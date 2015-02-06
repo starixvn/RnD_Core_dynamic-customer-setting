@@ -1,0 +1,22 @@
+﻿<div class="position-taking-item">
+    <div class="name" title="{{name}}">
+        {{name}}<span class="copy" title="{{resourceService.getString('CopyTooltip')}}" data-ng-show="hasCopy" data-ng-click="copy()">
+            <i class="icon-copy"></i></span>
+    </div>
+    <div class="super-max-pt">
+        <select data-ng-model="superMaxPT.value" data-position-taking-select-options="superMaxPT.options">
+        </select>
+    </div>
+    <div class="master-max-pt">
+        <select data-ng-model="masterMaxPT.value" data-position-taking-select-options="masterMaxPT.options">
+        </select>
+    </div>
+    <div class="agent-max-pt">
+        <select data-ng-model="agentMaxPT.value" data-position-taking-select-options="agentMaxPT.options">
+        </select>
+    </div>
+    <div class="super-min-pt">
+        <select data-ng-model="superMinPT.value" data-position-taking-select-options="superMinPT.options">
+        </select>
+    </div>
+</div>

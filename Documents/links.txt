@@ -1,0 +1,21 @@
+Mockup:
+https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/New_product_template
+https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/User_interface_template
+
+Database:
+https://docs.google.com/a/nexcel.vn/spreadsheets/d/19GHsxxN9rYWPUDp3xd_s8ketBnr8Ig_CAvhjIISUjSc/edit#gid=519194385
+https://docs.google.com/a/nexcel.vn/spreadsheets/d/1uFXwI-K2QKF9048XNgaWq8J62eEN2HnEYK7Dxo1qtdc/edit#gid=1971092045
+https://docs.google.com/a/nexcel.vn/spreadsheets/d/1fRXqXe7f1fgZwpNc2EFr5-H_yx2-9Xsdmyf0G5MHFs4/edit#gid=550221624
+
+Web:
+http://10.18.200.209:801/Javascript/AngularJs/AngularJS%20Fundamentals%20in%2060%20Minutes/
+http://weblogs.asp.net/dwahlin/learning-angularjs-by-example-the-customer-manager-application
+https://flipboard.com/section/the-angularjs-magazine-bbIMWS
+https://docs.google.com/a/nexcel.vn/document/d/1v4jpkD6YG5QSM-gNFwD43ITtUgY62r8FsvRQXlgLt54/edit
+http://www.slideshare.net/DanWahlin/building-an-end-toend-angular-js-application
+
+Change setting level:
+exec dbo.changeSettingLevel @SettingType = 1, @SettingLevel = 1
+
+Company select super:
+exec Acc_CustSetting_SuperSettingSelect @CustID=1177375, @ProductID=255

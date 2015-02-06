@@ -1,0 +1,11 @@
+﻿<div class="discount-container" data-ng-init="discountGroups=(discounts|dataGroup)">
+    <div data-ng-repeat="discountGroup in discountGroups" class="sport-group">
+        <div class="sport-name" title="{{discountGroup.SportTypeName}}">
+            {{discountGroup.SportTypeName}}
+        </div>
+        <div data-ng-repeat="item in discountGroup.Items" data-customer-setting-discount="item"
+            data-setting-level="setting.DiscountLevel" data-setting-context="settingContext"
+            data-form-type="formType" data-ng-class="{'full-width': $last && $even}">
+        </div>
+    </div>
+</div>

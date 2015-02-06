@@ -1,0 +1,14 @@
+﻿<div class="status-item">
+    <div class="name" title="{{name}}" data-ng-bind="name">
+    </div>
+    <div class="value">
+        <label class="checkbox">
+            <input type="checkbox" data-ng-model="enable" />
+            {{resourceService.getString('Enable')}}
+        </label>
+        <label class="checkbox downline">
+            <input type="checkbox" data-ng-model="downline" />
+            {{resourceService.getString('EnableDownline')}}
+        </label>
+    </div>
+</div>

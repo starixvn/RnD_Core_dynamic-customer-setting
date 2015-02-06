@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1CC53AF1-4620-402B-835B-9497EE11B665}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.CustomerSetting</RootNamespace>
+    <AssemblyName>Fanex.CustomerSetting</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Couchbase">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="SPSRemoting">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Criteria\MasterSelectAgentCriteria.cs" />
+    <Compile Include="Criteria\ProductProfileSelectCriteria.cs" />
+    <Compile Include="Criteria\ProductResourceSelectCriteria.cs" />
+    <Compile Include="Criteria\SuperSelectMemberCriteria.cs" />
+    <Compile Include="Criteria\SuperSelectMasterCriteria.cs" />
+    <Compile Include="Criteria\SelectCriteria.cs" />
+    <Compile Include="Criteria\CompanySelectSuperCriteria.cs" />
+    <Compile Include="Entities\AgentSelectMemberBetLimitEntity.cs" />
+    <Compile Include="Entities\AgentSelectMemberCustomerSettingEntity.cs" />
+    <Compile Include="Entities\AgentSelectMemberDiscountEntity.cs" />
+    <Compile Include="Entities\AgentSelectMemberPositionTakingEntity.cs" />
+    <Compile Include="Entities\AgentSelectMemberProductStatusEntity.cs" />
+    <Compile Include="Entities\BetLimitEntity.cs" />
+    <Compile Include="Entities\CompanySelectSuperBetLimitEntity.cs" />
+    <Compile Include="Entities\CompanySelectSuperCustomerSettingEntity.cs" />
+    <Compile Include="Entities\CompanySelectSuperDiscountEntity.cs" />
+    <Compile Include="Entities\CompanySelectSuperPositionTakingEntity.cs" />
+    <Compile Include="Entities\CompanySelectSuperProductStatusEntity.cs" />
+    <Compile Include="Entities\CustomerSettingEntity.cs" />
+    <Compile Include="Entities\MasterSelectAgentBetLimitEntity.cs" />
+    <Compile Include="Entities\MasterSelectAgentCustomerSettingEntity.cs" />
+    <Compile Include="Entities\MasterSelectAgentDiscountEntity.cs" />
+    <Compile Include="Entities\MasterSelectAgentPositionTakingEntity.cs" />
+    <Compile Include="Entities\MasterSelectAgentProductStatusEntity.cs" />
+    <Compile Include="Entities\MasterSelectMemberBetLimitEntity.cs" />
+    <Compile Include="Entities\MasterSelectMemberCustomerSettingEntity.cs" />
+    <Compile Include="Entities\MasterSelectMemberDiscountEntity.cs" />
+    <Compile Include="Entities\MasterSelectMemberPositionTakingEntity.cs" />
+    <Compile Include="Entities\MasterSelectMemberProductStatusEntity.cs" />
+    <Compile Include="Entities\ProductProfileEntity.cs" />
+    <Compile Include="Entities\ProductProfileItemEntity.cs" />
+    <Compile Include="Entities\ProductResourceEntity.cs" />
+    <Compile Include="Entities\ProductSetting.cs" />
+    <Compile Include="Entities\ProductStatusEntity.cs" />
+    <Compile Include="Exceptions\CriteriaException.cs" />
+    <Compile Include="Models\AgentSelectMemberResult.cs" />
+    <Compile Include="Models\MasterSelectMemberResult.cs" />
+    <Compile Include="Models\SuperSelectMemberResult.cs" />
+    <Compile Include="Models\MasterSelectAgentResult.cs" />
+    <Compile Include="Models\SettingContext.cs" />
+    <Compile Include="Entities\SuperSelectMasterBetLimitEntity.cs" />
+    <Compile Include="Entities\SuperSelectMasterCustomerSettingEntity.cs" />
+    <Compile Include="Entities\SuperSelectMasterDiscountEntity.cs" />
+    <Compile Include="Entities\SuperSelectMasterPositionTakingEntity.cs" />
+    <Compile Include="Entities\SuperSelectMasterProductStatusEntity.cs" />
+    <Compile Include="Entities\SuperSelectMemberBetLimitEntity.cs" />
+    <Compile Include="Entities\SuperSelectMemberCustomerSettingEntity.cs" />
+    <Compile Include="Entities\SuperSelectMemberDiscountEntity.cs" />
+    <Compile Include="Entities\SuperSelectMemberPositionTakingEntity.cs" />
+    <Compile Include="Entities\SuperSelectMemberProductStatusEntity.cs" />
+    <Compile Include="Enumerations\RoleType.cs" />
+    <Compile Include="Enumerations\SettingLevel.cs" />
+    <Compile Include="Models\CompanySelectSuperResult.cs" />
+    <Compile Include="Models\SuperSelectMasterResult.cs" />
+    <Compile Include="Models\SelectModel.cs" />
+    <Compile Include="Models\SelectResult.cs" />
+    <Compile Include="Models\UpdateModel.cs" />
+    <Compile Include="Models\UpdateResult.cs" />
+    <Compile Include="Repositories\IProductProfileRepository.cs" />
+    <Compile Include="Repositories\IResourceRepository.cs" />
+    <Compile Include="Repositories\ProductProfileRepository.cs" />
+    <Compile Include="Repositories\ResourceRepository.cs" />
+    <Compile Include="Resources\Error.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Error.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Lang.Designer.cs">
+      <DependentUpon>Lang.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Services\CustomerSettingService.cs" />
+    <Compile Include="Services\ICustomerSettingService.cs" />
+    <Compile Include="Entities\CustomerInformationEntity.cs" />
+    <Compile Include="Entities\DiscountEntity.cs" />
+    <Compile Include="Entities\PositionTakingEntity.cs" />
+    <Compile Include="Enumerations\FormType.cs" />
+    <Compile Include="Enumerations\SettingType.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CustomerSettingRepository.cs" />
+    <Compile Include="Repositories\ICustomerSettingRepository.cs" />
+    <Compile Include="Services\IProductProfileService.cs" />
+    <Compile Include="Services\IResourceService.cs" />
+    <Compile Include="Services\ProductProfileService.cs" />
+    <Compile Include="Services\ResourceService.cs" />
+    <Compile Include="Services\UserContext.cs" />
+    <Compile Include="Utility\Extensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\customer-setting-renovation.zreproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Error.zh-TW.resx" />
+    <EmbeddedResource Include="Resources\Error.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Lang.zh-TW.resx" />
+    <EmbeddedResource Include="Resources\Error.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Error.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Lang.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Lang.zh-CN.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

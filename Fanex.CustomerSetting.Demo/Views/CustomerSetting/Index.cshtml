@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html data-ng-app="customerSettingApp">
+<head>
+    <title>{{title}}</title>
+    <link href="../../app/customerSetting/customer-setting.less" rel="stylesheet" type="text/css" />
+</head>
+<body data-ng-controller="CustomerSettingViewController">
+    <div class="customer-setting" data-ng-cloak>
+        <div class="error" data-ng-show="hasError">
+            {{errorMessage}}
+        </div>
+        <div data-ng-include="view">
+        </div>
+        <div data-customer-setting-tooltip>
+        </div>
+    </div>
+    <script src="../../Scripts/AngularJS/angular.js" type="text/javascript"></script>
+    @Scripts.Render("~/customer-setting")
+</body>
+</html>

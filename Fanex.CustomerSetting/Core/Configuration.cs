@@ -1,0 +1,16 @@
+﻿namespace Fanex.CustomerSetting.Core
+{
+    /// <summary>
+    /// Constants class.
+    /// </summary>
+    public static class Configuration
+    {
+        public const int CacheTimeout = 12 * 60 * 60; // 1 day
+        public const string ProductResourceCacheKey = "CSR_PRODUCT_RESOURCE";
+
+        public static string GenerateProductProfileCacheKey(int productId)
+        {
+            return string.Format("CSR_PRODUCT_PROFILE_{0}", productId);
+        }
+    }
+}

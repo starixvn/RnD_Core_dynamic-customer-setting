@@ -1,0 +1,16 @@
+﻿namespace Fanex.CustomerSetting.Entities
+{
+    /// <summary>
+    /// ProductSetting class.
+    /// </summary>
+    public class ProductSetting
+    {
+        public int PositionTakingLevel { get; set; }
+
+        public int BetLimitLevel { get; set; }
+
+        public int DiscountLevel { get; set; }
+
+        public int StatusLevel { get; set; }
+    }
+}
