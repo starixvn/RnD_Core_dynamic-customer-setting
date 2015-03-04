@@ -1,8 +1,17 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'componentService', 'resourceService', 'appSettings'];
-    var companySelectSuperPositionTakingDirective = function ($rootScope, componentService, resourceService, appSettings) {
+    var injectParams = ['$rootScope', 'componentService', 'resourceService', 'linkingService', 'appSettings'];
+    var companySelectSuperPositionTakingDirective = function ($rootScope, componentService, resourceService, linkingService, appSettings) {
+        function parse(data) {
+            return {
+                superMaxPT: componentService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
+                masterMaxPT: componentService.createPositionTakingSelect(0, data.S4, data.M4),
+                agentMaxPT: componentService.createPositionTakingSelect(0, data.M4, data.A4),
+                superMinPT: componentService.createPositionTakingSelect(0, data.S4, data.N4)
+            };
+        }
+
         return {
             restrict: 'AE',
             scope: {
@@ -14,13 +23,14 @@
             },
             templateUrl: '/app/customerSetting/templates/company-select-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
+                linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
                 var name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
                 if ($scope.positionTaking.IsLive) {
                     name += ' (' + resourceService.getString('Live') + ')';
                 }
                 $scope.name = name;
-                var positionTaking = componentService.parsePositionTaking($scope.positionTaking, $scope.formType);
+                var positionTaking = parse($scope.positionTaking, $scope.formType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
@@ -31,8 +41,8 @@
                     };
                 }
 
-                $scope.$on('copy-position-taking', function(event, copyScope){
-                    if(copyScope !== $scope){
+                $scope.$on('copy-position-taking', function (event, copyScope) {
+                    if (copyScope !== $scope) {
                         $scope.superMaxPT.value = copyScope.superMaxPT.value;
                         $scope.masterMaxPT.value = copyScope.masterMaxPT.value;
                         $scope.agentMaxPT.value = copyScope.agentMaxPT.value;

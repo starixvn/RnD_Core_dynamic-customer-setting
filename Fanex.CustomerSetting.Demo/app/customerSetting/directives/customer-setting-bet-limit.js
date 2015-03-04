@@ -1,8 +1,40 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'componentService', 'resourceService', 'appSettings'];
-    var customerSettingBetLimitDirective = function ($rootScope, componentService, resourceService, appSettings) {
+    var injectParams = ['$rootScope', 'resourceService', 'linkingService', 'appSettings'];
+    var customerSettingBetLimitDirective = function ($rootScope, resourceService, linkingService, appSettings) {
+        function parse(data, formType) {
+            var BetLimitInput = function (value, limit) {
+                this.error = '';
+                this.value = value;
+                this.limit = limit;
+            };
+
+            switch (formType) {
+                case appSettings.formType.CompanyEditSuper:
+                    return {
+                        minBet: new BetLimitInput(data.MinBet, data.MinBetMin),
+                        maxBet: new BetLimitInput(data.MaxBet, appSettings.defaultMaxBet),
+                        maxPerMatch: new BetLimitInput(data.MaxPerMatch, appSettings.defaultMaxBet)
+                    };
+
+                case appSettings.formType.SuperEditMaster:
+                    return {};
+
+                case appSettings.formType.MasterEditAgent:
+                    return {};
+
+                case appSettings.formType.SuperEditMember:
+                    return {};
+
+                case appSettings.formType.MasterEditMember:
+                    return {};
+
+                case appSettings.formType.AgentEditMember:
+                    return {};
+            }
+        }
+
         return {
             restrict: 'AE',
             replace: true,
@@ -15,10 +47,11 @@
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-bet-limit.htm',
             controller: ['$scope', function ($scope) {
+                linkingService.linkBetLimit($scope);
                 $scope.appSettings = appSettings;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.betLimit);
                 $scope.resourceService = resourceService;
-                var betLimit = componentService.parseBetLimit($scope.betLimit, $scope.formType);
+                var betLimit = parse($scope.betLimit, $scope.formType);
                 $scope.minBet = betLimit.minBet;
                 $scope.maxBet = betLimit.maxBet;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
@@ -28,8 +61,8 @@
                     };
                 }
 
-                $scope.$on('copy-bet-limit', function(event, copyScope){
-                    if(copyScope !== $scope){
+                $scope.$on('copy-bet-limit', function (event, copyScope) {
+                    if (copyScope !== $scope) {
                         $scope.minBet.value = copyScope.minBet.value;
                         $scope.maxBet.value = copyScope.maxBet.value;
                         $scope.maxPerMatch.value = copyScope.maxPerMatch.value;

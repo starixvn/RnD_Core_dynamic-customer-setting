@@ -8,7 +8,7 @@
     using Fanex.Data.Configuration;
 
     /// <summary>
-    /// MvcApplication class.
+    /// MVC Application class.
     /// </summary>
     public class MvcApplication : HttpApplication
     {

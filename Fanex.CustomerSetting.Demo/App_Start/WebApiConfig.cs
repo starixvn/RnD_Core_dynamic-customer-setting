@@ -3,7 +3,7 @@
     using System.Web.Http;
 
     /// <summary>
-    /// WebApiConfig class.
+    /// WEB API Configuration class.
     /// </summary>
     public static class WebApiConfig
     {
@@ -12,8 +12,10 @@
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new
+                {
+                    id = RouteParameter.Optional
+                });
         }
     }
 }

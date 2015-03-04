@@ -35,6 +35,11 @@
 
         #region Methods
 
+        /// <summary>
+        /// Gets the setting value.
+        /// </summary>
+        /// <param name="key">The setting key.</param>
+        /// <returns>Returns setting value by string.</returns>
         private static string GetValue(string key)
         {
             try
@@ -48,6 +53,12 @@
             }
         }
 
+        /// <summary>
+        /// Gets the setting value.
+        /// </summary>
+        /// <typeparam name="T">Type of returned object.</typeparam>
+        /// <param name="key">The setting key.</param>
+        /// <returns>Returns value by setting key.</returns>
         private static T GetValue<T>(string key)
         {
             var value = GetValue(key);
