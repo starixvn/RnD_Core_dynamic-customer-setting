@@ -40,6 +40,14 @@
             }
         }
 
+        public static Result Error
+        {
+            get
+            {
+                return new Result(FailureValue, "Oops... you are here because of a system error, please notify your administrator.");
+            }
+        }
+
         public int ErrCode { get; private set; }
 
         public string ErrMsg { get; private set; }

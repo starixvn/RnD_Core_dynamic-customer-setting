@@ -5,7 +5,7 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// Position taking object.
     /// </summary>
-    public abstract class PositionTakingEntity : DataEntity
+    public abstract class PositionTakingEntity : BaseEntity
     {
         /// <summary>
         /// Indicating whether bet type offer live bet or not.

@@ -98,7 +98,7 @@
     <Compile Include="Entities\AgentSelectMemberDiscountEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberPositionTakingEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberProductStatusEntity.cs" />
-    <Compile Include="Entities\DataEntity.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\BetLimitEntity.cs" />
     <Compile Include="Entities\CompanySelectSuperBetLimitEntity.cs" />
     <Compile Include="Entities\CompanySelectSuperCustomerSettingEntity.cs" />

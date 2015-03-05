@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
@@ -150,8 +152,13 @@
         /// </summary>
         /// <param name="model">The update model.</param>
         /// <returns>Returns model validation.</returns>
+        [SuppressMessage(
+           "StyleCop.CSharp.Nexcel.NexcelCustomRules",
+           "SP2101:MethodMustNotContainMoreLinesThan",
+           Justification = "Switch has multiple cases.")]
         private Result ValidateProductProfile(UpdateModel model)
         {
+            var productProfile = _productProfileService.GetProductProfile(model.ProductId);
             switch (model.SettingType)
             {
                 case SettingType.All:
@@ -171,7 +178,7 @@
                         return Result.NoChange;
                     }
 
-                    break;
+                    return ValidateProductProfile(model.PositionTakings, productProfile);
 
                 case SettingType.BetLimit:
                     if (model.BetLimits == null || model.BetLimits.Count() == 0)
@@ -179,7 +186,7 @@
                         return Result.NoChange;
                     }
 
-                    break;
+                    return ValidateProductProfile(model.BetLimits, productProfile);
 
                 case SettingType.Discount:
                     if (model.Discounts == null || model.Discounts.Count() == 0)
@@ -187,7 +194,7 @@
                         return Result.NoChange;
                     }
 
-                    break;
+                    return ValidateProductProfile(model.Discounts, productProfile);
 
                 case SettingType.Status:
                     if (model.Statuses == null || model.Statuses.Count() == 0)
@@ -195,7 +202,30 @@
                         return Result.NoChange;
                     }
 
-                    break;
+                    return ValidateProductProfile(model.Statuses, productProfile);
+            }
+
+            return Result.Success;
+        }
+
+        private Result ValidateProductProfile(IEnumerable<BaseEntity> entities, ProductProfileEntity productProfile)
+        {
+            if (productProfile == null || productProfile.Items.Count() == 0)
+            {
+                return Result.Error;
+            }
+
+            if (entities == null)
+            {
+                return Result.Success;
+            }
+
+            foreach (var entity in entities)
+            {
+                //if (productProfile.Items.Where(profileItem => profileItem.SportType == entity.SportType).Any())
+                //{
+                //    return Result.AccessDenied;
+                //}
             }
 
             return Result.Success;

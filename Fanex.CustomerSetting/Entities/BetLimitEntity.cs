@@ -3,7 +3,7 @@
     /// <summary>
     /// BetLimit class.
     /// </summary>
-    public abstract class BetLimitEntity : DataEntity
+    public abstract class BetLimitEntity : BaseEntity
     {
         public decimal MinBet { get; set; }
 

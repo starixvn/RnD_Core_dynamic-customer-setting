@@ -5,7 +5,7 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// DataEntity class.
     /// </summary>
-    public abstract class DataEntity
+    public abstract class BaseEntity
     {
         /// <summary>
         /// Sport type ID.

@@ -5,7 +5,7 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// Discount class.
     /// </summary>
-    public abstract class DiscountEntity : DataEntity
+    public abstract class DiscountEntity : BaseEntity
     {
     }
 }
