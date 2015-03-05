@@ -5,28 +5,8 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// Position taking object.
     /// </summary>
-    public abstract class PositionTakingEntity
+    public abstract class PositionTakingEntity : DataEntity
     {
-        /// <summary>
-        /// Sport type ID.
-        /// </summary>
-        public short SportType { get; set; }
-
-        /// <summary>
-        /// Sport type name.
-        /// </summary>
-        public string SportTypeName { get; set; }
-
-        /// <summary>
-        /// Bet type ID.
-        /// </summary>
-        public short BetType { get; set; }
-
-        /// <summary>
-        /// Bet type name.
-        /// </summary>
-        public string BetTypeName { get; set; }
-
         /// <summary>
         /// Indicating whether bet type offer live bet or not.
         /// </summary>

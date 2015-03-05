@@ -10,11 +10,11 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Indicating whether down-lines are disabled or not.
         /// </summary>
-        public bool DisableDownlines { get; set; }
+        public bool IsDisabledDownline { get; set; }
 
         /// <summary>
         /// Indicating whether up-line is disabled or not.
         /// </summary>
-        public bool DisableUpline { get; set; }
+        public bool IsDisabledUpline { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 (function () {
     var injectParams = ['$window'];
-    var componentService = function ($window) {
+    var commonService = function ($window) {
         this.scrollToTop = function () {
             $window.scrollTo(0, 0);
         };
@@ -57,6 +57,6 @@
         };
     };
 
-    componentService.$inject = injectParams;
-    angular.module('customerSettingApp').service('componentService', componentService);
+    commonService.$inject = injectParams;
+    angular.module('customerSettingApp').service('commonService', commonService);
 })();

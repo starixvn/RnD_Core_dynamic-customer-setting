@@ -1,14 +1,14 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'componentService', 'resourceService', 'linkingService', 'appSettings'];
-    var companySelectSuperPositionTakingDirective = function ($rootScope, componentService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
+    var companySelectSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
         function parse(data) {
             return {
-                superMaxPT: componentService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
-                masterMaxPT: componentService.createPositionTakingSelect(0, data.S4, data.M4),
-                agentMaxPT: componentService.createPositionTakingSelect(0, data.M4, data.A4),
-                superMinPT: componentService.createPositionTakingSelect(0, data.S4, data.N4)
+                superMaxPT: commonService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
+                masterMaxPT: commonService.createPositionTakingSelect(0, data.S4, data.M4),
+                agentMaxPT: commonService.createPositionTakingSelect(0, data.M4, data.A4),
+                superMinPT: commonService.createPositionTakingSelect(0, data.S4, data.N4)
             };
         }
 
@@ -52,20 +52,22 @@
 
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ($scope.betLimit.MinBet === $scope.minBet.value
-                        && $scope.betLimit.MaxBet === $scope.maxBet.value
-                        && $scope.betLimit.MaxPerMatch === $scope.maxPerMatch.value) {
+                    if ($scope.positionTaking.S4 === $scope.superMaxPT.value
+                        && $scope.positionTaking.M4 === $scope.masterMaxPT.value
+                        && $scope.positionTaking.A4 === $scope.agentMaxPT.value
+                        && $scope.positionTaking.N4 === $scope.superMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.betLimit.SportType,
-                            BetType: $scope.betLimit.BetType,
-                            MinBet: $scope.minBet.value,
-                            MaxBet: $scope.maxBet.value,
-                            MaxPerMatch: $scope.maxPerMatch.value
+                            SportType: $scope.positionTaking.SportType,
+                            BetType: $scope.positionTaking.BetType,
+                            S4: $scope.superMaxPT.value,
+                            M4: $scope.masterMaxPT.value,
+                            A4: $scope.agentMaxPT.value,
+                            N4: $scope.superMinPT.value
                         }
                     };
                 };
@@ -75,8 +77,8 @@
                     if (newValue !== oldValue) {
                         var min = 0;
                         var max = parseInt(scope.superMaxPT.value);
-                        scope.masterMaxPT = componentService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.masterMaxPT.value)));
-                        scope.superMinPT = componentService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.superMinPT.value)));
+                        scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.masterMaxPT.value)));
+                        scope.superMinPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.superMinPT.value)));
                     }
                 });
 
@@ -84,7 +86,7 @@
                     if (newValue !== oldValue) {
                         var min = 0;
                         var max = parseInt(scope.masterMaxPT.value);
-                        scope.agentMaxPT = componentService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.agentMaxPT.value)));
+                        scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.agentMaxPT.value)));
                     }
                 });
             }

@@ -91,11 +91,14 @@
     <Compile Include="Criteria\SuperSelectMasterCriteria.cs" />
     <Compile Include="Criteria\SelectCriteria.cs" />
     <Compile Include="Criteria\CompanySelectSuperCriteria.cs" />
+    <Compile Include="Criteria\UpdateCriteria.cs" />
+    <Compile Include="Criteria\UpdateDisabledStatusCriteria.cs" />
     <Compile Include="Entities\AgentSelectMemberBetLimitEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberCustomerSettingEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberDiscountEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberPositionTakingEntity.cs" />
     <Compile Include="Entities\AgentSelectMemberProductStatusEntity.cs" />
+    <Compile Include="Entities\DataEntity.cs" />
     <Compile Include="Entities\BetLimitEntity.cs" />
     <Compile Include="Entities\CompanySelectSuperBetLimitEntity.cs" />
     <Compile Include="Entities\CompanySelectSuperCustomerSettingEntity.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Entities\ProductStatusEntity.cs" />
     <Compile Include="Exceptions\CriteriaException.cs" />
     <Compile Include="Models\AgentSelectMemberResult.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\MasterSelectMemberResult.cs" />
     <Compile Include="Models\SuperSelectMemberResult.cs" />
     <Compile Include="Models\MasterSelectAgentResult.cs" />
@@ -156,8 +160,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\CustomerSettingService.cs" />
-    <Compile Include="Services\ICustomerSettingService.cs" />
+    <Compile Include="Services\DataService.cs" />
+    <Compile Include="Services\IDataService.cs" />
     <Compile Include="Entities\CustomerInformationEntity.cs" />
     <Compile Include="Entities\DiscountEntity.cs" />
     <Compile Include="Entities\PositionTakingEntity.cs" />
@@ -169,9 +173,13 @@
     <Compile Include="Repositories\ICustomerSettingRepository.cs" />
     <Compile Include="Services\IProductProfileService.cs" />
     <Compile Include="Services\IResourceService.cs" />
+    <Compile Include="Services\IValidationService.cs" />
+    <Compile Include="Services\IXmlGenerator.cs" />
     <Compile Include="Services\ProductProfileService.cs" />
     <Compile Include="Services\ResourceService.cs" />
-    <Compile Include="Services\UserContext.cs" />
+    <Compile Include="Models\UserContext.cs" />
+    <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="Services\XmlGenerator.cs" />
     <Compile Include="Utility\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>

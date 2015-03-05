@@ -23,6 +23,13 @@
             Super: 4,
             Company: 5
         },
+        settingType: {
+            All: 0,
+            PositionTaking: 1,
+            BetLimit: 2,
+            Discount: 3,
+            Status: 4
+        },
         settingLevel: {
             Product: 1,
             SportType: 2,

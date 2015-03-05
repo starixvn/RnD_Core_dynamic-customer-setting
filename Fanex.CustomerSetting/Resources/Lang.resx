@@ -210,4 +210,10 @@
   <data name="CopyTooltip" xml:space="preserve">
     <value>Click to duplicate the values</value>
   </data>
+  <data name="AccessDeniedMsg" xml:space="preserve">
+    <value>You do not have permission to access this function.</value>
+  </data>
+  <data name="NoChangeToUpdate" xml:space="preserve">
+    <value>There is no change to update!</value>
+  </data>
 </root>

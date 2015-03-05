@@ -61,6 +61,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You do not have permission to access this function..
+        /// </summary>
+        public static string AccessDeniedMsg {
+            get {
+                return ResourceManager.GetString("AccessDeniedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent Max PT.
         /// </summary>
         public static string AgentMaxPT {
@@ -273,6 +282,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string Nickname {
             get {
                 return ResourceManager.GetString("Nickname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no change to update!.
+        /// </summary>
+        public static string NoChangeToUpdate {
+            get {
+                return ResourceManager.GetString("NoChangeToUpdate", resourceCulture);
             }
         }
         

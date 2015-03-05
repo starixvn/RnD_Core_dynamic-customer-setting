@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$filter', 'componentService', 'tooltipService', 'appSettings'];
-    var betLimitInputDirective = function ($filter, componentService, tooltipService, appSettings) {
+    var injectParams = ['$filter', 'commonService', 'tooltipService', 'appSettings'];
+    var betLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -40,12 +40,12 @@
 
                 element.on('keydown', function (event) {
                     if (modelCtrl.$modelValue === 0
-                        && componentService.inArray(event.keyCode, [46, 8]) !== -1) {
+                        && commonService.inArray(event.keyCode, [46, 8]) !== -1) {
                         event.preventDefault();
                         return;
                     }
 
-                    if (componentService.inArray(event.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 // Allow: backspace, delete, tab, escape, enter
+                    if (commonService.inArray(event.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 // Allow: backspace, delete, tab, escape, enter
                         || (event.keyCode === 65 && event.ctrlKey === true) // Allow: Ctrl+A
                         || (event.keyCode >= 35 && event.keyCode <= 40)) { // Allow: home, end, left, right, down, up
                         // let it happen, don't do anything

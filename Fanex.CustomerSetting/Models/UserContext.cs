@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Services
+﻿namespace Fanex.CustomerSetting.Models
 {
     using Fanex.CustomerSetting.Enumerations;
 
@@ -11,7 +11,7 @@
 
         public int SubAccountId { get; set; }
 
-        public RoleType RoleType { get; set; }
+        public RoleType RoleId { get; set; }
 
         public string Language { get; set; }
     }

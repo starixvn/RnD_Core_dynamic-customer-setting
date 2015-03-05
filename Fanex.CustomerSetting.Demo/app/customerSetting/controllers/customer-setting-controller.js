@@ -1,8 +1,10 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', 'locationService', 'dataService', 'resourceService', 'templateService', 'linkingService', 'componentService'];
-    var customerSettingController = function ($scope, $rootScope, locationService, dataService, resourceService, templateService, linkingService, componentService) {
+    var injectParams = ['$scope', '$rootScope', 'locationService', 'dataService', 'resourceService',
+                        'templateService', 'linkingService', 'appSettings', 'errorService'];
+    var customerSettingController = function ($scope, $rootScope, locationService, dataService, resourceService,
+                        templateService, linkingService, appSettings, errorService) {
         var selectModel = locationService.createSelectModel();
         dataService.select(selectModel, function (response) {
             var settingContext = response.SettingContext;
@@ -26,39 +28,97 @@
         });
 
         $scope.updateStatuses = function () {
-            var statuses = linkingService.statuses();
-            if (angular.isUndefined(statuses)) {
-                return; // form invalid
-            }
-
-            if (statuses.length === 0) {
-                $rootScope.hasError = true;
-                $rootScope.errorMessage = 'No change';
-                componentService.scrollToTop();
-                return;
-            }
-
-            console.log(statuses);
+            update(appSettings.settingType.Status);
         };
 
         $scope.updateDiscounts = function () {
-            var discounts = linkingService.discounts();
-            console.log(discounts);
+            update(appSettings.settingType.Discount);
         };
 
         $scope.updateBetLimits = function () {
-            var betLimits = linkingService.betLimits();
-            console.log(betLimits);
+            update(appSettings.settingType.BetLimit);
         };
 
         $scope.updatePositionTakings = function () {
-            var positionTakings = linkingService.positionTakings();
-            console.log(positionTakings);
+            update(appSettings.settingType.PositionTaking);
         };
 
         $scope.updateAll = function () {
-            console.log('updateAll');
+            update(appSettings.settingType.All);
         };
+
+        function hasUpdate(data, isShowNoChange) {
+            if (angular.isUndefined(data)) {
+                return false; // form invalid
+            }
+
+            if (data.length === 0) {
+                if (isShowNoChange) {
+                    errorService.show(resourceService.getString('NoChangeToUpdate'));
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        function update(settingType) {
+            errorService.hide();
+            var positionTakings;
+            var betLimits;
+            var discounts;
+            var statuses;
+            switch (settingType) {
+                case appSettings.settingType.All:
+                    statuses = linkingService.statuses();
+                    discounts = linkingService.discounts();
+                    betLimits = linkingService.betLimits();
+                    positionTakings = linkingService.positionTakings();
+                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.PositionTaking:
+                    positionTakings = linkingService.positionTakings();
+                    if (!hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    betLimits = linkingService.betLimits();
+                    if (!hasUpdate(betLimits, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Discount:
+                    discounts = linkingService.discounts();
+                    if (!hasUpdate(discounts, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Status:
+                    statuses = linkingService.statuses();
+                    if (!hasUpdate(statuses, true)) {
+                        return;
+                    }
+                    break;
+            }
+
+            var updateModel = angular.extend({
+                SettingType: settingType,
+                StatusString: JSON.stringify(statuses),
+                DiscountString: JSON.stringify(discounts),
+                BetLimitString: JSON.stringify(betLimits),
+                PositionTakingString: JSON.stringify(positionTakings)
+            }, selectModel);
+            dataService.update(updateModel, function (response) {
+                console.log(response);
+            });
+        }
     };
 
     customerSettingController.$inject = injectParams;

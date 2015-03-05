@@ -11,7 +11,7 @@
     /// <summary>
     /// CustomerSettingService class.
     /// </summary>
-    public class CustomerSettingService : ICustomerSettingService
+    public class DataService : IDataService
     {
         #region Variables
 
@@ -22,12 +22,12 @@
 
         #region Constructors
 
-        public CustomerSettingService(string languageCode)
+        public DataService(string languageCode)
             : this(languageCode, null, null)
         {
         }
 
-        public CustomerSettingService(string languageCode, ICustomerSettingRepository respository, IResourceService resourceService)
+        public DataService(string languageCode, ICustomerSettingRepository respository, IResourceService resourceService)
         {
             _respository = respository ?? new CustomerSettingRepository();
             _resourceService = resourceService ?? new ResourceService(languageCode);
@@ -169,6 +169,11 @@
             UpdateResource(customerSettingEntity.BetLimits);
             UpdateResource(customerSettingEntity.PositionTakings);
             return new AgentSelectMemberResult(settingContext, customerSettingEntity);
+        }
+
+        public UpdateResult Update(UpdateModel model)
+        {
+            return new UpdateResult(null);
         }
 
         private SettingContext CreateSettingContext(SelectModel model)

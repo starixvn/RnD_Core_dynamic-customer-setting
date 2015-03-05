@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using System.Collections.Generic;
     using Fanex.Caching;
     using Fanex.CustomerSetting.Core;
     using Fanex.CustomerSetting.Criteria;
@@ -35,6 +34,8 @@
 
         #endregion Constructors
 
+        #region Methods
+
         public ProductProfileEntity GetProductProfile(byte productId)
         {
             return InternalGetProductProfile(productId);
@@ -62,10 +63,12 @@
                 }
 
                 productProfile = _repository.GetProductProfile(criteria);
-                _cacheService.Set<ProductProfileEntity>(Configuration.ProductResourceCacheKey, productProfile, Configuration.CacheTimeout);
+                _cacheService.Set<ProductProfileEntity>(cacheKey, productProfile, Configuration.CacheTimeout);
             }
 
             return productProfile;
         }
+
+        #endregion Methods
     }
 }

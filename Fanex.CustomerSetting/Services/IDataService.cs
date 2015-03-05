@@ -5,7 +5,7 @@
     /// <summary>
     /// ICustomerSettingService class.
     /// </summary>
-    public interface ICustomerSettingService
+    public interface IDataService
     {
         CompanySelectSuperResult CompanySelectSuper(SelectModel model);
 
@@ -18,5 +18,7 @@
         MasterSelectMemberResult MasterSelectMember(SelectModel model);
 
         AgentSelectMemberResult AgentSelectMember(SelectModel model);
+
+        UpdateResult Update(UpdateModel model);
     }
 }

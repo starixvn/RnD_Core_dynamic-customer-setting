@@ -1,12 +1,11 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope'];
-    var dataService = function ($http, $rootScope) {
+    var injectParams = ['$http', '$rootScope', 'errorService'];
+    var dataService = function ($http, $rootScope, errorService) {
         function isSuccess(response) {
             if (!response.IsSuccess) {
-                $rootScope.hasError = true;
-                $rootScope.errorMessage = response.ErrMsg;
+                errorService.show(response.ErrMsg);
                 return false;
             }
 

@@ -5,26 +5,7 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// Discount class.
     /// </summary>
-    public abstract class DiscountEntity
+    public abstract class DiscountEntity : DataEntity
     {
-        /// <summary>
-        /// Sport type Id.
-        /// </summary>
-        public short SportType { get; set; }
-
-        /// <summary>
-        /// Sport type name.
-        /// </summary>
-        public string SportTypeName { get; set; }
-
-        /// <summary>
-        /// Bet type ID.
-        /// </summary>
-        public short BetType { get; set; }
-
-        /// <summary>
-        /// Bet type name.
-        /// </summary>
-        public string BetTypeName { get; set; }
     }
 }

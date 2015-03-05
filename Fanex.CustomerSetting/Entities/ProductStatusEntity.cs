@@ -5,28 +5,8 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// ProductState class.
     /// </summary>
-    public abstract class ProductStatusEntity
+    public abstract class ProductStatusEntity : DataEntity
     {
-        /// <summary>
-        /// Sport type Id.
-        /// </summary>
-        public short SportType { get; set; }
-
-        /// <summary>
-        /// Sport type name.
-        /// </summary>
-        public string SportTypeName { get; set; }
-
-        /// <summary>
-        /// Bet type ID.
-        /// </summary>
-        public short BetType { get; set; }
-
-        /// <summary>
-        /// Bet type name.
-        /// </summary>
-        public string BetTypeName { get; set; }
-
         /// <summary>
         /// Indicating whether product is disabled or not.
         /// </summary>

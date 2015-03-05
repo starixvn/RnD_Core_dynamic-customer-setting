@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using Fanex.CustomerSetting.Resources;
+
     /// <summary>
     /// Result class.
     /// </summary>
@@ -19,6 +21,22 @@
             get
             {
                 return new Result(SuccessValue, string.Empty);
+            }
+        }
+
+        public static Result AccessDenied
+        {
+            get
+            {
+                return new Result(FailureValue, Lang.AccessDeniedMsg);
+            }
+        }
+
+        public static Result NoChange
+        {
+            get
+            {
+                return new Result(FailureValue, Lang.NoChangeToUpdate);
             }
         }
 

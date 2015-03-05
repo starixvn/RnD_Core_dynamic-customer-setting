@@ -2,8 +2,6 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Demo.Configurations;
-    using Fanex.CustomerSetting.Entities;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
@@ -14,29 +12,31 @@
     {
         #region Variables
 
-        private ICustomerSettingService _service;
+        private IDataService _dataService;
         private UserContext _userContext;
+        private IValidationService _validationService;
 
         #endregion Variables
 
         #region Constructors
 
         public CustomerSettingController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerSettingController(ICustomerSettingService service)
+        public CustomerSettingController(IDataService service, IValidationService validationService)
         {
             _userContext = new UserContext
             {
                 CustId = AppSettings.CustId,
                 SubAccountId = AppSettings.SubAccountId,
-                RoleType = AppSettings.RoleType,
+                RoleId = AppSettings.RoleType,
                 Language = AppSettings.Language
             };
 
-            _service = service ?? new CustomerSettingService(_userContext.Language);
+            _dataService = service ?? new DataService(_userContext.Language);
+            _validationService = validationService ?? new ValidationService();
         }
 
         #endregion Constructors
@@ -56,99 +56,37 @@
         public JsonResult Select(SelectModel model)
         {
             model.CustId = _userContext.CustId;
-            model.RoleId = _userContext.RoleType;
+            model.RoleId = _userContext.RoleId;
             model.Language = _userContext.Language;
-            if (ValidateModel(model))
+            var validationResult = _validationService.Validate(model);
+            if (!validationResult.IsSuccess)
             {
-                var result = _service.CompanySelectSuper(model);
-                if (result.IsSuccess && ValidateCustomerInformation(result.CustomerSetting.Information, model))
-                {
-                    return Json(result);
-                }
+                return Json(validationResult);
             }
 
-            var invalidResult = new Result(Result.FailureValue, "No permission");
-            return Json(invalidResult);
-        }
-
-        [HttpPost]
-        public JsonResult Update(UpdateModel model)
-        {
-            return null;
+            var selectResult = _dataService.CompanySelectSuper(model);
+            return Json(selectResult);
         }
 
         /// <summary>
-        /// Validates the select model.
+        /// Update customer setting.
         /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Returns model validation.</returns>
-        private bool ValidateModel(SelectModel model)
+        /// <param name="model">The update model.</param>
+        /// <returns>Returns update JSON result.</returns>
+        [HttpPost]
+        public JsonResult Update(UpdateModel model)
         {
-            switch (model.FormType)
+            model.CustId = _userContext.CustId;
+            model.RoleId = _userContext.RoleId;
+            model.Language = _userContext.Language;
+            var validationResult = _validationService.Validate(model);
+            if (!validationResult.IsSuccess)
             {
-                case FormType.CompanyEditSuper:
-                    if (model.RoleId != RoleType.Company || model.TargetRoleId != RoleType.Super)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                case FormType.SuperEditMaster:
-                    if (model.TargetRoleId != RoleType.Master)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                case FormType.MasterEditAgent:
-                    if (model.TargetRoleId != RoleType.Agent)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                case FormType.SuperEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                case FormType.MasterEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                case FormType.AgentEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
-                    {
-                        return false;
-                    }
-
-                    break;
-
-                default:
-                    return false;
+                return Json(validationResult);
             }
 
-            return true;
-        }
-
-        private bool ValidateCustomerInformation(CustomerInformationEntity customerInformation, SelectModel model)
-        {
-            if (customerInformation != null)
-            {
-                return true;
-            }
-
-            return false;
+            var updateResult = _dataService.Update(model);
+            return Json(Result.AccessDenied);
         }
     }
 }

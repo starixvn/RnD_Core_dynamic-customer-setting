@@ -5,6 +5,7 @@
     var resources = {};
     
     resources['en-us'] = {
+        AccessDeniedMsg: "You do not have permission to access this function.",
         AgentMaxPT: "Agent Max PT",
         BetSetting: "Bet Setting",
         Commission: "Commission",
@@ -29,6 +30,7 @@
         MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
         MobilePhone: "Mobile Phone",
         Nickname: "Nickname",
+        NoChangeToUpdate: "There is no change to update!",
         Phone: "Phone",
         PositionTaking: "Position Taking",
         ProductStatus: "Product Status",
@@ -39,6 +41,7 @@
     };
     
     resources['zh-cn'] = {
+        AccessDeniedMsg: "You do not have permission to access this function.",
         AgentMaxPT: "代理最高占成",
         BetSetting: "投注设定",
         Commission: "佣金",
@@ -63,6 +66,7 @@
         MinBetMoreThanOrEqualTo: "最大投注额必须大于或等于 {0}",
         MobilePhone: "手机",
         Nickname: "昵称",
+        NoChangeToUpdate: "没有更新！",
         Phone: "电话",
         PositionTaking: "占成数",
         ProductStatus: "Product Status",
@@ -73,6 +77,7 @@
     };
     
     resources['zh-tw'] = {
+        AccessDeniedMsg: "You do not have permission to access this function.",
         AgentMaxPT: "代理最高佔成",
         BetSetting: "投注設定",
         Commission: "佣金",
@@ -97,6 +102,7 @@
         MinBetMoreThanOrEqualTo: "最大投注額必須大於或等於 {0}",
         MobilePhone: "手機",
         Nickname: "暱稱",
+        NoChangeToUpdate: "沒有更新!",
         Phone: "電話",
         PositionTaking: "佔成數",
         ProductStatus: "Product Status",

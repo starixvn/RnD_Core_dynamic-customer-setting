@@ -1,30 +1,34 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Enumerations;
 
     /// <summary>
     /// UpdateModel class.
     /// </summary>
-    public class UpdateModel
+    public class UpdateModel : BaseModel
     {
-        public int CustId { get; set; }
-
-        public RoleType RoleId { get; set; }
-
-        public int TargetCustId { get; set; }
-
-        public RoleType TargetRoleId { get; set; }
-
         public int SubAccountId { get; set; }
-
-        public int ProductId { get; set; }
-
-        public FormType FormType { get; set; }
 
         public SettingType SettingType { get; set; }
 
         public string Ip { get; set; }
 
-        public string Language { get; set; }
+        public string StatusString { get; set; }
+
+        public string DiscountString { get; set; }
+
+        public string BetLimitString { get; set; }
+
+        public string PositionTakingString { get; set; }
+
+        public IEnumerable<ProductStatusEntity> Statuses { get; set; }
+
+        public IEnumerable<DiscountEntity> Discounts { get; set; }
+
+        public IEnumerable<BetLimitEntity> BetLimits { get; set; }
+
+        public IEnumerable<PositionTakingEntity> PositionTakings { get; set; }
     }
 }

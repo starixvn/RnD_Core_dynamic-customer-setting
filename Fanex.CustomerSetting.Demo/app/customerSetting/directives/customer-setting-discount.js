@@ -1,32 +1,54 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['componentService', 'resourceService', 'linkingService', 'appSettings'];
-    var customerSettingDiscountDirective = function (componentService, resourceService, linkingService, appSettings) {
+    var injectParams = ['commonService', 'resourceService', 'linkingService', 'appSettings'];
+    var customerSettingDiscountDirective = function (commonService, resourceService, linkingService, appSettings) {
         function parse(data, formType) {
             var DiscountSelect = function (min, max, value) {
                 this.min = min;
                 this.value = value;
-                this.options = componentService.generateOptions(min, max, 0.0005, 10000);
+                this.options = commonService.generateOptions(min, max, 0.0005, 10000);
             };
 
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
                     return new DiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
-                case 2:
+                case appSettings.formType.SuperEditMaster:
                     return {};
 
-                case 3:
+                case appSettings.formType.MasterEditAgent:
                     return {};
 
-                case 4:
+                case appSettings.formType.SuperEditMember:
                     return {};
 
-                case 5:
+                case appSettings.formType.MasterEditMember:
                     return {};
 
-                case 6:
+                case appSettings.formType.AgentEditMember:
+                    return {};
+            }
+        }
+
+        function getValue(data, formType) {
+            switch (formType) {
+                case appSettings.formType.CompanyEditSuper:
+                    return data.SuperDiscount;
+
+                case appSettings.formType.SuperEditMaster:
+                    return {};
+
+                case appSettings.formType.MasterEditAgent:
+                    return {};
+
+                case appSettings.formType.SuperEditMember:
+                    return {};
+
+                case appSettings.formType.MasterEditMember:
+                    return {};
+
+                case appSettings.formType.AgentEditMember:
                     return {};
             }
         }
@@ -50,7 +72,7 @@
                 $scope.options = discount.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== $scope.discount.value
+                    var errCode = $scope.value !== getValue($scope.discount, $scope.formType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -59,7 +81,7 @@
                         data: {
                             SportType: $scope.discount.SportType,
                             BetType: $scope.discount.BetType,
-                            Value: $scope.value
+                            Discount: $scope.value
                         }
                     };
                 };

@@ -17,20 +17,20 @@
                 $scope.resourceService = resourceService;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
-                $scope.downline = !$scope.status.DisableDownlines;
+                $scope.downline = !$scope.status.IsDisabledDownline;
 
                 $scope.validate = function () {
-                    var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.DisableDownlines
+                    var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
-                    
+
                     return {
                         errCode: errCode,
                         data: {
                             SportType: $scope.status.SportType,
                             BetType: $scope.status.BetType,
                             IsDisabled: !$scope.enable,
-                            DisableDownlines: !$scope.downline
+                            IsDisabledDownline: !$scope.downline
                         }
                     };
                 };

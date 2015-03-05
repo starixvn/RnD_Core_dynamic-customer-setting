@@ -49,6 +49,8 @@
 
         #endregion Properties
 
+        #region Get product name
+
         public string GetProductName(int productId)
         {
             return GetProductName(productId, RefLanguage);
@@ -76,6 +78,10 @@
             return string.Format("Product {0}", productId);
         }
 
+        #endregion Get product name
+
+        #region Get sport type name
+
         public string GetSportTypeName(int sportType)
         {
             return GetSportTypeName(sportType, RefLanguage);
@@ -89,6 +95,10 @@
                 : sportTypeName;
         }
 
+        #endregion Get sport type name
+
+        #region Get bet type name
+
         public string GetBetTypeName(int betType)
         {
             return GetBetTypeName(betType, RefLanguage);
@@ -101,6 +111,10 @@
                 ? string.Format("Bet Type {0}", betType)
                 : betTypeName;
         }
+
+        #endregion Get bet type name
+
+        #region Utils
 
         /// <summary>
         /// Gets the reference language.
@@ -142,5 +156,7 @@
 
             return productResources;
         }
+
+        #endregion Utils
     }
 }

@@ -174,7 +174,8 @@
     <Content Include="app\customerSetting\directives\customer-setting-tooltip.js" />
     <Content Include="app\customerSetting\filters\data-group.js" />
     <Content Include="app\customerSetting\images\sprite.png" />
-    <Content Include="app\customerSetting\services\component-service.js" />
+    <Content Include="app\customerSetting\services\common-service.js" />
+    <Content Include="app\customerSetting\services\error-service.js" />
     <Content Include="app\customerSetting\services\linking-service.js" />
     <Content Include="app\customerSetting\services\location-service.js" />
     <Content Include="app\customerSetting\services\template-service.js" />
