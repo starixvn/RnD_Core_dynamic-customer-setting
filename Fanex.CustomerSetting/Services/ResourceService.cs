@@ -17,8 +17,8 @@
     {
         #region Variables
 
-        private IResourceRepository _resourceRepository;
-        private ICache _cacheService;
+        private readonly IResourceRepository _resourceRepository;
+        private readonly ICache _cacheService;
 
         #endregion Variables
 

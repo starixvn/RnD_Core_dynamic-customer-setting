@@ -14,8 +14,8 @@
     {
         #region Variables
 
-        private ICache _cacheService;
-        private IProductProfileRepository _repository;
+        private readonly ICache _cacheService;
+        private readonly IProductProfileRepository _repository;
 
         #endregion Variables
 

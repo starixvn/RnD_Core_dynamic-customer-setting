@@ -15,8 +15,8 @@
     {
         #region Variables
 
-        private ICustomerSettingRepository _respository;
-        private IResourceService _resourceService;
+        private readonly ICustomerSettingRepository _respository;
+        private readonly IResourceService _resourceService;
 
         #endregion Variables
 

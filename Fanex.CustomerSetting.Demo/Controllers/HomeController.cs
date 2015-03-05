@@ -21,6 +21,10 @@
             _currentSession = currentSession ?? new CurrentSession();
         }
 
+        /// <summary>
+        /// Index page.
+        /// </summary>
+        /// <returns>Returns HTML index page.</returns>
         public ActionResult Index()
         {
             var viewModel = new LoginViewModel

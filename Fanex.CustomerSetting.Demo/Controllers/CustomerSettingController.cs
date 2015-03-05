@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Demo.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Demo.Configurations;
     using Fanex.CustomerSetting.Demo.UserLogin.Session;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
@@ -14,9 +13,9 @@
     {
         #region Variables
 
-        private IDataService _dataService;
-        private UserContext _userContext;
-        private IValidationService _validationService;
+        private readonly IDataService _dataService;
+        private readonly UserContext _userContext;
+        private readonly IValidationService _validationService;
         private readonly ICurrentSession _currentSession;
 
         #endregion Variables
