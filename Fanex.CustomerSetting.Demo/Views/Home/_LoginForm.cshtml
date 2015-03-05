@@ -1,34 +1,40 @@
-﻿@using Fanex.CustomerSetting.Demo.UserLogin;
-@model LoginViewModels
-<h4>
-    Login
-</h4>
-<div>
-    <label>
-        Role type:
-    </label>
-    <select ng-model="Model.RoleId" ng-options="item.RoleId as item.RoleName for item in Model.Roles">
-        <option value="">--Please select--</option>
-    </select>
+﻿<div role="tab" id="headingLogin" style="text-align: right; padding: 5px;">
+    <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapseLogin">Login Form </a>
+    </h4>
 </div>
-<div>
-    <label>
-        Cust Id:</label>
-    <input type="text" />
-</div>
-<div>
-    <label>
-        Sub Acc Id:</label>
-    <input type="text" />
-</div>
-<div>
-    <label>
-        Language:</label>
-    <select ng-model="Model.LanguageCode" ng-options="item.LanguageCode as item.LanguageName for item in Model.Languages">
-    </select>
-</div>
-<div>
-    <label>
-    </label>
-    <input type="button" value="Login" class="bnt-login" />
+<div id="collapseLogin" ng-class="{in: !LoginForm.HideForm }" role="tabpanel" class="collapse">
+    <h4>
+        Login
+    </h4>
+    <div>
+        <label>
+            Role type:
+        </label>
+        <select ng-options="item.value as item.name for item in roles" ng-model="LoginForm.RoleId"
+            ng-change="roleChange()">
+            <option value="">--Please select--</option>
+        </select>
+    </div>
+    <div>
+        <label>
+            Cust Id:</label>
+        <input type="text" maxlength="15" ng-model="LoginForm.CustId" />
+    </div>
+    <div>
+        <label>
+            Sub Acc Id:</label>
+        <input type="text" maxlength="15" ng-model="LoginForm.SubAccountId" />
+    </div>
+    <div>
+        <label>
+            Language:</label>
+        <select ng-model="LoginForm.LanguageCode" ng-options="item.value as item.name for item in languages">
+        </select>
+    </div>
+    <div>
+        <label>
+        </label>
+        <input type="button" value="Login" class="bnt-login" ng-click="login()" ng-disabled="LoginForm.DisableLogin" />
+    </div>
 </div>

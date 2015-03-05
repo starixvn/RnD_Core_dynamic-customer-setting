@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.Demo.UserLogin.Session
                 return
                 (HttpContext.Current != null)
                 ? Convert.ToString(HttpContext.Current.Session[LANGUAGECODE])
-                : string.Empty;
+                : "en-US";
             }
 
             set

@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Demo.Configurations;
+    using Fanex.CustomerSetting.Demo.UserLogin.Session;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
@@ -27,12 +28,14 @@
 
         public CustomerSettingController(IDataService service, IValidationService validationService)
         {
+            _currentSession = currentSession ?? new CurrentSession();
+
             _userContext = new UserContext
             {
-                CustId = AppSettings.CustId,
-                SubAccountId = AppSettings.SubAccountId,
-                RoleId = AppSettings.RoleType,
-                Language = AppSettings.Language
+                CustId = _currentSession.CustId,
+                SubAccountId = _currentSession.SubAccountId,
+                RoleId = (RoleType)_currentSession.RoleId,
+                Language = _currentSession.LanguageCode
             };
 
             _dataService = service ?? new DataService(_userContext.Language);

@@ -43,7 +43,7 @@ iframe
     z-index: 1;
 }
 
-.login-form > div > label
+.login-form > div > div > label
 {
     font-weight: normal;
     width: 80px;
@@ -53,4 +53,9 @@ iframe
 .login-form .bnt-login
 {
     text-align: center;
+}
+.login-form input[type="button"]:disabled
+{
+    background: #ccc;
+    color: #999;
 }

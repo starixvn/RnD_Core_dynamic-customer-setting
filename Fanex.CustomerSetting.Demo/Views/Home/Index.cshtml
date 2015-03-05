@@ -1,6 +1,6 @@
-﻿@using Newtonsoft.Json;
-@using Fanex.CustomerSetting.Demo.UserLogin;
-@model LoginViewModels
+﻿@using Fanex.CustomerSetting.Demo.UserLogin
+@using Newtonsoft.Json
+@model LoginViewModel
 @section css{
     <link href="/Views/Home/Content/index.css" rel="stylesheet" type="text/css" />
 }
@@ -10,11 +10,11 @@
 }
 <div data-ng-app="indexModule" data-ng-controller="IndexController" data-ng-cloak>
     <div class="container left">
-        <span ng-init="Model = @Html.Raw(JsonConvert.SerializeObject(Model))"></span>
+        <span ng-init="LoginForm = @Html.Raw(JsonConvert.SerializeObject(Model))"></span>
         <div class="login-form">
             @Html.Partial("_LoginForm")
         </div>
-        <div>
+        <div ng-show="LoginForm.HideForm">
             <h4>
                 Customer Setting
             </h4>
