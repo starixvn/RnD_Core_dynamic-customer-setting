@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Demo.Configurations;
     using Fanex.CustomerSetting.Demo.UserLogin.Session;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
@@ -16,17 +17,18 @@
         private IDataService _dataService;
         private UserContext _userContext;
         private IValidationService _validationService;
+        private readonly ICurrentSession _currentSession;
 
         #endregion Variables
 
         #region Constructors
 
         public CustomerSettingController()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
-        public CustomerSettingController(IDataService service, IValidationService validationService)
+        public CustomerSettingController(IDataService service, IValidationService validationService, ICurrentSession currentSession)
         {
             _currentSession = currentSession ?? new CurrentSession();
 
