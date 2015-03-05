@@ -61,7 +61,7 @@
     });
 
     $scope.disableButtonLogin = function () {
-        if ($scope.LoginForm.CustId === "") {
+        if ($scope.LoginForm.CustId === "" || $scope.LoginForm.CustId === 0) {
             return true;
         }
         else {
