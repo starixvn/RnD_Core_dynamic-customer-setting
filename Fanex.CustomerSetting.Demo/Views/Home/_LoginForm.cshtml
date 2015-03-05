@@ -1,0 +1,34 @@
+﻿@using Fanex.CustomerSetting.Demo.UserLogin;
+@model LoginViewModels
+<h4>
+    Login
+</h4>
+<div>
+    <label>
+        Role type:
+    </label>
+    <select ng-model="Model.RoleId" ng-options="item.RoleId as item.RoleName for item in Model.Roles">
+        <option value="">--Please select--</option>
+    </select>
+</div>
+<div>
+    <label>
+        Cust Id:</label>
+    <input type="text" />
+</div>
+<div>
+    <label>
+        Sub Acc Id:</label>
+    <input type="text" />
+</div>
+<div>
+    <label>
+        Language:</label>
+    <select ng-model="Model.LanguageCode" ng-options="item.LanguageCode as item.LanguageName for item in Model.Languages">
+    </select>
+</div>
+<div>
+    <label>
+    </label>
+    <input type="button" value="Login" class="bnt-login" />
+</div>

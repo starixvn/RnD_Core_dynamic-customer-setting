@@ -1,4 +1,7 @@
-﻿@section css{
+﻿@using Newtonsoft.Json;
+@using Fanex.CustomerSetting.Demo.UserLogin;
+@model LoginViewModels
+@section css{
     <link href="/Views/Home/Content/index.css" rel="stylesheet" type="text/css" />
 }
 @section scripts{
@@ -7,71 +10,81 @@
 }
 <div data-ng-app="indexModule" data-ng-controller="IndexController" data-ng-cloak>
     <div class="container left">
-        <h4>
-            Customer Setting
-        </h4>
-        <strong>ProductId:</strong>
-        <input type="text" data-ng-model="productId" />
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Company edit
-                            Super </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel">
-                    <div class="panel-body">
-                        SuperId:
-                        <input type="text" data-ng-model="superId" />
-                        <a target="setting-page" data-ng-href="/CustomerSetting/#/editSuper/{{superId}}/{{productId}}">Open</a>
+        <span ng-init="Model = @Html.Raw(JsonConvert.SerializeObject(Model))"></span>
+        <div class="login-form">
+            @Html.Partial("_LoginForm")
+        </div>
+        <div>
+            <h4>
+                Customer Setting
+            </h4>
+            <strong>ProductId:</strong>
+            <input type="text" data-ng-model="productId" />
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Company edit
+                                Super </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel">
+                        <div class="panel-body">
+                            SuperId:
+                            <input type="text" data-ng-model="superId" />
+                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editSuper/{{superId}}/{{productId}}">
+                                Open</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Super edit Master</a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
-                    <div class="panel-body">
-                        MasterId:
-                        <input type="text" data-ng-model="masterId" />
-                        <a target="setting-page" data-ng-href="/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}">Open</a>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                Super edit Master</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            MasterId:
+                            <input type="text" data-ng-model="masterId" />
+                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}">
+                                Open</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            Master edit Agent </a>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
-                    <div class="panel-body">
-                        AgentId:
-                        <input type="text" data-ng-model="agentId" />
-                        <a target="setting-page" data-ng-href="/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}">Open</a>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                Master edit Agent </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            AgentId:
+                            <input type="text" data-ng-model="agentId" />
+                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}">
+                                Open</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                            Super edit Member </a>
-                    </h4>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
-                    <div class="panel-body">
-                        SuperId:
-                        <input type="text" data-ng-model="superId" />
-                        MemberId:
-                        <input type="text" data-ng-model="memberId" />
-                        <a target="setting-page" data-ng-href="/CustomerSetting/#/editMember/{{memberId}}/{{productId}}">Open</a>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                Super edit Member </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            SuperId:
+                            <input type="text" data-ng-model="superId" />
+                            MemberId:
+                            <input type="text" data-ng-model="memberId" />
+                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editMember/{{memberId}}/{{productId}}">
+                                Open</a>
+                        </div>
                     </div>
                 </div>
             </div>

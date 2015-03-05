@@ -42,3 +42,15 @@ iframe
     overflow: hidden;
     z-index: 1;
 }
+
+.login-form > div > label
+{
+    font-weight: normal;
+    width: 80px;
+    line-height: 23px;
+}
+
+.login-form .bnt-login
+{
+    text-align: center;
+}

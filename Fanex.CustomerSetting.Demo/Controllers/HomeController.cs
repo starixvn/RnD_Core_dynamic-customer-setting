@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Demo.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Demo.UserLogin;
 
     /// <summary>
     /// HomeController class.
@@ -9,7 +10,8 @@
     {
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new LoginViewModels();
+            return View(viewModel);
         }
 
         public ActionResult Welcome()
