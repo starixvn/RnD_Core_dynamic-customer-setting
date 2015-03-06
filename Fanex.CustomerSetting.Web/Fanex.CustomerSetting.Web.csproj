@@ -41,6 +41,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Fanex.CustomerSetting.Site\Properties\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="CurrentSession.cs" />
     <Compile Include="ICurrentSession.cs" />

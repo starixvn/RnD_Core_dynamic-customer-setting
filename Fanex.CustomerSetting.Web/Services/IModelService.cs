@@ -9,12 +9,12 @@
     /// </summary>
     public interface IModelService
     {
-        IEnumerable<ProductStatusEntity> ParseStatus(string statusString, FormType formType);
+        IEnumerable<ProductStatusEntity> ParseStatus(string status, FormType formType);
 
-        IEnumerable<DiscountEntity> ParseDiscount(string discountString, FormType formType);
+        IEnumerable<DiscountEntity> ParseDiscount(string discount, FormType formType);
 
-        IEnumerable<BetLimitEntity> ParseBetLimit(string betLimitString, FormType formType);
+        IEnumerable<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType);
 
-        IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTakingString, FormType formType);
+        IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType);
     }
 }

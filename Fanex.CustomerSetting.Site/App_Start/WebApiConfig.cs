@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Demo
+﻿namespace Fanex.CustomerSetting.Site
 {
     using System.Web.Http;
 

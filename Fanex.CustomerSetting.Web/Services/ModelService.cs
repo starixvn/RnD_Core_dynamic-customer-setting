@@ -11,44 +11,44 @@
     /// </summary>
     public class ModelService : IModelService
     {
-        public IEnumerable<ProductStatusEntity> ParseStatus(string statusString, FormType formType)
+        public IEnumerable<ProductStatusEntity> ParseStatus(string status, FormType formType)
         {
-            if (string.IsNullOrEmpty(statusString))
+            if (string.IsNullOrEmpty(status))
             {
                 return new List<ProductStatusEntity>();
             }
 
-            return JsonConvert.DeserializeObject<List<ProductStatusEntity>>(statusString, new StatusJsonConverter(formType));
+            return JsonConvert.DeserializeObject<List<ProductStatusEntity>>(status, new StatusJsonConverter(formType));
         }
 
-        public IEnumerable<DiscountEntity> ParseDiscount(string discountString, FormType formType)
+        public IEnumerable<DiscountEntity> ParseDiscount(string discount, FormType formType)
         {
-            if (string.IsNullOrEmpty(discountString))
+            if (string.IsNullOrEmpty(discount))
             {
                 return new List<DiscountEntity>();
             }
 
-            return JsonConvert.DeserializeObject<List<DiscountEntity>>(discountString, new DiscountJsonConverter(formType));
+            return JsonConvert.DeserializeObject<List<DiscountEntity>>(discount, new DiscountJsonConverter(formType));
         }
 
-        public IEnumerable<BetLimitEntity> ParseBetLimit(string betLimitString, FormType formType)
+        public IEnumerable<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType)
         {
-            if (string.IsNullOrEmpty(betLimitString))
+            if (string.IsNullOrEmpty(betLimit))
             {
                 return new List<BetLimitEntity>();
             }
 
-            return JsonConvert.DeserializeObject<List<BetLimitEntity>>(betLimitString, new BetLimitJsonConverter(formType));
+            return JsonConvert.DeserializeObject<List<BetLimitEntity>>(betLimit, new BetLimitJsonConverter(formType));
         }
 
-        public IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTakingString, FormType formType)
+        public IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType)
         {
-            if (string.IsNullOrEmpty(positionTakingString))
+            if (string.IsNullOrEmpty(positionTaking))
             {
                 return new List<PositionTakingEntity>();
             }
 
-            return JsonConvert.DeserializeObject<List<PositionTakingEntity>>(positionTakingString, new PositionTakingJsonConverter(formType));
+            return JsonConvert.DeserializeObject<List<PositionTakingEntity>>(positionTaking, new PositionTakingJsonConverter(formType));
         }
     }
 }

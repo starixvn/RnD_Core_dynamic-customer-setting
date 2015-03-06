@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Demo.Configurations
+﻿namespace Fanex.CustomerSetting.Site.Configurations
 {
     using System;
     using System.Configuration;

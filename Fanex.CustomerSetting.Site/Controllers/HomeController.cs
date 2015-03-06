@@ -1,7 +1,7 @@
-﻿namespace Fanex.CustomerSetting.Demo.Controllers
+﻿namespace Fanex.CustomerSetting.Site.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Demo.UserLogin;
+    using Fanex.CustomerSetting.Site.UserLogin;
     using Fanex.CustomerSetting.Web;
 
     /// <summary>

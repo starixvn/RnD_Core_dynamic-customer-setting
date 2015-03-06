@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Demo.UserLogin
+﻿namespace Fanex.CustomerSetting.Site.UserLogin
 {
     /// <summary>
     /// Model login class.
