@@ -3,15 +3,21 @@
     using Fanex.CustomerSetting.Enumerations;
 
     /// <summary>
-    /// UserContext class.
+    /// SelectInfo class.
     /// </summary>
-    public class UserContext
+    public class SelectInfo
     {
         public int CustId { get; set; }
 
-        public int SubAccountId { get; set; }
-
         public RoleType RoleId { get; set; }
+
+        public int TargetCustId { get; set; }
+
+        public RoleType TargetRoleId { get; set; }
+
+        public byte ProductId { get; set; }
+
+        public FormType FormType { get; set; }
 
         public string Language { get; set; }
     }

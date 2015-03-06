@@ -7,18 +7,18 @@
     /// </summary>
     public interface IDataService
     {
-        CompanySelectSuperResult CompanySelectSuper(SelectModel model);
+        CompanySelectSuperResult CompanySelectSuper(SelectInfo model);
 
-        SuperSelectMasterResult SuperSelectMaster(SelectModel model);
+        SuperSelectMasterResult SuperSelectMaster(SelectInfo model);
 
-        MasterSelectAgentResult MasterSelectAgent(SelectModel model);
+        MasterSelectAgentResult MasterSelectAgent(SelectInfo model);
 
-        SuperSelectMemberResult SuperSelectMember(SelectModel model);
+        SuperSelectMemberResult SuperSelectMember(SelectInfo model);
 
-        MasterSelectMemberResult MasterSelectMember(SelectModel model);
+        MasterSelectMemberResult MasterSelectMember(SelectInfo model);
 
-        AgentSelectMemberResult AgentSelectMember(SelectModel model);
+        AgentSelectMemberResult AgentSelectMember(SelectInfo model);
 
-        UpdateResult Update(UpdateModel model);
+        UpdateResult Update(UpdateInfo model);
     }
 }

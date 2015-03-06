@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Demo.UserLogin;
-    using Fanex.CustomerSetting.Demo.UserLogin.Session;
+    using Fanex.CustomerSetting.Web;
 
     /// <summary>
     /// HomeController class.

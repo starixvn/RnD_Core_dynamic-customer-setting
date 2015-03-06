@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Demo.UserLogin.Session
+﻿namespace Fanex.CustomerSetting.Web
 {
     /// <summary>
     /// Properties of an authenticated user.

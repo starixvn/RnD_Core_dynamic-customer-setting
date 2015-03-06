@@ -5,23 +5,15 @@
     using Fanex.CustomerSetting.Enumerations;
 
     /// <summary>
-    /// UpdateModel class.
+    /// UpdateInfo class.
     /// </summary>
-    public class UpdateModel : BaseModel
+    public class UpdateInfo : SelectInfo
     {
         public int SubAccountId { get; set; }
 
         public SettingType SettingType { get; set; }
 
         public string Ip { get; set; }
-
-        public string StatusString { get; set; }
-
-        public string DiscountString { get; set; }
-
-        public string BetLimitString { get; set; }
-
-        public string PositionTakingString { get; set; }
 
         public IEnumerable<ProductStatusEntity> Statuses { get; set; }
 

@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public CompanySelectSuperResult CompanySelectSuper(SelectModel model)
+        public CompanySelectSuperResult CompanySelectSuper(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new CompanySelectSuperCriteria
@@ -66,7 +66,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public SuperSelectMasterResult SuperSelectMaster(SelectModel model)
+        public SuperSelectMasterResult SuperSelectMaster(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new SuperSelectMasterCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MasterSettingSelect");
@@ -88,7 +88,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public MasterSelectAgentResult MasterSelectAgent(SelectModel model)
+        public MasterSelectAgentResult MasterSelectAgent(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new MasterSelectAgentCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_AgentSettingSelect");
@@ -110,7 +110,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public SuperSelectMemberResult SuperSelectMember(SelectModel model)
+        public SuperSelectMemberResult SuperSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
@@ -132,7 +132,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public MasterSelectMemberResult MasterSelectMember(SelectModel model)
+        public MasterSelectMemberResult MasterSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
@@ -154,7 +154,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Customer Setting Result.</returns>
-        public AgentSelectMemberResult AgentSelectMember(SelectModel model)
+        public AgentSelectMemberResult AgentSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
             var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
@@ -171,12 +171,12 @@
             return new AgentSelectMemberResult(settingContext, customerSettingEntity);
         }
 
-        public UpdateResult Update(UpdateModel model)
+        public UpdateResult Update(UpdateInfo model)
         {
             return new UpdateResult(null);
         }
 
-        private SettingContext CreateSettingContext(SelectModel model)
+        private SettingContext CreateSettingContext(SelectInfo model)
         {
             return new SettingContext
             {

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Models
+﻿namespace Fanex.CustomerSetting.Web.Models
 {
     using Fanex.CustomerSetting.Enumerations;
 

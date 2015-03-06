@@ -7,8 +7,8 @@
     /// </summary>
     public interface IValidationService
     {
-        Result Validate(SelectModel model);
+        Result Validate(SelectInfo model);
 
-        Result Validate(UpdateModel model);
+        Result Validate(UpdateInfo model);
     }
 }

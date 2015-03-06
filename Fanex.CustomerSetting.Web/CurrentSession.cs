@@ -1,7 +1,8 @@
 ﻿// <history>
 //   <change who="Kaden.Trinh" date="2015.03.04">Created and Implement current session user.</change>
 // </history>
-namespace Fanex.CustomerSetting.Demo.UserLogin.Session
+
+namespace Fanex.CustomerSetting.Web
 {
     using System;
     using System.Web;
