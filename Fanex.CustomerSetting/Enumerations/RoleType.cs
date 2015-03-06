@@ -5,8 +5,10 @@ namespace Fanex.CustomerSetting.Enumerations
     /// <summary>
     /// RoleType enumeration.
     /// </summary>
-    public enum RoleType : byte
+    public enum RoleType
     {
+        None = 0,
+
         Member = 1,
 
         Agent = 2,

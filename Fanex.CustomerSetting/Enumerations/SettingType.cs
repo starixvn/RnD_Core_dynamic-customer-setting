@@ -5,7 +5,7 @@ namespace Fanex.CustomerSetting.Enumerations
     /// <summary>
     /// SettingType enumeration.
     /// </summary>
-    public enum SettingType : byte
+    public enum SettingType
     {
         All = 0,
 

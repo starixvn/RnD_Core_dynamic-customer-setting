@@ -4,8 +4,8 @@
     var customerSettingApp = angular.module('customerSettingApp', []);
 
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$rootScope', 'errorService', 'appSettings',
-            function ($q, $rootScope, errorService, appSettings) {
+        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'appSettings',
+            function ($q, $rootScope, messageService, appSettings) {
                 return {
                     request: function (config) {
                         if (config.method === 'GET') {
@@ -15,7 +15,7 @@
                         return config;
                     },
                     responseError: function (response) {
-                        errorService.show('Sorry, an error occurred while processing your request.');
+                        messageService.showError('Sorry, an error occurred while processing your request.');
                         return $q.reject(response);
                     }
                 };

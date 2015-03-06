@@ -31,10 +31,10 @@
             }
         }
 
-        function getValue(data, formType) {
+        function getName(formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return data.SuperDiscount;
+                    return 'SuperDiscount';
 
                 case appSettings.formType.SuperEditMaster:
                     return {};
@@ -51,6 +51,11 @@
                 case appSettings.formType.AgentEditMember:
                     return {};
             }
+        }
+
+        function getValue(data, formType) {
+            var name = getName(formType);
+            return data[name];
         }
 
         return {
@@ -76,23 +81,17 @@
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
+                    var data = {
+                        SportType: $scope.discount.SportType,
+                        BetType: $scope.discount.BetType
+                    };
+                    data[getName($scope.formType)] = $scope.value;
                     return {
                         errCode: errCode,
-                        data: {
-                            SportType: $scope.discount.SportType,
-                            BetType: $scope.discount.BetType,
-                            Discount: $scope.value
-                        }
+                        data: data
                     };
                 };
-            } ],
-            link: function (scope) {
-                scope.$watch('value', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        scope.discount.SuperDiscount = newValue;
-                    }
-                });
-            }
+            } ]
         };
     };
 

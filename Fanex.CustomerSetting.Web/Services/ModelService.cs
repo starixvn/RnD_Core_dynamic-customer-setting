@@ -11,7 +11,7 @@
     /// </summary>
     public class ModelService : IModelService
     {
-        public IEnumerable<ProductStatusEntity> ParseStatus(string status, FormType formType)
+        public List<ProductStatusEntity> ParseStatus(string status, FormType formType)
         {
             if (string.IsNullOrEmpty(status))
             {
@@ -21,7 +21,7 @@
             return JsonConvert.DeserializeObject<List<ProductStatusEntity>>(status, new StatusJsonConverter(formType));
         }
 
-        public IEnumerable<DiscountEntity> ParseDiscount(string discount, FormType formType)
+        public List<DiscountEntity> ParseDiscount(string discount, FormType formType)
         {
             if (string.IsNullOrEmpty(discount))
             {
@@ -31,7 +31,7 @@
             return JsonConvert.DeserializeObject<List<DiscountEntity>>(discount, new DiscountJsonConverter(formType));
         }
 
-        public IEnumerable<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType)
+        public List<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType)
         {
             if (string.IsNullOrEmpty(betLimit))
             {
@@ -41,7 +41,7 @@
             return JsonConvert.DeserializeObject<List<BetLimitEntity>>(betLimit, new BetLimitJsonConverter(formType));
         }
 
-        public IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType)
+        public List<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType)
         {
             if (string.IsNullOrEmpty(positionTaking))
             {

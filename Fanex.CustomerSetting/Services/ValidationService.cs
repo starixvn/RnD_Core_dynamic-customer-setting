@@ -104,7 +104,7 @@
                     break;
 
                 case FormType.SuperEditMaster:
-                    if (model.TargetRoleId != RoleType.Master)
+                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Super) || model.TargetRoleId != RoleType.Master)
                     {
                         return Result.AccessDenied;
                     }
@@ -112,7 +112,7 @@
                     break;
 
                 case FormType.MasterEditAgent:
-                    if (model.TargetRoleId != RoleType.Agent)
+                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Master) || model.TargetRoleId != RoleType.Agent)
                     {
                         return Result.AccessDenied;
                     }
@@ -120,7 +120,7 @@
                     break;
 
                 case FormType.SuperEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
+                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Super) || model.TargetRoleId != RoleType.Member)
                     {
                         return Result.AccessDenied;
                     }
@@ -128,7 +128,7 @@
                     break;
 
                 case FormType.MasterEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
+                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Master) || model.TargetRoleId != RoleType.Member)
                     {
                         return Result.AccessDenied;
                     }
@@ -136,15 +136,12 @@
                     break;
 
                 case FormType.AgentEditMember:
-                    if (model.TargetRoleId != RoleType.Member)
+                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Agent) || model.TargetRoleId != RoleType.Member)
                     {
                         return Result.AccessDenied;
                     }
 
                     break;
-
-                default:
-                    return Result.AccessDenied;
             }
 
             return Result.Success;

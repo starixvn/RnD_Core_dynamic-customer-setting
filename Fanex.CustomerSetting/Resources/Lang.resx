@@ -216,4 +216,16 @@
   <data name="NoChangeToUpdate" xml:space="preserve">
     <value>There is no change to update!</value>
   </data>
+  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
+    <value>Updated bet setting successfully.</value>
+  </data>
+  <data name="UpdateCommissionSuccessfully" xml:space="preserve">
+    <value>Updated commission setting successfully.</value>
+  </data>
+  <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
+    <value>Updated position taking successfully.</value>
+  </data>
+  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
+    <value>Updated product status successfully.</value>
+  </data>
 </root>

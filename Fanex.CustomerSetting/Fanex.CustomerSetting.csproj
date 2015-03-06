@@ -50,6 +50,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Fanex.CustomerSetting.Site\Properties\VersionInfo.cs">
@@ -61,6 +62,9 @@
     <Compile Include="Converters\JsonCreationConverter.cs" />
     <Compile Include="Converters\StatusJsonConverter.cs" />
     <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Criteria\UpdatePositionTakingCriteria.cs" />
+    <Compile Include="Criteria\UpdateDiscountCriteria.cs" />
+    <Compile Include="Criteria\UpdateBetLimitCriteria.cs" />
     <Compile Include="Criteria\MasterSelectAgentCriteria.cs" />
     <Compile Include="Criteria\ProductProfileSelectCriteria.cs" />
     <Compile Include="Criteria\ProductResourceSelectCriteria.cs" />
@@ -122,6 +126,8 @@
     <Compile Include="Models\SelectResult.cs" />
     <Compile Include="Models\UpdateInfo.cs" />
     <Compile Include="Models\UpdateResult.cs" />
+    <Compile Include="Repositories\CustomerSettingUpdateRepository.cs" />
+    <Compile Include="Repositories\ICustomerSettingUpdateRepository.cs" />
     <Compile Include="Repositories\IProductProfileRepository.cs" />
     <Compile Include="Repositories\IResourceRepository.cs" />
     <Compile Include="Repositories\ProductProfileRepository.cs" />
@@ -136,8 +142,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\DataService.cs" />
-    <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Services\ICustomerSettingUpdateService.cs" />
+    <Compile Include="Services\CustomerSettingSelectService.cs" />
+    <Compile Include="Services\ICustomerSettingSelectService.cs" />
     <Compile Include="Entities\CustomerInformationEntity.cs" />
     <Compile Include="Entities\DiscountEntity.cs" />
     <Compile Include="Entities\PositionTakingEntity.cs" />
@@ -145,14 +152,15 @@
     <Compile Include="Enumerations\SettingType.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CustomerSettingRepository.cs" />
-    <Compile Include="Repositories\ICustomerSettingRepository.cs" />
+    <Compile Include="Repositories\CustomerSettingSelectRepository.cs" />
+    <Compile Include="Repositories\ICustomerSettingSelectRepository.cs" />
     <Compile Include="Services\IProductProfileService.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\IValidationService.cs" />
     <Compile Include="Services\IXmlGenerator.cs" />
     <Compile Include="Services\ProductProfileService.cs" />
     <Compile Include="Services\ResourceService.cs" />
+    <Compile Include="Services\CustomerSettingUpdateService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Services\XmlGenerator.cs" />
     <Compile Include="Utility\Extensions.cs" />
@@ -176,6 +184,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Lang.zh-CN.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

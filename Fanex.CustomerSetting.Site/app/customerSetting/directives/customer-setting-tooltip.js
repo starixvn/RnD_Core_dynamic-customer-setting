@@ -7,9 +7,7 @@
             restrict: 'AE',
             replace: true,
             templateUrl: '/app/customerSetting/templates/customer-setting-tooltip.htm',
-            controller: ['$scope', function ($scope) {
-                $scope.message = '';
-            } ],
+            scope: {},
             link: function (scope, element) {
                 tooltipService.setup(scope, element);
                 scope.$watch('message', function (newValue, oldValue) {

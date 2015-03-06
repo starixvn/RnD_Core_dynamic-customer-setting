@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// CompanyEditSuperDiscount class.
     /// </summary>
@@ -16,5 +18,13 @@ namespace Fanex.CustomerSetting.Entities
         /// Default max discount.
         /// </summary>
         public decimal DefaultMaxDiscount { get; set; }
+
+        public override string ToXml()
+        {
+            return BuildXml("Discount", new Dictionary<string, object>
+            {
+                {"Discount", SuperDiscount}
+            });
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// MasterEditAgentPositionTaking class.
     /// </summary>
@@ -41,5 +43,13 @@ namespace Fanex.CustomerSetting.Entities
         /// Master Min PT.
         /// </summary>
         public byte N3 { get; set; }
+
+        public override string ToXml()
+        {
+            return BuildXml("Discount", new Dictionary<string, object>
+            {
+                {"Discount", N3}
+            });
+        }
     }
 }

@@ -8,7 +8,7 @@
     /// <summary>
     /// CustomerSettingRepository class.
     /// </summary>
-    public class CustomerSettingRepository : ICustomerSettingRepository
+    public class CustomerSettingSelectRepository : ICustomerSettingSelectRepository
     {
         /// <summary>
         /// Company select super setting.

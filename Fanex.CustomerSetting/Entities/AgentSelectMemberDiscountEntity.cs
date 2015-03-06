@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// AgentEditMemberDiscount class.
     /// </summary>
@@ -16,5 +18,15 @@ namespace Fanex.CustomerSetting.Entities
         /// Agent discount.
         /// </summary>
         public decimal AgentDiscount { get; set; }
+
+        public override string ToXml()
+        {
+            return BuildXml(
+                "Discount",
+                new Dictionary<string, object>
+                {
+                    { "Discount", PlayerDiscount }
+                });
+        }
     }
 }

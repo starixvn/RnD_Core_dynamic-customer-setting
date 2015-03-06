@@ -5,8 +5,10 @@ namespace Fanex.CustomerSetting.Enumerations
     /// <summary>
     /// FormType enumeration.
     /// </summary>
-    public enum FormType : byte
+    public enum FormType
     {
+        None = 0,
+
         CompanyEditSuper = 1,
 
         SuperEditMaster = 2,

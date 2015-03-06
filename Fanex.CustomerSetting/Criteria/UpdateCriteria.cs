@@ -19,7 +19,7 @@
 
         public int ErrCode { get; set; }
 
-        public int ErrMsg { get; set; }
+        public string ErrMsg { get; set; }
 
         public override bool IsValid()
         {

@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// CompanyEditSuperPositionTaking class.
     /// </summary>
@@ -31,5 +33,16 @@ namespace Fanex.CustomerSetting.Entities
         /// Default Max PT.
         /// </summary>
         public byte DefaultMaxPT { get; set; }
+
+        public override string ToXml()
+        {
+            return BuildXml("PT", new Dictionary<string, object>
+            {
+                {"SuperPT", S4},
+                {"MasterPT", M4},
+                {"AgentPT", A4},
+                {"SuperMinPT", N4}
+            });
+        }
     }
 }

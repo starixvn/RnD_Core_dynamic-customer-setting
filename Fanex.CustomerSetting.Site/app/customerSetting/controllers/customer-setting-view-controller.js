@@ -1,10 +1,10 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', 'locationService', 'templateService', 'errorService'];
-    var customerSettingViewController = function ($scope, $rootScope, locationService, templateService, errorService) {
+    var injectParams = ['$scope', '$rootScope', 'locationService', 'templateService', 'messageService'];
+    var customerSettingViewController = function ($scope, $rootScope, locationService, templateService, messageService) {
         if (!locationService.isValid) {
-            errorService.show('Please check your URL');
+            messageService.showError('Please check your URL');
         } else {
             $scope.view = templateService.resolveView(locationService.productId);
         }

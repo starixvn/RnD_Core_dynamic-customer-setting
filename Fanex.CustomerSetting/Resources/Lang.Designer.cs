@@ -349,6 +349,42 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated bet setting successfully..
+        /// </summary>
+        public static string UpdateBetSettingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateBetSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated commission setting successfully..
+        /// </summary>
+        public static string UpdateCommissionSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateCommissionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated position taking successfully..
+        /// </summary>
+        public static string UpdatePositionTakingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatePositionTakingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated product status successfully..
+        /// </summary>
+        public static string UpdateProductStatusSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateProductStatusSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {

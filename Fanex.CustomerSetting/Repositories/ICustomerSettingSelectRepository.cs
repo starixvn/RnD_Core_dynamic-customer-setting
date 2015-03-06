@@ -6,7 +6,7 @@
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface ICustomerSettingRepository
+    public interface ICustomerSettingSelectRepository
     {
         CompanySelectSuperCustomerSettingEntity CompanySelectSuper(CompanySelectSuperCriteria criteria);
 

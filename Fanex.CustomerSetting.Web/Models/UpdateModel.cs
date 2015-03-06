@@ -3,17 +3,23 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Web.Services;
+    using Fanex.CustomerSetting.Web.Utility;
 
     /// <summary>
     /// UpdateModel class.
     /// </summary>
     public class UpdateModel : BaseModel
     {
+        public UpdateModel()
+        {
+            Ip = RequestHelpers.GetClientIp();
+        }
+
         public int SubAccountId { get; set; }
 
         public SettingType SettingType { get; set; }
 
-        public string Ip { get; set; }
+        public string Ip { get; private set; }
 
         public string StatusString { get; set; }
 

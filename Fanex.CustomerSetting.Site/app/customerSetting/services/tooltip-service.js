@@ -37,7 +37,7 @@
 
             boundingElement = element[0];
             if (tooltipScope.message !== message) {
-                if (tooltipScope.$$phase) {
+                if (!tooltipScope.$$phase) {
                     tooltipScope.message = message;
                 } else {
                     tooltipScope.$apply(function () {

@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// SuperEditMasterDiscount class.
     /// </summary>
@@ -16,5 +18,13 @@ namespace Fanex.CustomerSetting.Entities
         /// Super discount.
         /// </summary>
         public decimal SuperDiscount { get; set; }
+
+        public override string ToXml()
+        {
+            return BuildXml("BetLimit", new Dictionary<string, object>
+            {
+                {"Discount", SuperDiscount}
+            });
+        }
     }
 }

@@ -5,8 +5,10 @@ namespace Fanex.CustomerSetting.Enumerations
     /// <summary>
     /// SettingLevel class.
     /// </summary>
-    public enum SettingLevel : byte
+    public enum SettingLevel
     {
+        None = 0,
+
         Product = 1,
 
         SportType = 2,

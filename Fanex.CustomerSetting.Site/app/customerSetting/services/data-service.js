@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope', 'errorService'];
-    var dataService = function ($http, $rootScope, errorService) {
+    var injectParams = ['$http', '$rootScope', 'messageService'];
+    var dataService = function ($http, $rootScope, messageService) {
         function isSuccess(response) {
             if (!response.IsSuccess) {
-                errorService.show(response.ErrMsg);
+                messageService.showError(response.ErrMsg);
                 return false;
             }
 
@@ -27,6 +27,7 @@
             var request = $http.post('/CustomerSetting/Update', updateModel);
             request.success(function (response) {
                 if (isSuccess(response)) {
+                    messageService.showSuccess(response.ErrMsg);
                     successCallback(response);
                 }
             });

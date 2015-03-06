@@ -14,10 +14,10 @@ namespace Fanex.CustomerSetting.Web
     {
         #region Constant
 
-        public const string ROLEID = "CustomerSettingRoleId";
-        public const string CUSTID = "CustomerSettingCustId";
-        public const string SUBACCOUNTID = "CustomerSettingSubAccountId";
-        public const string LANGUAGECODE = "CustomerSettingLanguageCode";
+        public const string RoleIdSessionKey = "CSR_ROLE_ID";
+        public const string CustIdSessionKey = "CSR_CUST_ID";
+        public const string SubAccountIdSessionKey = "CSR_SUB_ACCOUNT_ID";
+        public const string LanguageCodeSessionKey = "CSR_LANGUAGE_CODE";
 
         #endregion Constant
 
@@ -33,13 +33,13 @@ namespace Fanex.CustomerSetting.Web
             get
             {
                 return (HttpContext.Current != null)
-                ? Convert.ToInt32(HttpContext.Current.Session[ROLEID])
+                ? Convert.ToInt32(HttpContext.Current.Session[RoleIdSessionKey])
                 : 0;
             }
 
             set
             {
-                HttpContext.Current.Session[ROLEID] = value;
+                HttpContext.Current.Session[RoleIdSessionKey] = value;
             }
         }
 
@@ -48,13 +48,13 @@ namespace Fanex.CustomerSetting.Web
             get
             {
                 return (HttpContext.Current != null)
-                ? Convert.ToInt32(HttpContext.Current.Session[CUSTID])
+                ? Convert.ToInt32(HttpContext.Current.Session[CustIdSessionKey])
                 : 0;
             }
 
             set
             {
-                HttpContext.Current.Session[CUSTID] = value;
+                HttpContext.Current.Session[CustIdSessionKey] = value;
             }
         }
 
@@ -63,13 +63,13 @@ namespace Fanex.CustomerSetting.Web
             get
             {
                 return (HttpContext.Current != null)
-                ? Convert.ToInt32(HttpContext.Current.Session[SUBACCOUNTID])
+                ? Convert.ToInt32(HttpContext.Current.Session[SubAccountIdSessionKey])
                 : 0;
             }
 
             set
             {
-                HttpContext.Current.Session[SUBACCOUNTID] = value;
+                HttpContext.Current.Session[SubAccountIdSessionKey] = value;
             }
         }
 
@@ -79,13 +79,13 @@ namespace Fanex.CustomerSetting.Web
             {
                 return
                 (HttpContext.Current != null)
-                ? Convert.ToString(HttpContext.Current.Session[LANGUAGECODE])
+                ? Convert.ToString(HttpContext.Current.Session[LanguageCodeSessionKey])
                 : "en-US";
             }
 
             set
             {
-                HttpContext.Current.Session[LANGUAGECODE] = value;
+                HttpContext.Current.Session[LanguageCodeSessionKey] = !string.IsNullOrEmpty(value) ? value : "en-US";
             }
         }
 

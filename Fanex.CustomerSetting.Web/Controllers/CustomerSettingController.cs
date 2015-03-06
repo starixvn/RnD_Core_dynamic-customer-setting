@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Web.Models;
@@ -13,7 +14,8 @@
     {
         #region Variables
 
-        private readonly IDataService _dataService;
+        private readonly ICustomerSettingSelectService _selectService;
+        private readonly ICustomerSettingUpdateService _updateService;
         private readonly UserContext _userContext;
         private readonly IValidationService _validationService;
         private readonly IModelService _modelService;
@@ -23,15 +25,20 @@
         #region Constructors
 
         public CustomerSettingController()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
-        public CustomerSettingController(IDataService service, IValidationService validationService, IModelService modelService)
+        public CustomerSettingController(
+            ICustomerSettingSelectService selectService,
+            ICustomerSettingUpdateService updateService,
+            IValidationService validationService,
+            IModelService modelService)
         {
             var userService = ServiceFactory.CreateUserService();
             _userContext = userService.CreateUserContext();
-            _dataService = service ?? new DataService(_userContext.Language);
+            _selectService = selectService ?? new CustomerSettingSelectService(_userContext.Language);
+            _updateService = updateService ?? new CustomerSettingUpdateService();
             _validationService = validationService ?? new ValidationService();
             _modelService = modelService ?? new ModelService();
         }
@@ -59,8 +66,28 @@
                 return Json(validationResult);
             }
 
-            var selectResult = _dataService.CompanySelectSuper(selectInfo);
-            return Json(selectResult);
+            switch (model.FormType)
+            {
+                case FormType.CompanyEditSuper:
+                    return Json(_selectService.CompanySelectSuper(selectInfo));
+
+                case FormType.SuperEditMaster:
+                    return Json(_selectService.SuperSelectMaster(selectInfo));
+
+                case FormType.MasterEditAgent:
+                    return Json(_selectService.MasterSelectAgent(selectInfo));
+
+                case FormType.SuperEditMember:
+                    return Json(_selectService.SuperSelectMember(selectInfo));
+
+                case FormType.MasterEditMember:
+                    return Json(_selectService.MasterSelectMember(selectInfo));
+
+                case FormType.AgentEditMember:
+                    return Json(_selectService.AgentSelectMember(selectInfo));
+            }
+
+            return Json(Result.Error);
         }
 
         /// <summary>
@@ -78,8 +105,8 @@
                 return Json(validationResult);
             }
 
-            var updateResult = _dataService.Update(updateInfo);
-            return Json(Result.AccessDenied);
+            var updateResult = _updateService.Update(updateInfo);
+            return Json(updateResult);
         }
     }
 }

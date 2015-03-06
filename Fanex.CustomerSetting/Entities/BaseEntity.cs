@@ -2,6 +2,9 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
+    using System.Text;
+
     /// <summary>
     /// DataEntity class.
     /// </summary>
@@ -26,5 +29,28 @@ namespace Fanex.CustomerSetting.Entities
         /// Bet type name.
         /// </summary>
         public string BetTypeName { get; set; }
+
+        public abstract string ToXml();
+
+        public string BuildXml(string elementName, Dictionary<string, object> dictionary)
+        {
+            dictionary["SportType"] = SportType;
+            dictionary["BetType"] = BetType;
+            var stringBuilder = new StringBuilder(string.Format("<{0}", elementName));
+            foreach (var key in dictionary.Keys)
+            {
+                var value = dictionary[key];
+                if (value.GetType() == typeof(bool))
+                {
+                    var boolValue = (bool)value;
+                    value = boolValue ? 1 : 0;
+                }
+
+                stringBuilder.AppendFormat(" {0}=\"{1}\"", key, value);
+            }
+
+            stringBuilder.Append(" />");
+            return stringBuilder.ToString();
+        }
     }
 }

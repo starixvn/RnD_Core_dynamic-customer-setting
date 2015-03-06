@@ -40,6 +40,11 @@
             Success: 0,
             FormInvalid: 1,
             NoChange: 2
+        },
+        messageType: {
+            Success: 0,
+            Warning: 1,
+            Error: 2
         }
     });
 })();

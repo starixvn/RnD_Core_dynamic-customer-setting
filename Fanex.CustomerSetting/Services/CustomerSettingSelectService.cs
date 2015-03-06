@@ -11,25 +11,25 @@
     /// <summary>
     /// CustomerSettingService class.
     /// </summary>
-    public class DataService : IDataService
+    public class CustomerSettingSelectService : ICustomerSettingSelectService
     {
         #region Variables
 
-        private readonly ICustomerSettingRepository _respository;
+        private readonly ICustomerSettingSelectRepository _respository;
         private readonly IResourceService _resourceService;
 
         #endregion Variables
 
         #region Constructors
 
-        public DataService(string languageCode)
+        public CustomerSettingSelectService(string languageCode)
             : this(languageCode, null, null)
         {
         }
 
-        public DataService(string languageCode, ICustomerSettingRepository respository, IResourceService resourceService)
+        public CustomerSettingSelectService(string languageCode, ICustomerSettingSelectRepository respository, IResourceService resourceService)
         {
-            _respository = respository ?? new CustomerSettingRepository();
+            _respository = respository ?? new CustomerSettingSelectRepository();
             _resourceService = resourceService ?? new ResourceService(languageCode);
         }
 
@@ -171,11 +171,6 @@
             return new AgentSelectMemberResult(settingContext, customerSettingEntity);
         }
 
-        public UpdateResult Update(UpdateInfo model)
-        {
-            return new UpdateResult(null);
-        }
-
         private SettingContext CreateSettingContext(SelectInfo model)
         {
             return new SettingContext
@@ -185,6 +180,8 @@
                 Language = model.Language
             };
         }
+
+        #region Update Resource
 
         private void UpdateResource(IEnumerable<ProductStatusEntity> statuses)
         {
@@ -221,5 +218,7 @@
                 positionTaking.BetTypeName = _resourceService.GetBetTypeName(positionTaking.BetType);
             });
         }
+
+        #endregion Update Resource
     }
 }

@@ -2,9 +2,9 @@
 
 (function () {
     var injectParams = ['$scope', '$rootScope', 'locationService', 'dataService', 'resourceService',
-                        'templateService', 'linkingService', 'appSettings', 'errorService'];
+                        'templateService', 'linkingService', 'appSettings', 'messageService'];
     var customerSettingController = function ($scope, $rootScope, locationService, dataService, resourceService,
-                        templateService, linkingService, appSettings, errorService) {
+                        templateService, linkingService, appSettings, messageService) {
         var selectModel = locationService.createSelectModel();
         dataService.select(selectModel, function (response) {
             var settingContext = response.SettingContext;
@@ -54,7 +54,7 @@
 
             if (data.length === 0) {
                 if (isShowNoChange) {
-                    errorService.show(resourceService.getString('NoChangeToUpdate'));
+                    messageService.showError(resourceService.getString('NoChangeToUpdate'));
                 }
                 return false;
             }
@@ -63,7 +63,7 @@
         }
 
         function update(settingType) {
-            errorService.hide();
+            messageService.hide();
             var positionTakings;
             var betLimits;
             var discounts;

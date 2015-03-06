@@ -9,7 +9,6 @@
     /// <summary>
     /// CriteriaException class.
     /// </summary>
-    [Serializable]
     public class CriteriaException : Exception
     {
         public CriteriaException()

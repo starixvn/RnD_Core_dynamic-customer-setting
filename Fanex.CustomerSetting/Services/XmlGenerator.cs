@@ -1,25 +1,44 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
+    using System.Text;
+    using Fanex.CustomerSetting.Entities;
 
     /// <summary>
     /// XmlGenerator class.
     /// </summary>
     public class XmlGenerator : IXmlGenerator
     {
-        private FormType _formType;
-        private SettingType _settingType;
-
-        public XmlGenerator(FormType formType, SettingType settingType)
+        public string GenerateStatus(IEnumerable<ProductStatusEntity> entities)
         {
-            _formType = formType;
-            _settingType = settingType;
+            return Generate(entities);
         }
 
-        public string Generate(IEnumerable<object> data)
+        public string GenerateDiscount(IEnumerable<DiscountEntity> entities)
         {
-            return null;
+            return Generate(entities);
+        }
+
+        public string GenerateBetLimit(IEnumerable<BetLimitEntity> entities)
+        {
+            return Generate(entities);
+        }
+
+        public string GeneratePositionTaking(IEnumerable<PositionTakingEntity> entities)
+        {
+            return Generate(entities);
+        }
+
+        private string Generate(IEnumerable<BaseEntity> entities)
+        {
+            var stringBuilder = new StringBuilder("<ROOT>");
+            foreach (var entity in entities)
+            {
+                stringBuilder.Append(entity.ToXml());
+            }
+
+            stringBuilder.Append("</ROOT>");
+            return stringBuilder.ToString();
         }
     }
 }
