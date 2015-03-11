@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
 
     /// <summary>
@@ -8,6 +7,6 @@
     /// </summary>
     public interface IMessageService
     {
-        string GetTranslatedMessage(UpdateCriteria criteria, UpdateInfo model);
+        string GetTranslatedMessage(MessageInfo messageInfo);
     }
 }

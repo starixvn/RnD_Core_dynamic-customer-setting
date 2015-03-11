@@ -117,6 +117,39 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BetLimit_10003" xml:space="preserve">
+    <value>Wrong Min bet/ Max bet/ Max per match.</value>
+  </data>
+  <data name="BetLimit_10005" xml:space="preserve">
+    <value>Min bet must be less than max bet and max bet must be less than max bet per match.</value>
+  </data>
+  <data name="BetLimit_10006" xml:space="preserve">
+    <value>Min bet must be equal to or greater than Agent min bet</value>
+  </data>
+  <data name="BetLimit_10007" xml:space="preserve">
+    <value>Max bet must be equal to or less than Agent max bet</value>
+  </data>
+  <data name="BetLimit_10008" xml:space="preserve">
+    <value>Max Per Match must be equal to or less than Agent Max Per Match</value>
+  </data>
+  <data name="BetLimit_10016" xml:space="preserve">
+    <value>Min bet must be equal to or greater than Super Agent min bet</value>
+  </data>
+  <data name="BetLimit_10017" xml:space="preserve">
+    <value>Max bet must be equal to or less than Super Agent max bet</value>
+  </data>
+  <data name="BetLimit_10018" xml:space="preserve">
+    <value>Max Per Match must be equal to or less than Super Agent Max Per Match</value>
+  </data>
+  <data name="BetLimit_10019" xml:space="preserve">
+    <value>Min bet must be equal to or greater than Master Agent min bet</value>
+  </data>
+  <data name="BetLimit_10020" xml:space="preserve">
+    <value>Max bet must be equal to or less than Master Agent max bet</value>
+  </data>
+  <data name="BetLimit_10021" xml:space="preserve">
+    <value>Max Per Match must be equal to or less than Master Agent Max Per Match</value>
+  </data>
   <data name="Discount_1" xml:space="preserve">
     <value>Invalid commission rate.</value>
   </data>

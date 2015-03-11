@@ -3,6 +3,7 @@
 namespace Fanex.CustomerSetting.Messages
 {
     using System.Xml.Serialization;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
 
@@ -14,11 +15,11 @@ namespace Fanex.CustomerSetting.Messages
         [XmlAttribute]
         public string MaxPT { get; set; }
 
-        public override string ToString(IResourceService resourceService)
+        public override string ToString(IResourceService resourceService, MessageInfo messageInfo)
         {
             return string.Format(
                 "{0} - {1}: {2}",
-                base.ToString(resourceService),
+                base.ToString(resourceService, messageInfo),
                 IsLive ? Lang.MaxLive : Lang.Max,
                 MaxPT);
         }

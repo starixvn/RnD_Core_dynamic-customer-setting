@@ -4,7 +4,6 @@
     using System.IO;
     using System.Text;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Messages;
     using Fanex.CustomerSetting.Models;
@@ -46,52 +45,51 @@
         /// <summary>
         /// Gets the translated message.
         /// </summary>
-        /// <param name="criteria">The update criteria.</param>
-        /// <param name="model">The update model.</param>
+        /// <param name="messageInfo">The message information.</param>
         /// <returns>
         /// Returns translated message.
         /// </returns>
-        public string GetTranslatedMessage(UpdateCriteria criteria, UpdateInfo model)
+        public string GetTranslatedMessage(MessageInfo messageInfo)
         {
-            if (criteria.ErrCode == Result.SuccessValue)
+            if (messageInfo.ErrCode == Result.SuccessValue)
             {
-                return _successMsgs[model.SettingType];
+                return _successMsgs[messageInfo.SettingType];
             }
 
-            switch ((MsgType)criteria.MsgType)
+            switch ((MsgType)messageInfo.MsgType)
             {
                 case MsgType.Simple:
-                    return TranslateSimpleMessage(criteria, model);
+                    return TranslateSimpleMessage(messageInfo);
 
                 case MsgType.Status:
                 case MsgType.Discount:
                 case MsgType.BetLimit:
                 case MsgType.PositionTaking:
-                    return TranslateTemplateMessage<NormalMessage, SimpleRow>(criteria, model);
+                    return TranslateTemplateMessage<NormalMessage, SimpleRow>(messageInfo);
 
                 case MsgType.PositionTakingDownline:
-                    return TranslateTemplateMessage<PositionTakingDownlineMessage, PositionTakingDownlineRow>(criteria, model);
+                    return TranslateTemplateMessage<PositionTakingDownlineMessage, PositionTakingDownlineRow>(messageInfo);
 
                 case MsgType.PositionTakingMin:
-                    return TranslateTemplateMessage<PositionTakingMinMessage, PositionTakingMinRow>(criteria, model);
+                    return TranslateTemplateMessage<PositionTakingMinMessage, PositionTakingMinRow>(messageInfo);
 
                 case MsgType.PositionTakingMax:
-                    return TranslateTemplateMessage<PositionTakingMaxMessage, PositionTakingMaxRow>(criteria, model);
+                    return TranslateTemplateMessage<PositionTakingMaxMessage, PositionTakingMaxRow>(messageInfo);
 
                 case MsgType.PositionTakingMinMax:
-                    return TranslateTemplateMessage<PositionTakingMinMaxMessage, PositionTakingMinMaxRow>(criteria, model);
+                    return TranslateTemplateMessage<PositionTakingMinMaxMessage, PositionTakingMinMaxRow>(messageInfo);
 
                 case MsgType.Other:
-                    return criteria.ErrMsg;
+                    return messageInfo.ErrMsg;
             }
 
-            return criteria.ErrMsg;
+            return messageInfo.ErrMsg;
         }
 
-        private string TranslateSimpleMessage(UpdateCriteria criteria, UpdateInfo model)
+        private string TranslateSimpleMessage(MessageInfo messageInfo)
         {
-            var simpleMessage = Deserialize<SimpleMessage>(criteria.ErrMsg);
-            return TranslateResource(simpleMessage.MessageId, model.SettingType);
+            var simpleMessage = Deserialize<SimpleMessage>(messageInfo.ErrMsg);
+            return TranslateResource(simpleMessage.MessageId, messageInfo.SettingType);
         }
 
         /// <summary>
@@ -99,29 +97,33 @@
         /// </summary>
         /// <typeparam name="M">Type of template message.</typeparam>
         /// <typeparam name="R">Type of message row.</typeparam>
-        /// <param name="criteria">The update criteria.</param>
-        /// <param name="model">The update model.</param>
-        /// <returns>Returns translate message.</returns>
-        private string TranslateTemplateMessage<M, R>(UpdateCriteria criteria, UpdateInfo model)
+        /// <param name="messageInfo">The message information.</param>
+        /// <returns>
+        /// Returns translate message.
+        /// </returns>
+        private string TranslateTemplateMessage<M, R>(MessageInfo messageInfo)
             where M : TemplateMessage<R>
             where R : SimpleRow
         {
-            var templateMessage = Deserialize<M>(criteria.ErrMsg);
-            var message = TranslateResource(templateMessage.MessageId, model.SettingType);
-            if (model.IsMultiple)
+            var templateMessage = Deserialize<M>(messageInfo.ErrMsg);
+            var message = TranslateResource(templateMessage.MessageId, messageInfo.SettingType);
+            if (messageInfo.IsMultiple)
             {
-                message = string.Format("{0}: {1}", model.UserName, message);
+                message = string.Format("{0}: {1}", messageInfo.UserName, message);
             }
 
             var stringBuilder = new StringBuilder(message);
-            if (typeof(R) == typeof(PositionTakingDownlineRow))
+            if (messageInfo.SettingLevel != SettingLevel.Product)
             {
-            }
-            else
-            {
-                foreach (var row in templateMessage.Rows)
+                if (typeof(R) == typeof(PositionTakingDownlineRow))
                 {
-                    stringBuilder.AppendFormat("<br />{0}", row.ToString(_resourceService));
+                }
+                else
+                {
+                    foreach (var row in templateMessage.Rows)
+                    {
+                        stringBuilder.AppendFormat("<br />{0}", row.ToString(_resourceService, messageInfo));
+                    }
                 }
             }
 

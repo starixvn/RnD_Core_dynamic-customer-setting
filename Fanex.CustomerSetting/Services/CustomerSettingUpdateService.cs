@@ -88,7 +88,7 @@
             }
 
             _respository.UpdateDisabledStatus(criteria);
-            return Process(criteria, model);
+            return Process(criteria, model, SettingType.Status);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@
             }
 
             _respository.UpdateDiscount(criteria);
-            return Process(criteria, model);
+            return Process(criteria, model, SettingType.Discount);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@
             }
 
             _respository.UpdateBetLimit(criteria);
-            return Process(criteria, model);
+            return Process(criteria, model, SettingType.BetLimit);
         }
 
         /// <summary>
@@ -160,13 +160,47 @@
             }
 
             _respository.UpdatePositionTaking(criteria);
-            return Process(criteria, model);
+            return Process(criteria, model, SettingType.PositionTaking);
         }
 
-        private UpdateResult Process(UpdateCriteria criteria, UpdateInfo model)
+        /// <summary>
+        /// Processes the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The update criteria.</param>
+        /// <param name="model">The update model.</param>
+        /// <param name="settingType">Type of the setting.</param>
+        /// <returns>Returns update result.</returns>
+        private UpdateResult Process(UpdateCriteria criteria, UpdateInfo model, SettingType settingType)
         {
-            var message = _messageService.GetTranslatedMessage(criteria, model);
-            return new UpdateResult(criteria.ErrCode, message);
+            var settingLevel = SettingLevel.None;
+            switch (settingType)
+            {
+                case SettingType.Status:
+                    settingLevel = model.StatusLevel;
+                    break;
+
+                case SettingType.Discount:
+                    settingLevel = model.DiscountLevel;
+                    break;
+
+                case SettingType.BetLimit:
+                    settingLevel = model.BetLimitLevel;
+                    break;
+
+                case SettingType.PositionTaking:
+                    settingLevel = model.PositionTakingLevel;
+                    break;
+            }
+
+            var messageInfo = new MessageInfo(criteria)
+            {
+                IsMultiple = model.IsMultiple,
+                UserName = model.UserName,
+                SettingLevel = settingLevel,
+                SettingType = settingType
+            };
+            var message = _messageService.GetTranslatedMessage(messageInfo);
+            return new UpdateResult(messageInfo.ErrCode, message);
         }
     }
 }
