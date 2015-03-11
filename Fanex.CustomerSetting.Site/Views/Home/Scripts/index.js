@@ -28,7 +28,7 @@
                 $scope.LoginForm.DisableLogin = false;
                 break;
             case 5:
-                $scope.LoginForm.CustId = 332427;
+                $scope.LoginForm.CustId = 8;
                 $scope.LoginForm.SubAccountId = 111;
                 $scope.LoginForm.DisableLogin = false;
                 break;

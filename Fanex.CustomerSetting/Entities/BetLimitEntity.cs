@@ -3,6 +3,7 @@
 namespace Fanex.CustomerSetting.Entities
 {
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Core;
 
     /// <summary>
     /// BetLimit class.
@@ -25,6 +26,21 @@ namespace Fanex.CustomerSetting.Entities
                     { "MaxBet", MaxBet },
                     { "MaxPerMatch", MaxPerMatch }
                 });
+        }
+
+        public override bool IsValid()
+        {
+            return base.IsValid()
+                && IsBetLimitValue(MinBet)
+                && IsBetLimitValue(MaxBet)
+                && IsBetLimitValue(MaxPerMatch)
+                && MinBet <= MaxBet
+                && MaxBet <= MaxPerMatch;
+        }
+
+        private bool IsBetLimitValue(decimal value)
+        {
+            return value >= 0 && value <= Configuration.MaxBetLimitValue;
         }
     }
 }

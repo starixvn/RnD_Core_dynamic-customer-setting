@@ -61,7 +61,13 @@
         /// <returns>Returns model validation.</returns>
         public Result Validate(UpdateInfo model)
         {
-            var result = ValidateRole(model);
+            var result = ValidateInput(model);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            result = ValidateRole(model);
             if (!result.IsSuccess)
             {
                 return result;
@@ -77,6 +83,38 @@
             if (!result.IsSuccess)
             {
                 return result;
+            }
+
+            return Result.Success;
+        }
+
+        /// <summary>
+        /// Validates the input.
+        /// </summary>
+        /// <param name="model">The update model.</param>
+        /// <returns>Returns model validation.</returns>
+        private Result ValidateInput(UpdateInfo model)
+        {
+            IEnumerable<BaseEntity>[] dataList =
+            {
+                model.PositionTakings,
+                model.BetLimits,
+                model.Discounts,
+                model.Statuses
+            };
+
+            if (dataList.Length == 0)
+            {
+                return Result.NoChange;
+            }
+
+            foreach (var data in dataList)
+            {
+                var isInvalid = data.Where(entity => !entity.IsValid()).Any();
+                if (isInvalid)
+                {
+                    return Result.AccessDenied;
+                }
             }
 
             return Result.Success;

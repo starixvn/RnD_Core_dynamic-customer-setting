@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Core;
+
     /// <summary>
     /// Position taking object.
     /// </summary>
@@ -11,5 +13,10 @@ namespace Fanex.CustomerSetting.Entities
         /// Indicating whether bet type offer live bet or not.
         /// </summary>
         public bool IsLive { get; set; }
+
+        protected bool IsPositionTakingValue(int value)
+        {
+            return value >= 0 && value <= Configuration.MaxPositionTakingValue;
+        }
     }
 }

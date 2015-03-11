@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// UpdateResult class.
     /// </summary>
@@ -11,13 +9,5 @@
             : base(errCode, errMsg)
         {
         }
-
-        public UpdateResult(IEnumerable<Result> results)
-            : this(Result.SuccessValue, string.Empty)
-        {
-            Results = results;
-        }
-
-        public IEnumerable<Result> Results { get; set; }
     }
 }

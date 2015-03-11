@@ -109,10 +109,15 @@
             }
 
             var updateModel = angular.extend({
+                UserName: $scope.information.UserName,
                 SettingType: settingType,
+                StatusLevel: $scope.setting.StatusLevel,
                 StatusString: JSON.stringify(statuses),
+                DiscountLevel: $scope.setting.DiscountLevel,
                 DiscountString: JSON.stringify(discounts),
+                BetLimitLevel: $scope.setting.BetLimitLevel,
                 BetLimitString: JSON.stringify(betLimits),
+                PositionTakingLevel: $scope.setting.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
             }, selectModel);
             dataService.update(updateModel, function (response) {

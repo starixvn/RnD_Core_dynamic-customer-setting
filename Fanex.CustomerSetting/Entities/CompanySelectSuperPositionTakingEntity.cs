@@ -34,6 +34,15 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public byte DefaultMaxPT { get; set; }
 
+        public override bool IsValid()
+        {
+            return base.IsValid()
+                && IsPositionTakingValue(S4)
+                && IsPositionTakingValue(M4)
+                && IsPositionTakingValue(A4)
+                && IsPositionTakingValue(N4);
+        }
+
         public override string ToXml()
         {
             return BuildXml("PT", new Dictionary<string, object>

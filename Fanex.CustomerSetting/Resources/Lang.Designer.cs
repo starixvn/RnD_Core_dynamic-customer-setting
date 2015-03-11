@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have permission to access this function..
+        ///   Looks up a localized string similar to You do not have permission to access this page..
         /// </summary>
         public static string AccessDeniedMsg {
             get {
@@ -178,6 +178,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Bet.
         /// </summary>
         public static string MaxBet {
@@ -214,6 +223,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Live.
+        /// </summary>
+        public static string MaxLive {
+            get {
+                return ResourceManager.GetString("MaxLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Per Match.
         /// </summary>
         public static string MaxPerMatch {
@@ -241,6 +259,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        public static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Min Bet.
         /// </summary>
         public static string MinBet {
@@ -264,6 +291,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string MinBetMoreThanOrEqualTo {
             get {
                 return ResourceManager.GetString("MinBetMoreThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Live.
+        /// </summary>
+        public static string MinLive {
+            get {
+                return ResourceManager.GetString("MinLive", resourceCulture);
             }
         }
         
@@ -385,11 +421,11 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to UserName.
         /// </summary>
-        public static string Username {
+        public static string UserName {
             get {
-                return ResourceManager.GetString("Username", resourceCulture);
+                return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
     }

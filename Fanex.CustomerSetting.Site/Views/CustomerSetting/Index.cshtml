@@ -9,8 +9,7 @@
 </head>
 <body data-ng-controller="CustomerSettingViewController">
     <div class="customer-setting" data-ng-cloak>
-        <div class="message" data-ng-class="messageClass" data-ng-show="hasMessage">
-            {{message}}
+        <div class="message" data-ng-class="messageClass" data-ng-show="hasMessage" data-ng-bind-html="message">
         </div>
         <div data-ng-include="view">
         </div>

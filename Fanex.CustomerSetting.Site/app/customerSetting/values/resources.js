@@ -5,7 +5,7 @@
     var resources = {};
     
     resources['en-us'] = {
-        AccessDeniedMsg: "You do not have permission to access this function.",
+        AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "Agent Max PT",
         BetSetting: "Bet Setting",
         Commission: "Commission",
@@ -18,16 +18,20 @@
         LastName: "Last Name",
         Live: "Live",
         MasterMaxPT: "Master Max PT",
+        Max: "Max",
         MaxBet: "Max Bet",
         MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
         MaxBetLessThanOrEqualTo: "Max Bet must be less than or equal to {0}",
         MaxBetMoreThanOrEqualMinBet: "Max Bet must be greater than or equal to Min Bet",
+        MaxLive: "Max Live",
         MaxPerMatch: "Max Per Match",
         MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
         MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Min: "Min",
         MinBet: "Min Bet",
         MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
         MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
+        MinLive: "Min Live",
         MobilePhone: "Mobile Phone",
         Nickname: "Nickname",
         NoChangeToUpdate: "There is no change to update!",
@@ -37,11 +41,15 @@
         SuperMaxPT: "Super Max PT",
         SuperMinPT: "Super Min PT",
         Update: "Update",
-        Username: "Username"
+        UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
+        UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
+        UserName: "Username"
     };
     
     resources['zh-cn'] = {
-        AccessDeniedMsg: "You do not have permission to access this function.",
+        AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "代理最高占成",
         BetSetting: "投注设定",
         Commission: "佣金",
@@ -73,11 +81,11 @@
         SuperMaxPT: "超级总代理最高占成",
         SuperMinPT: "超级总代理最低占成",
         Update: "更改",
-        Username: "用户名"
+        UserName: "用户名"
     };
     
     resources['zh-tw'] = {
-        AccessDeniedMsg: "You do not have permission to access this function.",
+        AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "代理最高佔成",
         BetSetting: "投注設定",
         Commission: "佣金",
@@ -109,7 +117,7 @@
         SuperMaxPT: "超級總代理最高佔成",
         SuperMinPT: "超級總代理最低佔成",
         Update: "更改",
-        Username: "用戶名"
+        UserName: "用戶名"
     };
 
     angular.module('customerSettingApp').value('resources', resources);

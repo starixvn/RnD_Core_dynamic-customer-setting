@@ -2,10 +2,16 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Core;
+
     /// <summary>
     /// Discount class.
     /// </summary>
     public abstract class DiscountEntity : BaseEntity
     {
+        protected bool IsDiscountValue(decimal value)
+        {
+            return value >= 0 && value < Configuration.MaxDiscountValue;
+        }
     }
 }

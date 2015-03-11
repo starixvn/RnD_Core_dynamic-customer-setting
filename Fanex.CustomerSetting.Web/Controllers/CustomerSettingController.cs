@@ -38,7 +38,7 @@
             var userService = ServiceFactory.CreateUserService();
             _userContext = userService.CreateUserContext();
             _selectService = selectService ?? new CustomerSettingSelectService(_userContext.Language);
-            _updateService = updateService ?? new CustomerSettingUpdateService();
+            _updateService = updateService ?? new CustomerSettingUpdateService(_userContext.Language);
             _validationService = validationService ?? new ValidationService();
             _modelService = modelService ?? new ModelService();
         }
@@ -59,6 +59,11 @@
         [HttpPost]
         public JsonResult Select(SelectModel model)
         {
+            if (_userContext == null)
+            {
+                return Json(Result.AccessDenied);
+            }
+
             var selectInfo = model.CreateSelectInfo(_userContext);
             var validationResult = _validationService.Validate(selectInfo);
             if (!validationResult.IsSuccess)
@@ -98,6 +103,11 @@
         [HttpPost]
         public JsonResult Update(UpdateModel model)
         {
+            if (_userContext == null)
+            {
+                return Json(Result.AccessDenied);
+            }
+
             var updateInfo = model.CreateUpdateInfo(_userContext, _modelService);
             var validationResult = _validationService.Validate(updateInfo);
             if (!validationResult.IsSuccess)

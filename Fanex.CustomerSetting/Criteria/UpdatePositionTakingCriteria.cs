@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// UpdateStatusCriteria class.
@@ -14,6 +15,7 @@
 
         public string PositionTaking { get; set; }
 
+        [SpParam(Ignored = true)]
         public FormType FormType { get; private set; }
 
         /// <summary>

@@ -183,8 +183,8 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
   </data>
   <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
     <value>Max Per Match must be greater than or equal to Max Bet</value>
@@ -211,7 +211,7 @@
     <value>Click to duplicate the values</value>
   </data>
   <data name="AccessDeniedMsg" xml:space="preserve">
-    <value>You do not have permission to access this function.</value>
+    <value>You do not have permission to access this page.</value>
   </data>
   <data name="NoChangeToUpdate" xml:space="preserve">
     <value>There is no change to update!</value>
@@ -227,5 +227,17 @@
   </data>
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
     <value>Updated product status successfully.</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="MaxLive" xml:space="preserve">
+    <value>Max Live</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="MinLive" xml:space="preserve">
+    <value>Min Live</value>
   </data>
 </root>

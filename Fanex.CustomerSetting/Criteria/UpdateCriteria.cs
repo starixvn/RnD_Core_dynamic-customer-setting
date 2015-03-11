@@ -15,15 +15,15 @@
 
         public string Ip { get; set; }
 
-        public string Language { get; set; }
-
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
 
+        public int MsgType { get; set; }
+
         public override bool IsValid()
         {
-            return UserId > 0 && !(UserId == 0 && SubAccId > 0) && CustId > 0 && !string.IsNullOrEmpty(Language);
+            return UserId > 0 && !(UserId == 0 && SubAccId > 0) && CustId > 0;
         }
     }
 }

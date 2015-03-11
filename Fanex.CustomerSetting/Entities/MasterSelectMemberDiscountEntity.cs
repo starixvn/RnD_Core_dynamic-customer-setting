@@ -19,6 +19,11 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public decimal AgentDiscount { get; set; }
 
+        public override bool IsValid()
+        {
+            return base.IsValid() && PlayerDiscount >= 0;
+        }
+
         public override string ToXml()
         {
             return BuildXml("Discount", new Dictionary<string, object>

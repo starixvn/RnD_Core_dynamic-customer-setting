@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'appSettings'];
-    var messageService = function ($rootScope, commonService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', '$sce', 'appSettings'];
+    var messageService = function ($rootScope, commonService, $sce, appSettings) {
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
@@ -11,7 +11,7 @@
         var show = function (message, messageType) {
             $rootScope.hasMessage = true;
             $rootScope.messageClass = messageClasses[messageType];
-            $rootScope.message = message;
+            $rootScope.message = $sce.trustAsHtml(message);
             commonService.scrollToTop();
         };
 
@@ -29,7 +29,7 @@
 
         this.hide = function () {
             $rootScope.hasMessage = false;
-            //$rootScope.message = undefined;
+            $rootScope.message = undefined;
         };
     };
 

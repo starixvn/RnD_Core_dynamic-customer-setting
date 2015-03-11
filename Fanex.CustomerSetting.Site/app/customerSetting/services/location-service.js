@@ -1,9 +1,17 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$location', 'appSettings'];
-    var locationService = function ($location, appSettings) {
+    var injectParams = ['$location', '$window', 'appSettings'];
+    var locationService = function ($location, $window, appSettings) {
         var path = $location.path();
+        console.log($window);
+        angular.element($window).on('hashChange', function(){
+        alert('test');
+        });
+//        var currentUrl = document.URL;
+//        setInterval(function(){
+//        console.log('changed url');
+//        }, 1000);
         var formSettings = [
             {
                 formType: appSettings.formType.CompanyEditSuper,

@@ -32,7 +32,12 @@ namespace Fanex.CustomerSetting.Entities
 
         public abstract string ToXml();
 
-        public string BuildXml(string elementName, Dictionary<string, object> dictionary)
+        public virtual bool IsValid()
+        {
+            return SportType > 0 && BetType > 0;
+        }
+
+        protected string BuildXml(string elementName, Dictionary<string, object> dictionary)
         {
             dictionary["SportType"] = SportType;
             dictionary["BetType"] = BetType;

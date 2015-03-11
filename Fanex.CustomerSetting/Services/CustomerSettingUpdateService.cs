@@ -1,12 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using System.Collections.Generic;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Repositories;
-    using Fanex.CustomerSetting.Resources;
 
     /// <summary>
     /// UpdateService class.
@@ -17,20 +15,26 @@
 
         private readonly ICustomerSettingUpdateRepository _respository;
         private readonly IXmlGenerator _xmlGenerator;
+        private readonly IMessageService _messageService;
 
         #endregion Variables
 
         #region Constructors
 
-        public CustomerSettingUpdateService()
-            : this(null, null)
+        public CustomerSettingUpdateService(string languageCode)
+            : this(null, null, null, languageCode)
         {
         }
 
-        public CustomerSettingUpdateService(ICustomerSettingUpdateRepository respository, IXmlGenerator xmlGenerator)
+        public CustomerSettingUpdateService(
+            ICustomerSettingUpdateRepository respository,
+            IXmlGenerator xmlGenerator,
+            IMessageService messageService,
+            string languageCode)
         {
             _respository = respository ?? new CustomerSettingUpdateRepository();
             _xmlGenerator = xmlGenerator ?? new XmlGenerator();
+            _messageService = messageService ?? new MessageService(languageCode);
         }
 
         #endregion Constructors
@@ -76,8 +80,7 @@
                 SubAccId = model.SubAccountId,
                 CustId = model.TargetCustId,
                 IsDisabled = _xmlGenerator.GenerateStatus(model.Statuses),
-                Ip = model.Ip,
-                Language = model.Language
+                Ip = model.Ip
             };
             if (!criteria.IsValid())
             {
@@ -85,7 +88,7 @@
             }
 
             _respository.UpdateDisabledStatus(criteria);
-            return Process(criteria, SettingType.Status);
+            return Process(criteria, model);
         }
 
         /// <summary>
@@ -101,8 +104,7 @@
                 SubAccId = model.SubAccountId,
                 CustId = model.TargetCustId,
                 Discount = _xmlGenerator.GenerateDiscount(model.Discounts),
-                Ip = model.Ip,
-                Language = model.Language
+                Ip = model.Ip
             };
             if (!criteria.IsValid())
             {
@@ -110,7 +112,7 @@
             }
 
             _respository.UpdateDiscount(criteria);
-            return Process(criteria, SettingType.Discount);
+            return Process(criteria, model);
         }
 
         /// <summary>
@@ -126,8 +128,7 @@
                 SubAccId = model.SubAccountId,
                 CustId = model.TargetCustId,
                 BetLimit = _xmlGenerator.GenerateBetLimit(model.BetLimits),
-                Ip = model.Ip,
-                Language = model.Language
+                Ip = model.Ip
             };
             if (!criteria.IsValid())
             {
@@ -135,7 +136,7 @@
             }
 
             _respository.UpdateBetLimit(criteria);
-            return Process(criteria, SettingType.BetLimit);
+            return Process(criteria, model);
         }
 
         /// <summary>
@@ -151,8 +152,7 @@
                 SubAccId = model.SubAccountId,
                 CustId = model.TargetCustId,
                 PositionTaking = _xmlGenerator.GeneratePositionTaking(model.PositionTakings),
-                Ip = model.Ip,
-                Language = model.Language
+                Ip = model.Ip
             };
             if (!criteria.IsValid())
             {
@@ -160,31 +160,13 @@
             }
 
             _respository.UpdatePositionTaking(criteria);
-            return Process(criteria, SettingType.PositionTaking);
+            return Process(criteria, model);
         }
 
-        /// <summary>
-        /// Process update criteria.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="settingType">Type of the setting.</param>
-        /// <returns>Returns Update Result.</returns>
-        private UpdateResult Process(UpdateCriteria criteria, SettingType settingType)
+        private UpdateResult Process(UpdateCriteria criteria, UpdateInfo model)
         {
-            if (criteria.ErrCode == Result.SuccessValue)
-            {
-                var successMsgs = new Dictionary<SettingType, string>
-                {
-                    { SettingType.Status, Lang.UpdateProductStatusSuccessfully },
-                    { SettingType.Discount, Lang.UpdateCommissionSuccessfully },
-                    { SettingType.BetLimit, Lang.UpdateBetSettingSuccessfully },
-                    { SettingType.PositionTaking, Lang.UpdatePositionTakingSuccessfully }
-                };
-
-                return new UpdateResult(Result.SuccessValue, successMsgs[settingType]);
-            }
-
-            return new UpdateResult(criteria.ErrCode, criteria.ErrMsg);
+            var message = _messageService.GetTranslatedMessage(criteria, model);
+            return new UpdateResult(criteria.ErrCode, message);
         }
     }
 }

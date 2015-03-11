@@ -19,6 +19,11 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public decimal DefaultMaxDiscount { get; set; }
 
+        public override bool IsValid()
+        {
+            return base.IsValid() && IsDiscountValue(SuperDiscount);
+        }
+
         public override string ToXml()
         {
             return BuildXml("Discount", new Dictionary<string, object>

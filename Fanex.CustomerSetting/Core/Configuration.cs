@@ -5,6 +5,9 @@
     /// </summary>
     public static class Configuration
     {
+        public const decimal MaxDiscountValue = 1m;
+        public const decimal MaxBetLimitValue = 99999999999;
+        public const decimal MaxPositionTakingValue = 10000;
         public const int CacheTimeout = 12 * 60 * 60; // 1 day
         public const string ProductResourceCacheKey = "CSR_PRODUCT_RESOURCE";
 

@@ -123,15 +123,20 @@
         /// <returns>REF language.</returns>
         private static string GetRefLanguage(string language)
         {
+            var defaultRefLanguage = "en";
+            if (string.IsNullOrEmpty(language))
+            {
+                return defaultRefLanguage;
+            }
+
             switch (language.ToLower())
             {
-                case "en-us": return "en";
+                case "en-us": return "en"; // English
                 case "zh-tw": return "ch"; // Traditional
                 case "zh-cn": return "cs"; // Simplified
-                case "ja-jp": return "jp";
+                case "ja-jp": return "jp"; // Japanese
                 case "th-th": return "th"; // Thai
-
-                default: return "en";
+                default: return defaultRefLanguage;
             }
         }
 

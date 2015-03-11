@@ -183,7 +183,7 @@
   <data name="Update" xml:space="preserve">
     <value>更改</value>
   </data>
-  <data name="Username" xml:space="preserve">
+  <data name="UserName" xml:space="preserve">
     <value>用户名</value>
   </data>
   <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
@@ -211,7 +211,7 @@
     <value>Click to duplicate the values</value>
   </data>
   <data name="AccessDeniedMsg" xml:space="preserve">
-    <value>You do not have permission to access this function.</value>
+    <value>You do not have permission to access this page.</value>
   </data>
   <data name="NoChangeToUpdate" xml:space="preserve">
     <value>没有更新！</value>

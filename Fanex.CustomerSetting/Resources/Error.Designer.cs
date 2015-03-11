@@ -59,5 +59,32 @@ namespace Fanex.CustomerSetting.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid commission rate..
+        /// </summary>
+        public static string Discount_1 {
+            get {
+                return ResourceManager.GetString("Discount_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines..
+        /// </summary>
+        public static string Status_60031 {
+            get {
+                return ResourceManager.GetString("Status_60031", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting..
+        /// </summary>
+        public static string Status_60032 {
+            get {
+                return ResourceManager.GetString("Status_60032", resourceCulture);
+            }
+        }
     }
 }

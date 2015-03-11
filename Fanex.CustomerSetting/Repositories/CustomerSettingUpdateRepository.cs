@@ -35,8 +35,9 @@
             {
                 objectDb.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = objectDb.GetOuputParams();
-                criteria.ErrCode = Convert.ToInt32(outputParams["ErrCode"]);
-                criteria.ErrMsg = Convert.ToString(outputParams["ErrMsg"]);
+                criteria.ErrCode = Convert.ToInt32(outputParams["errcode"]);
+                criteria.ErrMsg = Convert.ToString(outputParams["errmsg"]);
+                criteria.MsgType = Convert.ToInt32(outputParams["msgtype"]);
             }
         }
     }

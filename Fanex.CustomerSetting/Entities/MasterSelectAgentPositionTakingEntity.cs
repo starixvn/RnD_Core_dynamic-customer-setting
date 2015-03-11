@@ -44,6 +44,11 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public byte N3 { get; set; }
 
+        public override bool IsValid()
+        {
+            return base.IsValid();
+        }
+
         public override string ToXml()
         {
             return BuildXml("Discount", new Dictionary<string, object>
