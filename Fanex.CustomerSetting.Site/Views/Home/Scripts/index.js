@@ -1,10 +1,25 @@
 ﻿angular.module('indexModule', []).controller('IndexController',
 ['$scope', '$http', function ($scope, $http) {
-    $scope.productId = 255; $scope.superId = 1177375;
-    $scope.masterId = 0; $scope.agentId = 0; $scope.memberId = 0;
-    $scope.roles = [{ name: "Agent", value: 2 }, { name: "Master", value: 3 }, { name: "Super", value: 4 }, { name: "Company", value: 5}];
+    $scope.productId = 255;
+    $scope.superId = 1177375;
+    $scope.masterId = 0;
+    $scope.agentId = 0;
+    $scope.memberId = 0;
+    $scope.roles = [
+        { name: "Company", value: 5 },
+        { name: "Super", value: 4 },
+        { name: "Master", value: 3 },
+        { name: "Agent", value: 2 }
+    ];
 
-    $scope.languages = [{ name: "English", value: "en-US" }, { name: "繁體中文", value: "zh-TW" }, { name: "简体中文", value: "zh-CN" }, { name: "日本語", value: "ja-JP" }, { name: "ภาษาไทย", value: "th-TH" }, { name: "한국어", value: "ko-KR"}];
+    $scope.languages = [
+        { name: "English", value: "en-US" },
+        { name: "繁體中文", value: "zh-TW" },
+        { name: "简体中文", value: "zh-CN" },
+        { name: "日本語", value: "ja-JP" },
+        { name: "ภาษาไทย", value: "th-TH" },
+        { name: "한국어", value: "ko-KR" }
+    ];
 
     $scope.roleChange = function () {
         switch ($scope.LoginForm.RoleId) {
@@ -43,15 +58,15 @@
     $scope.login = function () {
         // Process
         $http.post("home/login",
-                    {
-                        RoleId: $scope.LoginForm.RoleId,
-                        CustId: $scope.LoginForm.CustId,
-                        SubAccountId: $scope.LoginForm.SubAccountId,
-                        LanguageCode: $scope.LoginForm.LanguageCode
-                    }).success(function (data) {
-                        $scope.LoginForm.HideForm = true;
-                        $('#collapseLogin').removeClass("in");
-                    });
+            {
+                RoleId: $scope.LoginForm.RoleId,
+                CustId: $scope.LoginForm.CustId,
+                SubAccountId: $scope.LoginForm.SubAccountId,
+                LanguageCode: $scope.LoginForm.LanguageCode
+            }).success(function (data) {
+                $scope.LoginForm.HideForm = true;
+                $('#collapseLogin').removeClass("in");
+            });
     };
 
     $scope.$watch('disableButtonLogin()', function (val) {

@@ -13,6 +13,7 @@
             FormType = formType;
         }
 
+        [SpParam(SqlParamName = "PT")]
         public string PositionTaking { get; set; }
 
         [SpParam(Ignored = true)]

@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BetLimit_10003" xml:space="preserve">
-    <value>Wrong Min bet/ Max bet/ Max per match.</value>
+    <value>Wrong Min bet/ Max bet/ Max per match</value>
   </data>
   <data name="BetLimit_10005" xml:space="preserve">
-    <value>Min bet must be less than max bet and max bet must be less than max bet per match.</value>
+    <value>Min bet must be less than max bet and max bet must be less than max bet per match</value>
   </data>
   <data name="BetLimit_10006" xml:space="preserve">
     <value>Min bet must be equal to or greater than Agent min bet</value>
@@ -151,12 +151,33 @@
     <value>Max Per Match must be equal to or less than Master Agent Max Per Match</value>
   </data>
   <data name="Discount_1" xml:space="preserve">
-    <value>Invalid commission rate.</value>
+    <value>Invalid commission rate</value>
+  </data>
+  <data name="PositionTaking_20001" xml:space="preserve">
+    <value>Wrong position taking</value>
+  </data>
+  <data name="PositionTaking_20012" xml:space="preserve">
+    <value>Existing members exceeded new Master Max PT</value>
+  </data>
+  <data name="PositionTaking_20013" xml:space="preserve">
+    <value>Existing masters exceeded new Super Max PT</value>
+  </data>
+  <data name="PositionTaking_20014" xml:space="preserve">
+    <value>Existing members exceeded new Super Max PT</value>
+  </data>
+  <data name="PositionTaking_20015" xml:space="preserve">
+    <value>Existing masters exceeded new Master Max PT</value>
+  </data>
+  <data name="PositionTaking_20016" xml:space="preserve">
+    <value>Existing agents exceeded new Agent Max PT</value>
+  </data>
+  <data name="PositionTaking_20017" xml:space="preserve">
+    <value>Existing members exceeded new Agent Max PT</value>
   </data>
   <data name="Status_60031" xml:space="preserve">
-    <value>Account disabled for this product. Unable to edit downlines.</value>
+    <value>Account disabled for this product. Unable to edit downlines</value>
   </data>
   <data name="Status_60032" xml:space="preserve">
-    <value>Cannot synchronize this product because this account's upline not synchronize setting.</value>
+    <value>Cannot synchronize this product because this account's upline not synchronize setting</value>
   </data>
 </root>

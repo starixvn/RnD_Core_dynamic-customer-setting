@@ -1,17 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$location', '$window', 'appSettings'];
-    var locationService = function ($location, $window, appSettings) {
-        var path = $location.path();
-        console.log($window);
-        angular.element($window).on('hashChange', function(){
-        alert('test');
-        });
-//        var currentUrl = document.URL;
-//        setInterval(function(){
-//        console.log('changed url');
-//        }, 1000);
+    var injectParams = ['$location', '$rootScope', 'appSettings'];
+    var locationService = function ($location, $rootScope, appSettings) {
         var formSettings = [
             {
                 formType: appSettings.formType.CompanyEditSuper,
@@ -40,30 +31,33 @@
         ];
 
         var self = this;
-        self.isValid = false;
-        angular.forEach(formSettings, function (formSetting) {
-            if (self.isValid) {
-                return;
-            }
+        function loadParams() {
+            self.isValid = false;
+            var path = $location.path();
+            angular.forEach(formSettings, function (formSetting) {
+                if (self.isValid) {
+                    return;
+                }
 
-            var formType = formSetting.formType;
-            var pattern = formSetting.pattern;
-            var matches = pattern.match(/\/:\w+/g);
-            var params = [];
-            angular.forEach(matches, function (match) {
-                params.push(match.replace('/:', ''));
-            });
-
-            var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
-            matches = regExp.exec(path);
-            if (matches !== null && matches.length - 1 === params.length) {
-                self.isValid = true;
-                angular.forEach(params, function (param, index) {
-                    self[param] = parseInt(matches[index + 1]);
+                var formType = formSetting.formType;
+                var pattern = formSetting.pattern;
+                var matches = pattern.match(/\/:\w+/g);
+                var params = [];
+                angular.forEach(matches, function (match) {
+                    params.push(match.replace('/:', ''));
                 });
-                self.formType = formType;
-            }
-        });
+
+                var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
+                matches = regExp.exec(path);
+                if (matches !== null && matches.length - 1 === params.length) {
+                    self.isValid = true;
+                    angular.forEach(params, function (param, index) {
+                        self[param] = parseInt(matches[index + 1]);
+                    });
+                    self.formType = formType;
+                }
+            });
+        }
 
         this.createSelectModel = function () {
             if (!this.isValid) {
@@ -122,6 +116,10 @@
             };
             return model;
         };
+
+        $rootScope.$on('$locationChangeStart', function(){
+            loadParams();
+        });
     };
 
     locationService.$inject = injectParams;

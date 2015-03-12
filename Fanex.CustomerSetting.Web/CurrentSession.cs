@@ -77,10 +77,17 @@ namespace Fanex.CustomerSetting.Web
         {
             get
             {
-                return
-                (HttpContext.Current != null)
-                ? Convert.ToString(HttpContext.Current.Session[LanguageCodeSessionKey])
-                : "en-US";
+                var languageCode = "en-US";
+                if (HttpContext.Current != null)
+                {
+                    var language = Convert.ToString(HttpContext.Current.Session[LanguageCodeSessionKey]);
+                    if (!string.IsNullOrEmpty(language))
+                    {
+                        languageCode = language;
+                    }
+                }
+
+                return languageCode;
             }
 
             set

@@ -37,7 +37,7 @@ namespace Fanex.CustomerSetting.Entities
             return SportType > 0 && BetType > 0;
         }
 
-        protected string BuildXml(string elementName, Dictionary<string, object> dictionary)
+        protected virtual string BuildXml(string elementName, Dictionary<string, object> dictionary)
         {
             dictionary["SportType"] = SportType;
             dictionary["BetType"] = BetType;

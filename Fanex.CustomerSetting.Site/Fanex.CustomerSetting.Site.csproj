@@ -161,6 +161,8 @@
     <Compile Include="UserLogin\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\angular-1.2.28.js" />
+    <Content Include="app\angular-1.2.28.min.js" />
     <Content Include="app\customerSetting\controllers\customer-setting-controller.js" />
     <Content Include="app\customerSetting\controllers\customer-setting-view-controller.js" />
     <Content Include="app\customerSetting\directives\bet-limit-input.js" />
@@ -214,8 +216,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\AngularJS\angular.js" />
-    <Content Include="Scripts\AngularJS\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />
@@ -272,7 +272,6 @@
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\209.pubxml" />
     <Content Include="Views\CustomerSetting\Index.cshtml" />
-    <Content Include="Scripts\AngularJS\angular.min.js.map" />
     <None Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Home\Welcome.cshtml" />
     <Content Include="Views\Home\_LoginForm.cshtml" />

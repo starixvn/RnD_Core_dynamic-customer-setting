@@ -42,6 +42,9 @@
                     });
                 }
                 ngModelCtrl.$render = render;
+                ngModelCtrl.$parsers.unshift(function (viewValue) {
+                    return parseInt(viewValue);
+                });
             }
         };
     };

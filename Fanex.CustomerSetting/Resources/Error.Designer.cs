@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrong Min bet/ Max bet/ Max per match..
+        ///   Looks up a localized string similar to Wrong Min bet/ Max bet/ Max per match.
         /// </summary>
         public static string BetLimit_10003 {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Min bet must be less than max bet and max bet must be less than max bet per match..
+        ///   Looks up a localized string similar to Min bet must be less than max bet and max bet must be less than max bet per match.
         /// </summary>
         public static string BetLimit_10005 {
             get {
@@ -160,7 +160,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid commission rate..
+        ///   Looks up a localized string similar to Invalid commission rate.
         /// </summary>
         public static string Discount_1 {
             get {
@@ -169,7 +169,70 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines..
+        ///   Looks up a localized string similar to Wrong position taking.
+        /// </summary>
+        public static string PositionTaking_20001 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing members exceeded new Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20012 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20012", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing masters exceeded new Super Max PT.
+        /// </summary>
+        public static string PositionTaking_20013 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20013", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing members exceeded new Super Max PT.
+        /// </summary>
+        public static string PositionTaking_20014 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20014", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing masters exceeded new Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20015 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20015", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing agents exceeded new Agent Max PT.
+        /// </summary>
+        public static string PositionTaking_20016 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20016", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing members exceeded new Agent Max PT.
+        /// </summary>
+        public static string PositionTaking_20017 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20017", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
         /// </summary>
         public static string Status_60031 {
             get {
@@ -178,7 +241,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting..
+        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
         /// </summary>
         public static string Status_60032 {
             get {

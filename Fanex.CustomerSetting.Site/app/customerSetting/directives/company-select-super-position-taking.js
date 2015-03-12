@@ -64,6 +64,7 @@
                         data: {
                             SportType: $scope.positionTaking.SportType,
                             BetType: $scope.positionTaking.BetType,
+                            IsLive: $scope.positionTaking.IsLive,
                             S4: $scope.superMaxPT.value,
                             M4: $scope.masterMaxPT.value,
                             A4: $scope.agentMaxPT.value,

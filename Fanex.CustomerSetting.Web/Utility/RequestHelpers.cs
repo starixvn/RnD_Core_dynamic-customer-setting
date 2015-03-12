@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Web.Utility
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Net;
     using System.Web;
@@ -14,6 +15,7 @@
         /// Gets the client IP.
         /// </summary>
         /// <returns>Returns client IP.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is a utlity function, not a property")]
         public static string GetClientIp()
         {
             var httpRequest = HttpContext.Current.Request;

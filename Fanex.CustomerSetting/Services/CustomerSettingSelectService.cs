@@ -69,7 +69,7 @@
         public SuperSelectMasterResult SuperSelectMaster(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
-            var criteria = new SuperSelectMasterCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MasterSettingSelect");
+            var criteria = new SuperSelectMasterCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
@@ -91,7 +91,7 @@
         public MasterSelectAgentResult MasterSelectAgent(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
-            var criteria = new MasterSelectAgentCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_AgentSettingSelect");
+            var criteria = new MasterSelectAgentCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
@@ -113,7 +113,7 @@
         public SuperSelectMemberResult SuperSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
-            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
+            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
@@ -135,7 +135,7 @@
         public MasterSelectMemberResult MasterSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
-            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
+            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
@@ -157,7 +157,7 @@
         public AgentSelectMemberResult AgentSelectMember(SelectInfo model)
         {
             var settingContext = CreateSettingContext(model);
-            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId, "Acc_CustSetting_MemberSettingSelect");
+            var criteria = new SuperSelectMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);

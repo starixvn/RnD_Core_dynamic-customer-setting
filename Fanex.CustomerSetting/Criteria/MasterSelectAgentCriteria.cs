@@ -5,9 +5,14 @@
     /// </summary>
     public class MasterSelectAgentCriteria : SelectCriteria
     {
-        public MasterSelectAgentCriteria(int custId, short productId, string settingKey)
-            : base(custId, productId, settingKey)
+        public MasterSelectAgentCriteria(int custId, short productId)
+            : base(custId, productId)
         {
+        }
+
+        public override string GetSettingKey()
+        {
+            return "Acc_CustSetting_AgentSettingSelect";
         }
     }
 }

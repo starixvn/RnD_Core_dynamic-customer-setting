@@ -14,6 +14,11 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public bool IsDisabledDownline { get; set; }
 
+        public override bool IsValid()
+        {
+            return base.IsValid() && !(IsDisabled && !IsDisabledDownline);
+        }
+
         public override string ToXml()
         {
             return BuildXml(

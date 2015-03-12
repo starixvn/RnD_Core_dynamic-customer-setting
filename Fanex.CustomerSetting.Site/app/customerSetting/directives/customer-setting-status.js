@@ -19,6 +19,20 @@
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
 
+                $scope.downlineDisabled = true;
+                var oldEnable = $scope.enable;
+                $scope.$watch('enable', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $scope.downlineDisabled = !($scope.enable && !oldEnable);
+                        if (!$scope.enable) {
+                            $scope.downline = false;
+                        }
+                        else {
+                            $scope.downline = oldEnable;
+                        }
+                    }
+                });
+
                 $scope.validate = function () {
                     var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline
                     ? appSettings.errorType.Success

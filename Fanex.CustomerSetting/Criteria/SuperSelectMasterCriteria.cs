@@ -5,9 +5,14 @@
     /// </summary>
     public class SuperSelectMasterCriteria : SelectCriteria
     {
-        public SuperSelectMasterCriteria(int custId, short productId, string settingKey)
-            : base(custId, productId, settingKey)
+        public SuperSelectMasterCriteria(int custId, short productId)
+            : base(custId, productId)
         {
+        }
+
+        public override string GetSettingKey()
+        {
+            return "Acc_CustSetting_MasterSettingSelect";
         }
     }
 }

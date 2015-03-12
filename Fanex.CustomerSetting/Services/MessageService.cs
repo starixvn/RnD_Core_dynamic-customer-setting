@@ -134,7 +134,10 @@
         {
             var prefix = _prefixs[settingType];
             var key = string.Format("{0}_{1}", prefix, messageId);
-            return Error.ResourceManager.GetString(key);
+            var message = Error.ResourceManager.GetString(key);
+            return !string.IsNullOrEmpty(message)
+                ? message
+                : string.Format("Undefined error message {0}", messageId);
         }
 
         private T Deserialize<T>(string text) where T : SimpleMessage

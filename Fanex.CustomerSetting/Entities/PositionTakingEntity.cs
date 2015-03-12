@@ -2,6 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using System.Collections.Generic;
     using Fanex.CustomerSetting.Core;
 
     /// <summary>
@@ -17,6 +18,12 @@ namespace Fanex.CustomerSetting.Entities
         protected bool IsPositionTakingValue(int value)
         {
             return value >= 0 && value <= Configuration.MaxPositionTakingValue;
+        }
+
+        protected override string BuildXml(string elementName, Dictionary<string, object> dictionary)
+        {
+            dictionary["IsLive"] = IsLive;
+            return base.BuildXml(elementName, dictionary);
         }
     }
 }
