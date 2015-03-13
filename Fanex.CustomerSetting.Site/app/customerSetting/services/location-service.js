@@ -117,7 +117,7 @@
             return model;
         };
 
-        $rootScope.$on('$locationChangeStart', function(){
+        $rootScope.$on('$locationChangeStart', function () {
             loadParams();
         });
     };

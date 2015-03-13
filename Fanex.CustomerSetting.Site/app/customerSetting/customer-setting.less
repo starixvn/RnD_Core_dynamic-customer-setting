@@ -67,7 +67,7 @@
     font-size: @font-size;
     width: @container-width;
 
-    & > .message
+    & > .message-container
     {
         padding: 5px;
         margin-bottom: @container-margin-bottom;
@@ -89,6 +89,33 @@
             color: #a94442;
             border-color: #ebccd1;
             background-color: #f2dede;
+        }
+    }
+
+    & > .loading-container
+    {
+        & > .block-overlay
+        {
+            z-index: 10008;
+            background: white;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        & > .block-loading
+        {
+            z-index: 10009;
+            background: url(images/loading.gif) no-repeat center center;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
         }
     }
 

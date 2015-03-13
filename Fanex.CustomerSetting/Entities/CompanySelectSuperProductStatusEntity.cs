@@ -2,7 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Attributes;
 
     /// <summary>
     /// CompanyEditSuperProductStatus class.
@@ -12,22 +12,12 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Indicating whether down-lines are disabled or not.
         /// </summary>
+        [OutputElement]
         public bool IsDisabledDownline { get; set; }
 
         public override bool IsValid()
         {
             return base.IsValid() && !(IsDisabled && !IsDisabledDownline);
-        }
-
-        public override string ToXml()
-        {
-            return BuildXml(
-                "ProductStatus",
-                new Dictionary<string, object>
-                {
-                    { "IsDisabled", IsDisabled },
-                    { "IsDisabledDownline", IsDisabledDownline }
-                });
         }
     }
 }

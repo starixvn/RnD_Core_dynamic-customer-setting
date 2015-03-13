@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -56,6 +56,8 @@
     <Compile Include="..\Fanex.CustomerSetting.Site\Properties\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\OutputElementAttribute.cs" />
+    <Compile Include="Attributes\OutputElementProperty.cs" />
     <Compile Include="Converters\BetLimitJsonConverter.cs" />
     <Compile Include="Converters\PositionTakingJsonConverter.cs" />
     <Compile Include="Converters\DiscountJsonConverter.cs" />
@@ -102,9 +104,12 @@
     <Compile Include="Entities\ProductResourceEntity.cs" />
     <Compile Include="Entities\ProductSetting.cs" />
     <Compile Include="Entities\ProductStatusEntity.cs" />
+    <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />
     <Compile Include="Exceptions\CriteriaException.cs" />
+    <Compile Include="Messages\PositionTakingMessage.cs" />
     <Compile Include="Messages\NormalMessage.cs" />
+    <Compile Include="Messages\PositionTakingDownlineGroup.cs" />
     <Compile Include="Messages\PositionTakingDownlineMessage.cs" />
     <Compile Include="Messages\PositionTakingMaxMessage.cs" />
     <Compile Include="Messages\PositionTakingMinMaxMessage.cs" />

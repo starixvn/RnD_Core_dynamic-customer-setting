@@ -2,7 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Attributes;
 
     /// <summary>
     /// CompanyEditSuperPositionTaking class.
@@ -12,21 +12,25 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Super Max PT.
         /// </summary>
+        [OutputElement("SuperPT")]
         public byte S4 { get; set; }
 
         /// <summary>
         /// Master Max PT.
         /// </summary>
+        [OutputElement("MasterPT")]
         public byte M4 { get; set; }
 
         /// <summary>
         /// Agent Max PT.
         /// </summary>
+        [OutputElement("AgentPT")]
         public byte A4 { get; set; }
 
         /// <summary>
         /// Super Min PT.
         /// </summary>
+        [OutputElement("SuperMinPT")]
         public byte N4 { get; set; }
 
         /// <summary>
@@ -40,18 +44,8 @@ namespace Fanex.CustomerSetting.Entities
                 && IsPositionTakingValue(S4)
                 && IsPositionTakingValue(M4)
                 && IsPositionTakingValue(A4)
-                && IsPositionTakingValue(N4);
-        }
-
-        public override string ToXml()
-        {
-            return BuildXml("PT", new Dictionary<string, object>
-            {
-                {"SuperPT", S4},
-                {"MasterPT", M4},
-                {"AgentPT", A4},
-                {"SuperMinPT", N4}
-            });
+                && IsPositionTakingValue(N4)
+                && S4 >= M4 && M4 >= A4 && S4 >= N4;
         }
     }
 }

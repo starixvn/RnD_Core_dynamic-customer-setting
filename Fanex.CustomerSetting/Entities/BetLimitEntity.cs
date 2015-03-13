@@ -2,7 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Attributes;
     using Fanex.CustomerSetting.Core;
 
     /// <summary>
@@ -10,23 +10,14 @@ namespace Fanex.CustomerSetting.Entities
     /// </summary>
     public abstract class BetLimitEntity : BaseEntity
     {
+        [OutputElement]
         public decimal MinBet { get; set; }
 
+        [OutputElement]
         public decimal MaxBet { get; set; }
 
+        [OutputElement]
         public decimal MaxPerMatch { get; set; }
-
-        public override string ToXml()
-        {
-            return BuildXml(
-                "BetLimit",
-                new Dictionary<string, object>
-                {
-                    { "MinBet", MinBet },
-                    { "MaxBet", MaxBet },
-                    { "MaxPerMatch", MaxPerMatch }
-                });
-        }
 
         public override bool IsValid()
         {

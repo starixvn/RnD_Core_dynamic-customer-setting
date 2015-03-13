@@ -3,10 +3,12 @@
 namespace Fanex.CustomerSetting.Entities
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// CustomerSettingEntity class.
     /// </summary>
+    [SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = "Generic")]
     public abstract class CustomerSettingEntity<T1, T2, T3, T4>
         where T1 : DiscountEntity
         where T2 : BetLimitEntity

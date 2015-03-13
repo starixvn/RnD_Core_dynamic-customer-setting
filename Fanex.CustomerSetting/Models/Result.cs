@@ -8,7 +8,9 @@
     public class Result
     {
         public const int SuccessValue = 0;
-        public const int FailureValue = -1;
+        public const int ErrorValue = -1;
+        public const int NoChangeValue = -2;
+        public const int AccessDeniedValue = -3;
 
         public Result(int errCode, string errMsg)
         {
@@ -28,7 +30,7 @@
         {
             get
             {
-                return new Result(FailureValue, Lang.AccessDeniedMsg);
+                return new Result(AccessDeniedValue, Lang.AccessDeniedMsg);
             }
         }
 
@@ -36,7 +38,7 @@
         {
             get
             {
-                return new Result(FailureValue, Lang.NoChangeToUpdate);
+                return new Result(NoChangeValue, Lang.NoChangeToUpdate);
             }
         }
 
@@ -44,7 +46,7 @@
         {
             get
             {
-                return new Result(FailureValue, "Oops... you are here because of a system error, please notify your administrator.");
+                return new Result(ErrorValue, "Oops... you are here because of a system error, please notify your administrator.");
             }
         }
 

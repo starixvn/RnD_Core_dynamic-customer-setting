@@ -1,17 +1,19 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', '$sce', 'appSettings'];
-    var messageService = function ($rootScope, commonService, $sce, appSettings) {
+    var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings'];
+    var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings) {
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
         messageClasses[appSettings.messageType.Error] = 'error';
 
         var show = function (message, messageType) {
-            $rootScope.hasMessage = true;
-            $rootScope.messageClass = messageClasses[messageType];
-            $rootScope.message = $sce.trustAsHtml(message);
+            $timeout(function () {
+                $rootScope.hasMessage = true;
+                $rootScope.messageClass = messageClasses[messageType];
+                $rootScope.message = $sce.trustAsHtml(message);
+            });
             commonService.scrollToTop();
         };
 

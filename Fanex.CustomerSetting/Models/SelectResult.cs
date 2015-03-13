@@ -2,11 +2,13 @@
 
 namespace Fanex.CustomerSetting.Models
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Entities;
 
     /// <summary>
     /// CustomerSettingResult class.
     /// </summary>
+    [SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = "Generic")]
     public abstract class SelectResult<T, T1, T2, T3, T4> : Result
         where T : CustomerSettingEntity<T1, T2, T3, T4>
         where T1 : DiscountEntity

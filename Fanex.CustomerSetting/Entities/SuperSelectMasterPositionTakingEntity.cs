@@ -2,8 +2,6 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// SuperEditMasterPositionTaking class.
     /// </summary>
@@ -48,13 +46,5 @@ namespace Fanex.CustomerSetting.Entities
         /// Super Min PT set by company.
         /// </summary>
         public byte N4 { get; set; }
-
-        public override string ToXml()
-        {
-            return BuildXml("Discount", new Dictionary<string, object>
-            {
-                {"Discount", N3}
-            });
-        }
     }
 }

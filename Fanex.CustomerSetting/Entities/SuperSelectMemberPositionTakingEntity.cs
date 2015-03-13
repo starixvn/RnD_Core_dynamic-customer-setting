@@ -46,10 +46,5 @@ namespace Fanex.CustomerSetting.Entities
         /// Master Max PT.
         /// </summary>
         public byte M3 { get; set; }
-
-        public override string ToXml()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -240,4 +240,13 @@
   <data name="MinLive" xml:space="preserve">
     <value>Min Live</value>
   </data>
+  <data name="Agents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="Masters" xml:space="preserve">
+    <value>Masters</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+  </data>
 </root>

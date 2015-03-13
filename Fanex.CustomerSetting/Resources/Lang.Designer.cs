@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agents.
+        /// </summary>
+        public static string Agents {
+            get {
+                return ResourceManager.GetString("Agents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Setting.
         /// </summary>
         public static string BetSetting {
@@ -178,6 +187,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Masters.
+        /// </summary>
+        public static string Masters {
+            get {
+                return ResourceManager.GetString("Masters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Max {
@@ -255,6 +273,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string MaxPerMatchMoreThanOrEqualMaxBet {
             get {
                 return ResourceManager.GetString("MaxPerMatchMoreThanOrEqualMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Members.
+        /// </summary>
+        public static string Members {
+            get {
+                return ResourceManager.GetString("Members", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Attributes;
 
     /// <summary>
     /// ProductState class.
@@ -12,18 +12,11 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Indicating whether product is disabled or not.
         /// </summary>
+        [OutputElement]
         public bool IsDisabled { get; set; }
 
         public bool IsHidden { get; set; }
 
         public bool IsSync { get; set; }
-
-        public override string ToXml()
-        {
-            return BuildXml("ProductStatus", new Dictionary<string, object>
-            {
-                {"IsDisabled", IsDisabled}
-            });
-        }
     }
 }

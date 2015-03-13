@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = [];
-    var tooltipService = function () {
+    var injectParams = ['$timeout'];
+    var tooltipService = function ($timeout) {
         var tooltipScope;
         var tooltipElement;
         var boundingElement;
@@ -37,19 +37,14 @@
 
             boundingElement = element[0];
             if (tooltipScope.message !== message) {
-                if (!tooltipScope.$$phase) {
+                $timeout(function () {
                     tooltipScope.message = message;
-                } else {
-                    tooltipScope.$apply(function () {
-                        tooltipScope.message = message;
-                    });
-                }
+                });
             }
 
             if (tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.removeClass('ng-hide');
                 this.calculatePosition();
-                //console.log('show');
             }
         };
 
@@ -60,7 +55,6 @@
 
             if (!tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.addClass('ng-hide');
-                //console.log('hide');
             }
         };
     };

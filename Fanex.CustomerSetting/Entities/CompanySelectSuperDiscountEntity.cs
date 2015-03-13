@@ -2,7 +2,7 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Attributes;
 
     /// <summary>
     /// CompanyEditSuperDiscount class.
@@ -12,6 +12,7 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Super discount.
         /// </summary>
+        [OutputElement("Discount")]
         public decimal SuperDiscount { get; set; }
 
         /// <summary>
@@ -22,14 +23,6 @@ namespace Fanex.CustomerSetting.Entities
         public override bool IsValid()
         {
             return base.IsValid() && IsDiscountValue(SuperDiscount);
-        }
-
-        public override string ToXml()
-        {
-            return BuildXml("Discount", new Dictionary<string, object>
-            {
-                {"Discount", SuperDiscount}
-            });
         }
     }
 }

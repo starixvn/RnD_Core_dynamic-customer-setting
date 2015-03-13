@@ -2,8 +2,6 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// AgentEditMemberPositionTaking class.
     /// </summary>
@@ -23,13 +21,5 @@ namespace Fanex.CustomerSetting.Entities
         /// Agent Min Position Taking.
         /// </summary>
         public byte N2 { get; set; }
-
-        public override string ToXml()
-        {
-            return BuildXml("Discount", new Dictionary<string, object>
-            {
-                {"Discount", A1}
-            });
-        }
     }
 }

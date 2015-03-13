@@ -2,8 +2,6 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// MasterEditAgentDiscount class.
     /// </summary>
@@ -22,14 +20,6 @@ namespace Fanex.CustomerSetting.Entities
         public override bool IsValid()
         {
             return base.IsValid() && AgentDiscount >= 0;
-        }
-
-        public override string ToXml()
-        {
-            return BuildXml("Discount", new Dictionary<string, object>
-            {
-                {"Discount", AgentDiscount}
-            });
         }
     }
 }

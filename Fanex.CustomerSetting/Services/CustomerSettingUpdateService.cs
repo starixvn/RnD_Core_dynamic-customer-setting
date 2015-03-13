@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
@@ -49,7 +51,17 @@
             switch (model.SettingType)
             {
                 case SettingType.All:
-                    return null;
+                    var results = new List<Result>
+                    {
+                        UpdateStatus(model),
+                        UpdateDiscount(model),
+                        UpdateBetLimit(model),
+                        UpdatePositionTaking(model)
+                    };
+                    results = results.Where(result => result.ErrCode != Result.NoChangeValue).ToList();
+                    return results.Count() == 0
+                    ? new UpdateResult(Result.NoChange)
+                    : new UpdateResult(results);
 
                 case SettingType.Status:
                     return UpdateStatus(model);
@@ -74,6 +86,11 @@
         /// <returns>Returns update result.</returns>
         private UpdateResult UpdateStatus(UpdateInfo model)
         {
+            if (model.Statuses == null || model.Statuses.Count() == 0)
+            {
+                return new UpdateResult(Result.NoChange);
+            }
+
             var criteria = new UpdateDisabledStatusCriteria
             {
                 UserId = model.CustId,
@@ -98,6 +115,11 @@
         /// <returns>Returns update result.</returns>
         private UpdateResult UpdateDiscount(UpdateInfo model)
         {
+            if (model.Discounts == null || model.Discounts.Count() == 0)
+            {
+                return new UpdateResult(Result.NoChange);
+            }
+
             var criteria = new UpdateDiscountCriteria
             {
                 UserId = model.CustId,
@@ -122,6 +144,11 @@
         /// <returns>Returns update result.</returns>
         private UpdateResult UpdateBetLimit(UpdateInfo model)
         {
+            if (model.BetLimits == null || model.BetLimits.Count() == 0)
+            {
+                return new UpdateResult(Result.NoChange);
+            }
+
             var criteria = new UpdateBetLimitCriteria
             {
                 UserId = model.CustId,
@@ -146,6 +173,11 @@
         /// <returns>Returns update result.</returns>
         private UpdateResult UpdatePositionTaking(UpdateInfo model)
         {
+            if (model.PositionTakings == null || model.PositionTakings.Count() == 0)
+            {
+                return new UpdateResult(Result.NoChange);
+            }
+
             var criteria = new UpdatePositionTakingCriteria(model.FormType)
             {
                 UserId = model.CustId,
@@ -196,6 +228,7 @@
             {
                 IsMultiple = model.IsMultiple,
                 UserName = model.UserName,
+                TargetRoleId = model.TargetRoleId,
                 SettingLevel = settingLevel,
                 SettingType = settingType
             };

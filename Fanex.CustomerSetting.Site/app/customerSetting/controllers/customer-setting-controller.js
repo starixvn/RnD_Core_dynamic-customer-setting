@@ -120,9 +120,7 @@
                 PositionTakingLevel: $scope.setting.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
             }, selectModel);
-            dataService.update(updateModel, function (response) {
-                console.log(response);
-            });
+            dataService.update(updateModel);
         }
     };
 

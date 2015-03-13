@@ -61,13 +61,7 @@
         /// <returns>Returns model validation.</returns>
         public Result Validate(UpdateInfo model)
         {
-            var result = ValidateInput(model);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            result = ValidateRole(model);
+            var result = ValidateRole(model);
             if (!result.IsSuccess)
             {
                 return result;
@@ -83,38 +77,6 @@
             if (!result.IsSuccess)
             {
                 return result;
-            }
-
-            return Result.Success;
-        }
-
-        /// <summary>
-        /// Validates the input.
-        /// </summary>
-        /// <param name="model">The update model.</param>
-        /// <returns>Returns model validation.</returns>
-        private Result ValidateInput(UpdateInfo model)
-        {
-            IEnumerable<BaseEntity>[] dataList =
-            {
-                model.PositionTakings,
-                model.BetLimits,
-                model.Discounts,
-                model.Statuses
-            };
-
-            if (dataList.Length == 0)
-            {
-                return Result.NoChange;
-            }
-
-            foreach (var data in dataList)
-            {
-                var isInvalid = data.Where(entity => !entity.IsValid()).Any();
-                if (isInvalid)
-                {
-                    return Result.AccessDenied;
-                }
             }
 
             return Result.Success;
@@ -216,7 +178,7 @@
                     var hasData = false;
                     foreach (var data in dataList)
                     {
-                        if (data == null || data.Count() == 0)
+                        if (data != null && data.Count() > 0)
                         {
                             hasData = true;
                             break;
@@ -295,7 +257,7 @@
 
             foreach (var entity in entities)
             {
-                if (!productProfile.Items.Where(profileItem => profileItem.SportType == entity.SportType && profileItem.BetType == entity.BetType).Any())
+                if (!entity.IsValid() || !productProfile.Items.Where(profileItem => profileItem.SportType == entity.SportType && profileItem.BetType == entity.BetType).Any())
                 {
                     return Result.AccessDenied;
                 }

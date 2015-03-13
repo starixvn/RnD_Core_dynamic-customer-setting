@@ -2,8 +2,6 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// MasterEditAgentPositionTaking class.
     /// </summary>
@@ -47,14 +45,6 @@ namespace Fanex.CustomerSetting.Entities
         public override bool IsValid()
         {
             return base.IsValid();
-        }
-
-        public override string ToXml()
-        {
-            return BuildXml("Discount", new Dictionary<string, object>
-            {
-                {"Discount", N3}
-            });
         }
     }
 }

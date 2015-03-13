@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Enumerations;
@@ -64,8 +65,10 @@
                 case MsgType.Status:
                 case MsgType.Discount:
                 case MsgType.BetLimit:
-                case MsgType.PositionTaking:
                     return TranslateTemplateMessage<NormalMessage, SimpleRow>(messageInfo);
+
+                case MsgType.PositionTaking:
+                    return TranslateTemplateMessage<PositionTakingMessage, PositionTakingRow>(messageInfo);
 
                 case MsgType.PositionTakingDownline:
                     return TranslateTemplateMessage<PositionTakingDownlineMessage, PositionTakingDownlineRow>(messageInfo);
@@ -117,6 +120,8 @@
             {
                 if (typeof(R) == typeof(PositionTakingDownlineRow))
                 {
+                    var downlineRows = templateMessage.Rows.Cast<PositionTakingDownlineRow>();
+                    stringBuilder.Append(TranslatePositionTakingDownlineRows(templateMessage.MessageId, downlineRows, messageInfo));
                 }
                 else
                 {
@@ -128,6 +133,66 @@
             }
 
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Translates the position taking down-line rows.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="rows">The position taking down-line rows.</param>
+        /// <param name="messageInfo">The message information.</param>
+        /// <returns>Returns translated message.</returns>
+        private string TranslatePositionTakingDownlineRows(int messageId, IEnumerable<PositionTakingDownlineRow> rows, MessageInfo messageInfo)
+        {
+            var groups = rows.GroupBy(row => new
+            {
+                row.SportType,
+                row.BetType,
+                row.IsLive
+            }).Select(group => new PositionTakingDownlineGroup
+            {
+                SportType = group.Key.SportType,
+                BetType = group.Key.BetType,
+                IsLive = group.Key.IsLive,
+                Rows = group.ToList()
+            });
+
+            var stringBuilder = new StringBuilder();
+            foreach (var group in groups)
+            {
+                var roleTypeName = GetRoleTypeName(messageId);
+                var userNames = string.Join(" ,", group.Rows.Select(row => row.UserName));
+                stringBuilder.AppendFormat("<br />{0} - {1}: {2}", group.ToString(_resourceService, messageInfo), roleTypeName, userNames);
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the name of the role type.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <returns>Returns name of role type.</returns>
+        private string GetRoleTypeName(int messageId)
+        {
+            switch ((MsgCode)messageId)
+            {
+                case MsgCode.PositionTakingMastersExceedSuper:
+                case MsgCode.PositionTakingMastersExceedMaster:
+                    return Lang.Masters;
+
+                case MsgCode.PositionTakingAgentsExceedMaster:
+                case MsgCode.PositionTakingAgentsExceedAgent:
+                    return Lang.Agents;
+
+                case MsgCode.PositionTakingMembersExceedSuper:
+                case MsgCode.PositionTakingMembersExceedMaster:
+                case MsgCode.PositionTakingMembersExceedAgent:
+                    return Lang.Members;
+
+                default:
+                    return string.Empty;
+            }
         }
 
         private string TranslateResource(int messageId, SettingType settingType)

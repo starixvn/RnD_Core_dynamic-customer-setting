@@ -25,6 +25,8 @@
 
         public bool IsMultiple { get; set; }
 
+        public RoleType TargetRoleId { get; set; }
+
         public SettingLevel SettingLevel { get; set; }
 
         public SettingType SettingType { get; set; }
