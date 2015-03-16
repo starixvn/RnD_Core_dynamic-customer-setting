@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// PositionTakingDownlineGroup class.
+    /// PositionTakingDownLineGroup class.
     /// </summary>
     public class PositionTakingDownlineGroup : PositionTakingRow
     {

@@ -1,0 +1,19 @@
+{
+  "name": "customer-setting",
+  "version": "0.0.1",
+  "description": "Grunt for Angular customer setting application",
+  "main": "customer-setting-app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "leo.vo",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-uglify": "^0.8.0",
+    "less-plugin-clean-css": "^1.5.0"
+  }
+}

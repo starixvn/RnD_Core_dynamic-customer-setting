@@ -80,3 +80,6 @@ UpgradeLog*.XML
 
 # Zeta Resource Editor
 *.zreproj
+
+#Grunt
+node_modules

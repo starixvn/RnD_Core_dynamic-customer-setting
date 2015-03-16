@@ -46,9 +46,13 @@
         #endregion Constructors
 
         [HttpGet]
-        public ViewResult Index()
+        public FileResult Index()
         {
-            return View();
+#if (DEBUG)
+            return File("/app/customerSetting/customer-setting-page.debug.htm", "text/HTML");
+#else
+            return File("/app/customerSetting/customer-setting-page.htm", "text/HTML");
+#endif
         }
 
         /// <summary>
@@ -115,8 +119,7 @@
                 return Json(validationResult);
             }
 
-            var updateResult = _updateService.Update(updateInfo);
-            return Json(updateResult);
+            return Json(_updateService.Update(updateInfo));
         }
     }
 }

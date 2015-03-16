@@ -7,16 +7,16 @@
             restrict: 'A',
             require: 'ngModel',
             scope: {
-                error: '@'
+                errorMessage: '='
             },
             link: function (scope, element, attrs, modelCtrl) {
                 attrs.$set('maxlength', appSettings.betLimitMaxLength);
 
-                scope.$watch('error', function (newValue, oldValue) {
+                scope.$watch('errorMessage', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        if (scope.error !== '') {
+                        if (angular.isDefined(scope.errorMessage)) {
                             if (element[0] === document.activeElement) {
-                                tooltipService.show(element, scope.error);
+                                tooltipService.show(element, scope.errorMessage);
                             }
                         } else {
                             if (element[0] === document.activeElement) {
@@ -27,13 +27,13 @@
                 });
 
                 element.on('focus', function () {
-                    if (scope.error) {
-                        tooltipService.show(element, scope.error);
+                    if (angular.isDefined(scope.errorMessage)) {
+                        tooltipService.show(element, scope.errorMessage);
                     }
                 });
 
                 element.on('blur', function () {
-                    if (scope.error) {
+                    if (angular.isDefined(scope.errorMessage)) {
                         tooltipService.hide();
                     }
                 });
