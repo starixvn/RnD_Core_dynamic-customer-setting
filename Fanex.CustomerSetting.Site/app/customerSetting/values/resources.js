@@ -7,6 +7,7 @@
     resources['en-us'] = {
         AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "Agent Max PT",
+        Agents: "Agents",
         BetSetting: "Bet Setting",
         Commission: "Commission",
         CopyTooltip: "Click to duplicate the values",
@@ -15,9 +16,12 @@
         Fax: "Fax",
         FirstName: "First Name",
         GeneralInformation: "General Information",
+        IsAuto: "Is Auto",
         LastName: "Last Name",
         Live: "Live",
         MasterMaxPT: "Master Max PT",
+        MasterMinPT: "Master Min PT",
+        Masters: "Masters",
         Max: "Max",
         MaxBet: "Max Bet",
         MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
@@ -27,6 +31,7 @@
         MaxPerMatch: "Max Per Match",
         MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
         MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "Members",
         Min: "Min",
         MinBet: "Min Bet",
         MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
@@ -40,12 +45,13 @@
         ProductStatus: "Product Status",
         SuperMaxPT: "Super Max PT",
         SuperMinPT: "Super Min PT",
+        SuperPT: "Super PT",
         Update: "Update",
         UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
         UpdateCommissionSuccessfully: "Updated commission setting successfully.",
         UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
         UpdateProductStatusSuccessfully: "Updated product status successfully.",
-        UserName: "Username"
+        UserName: "UserName"
     };
     
     resources['zh-cn'] = {

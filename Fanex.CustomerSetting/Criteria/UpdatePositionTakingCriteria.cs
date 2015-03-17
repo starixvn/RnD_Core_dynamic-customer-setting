@@ -34,7 +34,7 @@
                     return "Acc_CustSetting_MasterPTUpd";
 
                 case FormType.MasterEditAgent:
-                    return "Acc_CustSetting_MasterPTUpd";
+                    return "Acc_CustSetting_AgentPTUpd";
 
                 case FormType.SuperEditMember:
                     return "Acc_CustSetting_SuperPTOnMemberUpd";

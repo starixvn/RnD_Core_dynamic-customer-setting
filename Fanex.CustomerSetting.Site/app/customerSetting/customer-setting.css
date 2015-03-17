@@ -243,11 +243,45 @@
 .customer-setting > div > .view > .container > .body > .position-taking-container .position-taking-item > div.name {
   text-align: left;
 }
-.customer-setting > div > .view > .container > .body > .position-taking-container.company-select-super .super-max-pt,
-.customer-setting > div > .view > .container > .body > .position-taking-container.company-select-super .master-max-pt,
-.customer-setting > div > .view > .container > .body > .position-taking-container.company-select-super .agent-max-pt,
-.customer-setting > div > .view > .container > .body > .position-taking-container.company-select-super .super-min-pt {
+.customer-setting > div > .view > .container > .body > .position-taking-container.company-edit-super .super-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.company-edit-super .master-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.company-edit-super .agent-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.company-edit-super .super-min-pt {
   width: 175px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-master .super-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-master .master-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-master .master-min-pt {
+  width: 206.66666667px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-master .super-is-auto {
+  width: 80px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent .master-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent .agent-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent .agent-min-pt {
+  width: 206.66666667px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent .master-is-auto {
+  width: 80px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .super-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .master-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .agent-pt {
+  width: 206.66666667px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .super-is-auto {
+  width: 80px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member .master-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member .agent-pt {
+  width: 310px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member .master-is-auto {
+  width: 80px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.agent-edit-member .agent-pt {
+  width: 700px;
 }
 .customer-setting .tooltip {
   position: absolute;

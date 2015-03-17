@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-17 09:03:13
+// customer-setting - v0.0.1 - 2015-03-17 16:03:00
 
 'use strict';
 
@@ -278,7 +278,7 @@
 
 (function () {
     var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var companySelectSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
         function parse(data) {
             return {
                 superMaxPT: commonService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
@@ -291,13 +291,13 @@
         return {
             restrict: 'AE',
             scope: {
-                positionTaking: '=companySelectSuperPositionTaking',
+                positionTaking: '=companyEditSuperPositionTaking',
                 settingLevel: '=',
                 settingContext: '=',
                 formType: '=',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/company-select-super-position-taking.htm',
+            templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
@@ -370,8 +370,8 @@
         };
     };
 
-    companySelectSuperPositionTakingDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('companySelectSuperPositionTaking', companySelectSuperPositionTakingDirective);
+    companyEditSuperPositionTakingDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('companyEditSuperPositionTaking', companyEditSuperPositionTakingDirective);
 })();
 
 'use strict';
@@ -453,7 +453,11 @@
                     };
 
                 case appSettings.formType.SuperEditMaster:
-                    return {};
+                    return {
+                        minBet: new BetLimitInput(data.MinBet, data.MinBetMin),
+                        maxBet: new BetLimitInput(data.MaxBet, data.MaxBetMax),
+                        maxPerMatch: new BetLimitInput(data.MaxPerMatch, data.MaxPerMatchMax)
+                    };
 
                 case appSettings.formType.MasterEditAgent:
                     return {};
@@ -649,7 +653,7 @@
                     return new DiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return {};
+                    return new DiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
                     return {};
@@ -671,7 +675,7 @@
                     return 'SuperDiscount';
 
                 case appSettings.formType.SuperEditMaster:
-                    return {};
+                    return 'MasterDiscount';
 
                 case appSettings.formType.MasterEditAgent:
                     return {};
@@ -788,19 +792,27 @@
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
 
+                $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
-                var oldEnable = $scope.enable;
-                $scope.$watch('enable', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        $scope.downlineDisabled = !($scope.enable && !oldEnable);
-                        if (!$scope.enable) {
-                            $scope.downline = false;
+                if ($scope.status.IsDisabledUpline === true) {
+                    $scope.enableDisabled = true;
+                    $scope.downlineDisabled = true;
+                }
+
+                if ($scope.enableDisabled === false) {
+                    var oldEnable = $scope.enable;
+                    $scope.$watch('enable', function (newValue, oldValue) {
+                        if (newValue !== oldValue) {
+                            $scope.downlineDisabled = !($scope.enable && !oldEnable);
+                            if (!$scope.enable) {
+                                $scope.downline = false;
+                            }
+                            else {
+                                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
+                            }
                         }
-                        else {
-                            $scope.downline = oldEnable;
-                        }
-                    }
-                });
+                    });
+                }
 
                 $scope.validate = function () {
                     var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline
@@ -908,6 +920,142 @@
 'use strict';
 
 (function () {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
+    var superEditMasterPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+        function parse(data) {
+            var superPT = 0;
+            var masterMaxPTMin = 0;
+            var masterMaxPTMax = 0;
+            if (data.IS3) {
+                superPT = data.US3;
+                masterMaxPTMin = data.N4 - data.US3;
+                masterMaxPTMax = Math.min(data.S4, data.M4);
+            } else {
+                superPT = data.S3;
+                masterMaxPTMin = data.N4 - data.N4;
+                masterMaxPTMax = Math.min(data.S4 - data.S4, data.M4);
+            }
+            return {
+                superPT: commonService.createPositionTakingSelect(0, data.S4, superPT),
+                superIsAuto: data.IS3,
+                masterMaxPT: commonService.createPositionTakingSelect(masterMaxPTMin, masterMaxPTMax, data.M3),
+                masterMinPT: commonService.createPositionTakingSelect(0, data.M3, data.N3)
+            };
+        }
+
+        return {
+            restrict: 'AE',
+            scope: {
+                positionTaking: '=superEditMasterPositionTaking',
+                settingLevel: '=',
+                settingContext: '=',
+                formType: '=',
+                hasCopy: '='
+            },
+            templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
+            controller: ['$scope', function ($scope) {
+                linkingService.linkPositionTaking($scope);
+                $scope.resourceService = resourceService;
+                var name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
+                if ($scope.positionTaking.IsLive) {
+                    name += ' (' + resourceService.getString('Live') + ')';
+                }
+                $scope.name = name;
+                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.superPT = positionTaking.superPT;
+                $scope.superIsAuto = positionTaking.superIsAuto;
+                $scope.masterMaxPT = positionTaking.masterMaxPT;
+                $scope.masterMinPT = positionTaking.masterMinPT;
+                if ($scope.hasCopy) {
+                    $scope.copy = function () {
+                        $rootScope.$broadcast('copy-position-taking', $scope);
+                    };
+                }
+
+                $scope.$on('copy-position-taking', function (event, copyScope) {
+                    if (copyScope !== $scope) {
+                        $scope.superPT.value = copyScope.superPT.value;
+                        $scope.superIsAuto = copyScope.superIsAuto;
+                        $scope.masterMaxPT.value = copyScope.masterMaxPT.value;
+                        $scope.masterMinPT.value = copyScope.masterMinPT.value;
+                    }
+                });
+
+                $scope.validate = function () {
+                    var errCode = appSettings.errorType.Success;
+                    if (($scope.superIsAuto ? $scope.positionTaking.US3 === $scope.superPT.value : $scope.positionTaking.S3 === $scope.superPT.value)
+                        && $scope.positionTaking.IS3 === $scope.superIsAuto
+                        && $scope.positionTaking.M3 === $scope.masterMaxPT.value
+                        && $scope.positionTaking.N3 === $scope.masterMinPT.value) {
+                        errCode = appSettings.errorType.NoChange;
+                    }
+
+                    return {
+                        errCode: errCode,
+                        data: {
+                            SportType: $scope.positionTaking.SportType,
+                            BetType: $scope.positionTaking.BetType,
+                            IsLive: $scope.positionTaking.IsLive,
+                            S3: $scope.superIsAuto ? 0 : $scope.superPT.value,
+                            US3: $scope.superIsAuto ? $scope.superPT.value : 0,
+                            IS3: $scope.superIsAuto,
+                            M3: $scope.masterMaxPT.value,
+                            N3: $scope.masterMinPT.value
+                        }
+                    };
+                };
+            } ],
+            link: function (scope) {
+                scope.$watch('superPT.value', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        if (scope.superIsAuto) {
+                            scope.masterMaxPT = commonService.createPositionTakingSelect(
+                                scope.positionTaking.N4 - scope.positionTaking.US3,
+                                Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
+                                scope.positionTaking.M3);
+                        } else {
+                            scope.masterMaxPT = commonService.createPositionTakingSelect(
+                                scope.positionTaking.N4 - scope.positionTaking.S3,
+                                Math.min(scope.positionTaking.S4 - scope.positionTaking.S3, scope.positionTaking.M4),
+                                scope.positionTaking.M3);
+                        }
+                    }
+                });
+
+                scope.$watch('superIsAuto', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        if (scope.superIsAuto) {
+                            scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, scope.positionTaking.US3);
+                            scope.masterMaxPT = commonService.createPositionTakingSelect(
+                                scope.positionTaking.N4 - scope.positionTaking.US3,
+                                Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
+                                scope.positionTaking.M3);
+                        } else {
+                            scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, scope.positionTaking.S3);
+                            scope.masterMaxPT = commonService.createPositionTakingSelect(
+                                scope.positionTaking.N4 - scope.positionTaking.S3,
+                                Math.min(scope.positionTaking.S4 - scope.positionTaking.S3, scope.positionTaking.M4),
+                                scope.positionTaking.M3);
+                        }
+                    }
+                });
+
+                scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        scope.masterMinPT = commonService.createPositionTakingSelect(0, scope.masterMaxPT.value, scope.masterMinPT.value);
+                    }
+                });
+            }
+        };
+    };
+
+    superEditMasterPositionTakingDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('superEditMasterPositionTaking', superEditMasterPositionTakingDirective);
+})();
+
+'use strict';
+
+(function () {
     angular.module('customerSettingApp').filter('dataGroup', function () {
         function DataGroup(sportType, sportTypeName) {
             this.SportType = sportType;
@@ -960,6 +1108,8 @@
 
         this.generateOptions = function (min, max, step, factor) {
             var options = [];
+            min = Math.max(0, min);
+            max = Math.max(0, max);
             while (max >= min) {
                 options.push(max);
                 max -= step;
@@ -1491,6 +1641,7 @@
     resources['en-us'] = {
         AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "Agent Max PT",
+        Agents: "Agents",
         BetSetting: "Bet Setting",
         Commission: "Commission",
         CopyTooltip: "Click to duplicate the values",
@@ -1499,9 +1650,12 @@
         Fax: "Fax",
         FirstName: "First Name",
         GeneralInformation: "General Information",
+        IsAuto: "Is Auto",
         LastName: "Last Name",
         Live: "Live",
         MasterMaxPT: "Master Max PT",
+        MasterMinPT: "Master Min PT",
+        Masters: "Masters",
         Max: "Max",
         MaxBet: "Max Bet",
         MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
@@ -1511,6 +1665,7 @@
         MaxPerMatch: "Max Per Match",
         MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
         MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "Members",
         Min: "Min",
         MinBet: "Min Bet",
         MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
@@ -1524,12 +1679,13 @@
         ProductStatus: "Product Status",
         SuperMaxPT: "Super Max PT",
         SuperMinPT: "Super Min PT",
+        SuperPT: "Super PT",
         Update: "Update",
         UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
         UpdateCommissionSuccessfully: "Updated commission setting successfully.",
         UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
         UpdateProductStatusSuccessfully: "Updated product status successfully.",
-        UserName: "Username"
+        UserName: "UserName"
     };
     
     resources['zh-cn'] = {

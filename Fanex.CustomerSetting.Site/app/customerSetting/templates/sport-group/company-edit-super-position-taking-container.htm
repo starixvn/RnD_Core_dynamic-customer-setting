@@ -1,4 +1,4 @@
-﻿<div class="position-taking-container company-select-super" data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
+﻿<div class="position-taking-container company-edit-super" data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
     <div data-ng-repeat="positionTakingGroup in positionTakingGroups" class="sport-group">
         <div class="sport-name" title="{{positionTakingGroup.SportTypeName}}">
             {{positionTakingGroup.SportTypeName}}
@@ -19,7 +19,7 @@
                 {{resourceService.getString('SuperMinPT')}}
             </div>
         </div>
-        <div data-ng-repeat="item in positionTakingGroup.Items" data-company-select-super-position-taking="item"
+        <div data-ng-repeat="item in positionTakingGroup.Items" data-company-edit-super-position-taking="item"
             data-setting-level="setting.PositionTakingLevel" data-setting-context="settingContext"
             data-form-type="formType" data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
         </div>

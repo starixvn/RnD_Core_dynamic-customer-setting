@@ -15,7 +15,7 @@
                     return new DiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return {};
+                    return new DiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
                     return {};
@@ -37,7 +37,7 @@
                     return 'SuperDiscount';
 
                 case appSettings.formType.SuperEditMaster:
-                    return {};
+                    return 'MasterDiscount';
 
                 case appSettings.formType.MasterEditAgent:
                     return {};

@@ -1,8 +1,8 @@
 ﻿angular.module('indexModule', []).controller('IndexController',
-['$scope', '$http', function ($scope, $http) {
+        ['$scope', '$http', function ($scope, $http) {
     $scope.productId = 255;
-    $scope.superId = 1177375;
-    $scope.masterId = 0;
+    $scope.superId = 197461;
+    $scope.masterId = 197475;
     $scope.agentId = 0;
     $scope.memberId = 0;
     $scope.roles = [

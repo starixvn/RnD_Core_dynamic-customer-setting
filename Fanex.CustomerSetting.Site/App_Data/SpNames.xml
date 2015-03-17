@@ -11,9 +11,8 @@
     <Setting Key="Acc_CustSetting_DiscountUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_BetLimitUpd" SpName="Acc_CustSetting_BetLimitUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_SuperPTUpd" SpName="Acc_CustSetting_SuperPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_SuperPTUpd" SpName="Acc_CustSetting_SuperPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_MasterPTUpd" SpName="Acc_CustSetting_MasterPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_MasterPTUpd" SpName="Acc_CustSetting_MasterPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_AgentPTUpd" SpName="Acc_CustSetting_AgentPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_SuperPTOnMemberUpd" SpName="Acc_CustSetting_SuperPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_MasterPTOnMemberUpd" SpName="Acc_CustSetting_MasterPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />

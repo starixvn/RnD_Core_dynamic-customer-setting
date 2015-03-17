@@ -3,7 +3,7 @@
     </div>
     <div class="value">
         <label class="checkbox">
-            <input type="checkbox" data-ng-model="enable" />
+            <input type="checkbox" data-ng-model="enable" data-ng-disabled="enableDisabled" />
             {{resourceService.getString('Enable')}}
         </label>
         <label class="checkbox downline">

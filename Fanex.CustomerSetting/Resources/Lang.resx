@@ -249,4 +249,13 @@
   <data name="Members" xml:space="preserve">
     <value>Members</value>
   </data>
+  <data name="IsAuto" xml:space="preserve">
+    <value>Is Auto</value>
+  </data>
+  <data name="MasterMinPT" xml:space="preserve">
+    <value>Master Min PT</value>
+  </data>
+  <data name="SuperPT" xml:space="preserve">
+    <value>Super PT</value>
+  </data>
 </root>

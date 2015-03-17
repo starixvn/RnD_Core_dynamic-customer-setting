@@ -19,19 +19,27 @@
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
 
+                $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
-                var oldEnable = $scope.enable;
-                $scope.$watch('enable', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        $scope.downlineDisabled = !($scope.enable && !oldEnable);
-                        if (!$scope.enable) {
-                            $scope.downline = false;
+                if ($scope.status.IsDisabledUpline === true) {
+                    $scope.enableDisabled = true;
+                    $scope.downlineDisabled = true;
+                }
+
+                if ($scope.enableDisabled === false) {
+                    var oldEnable = $scope.enable;
+                    $scope.$watch('enable', function (newValue, oldValue) {
+                        if (newValue !== oldValue) {
+                            $scope.downlineDisabled = !($scope.enable && !oldEnable);
+                            if (!$scope.enable) {
+                                $scope.downline = false;
+                            }
+                            else {
+                                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
+                            }
                         }
-                        else {
-                            $scope.downline = oldEnable;
-                        }
-                    }
-                });
+                    });
+                }
 
                 $scope.validate = function () {
                     var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline

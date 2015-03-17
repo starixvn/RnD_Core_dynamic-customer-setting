@@ -173,12 +173,13 @@
     <Content Include="app\customerSetting\directives\bet-limit-input.js" />
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
+    <Content Include="app\customerSetting\directives\super-edit-master-position-taking.js" />
     <Content Include="app\customerSetting\directives\customer-setting-status.js" />
     <Content Include="app\customerSetting\directives\customer-setting-information.js" />
     <Content Include="app\customerSetting\directives\position-taking-select-options.js" />
     <Content Include="app\customerSetting\directives\customer-setting-bet-limit.js" />
     <Content Include="app\customerSetting\directives\customer-setting-discount.js" />
-    <Content Include="app\customerSetting\directives\company-select-super-position-taking.js" />
+    <Content Include="app\customerSetting\directives\company-edit-super-position-taking.js" />
     <Content Include="app\customerSetting\directives\customer-setting-tooltip.js" />
     <Content Include="app\customerSetting\filters\data-group.js" />
     <Content Include="app\customerSetting\Gruntfile.js" />
@@ -193,12 +194,15 @@
     <Content Include="app\customerSetting\services\tooltip-service.js" />
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
+    <Content Include="app\customerSetting\templates\super-edit-master-position-taking.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-view.htm" />
     <Content Include="app\customerSetting\templates\no-group\betlimit-container.htm" />
     <Content Include="app\customerSetting\templates\no-group\company-edit-super-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\no-group\super-edit-master-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\no-group\discount-container.htm" />
     <Content Include="app\customerSetting\templates\no-group\status-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\betlimit-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\super-edit-master-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\discount-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\company-edit-super-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\status-container.htm" />
@@ -211,7 +215,7 @@
     </Content>
     <Content Include="app\customerSetting\values\settings.js" />
     <Content Include="app\customerSetting\templates\customer-setting-bet-limit.htm" />
-    <Content Include="app\customerSetting\templates\company-select-super-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\company-edit-super-position-taking.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-tooltip.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-discount.htm" />
     <Content Include="App_Data\SpNames.xml">

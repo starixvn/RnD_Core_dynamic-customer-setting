@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Attributes;
+
     /// <summary>
     /// SuperEditMasterProductStatus class.
     /// </summary>
@@ -10,11 +12,17 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Indicating whether down-lines are disabled or not.
         /// </summary>
+        [OutputElement]
         public bool IsDisabledDownline { get; set; }
 
         /// <summary>
         /// Indicating whether up-line is disabled or not.
         /// </summary>
         public bool IsDisabledUpline { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid() && !(IsDisabled && !IsDisabledDownline);
+        }
     }
 }

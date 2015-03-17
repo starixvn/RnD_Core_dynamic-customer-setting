@@ -160,6 +160,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Auto.
+        /// </summary>
+        public static string IsAuto {
+            get {
+                return ResourceManager.GetString("IsAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastName {
@@ -183,6 +192,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string MasterMaxPT {
             get {
                 return ResourceManager.GetString("MasterMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Min PT.
+        /// </summary>
+        public static string MasterMinPT {
+            get {
+                return ResourceManager.GetString("MasterMinPT", resourceCulture);
             }
         }
         
@@ -399,6 +417,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string SuperMinPT {
             get {
                 return ResourceManager.GetString("SuperMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super PT.
+        /// </summary>
+        public static string SuperPT {
+            get {
+                return ResourceManager.GetString("SuperPT", resourceCulture);
             }
         }
         

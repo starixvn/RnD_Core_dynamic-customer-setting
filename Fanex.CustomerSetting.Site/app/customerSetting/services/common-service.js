@@ -20,6 +20,8 @@
 
         this.generateOptions = function (min, max, step, factor) {
             var options = [];
+            min = Math.max(0, min);
+            max = Math.max(0, max);
             while (max >= min) {
                 options.push(max);
                 max -= step;

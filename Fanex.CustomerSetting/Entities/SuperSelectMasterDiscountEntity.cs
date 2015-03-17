@@ -12,12 +12,17 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Master discount.
         /// </summary>
+        [OutputElement("Discount")]
         public decimal MasterDiscount { get; set; }
 
         /// <summary>
         /// Super discount.
         /// </summary>
-        [OutputElement("Discount")]
         public decimal SuperDiscount { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid() && IsDiscountValue(MasterDiscount);
+        }
     }
 }

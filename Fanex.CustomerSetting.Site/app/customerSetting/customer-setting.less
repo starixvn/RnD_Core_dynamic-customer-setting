@@ -308,38 +308,75 @@
                         }
                     }
 
-                    &.company-select-super
+                    @col-is-auto: 80px;
+                    &.company-edit-super
                     {
                         @col-value-width: (@container-width - @col-name-width) / 4;
-                        .super-max-pt, .master-max-pt, & .agent-max-pt, .super-min-pt
+                        .super-max-pt, .master-max-pt, .agent-max-pt, .super-min-pt
                         {
                             width: @col-value-width;
                         }
                     }
 
-                    &.super-select-master
+                    &.super-edit-master
                     {
-        
+                        @col-value-width: (@container-width - @col-name-width - @col-is-auto) / 3;
+                        .super-pt, .master-max-pt, .master-min-pt
+                        {
+                            width: @col-value-width;
+                        }
+                        .super-is-auto
+                        {
+                            width: @col-is-auto;
+                        }
                     }
 
-                    &.master-select-agent
+                    &.master-edit-agent
                     {
-        
+                        @col-value-width: (@container-width - @col-name-width - @col-is-auto) / 3;
+                        .master-pt, .agent-max-pt, .agent-min-pt
+                        {
+                            width: @col-value-width;
+                        }
+                        .master-is-auto
+                        {
+                            width: @col-is-auto;
+                        }
                     }
 
-                    &.super-select-member
+                    &.super-edit-member
                     {
-        
+                        @col-value-width: (@container-width - @col-name-width - @col-is-auto) / 3;
+                        .super-pt, .master-pt, .agent-pt
+                        {
+                            width: @col-value-width;
+                        }
+                        .super-is-auto
+                        {
+                            width: @col-is-auto;
+                        }
                     }
 
-                    &.master-select-member
+                    &.master-edit-member
                     {
-        
+                        @col-value-width: (@container-width - @col-name-width - @col-is-auto) / 2;
+                        .master-pt, .agent-pt
+                        {
+                            width: @col-value-width;
+                        }
+                        .master-is-auto
+                        {
+                            width: @col-is-auto;
+                        }
                     }
 
-                    &.agent-select-member
+                    &.agent-edit-member
                     {
-        
+                        @col-value-width: @container-width - @col-name-width;
+                        .agent-pt
+                        {
+                            width: @col-value-width;
+                        }
                     }
                 }
             }

@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Attributes;
+
     /// <summary>
     /// AgentEditMemberDiscount class.
     /// </summary>
@@ -10,6 +12,7 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Player discount.
         /// </summary>
+        [OutputElement("Discount")]
         public decimal PlayerDiscount { get; set; }
 
         /// <summary>
@@ -19,7 +22,7 @@ namespace Fanex.CustomerSetting.Entities
 
         public override bool IsValid()
         {
-            return base.IsValid() && PlayerDiscount >= 0;
+            return base.IsValid() && IsDiscountValue(PlayerDiscount);
         }
     }
 }

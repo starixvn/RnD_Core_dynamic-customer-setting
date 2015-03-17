@@ -2,7 +2,7 @@
 
 (function () {
     var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var companySelectSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
         function parse(data) {
             return {
                 superMaxPT: commonService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
@@ -15,13 +15,13 @@
         return {
             restrict: 'AE',
             scope: {
-                positionTaking: '=companySelectSuperPositionTaking',
+                positionTaking: '=companyEditSuperPositionTaking',
                 settingLevel: '=',
                 settingContext: '=',
                 formType: '=',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/company-select-super-position-taking.htm',
+            templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
@@ -94,6 +94,6 @@
         };
     };
 
-    companySelectSuperPositionTakingDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('companySelectSuperPositionTaking', companySelectSuperPositionTakingDirective);
+    companyEditSuperPositionTakingDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('companyEditSuperPositionTaking', companyEditSuperPositionTakingDirective);
 })();
