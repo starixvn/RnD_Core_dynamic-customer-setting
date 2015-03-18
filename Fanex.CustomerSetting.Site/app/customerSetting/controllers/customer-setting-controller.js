@@ -62,6 +62,55 @@
             return true;
         }
 
+        function getPTDisplayName(sportType, betType, isLive) {
+            var name;
+            angular.forEach($scope.positionTakings, function (pt) {
+                if (angular.isUndefined(name)) {
+                    if (pt.SportType === sportType && pt.BetType === betType && pt.IsLive === isLive) {
+                        name = resourceService.getDisplayName($scope.setting.PositionTakingLevel, $scope.settingContext, pt);
+                    }
+                }
+            });
+
+            return name;
+        }
+
+        function hasUncheckAutoPT(data) {
+            var isAutoPTName, ptName;
+            switch ($scope.formType) {
+                case appSettings.formType.SuperEditMaster:
+                    isAutoPTName = 'IS3';
+                    ptName = 'S3';
+                    break;
+            }
+
+            if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
+                var memberPTs = [];
+                angular.forEach(data, function (pt) {
+                    var isAuto = pt[isAutoPTName];
+                    if (isAuto === false) {
+                        var ptValue = pt[ptName];
+                        memberPTs.push({
+                            SportType: pt.SportType,
+                            BetType: pt.BetType,
+                            IsLive: pt.IsLive,
+                            Name: getPTDisplayName(pt.SportType, pt.BetType, pt.IsLive),
+                            Pt: ptValue
+                        });
+                    }
+                });
+
+                if (memberPTs.length > 0) {
+                    $rootScope.updateModal = {
+                        MemberPTs: memberPTs
+                    };
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function update(settingType) {
             messageService.hide();
             var positionTakings;
@@ -74,14 +123,24 @@
                     discounts = linkingService.discounts();
                     betLimits = linkingService.betLimits();
                     positionTakings = linkingService.positionTakings();
-                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdate(positionTakings, true)) {
+                    var hasUpdatePT = hasUpdate(positionTakings, true);
+                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
                         return;
                     }
+
+                    if (hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+
                     break;
 
                 case appSettings.settingType.PositionTaking:
                     positionTakings = linkingService.positionTakings();
                     if (!hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+
+                    if (hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
                     break;

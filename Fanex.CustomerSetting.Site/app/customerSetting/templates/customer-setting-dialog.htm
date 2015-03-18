@@ -1,0 +1,30 @@
+﻿<div class="dialog-container" data-ng-show="isShow">
+    <div class="dialog-overlay">
+    </div>
+    <div class="dialog-content">
+        <div class="dialog-header">
+            <div class="dialog-close" data-ng-click="hide()">
+                <i class="icon-close"></i>
+            </div>
+            <div class="dialog-title">
+                You have changed this master not to take auto position taking
+            </div>
+        </div>
+        <div class="dialog-body">
+            <span>You have changed your position taking</span>
+            <br />
+            <span>Do you want to update all member's position taking to:</span>
+            <div class="position-taking-group" data-ng-repeat="pt in pts">
+                {{pt.name}}
+                <select data-ng-model="pt.value" data-position-taking-select-options="pt.options">
+                </select>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button>
+                Yes</button>
+            <button>
+                No</button>
+        </div>
+    </div>
+</div>

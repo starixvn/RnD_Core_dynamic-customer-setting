@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-17 16:03:00
+// customer-setting - v0.0.1 - 2015-03-18 14:03:55
 
 'use strict';
 
@@ -101,6 +101,55 @@
             return true;
         }
 
+        function getPTDisplayName(sportType, betType, isLive) {
+            var name;
+            angular.forEach($scope.positionTakings, function (pt) {
+                if (angular.isUndefined(name)) {
+                    if (pt.SportType === sportType && pt.BetType === betType && pt.IsLive === isLive) {
+                        name = resourceService.getDisplayName($scope.setting.PositionTakingLevel, $scope.settingContext, pt);
+                    }
+                }
+            });
+
+            return name;
+        }
+
+        function hasUncheckAutoPT(data) {
+            var isAutoPTName, ptName;
+            switch ($scope.formType) {
+                case appSettings.formType.SuperEditMaster:
+                    isAutoPTName = 'IS3';
+                    ptName = 'S3';
+                    break;
+            }
+
+            if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
+                var memberPTs = [];
+                angular.forEach(data, function (pt) {
+                    var isAuto = pt[isAutoPTName];
+                    if (isAuto === false) {
+                        var ptValue = pt[ptName];
+                        memberPTs.push({
+                            SportType: pt.SportType,
+                            BetType: pt.BetType,
+                            IsLive: pt.IsLive,
+                            Name: getPTDisplayName(pt.SportType, pt.BetType, pt.IsLive),
+                            Pt: ptValue
+                        });
+                    }
+                });
+
+                if (memberPTs.length > 0) {
+                    $rootScope.updateModal = {
+                        MemberPTs: memberPTs
+                    };
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function update(settingType) {
             messageService.hide();
             var positionTakings;
@@ -113,14 +162,24 @@
                     discounts = linkingService.discounts();
                     betLimits = linkingService.betLimits();
                     positionTakings = linkingService.positionTakings();
-                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdate(positionTakings, true)) {
+                    var hasUpdatePT = hasUpdate(positionTakings, true);
+                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
                         return;
                     }
+
+                    if (hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+
                     break;
 
                 case appSettings.settingType.PositionTaking:
                     positionTakings = linkingService.positionTakings();
                     if (!hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+
+                    if (hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
                     break;
@@ -147,6 +206,7 @@
                     break;
             }
 
+            return;
             var updateModel = angular.extend({
                 UserName: $scope.information.UserName,
                 SettingType: settingType,
@@ -301,11 +361,7 @@
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                var name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                if ($scope.positionTaking.IsLive) {
-                    name += ' (' + resourceService.getString('Live') + ')';
-                }
-                $scope.name = name;
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
                 var positionTaking = parse($scope.positionTaking, $scope.formType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
@@ -639,6 +695,55 @@
 'use strict';
 
 (function () {
+    var injectParams = ['commonService'];
+    var customerSettingDialogDirective = function (commonService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                data: '=customerSettingDialog'
+            },
+            templateUrl: '/app/customerSetting/templates/customer-setting-dialog.htm',
+            link: function (scope) {
+                scope.isShow = false;
+                scope.hide = function () {
+                    scope.isShow = false;
+                };
+
+                scope.$watch('data', function (newValue, oldValue) {
+                    if (newValue === oldValue) {
+                        return;
+                    }
+
+                    if (angular.isUndefined(scope.data)) {
+                        scope.isShow = false;
+                        return;
+                    }
+
+                    var memberPTs = scope.data.MemberPTs;
+                    var pts = [];
+                    angular.forEach(memberPTs, function(memberPT){
+                        var ptSelect = commonService.createPositionTakingSelect(0, memberPT.Pt, memberPT.Pt);
+                        pts.push({
+                            name: memberPT.Name,
+                            value: ptSelect.value,
+                            options: ptSelect.options
+                        });
+                    });
+                    scope.isShow = true;
+                    scope.pts = pts;
+                });
+            }
+        };
+    };
+
+    customerSettingDialogDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingDialog', customerSettingDialogDirective);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['commonService', 'resourceService', 'linkingService', 'appSettings'];
     var customerSettingDiscountDirective = function (commonService, resourceService, linkingService, appSettings) {
         function parse(data, formType) {
@@ -956,11 +1061,7 @@
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                var name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                if ($scope.positionTaking.IsLive) {
-                    name += ' (' + resourceService.getString('Live') + ')';
-                }
-                $scope.name = name;
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
                 var positionTaking = parse($scope.positionTaking, $scope.formType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
@@ -1489,15 +1590,16 @@
         };
 
         this.getDisplayName = function (settingLevel, settingContext, data) {
+            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
                     return settingContext.ProductName;
                 case appSettings.settingLevel.SportType:
                     return data.SportTypeName;
                 case appSettings.settingLevel.BetType:
-                    return data.BetTypeName;
+                    return data.BetTypeName + liveName;
                 case appSettings.settingLevel.SportTypeBetType:
-                    return data.BetTypeName;
+                    return data.BetTypeName + liveName;
             }
 
             return undefined;

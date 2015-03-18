@@ -25,11 +25,7 @@
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                var name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                if ($scope.positionTaking.IsLive) {
-                    name += ' (' + resourceService.getString('Live') + ')';
-                }
-                $scope.name = name;
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
                 var positionTaking = parse($scope.positionTaking, $scope.formType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
