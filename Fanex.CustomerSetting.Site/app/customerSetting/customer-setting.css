@@ -12,21 +12,21 @@
   font-size: 11px;
   width: 840px;
 }
-.customer-setting > .message-container {
+.customer-setting > .message-container > .message {
   padding: 5px;
   margin-bottom: 10px;
 }
-.customer-setting > .message-container.success {
+.customer-setting > .message-container > .message.success {
   color: #3c763d;
   border-color: #d6e9c6;
   background-color: #dff0d8;
 }
-.customer-setting > .message-container.warning {
+.customer-setting > .message-container > .message.warning {
   color: #8a6d3b;
   border-color: #faebcc;
   background-color: #fcf8e3;
 }
-.customer-setting > .message-container.error {
+.customer-setting > .message-container > .message.error {
   color: #a94442;
   border-color: #ebccd1;
   background-color: #f2dede;
@@ -47,7 +47,7 @@
   position: absolute;
   top: 40%;
   left: 50%;
-  width: 480px;
+  width: 450px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -83,7 +83,7 @@
   text-align: right;
   background-color: #ececec;
   padding: 5px;
-  border-top: 1px solid #7d7d7d;
+  border-top: 1px solid #3c3c3c;
 }
 .customer-setting > .dialog-container > .dialog-content > .dialog-footer button {
   padding: 1px 6px;

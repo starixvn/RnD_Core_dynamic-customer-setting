@@ -457,6 +457,33 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have changed your position taking.
+        /// </summary>
+        public static string UpdateMemberPtInfo {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to update all member&apos;s position taking to:.
+        /// </summary>
+        public static string UpdateMemberPtQuestion {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Update Members&apos;s PT.
+        /// </summary>
+        public static string UpdateMemberPtTitle {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated position taking successfully..
         /// </summary>
         public static string UpdatePositionTakingSuccessfully {

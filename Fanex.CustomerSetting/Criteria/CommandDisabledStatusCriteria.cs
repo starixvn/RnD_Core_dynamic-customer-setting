@@ -1,0 +1,20 @@
+﻿namespace Fanex.CustomerSetting.Criteria
+{
+    /// <summary>
+    /// CommandDisabledStatusCriteria class.
+    /// </summary>
+    public class CommandDisabledStatusCriteria : CommandCriteria
+    {
+        public string IsDisabled { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "Acc_CustSetting_DisableStatUpd";
+        }
+
+        public override bool IsValid()
+        {
+            return base.IsValid() && !string.IsNullOrEmpty(IsDisabled);
+        }
+    }
+}

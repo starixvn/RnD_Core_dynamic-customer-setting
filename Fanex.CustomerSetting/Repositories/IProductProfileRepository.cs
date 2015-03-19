@@ -8,6 +8,6 @@
     /// </summary>
     public interface IProductProfileRepository
     {
-        ProductProfileEntity GetProductProfile(ProductProfileSelectCriteria criteria);
+        ProductProfileEntity GetProductProfile(ProductProfileQueryCriteria criteria);
     }
 }

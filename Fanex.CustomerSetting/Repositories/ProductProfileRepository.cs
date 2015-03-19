@@ -9,7 +9,7 @@
     /// </summary>
     public class ProductProfileRepository : IProductProfileRepository
     {
-        public ProductProfileEntity GetProductProfile(ProductProfileSelectCriteria criteria)
+        public ProductProfileEntity GetProductProfile(ProductProfileQueryCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {

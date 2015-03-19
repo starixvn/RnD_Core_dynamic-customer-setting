@@ -10,7 +10,7 @@
     /// </summary>
     public class ResourceRepository : IResourceRepository
     {
-        public IEnumerable<ProductResourceEntity> GetProductResources(ProductResourceSelectCriteria criteria)
+        public IEnumerable<ProductResourceEntity> GetProductResources(ProductResourceQueryCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {

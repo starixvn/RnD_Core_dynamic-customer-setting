@@ -258,4 +258,13 @@
   <data name="SuperPT" xml:space="preserve">
     <value>Super PT</value>
   </data>
+  <data name="UpdateMemberPtInfo" xml:space="preserve">
+    <value>You have changed your position taking</value>
+  </data>
+  <data name="UpdateMemberPtQuestion" xml:space="preserve">
+    <value>Do you want to update all member's position taking to:</value>
+  </data>
+  <data name="UpdateMemberPtTitle" xml:space="preserve">
+    <value>Confirm Update Members's PT</value>
+  </data>
 </root>

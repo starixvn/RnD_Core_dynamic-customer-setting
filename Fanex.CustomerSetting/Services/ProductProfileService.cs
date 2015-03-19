@@ -52,7 +52,7 @@
             var productProfile = _cacheService.Get<ProductProfileEntity>(cacheKey);
             if (productProfile == null)
             {
-                var criteria = new ProductProfileSelectCriteria
+                var criteria = new ProductProfileQueryCriteria
                 {
                     ProductId = productId
                 };

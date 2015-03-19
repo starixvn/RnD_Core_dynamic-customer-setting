@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['commonService'];
-    var customerSettingDialogDirective = function (commonService) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService'];
+    var customerSettingDialogDirective = function ($rootScope, commonService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
@@ -11,9 +11,34 @@
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-dialog.htm',
             link: function (scope) {
+                scope.resourceService = resourceService;
                 scope.isShow = false;
-                scope.hide = function () {
+                function update(isUpdateAllMembers) {
+                    var memberPts = [];
+                    angular.forEach(scope.pts, function (pt) {
+                        memberPts.push({
+                            SportType: pt.sportType,
+                            BetType: pt.betType,
+                            IsLive: pt.isLive,
+                            Pt: isUpdateAllMembers ? pt.value : 0
+                        });
+                    });
+                    $rootScope.$broadcast('update-member-position-taking', {
+                        IsUpdateAllMembers: isUpdateAllMembers,
+                        MemberPts: memberPts
+                    });
+                }
+
+                scope.clickClose = function () {
                     scope.isShow = false;
+                };
+                scope.clickYes = function () {
+                    scope.isShow = false;
+                    update(true);
+                };
+                scope.clickNo = function () {
+                    scope.isShow = false;
+                    update(false);
                 };
 
                 scope.$watch('data', function (newValue, oldValue) {
@@ -26,12 +51,15 @@
                         return;
                     }
 
-                    var memberPTs = scope.data.MemberPTs;
+                    var memberPtss = scope.data.MemberPTs;
                     var pts = [];
-                    angular.forEach(memberPTs, function(memberPT){
-                        var ptSelect = commonService.createPositionTakingSelect(0, memberPT.Pt, memberPT.Pt);
+                    angular.forEach(memberPtss, function (memberPts) {
+                        var ptSelect = commonService.createPositionTakingSelect(0, memberPts.Pt, memberPts.Pt);
                         pts.push({
-                            name: memberPT.Name,
+                            sportType: memberPts.SportType,
+                            betType: memberPts.BetType,
+                            isLive: memberPts.IsLive,
+                            name: memberPts.Name,
                             value: ptSelect.value,
                             options: ptSelect.options
                         });

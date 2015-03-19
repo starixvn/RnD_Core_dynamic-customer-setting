@@ -3,28 +3,38 @@
     </div>
     <div class="dialog-content">
         <div class="dialog-header">
-            <div class="dialog-close" data-ng-click="hide()">
+            <div class="dialog-close" data-ng-click="clickClose()">
                 <i class="icon-close"></i>
             </div>
             <div class="dialog-title">
-                You have changed this master not to take auto position taking
+                {{resourceService.getString('UpdateMemberPtTitle')}}
             </div>
         </div>
         <div class="dialog-body">
-            <span>You have changed your position taking</span>
+            <span>{{resourceService.getString('UpdateMemberPtInfo')}}</span>
             <br />
-            <span>Do you want to update all member's position taking to:</span>
-            <div class="position-taking-group" data-ng-repeat="pt in pts">
-                {{pt.name}}
-                <select data-ng-model="pt.value" data-position-taking-select-options="pt.options">
-                </select>
-            </div>
+            <span>{{resourceService.getString('UpdateMemberPtQuestion')}}</span>
+            <table class="position-taking-group">
+                <tbody>
+                    <tr data-ng-repeat="pt in pts">
+                        <td>
+                            {{pt.name}}
+                        </td>
+                        <td>
+                            <select data-ng-model="pt.value" data-position-taking-select-options="pt.options">
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="dialog-footer">
-            <button>
-                Yes</button>
-            <button>
-                No</button>
+            <button data-ng-click="clickYes()">
+                {{resourceService.getString('Yes')}}
+            </button>
+            <button data-ng-click="clickNo()">
+                {{resourceService.getString('No')}}
+            </button>
         </div>
     </div>
 </div>

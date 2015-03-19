@@ -28,22 +28,22 @@
             switch (_formType)
             {
                 case FormType.CompanyEditSuper:
-                    return jsonObject.ToObject<CompanySelectSuperPositionTakingEntity>();
+                    return jsonObject.ToObject<CompanyQuerySuperPositionTakingEntity>();
 
                 case FormType.SuperEditMaster:
-                    return jsonObject.ToObject<SuperSelectMasterPositionTakingEntity>();
+                    return jsonObject.ToObject<SuperCommandMasterPositionTakingEntity>();
 
                 case FormType.MasterEditAgent:
-                    return jsonObject.ToObject<MasterSelectAgentPositionTakingEntity>();
+                    return jsonObject.ToObject<MasterQueryAgentPositionTakingEntity>();
 
                 case FormType.SuperEditMember:
-                    return jsonObject.ToObject<SuperSelectMemberPositionTakingEntity>();
+                    return jsonObject.ToObject<SuperQueryMemberPositionTakingEntity>();
 
                 case FormType.MasterEditMember:
-                    return jsonObject.ToObject<MasterSelectMemberPositionTakingEntity>();
+                    return jsonObject.ToObject<MasterQueryMemberPositionTakingEntity>();
 
                 case FormType.AgentEditMember:
-                    return jsonObject.ToObject<AgentSelectMemberPositionTakingEntity>();
+                    return jsonObject.ToObject<AgentQueryMemberPositionTakingEntity>();
             }
 
             return null;

@@ -41,6 +41,12 @@
             FormInvalid: 1,
             NoChange: 2
         },
+        errCode: {
+            Success: 0,
+            ErrorValue: -1,
+            NoChange: -2,
+            AccessDenied: -3
+        },
         messageType: {
             Success: 0,
             Warning: 1,

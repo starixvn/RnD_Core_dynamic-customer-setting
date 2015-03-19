@@ -6,12 +6,15 @@
 </head>
 <body data-ng-controller="CustomerSettingViewController">
     <div class="customer-setting" data-ng-cloak>
-        <div class="message-container" data-ng-class="messageClass" data-ng-show="hasMessage"
-            data-ng-bind-html="message">
+        <div class="message-container" data-ng-show="messages">
+            <div data-ng-repeat="message in messages" class="message" data-ng-class="message.messageClass" data-ng-bind-html="message.messageContent">
+            </div>
         </div>
         <div data-ng-include="view">
         </div>
         <div data-customer-setting-tooltip>
+        </div>
+        <div data-customer-setting-dialog="updateModal">
         </div>
         <div class="loading-container" data-ng-show="hasLoading">
             <div class="block-overlay">

@@ -149,7 +149,7 @@
             var productResources = _cacheService.Get<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey);
             if (productResources == null)
             {
-                var criteria = new ProductResourceSelectCriteria();
+                var criteria = new ProductResourceQueryCriteria();
                 if (!criteria.IsValid())
                 {
                     throw new CriteriaException(criteria);

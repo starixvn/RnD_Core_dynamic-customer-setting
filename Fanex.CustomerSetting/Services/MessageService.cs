@@ -161,7 +161,7 @@
             foreach (var group in groups)
             {
                 var roleTypeName = GetRoleTypeName(messageId);
-                var userNames = string.Join(" ,", group.Rows.Select(row => row.UserName));
+                var userNames = string.Join(", ", group.Rows.Select(row => row.UserName));
                 stringBuilder.AppendFormat("<br />{0} - {1}: {2}", group.ToString(_resourceService, messageInfo), roleTypeName, userNames);
             }
 

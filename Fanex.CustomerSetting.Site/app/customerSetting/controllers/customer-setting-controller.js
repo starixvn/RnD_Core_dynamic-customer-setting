@@ -27,25 +27,35 @@
             $scope.positionTakingTemplate = templateService.resolvePositionTaking(productId, formType, $scope.setting.PositionTakingLevel);
         });
 
+        var selectSettingType;
         $scope.updateStatuses = function () {
+            selectSettingType = appSettings.settingType.Status;
             update(appSettings.settingType.Status);
         };
 
         $scope.updateDiscounts = function () {
+            selectSettingType = appSettings.settingType.Discount;
             update(appSettings.settingType.Discount);
         };
 
         $scope.updateBetLimits = function () {
+            selectSettingType = appSettings.settingType.BetLimit;
             update(appSettings.settingType.BetLimit);
         };
 
         $scope.updatePositionTakings = function () {
+            selectSettingType = appSettings.settingType.PositionTaking;
             update(appSettings.settingType.PositionTaking);
         };
 
         $scope.updateAll = function () {
+            selectSettingType = appSettings.settingType.All;
             update(appSettings.settingType.All);
         };
+
+        $rootScope.$on('update-member-position-taking', function (event, updateMemberPt) {
+            update(selectSettingType, updateMemberPt);
+        });
 
         function hasUpdate(data, isShowNoChange) {
             if (angular.isUndefined(data)) {
@@ -85,12 +95,12 @@
             }
 
             if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
-                var memberPTs = [];
+                var memberPtss = [];
                 angular.forEach(data, function (pt) {
                     var isAuto = pt[isAutoPTName];
                     if (isAuto === false) {
                         var ptValue = pt[ptName];
-                        memberPTs.push({
+                        memberPtss.push({
                             SportType: pt.SportType,
                             BetType: pt.BetType,
                             IsLive: pt.IsLive,
@@ -100,9 +110,9 @@
                     }
                 });
 
-                if (memberPTs.length > 0) {
+                if (memberPtss.length > 0) {
                     $rootScope.updateModal = {
-                        MemberPTs: memberPTs
+                        MemberPTs: memberPtss
                     };
                     return true;
                 }
@@ -111,7 +121,7 @@
             return false;
         }
 
-        function update(settingType) {
+        function update(settingType, updateMemberPt) {
             messageService.hide();
             var positionTakings;
             var betLimits;
@@ -128,7 +138,7 @@
                         return;
                     }
 
-                    if (hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPt) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
 
@@ -140,7 +150,7 @@
                         return;
                     }
 
-                    if (hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPt) && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
                     break;
@@ -165,6 +175,31 @@
                         return;
                     }
                     break;
+            }
+
+            if (angular.isDefined(updateMemberPt)) {
+                var isUpdateAllMembers = updateMemberPt.IsUpdateAllMembers;
+                var memberPts = updateMemberPt.MemberPts;
+                var newPositionTakings = [];
+                angular.forEach(positionTakings, function (positionTaking) {
+                    var isFound = false;
+                    var newPositionTaking = positionTaking;
+                    angular.forEach(memberPts, function (memberPt) {
+                        if (!isFound
+                            && newPositionTaking.SportType === memberPt.SportType
+                            && newPositionTaking.BetType === memberPt.BetType
+                            && newPositionTaking.IsLive === memberPt.IsLive) {
+                            newPositionTaking = angular.extend({
+                                IsUpdateAllMembers: isUpdateAllMembers,
+                                MemberPositionTaking: memberPt.Pt
+                            }, newPositionTaking);
+                            newPositionTakings.push(newPositionTaking);
+                            isFound = true;
+                        }
+                    });
+                });
+
+                positionTakings = newPositionTakings;
             }
 
             var updateModel = angular.extend({

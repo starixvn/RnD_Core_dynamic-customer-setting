@@ -1,9 +1,9 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope', 'messageService'];
-    var dataService = function ($http, $rootScope, messageService) {
-        function isSuccess(response) {
+    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings'];
+    var dataService = function ($http, $rootScope, messageService, appSettings) {
+        function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
                 return false;
@@ -15,7 +15,11 @@
         this.select = function (selectModel, successCallback) {
             var request = $http.post('/CustomerSetting/Select', selectModel);
             request.success(function (response) {
-                if (isSuccess(response) && angular.isFunction(successCallback)) {
+                if (!isSuccessResponse(response)) {
+                    return;
+                }
+
+                if (angular.isFunction(successCallback)) {
                     successCallback(response);
                 }
             });
@@ -26,21 +30,39 @@
         this.update = function (updateModel, successCallback) {
             var request = $http.post('/CustomerSetting/Update', updateModel);
             request.success(function (response) {
-                var message = response.ErrMsg;
-                if (response.Results) {
-                    var messsages = [];
-                    angular.forEach(response.Results, function (result) {
-                        messsages.push(result.ErrMsg);
-                    });
-                    message = messsages.join('<br />');
-                }
-                if (isSuccess(response)) {
-                    messageService.showSuccess(message);
-                } else {
-                    messageService.showError(message);
+                if (!isSuccessResponse(response)) {
+                    return;
                 }
 
-                if (isSuccess(response) && angular.isFunction(successCallback)) {
+                var results = [];
+                switch (updateModel.SettingType) {
+                    case appSettings.settingType.All:
+                        results.push(response.StatusResult);
+                        results.push(response.DiscountResult);
+                        results.push(response.BetLimitResult);
+                        results.push(response.PositionTakingResult);
+                        break;
+
+                    case appSettings.settingType.Status:
+                        results.push(response.StatusResult);
+                        break;
+
+                    case appSettings.settingType.Discount:
+                        results.push(response.DiscountResult);
+                        break;
+
+                    case appSettings.settingType.BetLimit:
+                        results.push(response.BetLimitResult);
+                        break;
+
+                    case appSettings.settingType.PositionTaking:
+                        results.push(response.PositionTakingResult);
+                        break;
+                }
+
+                messageService.showResults(results);
+
+                if (angular.isFunction(successCallback)) {
                     successCallback(response);
                 }
             });

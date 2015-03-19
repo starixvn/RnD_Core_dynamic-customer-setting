@@ -12,6 +12,11 @@
         public const int NoChangeValue = -2;
         public const int AccessDeniedValue = -3;
 
+        public Result(Result result)
+            : this(result.ErrCode, result.ErrMsg)
+        {
+        }
+
         public Result(int errCode, string errMsg)
         {
             ErrCode = errCode;

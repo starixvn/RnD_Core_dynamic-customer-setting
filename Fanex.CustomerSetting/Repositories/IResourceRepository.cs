@@ -9,6 +9,6 @@
     /// </summary>
     public interface IResourceRepository
     {
-        IEnumerable<ProductResourceEntity> GetProductResources(ProductResourceSelectCriteria criteria);
+        IEnumerable<ProductResourceEntity> GetProductResources(ProductResourceQueryCriteria criteria);
     }
 }

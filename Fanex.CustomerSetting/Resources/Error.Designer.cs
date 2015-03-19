@@ -178,56 +178,146 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Existing members exceeded new Master Max PT.
-        /// </summary>
-        public static string PositionTaking_20012 {
-            get {
-                return ResourceManager.GetString("PositionTaking_20012", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Existing masters exceeded new Super Max PT.
         /// </summary>
-        public static string PositionTaking_20013 {
+        public static string PositionTaking_20019 {
             get {
-                return ResourceManager.GetString("PositionTaking_20013", resourceCulture);
+                return ResourceManager.GetString("PositionTaking_20019", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Existing members exceeded new Super Max PT.
         /// </summary>
-        public static string PositionTaking_20014 {
+        public static string PositionTaking_20020 {
             get {
-                return ResourceManager.GetString("PositionTaking_20014", resourceCulture);
+                return ResourceManager.GetString("PositionTaking_20020", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Existing masters exceeded new Master Max PT.
         /// </summary>
-        public static string PositionTaking_20015 {
+        public static string PositionTaking_20021 {
             get {
-                return ResourceManager.GetString("PositionTaking_20015", resourceCulture);
+                return ResourceManager.GetString("PositionTaking_20021", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing members exceeded new Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20022 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20022", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Existing agents exceeded new Agent Max PT.
         /// </summary>
-        public static string PositionTaking_20016 {
+        public static string PositionTaking_20023 {
             get {
-                return ResourceManager.GetString("PositionTaking_20016", resourceCulture);
+                return ResourceManager.GetString("PositionTaking_20023", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Existing members exceeded new Agent Max PT.
         /// </summary>
-        public static string PositionTaking_20017 {
+        public static string PositionTaking_20024 {
             get {
-                return ResourceManager.GetString("PositionTaking_20017", resourceCulture);
+                return ResourceManager.GetString("PositionTaking_20024", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Upline Min/Max PT.
+        /// </summary>
+        public static string PositionTaking_20025 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20025", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing agents exceeded new Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20026 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20026", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Master Max PT set by company.
+        /// </summary>
+        public static string PositionTaking_20027 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20027", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Super Max PT.
+        /// </summary>
+        public static string PositionTaking_20028 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20028", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Super Min PT.
+        /// </summary>
+        public static string PositionTaking_20029 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20029", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Agent Min PT violates Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20030 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20030", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Master Max PT.
+        /// </summary>
+        public static string PositionTaking_20031 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20031", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Master Min PT.
+        /// </summary>
+        public static string PositionTaking_20032 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20032", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Agent Min/Max PT.
+        /// </summary>
+        public static string PositionTaking_20033 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20033", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The position taking violates Agent Max PT.
+        /// </summary>
+        public static string PositionTaking_20034 {
+            get {
+                return ResourceManager.GetString("PositionTaking_20034", resourceCulture);
             }
         }
         

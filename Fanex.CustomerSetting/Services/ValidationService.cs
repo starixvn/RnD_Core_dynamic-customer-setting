@@ -37,7 +37,7 @@
         /// </summary>
         /// <param name="model">The select model.</param>
         /// <returns>Returns model validation.</returns>
-        public Result Validate(SelectInfo model)
+        public Result Validate(QueryInfo model)
         {
             var result = ValidateRole(model);
             if (!result.IsSuccess)
@@ -59,7 +59,7 @@
         /// </summary>
         /// <param name="model">The update model.</param>
         /// <returns>Returns model validation.</returns>
-        public Result Validate(UpdateInfo model)
+        public Result Validate(CommandInfo model)
         {
             var result = ValidateRole(model);
             if (!result.IsSuccess)
@@ -91,7 +91,7 @@
            "StyleCop.CSharp.Nexcel.NexcelCustomRules",
            "SP2101:MethodMustNotContainMoreLinesThan",
            Justification = "Switch has multiple cases.")]
-        private Result ValidateRole(SelectInfo model)
+        private Result ValidateRole(QueryInfo model)
         {
             switch (model.FormType)
             {
@@ -147,7 +147,7 @@
             return Result.Success;
         }
 
-        private Result ValidateDownline(SelectInfo model)
+        private Result ValidateDownline(QueryInfo model)
         {
             return Result.Success;
         }
@@ -161,7 +161,7 @@
            "StyleCop.CSharp.Nexcel.NexcelCustomRules",
            "SP2101:MethodMustNotContainMoreLinesThan",
            Justification = "Switch has multiple cases.")]
-        private Result ValidateProductProfile(UpdateInfo model)
+        private Result ValidateProductProfile(CommandInfo model)
         {
             var productProfile = _productProfileService.GetProductProfile(model.ProductId);
             switch (model.SettingType)

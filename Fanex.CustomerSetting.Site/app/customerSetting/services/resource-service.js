@@ -21,7 +21,12 @@
 
         this.getString = function (key) {
             var value = resource[key];
-            return angular.isDefined(value) ? value : key;
+            if (angular.isDefined(value)) {
+                value = value.replace(/&apos;|&#x0*27;/g, "'");
+            } else {
+                value = key;
+            }
+            return value;
         };
 
         this.getFormatString = function (key) {

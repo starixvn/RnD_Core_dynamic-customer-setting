@@ -8,7 +8,7 @@
     /// </summary>
     public class MessageInfo
     {
-        public MessageInfo(UpdateCriteria criteria)
+        public MessageInfo(CommandCriteria criteria)
         {
             this.ErrCode = criteria.ErrCode;
             this.ErrMsg = criteria.ErrMsg;

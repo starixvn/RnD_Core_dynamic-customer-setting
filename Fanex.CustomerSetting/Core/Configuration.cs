@@ -7,7 +7,7 @@
     {
         public const decimal MaxDiscountValue = 1m;
         public const decimal MaxBetLimitValue = 99999999999;
-        public const decimal MaxPositionTakingValue = 9000;
+        public const byte MaxPositionTakingValue = 90;
         public const int CacheTimeout = 12 * 60 * 60; // 1 day
         public const string ProductResourceCacheKey = "CSR_PRODUCT_RESOURCE";
 

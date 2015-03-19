@@ -49,6 +49,9 @@
         Update: "Update",
         UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
         UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "You have changed your position taking",
+        UpdateMemberPtQuestion: "Do you want to update all member&apos;s position taking to:",
+        UpdateMemberPtTitle: "Confirm Update Members&apos;s PT",
         UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
         UpdateProductStatusSuccessfully: "Updated product status successfully.",
         UserName: "UserName"

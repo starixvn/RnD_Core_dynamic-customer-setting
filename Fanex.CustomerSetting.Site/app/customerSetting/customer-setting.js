@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-18 14:03:55
+// customer-setting - v0.0.1 - 2015-03-19 14:03:23
 
 'use strict';
 
@@ -66,25 +66,35 @@
             $scope.positionTakingTemplate = templateService.resolvePositionTaking(productId, formType, $scope.setting.PositionTakingLevel);
         });
 
+        var selectSettingType;
         $scope.updateStatuses = function () {
+            selectSettingType = appSettings.settingType.Status;
             update(appSettings.settingType.Status);
         };
 
         $scope.updateDiscounts = function () {
+            selectSettingType = appSettings.settingType.Discount;
             update(appSettings.settingType.Discount);
         };
 
         $scope.updateBetLimits = function () {
+            selectSettingType = appSettings.settingType.BetLimit;
             update(appSettings.settingType.BetLimit);
         };
 
         $scope.updatePositionTakings = function () {
+            selectSettingType = appSettings.settingType.PositionTaking;
             update(appSettings.settingType.PositionTaking);
         };
 
         $scope.updateAll = function () {
+            selectSettingType = appSettings.settingType.All;
             update(appSettings.settingType.All);
         };
+
+        $rootScope.$on('update-member-position-taking', function (event, updateMemberPt) {
+            update(selectSettingType, updateMemberPt);
+        });
 
         function hasUpdate(data, isShowNoChange) {
             if (angular.isUndefined(data)) {
@@ -124,12 +134,12 @@
             }
 
             if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
-                var memberPTs = [];
+                var memberPtss = [];
                 angular.forEach(data, function (pt) {
                     var isAuto = pt[isAutoPTName];
                     if (isAuto === false) {
                         var ptValue = pt[ptName];
-                        memberPTs.push({
+                        memberPtss.push({
                             SportType: pt.SportType,
                             BetType: pt.BetType,
                             IsLive: pt.IsLive,
@@ -139,9 +149,9 @@
                     }
                 });
 
-                if (memberPTs.length > 0) {
+                if (memberPtss.length > 0) {
                     $rootScope.updateModal = {
-                        MemberPTs: memberPTs
+                        MemberPTs: memberPtss
                     };
                     return true;
                 }
@@ -150,7 +160,7 @@
             return false;
         }
 
-        function update(settingType) {
+        function update(settingType, updateMemberPt) {
             messageService.hide();
             var positionTakings;
             var betLimits;
@@ -167,7 +177,7 @@
                         return;
                     }
 
-                    if (hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPt) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
 
@@ -179,7 +189,7 @@
                         return;
                     }
 
-                    if (hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPt) && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
                     break;
@@ -206,7 +216,31 @@
                     break;
             }
 
-            return;
+            if (angular.isDefined(updateMemberPt)) {
+                var isUpdateAllMembers = updateMemberPt.IsUpdateAllMembers;
+                var memberPts = updateMemberPt.MemberPts;
+                var newPositionTakings = [];
+                angular.forEach(positionTakings, function (positionTaking) {
+                    var isFound = false;
+                    var newPositionTaking = positionTaking;
+                    angular.forEach(memberPts, function (memberPt) {
+                        if (!isFound
+                            && newPositionTaking.SportType === memberPt.SportType
+                            && newPositionTaking.BetType === memberPt.BetType
+                            && newPositionTaking.IsLive === memberPt.IsLive) {
+                            newPositionTaking = angular.extend({
+                                IsUpdateAllMembers: isUpdateAllMembers,
+                                MemberPositionTaking: memberPt.Pt
+                            }, newPositionTaking);
+                            newPositionTakings.push(newPositionTaking);
+                            isFound = true;
+                        }
+                    });
+                });
+
+                positionTakings = newPositionTakings;
+            }
+
             var updateModel = angular.extend({
                 UserName: $scope.information.UserName,
                 SettingType: settingType,
@@ -695,8 +729,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['commonService'];
-    var customerSettingDialogDirective = function (commonService) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService'];
+    var customerSettingDialogDirective = function ($rootScope, commonService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
@@ -705,9 +739,34 @@
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-dialog.htm',
             link: function (scope) {
+                scope.resourceService = resourceService;
                 scope.isShow = false;
-                scope.hide = function () {
+                function update(isUpdateAllMembers) {
+                    var memberPts = [];
+                    angular.forEach(scope.pts, function (pt) {
+                        memberPts.push({
+                            SportType: pt.sportType,
+                            BetType: pt.betType,
+                            IsLive: pt.isLive,
+                            Pt: isUpdateAllMembers ? pt.value : 0
+                        });
+                    });
+                    $rootScope.$broadcast('update-member-position-taking', {
+                        IsUpdateAllMembers: isUpdateAllMembers,
+                        MemberPts: memberPts
+                    });
+                }
+
+                scope.clickClose = function () {
                     scope.isShow = false;
+                };
+                scope.clickYes = function () {
+                    scope.isShow = false;
+                    update(true);
+                };
+                scope.clickNo = function () {
+                    scope.isShow = false;
+                    update(false);
                 };
 
                 scope.$watch('data', function (newValue, oldValue) {
@@ -720,12 +779,15 @@
                         return;
                     }
 
-                    var memberPTs = scope.data.MemberPTs;
+                    var memberPtss = scope.data.MemberPTs;
                     var pts = [];
-                    angular.forEach(memberPTs, function(memberPT){
-                        var ptSelect = commonService.createPositionTakingSelect(0, memberPT.Pt, memberPT.Pt);
+                    angular.forEach(memberPtss, function (memberPts) {
+                        var ptSelect = commonService.createPositionTakingSelect(0, memberPts.Pt, memberPts.Pt);
                         pts.push({
-                            name: memberPT.Name,
+                            sportType: memberPts.SportType,
+                            betType: memberPts.BetType,
+                            isLive: memberPts.IsLive,
+                            name: memberPts.Name,
                             value: ptSelect.value,
                             options: ptSelect.options
                         });
@@ -1255,9 +1317,9 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope', 'messageService'];
-    var dataService = function ($http, $rootScope, messageService) {
-        function isSuccess(response) {
+    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings'];
+    var dataService = function ($http, $rootScope, messageService, appSettings) {
+        function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
                 return false;
@@ -1269,7 +1331,11 @@
         this.select = function (selectModel, successCallback) {
             var request = $http.post('/CustomerSetting/Select', selectModel);
             request.success(function (response) {
-                if (isSuccess(response) && angular.isFunction(successCallback)) {
+                if (!isSuccessResponse(response)) {
+                    return;
+                }
+
+                if (angular.isFunction(successCallback)) {
                     successCallback(response);
                 }
             });
@@ -1280,21 +1346,39 @@
         this.update = function (updateModel, successCallback) {
             var request = $http.post('/CustomerSetting/Update', updateModel);
             request.success(function (response) {
-                var message = response.ErrMsg;
-                if (response.Results) {
-                    var messsages = [];
-                    angular.forEach(response.Results, function (result) {
-                        messsages.push(result.ErrMsg);
-                    });
-                    message = messsages.join('<br />');
-                }
-                if (isSuccess(response)) {
-                    messageService.showSuccess(message);
-                } else {
-                    messageService.showError(message);
+                if (!isSuccessResponse(response)) {
+                    return;
                 }
 
-                if (isSuccess(response) && angular.isFunction(successCallback)) {
+                var results = [];
+                switch (updateModel.SettingType) {
+                    case appSettings.settingType.All:
+                        results.push(response.StatusResult);
+                        results.push(response.DiscountResult);
+                        results.push(response.BetLimitResult);
+                        results.push(response.PositionTakingResult);
+                        break;
+
+                    case appSettings.settingType.Status:
+                        results.push(response.StatusResult);
+                        break;
+
+                    case appSettings.settingType.Discount:
+                        results.push(response.DiscountResult);
+                        break;
+
+                    case appSettings.settingType.BetLimit:
+                        results.push(response.BetLimitResult);
+                        break;
+
+                    case appSettings.settingType.PositionTaking:
+                        results.push(response.PositionTakingResult);
+                        break;
+                }
+
+                messageService.showResults(results);
+
+                if (angular.isFunction(successCallback)) {
                     successCallback(response);
                 }
             });
@@ -1524,30 +1608,89 @@
         messageClasses[appSettings.messageType.Warning] = 'warning';
         messageClasses[appSettings.messageType.Error] = 'error';
 
-        var show = function (message, messageType) {
-            $timeout(function () {
-                $rootScope.hasMessage = true;
-                $rootScope.messageClass = messageClasses[messageType];
-                $rootScope.message = $sce.trustAsHtml(message);
+        var Message = function (messageType, messageContent) {
+            this.MessageType = messageType;
+            this.MessageContent = messageContent;
+        };
+
+        function generateMesage(result) {
+            var messageType = appSettings.messageType.Error;
+            switch (result.ErrCode) {
+                case appSettings.errCode.Success:
+                    messageType = appSettings.messageType.Success;
+                    break;
+
+                case appSettings.errCode.NoChange:
+                    messageType = appSettings.messageType.Warning;
+                    break;
+            }
+
+            var messageContent = result.ErrMsg || 'Undefined messsage';
+            return new Message(messageType, messageContent);
+        }
+
+        function showMessage(message) {
+            var htmlMessages = [];
+            htmlMessages.push({
+                messageClass: messageClasses[message.MessageType],
+                messageContent: $sce.trustAsHtml(message.MessageContent)
             });
             commonService.scrollToTop();
+
+            $timeout(function () {
+                $rootScope.messages = htmlMessages;
+            });
+        }
+
+        function showMessages(messages) {
+            var htmlMessages = [];
+            angular.forEach(messages, function (message) {
+                htmlMessages.push({
+                    messageClass: messageClasses[message.MessageType],
+                    messageContent: $sce.trustAsHtml(message.MessageContent)
+                });
+            });
+            commonService.scrollToTop();
+
+            $timeout(function () {
+                $rootScope.messages = htmlMessages;
+            });
+        }
+
+        this.showMessage = function (messageType, messageContent) {
+            var message = new Message(messageType, messageContent);
+            showMessage(message);
         };
 
-        this.showSuccess = function (message) {
-            show(message || 'Undefined success', appSettings.messageType.Success);
+        this.showResult = function (result) {
+            var message = generateMesage(result);
+            showMessage(message);
         };
 
-        this.showWarning = function (message) {
-            show(message || 'Undefined warning', appSettings.messageType.Warning);
+        this.showResults = function (results) {
+            var messages = [];
+            angular.forEach(results, function (result) {
+                var message = generateMesage(result);
+                messages.push(message);
+            });
+
+            showMessages(messages);
         };
 
-        this.showError = function (message) {
-            show(message || 'Undefined error', appSettings.messageType.Error);
+        this.showSuccess = function (messageContent) {
+            this.showMessage(appSettings.messageType.Success, messageContent || 'Undefined success message');
+        };
+
+        this.showWarning = function (messageContent) {
+            this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+        };
+
+        this.showError = function (messageContent) {
+            this.showMessage(appSettings.messageType.Error, messageContent || 'Undefined error message');
         };
 
         this.hide = function () {
-            $rootScope.hasMessage = false;
-            $rootScope.message = undefined;
+            $rootScope.messages = undefined;
         };
     };
 
@@ -1578,7 +1721,12 @@
 
         this.getString = function (key) {
             var value = resource[key];
-            return angular.isDefined(value) ? value : key;
+            if (angular.isDefined(value)) {
+                value = value.replace(/&apos;|&#x0*27;/g, "'");
+            } else {
+                value = key;
+            }
+            return value;
         };
 
         this.getFormatString = function (key) {
@@ -1785,6 +1933,9 @@
         Update: "Update",
         UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
         UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "You have changed your position taking",
+        UpdateMemberPtQuestion: "Do you want to update all member&apos;s position taking to:",
+        UpdateMemberPtTitle: "Confirm Update Members&apos;s PT",
         UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
         UpdateProductStatusSuccessfully: "Updated product status successfully.",
         UserName: "UserName"
@@ -1908,6 +2059,12 @@
             Success: 0,
             FormInvalid: 1,
             NoChange: 2
+        },
+        errCode: {
+            Success: 0,
+            ErrorValue: -1,
+            NoChange: -2,
+            AccessDenied: -3
         },
         messageType: {
             Success: 0,

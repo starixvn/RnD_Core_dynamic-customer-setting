@@ -8,30 +8,89 @@
         messageClasses[appSettings.messageType.Warning] = 'warning';
         messageClasses[appSettings.messageType.Error] = 'error';
 
-        var show = function (message, messageType) {
-            $timeout(function () {
-                $rootScope.hasMessage = true;
-                $rootScope.messageClass = messageClasses[messageType];
-                $rootScope.message = $sce.trustAsHtml(message);
+        var Message = function (messageType, messageContent) {
+            this.MessageType = messageType;
+            this.MessageContent = messageContent;
+        };
+
+        function generateMesage(result) {
+            var messageType = appSettings.messageType.Error;
+            switch (result.ErrCode) {
+                case appSettings.errCode.Success:
+                    messageType = appSettings.messageType.Success;
+                    break;
+
+                case appSettings.errCode.NoChange:
+                    messageType = appSettings.messageType.Warning;
+                    break;
+            }
+
+            var messageContent = result.ErrMsg || 'Undefined messsage';
+            return new Message(messageType, messageContent);
+        }
+
+        function showMessage(message) {
+            var htmlMessages = [];
+            htmlMessages.push({
+                messageClass: messageClasses[message.MessageType],
+                messageContent: $sce.trustAsHtml(message.MessageContent)
             });
             commonService.scrollToTop();
+
+            $timeout(function () {
+                $rootScope.messages = htmlMessages;
+            });
+        }
+
+        function showMessages(messages) {
+            var htmlMessages = [];
+            angular.forEach(messages, function (message) {
+                htmlMessages.push({
+                    messageClass: messageClasses[message.MessageType],
+                    messageContent: $sce.trustAsHtml(message.MessageContent)
+                });
+            });
+            commonService.scrollToTop();
+
+            $timeout(function () {
+                $rootScope.messages = htmlMessages;
+            });
+        }
+
+        this.showMessage = function (messageType, messageContent) {
+            var message = new Message(messageType, messageContent);
+            showMessage(message);
         };
 
-        this.showSuccess = function (message) {
-            show(message || 'Undefined success', appSettings.messageType.Success);
+        this.showResult = function (result) {
+            var message = generateMesage(result);
+            showMessage(message);
         };
 
-        this.showWarning = function (message) {
-            show(message || 'Undefined warning', appSettings.messageType.Warning);
+        this.showResults = function (results) {
+            var messages = [];
+            angular.forEach(results, function (result) {
+                var message = generateMesage(result);
+                messages.push(message);
+            });
+
+            showMessages(messages);
         };
 
-        this.showError = function (message) {
-            show(message || 'Undefined error', appSettings.messageType.Error);
+        this.showSuccess = function (messageContent) {
+            this.showMessage(appSettings.messageType.Success, messageContent || 'Undefined success message');
+        };
+
+        this.showWarning = function (messageContent) {
+            this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+        };
+
+        this.showError = function (messageContent) {
+            this.showMessage(appSettings.messageType.Error, messageContent || 'Undefined error message');
         };
 
         this.hide = function () {
-            $rootScope.hasMessage = false;
-            $rootScope.message = undefined;
+            $rootScope.messages = undefined;
         };
     };
 
