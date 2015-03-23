@@ -173,6 +173,7 @@
     <Content Include="app\customerSetting\directives\bet-limit-input.js" />
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
+    <Content Include="app\customerSetting\directives\master-edit-agent-position-taking.js" />
     <Content Include="app\customerSetting\directives\customer-setting-dialog.js" />
     <Content Include="app\customerSetting\directives\super-edit-master-position-taking.js" />
     <Content Include="app\customerSetting\directives\customer-setting-status.js" />
@@ -195,7 +196,19 @@
     <Content Include="app\customerSetting\services\tooltip-service.js" />
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
+    <Content Include="app\customerSetting\templates\agent-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\master-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\no-group\master-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\no-group\super-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\master-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\super-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\super-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\master-edit-agent-position-taking.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-dialog.htm" />
+    <Content Include="app\customerSetting\templates\no-group\agent-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\no-group\master-edit-agent-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\agent-edit-member-position-taking-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\master-edit-agent-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\super-edit-master-position-taking.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-view.htm" />
     <Content Include="app\customerSetting\templates\no-group\betlimit-container.htm" />

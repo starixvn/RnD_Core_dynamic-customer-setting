@@ -7,14 +7,14 @@
             var superPT = 0;
             var masterMaxPTMin = 0;
             var masterMaxPTMax = 0;
-            if (data.IS3) {
+            if (!data.IS3) {
+                superPT = data.S3;
+                masterMaxPTMin = data.N4 - data.S3;
+                masterMaxPTMax = Math.min(data.S4 - data.S3, data.M4);
+            } else {
                 superPT = data.US3;
                 masterMaxPTMin = data.N4 - data.US3;
                 masterMaxPTMax = Math.min(data.S4, data.M4);
-            } else {
-                superPT = data.S3;
-                masterMaxPTMin = data.N4 - data.N4;
-                masterMaxPTMax = Math.min(data.S4 - data.S4, data.M4);
             }
             return {
                 superPT: commonService.createPositionTakingSelect(0, data.S4, superPT),
@@ -83,37 +83,31 @@
                 };
             } ],
             link: function (scope) {
+                function updateMasterMaxPT(){
+                    if (!scope.superIsAuto) {
+                        scope.masterMaxPT = commonService.createPositionTakingSelect(
+                            scope.positionTaking.N4 - scope.superPT.value,
+                            Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.M4),
+                            scope.masterMaxPT.value);
+                    } else {
+                        scope.masterMaxPT = commonService.createPositionTakingSelect(
+                            scope.positionTaking.N4 - scope.superPT.value,
+                            Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
+                            scope.masterMaxPT.value);
+                    }
+                }
+
                 scope.$watch('superPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        if (scope.superIsAuto) {
-                            scope.masterMaxPT = commonService.createPositionTakingSelect(
-                                scope.positionTaking.N4 - scope.positionTaking.US3,
-                                Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
-                                scope.positionTaking.M3);
-                        } else {
-                            scope.masterMaxPT = commonService.createPositionTakingSelect(
-                                scope.positionTaking.N4 - scope.positionTaking.S3,
-                                Math.min(scope.positionTaking.S4 - scope.positionTaking.S3, scope.positionTaking.M4),
-                                scope.positionTaking.M3);
-                        }
+                        updateMasterMaxPT();
                     }
                 });
 
                 scope.$watch('superIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        if (scope.superIsAuto) {
-                            scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, scope.positionTaking.US3);
-                            scope.masterMaxPT = commonService.createPositionTakingSelect(
-                                scope.positionTaking.N4 - scope.positionTaking.US3,
-                                Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
-                                scope.positionTaking.M3);
-                        } else {
-                            scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, scope.positionTaking.S3);
-                            scope.masterMaxPT = commonService.createPositionTakingSelect(
-                                scope.positionTaking.N4 - scope.positionTaking.S3,
-                                Math.min(scope.positionTaking.S4 - scope.positionTaking.S3, scope.positionTaking.M4),
-                                scope.positionTaking.M3);
-                        }
+                        var superPT = scope.superIsAuto ? scope.positionTaking.US3 : scope.positionTaking.S3;
+                        scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, superPT);
+                        updateMasterMaxPT();
                     }
                 });
 

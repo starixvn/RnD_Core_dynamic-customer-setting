@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'resourceService', 'linkingService', 'appSettings'];
+    var injectParams = ['$rootScope', '$filter', 'resourceService', 'linkingService', 'appSettings'];
     var errType = {
         none: 0,
         limit: 1,
@@ -9,7 +9,7 @@
         maxBet: 3,
         maxPerMatch: 4
     };
-    var customerSettingBetLimitDirective = function ($rootScope, resourceService, linkingService, appSettings) {
+    var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, linkingService, appSettings) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -162,7 +162,8 @@
                     }
 
                     if (scope.minBet.value < scope.minBet.limit) {
-                        scope.minBet.setInvalid(errType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', scope.minBet.limit));
+                        var formattedNumber = $filter('number')(scope.minBet.limit);
+                        scope.minBet.setInvalid(errType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
                     }
                     else {
                         scope.minBet.setValid(errType.limit);
@@ -185,7 +186,8 @@
                     }
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
-                        scope.maxBet.setInvalid(errType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', scope.maxBet.limit));
+                        var formattedNumber = $filter('number')(scope.maxBet.limit);
+                        scope.maxBet.setInvalid(errType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
                     }
                     else {
                         scope.maxBet.setValid(errType.limit);
@@ -216,7 +218,7 @@
                     }
 
                     if (scope.maxPerMatch.value > scope.maxPerMatch.limit) {
-                        var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', scope.maxPerMatch.limit);
+                        var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', $filter('number')(scope.maxPerMatch.limit));
                         scope.maxPerMatch.setInvalid(errType.limit, errMsg);
                     } else {
                         scope.maxPerMatch.setValid(errType.limit);

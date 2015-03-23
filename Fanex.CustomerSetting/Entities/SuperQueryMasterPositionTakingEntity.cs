@@ -16,10 +16,10 @@ namespace Fanex.CustomerSetting.Entities
         public byte S3 { get; set; }
 
         /// <summary>
-        /// Master Max PT.
+        /// Super Auto PT.
         /// </summary>
-        [OutputElement("MasterPT")]
-        public byte M3 { get; set; }
+        [OutputElement("AutoSuperPT")]
+        public byte US3 { get; set; }
 
         /// <summary>
         /// Super Is Auto.
@@ -28,10 +28,10 @@ namespace Fanex.CustomerSetting.Entities
         public bool IS3 { get; set; }
 
         /// <summary>
-        /// Super Auto PT.
+        /// Master Max PT.
         /// </summary>
-        [OutputElement("AutoSuperPT")]
-        public byte US3 { get; set; }
+        [OutputElement("MasterPT")]
+        public byte M3 { get; set; }
 
         /// <summary>
         /// Master Min PT.

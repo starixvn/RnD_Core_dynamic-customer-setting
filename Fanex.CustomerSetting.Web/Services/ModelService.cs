@@ -11,9 +11,11 @@
     /// </summary>
     public class ModelService : IModelService
     {
-        public List<ProductStatusEntity> ParseStatus(string status, FormType formType)
+        private const int MaxJsonStringLength = 10000;
+
+        public IEnumerable<ProductStatusEntity> ParseStatus(string status, FormType formType)
         {
-            if (string.IsNullOrEmpty(status))
+            if (string.IsNullOrEmpty(status) || status.Length > MaxJsonStringLength)
             {
                 return new List<ProductStatusEntity>();
             }
@@ -21,9 +23,9 @@
             return JsonConvert.DeserializeObject<List<ProductStatusEntity>>(status, new StatusJsonConverter(formType));
         }
 
-        public List<DiscountEntity> ParseDiscount(string discount, FormType formType)
+        public IEnumerable<DiscountEntity> ParseDiscount(string discount, FormType formType)
         {
-            if (string.IsNullOrEmpty(discount))
+            if (string.IsNullOrEmpty(discount) || discount.Length > MaxJsonStringLength)
             {
                 return new List<DiscountEntity>();
             }
@@ -31,9 +33,9 @@
             return JsonConvert.DeserializeObject<List<DiscountEntity>>(discount, new DiscountJsonConverter(formType));
         }
 
-        public List<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType)
+        public IEnumerable<BetLimitEntity> ParseBetLimit(string betLimit, FormType formType)
         {
-            if (string.IsNullOrEmpty(betLimit))
+            if (string.IsNullOrEmpty(betLimit) || betLimit.Length > MaxJsonStringLength)
             {
                 return new List<BetLimitEntity>();
             }
@@ -41,9 +43,9 @@
             return JsonConvert.DeserializeObject<List<BetLimitEntity>>(betLimit, new BetLimitJsonConverter(formType));
         }
 
-        public List<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType)
+        public IEnumerable<PositionTakingEntity> ParsePositionTaking(string positionTaking, FormType formType)
         {
-            if (string.IsNullOrEmpty(positionTaking))
+            if (string.IsNullOrEmpty(positionTaking) || positionTaking.Length > MaxJsonStringLength)
             {
                 return new List<PositionTakingEntity>();
             }

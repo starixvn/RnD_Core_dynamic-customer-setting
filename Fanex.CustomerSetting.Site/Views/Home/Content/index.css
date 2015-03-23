@@ -43,6 +43,11 @@ iframe
     z-index: 1;
 }
 
+.separator
+{
+    height: 5px;
+}
+
 .login-form > div > div > label
 {
     font-weight: normal;

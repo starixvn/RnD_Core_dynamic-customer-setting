@@ -1,17 +1,19 @@
-﻿angular.module('indexModule', []).controller('IndexController',
-        ['$scope', '$http', function ($scope, $http) {
+﻿'use strict';
+
+angular.module('indexModule', []).controller('IndexController', ['$scope', '$http',
+function ($scope, $http) {
+    var roleType = {
+        Company: 5,
+        Super: 4,
+        Master: 3,
+        Agent: 2
+    };
+
     $scope.productId = 255;
     $scope.superId = 197461;
     $scope.masterId = 197475;
-    $scope.agentId = 0;
-    $scope.memberId = 0;
-    $scope.roles = [
-        { name: "Company", value: 5 },
-        { name: "Super", value: 4 },
-        { name: "Master", value: 3 },
-        { name: "Agent", value: 2 }
-    ];
-
+    $scope.agentId = 181595;
+    $scope.memberId = 73103;
     $scope.languages = [
         { name: "English", value: "en-US" },
         { name: "繁體中文", value: "zh-TW" },
@@ -20,53 +22,54 @@
         { name: "ภาษาไทย", value: "th-TH" },
         { name: "한국어", value: "ko-KR" }
     ];
+    $scope.roles = [];
+    for (var key in roleType) {
+        $scope.roles.push({
+            name: key,
+            value: roleType[key]
+        });
+    }
 
     $scope.roleChange = function () {
         switch ($scope.LoginForm.RoleId) {
-            case 1:
-                $scope.LoginForm.CustId = 73103;
-                $scope.LoginForm.DisableLogin = false;
-                break;
-            case 2:
+            case roleType.Agent:
                 $scope.LoginForm.CustId = 181595;
                 $scope.LoginForm.SubAccountId = 1;
                 $scope.LoginForm.DisableLogin = false;
                 break;
-            case 3:
+            case roleType.Master:
                 $scope.LoginForm.CustId = 68287;
                 $scope.LoginForm.SubAccountId = 2;
                 $scope.LoginForm.DisableLogin = false;
                 break;
-            case 4:
+            case roleType.Super:
                 $scope.LoginForm.CustId = 197461;
                 $scope.LoginForm.SubAccountId = 3;
                 $scope.LoginForm.DisableLogin = false;
                 break;
-            case 5:
+            case roleType.Company:
                 $scope.LoginForm.CustId = 8;
                 $scope.LoginForm.SubAccountId = 111;
                 $scope.LoginForm.DisableLogin = false;
                 break;
             default:
-                $scope.LoginForm.CustId = "";
-                $scope.LoginForm.SubAccountId = "";
+                $scope.LoginForm.CustId = 0;
+                $scope.LoginForm.SubAccountId = 0;
                 $scope.LoginForm.DisableLogin = true;
                 break;
         }
     };
 
     $scope.login = function () {
-        // Process
-        $http.post("home/login",
-            {
-                RoleId: $scope.LoginForm.RoleId,
-                CustId: $scope.LoginForm.CustId,
-                SubAccountId: $scope.LoginForm.SubAccountId,
-                LanguageCode: $scope.LoginForm.LanguageCode
-            }).success(function (data) {
-                $scope.LoginForm.HideForm = true;
-                $('#collapseLogin').removeClass("in");
-            });
+        $http.post("home/login", {
+            RoleId: $scope.LoginForm.RoleId,
+            CustId: $scope.LoginForm.CustId,
+            SubAccountId: $scope.LoginForm.SubAccountId,
+            LanguageCode: $scope.LoginForm.LanguageCode
+        }).success(function () {
+            $scope.LoginForm.HideForm = true;
+            $('#collapseLogin').removeClass("in");
+        });
     };
 
     $scope.$watch('disableButtonLogin()', function (val) {
@@ -76,11 +79,6 @@
     });
 
     $scope.disableButtonLogin = function () {
-        if ($scope.LoginForm.CustId === "" || $scope.LoginForm.CustId === 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+        return $scope.LoginForm.CustId === 0 || $scope.LoginForm.CustId === 0;
+    };
 } ]);

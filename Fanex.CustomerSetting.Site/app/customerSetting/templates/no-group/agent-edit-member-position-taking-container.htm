@@ -1,0 +1,13 @@
+﻿<div class="position-taking-container agent-edit-member">
+    <div class="title">
+        <div class="name">
+        </div>
+        <div class="agent-pt">
+            {{resourceService.getString('AgentPT')}}
+        </div>
+    </div>
+    <div data-ng-repeat="item in positionTakings" data-agent-edit-member-position-taking="item"
+        data-setting-level="setting.PositionTakingLevel" data-setting-context="settingContext"
+        data-form-type="formType" data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+    </div>
+</div>

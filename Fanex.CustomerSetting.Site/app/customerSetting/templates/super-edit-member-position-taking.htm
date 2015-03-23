@@ -1,0 +1,19 @@
+﻿<div class="position-taking-item">
+    <div class="name" title="{{name}}">
+        {{name}}<span class="copy" title="{{resourceService.getString('CopyTooltip')}}" data-ng-show="hasCopy"
+            data-ng-click="copy()"> <i class="icon-copy"></i></span>
+    </div>
+    <div class="super-pt">
+        <select data-ng-model="superPT.value" data-position-taking-select-options="superPT.options">
+        </select>
+    </div>
+    <div class="super-is-auto">
+        <label class="checkbox">
+            <input type="checkbox" data-ng-model="superIsAuto" />
+        </label>
+    </div>
+    <div class="master-pt" data-ng-bind="masterPT.value">
+    </div>
+    <div class="agent-pt" data-ng-bind="agentPT.value">
+    </div>
+</div>
