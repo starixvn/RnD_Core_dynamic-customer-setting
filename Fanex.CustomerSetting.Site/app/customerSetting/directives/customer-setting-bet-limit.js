@@ -91,13 +91,25 @@
                     };
 
                 case appSettings.formType.SuperEditMember:
-                    return {};
+                    return {
+                        minBet: data.MinBet,
+                        maxBet: data.MaxBet,
+                        maxPerMatch: data.MaxPerMatch
+                    };
 
                 case appSettings.formType.MasterEditMember:
-                    return {};
+                    return {
+                        minBet: data.MinBet,
+                        maxBet: data.MaxBet,
+                        maxPerMatch: data.MaxPerMatch
+                    };
 
                 case appSettings.formType.AgentEditMember:
-                    return {};
+                    return {
+                        minBet: new BetLimitInput(data.MinBet, data.MinBetMin),
+                        maxBet: new BetLimitInput(data.MaxBet, data.MaxBetMax),
+                        maxPerMatch: new BetLimitInput(data.MaxPerMatch, data.MaxPerMatchMax)
+                    };
             }
         }
 
@@ -111,16 +123,28 @@
                 formType: '=',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-bet-limit.htm',
+            template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                linkingService.linkBetLimit($scope);
-                $scope.appSettings = appSettings;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.betLimit);
-                $scope.resourceService = resourceService;
+                $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
+                    || $scope.formType === appSettings.formType.MasterEditMember;
+                $scope.templateUrl = $scope.isReadonly
+                    ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
+                    : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
+
                 var betLimit = parse($scope.betLimit, $scope.formType);
                 $scope.minBet = betLimit.minBet;
                 $scope.maxBet = betLimit.maxBet;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
+                $scope.appSettings = appSettings;
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.betLimit);
+                $scope.resourceService = resourceService;
+
+                if ($scope.isReadonly) {
+                    return;
+                }
+
+                linkingService.linkBetLimit($scope);
+
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-bet-limit', $scope);
@@ -158,6 +182,10 @@
                 };
             } ],
             link: function (scope) {
+                if (scope.isReadonly) {
+                    return;
+                }
+
                 var validateMinBet = function () {
                     if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
                         scope.minBet.clearErrors();

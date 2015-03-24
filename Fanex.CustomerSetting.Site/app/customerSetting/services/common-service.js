@@ -43,7 +43,7 @@
             if (selectIndex === -1) {
                 if (value < min) {
                     options.push(value);
-                    options = options.length - 1;
+                    selectIndex = options.length - 1;
                 } else if (value > max) {
                     options.unshift(value);
                     selectIndex = 0;

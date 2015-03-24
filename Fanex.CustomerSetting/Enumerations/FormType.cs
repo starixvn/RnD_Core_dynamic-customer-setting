@@ -15,10 +15,10 @@ namespace Fanex.CustomerSetting.Enumerations
 
         MasterEditAgent = 3,
 
-        SuperEditMember = 4,
+        AgentEditMember = 4,
 
-        MasterEditMember = 5,
+        SuperEditMember = 5,
 
-        AgentEditMember = 6
+        MasterEditMember = 6
     }
 }

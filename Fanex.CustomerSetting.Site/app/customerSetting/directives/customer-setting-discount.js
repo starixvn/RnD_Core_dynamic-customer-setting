@@ -20,14 +20,8 @@
                 case appSettings.formType.MasterEditAgent:
                     return new DiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
 
-                case appSettings.formType.SuperEditMember:
-                    return {};
-
-                case appSettings.formType.MasterEditMember:
-                    return {};
-
                 case appSettings.formType.AgentEditMember:
-                    return {};
+                    return new DiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
             }
         }
 
@@ -42,14 +36,8 @@
                 case appSettings.formType.MasterEditAgent:
                     return 'AgentDiscount';
 
-                case appSettings.formType.SuperEditMember:
-                    return {};
-
-                case appSettings.formType.MasterEditMember:
-                    return {};
-
                 case appSettings.formType.AgentEditMember:
-                    return {};
+                    return 'PlayerDiscount';
             }
         }
 

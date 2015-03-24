@@ -17,16 +17,16 @@
                 pattern: '/editAgent/:agentId/:productId'
             },
             {
+                formType: appSettings.formType.AgentEditMember,
+                pattern: '/editMember/:memberId/:productId'
+            },
+            {
                 formType: appSettings.formType.SuperEditMember,
                 pattern: '/superEditMember/:superId/:memberId/:productId'
             },
             {
                 formType: appSettings.formType.MasterEditMember,
                 pattern: '/masterEditMember/:masterId/:memberId/:productId'
-            },
-            {
-                formType: appSettings.formType.AgentEditMember,
-                pattern: '/agentEditMember/:masterId/:memberId/:productId'
             }
         ];
 

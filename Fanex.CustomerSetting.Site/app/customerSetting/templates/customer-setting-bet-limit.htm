@@ -11,13 +11,13 @@
     <div class="max-bet">
         <input type="text" data-ng-model="maxBet.value" data-bet-limit-input data-error-message="maxBet.errorMessage()"
             data-ng-class="{'full-width': formType==appSettings.formType.CompanyEditSuper, 'invalid': !maxBet.isValid()}" />
-        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper && maxBet.limit>0">
+        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper">
             <={{maxBet.limit | number}} </span>
     </div>
     <div class="max-per-match">
         <input type="text" data-ng-model="maxPerMatch.value" data-bet-limit-input data-error-message="maxPerMatch.errorMessage()"
             data-ng-class="{'full-width': formType==appSettings.formType.CompanyEditSuper, 'invalid': !maxPerMatch.isValid()}" />
-        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper && maxPerMatch.limit>0">
+        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper">
             <={{maxPerMatch.limit | number}} </span>
     </div>
 </div>

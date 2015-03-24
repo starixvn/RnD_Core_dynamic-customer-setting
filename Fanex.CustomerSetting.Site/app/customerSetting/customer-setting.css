@@ -279,6 +279,12 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.customer-setting > div > .view > .container > .body > .bet-limit-container .bet-limit-item > .min-bet.read-only,
+.customer-setting > div > .view > .container > .body > .bet-limit-container .bet-limit-item > .max-bet.read-only,
+.customer-setting > div > .view > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match.read-only {
+  background-color: #b5c4d0;
+  text-align: center;
+}
 .customer-setting > div > .view > .container > .body > .bet-limit-container .min-bet,
 .customer-setting > div > .view > .container > .body > .bet-limit-container .max-bet,
 .customer-setting > div > .view > .container > .body > .bet-limit-container .max-per-match {

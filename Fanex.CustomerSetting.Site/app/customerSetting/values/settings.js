@@ -12,9 +12,9 @@
             CompanyEditSuper: 1,
             SuperEditMaster: 2,
             MasterEditAgent: 3,
-            SuperEditMember: 4,
-            MasterEditMember: 5,
-            AgentEditMember: 6
+            AgentEditMember: 4,
+            SuperEditMember: 5,
+            MasterEditMember: 6
         },
         roleType: {
             Member: 1,
