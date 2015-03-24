@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-24 11:03:26
+// customer-setting - v0.0.1 - 2015-03-24 13:03:43
 
 'use strict';
 
@@ -447,17 +447,18 @@
                 scope.$watch('superMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         var min = 0;
-                        var max = parseInt(scope.superMaxPT.value);
-                        scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.masterMaxPT.value)));
-                        scope.superMinPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.superMinPT.value)));
+                        var max = scope.superMaxPT.value;
+                        scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, scope.masterMaxPT.value));
+                        scope.superMinPT = commonService.createPositionTakingSelect(min, max, Math.min(max, scope.superMinPT.value));
                     }
                 });
 
                 scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         var min = 0;
-                        var max = parseInt(scope.masterMaxPT.value);
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.agentMaxPT.value)));
+                        var max = scope.masterMaxPT.value;
+                        var value = Math.min(max, scope.agentMaxPT.value);
+                        scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                     }
                 });
             }
@@ -554,7 +555,11 @@
                     };
 
                 case appSettings.formType.MasterEditAgent:
-                    return {};
+                    return {
+                        minBet: new BetLimitInput(data.MinBet, data.MinBetMin),
+                        maxBet: new BetLimitInput(data.MaxBet, data.MaxBetMax),
+                        maxPerMatch: new BetLimitInput(data.MaxPerMatch, data.MaxPerMatchMax)
+                    };
 
                 case appSettings.formType.SuperEditMember:
                     return {};
@@ -829,7 +834,7 @@
                     return new DiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
-                    return {};
+                    return new DiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
 
                 case appSettings.formType.SuperEditMember:
                     return {};
@@ -851,7 +856,7 @@
                     return 'MasterDiscount';
 
                 case appSettings.formType.MasterEditAgent:
-                    return {};
+                    return 'AgentDiscount';
 
                 case appSettings.formType.SuperEditMember:
                     return {};
@@ -1064,13 +1069,13 @@
         return {
             restrict: 'AE',
             scope: {
-                positionTaking: '=superEditMasterPositionTaking',
+                positionTaking: '=masterEditAgentPositionTaking',
                 settingLevel: '=',
                 settingContext: '=',
                 formType: '=',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
+            templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
@@ -1333,7 +1338,10 @@
 
                 scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        scope.masterMinPT = commonService.createPositionTakingSelect(0, scope.masterMaxPT.value, scope.masterMinPT.value);
+                        var min = 0;
+                        var max = scope.masterMaxPT.value;
+                        var value = Math.min(max, scope.masterMinPT.value);
+                        scope.masterMinPT = commonService.createPositionTakingSelect(min, max, value);
                     }
                 });
             }

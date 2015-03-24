@@ -115,7 +115,10 @@
 
                 scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        scope.masterMinPT = commonService.createPositionTakingSelect(0, scope.masterMaxPT.value, scope.masterMinPT.value);
+                        var min = 0;
+                        var max = scope.masterMaxPT.value;
+                        var value = Math.min(max, scope.masterMinPT.value);
+                        scope.masterMinPT = commonService.createPositionTakingSelect(min, max, value);
                     }
                 });
             }

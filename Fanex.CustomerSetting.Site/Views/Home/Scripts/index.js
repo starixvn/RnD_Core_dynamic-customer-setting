@@ -11,10 +11,10 @@ function ($scope, $http) {
 
     $scope.productId = 255;
     $scope.companyId = 8;
-    $scope.superId = 197461;
-    $scope.masterId = 197475;
-    $scope.agentId = 181595;
-    $scope.memberId = 73103;
+    $scope.superId = 2;
+    $scope.masterId = 4174;
+    $scope.agentId = 1262;
+    $scope.memberId = 1277;
     $scope.languages = [
         { name: "English", value: "en-US" },
         { name: "繁體中文", value: "zh-TW" },

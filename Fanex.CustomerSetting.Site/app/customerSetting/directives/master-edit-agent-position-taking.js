@@ -27,13 +27,13 @@
         return {
             restrict: 'AE',
             scope: {
-                positionTaking: '=superEditMasterPositionTaking',
+                positionTaking: '=masterEditAgentPositionTaking',
                 settingLevel: '=',
                 settingContext: '=',
                 formType: '=',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
+            templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 linkingService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;

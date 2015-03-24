@@ -84,7 +84,11 @@
                     };
 
                 case appSettings.formType.MasterEditAgent:
-                    return {};
+                    return {
+                        minBet: new BetLimitInput(data.MinBet, data.MinBetMin),
+                        maxBet: new BetLimitInput(data.MaxBet, data.MaxBetMax),
+                        maxPerMatch: new BetLimitInput(data.MaxPerMatch, data.MaxPerMatchMax)
+                    };
 
                 case appSettings.formType.SuperEditMember:
                     return {};

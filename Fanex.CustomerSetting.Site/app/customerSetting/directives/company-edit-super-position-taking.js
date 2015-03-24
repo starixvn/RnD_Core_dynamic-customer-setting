@@ -73,17 +73,18 @@
                 scope.$watch('superMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         var min = 0;
-                        var max = parseInt(scope.superMaxPT.value);
-                        scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.masterMaxPT.value)));
-                        scope.superMinPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.superMinPT.value)));
+                        var max = scope.superMaxPT.value;
+                        scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, scope.masterMaxPT.value));
+                        scope.superMinPT = commonService.createPositionTakingSelect(min, max, Math.min(max, scope.superMinPT.value));
                     }
                 });
 
                 scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         var min = 0;
-                        var max = parseInt(scope.masterMaxPT.value);
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, Math.min(max, parseInt(scope.agentMaxPT.value)));
+                        var max = scope.masterMaxPT.value;
+                        var value = Math.min(max, scope.agentMaxPT.value);
+                        scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                     }
                 });
             }

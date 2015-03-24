@@ -49,6 +49,11 @@ namespace Fanex.CustomerSetting.Entities
         /// </summary>
         public byte N3 { get; set; }
 
+        /// <summary>
+        /// Agent Max PT on Company level.
+        /// </summary>
+        public byte A4 { get; set; }
+
         public override bool IsValid()
         {
             return base.IsValid()
