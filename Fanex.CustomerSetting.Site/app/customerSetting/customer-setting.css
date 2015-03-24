@@ -42,50 +42,52 @@
   top: 0;
   bottom: 0;
 }
-.customer-setting > .dialog-container > .dialog-content {
+.customer-setting > .dialog-container > .dialog-scrollable {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
   z-index: 10009;
-  position: absolute;
-  top: 40%;
-  left: 50%;
+}
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content {
   width: 450px;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  background-color: #fff;
+  margin: 100px auto auto;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-header {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header {
   padding: 1px;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-header > .dialog-title {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-title {
   font-weight: bold;
   color: white;
   background-color: #3c3c3c;
   padding: 5px;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-header > .dialog-close {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-close {
   float: right;
   margin-right: 5px;
   margin-top: 3px;
   cursor: pointer;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-body {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body {
   padding: 5px 10px;
   text-align: left;
   background-color: #ececec;
   line-height: 20px;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-body .position-taking-group {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
   margin-left: 20px;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-footer {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer {
   text-align: right;
   background-color: #ececec;
   padding: 5px;
   border-top: 1px solid #3c3c3c;
 }
-.customer-setting > .dialog-container > .dialog-content > .dialog-footer button {
+.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer button {
   padding: 1px 6px;
   min-width: 80px;
   cursor: pointer;

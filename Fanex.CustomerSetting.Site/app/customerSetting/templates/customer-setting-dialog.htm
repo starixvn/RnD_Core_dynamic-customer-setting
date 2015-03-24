@@ -1,40 +1,42 @@
 ﻿<div class="dialog-container" data-ng-show="isShow">
-    <div class="dialog-overlay">
+    <div class="dialog-scrollable">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <div class="dialog-close" data-ng-click="clickClose()">
+                    <i class="icon-close"></i>
+                </div>
+                <div class="dialog-title">
+                    {{resourceService.getString('UpdateMemberPtTitle')}}
+                </div>
+            </div>
+            <div class="dialog-body">
+                <span>{{resourceService.getString('UpdateMemberPtInfo')}}</span>
+                <br />
+                <span>{{resourceService.getString('UpdateMemberPtQuestion')}}</span>
+                <table class="position-taking-group">
+                    <tbody>
+                        <tr data-ng-repeat="pt in pts">
+                            <td>
+                                {{pt.name}}
+                            </td>
+                            <td>
+                                <select data-ng-model="pt.value" data-position-taking-select-options="pt.options">
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="dialog-footer">
+                <button data-ng-click="clickYes()">
+                    {{resourceService.getString('Yes')}}
+                </button>
+                <button data-ng-click="clickNo()">
+                    {{resourceService.getString('No')}}
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="dialog-content">
-        <div class="dialog-header">
-            <div class="dialog-close" data-ng-click="clickClose()">
-                <i class="icon-close"></i>
-            </div>
-            <div class="dialog-title">
-                {{resourceService.getString('UpdateMemberPtTitle')}}
-            </div>
-        </div>
-        <div class="dialog-body">
-            <span>{{resourceService.getString('UpdateMemberPtInfo')}}</span>
-            <br />
-            <span>{{resourceService.getString('UpdateMemberPtQuestion')}}</span>
-            <table class="position-taking-group">
-                <tbody>
-                    <tr data-ng-repeat="pt in pts">
-                        <td>
-                            {{pt.name}}
-                        </td>
-                        <td>
-                            <select data-ng-model="pt.value" data-position-taking-select-options="pt.options">
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="dialog-footer">
-            <button data-ng-click="clickYes()">
-                {{resourceService.getString('Yes')}}
-            </button>
-            <button data-ng-click="clickNo()">
-                {{resourceService.getString('No')}}
-            </button>
-        </div>
+    <div class="dialog-overlay">
     </div>
 </div>

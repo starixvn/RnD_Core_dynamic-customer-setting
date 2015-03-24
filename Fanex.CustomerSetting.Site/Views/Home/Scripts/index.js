@@ -10,6 +10,7 @@ function ($scope, $http) {
     };
 
     $scope.productId = 255;
+    $scope.companyId = 8;
     $scope.superId = 197461;
     $scope.masterId = 197475;
     $scope.agentId = 181595;
@@ -33,22 +34,22 @@ function ($scope, $http) {
     $scope.roleChange = function () {
         switch ($scope.LoginForm.RoleId) {
             case roleType.Agent:
-                $scope.LoginForm.CustId = 181595;
+                $scope.LoginForm.CustId = $scope.agentId;
                 $scope.LoginForm.SubAccountId = 1;
                 $scope.LoginForm.DisableLogin = false;
                 break;
             case roleType.Master:
-                $scope.LoginForm.CustId = 68287;
+                $scope.LoginForm.CustId = $scope.masterId;
                 $scope.LoginForm.SubAccountId = 2;
                 $scope.LoginForm.DisableLogin = false;
                 break;
             case roleType.Super:
-                $scope.LoginForm.CustId = 197461;
+                $scope.LoginForm.CustId = $scope.superId;
                 $scope.LoginForm.SubAccountId = 3;
                 $scope.LoginForm.DisableLogin = false;
                 break;
             case roleType.Company:
-                $scope.LoginForm.CustId = 8;
+                $scope.LoginForm.CustId = $scope.companyId;
                 $scope.LoginForm.SubAccountId = 111;
                 $scope.LoginForm.DisableLogin = false;
                 break;

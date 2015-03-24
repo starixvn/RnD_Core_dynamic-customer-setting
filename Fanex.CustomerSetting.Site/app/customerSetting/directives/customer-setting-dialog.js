@@ -14,9 +14,9 @@
                 scope.resourceService = resourceService;
                 scope.isShow = false;
                 function update(isUpdateAllMembers) {
-                    var memberPts = [];
+                    var memberPTs = [];
                     angular.forEach(scope.pts, function (pt) {
-                        memberPts.push({
+                        memberPTs.push({
                             SportType: pt.sportType,
                             BetType: pt.betType,
                             IsLive: pt.isLive,
@@ -25,7 +25,7 @@
                     });
                     $rootScope.$broadcast('update-member-position-taking', {
                         IsUpdateAllMembers: isUpdateAllMembers,
-                        MemberPts: memberPts
+                        MemberPTs: memberPTs
                     });
                 }
 

@@ -71,7 +71,9 @@
                         errCode: errCode,
                         data: {
                             SportType: $scope.positionTaking.SportType,
+                            SportTypeName: $scope.positionTaking.SportTypeName,
                             BetType: $scope.positionTaking.BetType,
+                            BetTypeName: $scope.positionTaking.BetTypeName,
                             IsLive: $scope.positionTaking.IsLive,
                             S3: $scope.superIsAuto ? 0 : $scope.superPT.value,
                             US3: $scope.superIsAuto ? $scope.superPT.value : 0,

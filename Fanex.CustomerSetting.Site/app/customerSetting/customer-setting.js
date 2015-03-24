@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-23 11:03:26
+// customer-setting - v0.0.1 - 2015-03-24 11:03:26
 
 'use strict';
 
@@ -40,33 +40,38 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', 'locationService', 'dataService', 'resourceService',
+    var injectParams = ['$scope', '$rootScope', '$timeout', 'locationService', 'dataService', 'resourceService',
                         'templateService', 'linkingService', 'appSettings', 'messageService'];
-    var customerSettingController = function ($scope, $rootScope, locationService, dataService, resourceService,
+    var customerSettingController = function ($scope, $rootScope, $timeout, locationService, dataService, resourceService,
                         templateService, linkingService, appSettings, messageService) {
         var selectModel = locationService.createSelectModel();
-        dataService.select(selectModel, function (response) {
-            var settingContext = response.SettingContext;
-            resourceService.setLanguage(settingContext.Language);
-            var customerSetting = response.CustomerSetting;
-            $scope.formType = selectModel.FormType;
-            $scope.settingContext = settingContext;
-            $scope.setting = customerSetting.Setting;
-            $scope.information = customerSetting.Information;
+        function init() {
+            dataService.select(selectModel, function (response) {
+                var settingContext = response.SettingContext;
+                resourceService.setLanguage(settingContext.Language);
+                var customerSetting = response.CustomerSetting;
+                $scope.formType = selectModel.FormType;
+                $scope.settingContext = settingContext;
+                $scope.setting = customerSetting.Setting;
+                $scope.information = customerSetting.Information;
 
-            var productId = $scope.settingContext.ProductId;
-            var formType = $scope.formType;
-            $scope.statuses = customerSetting.Statuses;
-            $scope.statusTemplate = templateService.resolveStatus(productId, formType, $scope.setting.StatusLevel);
-            $scope.discounts = customerSetting.Discounts;
-            $scope.discountTemplate = templateService.resolveDiscount(productId, formType, $scope.setting.DiscountLevel);
-            $scope.betLimits = customerSetting.BetLimits;
-            $scope.betLimitTemplate = templateService.resolveBetLimit(productId, formType, $scope.setting.BetLimitLevel);
-            $scope.positionTakings = customerSetting.PositionTakings;
-            $scope.positionTakingTemplate = templateService.resolvePositionTaking(productId, formType, $scope.setting.PositionTakingLevel);
-        });
+                var productId = $scope.settingContext.ProductId;
+                var formType = $scope.formType;
+                $scope.statuses = customerSetting.Statuses;
+                $scope.statusTemplate = templateService.resolveStatus(productId, formType, $scope.setting.StatusLevel);
+                $scope.discounts = customerSetting.Discounts;
+                $scope.discountTemplate = templateService.resolveDiscount(productId, formType, $scope.setting.DiscountLevel);
+                $scope.betLimits = customerSetting.BetLimits;
+                $scope.betLimitTemplate = templateService.resolveBetLimit(productId, formType, $scope.setting.BetLimitLevel);
+                $scope.positionTakings = customerSetting.PositionTakings;
+                $scope.positionTakingTemplate = templateService.resolvePositionTaking(productId, formType, $scope.setting.PositionTakingLevel);
+            });
+        }
 
+        init();
+        
         var selectSettingType;
+
         $scope.updateStatuses = function () {
             selectSettingType = appSettings.settingType.Status;
             update(appSettings.settingType.Status);
@@ -92,8 +97,8 @@
             update(appSettings.settingType.All);
         };
 
-        $rootScope.$on('update-member-position-taking', function (event, updateMemberPt) {
-            update(selectSettingType, updateMemberPt);
+        $rootScope.$on('update-member-position-taking', function (event, updateMemberPT) {
+            update(selectSettingType, updateMemberPT);
         });
 
         function hasUpdate(data, isShowNoChange) {
@@ -111,19 +116,6 @@
             return true;
         }
 
-        function getPTDisplayName(sportType, betType, isLive) {
-            var name;
-            angular.forEach($scope.positionTakings, function (pt) {
-                if (angular.isUndefined(name)) {
-                    if (pt.SportType === sportType && pt.BetType === betType && pt.IsLive === isLive) {
-                        name = resourceService.getDisplayName($scope.setting.PositionTakingLevel, $scope.settingContext, pt);
-                    }
-                }
-            });
-
-            return name;
-        }
-
         function hasUncheckAutoPT(data) {
             var isAutoPTName, ptName;
             switch ($scope.formType) {
@@ -131,27 +123,33 @@
                     isAutoPTName = 'IS3';
                     ptName = 'S3';
                     break;
+
+                case appSettings.formType.MasterEditAgent:
+                    isAutoPTName = 'IM2';
+                    ptName = 'M2';
+                    break;
             }
 
             if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
-                var memberPtss = [];
+                var memberPTs = [];
                 angular.forEach(data, function (pt) {
                     var isAuto = pt[isAutoPTName];
                     if (isAuto === false) {
                         var ptValue = pt[ptName];
-                        memberPtss.push({
+                        var name = resourceService.getDisplayName($scope.setting.PositionTakingLevel, $scope.settingContext, pt);
+                        memberPTs.push({
                             SportType: pt.SportType,
                             BetType: pt.BetType,
                             IsLive: pt.IsLive,
-                            Name: getPTDisplayName(pt.SportType, pt.BetType, pt.IsLive),
+                            Name: name,
                             Pt: ptValue
                         });
                     }
                 });
 
-                if (memberPtss.length > 0) {
+                if (memberPTs.length > 0) {
                     $rootScope.updateModal = {
-                        MemberPTs: memberPtss
+                        MemberPTs: memberPTs
                     };
                     return true;
                 }
@@ -160,7 +158,7 @@
             return false;
         }
 
-        function update(settingType, updateMemberPt) {
+        function update(settingType, updateMemberPT) {
             messageService.hide();
             var positionTakings;
             var betLimits;
@@ -177,7 +175,7 @@
                         return;
                     }
 
-                    if (angular.isUndefined(updateMemberPt) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPT) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
 
@@ -189,7 +187,7 @@
                         return;
                     }
 
-                    if (angular.isUndefined(updateMemberPt) && hasUncheckAutoPT(positionTakings)) {
+                    if (angular.isUndefined(updateMemberPT) && hasUncheckAutoPT(positionTakings)) {
                         return;
                     }
                     break;
@@ -216,14 +214,14 @@
                     break;
             }
 
-            if (angular.isDefined(updateMemberPt)) {
-                var isUpdateAllMembers = updateMemberPt.IsUpdateAllMembers;
-                var memberPts = updateMemberPt.MemberPts;
+            if (angular.isDefined(updateMemberPT)) {
+                var isUpdateAllMembers = updateMemberPT.IsUpdateAllMembers;
+                var memberPTs = updateMemberPT.MemberPTs;
                 var newPositionTakings = [];
                 angular.forEach(positionTakings, function (positionTaking) {
                     var isFound = false;
                     var newPositionTaking = positionTaking;
-                    angular.forEach(memberPts, function (memberPt) {
+                    angular.forEach(memberPTs, function (memberPt) {
                         if (!isFound
                             && newPositionTaking.SportType === memberPt.SportType
                             && newPositionTaking.BetType === memberPt.BetType
@@ -240,6 +238,12 @@
 
                 positionTakings = newPositionTakings;
             }
+
+            // delete un-used properties
+            angular.forEach(positionTakings, function (positionTaking) {
+                delete (positionTaking.SportTypeName);
+                delete (positionTaking.BetTypeName);
+            });
 
             var updateModel = angular.extend({
                 UserName: $scope.information.UserName,
@@ -744,9 +748,9 @@
                 scope.resourceService = resourceService;
                 scope.isShow = false;
                 function update(isUpdateAllMembers) {
-                    var memberPts = [];
+                    var memberPTs = [];
                     angular.forEach(scope.pts, function (pt) {
-                        memberPts.push({
+                        memberPTs.push({
                             SportType: pt.sportType,
                             BetType: pt.betType,
                             IsLive: pt.isLive,
@@ -755,7 +759,7 @@
                     });
                     $rootScope.$broadcast('update-member-position-taking', {
                         IsUpdateAllMembers: isUpdateAllMembers,
-                        MemberPts: memberPts
+                        MemberPTs: memberPTs
                     });
                 }
 
@@ -1285,7 +1289,9 @@
                         errCode: errCode,
                         data: {
                             SportType: $scope.positionTaking.SportType,
+                            SportTypeName: $scope.positionTaking.SportTypeName,
                             BetType: $scope.positionTaking.BetType,
+                            BetTypeName: $scope.positionTaking.BetTypeName,
                             IsLive: $scope.positionTaking.IsLive,
                             S3: $scope.superIsAuto ? 0 : $scope.superPT.value,
                             US3: $scope.superIsAuto ? $scope.superPT.value : 0,

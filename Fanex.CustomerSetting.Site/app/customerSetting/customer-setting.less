@@ -16,6 +16,7 @@
 @border-color: #7c98a4;
 @font-size: 11px;
 @font-family: Tahoma, Arial, helvetica, sans-serif;
+@overlay-z-index: 10008;
 
 .border-box()
 {
@@ -60,6 +61,19 @@
     background-color: @header-name-color;
 }
 
+.overlay()
+{
+    z-index: @overlay-z-index;
+    background: white;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
 .customer-setting
 {
     float: left;
@@ -101,77 +115,73 @@
     {
         & > .dialog-overlay
         {
-            z-index: 10008;
-            background: white;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
+            .overlay();
         }
 
-        & > .dialog-content
+        & > .dialog-scrollable
         {
-            z-index:10009;
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            width: 450px;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-            background-color: #fff;
-            -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
-            box-shadow: 0 5px 15px rgba(0,0,0,.5);
-
-            & > .dialog-header
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: auto;
+            z-index: @overlay-z-index + 1;
+        
+            & > .dialog-content
             {
-                padding: 1px;
+                width: 450px;
+                margin: 100px auto auto;
+                -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+                box-shadow: 0 5px 15px rgba(0,0,0,.5);
 
-                & > .dialog-title
+                & > .dialog-header
                 {
-                    font-weight: bold;
-                    color: white;
-                    background-color: #3c3c3c;
+                    padding: 1px;
+
+                    & > .dialog-title
+                    {
+                        font-weight: bold;
+                        color: white;
+                        background-color: #3c3c3c;
+                        padding: 5px;
+                    }
+
+                    & > .dialog-close
+                    {
+                        float: right;
+                        margin-right: 5px;
+                        margin-top: 3px;
+                        cursor: pointer;
+                    }
+                }
+
+                & > .dialog-body
+                {
+                    padding: 5px 10px;
+                    text-align: left;
+                    background-color: #ececec;
+                    line-height: 20px;
+
+                    .position-taking-group
+                    {
+                        margin-left: 20px;
+                    }
+                }
+
+                & > .dialog-footer
+                {
+                    text-align: right;
+                    background-color: #ececec;
                     padding: 5px;
-                }
+                    border-top: 1px solid #3c3c3c;
 
-                & > .dialog-close
-                {
-                    float: right;
-                    margin-right: 5px;
-                    margin-top: 3px;
-                    cursor: pointer;
-                }
-            }
-
-            & > .dialog-body
-            {
-                padding: 5px 10px;
-                text-align: left;
-                background-color: #ececec;
-                line-height: 20px;
-
-                .position-taking-group
-                {
-                    margin-left: 20px;
-                }
-            }
-
-            & > .dialog-footer
-            {
-                text-align: right;
-                background-color: #ececec;
-                padding: 5px;
-                border-top: 1px solid #3c3c3c;
-
-                button
-                {
-                    padding: 1px 6px;
-                    min-width: 80px;
-                    cursor: pointer;
+                    button
+                    {
+                        padding: 1px 6px;
+                        min-width: 80px;
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -181,20 +191,12 @@
     {
         & > .block-overlay
         {
-            z-index: 10008;
-            background: white;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
+            .overlay();
         }
 
         & > .block-loading
         {
-            z-index: 10009;
+            z-index: @overlay-z-index + 1;
             background: url(images/loading.gif) no-repeat center center;
             position: fixed;
             left: 0;
