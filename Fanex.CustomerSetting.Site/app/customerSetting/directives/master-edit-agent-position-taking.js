@@ -84,17 +84,16 @@
             } ],
             link: function (scope) {
                 function updateAgentMaxPT(){
+                    var min = scope.positionTaking.N3 - scope.masterPT.value;
+                    var max;
+                    var value = scope.agentMaxPT.value;
                     if (!scope.masterIsAuto) {
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N3 - scope.masterPT.value,
-                            Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.A4),
-                            scope.agentMaxPT.value);
+                        max = Math.min(scope.positionTaking.M3 - scope.masterPT.value, scope.positionTaking.A4);
                     } else {
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N3 - scope.masterPT.value,
-                            Math.min(scope.positionTaking.M3, scope.positionTaking.A4),
-                            scope.agentMaxPT.value);
+                        max = Math.min(scope.positionTaking.M3, scope.positionTaking.A4);
                     }
+
+                    scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
                 scope.$watch('masterPT.value', function (newValue, oldValue) {

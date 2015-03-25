@@ -26,7 +26,7 @@
                     var betLimits = multi.Read<CompanyQuerySuperBetLimitEntity>();
                     var discounts = multi.Read<CompanyQuerySuperDiscountEntity>();
                     var statuses = multi.Read<CompanyQuerySuperProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new CompanyQuerySuperCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -56,7 +56,7 @@
                     var betLimits = multi.Read<SuperQueryMasterBetLimitEntity>();
                     var discounts = multi.Read<SuperQueryMasterDiscountEntity>();
                     var statuses = multi.Read<SuperQueryMasterProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new SuperQueryMasterCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -86,7 +86,7 @@
                     var betLimits = multi.Read<MasterQueryAgentBetLimitEntity>();
                     var discounts = multi.Read<MasterQueryAgentDiscountEntity>();
                     var statuses = multi.Read<MasterQueryAgentProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new MasterQueryAgentCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -116,7 +116,7 @@
                     var betLimits = multi.Read<SuperQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<SuperQueryMemberDiscountEntity>();
                     var statuses = multi.Read<SuperQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new SuperQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -146,7 +146,7 @@
                     var betLimits = multi.Read<MasterQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<MasterQueryMemberDiscountEntity>();
                     var statuses = multi.Read<MasterQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new MasterQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -176,7 +176,7 @@
                     var betLimits = multi.Read<AgentQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<AgentQueryMemberDiscountEntity>();
                     var statuses = multi.Read<AgentQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<ProductSetting>().First();
+                    var setting = multi.Read<SettingEntity>().First();
                     return new AgentQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,

@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-24 15:03:57
+// customer-setting - v0.0.1 - 2015-03-25 10:03:09
 
 'use strict';
 
@@ -1142,17 +1142,16 @@
             } ],
             link: function (scope) {
                 function updateAgentMaxPT(){
+                    var min = scope.positionTaking.N3 - scope.masterPT.value;
+                    var max;
+                    var value = scope.agentMaxPT.value;
                     if (!scope.masterIsAuto) {
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N3 - scope.masterPT.value,
-                            Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.A4),
-                            scope.agentMaxPT.value);
+                        max = Math.min(scope.positionTaking.M3 - scope.masterPT.value, scope.positionTaking.A4);
                     } else {
-                        scope.agentMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N3 - scope.masterPT.value,
-                            Math.min(scope.positionTaking.M3, scope.positionTaking.A4),
-                            scope.agentMaxPT.value);
+                        max = Math.min(scope.positionTaking.M3, scope.positionTaking.A4);
                     }
+
+                    scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
                 scope.$watch('masterPT.value', function (newValue, oldValue) {
@@ -1325,17 +1324,15 @@
             } ],
             link: function (scope) {
                 function updateMasterMaxPT(){
+                    var min = scope.positionTaking.N4 - scope.superPT.value;
+                    var max;
+                    var value = scope.masterMaxPT.value;
                     if (!scope.superIsAuto) {
-                        scope.masterMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N4 - scope.superPT.value,
-                            Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.M4),
-                            scope.masterMaxPT.value);
+                        max = Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.M4);
                     } else {
-                        scope.masterMaxPT = commonService.createPositionTakingSelect(
-                            scope.positionTaking.N4 - scope.superPT.value,
-                            Math.min(scope.positionTaking.S4, scope.positionTaking.M4),
-                            scope.masterMaxPT.value);
+                        max = Math.min(scope.positionTaking.S4, scope.positionTaking.M4);
                     }
+                    scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
                 scope.$watch('superPT.value', function (newValue, oldValue) {

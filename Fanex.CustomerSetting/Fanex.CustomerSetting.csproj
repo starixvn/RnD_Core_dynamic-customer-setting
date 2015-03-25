@@ -103,7 +103,7 @@
     <Compile Include="Entities\ProductProfileEntity.cs" />
     <Compile Include="Entities\ProductProfileItemEntity.cs" />
     <Compile Include="Entities\ProductResourceEntity.cs" />
-    <Compile Include="Entities\ProductSetting.cs" />
+    <Compile Include="Entities\SettingEntity.cs" />
     <Compile Include="Entities\ProductStatusEntity.cs" />
     <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />

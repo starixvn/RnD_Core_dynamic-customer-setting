@@ -25,6 +25,6 @@ namespace Fanex.CustomerSetting.Entities
 
         public IEnumerable<T4> Statuses { get; set; }
 
-        public ProductSetting Setting { get; set; }
+        public SettingEntity Setting { get; set; }
     }
 }
