@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Attributes;
+
     /// <summary>
     /// SuperEditMemberPositionTaking class.
     /// </summary>
@@ -20,16 +22,20 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Super PT.
         /// </summary>
+        [OutputElement("SuperPT")]
         public byte S1 { get; set; }
 
         /// <summary>
         /// Super Is Auto.
         /// </summary>
+
+        [OutputElement("IsAutoSuperPT")]
         public bool IS1 { get; set; }
 
         /// <summary>
         /// Super Auto PT.
         /// </summary>
+        [OutputElement("AutoSuperPT")]
         public byte US1 { get; set; }
 
         /// <summary>
@@ -46,5 +52,14 @@ namespace Fanex.CustomerSetting.Entities
         /// Master Max PT.
         /// </summary>
         public byte M3 { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid()
+                && IsPositionTakingValue(S1)
+                && IsPositionTakingValue(US1)
+                && !(IS1 && S1 > 0)
+                && !(!IS1 && US1 > 0);
+        }
     }
 }

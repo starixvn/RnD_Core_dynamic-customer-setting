@@ -16,6 +16,7 @@
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
+                $scope.showDownline = controllerService.formType !== appSettings.formType.AgentEditMember;
 
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;

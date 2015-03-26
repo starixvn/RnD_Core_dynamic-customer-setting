@@ -88,6 +88,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent PT.
+        /// </summary>
+        public static string AgentPT {
+            get {
+                return ResourceManager.GetString("AgentPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agents.
         /// </summary>
         public static string Agents {
@@ -111,6 +120,33 @@ namespace Fanex.CustomerSetting.Resources {
         public static string Commission {
             get {
                 return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Agent.
+        /// </summary>
+        public static string CommissionForAgent {
+            get {
+                return ResourceManager.GetString("CommissionForAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Master.
+        /// </summary>
+        public static string CommissionForMaster {
+            get {
+                return ResourceManager.GetString("CommissionForMaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Member.
+        /// </summary>
+        public static string CommissionForMember {
+            get {
+                return ResourceManager.GetString("CommissionForMember", resourceCulture);
             }
         }
         

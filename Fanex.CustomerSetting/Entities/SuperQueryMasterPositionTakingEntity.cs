@@ -61,7 +61,9 @@ namespace Fanex.CustomerSetting.Entities
                 && IsPositionTakingValue(US3)
                 && IsPositionTakingValue(M3)
                 && IsPositionTakingValue(N3)
-                && M3 >= N3 && !(IS3 && S3 > 0) && !(!IS3 && US3 > 0);
+                && M3 >= N3
+                && !(IS3 && S3 > 0)
+                && !(!IS3 && US3 > 0);
         }
     }
 }

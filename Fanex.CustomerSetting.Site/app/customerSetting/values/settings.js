@@ -6,7 +6,6 @@
         defaultLanguage: 'en-US',
         defaultMaxBet: 99999999999,
         betLimitMaxLength: 14,
-        positionTakingStep: 0.01,
         positionTakingDivider: 100,
         formType: {
             CompanyEditSuper: 1,

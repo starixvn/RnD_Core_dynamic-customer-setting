@@ -1,4 +1,5 @@
-﻿<div class="position-taking-container master-edit-member" data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
+﻿<div class="position-taking-container master-edit-member" data-ng-class="{ 'disable-auto-mpt' : disableAutoMPT }"
+    data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
     <div data-ng-repeat="positionTakingGroup in positionTakingGroups" class="sport-group">
         <div class="sport-name" title="{{positionTakingGroup.SportTypeName}}">
             {{positionTakingGroup.SportTypeName}}

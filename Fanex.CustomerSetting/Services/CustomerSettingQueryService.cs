@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Entities;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Repositories;
@@ -113,14 +114,13 @@
         public SuperQueryMemberResult SuperQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
-            var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
+            var criteria = new QueryMemberCriteria(model.TargetCustId, (int)RoleType.Super, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
             }
 
             var customerSettingEntity = _respository.SuperQueryMember(criteria);
-            UpdateResource(customerSettingEntity.Statuses);
             UpdateResource(customerSettingEntity.Discounts);
             UpdateResource(customerSettingEntity.BetLimits);
             UpdateResource(customerSettingEntity.PositionTakings);
@@ -135,14 +135,13 @@
         public MasterQueryMemberResult MasterQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
-            var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
+            var criteria = new QueryMemberCriteria(model.TargetCustId, (int)RoleType.Master, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);
             }
 
             var customerSettingEntity = _respository.MasterQueryMember(criteria);
-            UpdateResource(customerSettingEntity.Statuses);
             UpdateResource(customerSettingEntity.Discounts);
             UpdateResource(customerSettingEntity.BetLimits);
             UpdateResource(customerSettingEntity.PositionTakings);
@@ -157,7 +156,7 @@
         public AgentQueryMemberResult AgentQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
-            var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
+            var criteria = new QueryMemberCriteria(model.TargetCustId, (int)RoleType.Agent, model.ProductId);
             if (!criteria.IsValid())
             {
                 throw new CriteriaException(criteria);

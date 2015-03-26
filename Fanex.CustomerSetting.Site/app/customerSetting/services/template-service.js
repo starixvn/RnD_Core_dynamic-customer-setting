@@ -17,6 +17,14 @@
         positionTakingFiles[appSettings.formType.MasterEditMember] = 'master-edit-member-position-taking-container.htm';
         positionTakingFiles[appSettings.formType.AgentEditMember] = 'agent-edit-member-position-taking-container.htm';
 
+        var discountFiles = {};
+        discountFiles[appSettings.formType.CompanyEditSuper] = 'discount-container.htm';
+        discountFiles[appSettings.formType.SuperEditMaster] = 'discount-container.htm';
+        discountFiles[appSettings.formType.MasterEditAgent] = 'discount-container.htm';
+        discountFiles[appSettings.formType.SuperEditMember] = 'super-edit-member-discount-container.htm';
+        discountFiles[appSettings.formType.MasterEditMember] = 'master-edit-member-discount-container.htm';
+        discountFiles[appSettings.formType.AgentEditMember] = 'discount-container.htm';
+
         this.resolveView = function () {
             return '/app/customerSetting/templates/customer-setting-view.htm';
         };
@@ -30,8 +38,9 @@
 
         this.resolveDiscount = function () {
             var levelFolder = levelFolders[controllerService.discountLevel];
+            var fileName = discountFiles[controllerService.formType];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/discount-container.htm'
+            ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;
         };
 

@@ -10,7 +10,7 @@
             SuperQueryMemberDiscountEntity,
             SuperQueryMemberBetLimitEntity,
             SuperQueryMemberPositionTakingEntity,
-            SuperQueryMemberProductStatusEntity>
+            ProductStatusEntity>
     {
         public SuperQueryMemberResult(int errCode, string errMsg, RequestContext requestContext)
             : base(errCode, errMsg, requestContext)

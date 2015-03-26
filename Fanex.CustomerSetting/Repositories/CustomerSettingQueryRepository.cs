@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer Setting Entity.</returns>
-        public SuperQueryMemberCustomerSettingEntity SuperQueryMember(SuperQueryMemberCriteria criteria)
+        public SuperQueryMemberCustomerSettingEntity SuperQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -115,7 +115,6 @@
                     var positionTakings = multi.Read<SuperQueryMemberPositionTakingEntity>();
                     var betLimits = multi.Read<SuperQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<SuperQueryMemberDiscountEntity>();
-                    var statuses = multi.Read<SuperQueryMemberProductStatusEntity>();
                     var setting = multi.Read<SettingContext>().First();
                     return new SuperQueryMemberCustomerSettingEntity
                     {
@@ -123,7 +122,6 @@
                         PositionTakings = positionTakings,
                         BetLimits = betLimits,
                         Discounts = discounts,
-                        Statuses = statuses,
                         SettingContext = setting
                     };
                 }
@@ -135,7 +133,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer Setting Entity.</returns>
-        public MasterQueryMemberCustomerSettingEntity MasterQueryMember(SuperQueryMemberCriteria criteria)
+        public MasterQueryMemberCustomerSettingEntity MasterQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -145,7 +143,6 @@
                     var positionTakings = multi.Read<MasterQueryMemberPositionTakingEntity>();
                     var betLimits = multi.Read<MasterQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<MasterQueryMemberDiscountEntity>();
-                    var statuses = multi.Read<MasterQueryMemberProductStatusEntity>();
                     var setting = multi.Read<SettingContext>().First();
                     return new MasterQueryMemberCustomerSettingEntity
                     {
@@ -153,7 +150,6 @@
                         PositionTakings = positionTakings,
                         BetLimits = betLimits,
                         Discounts = discounts,
-                        Statuses = statuses,
                         SettingContext = setting
                     };
                 }
@@ -165,7 +161,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer Setting Entity.</returns>
-        public AgentQueryMemberCustomerSettingEntity AgentQueryMember(SuperQueryMemberCriteria criteria)
+        public AgentQueryMemberCustomerSettingEntity AgentQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {

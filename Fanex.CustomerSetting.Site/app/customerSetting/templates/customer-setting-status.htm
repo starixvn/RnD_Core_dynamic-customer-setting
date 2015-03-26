@@ -6,7 +6,7 @@
             <input type="checkbox" data-ng-model="enable" data-ng-disabled="enableDisabled" />
             {{resourceService.getString('Enable')}}
         </label>
-        <label class="checkbox downline">
+        <label class="checkbox downline" data-ng-show="showDownline">
             <input type="checkbox" data-ng-model="downline" data-ng-disabled="downlineDisabled" />
             {{resourceService.getString('EnableDownline')}}
         </label>

@@ -7,7 +7,7 @@ namespace Fanex.CustomerSetting.Entities
     /// <summary>
     /// ProductState class.
     /// </summary>
-    public abstract class ProductStatusEntity : BaseEntity
+    public class ProductStatusEntity : BaseEntity
     {
         /// <summary>
         /// Indicating whether product is disabled or not.

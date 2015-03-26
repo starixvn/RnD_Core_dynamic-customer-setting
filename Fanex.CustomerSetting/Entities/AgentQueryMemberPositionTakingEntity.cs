@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Attributes;
+
     /// <summary>
     /// AgentEditMemberPositionTaking class.
     /// </summary>
@@ -10,6 +12,7 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Agent Position Taking.
         /// </summary>
+        [OutputElement("AgentPT")]
         public byte A1 { get; set; }
 
         /// <summary>
@@ -21,5 +24,10 @@ namespace Fanex.CustomerSetting.Entities
         /// Agent Min Position Taking.
         /// </summary>
         public byte N2 { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid() && IsPositionTakingValue(A1);
+        }
     }
 }

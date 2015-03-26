@@ -36,12 +36,6 @@
                 case FormType.MasterEditAgent:
                     return jsonObject.ToObject<MasterQueryAgentProductStatusEntity>();
 
-                case FormType.SuperEditMember:
-                    return jsonObject.ToObject<SuperQueryMemberProductStatusEntity>();
-
-                case FormType.MasterEditMember:
-                    return jsonObject.ToObject<MasterQueryMemberProductStatusEntity>();
-
                 case FormType.AgentEditMember:
                     return jsonObject.ToObject<AgentQueryMemberProductStatusEntity>();
             }

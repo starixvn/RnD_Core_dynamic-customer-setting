@@ -3,22 +3,17 @@
     using Fanex.CustomerSetting.Enumerations;
 
     /// <summary>
-    /// SuperQueryMemberCriteria class.
+    /// QueryMemberCriteria class.
     /// </summary>
-    public class SuperQueryMemberCriteria : QueryCriteria
+    public class QueryMemberCriteria : QueryCriteria
     {
-        public SuperQueryMemberCriteria(int custId, short productId)
+        public QueryMemberCriteria(int custId, int roleId, short productId)
             : base(custId, productId)
         {
+            RoleId = roleId;
         }
 
-        public int RoleId
-        {
-            get
-            {
-                return (int)RoleType.Super;
-            }
-        }
+        public int RoleId { get; private set; }
 
         public override string GetSettingKey()
         {

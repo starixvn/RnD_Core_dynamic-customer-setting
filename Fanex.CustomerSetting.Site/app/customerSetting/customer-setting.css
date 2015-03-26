@@ -247,6 +247,49 @@
 .customer-setting > div > .view > .container > .body > .discount-container .discount-item.full-width {
   width: 100%;
 }
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item {
+  width: 100%;
+}
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item > div {
+  float: left;
+  padding: 0 3px;
+  overflow: hidden;
+  height: 23px;
+  line-height: 23px;
+  border-left: 1px solid #7c98a4;
+  border-top: 1px solid #7c98a4;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #b5c4d0;
+  text-align: center;
+}
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .master-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .agent-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .member-discount {
+  width: 233.33333333px;
+}
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item {
+  width: 100%;
+}
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item > div {
+  float: left;
+  padding: 0 3px;
+  overflow: hidden;
+  height: 23px;
+  line-height: 23px;
+  border-left: 1px solid #7c98a4;
+  border-top: 1px solid #7c98a4;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #b5c4d0;
+  text-align: center;
+}
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .agent-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .member-discount {
+  width: 350px;
+}
 .customer-setting > div > .view > .container > .body > .bet-limit-container .bet-limit-item {
   float: left;
   width: 100%;
@@ -354,6 +397,13 @@
 }
 .customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member .master-is-auto {
   width: 80px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .agent-pt {
+  width: 350px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-is-auto {
+  display: none;
 }
 .customer-setting > div > .view > .container > .body > .position-taking-container.agent-edit-member .agent-pt {
   width: 700px;

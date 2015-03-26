@@ -7,7 +7,7 @@
         : CustomerSettingEntity<SuperQueryMemberDiscountEntity,
             SuperQueryMemberBetLimitEntity,
             SuperQueryMemberPositionTakingEntity,
-            SuperQueryMemberProductStatusEntity>
+            ProductStatusEntity>
     {
     }
 }

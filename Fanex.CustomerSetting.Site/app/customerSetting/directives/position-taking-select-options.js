@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$parse'];
-    var positionTakingSelectOptionsDirective = function ($parse) {
+    var injectParams = ['$parse', 'appSettings'];
+    var positionTakingSelectOptionsDirective = function ($parse, appSettings) {
         var optionTemplate = angular.element(document.createElement('option'));
         return {
             restrict: 'A',
@@ -54,7 +54,7 @@
                     selectElement.children().remove();
                     angular.forEach(currentOptions, function (option) {
                         var value = option;
-                        var label = value / 100;
+                        var label = value / appSettings.positionTakingDivider;
                         var selected = currentValue === option;
                         var optionElement = optionTemplate.clone();
                         optionElement.val(value);

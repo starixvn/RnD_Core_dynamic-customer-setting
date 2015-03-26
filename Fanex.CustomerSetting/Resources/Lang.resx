@@ -273,4 +273,16 @@
   <data name="MasterPT" xml:space="preserve">
     <value>Master PT</value>
   </data>
+  <data name="AgentPT" xml:space="preserve">
+    <value>Agent PT</value>
+  </data>
+  <data name="CommissionForAgent" xml:space="preserve">
+    <value>Comm for Agent</value>
+  </data>
+  <data name="CommissionForMaster" xml:space="preserve">
+    <value>Comm for Master</value>
+  </data>
+  <data name="CommissionForMember" xml:space="preserve">
+    <value>Comm for Member</value>
+  </data>
 </root>

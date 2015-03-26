@@ -40,7 +40,6 @@
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
                 $scope.agentMinPT = positionTaking.agentMinPT;
-                $scope.disableAutoMPT = controllerService.settingContext.DisableAutoMPT;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);

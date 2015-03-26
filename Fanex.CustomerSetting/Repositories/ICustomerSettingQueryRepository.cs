@@ -14,10 +14,10 @@
 
         MasterQueryAgentCustomerSettingEntity MasterQueryAgent(MasterQueryAgentCriteria criteria);
 
-        SuperQueryMemberCustomerSettingEntity SuperQueryMember(SuperQueryMemberCriteria criteria);
+        SuperQueryMemberCustomerSettingEntity SuperQueryMember(QueryMemberCriteria criteria);
 
-        MasterQueryMemberCustomerSettingEntity MasterQueryMember(SuperQueryMemberCriteria criteria);
+        MasterQueryMemberCustomerSettingEntity MasterQueryMember(QueryMemberCriteria criteria);
 
-        AgentQueryMemberCustomerSettingEntity AgentQueryMember(SuperQueryMemberCriteria criteria);
+        AgentQueryMemberCustomerSettingEntity AgentQueryMember(QueryMemberCriteria criteria);
     }
 }

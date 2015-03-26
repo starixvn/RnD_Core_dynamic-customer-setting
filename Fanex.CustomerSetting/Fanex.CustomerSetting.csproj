@@ -70,7 +70,7 @@
     <Compile Include="Criteria\MasterQueryAgentCriteria.cs" />
     <Compile Include="Criteria\ProductProfileQueryCriteria.cs" />
     <Compile Include="Criteria\ProductResourceQueryCriteria.cs" />
-    <Compile Include="Criteria\SuperQueryMemberCriteria.cs" />
+    <Compile Include="Criteria\QueryMemberCriteria.cs" />
     <Compile Include="Criteria\SuperQueryMasterCriteria.cs" />
     <Compile Include="Criteria\QueryCriteria.cs" />
     <Compile Include="Criteria\CompanyQuerySuperCriteria.cs" />
@@ -88,6 +88,7 @@
     <Compile Include="Entities\CompanyQuerySuperDiscountEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperPositionTakingEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperProductStatusEntity.cs" />
+    <Compile Include="Entities\SuperCommandMemberPositionTakingEntity.cs" />
     <Compile Include="Entities\MasterCommandAgentPositionTakingEntity.cs" />
     <Compile Include="Entities\SuperCommandMasterPositionTakingEntity.cs" />
     <Compile Include="Entities\CustomerSettingEntity.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="Entities\SuperQueryMemberCustomerSettingEntity.cs" />
     <Compile Include="Entities\SuperQueryMemberDiscountEntity.cs" />
     <Compile Include="Entities\SuperQueryMemberPositionTakingEntity.cs" />
-    <Compile Include="Entities\SuperQueryMemberProductStatusEntity.cs" />
     <Compile Include="Enumerations\RoleType.cs" />
     <Compile Include="Enumerations\SettingLevel.cs" />
     <Compile Include="Models\CompanyQuerySuperResult.cs" />

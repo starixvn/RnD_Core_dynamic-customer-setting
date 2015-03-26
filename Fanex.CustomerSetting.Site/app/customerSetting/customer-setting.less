@@ -340,6 +340,50 @@
                             width: 100%;
                         }
                     }
+
+                    &.super-edit-member
+                    {
+                        .discount-item
+                        {
+                            width: 100%;
+
+                            & > div
+                            {
+                                float: left;
+                                .col-value();
+                                background-color: #b5c4d0;
+                                text-align: center;
+                            }
+                        }
+
+                        @col-value-width: (@container-width - @col-name-width) / 3;
+                        .master-discount, .agent-discount, .member-discount
+                        {
+                            width: @col-value-width;
+                        }
+                    }
+
+                    &.master-edit-member
+                    {
+                        .discount-item
+                        {
+                            width: 100%;
+
+                            & > div
+                            {
+                                float: left;
+                                .col-value();
+                                background-color: #b5c4d0;
+                                text-align: center;
+                            }
+                        }
+
+                        @col-value-width: (@container-width - @col-name-width) / 2;
+                        .agent-discount, .member-discount
+                        {
+                            width: @col-value-width;
+                        }
+                    }
                 }
 
                 & > .bet-limit-container
@@ -473,6 +517,19 @@
                         .master-is-auto
                         {
                             width: @col-is-auto;
+                        }
+
+                        &.disable-auto-mpt
+                        {
+                            @col-value-width: (@container-width - @col-name-width) / 2;
+                            .master-pt, .agent-pt
+                            {
+                                width: @col-value-width;
+                            }
+                            .master-is-auto
+                            {
+                                display: none;
+                            }
                         }
                     }
 
