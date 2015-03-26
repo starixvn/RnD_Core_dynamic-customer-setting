@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$filter', 'resourceService', 'linkingService', 'appSettings'];
+    var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
     var errType = {
         none: 0,
         limit: 1,
@@ -9,7 +9,7 @@
         maxBet: 3,
         maxPerMatch: 4
     };
-    var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, linkingService, appSettings) {
+    var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -118,32 +118,32 @@
             replace: true,
             scope: {
                 betLimit: '=customerSettingBetLimit',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
-                    || $scope.formType === appSettings.formType.MasterEditMember;
+                $scope.isReadonly = controllerService.formType === appSettings.formType.SuperEditMember
+                    || controllerService.formType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
                     : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
 
-                var betLimit = parse($scope.betLimit, $scope.formType);
+                var betLimit = parse($scope.betLimit, controllerService.formType);
                 $scope.minBet = betLimit.minBet;
+                $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = betLimit.maxBet;
+                $scope.hasMaxBetLimit = controllerService.formType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
+                $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.betLimit);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, $scope.betLimit);
                 $scope.resourceService = resourceService;
 
                 if ($scope.isReadonly) {
                     return;
                 }
 
-                linkingService.linkBetLimit($scope);
+                controllerService.linkBetLimit($scope);
 
                 if ($scope.hasCopy) {
                     $scope.copy = function () {

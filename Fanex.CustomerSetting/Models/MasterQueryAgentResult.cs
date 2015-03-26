@@ -12,13 +12,13 @@
             MasterQueryAgentPositionTakingEntity,
             MasterQueryAgentProductStatusEntity>
     {
-        public MasterQueryAgentResult(int errCode, string errMsg, SettingContext settingContext)
-            : base(errCode, errMsg, settingContext)
+        public MasterQueryAgentResult(int errCode, string errMsg, RequestContext requestContext)
+            : base(errCode, errMsg, requestContext)
         {
         }
 
-        public MasterQueryAgentResult(SettingContext settingContext, MasterQueryAgentCustomerSettingEntity customerSetting)
-            : base(settingContext, customerSetting)
+        public MasterQueryAgentResult(RequestContext requestContext, MasterQueryAgentCustomerSettingEntity customerSetting)
+            : base(requestContext, customerSetting)
         {
         }
     }

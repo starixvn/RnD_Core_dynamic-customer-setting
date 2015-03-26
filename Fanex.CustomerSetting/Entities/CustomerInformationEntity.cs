@@ -46,7 +46,5 @@ namespace Fanex.CustomerSetting.Entities
         /// Customer email.
         /// </summary>
         public string Email { get; set; }
-
-        public bool DisableAutoMPT { get; set; }
     }
 }

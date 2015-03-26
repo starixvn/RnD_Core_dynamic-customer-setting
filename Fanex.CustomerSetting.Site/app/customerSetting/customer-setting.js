@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-25 10:03:09
+// customer-setting - v0.0.1 - 2015-03-26 11:03:36
 
 'use strict';
 
@@ -40,225 +40,42 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', '$timeout', 'locationService', 'dataService', 'resourceService',
-                        'templateService', 'linkingService', 'appSettings', 'messageService'];
-    var customerSettingController = function ($scope, $rootScope, $timeout, locationService, dataService, resourceService,
-                        templateService, linkingService, appSettings, messageService) {
-        var selectModel = locationService.createSelectModel();
-        function init() {
-            dataService.select(selectModel, function (response) {
-                var settingContext = response.SettingContext;
-                resourceService.setLanguage(settingContext.Language);
-                var customerSetting = response.CustomerSetting;
-                $scope.formType = selectModel.FormType;
-                $scope.settingContext = settingContext;
-                $scope.setting = customerSetting.Setting;
-                $scope.information = customerSetting.Information;
-
-                var productId = $scope.settingContext.ProductId;
-                var formType = $scope.formType;
-                $scope.statuses = customerSetting.Statuses;
-                $scope.statusTemplate = templateService.resolveStatus(productId, formType, $scope.setting.StatusLevel);
-                $scope.discounts = customerSetting.Discounts;
-                $scope.discountTemplate = templateService.resolveDiscount(productId, formType, $scope.setting.DiscountLevel);
-                $scope.betLimits = customerSetting.BetLimits;
-                $scope.betLimitTemplate = templateService.resolveBetLimit(productId, formType, $scope.setting.BetLimitLevel);
-                $scope.positionTakings = customerSetting.PositionTakings;
-                $scope.positionTakingTemplate = templateService.resolvePositionTaking(productId, formType, $scope.setting.PositionTakingLevel);
-            });
-        }
-
-        init();
-        
-        var selectSettingType;
+    var injectParams = ['$scope', 'templateService', 'controllerService', 'appSettings'];
+    var customerSettingController = function ($scope, templateService, controllerService, appSettings) {
+        controllerService.select(function () {
+            $scope.information = controllerService.information;
+            $scope.statuses = controllerService.statuses;
+            $scope.statusTemplate = templateService.resolveStatus();
+            $scope.discounts = controllerService.discounts;
+            $scope.discountTemplate = templateService.resolveDiscount();
+            $scope.betLimits = controllerService.betLimits;
+            $scope.betLimitTemplate = templateService.resolveBetLimit();
+            $scope.positionTakings = controllerService.positionTakings;
+            $scope.positionTakingTemplate = templateService.resolvePositionTaking();
+            if (controllerService.formType === appSettings.formType.MasterEditAgent) {
+                $scope.disableAutoMPT = controllerService.settingContext.DisableAutoMPT;
+            }
+        });
 
         $scope.updateStatuses = function () {
-            selectSettingType = appSettings.settingType.Status;
-            update(appSettings.settingType.Status);
+            controllerService.update(appSettings.settingType.Status);
         };
 
         $scope.updateDiscounts = function () {
-            selectSettingType = appSettings.settingType.Discount;
-            update(appSettings.settingType.Discount);
+            controllerService.update(appSettings.settingType.Discount);
         };
 
         $scope.updateBetLimits = function () {
-            selectSettingType = appSettings.settingType.BetLimit;
-            update(appSettings.settingType.BetLimit);
+            controllerService.update(appSettings.settingType.BetLimit);
         };
 
         $scope.updatePositionTakings = function () {
-            selectSettingType = appSettings.settingType.PositionTaking;
-            update(appSettings.settingType.PositionTaking);
+            controllerService.update(appSettings.settingType.PositionTaking);
         };
 
         $scope.updateAll = function () {
-            selectSettingType = appSettings.settingType.All;
-            update(appSettings.settingType.All);
+            controllerService.update(appSettings.settingType.All);
         };
-
-        $rootScope.$on('update-member-position-taking', function (event, updateMemberPT) {
-            update(selectSettingType, updateMemberPT);
-        });
-
-        function hasUpdate(data, isShowNoChange) {
-            if (angular.isUndefined(data)) {
-                return false; // form invalid
-            }
-
-            if (data.length === 0) {
-                if (isShowNoChange) {
-                    messageService.showError(resourceService.getString('NoChangeToUpdate'));
-                }
-                return false;
-            }
-
-            return true;
-        }
-
-        function hasUncheckAutoPT(data) {
-            var isAutoPTName, ptName;
-            switch ($scope.formType) {
-                case appSettings.formType.SuperEditMaster:
-                    isAutoPTName = 'IS3';
-                    ptName = 'S3';
-                    break;
-
-                case appSettings.formType.MasterEditAgent:
-                    isAutoPTName = 'IM2';
-                    ptName = 'M2';
-                    break;
-            }
-
-            if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
-                var memberPTs = [];
-                angular.forEach(data, function (pt) {
-                    var isAuto = pt[isAutoPTName];
-                    if (isAuto === false) {
-                        var ptValue = pt[ptName];
-                        var name = resourceService.getDisplayName($scope.setting.PositionTakingLevel, $scope.settingContext, pt);
-                        memberPTs.push({
-                            SportType: pt.SportType,
-                            BetType: pt.BetType,
-                            IsLive: pt.IsLive,
-                            Name: name,
-                            Pt: ptValue
-                        });
-                    }
-                });
-
-                if (memberPTs.length > 0) {
-                    $rootScope.updateModal = {
-                        MemberPTs: memberPTs
-                    };
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        function update(settingType, updateMemberPT) {
-            messageService.hide();
-            var positionTakings;
-            var betLimits;
-            var discounts;
-            var statuses;
-            switch (settingType) {
-                case appSettings.settingType.All:
-                    statuses = linkingService.statuses();
-                    discounts = linkingService.discounts();
-                    betLimits = linkingService.betLimits();
-                    positionTakings = linkingService.positionTakings();
-                    var hasUpdatePT = hasUpdate(positionTakings, true);
-                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
-                        return;
-                    }
-
-                    if (angular.isUndefined(updateMemberPT) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
-                        return;
-                    }
-
-                    break;
-
-                case appSettings.settingType.PositionTaking:
-                    positionTakings = linkingService.positionTakings();
-                    if (!hasUpdate(positionTakings, true)) {
-                        return;
-                    }
-
-                    if (angular.isUndefined(updateMemberPT) && hasUncheckAutoPT(positionTakings)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.BetLimit:
-                    betLimits = linkingService.betLimits();
-                    if (!hasUpdate(betLimits, true)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.Discount:
-                    discounts = linkingService.discounts();
-                    if (!hasUpdate(discounts, true)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.Status:
-                    statuses = linkingService.statuses();
-                    if (!hasUpdate(statuses, true)) {
-                        return;
-                    }
-                    break;
-            }
-
-            if (angular.isDefined(updateMemberPT)) {
-                var isUpdateAllMembers = updateMemberPT.IsUpdateAllMembers;
-                var memberPTs = updateMemberPT.MemberPTs;
-                var newPositionTakings = [];
-                angular.forEach(positionTakings, function (positionTaking) {
-                    var isFound = false;
-                    var newPositionTaking = positionTaking;
-                    angular.forEach(memberPTs, function (memberPt) {
-                        if (!isFound
-                            && newPositionTaking.SportType === memberPt.SportType
-                            && newPositionTaking.BetType === memberPt.BetType
-                            && newPositionTaking.IsLive === memberPt.IsLive) {
-                            newPositionTaking = angular.extend({
-                                IsUpdateAllMembers: isUpdateAllMembers,
-                                MemberPositionTaking: memberPt.Pt
-                            }, newPositionTaking);
-                            newPositionTakings.push(newPositionTaking);
-                            isFound = true;
-                        }
-                    });
-                });
-
-                positionTakings = newPositionTakings;
-            }
-
-            // delete un-used properties
-            angular.forEach(positionTakings, function (positionTaking) {
-                delete (positionTaking.SportTypeName);
-                delete (positionTaking.BetTypeName);
-            });
-
-            var updateModel = angular.extend({
-                UserName: $scope.information.UserName,
-                SettingType: settingType,
-                StatusLevel: $scope.setting.StatusLevel,
-                StatusString: JSON.stringify(statuses),
-                DiscountLevel: $scope.setting.DiscountLevel,
-                DiscountString: JSON.stringify(discounts),
-                BetLimitLevel: $scope.setting.BetLimitLevel,
-                BetLimitString: JSON.stringify(betLimits),
-                PositionTakingLevel: $scope.setting.PositionTakingLevel,
-                PositionTakingString: JSON.stringify(positionTakings)
-            }, selectModel);
-            dataService.update(updateModel);
-        }
     };
 
     customerSettingController.$inject = injectParams;
@@ -268,19 +85,20 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', '$timeout', 'locationService', 'templateService', 'messageService'];
-    var customerSettingViewController = function ($scope, $rootScope, $timeout, locationService, templateService, messageService) {
+    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'messageService'];
+    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, messageService) {
         $rootScope.$on('$locationChangeStart', function () {
             $scope.view = undefined;
             messageService.hide();
         });
 
         $rootScope.$on('$locationChangeSuccess', function () {
-            if (!locationService.isValid) {
+            if (!modelService.isValid) {
                 messageService.showError('Please check your URL');
             } else {
                 $timeout(function () {
-                    $scope.view = templateService.resolveView(locationService.productId);
+                    var modelParams = modelService.params;
+                    $scope.view = templateService.resolveView(modelParams.productId);
                 });
             }
         });
@@ -375,8 +193,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             return {
                 superMaxPT: commonService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
@@ -390,17 +208,14 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=companyEditSuperPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
@@ -472,7 +287,7 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$filter', 'resourceService', 'linkingService', 'appSettings'];
+    var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
     var errType = {
         none: 0,
         limit: 1,
@@ -480,7 +295,7 @@
         maxBet: 3,
         maxPerMatch: 4
     };
-    var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, linkingService, appSettings) {
+    var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -589,32 +404,32 @@
             replace: true,
             scope: {
                 betLimit: '=customerSettingBetLimit',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
-                    || $scope.formType === appSettings.formType.MasterEditMember;
+                $scope.isReadonly = controllerService.formType === appSettings.formType.SuperEditMember
+                    || controllerService.formType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
                     : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
 
-                var betLimit = parse($scope.betLimit, $scope.formType);
+                var betLimit = parse($scope.betLimit, controllerService.formType);
                 $scope.minBet = betLimit.minBet;
+                $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = betLimit.maxBet;
+                $scope.hasMaxBetLimit = controllerService.formType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
+                $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.betLimit);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, $scope.betLimit);
                 $scope.resourceService = resourceService;
 
                 if ($scope.isReadonly) {
                     return;
                 }
 
-                linkingService.linkBetLimit($scope);
+                controllerService.linkBetLimit($scope);
 
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
@@ -845,8 +660,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var customerSettingDiscountDirective = function (commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var customerSettingDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
             var DiscountSelect = function (min, max, value) {
                 this.min = min;
@@ -894,22 +709,19 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                discount: '=customerSettingDiscount',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '='
+                discount: '=customerSettingDiscount'
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkDiscount($scope);
-                var discount = parse($scope.discount, $scope.formType);
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.discount);
+                controllerService.linkDiscount($scope);
+                var discount = parse($scope.discount, controllerService.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.min = discount.min;
                 $scope.value = discount.value;
                 $scope.options = discount.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== getValue($scope.discount, $scope.formType)
+                    var errCode = $scope.value !== getValue($scope.discount, controllerService.formType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -917,7 +729,7 @@
                         SportType: $scope.discount.SportType,
                         BetType: $scope.discount.BetType
                     };
-                    data[getName($scope.formType)] = $scope.value;
+                    data[getName(controllerService.formType)] = $scope.value;
                     return {
                         errCode: errCode,
                         data: data
@@ -968,21 +780,19 @@
 'use strict';
 
 (function () {
-    var injectParams = ['resourceService', 'linkingService', 'appSettings'];
-    var customerSettingStatusDirective = function (resourceService, linkingService, appSettings) {
+    var injectParams = ['resourceService', 'controllerService', 'appSettings'];
+    var customerSettingStatusDirective = function (resourceService, controllerService, appSettings) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
-                status: '=customerSettingStatus',
-                settingLevel: '=',
-                settingContext: '='
+                status: '=customerSettingStatus'
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkStatus($scope);
+                controllerService.linkStatus($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.status);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
 
@@ -1059,8 +869,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var masterEditAgentPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var masterEditAgentPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             var masterPT = 0;
             var agentMaxPTMin = 0;
@@ -1086,21 +896,19 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=masterEditAgentPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
                 $scope.agentMinPT = positionTaking.agentMinPT;
+                $scope.disableAutoMPT = controllerService.settingContext.DisableAutoMPT;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
@@ -1129,7 +937,9 @@
                         errCode: errCode,
                         data: {
                             SportType: $scope.positionTaking.SportType,
+                            SportTypeName: $scope.positionTaking.SportTypeName,
                             BetType: $scope.positionTaking.BetType,
+                            BetTypeName: $scope.positionTaking.BetTypeName,
                             IsLive: $scope.positionTaking.IsLive,
                             M2: $scope.masterIsAuto ? 0 : $scope.masterPT.value,
                             UM2: $scope.masterIsAuto ? $scope.masterPT.value : 0,
@@ -1142,15 +952,14 @@
             } ],
             link: function (scope) {
                 function updateAgentMaxPT(){
-                    var min = scope.positionTaking.N3 - scope.masterPT.value;
+                    var min = Math.max(0, scope.positionTaking.N3 - scope.masterPT.value);
                     var max;
-                    var value = scope.agentMaxPT.value;
                     if (!scope.masterIsAuto) {
                         max = Math.min(scope.positionTaking.M3 - scope.masterPT.value, scope.positionTaking.A4);
                     } else {
                         max = Math.min(scope.positionTaking.M3, scope.positionTaking.A4);
                     }
-
+                    var value = Math.min(scope.agentMaxPT.value, max);
                     scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
@@ -1208,14 +1017,37 @@
                 });
 
                 var valueFn = $parse(attrs.positionTakingSelectOptions);
+                var currentOptions;
+                var currentValue;
                 function render() {
-                    selectElement.children().remove();
-                    var modelValue = ngModelCtrl.$modelValue;
+                    var value = ngModelCtrl.$modelValue;
                     var options = valueFn(scope);
-                    angular.forEach(options, function (option) {
+                    var hasChange = false;
+                    if (currentValue !== value) {
+                        hasChange = true;
+                    } else if (angular.isUndefined(currentOptions) || currentOptions.length !== options.length) {
+                        hasChange = true;
+                    } else {
+                        for (var i = 0; i < currentOptions.length; i++) {
+                            if (currentOptions[i] !== options[i]) {
+                                hasChange = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hasChange) {
+                        //console.log('This check is useful');
+                        return;
+                    }
+
+                    currentOptions = options;
+                    currentValue = value;
+                    selectElement.children().remove();
+                    angular.forEach(currentOptions, function (option) {
                         var value = option;
                         var label = value / 100;
-                        var selected = modelValue === option;
+                        var selected = currentValue === option;
                         var optionElement = optionTemplate.clone();
                         optionElement.val(value);
                         optionElement.prop('selected', selected);
@@ -1239,8 +1071,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var superEditMasterPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var superEditMasterPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             var superPT = 0;
             var masterMaxPTMin = 0;
@@ -1266,17 +1098,14 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=superEditMasterPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
@@ -1324,14 +1153,14 @@
             } ],
             link: function (scope) {
                 function updateMasterMaxPT(){
-                    var min = scope.positionTaking.N4 - scope.superPT.value;
+                    var min = Math.max(0, scope.positionTaking.N4 - scope.superPT.value);
                     var max;
-                    var value = scope.masterMaxPT.value;
                     if (!scope.superIsAuto) {
                         max = Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.M4);
                     } else {
                         max = Math.min(scope.positionTaking.S4, scope.positionTaking.M4);
                     }
+                    var value = Math.min(scope.masterMaxPT.value, max);
                     scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
@@ -1466,6 +1295,288 @@
 'use strict';
 
 (function () {
+    var injectParams = ['$rootScope', 'appSettings', 'modelService', 'dataService', 'resourceService', 'messageService'];
+    var controllerService = function ($rootScope, appSettings, modelService, dataService, resourceService, messageService) {
+        var self = this;
+        var statusScopes = [];
+        var discountScopes = [];
+        var betLimitScopes = [];
+        var positionTakingScopes = [];
+        this.linkStatus = function (scope) {
+            statusScopes.push(scope);
+        };
+        this.linkDiscount = function (scope) {
+            discountScopes.push(scope);
+        };
+        this.linkBetLimit = function (scope) {
+            betLimitScopes.push(scope);
+        };
+        this.linkPositionTaking = function (scope) {
+            positionTakingScopes.push(scope);
+        };
+
+        this.getDisplayName = function (settingType, data) {
+            var liveName = data.IsLive === true ? ' (' + resourceService.getString('Live') + ')' : '';
+            var settingLevel;
+            switch (settingType) {
+                case appSettings.settingType.PositionTaking:
+                    settingLevel = self.positionTakingLevel;
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    settingLevel = self.betLimitLevel;
+                    break;
+
+                case appSettings.settingType.Discount:
+                    settingLevel = self.discountLevel;
+                    break;
+
+                case appSettings.settingType.Status:
+                    settingLevel = self.statusLevel;
+                    break;
+            }
+
+            switch (settingLevel) {
+                case appSettings.settingLevel.Product:
+                    return self.productName;
+                case appSettings.settingLevel.SportType:
+                    return data.SportTypeName;
+                case appSettings.settingLevel.BetType:
+                    return data.BetTypeName + liveName;
+                case appSettings.settingLevel.SportTypeBetType:
+                    return data.BetTypeName + liveName;
+            }
+
+            return undefined;
+        };
+
+        this.select = function (callback) {
+            var selectModel = modelService.createSelectModel();
+            dataService.select(selectModel, function (response) {
+                var requestContext = response.RequestContext;
+                self.requestContext = requestContext;
+                self.productId = requestContext.ProductId;
+                self.productName = requestContext.ProductName;
+                self.formType = requestContext.FormType;
+                self.language = requestContext.Language;
+
+                var customerSetting = response.CustomerSetting;
+                self.customerSetting = customerSetting;
+                self.information = customerSetting.Information;
+                self.statuses = customerSetting.Statuses;
+                self.discounts = customerSetting.Discounts;
+                self.betLimits = customerSetting.BetLimits;
+                self.positionTakings = customerSetting.PositionTakings;
+
+                var settingContext = customerSetting.SettingContext;
+                self.settingContext = settingContext;
+                self.statusLevel = settingContext.StatusLevel;
+                self.discountLevel = settingContext.DiscountLevel;
+                self.betLimitLevel = settingContext.BetLimitLevel;
+                self.positionTakingLevel = settingContext.PositionTakingLevel;
+                self.disableAutoMPT = settingContext.DisableAutoMPT;
+
+                callback();
+            });
+        };
+
+        var selectSettingType;
+        this.update = function (settingType) {
+            selectSettingType = settingType;
+            update();
+        };
+
+        $rootScope.$on('update-member-position-taking', function (event, updateMemberPT) {
+            update(updateMemberPT);
+        });
+
+        function update(updateMemberPT) {
+            function getData(scopes) {
+                var data = [];
+                var isFormInvalid = false;
+                angular.forEach(scopes, function (scope) {
+                    if (!isFormInvalid) {
+                        var result = scope.validate();
+                        if (result.errCode === appSettings.errorType.Success) {
+                            data.push(result.data);
+                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                            isFormInvalid = true;
+                        }
+                    }
+                });
+
+                return isFormInvalid
+                    ? undefined
+                    : data;
+            }
+
+            function hasUpdate(data, isShowNoChange) {
+                if (angular.isUndefined(data)) {
+                    return false; // form invalid
+                }
+
+                if (data.length === 0) {
+                    if (isShowNoChange) {
+                        messageService.showError(resourceService.getString('NoChangeToUpdate'));
+                    }
+                    return false;
+                }
+
+                return true;
+            }
+
+            function hasUncheckAutoPT(data) {
+                var isAutoPTName, ptName;
+                switch (self.formType) {
+                    case appSettings.formType.SuperEditMaster:
+                        isAutoPTName = 'IS3';
+                        ptName = 'S3';
+                        break;
+
+                    case appSettings.formType.MasterEditAgent:
+                        isAutoPTName = 'IM2';
+                        ptName = 'M2';
+                        break;
+                }
+
+                if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
+                    var memberPTs = [];
+                    angular.forEach(data, function (pt) {
+                        var isAuto = pt[isAutoPTName];
+                        if (isAuto === false) {
+                            var ptValue = pt[ptName];
+                            var name = self.getDisplayName(appSettings.settingType.PositionTaking, pt);
+                            memberPTs.push({
+                                SportType: pt.SportType,
+                                BetType: pt.BetType,
+                                IsLive: pt.IsLive,
+                                Name: name,
+                                Pt: ptValue
+                            });
+                        }
+                    });
+
+                    if (memberPTs.length > 0) {
+                        $rootScope.updateModal = {
+                            MemberPTs: memberPTs
+                        };
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            messageService.hide();
+            var positionTakings;
+            var betLimits;
+            var discounts;
+            var statuses;
+            switch (selectSettingType) {
+                case appSettings.settingType.All:
+                    statuses = getData(statusScopes);
+                    discounts = getData(discountScopes);
+                    betLimits = getData(betLimitScopes);
+                    positionTakings = getData(positionTakingScopes);
+                    var hasUpdatePT = hasUpdate(positionTakings, true);
+                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
+                        return;
+                    }
+
+                    if (angular.isUndefined(updateMemberPT) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+
+                    break;
+
+                case appSettings.settingType.PositionTaking:
+                    positionTakings = getData(positionTakingScopes);
+                    if (!hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+
+                    if (angular.isUndefined(updateMemberPT) && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    betLimits = getData(betLimitScopes);
+                    if (!hasUpdate(betLimits, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Discount:
+                    discounts = getData(discountScopes);
+                    if (!hasUpdate(discounts, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Status:
+                    statuses = getData(statusScopes);
+                    if (!hasUpdate(statuses, true)) {
+                        return;
+                    }
+                    break;
+            }
+
+            if (angular.isDefined(updateMemberPT)) {
+                var isUpdateAllMembers = updateMemberPT.IsUpdateAllMembers;
+                var memberPTs = updateMemberPT.MemberPTs;
+                var newPositionTakings = [];
+                angular.forEach(positionTakings, function (positionTaking) {
+                    var isFound = false;
+                    var newPositionTaking = positionTaking;
+                    angular.forEach(memberPTs, function (memberPt) {
+                        if (!isFound
+                            && newPositionTaking.SportType === memberPt.SportType
+                            && newPositionTaking.BetType === memberPt.BetType
+                            && newPositionTaking.IsLive === memberPt.IsLive) {
+                            newPositionTaking = angular.extend({
+                                IsUpdateAllMembers: isUpdateAllMembers,
+                                MemberPositionTaking: memberPt.Pt
+                            }, newPositionTaking);
+                            newPositionTakings.push(newPositionTaking);
+                            isFound = true;
+                        }
+                    });
+                });
+
+                positionTakings = newPositionTakings;
+            }
+
+            // delete un-used properties
+            angular.forEach(positionTakings, function (positionTaking) {
+                delete (positionTaking.SportTypeName);
+                delete (positionTaking.BetTypeName);
+            });
+
+            var selectModel = modelService.createSelectModel();
+            var updateModel = angular.extend({
+                UserName: self.information.UserName,
+                SettingType: selectSettingType,
+                StatusLevel: self.statusLevel,
+                StatusString: JSON.stringify(statuses),
+                DiscountLevel: self.discountLevel,
+                DiscountString: JSON.stringify(discounts),
+                BetLimitLevel: self.betLimitLevel,
+                BetLimitString: JSON.stringify(betLimits),
+                PositionTakingLevel: self.positionTakingLevel,
+                PositionTakingString: JSON.stringify(positionTakings)
+            }, selectModel);
+            dataService.update(updateModel);
+        }
+    };
+
+    controllerService.$inject = injectParams;
+    angular.module('customerSettingApp').service('controllerService', controllerService);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings'];
     var dataService = function ($http, $rootScope, messageService, appSettings) {
         function isSuccessResponse(response) {
@@ -1543,67 +1654,6 @@
 'use strict';
 
 (function () {
-    var injectParams = ['appSettings'];
-    var linkingService = function (appSettings) {
-        function getData(scopes) {
-            var data = [];
-            var isFormInvalid = false;
-            angular.forEach(scopes, function (scope) {
-                if (!isFormInvalid) {
-                    var result = scope.validate();
-                    if (result.errCode === appSettings.errorType.Success) {
-                        data.push(result.data);
-                    } else if (result.errCode === appSettings.errorType.FormInvalid) {
-                        isFormInvalid = true;
-                    }
-                }
-            });
-
-            return isFormInvalid
-                ? undefined
-                : data;
-        }
-
-        var statusScopes = [];
-        this.linkStatus = function (scope) {
-            statusScopes.push(scope);
-        };
-        this.statuses = function () {
-            return getData(statusScopes);
-        };
-
-        var discountScopes = [];
-        this.linkDiscount = function (scope) {
-            discountScopes.push(scope);
-        };
-        this.discounts = function () {
-            return getData(discountScopes);
-        };
-
-        var betLimitScopes = [];
-        this.linkBetLimit = function (scope) {
-            betLimitScopes.push(scope);
-        };
-        this.betLimits = function () {
-            return getData(betLimitScopes);
-        };
-
-        var positionTakingScopes = [];
-        this.linkPositionTaking = function (scope) {
-            positionTakingScopes.push(scope);
-        };
-        this.positionTakings = function () {
-            return getData(positionTakingScopes);
-        };
-    };
-
-    linkingService.$inject = injectParams;
-    angular.module('customerSettingApp').service('linkingService', linkingService);
-})();
-
-'use strict';
-
-(function () {
     var injectParams = ['$rootScope'];
     var loadingService = function ($rootScope) {
         this.block = function () {
@@ -1617,134 +1667,6 @@
 
     loadingService.$inject = injectParams;
     angular.module('customerSettingApp').service('loadingService', loadingService);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['$location', '$rootScope', 'appSettings'];
-    var locationService = function ($location, $rootScope, appSettings) {
-        var formSettings = [
-            {
-                formType: appSettings.formType.CompanyEditSuper,
-                pattern: '/editSuper/:superId/:productId'
-            },
-            {
-                formType: appSettings.formType.SuperEditMaster,
-                pattern: '/editMaster/:masterId/:productId'
-            },
-            {
-                formType: appSettings.formType.MasterEditAgent,
-                pattern: '/editAgent/:agentId/:productId'
-            },
-            {
-                formType: appSettings.formType.AgentEditMember,
-                pattern: '/editMember/:memberId/:productId'
-            },
-            {
-                formType: appSettings.formType.SuperEditMember,
-                pattern: '/superEditMember/:superId/:memberId/:productId'
-            },
-            {
-                formType: appSettings.formType.MasterEditMember,
-                pattern: '/masterEditMember/:masterId/:memberId/:productId'
-            }
-        ];
-
-        var self = this;
-        function loadParams() {
-            self.isValid = false;
-            var path = $location.path();
-            angular.forEach(formSettings, function (formSetting) {
-                if (self.isValid) {
-                    return;
-                }
-
-                var formType = formSetting.formType;
-                var pattern = formSetting.pattern;
-                var matches = pattern.match(/\/:\w+/g);
-                var params = [];
-                angular.forEach(matches, function (match) {
-                    params.push(match.replace('/:', ''));
-                });
-
-                var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
-                matches = regExp.exec(path);
-                if (matches !== null && matches.length - 1 === params.length) {
-                    self.isValid = true;
-                    angular.forEach(params, function (param, index) {
-                        self[param] = parseInt(matches[index + 1]);
-                    });
-                    self.formType = formType;
-                }
-            });
-        }
-
-        this.createSelectModel = function () {
-            if (!this.isValid) {
-                return undefined;
-            }
-
-            var custId;
-            var roleId;
-            var targetCustId;
-            var targetRoleId;
-            switch (this.formType) {
-                case appSettings.formType.CompanyEditSuper:
-                    targetCustId = this.superId;
-                    targetRoleId = appSettings.roleType.Super;
-                    break;
-
-                case appSettings.formType.SuperEditMaster:
-                    targetCustId = this.masterId;
-                    targetRoleId = appSettings.roleType.Master;
-                    break;
-
-                case appSettings.formType.MasterEditAgent:
-                    targetCustId = this.agentId;
-                    targetRoleId = appSettings.roleType.Agent;
-                    break;
-
-                case appSettings.formType.SuperEditMember:
-                    custId = this.superId;
-                    roleId = appSettings.roleType.Super;
-                    targetCustId = this.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-
-                case appSettings.formType.MasterEditMember:
-                    custId = this.masterId;
-                    roleId = appSettings.roleType.Master;
-                    targetCustId = this.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-
-                case appSettings.formType.AgentEditMember:
-                    custId = this.agentId;
-                    roleId = appSettings.roleType.Agent;
-                    targetCustId = this.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-            }
-
-            var model = {
-                CustId: custId,
-                RoleId: roleId,
-                TargetCustId: targetCustId,
-                TargetRoleId: targetRoleId,
-                FormType: this.formType,
-                ProductId: this.productId
-            };
-            return model;
-        };
-
-        $rootScope.$on('$locationChangeStart', function () {
-            loadParams();
-        });
-    };
-
-    locationService.$inject = injectParams;
-    angular.module('customerSettingApp').service('locationService', locationService);
 })();
 
 'use strict';
@@ -1850,6 +1772,141 @@
 'use strict';
 
 (function () {
+    var injectParams = ['$rootScope', '$location', 'appSettings'];
+    var modelService = function ($rootScope, $location, appSettings) {
+        var formSettings = [
+            {
+                formType: appSettings.formType.CompanyEditSuper,
+                pattern: '/editSuper/:superId/:productId'
+            },
+            {
+                formType: appSettings.formType.SuperEditMaster,
+                pattern: '/editMaster/:masterId/:productId'
+            },
+            {
+                formType: appSettings.formType.MasterEditAgent,
+                pattern: '/editAgent/:agentId/:productId'
+            },
+            {
+                formType: appSettings.formType.AgentEditMember,
+                pattern: '/editMember/:memberId/:productId'
+            },
+            {
+                formType: appSettings.formType.SuperEditMember,
+                pattern: '/superEditMember/:superId/:memberId/:productId'
+            },
+            {
+                formType: appSettings.formType.MasterEditMember,
+                pattern: '/masterEditMember/:masterId/:memberId/:productId'
+            }
+        ];
+
+        var self = this;
+        function loadParams() {
+            var isValidModel = false;
+            var modelParams = {};
+            var path = $location.path();
+            angular.forEach(formSettings, function (formSetting) {
+                if (isValidModel) {
+                    return;
+                }
+
+                var formType = formSetting.formType;
+                var pattern = formSetting.pattern;
+                var matches = pattern.match(/\/:\w+/g);
+                var params = [];
+                angular.forEach(matches, function (match) {
+                    params.push(match.replace('/:', ''));
+                });
+
+                var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
+                matches = regExp.exec(path);
+                if (matches !== null && matches.length - 1 === params.length) {
+                    isValidModel = true;
+                    angular.forEach(params, function (param, index) {
+                        modelParams[param] = parseInt(matches[index + 1]);
+                    });
+                    modelParams.formType = formType;
+                }
+            });
+
+            self.isValid = isValidModel;
+            self.params = modelParams;
+        }
+
+        this.createSelectModel = function () {
+            var isValid = this.isValid;
+            var params = this.params;
+            if (!isValid) {
+                return undefined;
+            }
+
+            var custId;
+            var roleId;
+            var targetCustId;
+            var targetRoleId;
+            switch (params.formType) {
+                case appSettings.formType.CompanyEditSuper:
+                    targetCustId = params.superId;
+                    targetRoleId = appSettings.roleType.Super;
+                    break;
+
+                case appSettings.formType.SuperEditMaster:
+                    targetCustId = params.masterId;
+                    targetRoleId = appSettings.roleType.Master;
+                    break;
+
+                case appSettings.formType.MasterEditAgent:
+                    targetCustId = params.agentId;
+                    targetRoleId = appSettings.roleType.Agent;
+                    break;
+
+                case appSettings.formType.SuperEditMember:
+                    custId = params.superId;
+                    roleId = appSettings.roleType.Super;
+                    targetCustId = params.memberId;
+                    targetRoleId = appSettings.roleType.Member;
+                    break;
+
+                case appSettings.formType.MasterEditMember:
+                    custId = params.masterId;
+                    roleId = appSettings.roleType.Master;
+                    targetCustId = params.memberId;
+                    targetRoleId = appSettings.roleType.Member;
+                    break;
+
+                case appSettings.formType.AgentEditMember:
+                    custId = params.agentId;
+                    roleId = appSettings.roleType.Agent;
+                    targetCustId = params.memberId;
+                    targetRoleId = appSettings.roleType.Member;
+                    break;
+            }
+
+            return {
+                CustId: custId,
+                RoleId: roleId,
+                TargetCustId: targetCustId,
+                TargetRoleId: targetRoleId,
+                FormType: params.formType,
+                ProductId: params.productId
+            };
+        };
+
+        $rootScope.$on('$locationChangeStart', function () {
+            loadParams();
+        });
+        
+        loadParams();
+    };
+
+    modelService.$inject = injectParams;
+    angular.module('customerSettingApp').service('modelService', modelService);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['resources', 'appSettings'];
     var resourceService = function (resources, appSettings) {
         var resource = {};
@@ -1885,22 +1942,6 @@
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
         };
-
-        this.getDisplayName = function (settingLevel, settingContext, data) {
-            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
-            switch (settingLevel) {
-                case appSettings.settingLevel.Product:
-                    return settingContext.ProductName;
-                case appSettings.settingLevel.SportType:
-                    return data.SportTypeName;
-                case appSettings.settingLevel.BetType:
-                    return data.BetTypeName + liveName;
-                case appSettings.settingLevel.SportTypeBetType:
-                    return data.BetTypeName + liveName;
-            }
-
-            return undefined;
-        };
     };
 
     resourceService.$inject = injectParams;
@@ -1910,8 +1951,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['appSettings'];
-    var templateService = function (appSettings) {
+    var injectParams = ['appSettings', 'controllerService'];
+    var templateService = function (appSettings, controllerService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -1926,36 +1967,34 @@
         positionTakingFiles[appSettings.formType.MasterEditMember] = 'master-edit-member-position-taking-container.htm';
         positionTakingFiles[appSettings.formType.AgentEditMember] = 'agent-edit-member-position-taking-container.htm';
 
-        this.resolveView = function (productId) {
-            return productId > 0
-                ? '/app/customerSetting/templates/customer-setting-view.htm'
-                : undefined;
+        this.resolveView = function () {
+            return '/app/customerSetting/templates/customer-setting-view.htm';
         };
 
-        this.resolveStatus = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveStatus = function () {
+            var levelFolder = levelFolders[controllerService.statusLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
-        this.resolveDiscount = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveDiscount = function () {
+            var levelFolder = levelFolders[controllerService.discountLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/discount-container.htm'
             : undefined;
         };
 
-        this.resolveBetLimit = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveBetLimit = function () {
+            var levelFolder = levelFolders[controllerService.betLimitLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
-        this.resolvePositionTaking = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
-            var fileName = positionTakingFiles[formType];
+        this.resolvePositionTaking = function () {
+            var levelFolder = levelFolders[controllerService.positionTakingLevel];
+            var fileName = positionTakingFiles[controllerService.formType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;
@@ -2040,6 +2079,7 @@
     resources['en-us'] = {
         AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "Agent Max PT",
+        AgentMinPT: "Agent Min PT",
         Agents: "Agents",
         BetSetting: "Bet Setting",
         Commission: "Commission",
@@ -2054,6 +2094,7 @@
         Live: "Live",
         MasterMaxPT: "Master Max PT",
         MasterMinPT: "Master Min PT",
+        MasterPT: "Master PT",
         Masters: "Masters",
         Max: "Max",
         MaxBet: "Max Bet",

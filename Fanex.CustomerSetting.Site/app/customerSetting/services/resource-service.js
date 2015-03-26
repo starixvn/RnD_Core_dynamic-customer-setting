@@ -36,22 +36,6 @@
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
         };
-
-        this.getDisplayName = function (settingLevel, settingContext, data) {
-            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
-            switch (settingLevel) {
-                case appSettings.settingLevel.Product:
-                    return settingContext.ProductName;
-                case appSettings.settingLevel.SportType:
-                    return data.SportTypeName;
-                case appSettings.settingLevel.BetType:
-                    return data.BetTypeName + liveName;
-                case appSettings.settingLevel.SportTypeBetType:
-                    return data.BetTypeName + liveName;
-            }
-
-            return undefined;
-        };
     };
 
     resourceService.$inject = injectParams;

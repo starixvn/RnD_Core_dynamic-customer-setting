@@ -12,13 +12,13 @@
             SuperQueryMemberPositionTakingEntity,
             SuperQueryMemberProductStatusEntity>
     {
-        public SuperQueryMemberResult(int errCode, string errMsg, SettingContext settingContext)
-            : base(errCode, errMsg, settingContext)
+        public SuperQueryMemberResult(int errCode, string errMsg, RequestContext requestContext)
+            : base(errCode, errMsg, requestContext)
         {
         }
 
-        public SuperQueryMemberResult(SettingContext settingContext, SuperQueryMemberCustomerSettingEntity customerSetting)
-            : base(settingContext, customerSetting)
+        public SuperQueryMemberResult(RequestContext requestContext, SuperQueryMemberCustomerSettingEntity customerSetting)
+            : base(requestContext, customerSetting)
         {
         }
     }

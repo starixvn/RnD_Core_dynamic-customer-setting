@@ -88,6 +88,7 @@
     <Compile Include="Entities\CompanyQuerySuperDiscountEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperPositionTakingEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperProductStatusEntity.cs" />
+    <Compile Include="Entities\MasterCommandAgentPositionTakingEntity.cs" />
     <Compile Include="Entities\SuperCommandMasterPositionTakingEntity.cs" />
     <Compile Include="Entities\CustomerSettingEntity.cs" />
     <Compile Include="Entities\MasterQueryAgentBetLimitEntity.cs" />
@@ -103,7 +104,7 @@
     <Compile Include="Entities\ProductProfileEntity.cs" />
     <Compile Include="Entities\ProductProfileItemEntity.cs" />
     <Compile Include="Entities\ProductResourceEntity.cs" />
-    <Compile Include="Entities\SettingEntity.cs" />
+    <Compile Include="Entities\SettingContext.cs" />
     <Compile Include="Entities\ProductStatusEntity.cs" />
     <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />
@@ -129,7 +130,7 @@
     <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Models\SuperQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryAgentResult.cs" />
-    <Compile Include="Models\SettingContext.cs" />
+    <Compile Include="Entities\RequestContext.cs" />
     <Compile Include="Entities\SuperQueryMasterBetLimitEntity.cs" />
     <Compile Include="Entities\SuperQueryMasterCustomerSettingEntity.cs" />
     <Compile Include="Entities\SuperQueryMasterDiscountEntity.cs" />

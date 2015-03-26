@@ -16,19 +16,19 @@ namespace Fanex.CustomerSetting.Models
         where T3 : PositionTakingEntity
         where T4 : ProductStatusEntity
     {
-        protected QueryResult(int errCode, string errMsg, SettingContext settingContext)
+        protected QueryResult(int errCode, string errMsg, RequestContext requestContext)
             : base(errCode, errMsg)
         {
-            SettingContext = settingContext;
+            RequestContext = requestContext;
         }
 
-        protected QueryResult(SettingContext settingContext, CustomerSettingEntity<T1, T2, T3, T4> customerSetting)
-            : this(Result.SuccessValue, string.Empty, settingContext)
+        protected QueryResult(RequestContext requestContext, CustomerSettingEntity<T1, T2, T3, T4> customerSetting)
+            : this(Result.SuccessValue, string.Empty, requestContext)
         {
             CustomerSetting = customerSetting;
         }
 
-        public SettingContext SettingContext { get; private set; }
+        public RequestContext RequestContext { get; private set; }
 
         public CustomerSettingEntity<T1, T2, T3, T4> CustomerSetting { get; private set; }
     }

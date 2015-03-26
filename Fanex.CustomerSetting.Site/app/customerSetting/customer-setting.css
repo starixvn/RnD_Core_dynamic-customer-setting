@@ -332,6 +332,14 @@
 .customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent .master-is-auto {
   width: 80px;
 }
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-max-pt,
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-min-pt {
+  width: 233.33333333px;
+}
+.customer-setting > div > .view > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-is-auto {
+  display: none;
+}
 .customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .super-pt,
 .customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .master-pt,
 .customer-setting > div > .view > .container > .body > .position-taking-container.super-edit-member .agent-pt {

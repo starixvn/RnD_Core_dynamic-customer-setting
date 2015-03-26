@@ -25,14 +25,37 @@
                 });
 
                 var valueFn = $parse(attrs.positionTakingSelectOptions);
+                var currentOptions;
+                var currentValue;
                 function render() {
-                    selectElement.children().remove();
-                    var modelValue = ngModelCtrl.$modelValue;
+                    var value = ngModelCtrl.$modelValue;
                     var options = valueFn(scope);
-                    angular.forEach(options, function (option) {
+                    var hasChange = false;
+                    if (currentValue !== value) {
+                        hasChange = true;
+                    } else if (angular.isUndefined(currentOptions) || currentOptions.length !== options.length) {
+                        hasChange = true;
+                    } else {
+                        for (var i = 0; i < currentOptions.length; i++) {
+                            if (currentOptions[i] !== options[i]) {
+                                hasChange = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hasChange) {
+                        //console.log('This check is useful');
+                        return;
+                    }
+
+                    currentOptions = options;
+                    currentValue = value;
+                    selectElement.children().remove();
+                    angular.forEach(currentOptions, function (option) {
                         var value = option;
                         var label = value / 100;
-                        var selected = modelValue === option;
+                        var selected = currentValue === option;
                         var optionElement = optionTemplate.clone();
                         optionElement.val(value);
                         optionElement.prop('selected', selected);

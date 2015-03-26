@@ -267,4 +267,10 @@
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>Confirm Update Members's PT</value>
   </data>
+  <data name="AgentMinPT" xml:space="preserve">
+    <value>Agent Min PT</value>
+  </data>
+  <data name="MasterPT" xml:space="preserve">
+    <value>Master PT</value>
+  </data>
 </root>

@@ -5,19 +5,17 @@
     </div>
     <div class="min-bet">
         <input type="text" data-ng-model="minBet.value" data-bet-limit-input data-error-message="minBet.errorMessage()"
-            data-ng-class="{'full-width': minBet.limit==0, 'invalid': !minBet.isValid()}" />
-        <span data-ng-show="minBet.limit>0">>={{minBet.limit | number}}</span>
+            data-ng-class="{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}" />
+        <span data-ng-show="hasMinBetLimit">>={{minBet.limit | number}}</span>
     </div>
     <div class="max-bet">
         <input type="text" data-ng-model="maxBet.value" data-bet-limit-input data-error-message="maxBet.errorMessage()"
-            data-ng-class="{'full-width': formType==appSettings.formType.CompanyEditSuper, 'invalid': !maxBet.isValid()}" />
-        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper">
-            <={{maxBet.limit | number}} </span>
+            data-ng-class="{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}" />
+        <span data-ng-show="hasMaxBetLimit"><={{maxBet.limit | number}} </span>
     </div>
     <div class="max-per-match">
         <input type="text" data-ng-model="maxPerMatch.value" data-bet-limit-input data-error-message="maxPerMatch.errorMessage()"
-            data-ng-class="{'full-width': formType==appSettings.formType.CompanyEditSuper, 'invalid': !maxPerMatch.isValid()}" />
-        <span data-ng-show="formType!=appSettings.formType.CompanyEditSuper">
-            <={{maxPerMatch.limit | number}} </span>
+            data-ng-class="{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}" />
+        <span data-ng-show="hasMaxPerMatchLimit"><={{maxPerMatch.limit | number}} </span>
     </div>
 </div>

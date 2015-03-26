@@ -1,4 +1,4 @@
-﻿<div class="position-taking-container master-edit-agent">
+﻿<div class="position-taking-container master-edit-agent" data-ng-class="{ 'disable-auto-mpt' : disableAutoMPT }">
     <div class="title">
         <div class="name">
         </div>
@@ -16,7 +16,6 @@
         </div>
     </div>
     <div data-ng-repeat="item in positionTakings" data-master-edit-agent-position-taking="item"
-        data-setting-level="setting.PositionTakingLevel" data-setting-context="settingContext"
-        data-form-type="formType" data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+        data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
     </div>
 </div>

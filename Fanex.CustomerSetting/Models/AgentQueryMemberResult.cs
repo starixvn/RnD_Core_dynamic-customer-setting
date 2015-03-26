@@ -12,13 +12,13 @@
             AgentQueryMemberPositionTakingEntity,
             AgentQueryMemberProductStatusEntity>
     {
-        public AgentQueryMemberResult(int errCode, string errMsg, SettingContext settingContext)
-            : base(errCode, errMsg, settingContext)
+        public AgentQueryMemberResult(int errCode, string errMsg, RequestContext requestContext)
+            : base(errCode, errMsg, requestContext)
         {
         }
 
-        public AgentQueryMemberResult(SettingContext settingContext, AgentQueryMemberCustomerSettingEntity customerSetting)
-            : base(settingContext, customerSetting)
+        public AgentQueryMemberResult(RequestContext requestContext, AgentQueryMemberCustomerSettingEntity customerSetting)
+            : base(requestContext, customerSetting)
         {
         }
     }

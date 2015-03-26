@@ -26,7 +26,7 @@
                     var betLimits = multi.Read<CompanyQuerySuperBetLimitEntity>();
                     var discounts = multi.Read<CompanyQuerySuperDiscountEntity>();
                     var statuses = multi.Read<CompanyQuerySuperProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new CompanyQuerySuperCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -34,7 +34,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }
@@ -56,7 +56,7 @@
                     var betLimits = multi.Read<SuperQueryMasterBetLimitEntity>();
                     var discounts = multi.Read<SuperQueryMasterDiscountEntity>();
                     var statuses = multi.Read<SuperQueryMasterProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new SuperQueryMasterCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -64,7 +64,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }
@@ -86,7 +86,7 @@
                     var betLimits = multi.Read<MasterQueryAgentBetLimitEntity>();
                     var discounts = multi.Read<MasterQueryAgentDiscountEntity>();
                     var statuses = multi.Read<MasterQueryAgentProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new MasterQueryAgentCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -94,7 +94,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }
@@ -116,7 +116,7 @@
                     var betLimits = multi.Read<SuperQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<SuperQueryMemberDiscountEntity>();
                     var statuses = multi.Read<SuperQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new SuperQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -124,7 +124,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }
@@ -146,7 +146,7 @@
                     var betLimits = multi.Read<MasterQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<MasterQueryMemberDiscountEntity>();
                     var statuses = multi.Read<MasterQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new MasterQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -154,7 +154,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }
@@ -176,7 +176,7 @@
                     var betLimits = multi.Read<AgentQueryMemberBetLimitEntity>();
                     var discounts = multi.Read<AgentQueryMemberDiscountEntity>();
                     var statuses = multi.Read<AgentQueryMemberProductStatusEntity>();
-                    var setting = multi.Read<SettingEntity>().First();
+                    var setting = multi.Read<SettingContext>().First();
                     return new AgentQueryMemberCustomerSettingEntity
                     {
                         Information = customerInformation,
@@ -184,7 +184,7 @@
                         BetLimits = betLimits,
                         Discounts = discounts,
                         Statuses = statuses,
-                        Setting = setting
+                        SettingContext = setting
                     };
                 }
             }

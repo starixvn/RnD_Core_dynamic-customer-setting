@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var customerSettingDiscountDirective = function (commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var customerSettingDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
             var DiscountSelect = function (min, max, value) {
                 this.min = min;
@@ -50,22 +50,19 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                discount: '=customerSettingDiscount',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '='
+                discount: '=customerSettingDiscount'
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkDiscount($scope);
-                var discount = parse($scope.discount, $scope.formType);
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.discount);
+                controllerService.linkDiscount($scope);
+                var discount = parse($scope.discount, controllerService.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.min = discount.min;
                 $scope.value = discount.value;
                 $scope.options = discount.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== getValue($scope.discount, $scope.formType)
+                    var errCode = $scope.value !== getValue($scope.discount, controllerService.formType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -73,7 +70,7 @@
                         SportType: $scope.discount.SportType,
                         BetType: $scope.discount.BetType
                     };
-                    data[getName($scope.formType)] = $scope.value;
+                    data[getName(controllerService.formType)] = $scope.value;
                     return {
                         errCode: errCode,
                         data: data

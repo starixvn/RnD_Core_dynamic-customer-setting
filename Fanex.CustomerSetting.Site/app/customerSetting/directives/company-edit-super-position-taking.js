@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             return {
                 superMaxPT: commonService.createPositionTakingSelect(0, data.DefaultMaxPT, data.S4),
@@ -16,17 +16,14 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=companyEditSuperPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;

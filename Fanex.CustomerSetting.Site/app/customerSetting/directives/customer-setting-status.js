@@ -1,21 +1,19 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['resourceService', 'linkingService', 'appSettings'];
-    var customerSettingStatusDirective = function (resourceService, linkingService, appSettings) {
+    var injectParams = ['resourceService', 'controllerService', 'appSettings'];
+    var customerSettingStatusDirective = function (resourceService, controllerService, appSettings) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
-                status: '=customerSettingStatus',
-                settingLevel: '=',
-                settingContext: '='
+                status: '=customerSettingStatus'
             },
             templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkStatus($scope);
+                controllerService.linkStatus($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.status);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
 

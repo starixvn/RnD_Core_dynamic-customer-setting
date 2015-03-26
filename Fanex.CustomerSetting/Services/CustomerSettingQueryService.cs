@@ -42,7 +42,7 @@
         /// <returns>Customer Setting Result.</returns>
         public CompanyQuerySuperResult CompanyQuerySuper(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new CompanyQuerySuperCriteria
             {
                 CustId = model.TargetCustId,
@@ -68,7 +68,7 @@
         /// <returns>Customer Setting Result.</returns>
         public SuperQueryMasterResult SuperQueryMaster(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new SuperQueryMasterCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
@@ -90,7 +90,7 @@
         /// <returns>Customer Setting Result.</returns>
         public MasterQueryAgentResult MasterQueryAgent(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new MasterQueryAgentCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
@@ -112,7 +112,7 @@
         /// <returns>Customer Setting Result.</returns>
         public SuperQueryMemberResult SuperQueryMember(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
@@ -134,7 +134,7 @@
         /// <returns>Customer Setting Result.</returns>
         public MasterQueryMemberResult MasterQueryMember(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
@@ -156,7 +156,7 @@
         /// <returns>Customer Setting Result.</returns>
         public AgentQueryMemberResult AgentQueryMember(QueryInfo model)
         {
-            var settingContext = CreateSettingContext(model);
+            var settingContext = CreateRequestContext(model);
             var criteria = new SuperQueryMemberCriteria(model.TargetCustId, model.ProductId);
             if (!criteria.IsValid())
             {
@@ -171,10 +171,12 @@
             return new AgentQueryMemberResult(settingContext, customerSettingEntity);
         }
 
-        private SettingContext CreateSettingContext(QueryInfo model)
+        private RequestContext CreateRequestContext(QueryInfo model)
         {
-            return new SettingContext
+            return new RequestContext
             {
+                TargetCustId = model.TargetCustId,
+                FormType = model.FormType,
                 ProductId = model.ProductId,
                 ProductName = _resourceService.GetProductName(model.ProductId),
                 Language = model.Language

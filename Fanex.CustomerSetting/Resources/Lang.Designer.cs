@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent Min PT.
+        /// </summary>
+        public static string AgentMinPT {
+            get {
+                return ResourceManager.GetString("AgentMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agents.
         /// </summary>
         public static string Agents {
@@ -201,6 +210,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string MasterMinPT {
             get {
                 return ResourceManager.GetString("MasterMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master PT.
+        /// </summary>
+        public static string MasterPT {
+            get {
+                return ResourceManager.GetString("MasterPT", resourceCulture);
             }
         }
         

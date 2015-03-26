@@ -3,9 +3,9 @@
 namespace Fanex.CustomerSetting.Entities
 {
     /// <summary>
-    /// ProductSetting class.
+    /// SettingContext class.
     /// </summary>
-    public class SettingEntity
+    public class SettingContext
     {
         public int PositionTakingLevel { get; set; }
 

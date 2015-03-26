@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var superEditMasterPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var superEditMasterPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             var superPT = 0;
             var masterMaxPTMin = 0;
@@ -28,17 +28,14 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=superEditMasterPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
@@ -86,14 +83,14 @@
             } ],
             link: function (scope) {
                 function updateMasterMaxPT(){
-                    var min = scope.positionTaking.N4 - scope.superPT.value;
+                    var min = Math.max(0, scope.positionTaking.N4 - scope.superPT.value);
                     var max;
-                    var value = scope.masterMaxPT.value;
                     if (!scope.superIsAuto) {
                         max = Math.min(scope.positionTaking.S4 - scope.superPT.value, scope.positionTaking.M4);
                     } else {
                         max = Math.min(scope.positionTaking.S4, scope.positionTaking.M4);
                     }
+                    var value = Math.min(scope.masterMaxPT.value, max);
                     scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 

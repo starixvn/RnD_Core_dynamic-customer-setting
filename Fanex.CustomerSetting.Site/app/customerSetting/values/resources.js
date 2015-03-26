@@ -7,6 +7,7 @@
     resources['en-us'] = {
         AccessDeniedMsg: "You do not have permission to access this page.",
         AgentMaxPT: "Agent Max PT",
+        AgentMinPT: "Agent Min PT",
         Agents: "Agents",
         BetSetting: "Bet Setting",
         Commission: "Commission",
@@ -21,6 +22,7 @@
         Live: "Live",
         MasterMaxPT: "Master Max PT",
         MasterMinPT: "Master Min PT",
+        MasterPT: "Master PT",
         Masters: "Masters",
         Max: "Max",
         MaxBet: "Max Bet",

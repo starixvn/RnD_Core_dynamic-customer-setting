@@ -1,10 +1,16 @@
-﻿namespace Fanex.CustomerSetting.Models
+﻿namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Enumerations;
+
     /// <summary>
     /// SettingContext class.
     /// </summary>
-    public class SettingContext
+    public class RequestContext
     {
+        public int TargetCustId { get; set; }
+
+        public FormType FormType { get; set; }
+
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

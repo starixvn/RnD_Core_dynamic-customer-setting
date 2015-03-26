@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$location', '$rootScope', 'appSettings'];
-    var locationService = function ($location, $rootScope, appSettings) {
+    var injectParams = ['$rootScope', '$location', 'appSettings'];
+    var modelService = function ($rootScope, $location, appSettings) {
         var formSettings = [
             {
                 formType: appSettings.formType.CompanyEditSuper,
@@ -32,10 +32,11 @@
 
         var self = this;
         function loadParams() {
-            self.isValid = false;
+            var isValidModel = false;
+            var modelParams = {};
             var path = $location.path();
             angular.forEach(formSettings, function (formSetting) {
-                if (self.isValid) {
+                if (isValidModel) {
                     return;
                 }
 
@@ -50,17 +51,22 @@
                 var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
                 matches = regExp.exec(path);
                 if (matches !== null && matches.length - 1 === params.length) {
-                    self.isValid = true;
+                    isValidModel = true;
                     angular.forEach(params, function (param, index) {
-                        self[param] = parseInt(matches[index + 1]);
+                        modelParams[param] = parseInt(matches[index + 1]);
                     });
-                    self.formType = formType;
+                    modelParams.formType = formType;
                 }
             });
+
+            self.isValid = isValidModel;
+            self.params = modelParams;
         }
 
         this.createSelectModel = function () {
-            if (!this.isValid) {
+            var isValid = this.isValid;
+            var params = this.params;
+            if (!isValid) {
                 return undefined;
             }
 
@@ -68,60 +74,61 @@
             var roleId;
             var targetCustId;
             var targetRoleId;
-            switch (this.formType) {
+            switch (params.formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    targetCustId = this.superId;
+                    targetCustId = params.superId;
                     targetRoleId = appSettings.roleType.Super;
                     break;
 
                 case appSettings.formType.SuperEditMaster:
-                    targetCustId = this.masterId;
+                    targetCustId = params.masterId;
                     targetRoleId = appSettings.roleType.Master;
                     break;
 
                 case appSettings.formType.MasterEditAgent:
-                    targetCustId = this.agentId;
+                    targetCustId = params.agentId;
                     targetRoleId = appSettings.roleType.Agent;
                     break;
 
                 case appSettings.formType.SuperEditMember:
-                    custId = this.superId;
+                    custId = params.superId;
                     roleId = appSettings.roleType.Super;
-                    targetCustId = this.memberId;
+                    targetCustId = params.memberId;
                     targetRoleId = appSettings.roleType.Member;
                     break;
 
                 case appSettings.formType.MasterEditMember:
-                    custId = this.masterId;
+                    custId = params.masterId;
                     roleId = appSettings.roleType.Master;
-                    targetCustId = this.memberId;
+                    targetCustId = params.memberId;
                     targetRoleId = appSettings.roleType.Member;
                     break;
 
                 case appSettings.formType.AgentEditMember:
-                    custId = this.agentId;
+                    custId = params.agentId;
                     roleId = appSettings.roleType.Agent;
-                    targetCustId = this.memberId;
+                    targetCustId = params.memberId;
                     targetRoleId = appSettings.roleType.Member;
                     break;
             }
 
-            var model = {
+            return {
                 CustId: custId,
                 RoleId: roleId,
                 TargetCustId: targetCustId,
                 TargetRoleId: targetRoleId,
-                FormType: this.formType,
-                ProductId: this.productId
+                FormType: params.formType,
+                ProductId: params.productId
             };
-            return model;
         };
 
         $rootScope.$on('$locationChangeStart', function () {
             loadParams();
         });
+        
+        loadParams();
     };
 
-    locationService.$inject = injectParams;
-    angular.module('customerSettingApp').service('locationService', locationService);
+    modelService.$inject = injectParams;
+    angular.module('customerSettingApp').service('modelService', modelService);
 })();

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['appSettings'];
-    var templateService = function (appSettings) {
+    var injectParams = ['appSettings', 'controllerService'];
+    var templateService = function (appSettings, controllerService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -17,36 +17,34 @@
         positionTakingFiles[appSettings.formType.MasterEditMember] = 'master-edit-member-position-taking-container.htm';
         positionTakingFiles[appSettings.formType.AgentEditMember] = 'agent-edit-member-position-taking-container.htm';
 
-        this.resolveView = function (productId) {
-            return productId > 0
-                ? '/app/customerSetting/templates/customer-setting-view.htm'
-                : undefined;
+        this.resolveView = function () {
+            return '/app/customerSetting/templates/customer-setting-view.htm';
         };
 
-        this.resolveStatus = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveStatus = function () {
+            var levelFolder = levelFolders[controllerService.statusLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
-        this.resolveDiscount = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveDiscount = function () {
+            var levelFolder = levelFolders[controllerService.discountLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/discount-container.htm'
             : undefined;
         };
 
-        this.resolveBetLimit = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
+        this.resolveBetLimit = function () {
+            var levelFolder = levelFolders[controllerService.betLimitLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
-        this.resolvePositionTaking = function (productId, formType, settingLevel) {
-            var levelFolder = levelFolders[settingLevel];
-            var fileName = positionTakingFiles[formType];
+        this.resolvePositionTaking = function () {
+            var levelFolder = levelFolders[controllerService.positionTakingLevel];
+            var fileName = positionTakingFiles[controllerService.formType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;

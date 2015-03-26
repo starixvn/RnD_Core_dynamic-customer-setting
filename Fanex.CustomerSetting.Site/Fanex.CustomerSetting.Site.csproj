@@ -184,11 +184,11 @@
     <Content Include="app\customerSetting\Gruntfile.js" />
     <Content Include="app\customerSetting\images\loading.gif" />
     <Content Include="app\customerSetting\images\sprite.png" />
+    <Content Include="app\customerSetting\services\model-service.js" />
     <Content Include="app\customerSetting\services\common-service.js" />
+    <Content Include="app\customerSetting\services\controller-service.js" />
     <Content Include="app\customerSetting\services\loading-service.js" />
     <Content Include="app\customerSetting\services\message-service.js" />
-    <Content Include="app\customerSetting\services\linking-service.js" />
-    <Content Include="app\customerSetting\services\location-service.js" />
     <Content Include="app\customerSetting\services\template-service.js" />
     <Content Include="app\customerSetting\services\tooltip-service.js" />
     <Content Include="app\customerSetting\services\resource-service.js" />

@@ -435,6 +435,19 @@
                         {
                             width: @col-is-auto;
                         }
+
+                        &.disable-auto-mpt
+                        {
+                            @col-value-width: (@container-width - @col-name-width) / 3;
+                            .master-pt, .agent-max-pt, .agent-min-pt
+                            {
+                                width: @col-value-width;
+                            }
+                            .master-is-auto
+                            {
+                                display: none;
+                            }
+                        }
                     }
 
                     &.super-edit-member

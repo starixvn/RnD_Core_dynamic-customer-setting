@@ -12,13 +12,13 @@
             CompanyQuerySuperPositionTakingEntity,
             CompanyQuerySuperProductStatusEntity>
     {
-        public CompanyQuerySuperResult(int errCode, string errMsg, SettingContext settingContext)
-            : base(errCode, errMsg, settingContext)
+        public CompanyQuerySuperResult(int errCode, string errMsg, RequestContext requestContext)
+            : base(errCode, errMsg, requestContext)
         {
         }
 
-        public CompanyQuerySuperResult(SettingContext settingContext, CompanyQuerySuperCustomerSettingEntity customerSetting)
-            : base(settingContext, customerSetting)
+        public CompanyQuerySuperResult(RequestContext requestContext, CompanyQuerySuperCustomerSettingEntity customerSetting)
+            : base(requestContext, customerSetting)
         {
         }
     }

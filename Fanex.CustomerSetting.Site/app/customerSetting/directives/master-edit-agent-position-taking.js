@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'linkingService', 'appSettings'];
-    var masterEditAgentPositionTakingDirective = function ($rootScope, commonService, resourceService, linkingService, appSettings) {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var masterEditAgentPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
         function parse(data) {
             var masterPT = 0;
             var agentMaxPTMin = 0;
@@ -28,21 +28,19 @@
             restrict: 'AE',
             scope: {
                 positionTaking: '=masterEditAgentPositionTaking',
-                settingLevel: '=',
-                settingContext: '=',
-                formType: '=',
                 hasCopy: '='
             },
             templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
-                linkingService.linkPositionTaking($scope);
+                controllerService.linkPositionTaking($scope);
                 $scope.resourceService = resourceService;
-                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.settingContext, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, $scope.formType);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
                 $scope.agentMinPT = positionTaking.agentMinPT;
+                $scope.disableAutoMPT = controllerService.settingContext.DisableAutoMPT;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
@@ -71,7 +69,9 @@
                         errCode: errCode,
                         data: {
                             SportType: $scope.positionTaking.SportType,
+                            SportTypeName: $scope.positionTaking.SportTypeName,
                             BetType: $scope.positionTaking.BetType,
+                            BetTypeName: $scope.positionTaking.BetTypeName,
                             IsLive: $scope.positionTaking.IsLive,
                             M2: $scope.masterIsAuto ? 0 : $scope.masterPT.value,
                             UM2: $scope.masterIsAuto ? $scope.masterPT.value : 0,
@@ -84,15 +84,14 @@
             } ],
             link: function (scope) {
                 function updateAgentMaxPT(){
-                    var min = scope.positionTaking.N3 - scope.masterPT.value;
+                    var min = Math.max(0, scope.positionTaking.N3 - scope.masterPT.value);
                     var max;
-                    var value = scope.agentMaxPT.value;
                     if (!scope.masterIsAuto) {
                         max = Math.min(scope.positionTaking.M3 - scope.masterPT.value, scope.positionTaking.A4);
                     } else {
                         max = Math.min(scope.positionTaking.M3, scope.positionTaking.A4);
                     }
-
+                    var value = Math.min(scope.agentMaxPT.value, max);
                     scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 

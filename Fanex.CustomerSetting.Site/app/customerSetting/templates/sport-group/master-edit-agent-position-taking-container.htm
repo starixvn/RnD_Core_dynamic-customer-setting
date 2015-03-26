@@ -1,4 +1,5 @@
-﻿<div class="position-taking-container master-edit-agent" data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
+﻿<div class="position-taking-container master-edit-agent" data-ng-class="{ 'disable-auto-mpt' : disableAutoMPT }"
+    data-ng-init="positionTakingGroups=(positionTakings|dataGroup)">
     <div data-ng-repeat="positionTakingGroup in positionTakingGroups" class="sport-group">
         <div class="sport-name" title="{{positionTakingGroup.SportTypeName}}">
             {{positionTakingGroup.SportTypeName}}
@@ -20,8 +21,7 @@
             </div>
         </div>
         <div data-ng-repeat="item in positionTakingGroup.Items" data-master-edit-agent-position-taking="item"
-            data-setting-level="setting.PositionTakingLevel" data-setting-context="settingContext"
-            data-form-type="formType" data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+            data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
         </div>
     </div>
 </div>
