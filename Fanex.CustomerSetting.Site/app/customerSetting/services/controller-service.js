@@ -102,11 +102,13 @@
                 var isFormInvalid = false;
                 angular.forEach(scopes, function (scope) {
                     if (!isFormInvalid) {
-                        var result = scope.validate();
-                        if (result.errCode === appSettings.errorType.Success) {
-                            data.push(result.data);
-                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
-                            isFormInvalid = true;
+                        if (angular.isFunction(scope.validate)) {
+                            var result = scope.validate();
+                            if (result.errCode === appSettings.errorType.Success) {
+                                data.push(result.data);
+                            } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                                isFormInvalid = true;
+                            }
                         }
                     }
                 });
@@ -184,8 +186,11 @@
                     discounts = getData(discountScopes);
                     betLimits = getData(betLimitScopes);
                     positionTakings = getData(positionTakingScopes);
-                    var hasUpdatePT = hasUpdate(positionTakings, true);
-                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
+                    var hasUpdatePT;
+                    if (!hasUpdate(statuses, false) 
+                        && !hasUpdate(discounts, false) 
+                        && !hasUpdate(betLimits, false) 
+                        && !(hasUpdatePT = hasUpdate(positionTakings, true))) {
                         return;
                     }
 

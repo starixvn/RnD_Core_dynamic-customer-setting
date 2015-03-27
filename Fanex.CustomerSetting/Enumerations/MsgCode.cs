@@ -9,18 +9,18 @@ namespace Fanex.CustomerSetting.Enumerations
     {
         Success = 0,
 
-        PositionTakingMastersExceedSuper = 20013,
+        PositionTakingMastersExceedSuper = 20019,
 
-        PositionTakingMastersExceedMaster = 20015,
+        PositionTakingMastersExceedMaster = 20021,
 
         PositionTakingAgentsExceedMaster = 20011,
 
-        PositionTakingAgentsExceedAgent = 20016,
+        PositionTakingAgentsExceedAgent = 20023,
 
-        PositionTakingMembersExceedSuper = 20014,
+        PositionTakingMembersExceedSuper = 20020,
 
         PositionTakingMembersExceedMaster = 20012,
 
-        PositionTakingMembersExceedAgent = 20017,
+        PositionTakingMembersExceedAgent = 20024,
     }
 }

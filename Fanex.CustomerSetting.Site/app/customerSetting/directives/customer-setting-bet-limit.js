@@ -186,11 +186,22 @@
                     return;
                 }
 
-                var validateMinBet = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
+                function hasValidate() {
+                    if (scope.minBet.value === scope.maxBet.value
+                        && scope.maxBet.value === scope.maxPerMatch.value
+                        && scope.maxPerMatch.value === 0) {
                         scope.minBet.clearErrors();
                         scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                        scope.maxPerMatch.clearErrors();
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                var validateMinBet = function () {
+                    if (!hasValidate()) {
+                        return;
                     }
 
                     if (scope.minBet.value < scope.minBet.limit) {
@@ -211,10 +222,8 @@
                 };
 
                 var validateMaxBet = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
-                        scope.minBet.clearErrors();
-                        scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                    if (!hasValidate()) {
+                        return;
                     }
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
@@ -242,10 +251,7 @@
                 };
 
                 var validateMaxPerMatch = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
-                        scope.minBet.clearErrors();
-                        scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                    if (!hasValidate()) {
                         return;
                     }
 

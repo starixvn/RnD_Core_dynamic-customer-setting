@@ -50,6 +50,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,7 @@
     <Compile Include="Criteria\CommandDiscountCriteria.cs" />
     <Compile Include="Criteria\CommandBetLimitCriteria.cs" />
     <Compile Include="Criteria\MasterQueryAgentCriteria.cs" />
+    <Compile Include="Criteria\PermissionValidateCriteria.cs" />
     <Compile Include="Criteria\ProductProfileQueryCriteria.cs" />
     <Compile Include="Criteria\ProductResourceQueryCriteria.cs" />
     <Compile Include="Criteria\QueryMemberCriteria.cs" />
@@ -151,8 +153,10 @@
     <Compile Include="Repositories\ICustomerSettingCommandRepository.cs" />
     <Compile Include="Repositories\IProductProfileRepository.cs" />
     <Compile Include="Repositories\IResourceRepository.cs" />
+    <Compile Include="Repositories\IValidationRepository.cs" />
     <Compile Include="Repositories\ProductProfileRepository.cs" />
     <Compile Include="Repositories\ResourceRepository.cs" />
+    <Compile Include="Repositories\ValidationRepository.cs" />
     <Compile Include="Resources\Error.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -3,9 +3,12 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Repositories;
 
     /// <summary>
     /// ValidationService class.
@@ -15,19 +18,21 @@
         #region Variables
 
         private readonly IProductProfileService _productProfileService;
+        private readonly IValidationRepository _validationRepository;
 
         #endregion Variables
 
         #region Constructors
 
         public ValidationService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public ValidationService(IProductProfileService productProfileService)
+        public ValidationService(IProductProfileService productProfileService, IValidationRepository validationRepository)
         {
             _productProfileService = productProfileService ?? new ProductProfileService();
+            _validationRepository = validationRepository ?? new ValidationRepository();
         }
 
         #endregion Constructors
@@ -45,7 +50,7 @@
                 return result;
             }
 
-            result = ValidateDownline(model);
+            result = ValidatePermission(model);
             if (!result.IsSuccess)
             {
                 return result;
@@ -73,7 +78,7 @@
                 return result;
             }
 
-            result = ValidateDownline(model);
+            result = ValidatePermission(model);
             if (!result.IsSuccess)
             {
                 return result;
@@ -162,9 +167,29 @@
             return Result.Success;
         }
 
-        private Result ValidateDownline(QueryInfo model)
+        /// <summary>
+        /// Validate status of customer and target customer to be open.
+        /// Validate target customer to have the exacted target customer role type.
+        /// Validate target customer to be down-line of customer.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Returns validation result.</returns>
+        private Result ValidatePermission(QueryInfo model)
         {
-            return Result.Success;
+            var criteria = new PermissionValidateCriteria
+            {
+                CustId = model.CustId,
+                TargetCustId = model.TargetCustId,
+                TargetRoleId = (int)model.TargetRoleId
+            };
+
+            if (!criteria.IsValid())
+            {
+                throw new CriteriaException(criteria);
+            }
+
+            _validationRepository.ValidatePermission(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         /// <summary>

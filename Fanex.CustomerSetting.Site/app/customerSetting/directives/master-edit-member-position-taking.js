@@ -8,7 +8,7 @@
             var masterPTMin = Math.max(0, data.N3 - data.A1);
             var masterPTMax = 0;
             if (!data.IS1) {
-                masterPT = data.S1;
+                masterPT = data.M1;
                 masterPTMax = Math.max(data.M3 - data.A1);
             } else {
                 masterPT = data.US1;

@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-27 10:03:05
+// customer-setting - v0.0.1 - 2015-03-30 10:03:46
 
 'use strict';
 
@@ -535,11 +535,22 @@
                     return;
                 }
 
-                var validateMinBet = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
+                function hasValidate() {
+                    if (scope.minBet.value === scope.maxBet.value
+                        && scope.maxBet.value === scope.maxPerMatch.value
+                        && scope.maxPerMatch.value === 0) {
                         scope.minBet.clearErrors();
                         scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                        scope.maxPerMatch.clearErrors();
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                var validateMinBet = function () {
+                    if (!hasValidate()) {
+                        return;
                     }
 
                     if (scope.minBet.value < scope.minBet.limit) {
@@ -560,10 +571,8 @@
                 };
 
                 var validateMaxBet = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
-                        scope.minBet.clearErrors();
-                        scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                    if (!hasValidate()) {
+                        return;
                     }
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
@@ -591,10 +600,7 @@
                 };
 
                 var validateMaxPerMatch = function () {
-                    if (scope.minBet.value === scope.maxBet.value === scope.maxPerMatch.value === 0) {
-                        scope.minBet.clearErrors();
-                        scope.maxBet.clearErrors();
-                        scope.minPerMatch.clearErrors();
+                    if (!hasValidate()) {
                         return;
                     }
 
@@ -1089,7 +1095,7 @@
             var masterPTMin = Math.max(0, data.N3 - data.A1);
             var masterPTMax = 0;
             if (!data.IS1) {
-                masterPT = data.S1;
+                masterPT = data.M1;
                 masterPTMax = Math.max(data.M3 - data.A1);
             } else {
                 masterPT = data.US1;
@@ -1706,11 +1712,13 @@
                 var isFormInvalid = false;
                 angular.forEach(scopes, function (scope) {
                     if (!isFormInvalid) {
-                        var result = scope.validate();
-                        if (result.errCode === appSettings.errorType.Success) {
-                            data.push(result.data);
-                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
-                            isFormInvalid = true;
+                        if (angular.isFunction(scope.validate)) {
+                            var result = scope.validate();
+                            if (result.errCode === appSettings.errorType.Success) {
+                                data.push(result.data);
+                            } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                                isFormInvalid = true;
+                            }
                         }
                     }
                 });
@@ -1788,8 +1796,11 @@
                     discounts = getData(discountScopes);
                     betLimits = getData(betLimitScopes);
                     positionTakings = getData(positionTakingScopes);
-                    var hasUpdatePT = hasUpdate(positionTakings, true);
-                    if (!hasUpdate(statuses, false) && !hasUpdate(discounts, false) && !hasUpdate(betLimits, false) && !hasUpdatePT) {
+                    var hasUpdatePT;
+                    if (!hasUpdate(statuses, false) 
+                        && !hasUpdate(discounts, false) 
+                        && !hasUpdate(betLimits, false) 
+                        && !(hasUpdatePT = hasUpdate(positionTakings, true))) {
                         return;
                     }
 

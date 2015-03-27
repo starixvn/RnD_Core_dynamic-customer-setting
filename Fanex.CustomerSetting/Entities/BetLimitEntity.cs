@@ -25,8 +25,7 @@ namespace Fanex.CustomerSetting.Entities
                 && IsBetLimitValue(MinBet)
                 && IsBetLimitValue(MaxBet)
                 && IsBetLimitValue(MaxPerMatch)
-                && MinBet <= MaxBet
-                && MaxBet <= MaxPerMatch;
+                && ((MinBet == MaxBet && MaxBet == MaxPerMatch && MinBet == 0) || (MinBet <= MaxBet && MaxBet <= MaxPerMatch));
         }
 
         private bool IsBetLimitValue(decimal value)
