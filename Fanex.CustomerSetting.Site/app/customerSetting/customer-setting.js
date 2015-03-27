@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-26 15:03:40
+// customer-setting - v0.0.1 - 2015-03-27 10:03:05
 
 'use strict';
 
@@ -47,8 +47,11 @@
             $scope.statuses = controllerService.statuses;
             $scope.statusTemplate = templateService.resolveStatus();
             $scope.discounts = controllerService.discounts;
+            $scope.hasUpdateDiscount = controllerService.formType !== appSettings.formType.SuperEditMember
+                && controllerService.formType !== appSettings.formType.MasterEditMember;
             $scope.discountTemplate = templateService.resolveDiscount();
             $scope.betLimits = controllerService.betLimits;
+            $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
             $scope.positionTakings = controllerService.positionTakings;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
@@ -1053,6 +1056,128 @@
 'use strict';
 
 (function () {
+    var injectParams = ['commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var masterEditMemberDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                discount: '=masterEditMemberDiscount'
+            },
+            templateUrl: '/app/customerSetting/templates/master-edit-member-discount.htm',
+            controller: ['$scope', function ($scope) {
+                controllerService.linkDiscount($scope);
+                var discount = $scope.discount;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
+                $scope.agentDiscount = discount.AgentDiscount;
+                $scope.memberDiscount = discount.PlayerDiscount;
+            } ]
+        };
+    };
+
+    masterEditMemberDiscountDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('masterEditMemberDiscount', masterEditMemberDiscountDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var masterEditMemberPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
+        function parse(data) {
+            var masterPT = 0;
+            var masterPTMin = Math.max(0, data.N3 - data.A1);
+            var masterPTMax = 0;
+            if (!data.IS1) {
+                masterPT = data.S1;
+                masterPTMax = Math.max(data.M3 - data.A1);
+            } else {
+                masterPT = data.US1;
+                masterPTMax = data.M3;
+            }
+            return {
+                masterPT: commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT),
+                masterIsAuto: data.IM1,
+                agentPT: data.A1 / appSettings.positionTakingDivider
+            };
+        }
+
+        return {
+            restrict: 'AE',
+            scope: {
+                positionTaking: '=masterEditMemberPositionTaking',
+                hasCopy: '='
+            },
+            templateUrl: '/app/customerSetting/templates/master-edit-member-position-taking.htm',
+            controller: ['$scope', function ($scope) {
+                controllerService.linkPositionTaking($scope);
+                $scope.resourceService = resourceService;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
+                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                $scope.masterPT = positionTaking.masterPT;
+                $scope.masterIsAuto = positionTaking.masterIsAuto;
+                $scope.agentPT = positionTaking.agentPT;
+                if ($scope.hasCopy) {
+                    $scope.copy = function () {
+                        $rootScope.$broadcast('copy-position-taking', $scope);
+                    };
+                }
+
+                $scope.$on('copy-position-taking', function (event, copyScope) {
+                    if (copyScope !== $scope) {
+                        $scope.masterPT.value = copyScope.masterPT.value;
+                        $scope.masterIsAuto = copyScope.masterIsAuto;
+                    }
+                });
+
+                $scope.validate = function () {
+                    var errCode = appSettings.errorType.Success;
+                    if (($scope.masterIsAuto ? $scope.positionTaking.UM1 === $scope.masterPT.value : $scope.positionTaking.M1 === $scope.masterPT.value)
+                        && $scope.positionTaking.IM1 === $scope.masterIsAuto) {
+                        errCode = appSettings.errorType.NoChange;
+                    }
+
+                    return {
+                        errCode: errCode,
+                        data: {
+                            SportType: $scope.positionTaking.SportType,
+                            SportTypeName: $scope.positionTaking.SportTypeName,
+                            BetType: $scope.positionTaking.BetType,
+                            BetTypeName: $scope.positionTaking.BetTypeName,
+                            IsLive: $scope.positionTaking.IsLive,
+                            M1: $scope.masterIsAuto ? 0 : $scope.masterPT.value,
+                            UM1: $scope.masterIsAuto ? $scope.masterPT.value : 0,
+                            IM1: $scope.masterIsAuto
+                        }
+                    };
+                };
+            } ],
+            link: function (scope) {
+                scope.$watch('masterIsAuto', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        var masterPT = scope.masterIsAuto ? scope.positionTaking.UM1 : scope.positionTaking.M1;
+                        var data = scope.positionTaking;
+                        var masterPTMin = Math.max(0, data.N3 - data.A1);
+                        var masterPTMax = 0;
+                        if (!scope.superIsAuto) {
+                            masterPTMax = Math.max(data.M3 - data.A1);
+                        } else {
+                            masterPTMax = data.M3;
+                        }
+                        scope.superPT = commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT);
+                    }
+                });
+            }
+        };
+    };
+
+    masterEditMemberPositionTakingDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('masterEditMemberPositionTaking', masterEditMemberPositionTakingDirective);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['$parse', 'appSettings'];
     var positionTakingSelectOptionsDirective = function ($parse, appSettings) {
         var optionTemplate = angular.element(document.createElement('option'));
@@ -1337,7 +1462,7 @@
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
                     if (($scope.superIsAuto ? $scope.positionTaking.US1 === $scope.superPT.value : $scope.positionTaking.S1 === $scope.superPT.value)
-                        && $scope.positionTaking.IS1 === $scope.superIsAutoe) {
+                        && $scope.positionTaking.IS1 === $scope.superIsAuto) {
                         errCode = appSettings.errorType.NoChange;
                     }
 

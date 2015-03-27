@@ -101,7 +101,6 @@
     <Compile Include="Entities\MasterQueryMemberCustomerSettingEntity.cs" />
     <Compile Include="Entities\MasterQueryMemberDiscountEntity.cs" />
     <Compile Include="Entities\MasterQueryMemberPositionTakingEntity.cs" />
-    <Compile Include="Entities\MasterQueryMemberProductStatusEntity.cs" />
     <Compile Include="Entities\ProductProfileEntity.cs" />
     <Compile Include="Entities\ProductProfileItemEntity.cs" />
     <Compile Include="Entities\ProductResourceEntity.cs" />

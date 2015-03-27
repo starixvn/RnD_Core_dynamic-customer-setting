@@ -10,7 +10,7 @@
             MasterQueryMemberDiscountEntity,
             MasterQueryMemberBetLimitEntity,
             MasterQueryMemberPositionTakingEntity,
-            MasterQueryMemberProductStatusEntity>
+            ProductStatusEntity>
     {
         public MasterQueryMemberResult(int errCode, string errMsg, RequestContext requestContext)
             : base(errCode, errMsg, requestContext)

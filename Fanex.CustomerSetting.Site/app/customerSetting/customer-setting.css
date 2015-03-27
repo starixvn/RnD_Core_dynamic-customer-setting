@@ -250,7 +250,9 @@
 .customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item > div {
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item > .master-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item .agent-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.super-edit-member .discount-item .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -272,7 +274,8 @@
 .customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item > div {
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item > .agent-discount,
+.customer-setting > div > .view > .container > .body > .discount-container.master-edit-member .discount-item .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;

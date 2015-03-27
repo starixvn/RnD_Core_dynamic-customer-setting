@@ -61,7 +61,13 @@
         /// <returns>Returns model validation.</returns>
         public Result Validate(CommandInfo model)
         {
-            var result = ValidateRole(model);
+            var result = ValidateForm(model);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            result = ValidateRole(model);
             if (!result.IsSuccess)
             {
                 return result;
@@ -80,6 +86,15 @@
             }
 
             return Result.Success;
+        }
+
+        private Result ValidateForm(CommandInfo model)
+        {
+            return (model.FormType == FormType.SuperEditMember || model.FormType == FormType.MasterEditMember)
+                && model.Discounts != null
+                && model.Discounts.Count() > 0
+                ? Result.AccessDenied
+                : Result.Success;
         }
 
         /// <summary>

@@ -54,7 +54,7 @@
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
                     if (($scope.superIsAuto ? $scope.positionTaking.US1 === $scope.superPT.value : $scope.positionTaking.S1 === $scope.superPT.value)
-                        && $scope.positionTaking.IS1 === $scope.superIsAutoe) {
+                        && $scope.positionTaking.IS1 === $scope.superIsAuto) {
                         errCode = appSettings.errorType.NoChange;
                     }
 

@@ -171,6 +171,8 @@
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
     <Content Include="app\customerSetting\directives\agent-edit-member-position-taking.js" />
+    <Content Include="app\customerSetting\directives\master-edit-member-position-taking.js" />
+    <Content Include="app\customerSetting\directives\master-edit-member-discount.js" />
     <Content Include="app\customerSetting\directives\super-edit-member-discount.js" />
     <Content Include="app\customerSetting\directives\super-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-agent-position-taking.js" />
@@ -197,6 +199,9 @@
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
     <Content Include="app\customerSetting\templates\agent-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\master-edit-member-discount.htm" />
+    <Content Include="app\customerSetting\templates\no-group\master-edit-member-discount-container.htm" />
+    <Content Include="app\customerSetting\templates\sport-group\master-edit-member-discount-container.htm" />
     <Content Include="app\customerSetting\templates\super-edit-member-discount.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-bet-limit-readonly.htm" />
     <Content Include="app\customerSetting\templates\master-edit-member-position-taking.htm" />

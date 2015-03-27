@@ -8,8 +8,11 @@
             $scope.statuses = controllerService.statuses;
             $scope.statusTemplate = templateService.resolveStatus();
             $scope.discounts = controllerService.discounts;
+            $scope.hasUpdateDiscount = controllerService.formType !== appSettings.formType.SuperEditMember
+                && controllerService.formType !== appSettings.formType.MasterEditMember;
             $scope.discountTemplate = templateService.resolveDiscount();
             $scope.betLimits = controllerService.betLimits;
+            $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
             $scope.positionTakings = controllerService.positionTakings;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
