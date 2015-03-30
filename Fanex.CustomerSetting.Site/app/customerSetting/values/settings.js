@@ -2,7 +2,7 @@
 
 (function () {
     angular.module('customerSettingApp').value('appSettings', {
-        version: '0.1',
+        version: '0.2',
         defaultLanguage: 'en-US',
         defaultMaxBet: 99999999999,
         betLimitMaxLength: 14,

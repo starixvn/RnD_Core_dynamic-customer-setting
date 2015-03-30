@@ -30,30 +30,36 @@
         };
 
         this.resolveStatus = function () {
-            var levelFolder = levelFolders[controllerService.statusLevel];
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
         this.resolveDiscount = function () {
-            var levelFolder = levelFolders[controllerService.discountLevel];
-            var fileName = discountFiles[controllerService.formType];
+            var requestContext = controllerService.getRequestContext();
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.DiscountLevel];
+            var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;
         };
 
         this.resolveBetLimit = function () {
-            var levelFolder = levelFolders[controllerService.betLimitLevel];
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
         this.resolvePositionTaking = function () {
-            var levelFolder = levelFolders[controllerService.positionTakingLevel];
-            var fileName = positionTakingFiles[controllerService.formType];
+            var requestContext = controllerService.getRequestContext();
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.PositionTakingLevel];
+            var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;

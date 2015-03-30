@@ -12,11 +12,12 @@
             templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkStatus($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
-                $scope.showDownline = controllerService.formType !== appSettings.formType.AgentEditMember;
+                $scope.showDownline = requestContext.FormType !== appSettings.formType.AgentEditMember;
 
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;

@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-03-30 10:03:46
+// customer-setting - v0.0.1 - 2015-03-30 12:03:40
 
 'use strict';
 
@@ -40,45 +40,229 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$scope', 'templateService', 'controllerService', 'appSettings'];
-    var customerSettingController = function ($scope, templateService, controllerService, appSettings) {
-        controllerService.select(function () {
-            $scope.information = controllerService.information;
-            $scope.statuses = controllerService.statuses;
+    var injectParams = ['$rootScope', '$scope', 'templateService', 'dataService', 'controllerService',
+                        'appSettings', 'modelService', 'messageService', 'resourceService'];
+    var customerSettingController = function ($rootScope, $scope, templateService, dataService, controllerService,
+                        appSettings, modelService, messageService, resourceService) {
+        var selectModel = modelService.createSelectModel();
+        dataService.select(selectModel, function (response) {
+            controllerService.updateResponse(response);
+            var requestContext = controllerService.getRequestContext();
+            var customerSetting = controllerService.getCustomerSetting();
+            var settingContext = controllerService.getSettingContext();
+
+            $scope.information = customerSetting.Information;
+            $scope.statuses = customerSetting.Statuses;
             $scope.statusTemplate = templateService.resolveStatus();
-            $scope.discounts = controllerService.discounts;
-            $scope.hasUpdateDiscount = controllerService.formType !== appSettings.formType.SuperEditMember
-                && controllerService.formType !== appSettings.formType.MasterEditMember;
+            $scope.discounts = customerSetting.Discounts;
+            $scope.hasUpdateDiscount = requestContext.FormType !== appSettings.formType.SuperEditMember
+                && requestContext.FormType !== appSettings.formType.MasterEditMember;
             $scope.discountTemplate = templateService.resolveDiscount();
-            $scope.betLimits = controllerService.betLimits;
+            $scope.betLimits = customerSetting.BetLimits;
             $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
-            $scope.positionTakings = controllerService.positionTakings;
+            $scope.positionTakings = customerSetting.PositionTakings;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
-            if (controllerService.formType === appSettings.formType.MasterEditAgent) {
-                $scope.disableAutoMPT = controllerService.settingContext.DisableAutoMPT;
+            if (requestContext.FormType === appSettings.formType.MasterEditAgent) {
+                $scope.disableAutoMPT = settingContext.DisableAutoMPT;
             }
         });
 
+        var selectSettingType;
         $scope.updateStatuses = function () {
-            controllerService.update(appSettings.settingType.Status);
+            selectSettingType = appSettings.settingType.Status;
+            update();
         };
 
         $scope.updateDiscounts = function () {
-            controllerService.update(appSettings.settingType.Discount);
+            selectSettingType = appSettings.settingType.Discount;
+            update();
         };
 
         $scope.updateBetLimits = function () {
-            controllerService.update(appSettings.settingType.BetLimit);
+            selectSettingType = appSettings.settingType.BetLimit;
+            update();
         };
 
         $scope.updatePositionTakings = function () {
-            controllerService.update(appSettings.settingType.PositionTaking);
+            selectSettingType = appSettings.settingType.PositionTaking;
+            update();
         };
 
         $scope.updateAll = function () {
-            controllerService.update(appSettings.settingType.All);
+            selectSettingType = appSettings.settingType.All;
+            update();
         };
+
+        $rootScope.$on('update-member-position-taking', function (event, updateMemberPT) {
+            update(updateMemberPT);
+        });
+
+        function update(updateMemberPT) {
+            var requestContext = controllerService.getRequestContext();
+            var settingContext = controllerService.getSettingContext();
+
+            function hasUpdate(data, isShowNoChange) {
+                if (angular.isUndefined(data)) {
+                    return false; // form invalid
+                }
+
+                if (data.length === 0) {
+                    if (isShowNoChange) {
+                        messageService.showError(resourceService.getString('NoChangeToUpdate'));
+                    }
+                    return false;
+                }
+
+                return true;
+            }
+
+            function hasUncheckAutoPT(data) {
+                var isAutoPTName, ptName;
+                switch (requestContext.FormType) {
+                    case appSettings.formType.SuperEditMaster:
+                        isAutoPTName = 'IS3';
+                        ptName = 'S3';
+                        break;
+
+                    case appSettings.formType.MasterEditAgent:
+                        isAutoPTName = 'IM2';
+                        ptName = 'M2';
+                        break;
+                }
+
+                if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
+                    var memberPTs = [];
+                    angular.forEach(data, function (pt) {
+                        var isAuto = pt[isAutoPTName];
+                        if (isAuto === false) {
+                            var ptValue = pt[ptName];
+                            var name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, pt);
+                            memberPTs.push({
+                                SportType: pt.SportType,
+                                BetType: pt.BetType,
+                                IsLive: pt.IsLive,
+                                Name: name,
+                                Pt: ptValue
+                            });
+                        }
+                    });
+
+                    if (memberPTs.length > 0) {
+                        $rootScope.updateModal = {
+                            MemberPTs: memberPTs
+                        };
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            messageService.hide();
+            var positionTakings;
+            var betLimits;
+            var discounts;
+            var statuses;
+            switch (selectSettingType) {
+                case appSettings.settingType.All:
+                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
+                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
+                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
+                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    var hasUpdatePT;
+                    if (!hasUpdate(statuses, false)
+                        && !hasUpdate(discounts, false)
+                        && !hasUpdate(betLimits, false)
+                        && !(hasUpdatePT = hasUpdate(positionTakings, true))) {
+                        return;
+                    }
+
+                    if (angular.isUndefined(updateMemberPT) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+
+                    break;
+
+                case appSettings.settingType.PositionTaking:
+                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    if (!hasUpdate(positionTakings, true)) {
+                        return;
+                    }
+
+                    if (angular.isUndefined(updateMemberPT) && hasUncheckAutoPT(positionTakings)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
+                    if (!hasUpdate(betLimits, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Discount:
+                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
+                    if (!hasUpdate(discounts, true)) {
+                        return;
+                    }
+                    break;
+
+                case appSettings.settingType.Status:
+                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
+                    if (!hasUpdate(statuses, true)) {
+                        return;
+                    }
+                    break;
+            }
+
+            if (angular.isDefined(updateMemberPT)) {
+                var isUpdateAllMembers = updateMemberPT.IsUpdateAllMembers;
+                var memberPTs = updateMemberPT.MemberPTs;
+                var newPositionTakings = [];
+                angular.forEach(positionTakings, function (positionTaking) {
+                    var isFound = false;
+                    var newPositionTaking = positionTaking;
+                    angular.forEach(memberPTs, function (memberPt) {
+                        if (!isFound
+                            && newPositionTaking.SportType === memberPt.SportType
+                            && newPositionTaking.BetType === memberPt.BetType
+                            && newPositionTaking.IsLive === memberPt.IsLive) {
+                            newPositionTaking = angular.extend({
+                                IsUpdateAllMembers: isUpdateAllMembers,
+                                MemberPositionTaking: memberPt.Pt
+                            }, newPositionTaking);
+                            newPositionTakings.push(newPositionTaking);
+                            isFound = true;
+                        }
+                    });
+                });
+
+                positionTakings = newPositionTakings;
+            }
+
+            // delete un-used properties
+            angular.forEach(positionTakings, function (positionTaking) {
+                delete (positionTaking.SportTypeName);
+                delete (positionTaking.BetTypeName);
+            });
+
+            var selectModel = modelService.createSelectModel();
+            var updateModel = angular.extend({
+                UserName: $scope.information.UserName,
+                SettingType: selectSettingType,
+                StatusLevel: settingContext.StatusLevel,
+                StatusString: JSON.stringify(statuses),
+                DiscountLevel: settingContext.DiscountLevel,
+                DiscountString: JSON.stringify(discounts),
+                BetLimitLevel: settingContext.BetLimitLevel,
+                BetLimitString: JSON.stringify(betLimits),
+                PositionTakingLevel: settingContext.PositionTakingLevel,
+                PositionTakingString: JSON.stringify(positionTakings)
+            }, selectModel);
+            dataService.update(updateModel);
+        }
     };
 
     customerSettingController.$inject = injectParams;
@@ -131,9 +315,10 @@
             templateUrl: '/app/customerSetting/templates/agent-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.agentPT = positionTaking.agentPT;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
@@ -276,9 +461,10 @@
             templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
@@ -471,17 +657,20 @@
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                $scope.isReadonly = controllerService.formType === appSettings.formType.SuperEditMember
-                    || controllerService.formType === appSettings.formType.MasterEditMember;
+                controllerService.linkBetLimit($scope);
+                var requestContext = controllerService.getRequestContext();
+
+                $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
+                    || requestContext.FormType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
                     : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
 
-                var betLimit = parse($scope.betLimit, controllerService.formType);
+                var betLimit = parse($scope.betLimit, requestContext.FormType);
                 $scope.minBet = betLimit.minBet;
                 $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = betLimit.maxBet;
-                $scope.hasMaxBetLimit = controllerService.formType !== appSettings.formType.CompanyEditSuper;
+                $scope.hasMaxBetLimit = requestContext.FormType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
@@ -491,8 +680,6 @@
                 if ($scope.isReadonly) {
                     return;
                 }
-
-                controllerService.linkBetLimit($scope);
 
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
@@ -783,14 +970,15 @@
             templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
-                var discount = parse($scope.discount, controllerService.formType);
+                var requestContext = controllerService.getRequestContext();
+                var discount = parse($scope.discount, requestContext.FormType);
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.min = discount.min;
                 $scope.value = discount.value;
                 $scope.options = discount.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== getValue($scope.discount, controllerService.formType)
+                    var errCode = $scope.value !== getValue($scope.discount, requestContext.FormType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -798,7 +986,7 @@
                         SportType: $scope.discount.SportType,
                         BetType: $scope.discount.BetType
                     };
-                    data[getName(controllerService.formType)] = $scope.value;
+                    data[getName(requestContext.FormType)] = $scope.value;
                     return {
                         errCode: errCode,
                         data: data
@@ -860,11 +1048,12 @@
             templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkStatus($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
-                $scope.showDownline = controllerService.formType !== appSettings.formType.AgentEditMember;
+                $scope.showDownline = requestContext.FormType !== appSettings.formType.AgentEditMember;
 
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
@@ -971,9 +1160,10 @@
             templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;
@@ -1117,9 +1307,10 @@
             templateUrl: '/app/customerSetting/templates/master-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentPT = positionTaking.agentPT;
@@ -1294,9 +1485,10 @@
             templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
@@ -1445,9 +1637,10 @@
             templateUrl: '/app/customerSetting/templates/super-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterPT = positionTaking.masterPT;
@@ -1611,9 +1804,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'appSettings', 'modelService', 'dataService', 'resourceService', 'messageService'];
-    var controllerService = function ($rootScope, appSettings, modelService, dataService, resourceService, messageService) {
-        var self = this;
+    var injectParams = ['appSettings', 'resourceService'];
+    var controllerService = function (appSettings, resourceService) {
         var statusScopes = [];
         var discountScopes = [];
         var betLimitScopes = [];
@@ -1631,30 +1823,70 @@
             positionTakingScopes.push(scope);
         };
 
+        this.getScopes = function (settingType) {
+            switch (settingType) {
+                case appSettings.settingType.Status:
+                    return statusScopes;
+
+                case appSettings.settingType.Discount:
+                    return discountScopes;
+
+                case appSettings.settingType.BetLimit:
+                    return betLimitScopes;
+
+                case appSettings.settingType.PositionTaking:
+                    return positionTakingScopes;
+            }
+
+            return undefined;
+        };
+
+        this.getUpdateData = function (settingType) {
+            var scopes = this.getScopes(settingType);
+            var data = [];
+            var isFormInvalid = false;
+            angular.forEach(scopes, function (scope) {
+                if (!isFormInvalid) {
+                    if (angular.isFunction(scope.validate)) {
+                        var result = scope.validate();
+                        if (result.errCode === appSettings.errorType.Success) {
+                            data.push(result.data);
+                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                            isFormInvalid = true;
+                        }
+                    }
+                }
+            });
+
+            return isFormInvalid
+                ? undefined
+                : data;
+        };
+
         this.getDisplayName = function (settingType, data) {
             var liveName = data.IsLive === true ? ' (' + resourceService.getString('Live') + ')' : '';
             var settingLevel;
             switch (settingType) {
                 case appSettings.settingType.PositionTaking:
-                    settingLevel = self.positionTakingLevel;
+                    settingLevel = settingContext.PositionTakingLevel;
                     break;
 
                 case appSettings.settingType.BetLimit:
-                    settingLevel = self.betLimitLevel;
+                    settingLevel = settingContext.BetLimitLevel;
                     break;
 
                 case appSettings.settingType.Discount:
-                    settingLevel = self.discountLevel;
+                    settingLevel = settingContext.DiscountLevel;
                     break;
 
                 case appSettings.settingType.Status:
-                    settingLevel = self.statusLevel;
+                    settingLevel = settingContext.StatusLevel;
                     break;
             }
 
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
-                    return self.productName;
+                    return requestContext.ProductName;
                 case appSettings.settingLevel.SportType:
                     return data.SportTypeName;
                 case appSettings.settingLevel.BetType:
@@ -1666,229 +1898,46 @@
             return undefined;
         };
 
-        this.select = function (callback) {
-            var selectModel = modelService.createSelectModel();
-            dataService.select(selectModel, function (response) {
-                var requestContext = response.RequestContext;
-                self.requestContext = requestContext;
-                self.productId = requestContext.ProductId;
-                self.productName = requestContext.ProductName;
-                self.formType = requestContext.FormType;
-                self.language = requestContext.Language;
-
-                var customerSetting = response.CustomerSetting;
-                self.customerSetting = customerSetting;
-                self.information = customerSetting.Information;
-                self.statuses = customerSetting.Statuses;
-                self.discounts = customerSetting.Discounts;
-                self.betLimits = customerSetting.BetLimits;
-                self.positionTakings = customerSetting.PositionTakings;
-
-                var settingContext = customerSetting.SettingContext;
-                self.settingContext = settingContext;
-                self.statusLevel = settingContext.StatusLevel;
-                self.discountLevel = settingContext.DiscountLevel;
-                self.betLimitLevel = settingContext.BetLimitLevel;
-                self.positionTakingLevel = settingContext.PositionTakingLevel;
-                self.disableAutoMPT = settingContext.DisableAutoMPT;
-
-                callback();
-            });
-        };
-
-        var selectSettingType;
-        this.update = function (settingType) {
-            selectSettingType = settingType;
-            update();
-        };
-
-        $rootScope.$on('update-member-position-taking', function (event, updateMemberPT) {
-            update(updateMemberPT);
-        });
-
-        function update(updateMemberPT) {
-            function getData(scopes) {
-                var data = [];
-                var isFormInvalid = false;
-                angular.forEach(scopes, function (scope) {
-                    if (!isFormInvalid) {
-                        if (angular.isFunction(scope.validate)) {
-                            var result = scope.validate();
-                            if (result.errCode === appSettings.errorType.Success) {
-                                data.push(result.data);
-                            } else if (result.errCode === appSettings.errorType.FormInvalid) {
-                                isFormInvalid = true;
-                            }
-                        }
-                    }
-                });
-
-                return isFormInvalid
-                    ? undefined
-                    : data;
-            }
-
-            function hasUpdate(data, isShowNoChange) {
-                if (angular.isUndefined(data)) {
-                    return false; // form invalid
-                }
-
-                if (data.length === 0) {
-                    if (isShowNoChange) {
-                        messageService.showError(resourceService.getString('NoChangeToUpdate'));
-                    }
-                    return false;
-                }
-
-                return true;
-            }
-
-            function hasUncheckAutoPT(data) {
-                var isAutoPTName, ptName;
-                switch (self.formType) {
-                    case appSettings.formType.SuperEditMaster:
-                        isAutoPTName = 'IS3';
-                        ptName = 'S3';
-                        break;
-
-                    case appSettings.formType.MasterEditAgent:
-                        isAutoPTName = 'IM2';
-                        ptName = 'M2';
-                        break;
-                }
-
-                if (angular.isDefined(isAutoPTName) && angular.isDefined(ptName)) {
-                    var memberPTs = [];
-                    angular.forEach(data, function (pt) {
-                        var isAuto = pt[isAutoPTName];
-                        if (isAuto === false) {
-                            var ptValue = pt[ptName];
-                            var name = self.getDisplayName(appSettings.settingType.PositionTaking, pt);
-                            memberPTs.push({
-                                SportType: pt.SportType,
-                                BetType: pt.BetType,
-                                IsLive: pt.IsLive,
-                                Name: name,
-                                Pt: ptValue
-                            });
-                        }
-                    });
-
-                    if (memberPTs.length > 0) {
-                        $rootScope.updateModal = {
-                            MemberPTs: memberPTs
-                        };
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            messageService.hide();
-            var positionTakings;
-            var betLimits;
-            var discounts;
-            var statuses;
-            switch (selectSettingType) {
-                case appSettings.settingType.All:
-                    statuses = getData(statusScopes);
-                    discounts = getData(discountScopes);
-                    betLimits = getData(betLimitScopes);
-                    positionTakings = getData(positionTakingScopes);
-                    var hasUpdatePT;
-                    if (!hasUpdate(statuses, false) 
-                        && !hasUpdate(discounts, false) 
-                        && !hasUpdate(betLimits, false) 
-                        && !(hasUpdatePT = hasUpdate(positionTakings, true))) {
-                        return;
-                    }
-
-                    if (angular.isUndefined(updateMemberPT) && hasUpdatePT && hasUncheckAutoPT(positionTakings)) {
-                        return;
-                    }
-
-                    break;
-
-                case appSettings.settingType.PositionTaking:
-                    positionTakings = getData(positionTakingScopes);
-                    if (!hasUpdate(positionTakings, true)) {
-                        return;
-                    }
-
-                    if (angular.isUndefined(updateMemberPT) && hasUncheckAutoPT(positionTakings)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.BetLimit:
-                    betLimits = getData(betLimitScopes);
-                    if (!hasUpdate(betLimits, true)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.Discount:
-                    discounts = getData(discountScopes);
-                    if (!hasUpdate(discounts, true)) {
-                        return;
-                    }
-                    break;
-
-                case appSettings.settingType.Status:
-                    statuses = getData(statusScopes);
-                    if (!hasUpdate(statuses, true)) {
-                        return;
-                    }
-                    break;
-            }
-
-            if (angular.isDefined(updateMemberPT)) {
-                var isUpdateAllMembers = updateMemberPT.IsUpdateAllMembers;
-                var memberPTs = updateMemberPT.MemberPTs;
-                var newPositionTakings = [];
-                angular.forEach(positionTakings, function (positionTaking) {
-                    var isFound = false;
-                    var newPositionTaking = positionTaking;
-                    angular.forEach(memberPTs, function (memberPt) {
-                        if (!isFound
-                            && newPositionTaking.SportType === memberPt.SportType
-                            && newPositionTaking.BetType === memberPt.BetType
-                            && newPositionTaking.IsLive === memberPt.IsLive) {
-                            newPositionTaking = angular.extend({
-                                IsUpdateAllMembers: isUpdateAllMembers,
-                                MemberPositionTaking: memberPt.Pt
-                            }, newPositionTaking);
-                            newPositionTakings.push(newPositionTaking);
-                            isFound = true;
-                        }
-                    });
-                });
-
-                positionTakings = newPositionTakings;
-            }
-
-            // delete un-used properties
-            angular.forEach(positionTakings, function (positionTaking) {
-                delete (positionTaking.SportTypeName);
-                delete (positionTaking.BetTypeName);
-            });
-
-            var selectModel = modelService.createSelectModel();
-            var updateModel = angular.extend({
-                UserName: self.information.UserName,
-                SettingType: selectSettingType,
-                StatusLevel: self.statusLevel,
-                StatusString: JSON.stringify(statuses),
-                DiscountLevel: self.discountLevel,
-                DiscountString: JSON.stringify(discounts),
-                BetLimitLevel: self.betLimitLevel,
-                BetLimitString: JSON.stringify(betLimits),
-                PositionTakingLevel: self.positionTakingLevel,
-                PositionTakingString: JSON.stringify(positionTakings)
-            }, selectModel);
-            dataService.update(updateModel);
+        function RequestContext() {
+            this.TargetCustId = 0;
+            this.FormType = undefined;
+            this.ProductId = 0;
+            this.ProductName = undefined;
+            this.Language = undefined;
         }
+        function SettingContext() {
+            this.PositionTakingLevel = undefined;
+            this.BetLimitLevel = undefined;
+            this.DiscountLevel = undefined;
+            this.StatusLevel = undefined;
+            this.DisableAutoMPT = undefined;
+        }
+        function CustomerSetting() {
+            this.Information = undefined;
+            this.Statuses = undefined;
+            this.Discounts = undefined;
+            this.BetLimits = undefined;
+            this.PositionTakings = undefined;
+        }
+
+        var requestContext = new RequestContext();
+        var settingContext = new SettingContext();
+        var customerSetting = new CustomerSetting();
+        this.updateResponse = function (response) {
+            angular.copy(response.RequestContext, requestContext);
+            angular.copy(response.CustomerSetting, customerSetting);
+            angular.copy(response.CustomerSetting.SettingContext, settingContext);
+        };
+
+        this.getRequestContext = function () {
+            return requestContext;
+        };
+        this.getSettingContext = function () {
+            return settingContext;
+        };
+        this.getCustomerSetting = function () {
+            return customerSetting;
+        };
     };
 
     controllerService.$inject = injectParams;
@@ -2301,30 +2350,36 @@
         };
 
         this.resolveStatus = function () {
-            var levelFolder = levelFolders[controllerService.statusLevel];
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
         this.resolveDiscount = function () {
-            var levelFolder = levelFolders[controllerService.discountLevel];
-            var fileName = discountFiles[controllerService.formType];
+            var requestContext = controllerService.getRequestContext();
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.DiscountLevel];
+            var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;
         };
 
         this.resolveBetLimit = function () {
-            var levelFolder = levelFolders[controllerService.betLimitLevel];
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
         this.resolvePositionTaking = function () {
-            var levelFolder = levelFolders[controllerService.positionTakingLevel];
-            var fileName = positionTakingFiles[controllerService.formType];
+            var requestContext = controllerService.getRequestContext();
+            var settingContext = controllerService.getSettingContext();
+            var levelFolder = levelFolders[settingContext.PositionTakingLevel];
+            var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
             ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
             : undefined;
@@ -2545,7 +2600,7 @@
 
 (function () {
     angular.module('customerSettingApp').value('appSettings', {
-        version: '0.1',
+        version: '0.2',
         defaultLanguage: 'en-US',
         defaultMaxBet: 99999999999,
         betLimitMaxLength: 14,

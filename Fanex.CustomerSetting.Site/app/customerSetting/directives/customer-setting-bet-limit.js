@@ -122,17 +122,20 @@
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                $scope.isReadonly = controllerService.formType === appSettings.formType.SuperEditMember
-                    || controllerService.formType === appSettings.formType.MasterEditMember;
+                controllerService.linkBetLimit($scope);
+                var requestContext = controllerService.getRequestContext();
+
+                $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
+                    || requestContext.FormType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
                     : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
 
-                var betLimit = parse($scope.betLimit, controllerService.formType);
+                var betLimit = parse($scope.betLimit, requestContext.FormType);
                 $scope.minBet = betLimit.minBet;
                 $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = betLimit.maxBet;
-                $scope.hasMaxBetLimit = controllerService.formType !== appSettings.formType.CompanyEditSuper;
+                $scope.hasMaxBetLimit = requestContext.FormType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = betLimit.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
@@ -142,8 +145,6 @@
                 if ($scope.isReadonly) {
                     return;
                 }
-
-                controllerService.linkBetLimit($scope);
 
                 if ($scope.hasCopy) {
                     $scope.copy = function () {

@@ -31,9 +31,10 @@
             templateUrl: '/app/customerSetting/templates/super-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.superPT = positionTaking.superPT;
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterPT = positionTaking.masterPT;

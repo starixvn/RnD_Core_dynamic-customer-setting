@@ -18,9 +18,10 @@
             templateUrl: '/app/customerSetting/templates/agent-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.agentPT = positionTaking.agentPT;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {

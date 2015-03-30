@@ -55,14 +55,15 @@
             templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
-                var discount = parse($scope.discount, controllerService.formType);
+                var requestContext = controllerService.getRequestContext();
+                var discount = parse($scope.discount, requestContext.FormType);
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.min = discount.min;
                 $scope.value = discount.value;
                 $scope.options = discount.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== getValue($scope.discount, controllerService.formType)
+                    var errCode = $scope.value !== getValue($scope.discount, requestContext.FormType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -70,7 +71,7 @@
                         SportType: $scope.discount.SportType,
                         BetType: $scope.discount.BetType
                     };
-                    data[getName(controllerService.formType)] = $scope.value;
+                    data[getName(requestContext.FormType)] = $scope.value;
                     return {
                         errCode: errCode,
                         data: data

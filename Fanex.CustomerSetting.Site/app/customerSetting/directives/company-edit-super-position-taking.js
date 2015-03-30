@@ -21,9 +21,10 @@
             templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.superMaxPT = positionTaking.superMaxPT;
                 $scope.masterMaxPT = positionTaking.masterMaxPT;
                 $scope.agentMaxPT = positionTaking.agentMaxPT;

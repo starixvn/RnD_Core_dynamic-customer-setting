@@ -30,9 +30,10 @@
             templateUrl: '/app/customerSetting/templates/master-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
+                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, controllerService.formType);
+                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentPT = positionTaking.agentPT;
