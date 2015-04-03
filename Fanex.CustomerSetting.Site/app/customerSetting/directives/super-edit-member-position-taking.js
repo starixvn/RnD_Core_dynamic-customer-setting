@@ -39,6 +39,7 @@
                 $scope.superIsAuto = positionTaking.superIsAuto;
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.agentPT = positionTaking.agentPT;
+                $scope.isDisabledSuperPT = $scope.positionTaking.IS3 && !$scope.positionTaking.IS1;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
@@ -73,10 +74,10 @@
                         }
                     };
                 };
-            } ],
-            link: function (scope) {
+            } ], link: function (scope) {
                 scope.$watch('superIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        scope.isDisabledSuperPT = scope.positionTaking.IS3 && !scope.superIsAuto;
                         var superPT = scope.superIsAuto ? scope.positionTaking.US1 : scope.positionTaking.S1;
                         var data = scope.positionTaking;
                         var superPTMin = Math.max(0, data.N4 - data.M1 - data.A1);

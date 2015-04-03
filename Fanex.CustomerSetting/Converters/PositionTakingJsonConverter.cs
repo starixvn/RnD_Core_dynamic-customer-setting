@@ -37,7 +37,7 @@
                     return jsonObject.ToObject<MasterCommandAgentPositionTakingEntity>();
 
                 case FormType.SuperEditMember:
-                    return jsonObject.ToObject<SuperCommandMemberPositionTakingEntity>();
+                    return jsonObject.ToObject<SuperQueryMemberPositionTakingEntity>();
 
                 case FormType.MasterEditMember:
                     return jsonObject.ToObject<MasterQueryMemberPositionTakingEntity>();

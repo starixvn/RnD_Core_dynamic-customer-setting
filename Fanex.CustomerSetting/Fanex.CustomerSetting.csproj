@@ -90,7 +90,6 @@
     <Compile Include="Entities\CompanyQuerySuperDiscountEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperPositionTakingEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperProductStatusEntity.cs" />
-    <Compile Include="Entities\SuperCommandMemberPositionTakingEntity.cs" />
     <Compile Include="Entities\MasterCommandAgentPositionTakingEntity.cs" />
     <Compile Include="Entities\SuperCommandMasterPositionTakingEntity.cs" />
     <Compile Include="Entities\CustomerSettingEntity.cs" />

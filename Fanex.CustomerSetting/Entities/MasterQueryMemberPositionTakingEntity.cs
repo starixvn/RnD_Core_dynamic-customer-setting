@@ -2,6 +2,8 @@
 
 namespace Fanex.CustomerSetting.Entities
 {
+    using Fanex.CustomerSetting.Attributes;
+
     /// <summary>
     /// MasterEditMemberPositionTaking class.
     /// </summary>
@@ -15,17 +17,25 @@ namespace Fanex.CustomerSetting.Entities
         /// <summary>
         /// Master PT.
         /// </summary>
+        [OutputElement("MasterPT")]
         public byte M1 { get; set; }
 
         /// <summary>
-        /// Master Is Auto.
+        /// Master Is Auto on Member.
         /// </summary>
+        [OutputElement("IsAutoMasterPT")]
         public bool IM1 { get; set; }
 
         /// <summary>
         /// Master Auto PT.
         /// </summary>
+        [OutputElement("AutoMasterPT")]
         public byte UM1 { get; set; }
+
+        /// <summary>
+        /// Master Is Auto on Agent.
+        /// </summary>
+        public bool IM2 { get; set; }
 
         /// <summary>
         /// Master Max PT.
@@ -36,5 +46,14 @@ namespace Fanex.CustomerSetting.Entities
         /// Master Min PT.
         /// </summary>
         public byte N3 { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid()
+                && IsPositionTakingValue(M1)
+                && IsPositionTakingValue(UM1)
+                && !(IM1 && M1 > 0)
+                && !(!IM1 && UM1 > 0);
+        }
     }
 }

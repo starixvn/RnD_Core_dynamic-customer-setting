@@ -37,6 +37,7 @@
                 $scope.masterPT = positionTaking.masterPT;
                 $scope.masterIsAuto = positionTaking.masterIsAuto;
                 $scope.agentPT = positionTaking.agentPT;
+                $scope.isDisabledMasterPT = $scope.positionTaking.IM2 && !$scope.positionTaking.IM1;
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
@@ -75,16 +76,17 @@
             link: function (scope) {
                 scope.$watch('masterIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        scope.isDisabledMasterPT = scope.positionTaking.IM2 && !scope.masterIsAuto;
                         var masterPT = scope.masterIsAuto ? scope.positionTaking.UM1 : scope.positionTaking.M1;
                         var data = scope.positionTaking;
                         var masterPTMin = Math.max(0, data.N3 - data.A1);
                         var masterPTMax = 0;
-                        if (!scope.superIsAuto) {
+                        if (!scope.masterIsAuto) {
                             masterPTMax = Math.max(data.M3 - data.A1);
                         } else {
                             masterPTMax = data.M3;
                         }
-                        scope.superPT = commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT);
+                        scope.masterPT = commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT);
                     }
                 });
             }

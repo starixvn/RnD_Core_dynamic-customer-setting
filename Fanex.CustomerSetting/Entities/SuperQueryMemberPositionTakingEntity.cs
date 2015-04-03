@@ -26,11 +26,15 @@ namespace Fanex.CustomerSetting.Entities
         public byte S1 { get; set; }
 
         /// <summary>
-        /// Super Is Auto.
+        /// Super Is Auto on Member.
         /// </summary>
-
         [OutputElement("IsAutoSuperPT")]
         public bool IS1 { get; set; }
+
+        /// <summary>
+        /// Super Is Auto On Master.
+        /// </summary>
+        public bool IS3 { get; set; }
 
         /// <summary>
         /// Super Auto PT.

@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Entities
                 && IsPositionTakingValue(UM2)
                 && IsPositionTakingValue(A2)
                 && IsPositionTakingValue(N2)
-                && M2 >= N2
+                && A2 >= N2
                 && !(IM2 && M2 > 0)
                 && !(!IM2 && UM2 > 0);
         }

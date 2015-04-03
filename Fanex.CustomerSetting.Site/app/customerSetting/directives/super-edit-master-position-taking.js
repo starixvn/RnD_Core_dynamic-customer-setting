@@ -17,7 +17,7 @@
                 masterMaxPTMax = Math.min(data.S4, data.M4);
             }
             return {
-                superPT: commonService.createPositionTakingSelect(0, data.S4, superPT),
+                superPT: commonService.createPositionTakingSelect(Math.max(0, data.N4 - data.M4), data.S4, superPT),
                 superIsAuto: data.IS3,
                 masterMaxPT: commonService.createPositionTakingSelect(masterMaxPTMin, masterMaxPTMax, data.M3),
                 masterMinPT: commonService.createPositionTakingSelect(0, data.M3, data.N3)
@@ -83,7 +83,7 @@
                 };
             } ],
             link: function (scope) {
-                function updateMasterMaxPT(){
+                function updateMasterMaxPT() {
                     var min = Math.max(0, scope.positionTaking.N4 - scope.superPT.value);
                     var max;
                     if (!scope.superIsAuto) {
@@ -91,7 +91,7 @@
                     } else {
                         max = Math.min(scope.positionTaking.S4, scope.positionTaking.M4);
                     }
-                    var value = Math.min(scope.masterMaxPT.value, max);
+                    var value = Math.max(min, Math.min(scope.masterMaxPT.value, max));
                     scope.masterMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
@@ -103,8 +103,10 @@
 
                 scope.$watch('superIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        var superPT = scope.superIsAuto ? scope.positionTaking.US3 : scope.positionTaking.S3;
-                        scope.superPT = commonService.createPositionTakingSelect(0, scope.positionTaking.S4, superPT);
+                        var min = scope.superPT.min;
+                        var max = scope.superPT.max;
+                        var value = scope.superIsAuto ? scope.positionTaking.US3 : scope.positionTaking.S3;
+                        scope.superPT = commonService.createPositionTakingSelect(min, max, value);
                         updateMasterMaxPT();
                     }
                 });

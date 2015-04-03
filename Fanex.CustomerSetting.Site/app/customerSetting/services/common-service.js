@@ -52,6 +52,8 @@
 
             this.options = options;
             this.value = this.options[selectIndex];
+            this.min = min;
+            this.max = max;
         };
 
         this.createPositionTakingSelect = function (min, max, value) {

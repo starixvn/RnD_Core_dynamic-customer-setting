@@ -91,7 +91,7 @@
                     } else {
                         max = Math.min(scope.positionTaking.M3, scope.positionTaking.A4);
                     }
-                    var value = Math.min(scope.agentMaxPT.value, max);
+                    var value = Math.max(min, Math.min(scope.agentMaxPT.value, max));
                     scope.agentMaxPT = commonService.createPositionTakingSelect(min, max, value);
                 }
 
@@ -103,15 +103,20 @@
 
                 scope.$watch('masterIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        var masterPT = scope.masterIsAuto ? scope.positionTaking.UM2 : scope.positionTaking.M2;
-                        scope.masterPT = commonService.createPositionTakingSelect(0, scope.positionTaking.M3, masterPT);
+                        var min = 0;
+                        var max = scope.positionTaking.M3;
+                        var value = scope.masterIsAuto ? scope.positionTaking.UM2 : scope.positionTaking.M2;
+                        scope.masterPT = commonService.createPositionTakingSelect(min, max, value);
                         updateAgentMaxPT();
                     }
                 });
 
                 scope.$watch('agentMaxPT.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        scope.agentMinPT = commonService.createPositionTakingSelect(0, scope.agentMaxPT.value, scope.agentMinPT.value);
+                        var min = 0;
+                        var max = scope.agentMaxPT.value;
+                        var value = Math.max(min, Math.min(scope.agentMinPT.value, max));
+                        scope.agentMinPT = commonService.createPositionTakingSelect(min, max, value);
                     }
                 });
             }
