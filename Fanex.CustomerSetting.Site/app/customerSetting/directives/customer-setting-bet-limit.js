@@ -123,6 +123,7 @@
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
                 controllerService.linkBetLimit($scope);
+                var betLimit = $scope.betLimit;
                 var requestContext = controllerService.getRequestContext();
 
                 $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
@@ -131,15 +132,15 @@
                     ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
                     : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
 
-                var betLimit = parse($scope.betLimit, requestContext.FormType);
-                $scope.minBet = betLimit.minBet;
+                var data = parse(betLimit, requestContext.FormType);
+                $scope.minBet = data.minBet;
                 $scope.hasMinBetLimit = $scope.minBet.limit > 0;
-                $scope.maxBet = betLimit.maxBet;
+                $scope.maxBet = data.maxBet;
                 $scope.hasMaxBetLimit = requestContext.FormType !== appSettings.formType.CompanyEditSuper;
-                $scope.maxPerMatch = betLimit.maxPerMatch;
+                $scope.maxPerMatch = data.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, $scope.betLimit);
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, betLimit);
                 $scope.resourceService = resourceService;
 
                 if ($scope.isReadonly) {
@@ -164,17 +165,17 @@
                     var errCode = appSettings.errorType.Success;
                     if (!$scope.minBet.isValid() || !$scope.maxBet.isValid() || !$scope.maxPerMatch.isValid()) {
                         errCode = appSettings.errorType.FormInvalid;
-                    } else if ($scope.betLimit.MinBet === $scope.minBet.value
-                        && $scope.betLimit.MaxBet === $scope.maxBet.value
-                        && $scope.betLimit.MaxPerMatch === $scope.maxPerMatch.value) {
+                    } else if (betLimit.MinBet === $scope.minBet.value
+                        && betLimit.MaxBet === $scope.maxBet.value
+                        && betLimit.MaxPerMatch === $scope.maxPerMatch.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.betLimit.SportType,
-                            BetType: $scope.betLimit.BetType,
+                            SportType: betLimit.SportType,
+                            BetType: betLimit.BetType,
                             MinBet: $scope.minBet.value,
                             MaxBet: $scope.maxBet.value,
                             MaxPerMatch: $scope.maxPerMatch.value

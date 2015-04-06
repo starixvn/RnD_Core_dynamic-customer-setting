@@ -3,24 +3,6 @@
 (function () {
     var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
     var masterEditMemberPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
-        function parse(data) {
-            var masterPT = 0;
-            var masterPTMin = Math.max(0, data.N3 - data.A1);
-            var masterPTMax = 0;
-            if (!data.IS1) {
-                masterPT = data.M1;
-                masterPTMax = Math.max(data.M3 - data.A1);
-            } else {
-                masterPT = data.US1;
-                masterPTMax = data.M3;
-            }
-            return {
-                masterPT: commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT),
-                masterIsAuto: data.IM1,
-                agentPT: data.A1 / appSettings.positionTakingDivider
-            };
-        }
-
         return {
             restrict: 'AE',
             scope: {
@@ -30,30 +12,64 @@
             templateUrl: '/app/customerSetting/templates/master-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
-                var requestContext = controllerService.getRequestContext();
+                var positionTaking = $scope.positionTaking;
+                var isInitialized = false;
+                var isCopied = false;
                 $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
-                $scope.masterPT = positionTaking.masterPT;
-                $scope.masterIsAuto = positionTaking.masterIsAuto;
-                $scope.agentPT = positionTaking.agentPT;
-                $scope.isDisabledMasterPT = $scope.positionTaking.IM2 && !$scope.positionTaking.IM1;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+
+                // Master Is Auto
+                $scope.masterIsAuto = positionTaking.IM1;
+                $scope.$watch('masterIsAuto', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
+                        $scope.masterPT = generateMasterPT();
+                        isCopied = false;
+                    }
+                });
+
+                // Master PT
+                $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
+                function generateMasterPT() {
+                    var min = Math.max(0, positionTaking.N3 - positionTaking.A1);
+                    var max = !$scope.masterIsAuto
+                        ? positionTaking.M3 - positionTaking.A1
+                        : positionTaking.M3;
+                    var value = $scope.isDisabledMasterPT
+                        ? positionTaking.M1
+                        : isCopied === true
+                            ? $scope.masterPT.value
+                            : !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1;
+                    if (isInitialized && !$scope.isDisabledMasterPT) {
+                        value = commonService.correctValue(min, max, value);
+                    }
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.masterPT = generateMasterPT();
+
+                // Agent PT
+                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+
+                // Copy
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
                     };
                 }
-
                 $scope.$on('copy-position-taking', function (event, copyScope) {
                     if (copyScope !== $scope) {
-                        $scope.masterPT.value = copyScope.masterPT.value;
+                        isCopied = true;
                         $scope.masterIsAuto = copyScope.masterIsAuto;
+                        if (!$scope.isDisabledMasterPT || copyScope.masterIsAuto) {
+                            $scope.masterPT.value = copyScope.masterPT.value;
+                        }
                     }
                 });
 
+                // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if (($scope.masterIsAuto ? $scope.positionTaking.UM1 === $scope.masterPT.value : $scope.positionTaking.M1 === $scope.masterPT.value)
+                    if ((!$scope.masterIsAuto ? $scope.positionTaking.M1 === $scope.masterPT.value : $scope.positionTaking.UM1 === $scope.masterPT.value)
                         && $scope.positionTaking.IM1 === $scope.masterIsAuto) {
                         errCode = appSettings.errorType.NoChange;
                     }
@@ -72,24 +88,9 @@
                         }
                     };
                 };
-            } ],
-            link: function (scope) {
-                scope.$watch('masterIsAuto', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        scope.isDisabledMasterPT = scope.positionTaking.IM2 && !scope.masterIsAuto;
-                        var masterPT = scope.masterIsAuto ? scope.positionTaking.UM1 : scope.positionTaking.M1;
-                        var data = scope.positionTaking;
-                        var masterPTMin = Math.max(0, data.N3 - data.A1);
-                        var masterPTMax = 0;
-                        if (!scope.masterIsAuto) {
-                            masterPTMax = Math.max(data.M3 - data.A1);
-                        } else {
-                            masterPTMax = data.M3;
-                        }
-                        scope.masterPT = commonService.createPositionTakingSelect(masterPTMin, masterPTMax, masterPT);
-                    }
-                });
-            }
+
+                isInitialized = true;
+            } ]
         };
     };
 

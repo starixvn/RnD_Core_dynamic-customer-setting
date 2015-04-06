@@ -30,6 +30,10 @@
             return options;
         };
 
+        this.correctValue = function (min, max, value) {
+            return Math.max(min, Math.min(max, value));
+        };
+
         var self = this;
         var PositionTakingSelect = function (min, max, value) {
             var options = self.generateOptions(min, max, 1, 1);

@@ -13,13 +13,13 @@ namespace Fanex.CustomerSetting.Enumerations
 
         PositionTakingMastersExceedMaster = 20021,
 
-        PositionTakingAgentsExceedMaster = 20011,
+        PositionTakingAgentsExceedMaster = 20026,
 
         PositionTakingAgentsExceedAgent = 20023,
 
         PositionTakingMembersExceedSuper = 20020,
 
-        PositionTakingMembersExceedMaster = 20012,
+        PositionTakingMembersExceedMaster = 20022,
 
         PositionTakingMembersExceedAgent = 20024,
     }

@@ -3,25 +3,6 @@
 (function () {
     var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
     var superEditMemberPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
-        function parse(data) {
-            var superPT = 0;
-            var superPTMin = Math.max(0, data.N4 - data.M1 - data.A1);
-            var superPTMax = 0;
-            if (!data.IS1) {
-                superPT = data.S1;
-                superPTMax = Math.max(data.N4 - data.M1 - data.A1, data.S4 - data.M3);
-            } else {
-                superPT = data.US1;
-                superPTMax = data.S4;
-            }
-            return {
-                superPT: commonService.createPositionTakingSelect(superPTMin, superPTMax, superPT),
-                superIsAuto: data.IS1,
-                masterPT: data.M1 / appSettings.positionTakingDivider,
-                agentPT: data.A1 / appSettings.positionTakingDivider
-            };
-        }
-
         return {
             restrict: 'AE',
             scope: {
@@ -31,28 +12,62 @@
             templateUrl: '/app/customerSetting/templates/super-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
-                var requestContext = controllerService.getRequestContext();
+                var positionTaking = $scope.positionTaking;
+                var isInitialized = false;
+                var isCopied = false;
                 $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
-                $scope.superPT = positionTaking.superPT;
-                $scope.superIsAuto = positionTaking.superIsAuto;
-                $scope.masterPT = positionTaking.masterPT;
-                $scope.agentPT = positionTaking.agentPT;
-                $scope.isDisabledSuperPT = $scope.positionTaking.IS3 && !$scope.positionTaking.IS1;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+
+                // Super Is Auto
+                $scope.superIsAuto = positionTaking.IS1;
+                $scope.$watch('superIsAuto', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $scope.isDisabledSuperPT = positionTaking.IS3 && !$scope.superIsAuto;
+                        $scope.superPT = generateSuperPT();
+                        isCopied = false;
+                    }
+                });
+
+                // Super PT
+                $scope.isDisabledSuperPT = positionTaking.IS3 && !$scope.superIsAuto;
+                function generateSuperPT() {
+                    var min = Math.max(0, positionTaking.N4 - positionTaking.M1 - positionTaking.A1);
+                    var max = !$scope.superIsAuto
+                        ? Math.max(positionTaking.N4 - positionTaking.M1 - positionTaking.A1, positionTaking.S4 - positionTaking.M3)
+                        : positionTaking.S4;
+                    var value = $scope.isDisabledSuperPT
+                        ? positionTaking.S1
+                        : isCopied
+                            ? $scope.superPT.value
+                            : !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1;
+                    if (isInitialized && !$scope.isDisabledSuperPT) {
+                        value = commonService.correctValue(min, max, value);
+                    }
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.superPT = generateSuperPT();
+
+                // Master PT
+                $scope.masterPT = positionTaking.M1 / appSettings.positionTakingDivider;
+
+                // Agent PT
+                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+
+                // Copy
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
                     };
                 }
-
                 $scope.$on('copy-position-taking', function (event, copyScope) {
                     if (copyScope !== $scope) {
-                        $scope.superPT.value = copyScope.superPT.value;
+                        isCopied = true;
                         $scope.superIsAuto = copyScope.superIsAuto;
+                        $scope.superPT.value = copyScope.superPT.value;
                     }
                 });
 
+                // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
                     if (($scope.superIsAuto ? $scope.positionTaking.US1 === $scope.superPT.value : $scope.positionTaking.S1 === $scope.superPT.value)
@@ -74,23 +89,9 @@
                         }
                     };
                 };
-            } ], link: function (scope) {
-                scope.$watch('superIsAuto', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        scope.isDisabledSuperPT = scope.positionTaking.IS3 && !scope.superIsAuto;
-                        var superPT = scope.superIsAuto ? scope.positionTaking.US1 : scope.positionTaking.S1;
-                        var data = scope.positionTaking;
-                        var superPTMin = Math.max(0, data.N4 - data.M1 - data.A1);
-                        var superPTMax = 0;
-                        if (!scope.superIsAuto) {
-                            superPTMax = Math.max(data.N4 - data.M1 - data.A1, data.S4 - data.M3);
-                        } else {
-                            superPTMax = data.S4;
-                        }
-                        scope.superPT = commonService.createPositionTakingSelect(superPTMin, superPTMax, superPT);
-                    }
-                });
-            }
+
+                isInitialized = true;
+            } ]
         };
     };
 

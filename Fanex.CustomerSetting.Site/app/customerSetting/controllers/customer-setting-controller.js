@@ -11,6 +11,7 @@
             var requestContext = controllerService.getRequestContext();
             var customerSetting = controllerService.getCustomerSetting();
             var settingContext = controllerService.getSettingContext();
+            resourceService.setLanguage(requestContext.Language);
 
             $scope.information = customerSetting.Information;
             $scope.statuses = customerSetting.Statuses;

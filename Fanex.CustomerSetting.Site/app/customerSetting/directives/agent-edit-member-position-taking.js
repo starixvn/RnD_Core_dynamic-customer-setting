@@ -3,12 +3,6 @@
 (function () {
     var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
     var agentEditMemberPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
-        function parse(data) {
-            return {
-                agentPT: commonService.createPositionTakingSelect(data.N2, data.A2, data.A1)
-            };
-        }
-
         return {
             restrict: 'AE',
             scope: {
@@ -18,23 +12,43 @@
             templateUrl: '/app/customerSetting/templates/agent-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
-                var requestContext = controllerService.getRequestContext();
+                var positionTaking = $scope.positionTaking;
+                var isInitialized = false;
+                var isCopied = false;
                 $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, $scope.positionTaking);
-                var positionTaking = parse($scope.positionTaking, requestContext.FormType);
-                $scope.agentPT = positionTaking.agentPT;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+
+                // Agent PT
+                function generateAgentPT() {
+                    var min = positionTaking.N2;
+                    var max = positionTaking.A2;
+                    var value = !isInitialized
+                        ? positionTaking.A1
+                        : commonService.correctValue(min, max, $scope.agentPT.value);
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.agentPT = generateAgentPT();
+                $scope.$watch('agentPT.value', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $scope.agentPT = generateAgentPT();
+                        isCopied = false;
+                    }
+                });
+
+                // Copy
                 if ($scope.hasCopy) {
                     $scope.copy = function () {
                         $rootScope.$broadcast('copy-position-taking', $scope);
                     };
                 }
-
                 $scope.$on('copy-position-taking', function (event, copyScope) {
                     if (copyScope !== $scope) {
+                        isCopied = true;
                         $scope.agentPT.value = copyScope.agentPT.value;
                     }
                 });
 
+                // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
                     if ($scope.positionTaking.A1 === $scope.agentPT.value) {
@@ -51,6 +65,8 @@
                         }
                     };
                 };
+
+                isInitialized = true;
             } ]
         };
     };

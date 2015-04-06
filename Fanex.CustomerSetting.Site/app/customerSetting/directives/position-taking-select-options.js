@@ -20,7 +20,7 @@
 
                 scope.$watchCollection(attrs.positionTakingSelectOptions, function (newValues, oldValues) {
                     if (newValues !== oldValues) {
-                        ngModelCtrl.$render();
+                        render();
                     }
                 });
 
@@ -64,9 +64,12 @@
                         selectElement.append(optionElement);
                     });
                 }
+
                 ngModelCtrl.$render = render;
                 ngModelCtrl.$parsers.unshift(function (viewValue) {
-                    return parseInt(viewValue);
+                    var value = parseInt(viewValue);
+                    currentValue = value;
+                    return value;
                 });
             }
         };
