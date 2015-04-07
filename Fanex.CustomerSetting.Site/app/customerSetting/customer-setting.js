@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-04-06 17:04:40
+// customer-setting - v0.0.1 - 2015-04-07 14:04:25
 
 'use strict';
 
@@ -349,16 +349,16 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ($scope.positionTaking.A1 === $scope.agentPT.value) {
+                    if (positionTaking.A1 === $scope.agentPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            BetType: $scope.positionTaking.BetType,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            BetType: positionTaking.BetType,
+                            IsLive: positionTaking.IsLive,
                             A1: $scope.agentPT.value
                         }
                     };
@@ -548,19 +548,19 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ($scope.positionTaking.S4 === $scope.superMaxPT.value
-                        && $scope.positionTaking.M4 === $scope.masterMaxPT.value
-                        && $scope.positionTaking.A4 === $scope.agentMaxPT.value
-                        && $scope.positionTaking.N4 === $scope.superMinPT.value) {
+                    if (positionTaking.S4 === $scope.superMaxPT.value
+                        && positionTaking.M4 === $scope.masterMaxPT.value
+                        && positionTaking.A4 === $scope.agentMaxPT.value
+                        && positionTaking.N4 === $scope.superMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            BetType: $scope.positionTaking.BetType,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            BetType: positionTaking.BetType,
+                            IsLive: positionTaking.IsLive,
                             S4: $scope.superMaxPT.value,
                             M4: $scope.masterMaxPT.value,
                             A4: $scope.agentMaxPT.value,
@@ -1269,21 +1269,21 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if (($scope.masterIsAuto ? $scope.positionTaking.IM2 === $scope.masterPT.value : $scope.positionTaking.M2 === $scope.masterPT.value)
-                        && $scope.positionTaking.IM2 === $scope.masterIsAuto
-                        && $scope.positionTaking.A2 === $scope.agentMaxPT.value
-                        && $scope.positionTaking.N2 === $scope.agentMinPT.value) {
+                    if ((!$scope.masterIsAuto ? positionTaking.M2 : positionTaking.UM2) === $scope.masterPT.value
+                        && positionTaking.IM2 === $scope.masterIsAuto
+                        && positionTaking.A2 === $scope.agentMaxPT.value
+                        && positionTaking.N2 === $scope.agentMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            SportTypeName: $scope.positionTaking.SportTypeName,
-                            BetType: $scope.positionTaking.BetType,
-                            BetTypeName: $scope.positionTaking.BetTypeName,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            SportTypeName: positionTaking.SportTypeName,
+                            BetType: positionTaking.BetType,
+                            BetTypeName: positionTaking.BetTypeName,
+                            IsLive: positionTaking.IsLive,
                             M2: $scope.masterIsAuto ? 0 : $scope.masterPT.value,
                             UM2: $scope.masterIsAuto ? $scope.masterPT.value : 0,
                             IM2: $scope.masterIsAuto,
@@ -1399,19 +1399,19 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ((!$scope.masterIsAuto ? $scope.positionTaking.M1 === $scope.masterPT.value : $scope.positionTaking.UM1 === $scope.masterPT.value)
-                        && $scope.positionTaking.IM1 === $scope.masterIsAuto) {
+                    if ((!$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1) === $scope.masterPT.value
+                        && positionTaking.IM1 === $scope.masterIsAuto) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            SportTypeName: $scope.positionTaking.SportTypeName,
-                            BetType: $scope.positionTaking.BetType,
-                            BetTypeName: $scope.positionTaking.BetTypeName,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            SportTypeName: positionTaking.SportTypeName,
+                            BetType: positionTaking.BetType,
+                            BetTypeName: positionTaking.BetTypeName,
+                            IsLive: positionTaking.IsLive,
                             M1: $scope.masterIsAuto ? 0 : $scope.masterPT.value,
                             UM1: $scope.masterIsAuto ? $scope.masterPT.value : 0,
                             IM1: $scope.masterIsAuto
@@ -1606,21 +1606,21 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ((!$scope.superIsAuto ? $scope.positionTaking.S3 === $scope.superPT.value : $scope.positionTaking.US3 === $scope.superPT.value)
-                        && $scope.positionTaking.IS3 === $scope.superIsAuto
-                        && $scope.positionTaking.M3 === $scope.masterMaxPT.value
-                        && $scope.positionTaking.N3 === $scope.masterMinPT.value) {
+                    if ((!$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3) === $scope.superPT.value
+                        && positionTaking.IS3 === $scope.superIsAuto
+                        && positionTaking.M3 === $scope.masterMaxPT.value
+                        && positionTaking.N3 === $scope.masterMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            SportTypeName: $scope.positionTaking.SportTypeName,
-                            BetType: $scope.positionTaking.BetType,
-                            BetTypeName: $scope.positionTaking.BetTypeName,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            SportTypeName: positionTaking.SportTypeName,
+                            BetType: positionTaking.BetType,
+                            BetTypeName: positionTaking.BetTypeName,
+                            IsLive: positionTaking.IsLive,
                             S3: $scope.superIsAuto ? 0 : $scope.superPT.value,
                             US3: $scope.superIsAuto ? $scope.superPT.value : 0,
                             IS3: $scope.superIsAuto,
@@ -1738,19 +1738,19 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if (($scope.superIsAuto ? $scope.positionTaking.US1 === $scope.superPT.value : $scope.positionTaking.S1 === $scope.superPT.value)
-                        && $scope.positionTaking.IS1 === $scope.superIsAuto) {
+                    if ((!$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1) === $scope.superPT.value
+                        && positionTaking.IS1 === $scope.superIsAuto) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            SportTypeName: $scope.positionTaking.SportTypeName,
-                            BetType: $scope.positionTaking.BetType,
-                            BetTypeName: $scope.positionTaking.BetTypeName,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            SportTypeName: positionTaking.SportTypeName,
+                            BetType: positionTaking.BetType,
+                            BetTypeName: positionTaking.BetTypeName,
+                            IsLive: positionTaking.IsLive,
                             S1: $scope.superIsAuto ? 0 : $scope.superPT.value,
                             US1: $scope.superIsAuto ? $scope.superPT.value : 0,
                             IS1: $scope.superIsAuto

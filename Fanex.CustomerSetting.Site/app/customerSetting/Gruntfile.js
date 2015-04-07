@@ -65,8 +65,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
 
-    grunt.registerTask('default', ['jshint', 'uglify', 'concat', 'less']);
-    grunt.registerTask('js', ['jshint', 'uglify', 'concat']);
-    grunt.registerTask('css', ['less']);
-    grunt.registerTask('dev', ['concat']);
+    grunt.registerTask('default', ['jshint', 'uglify', 'concat', 'less']); // development & production.
+    grunt.registerTask('verify', ['jshint']); // verify codes before build.
+    grunt.registerTask('css', ['less:development']); // development - css only.
+    grunt.registerTask('js', ['concat']); // development - js only.
 };

@@ -110,6 +110,14 @@
     <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />
     <Compile Include="Exceptions\CriteriaException.cs" />
+    <Compile Include="FormTypes\CompanyEditSuperFormHandler.cs" />
+    <Compile Include="FormTypes\AgentEditMemberFormHandler.cs" />
+    <Compile Include="FormTypes\FormHandlerFactory.cs" />
+    <Compile Include="FormTypes\MasterEditMemberFormHandler.cs" />
+    <Compile Include="FormTypes\SuperEditMemberFormHandler.cs" />
+    <Compile Include="FormTypes\MasterEditAgentFormHandler.cs" />
+    <Compile Include="FormTypes\IFormHandler.cs" />
+    <Compile Include="FormTypes\SuperEditMasterFormHandler.cs" />
     <Compile Include="Messages\PositionTakingMessage.cs" />
     <Compile Include="Messages\NormalMessage.cs" />
     <Compile Include="Messages\PositionTakingDownlineGroup.cs" />

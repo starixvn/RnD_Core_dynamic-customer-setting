@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
+    using Fanex.CustomerSetting.FormTypes;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Repositories;
 
@@ -29,7 +30,9 @@
         {
         }
 
-        public ValidationService(IProductProfileService productProfileService, IValidationRepository validationRepository)
+        public ValidationService(
+            IProductProfileService productProfileService,
+            IValidationRepository validationRepository)
         {
             _productProfileService = productProfileService ?? new ProductProfileService();
             _validationRepository = validationRepository ?? new ValidationRepository();
@@ -102,69 +105,12 @@
                 : Result.Success;
         }
 
-        /// <summary>
-        /// Validates the user role.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Returns model validation.</returns>
-        [SuppressMessage(
-           "StyleCop.CSharp.Nexcel.NexcelCustomRules",
-           "SP2101:MethodMustNotContainMoreLinesThan",
-           Justification = "Switch has multiple cases.")]
         private Result ValidateRole(QueryInfo model)
         {
-            switch (model.FormType)
-            {
-                case FormType.CompanyEditSuper:
-                    if (model.RoleId != RoleType.Company || model.TargetRoleId != RoleType.Super)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-
-                case FormType.SuperEditMaster:
-                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Super) || model.TargetRoleId != RoleType.Master)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-
-                case FormType.MasterEditAgent:
-                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Master) || model.TargetRoleId != RoleType.Agent)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-
-                case FormType.SuperEditMember:
-                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Super) || model.TargetRoleId != RoleType.Member)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-
-                case FormType.MasterEditMember:
-                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Master) || model.TargetRoleId != RoleType.Member)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-
-                case FormType.AgentEditMember:
-                    if ((model.RoleId != RoleType.Company && model.RoleId != RoleType.Agent) || model.TargetRoleId != RoleType.Member)
-                    {
-                        return Result.AccessDenied;
-                    }
-
-                    break;
-            }
-
-            return Result.Success;
+            var formHandler = FormHandlerFactory.Create(model.FormType);
+            return formHandler.HasPermission(model)
+                ? Result.Success
+                : Result.AccessDenied;
         }
 
         /// <summary>

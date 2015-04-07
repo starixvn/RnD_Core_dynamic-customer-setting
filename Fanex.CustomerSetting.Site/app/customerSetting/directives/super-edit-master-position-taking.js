@@ -95,21 +95,21 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ((!$scope.superIsAuto ? $scope.positionTaking.S3 === $scope.superPT.value : $scope.positionTaking.US3 === $scope.superPT.value)
-                        && $scope.positionTaking.IS3 === $scope.superIsAuto
-                        && $scope.positionTaking.M3 === $scope.masterMaxPT.value
-                        && $scope.positionTaking.N3 === $scope.masterMinPT.value) {
+                    if ((!$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3) === $scope.superPT.value
+                        && positionTaking.IS3 === $scope.superIsAuto
+                        && positionTaking.M3 === $scope.masterMaxPT.value
+                        && positionTaking.N3 === $scope.masterMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            SportTypeName: $scope.positionTaking.SportTypeName,
-                            BetType: $scope.positionTaking.BetType,
-                            BetTypeName: $scope.positionTaking.BetTypeName,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            SportTypeName: positionTaking.SportTypeName,
+                            BetType: positionTaking.BetType,
+                            BetTypeName: positionTaking.BetTypeName,
+                            IsLive: positionTaking.IsLive,
                             S3: $scope.superIsAuto ? 0 : $scope.superPT.value,
                             US3: $scope.superIsAuto ? $scope.superPT.value : 0,
                             IS3: $scope.superIsAuto,

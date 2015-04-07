@@ -2,9 +2,8 @@
 {
     display: none !important;
 }
-
-@container-width: 840px;
 @col-name-width: 140px;
+@container-width: @col-name-width + 60 * 12; // don't change multipler 12
 @btn-save-width: 100px;
 @row-height: 23px;
 @tooltip-text-color: #fff;
@@ -347,7 +346,7 @@
                         {
                             width: 100%;
 
-                            & > .master-discount, .agent-discount, .member-discount
+                            & > .master-discount, & > .agent-discount, & > .member-discount
                             {
                                 float: left;
                                 .col-value();
@@ -369,7 +368,7 @@
                         {
                             width: 100%;
 
-                            & > .agent-discount, .member-discount
+                            & > .agent-discount, & > .member-discount
                             {
                                 float: left;
                                 .col-value();
@@ -445,7 +444,7 @@
                         }
                     }
 
-                    @col-is-auto: 80px;
+                    @col-is-auto: 15px * 6; // divisible by 6
                     &.company-edit-super
                     {
                         @col-value-width: (@container-width - @col-name-width) / 4;

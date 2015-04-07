@@ -51,16 +51,16 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ($scope.positionTaking.A1 === $scope.agentPT.value) {
+                    if (positionTaking.A1 === $scope.agentPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            BetType: $scope.positionTaking.BetType,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            BetType: positionTaking.BetType,
+                            IsLive: positionTaking.IsLive,
                             A1: $scope.agentPT.value
                         }
                     };

@@ -91,19 +91,19 @@
                 // Validate
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
-                    if ($scope.positionTaking.S4 === $scope.superMaxPT.value
-                        && $scope.positionTaking.M4 === $scope.masterMaxPT.value
-                        && $scope.positionTaking.A4 === $scope.agentMaxPT.value
-                        && $scope.positionTaking.N4 === $scope.superMinPT.value) {
+                    if (positionTaking.S4 === $scope.superMaxPT.value
+                        && positionTaking.M4 === $scope.masterMaxPT.value
+                        && positionTaking.A4 === $scope.agentMaxPT.value
+                        && positionTaking.N4 === $scope.superMinPT.value) {
                         errCode = appSettings.errorType.NoChange;
                     }
 
                     return {
                         errCode: errCode,
                         data: {
-                            SportType: $scope.positionTaking.SportType,
-                            BetType: $scope.positionTaking.BetType,
-                            IsLive: $scope.positionTaking.IsLive,
+                            SportType: positionTaking.SportType,
+                            BetType: positionTaking.BetType,
+                            IsLive: positionTaking.IsLive,
                             S4: $scope.superMaxPT.value,
                             M4: $scope.masterMaxPT.value,
                             A4: $scope.agentMaxPT.value,
