@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
@@ -45,14 +46,24 @@
 
         #endregion Constructors
 
+        /// <summary>
+        /// Customer setting single page.
+        /// </summary>
+        /// <returns>Returns HTML customer setting single page.</returns>
         [HttpGet]
-        public FileResult Index()
+        [OutputCache(Duration = 14400)]
+        public ActionResult Index()
         {
-#if (DEBUG)
-            return File("/app/customerSetting/customer-setting-page.debug.htm", "text/HTML");
-#else
-            return File("/app/customerSetting/customer-setting-page.htm", "text/HTML");
-#endif
+            var rootUrl = Request.ApplicationPath;
+            if (rootUrl.EndsWith("/", StringComparison.CurrentCulture))
+            {
+                rootUrl = rootUrl.Substring(0, rootUrl.Length - 1);
+            }
+
+            var filePath = Server.MapPath("~/app/customerSetting/customer-setting-page.htm");
+            var htmlContent = System.IO.File.ReadAllText(filePath);
+            htmlContent = htmlContent.Replace("{{rootUrl}}", rootUrl);
+            return Content(htmlContent, "text/HTML");
         }
 
         /// <summary>

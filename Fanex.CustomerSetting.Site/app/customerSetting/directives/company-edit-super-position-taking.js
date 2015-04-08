@@ -9,7 +9,7 @@
                 positionTaking: '=companyEditSuperPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
+            templateUrl: 'templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;

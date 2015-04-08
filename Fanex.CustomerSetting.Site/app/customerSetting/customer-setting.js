@@ -1,10 +1,9 @@
-// customer-setting - v0.0.1 - 2015-04-07 14:04:25
+// customer-setting - v0.0.1 - 2015-04-08 13:04:46
 
 'use strict';
 
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
-
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'loadingService', 'appSettings',
             function ($q, $rootScope, messageService, loadingService, appSettings) {
@@ -12,7 +11,7 @@
                     request: function (config) {
                         loadingService.block();
                         if (config.method === 'GET') {
-                            config.url += '?v=' + appSettings.version;
+                            config.url = appSettings.rootUrl + '/app/customerSetting/' + config.url + '?v=' + appSettings.version;
                         }
 
                         return config;
@@ -110,7 +109,7 @@
 
                 if (data.length === 0) {
                     if (isShowNoChange) {
-                        messageService.showError(resourceService.getString('NoChangeToUpdate'));
+                        messageService.showWarning(resourceService.getString('NoChangeToUpdate'));
                     }
                     return false;
                 }
@@ -307,7 +306,7 @@
                 positionTaking: '=agentEditMemberPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/agent-edit-member-position-taking.htm',
+            templateUrl: 'templates/agent-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -466,7 +465,7 @@
                 positionTaking: '=companyEditSuperPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/company-edit-super-position-taking.htm',
+            templateUrl: 'templates/company-edit-super-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -709,8 +708,8 @@
                 $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
                     || requestContext.FormType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
-                    ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
-                    : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
+                    ? 'templates/customer-setting-bet-limit-readonly.htm'
+                    : 'templates/customer-setting-bet-limit.htm';
 
                 var data = parse(betLimit, requestContext.FormType);
                 $scope.minBet = data.minBet;
@@ -893,7 +892,7 @@
             scope: {
                 data: '=customerSettingDialog'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-dialog.htm',
+            templateUrl: 'templates/customer-setting-dialog.htm',
             link: function (scope) {
                 scope.resourceService = resourceService;
                 scope.isShow = false;
@@ -1013,7 +1012,7 @@
             scope: {
                 discount: '=customerSettingDiscount'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
+            templateUrl: 'templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;
@@ -1057,7 +1056,7 @@
             scope: {
                 information: '=customerSettingInformation'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-information.htm',
+            templateUrl: 'templates/customer-setting-information.htm',
             controller: ['$scope', function ($scope) {
                 $scope.resourceService = resourceService;
                 $scope.$watch('information', function () {
@@ -1092,7 +1091,7 @@
             scope: {
                 status: '=customerSettingStatus'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
+            templateUrl: 'templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkStatus($scope);
                 var requestContext = controllerService.getRequestContext();
@@ -1155,7 +1154,7 @@
         return {
             restrict: 'AE',
             replace: true,
-            templateUrl: '/app/customerSetting/templates/customer-setting-tooltip.htm',
+            templateUrl: 'templates/customer-setting-tooltip.htm',
             scope: {},
             link: function (scope, element) {
                 tooltipService.setup(scope, element);
@@ -1183,7 +1182,7 @@
                 positionTaking: '=masterEditAgentPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
+            templateUrl: 'templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -1313,7 +1312,7 @@
             scope: {
                 discount: '=masterEditMemberDiscount'
             },
-            templateUrl: '/app/customerSetting/templates/master-edit-member-discount.htm',
+            templateUrl: 'templates/master-edit-member-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;
@@ -1339,7 +1338,7 @@
                 positionTaking: '=masterEditMemberPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/master-edit-member-position-taking.htm',
+            templateUrl: 'templates/master-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -1520,7 +1519,7 @@
                 positionTaking: '=superEditMasterPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/super-edit-master-position-taking.htm',
+            templateUrl: 'templates/super-edit-master-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -1650,7 +1649,7 @@
             scope: {
                 discount: '=superEditMemberDiscount'
             },
-            templateUrl: '/app/customerSetting/templates/super-edit-member-discount.htm',
+            templateUrl: 'templates/super-edit-member-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;
@@ -1677,7 +1676,7 @@
                 positionTaking: '=superEditMemberPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/super-edit-member-position-taking.htm',
+            templateUrl: 'templates/super-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
@@ -2029,7 +2028,8 @@
         }
 
         this.select = function (selectModel, successCallback) {
-            var request = $http.post('/CustomerSetting/Select', selectModel);
+            var url = appSettings.rootUrl + '/CustomerSetting/Select';
+            var request = $http.post(url, selectModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;
@@ -2044,7 +2044,8 @@
         };
 
         this.update = function (updateModel, successCallback) {
-            var request = $http.post('/CustomerSetting/Update', updateModel);
+            var url = appSettings.rootUrl + '/CustomerSetting/Update';
+            var request = $http.post(url, updateModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;
@@ -2416,14 +2417,14 @@
         discountFiles[appSettings.formType.AgentEditMember] = 'discount-container.htm';
 
         this.resolveView = function () {
-            return '/app/customerSetting/templates/customer-setting-view.htm';
+            return 'templates/customer-setting-view.htm';
         };
 
         this.resolveStatus = function () {
             var settingContext = controllerService.getSettingContext();
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
+            ? 'templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
@@ -2433,7 +2434,7 @@
             var levelFolder = levelFolders[settingContext.DiscountLevel];
             var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
+            ? 'templates/' + levelFolder + '/' + fileName
             : undefined;
         };
 
@@ -2441,7 +2442,7 @@
             var settingContext = controllerService.getSettingContext();
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
+            ? 'templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
@@ -2451,7 +2452,7 @@
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];
             var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
+            ? 'templates/' + levelFolder + '/' + fileName
             : undefined;
         };
     };
@@ -2669,7 +2670,10 @@
 'use strict';
 
 (function () {
+    var body = angular.element(document.body);
+    var rootUrl = body.attr("data-root-url");
     angular.module('customerSettingApp').value('appSettings', {
+        rootUrl: rootUrl,
         version: '0.2',
         defaultLanguage: 'en-US',
         defaultMaxBet: 99999999999,

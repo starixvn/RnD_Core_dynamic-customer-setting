@@ -129,8 +129,8 @@
                 $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
                     || requestContext.FormType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
-                    ? '/app/customerSetting/templates/customer-setting-bet-limit-readonly.htm'
-                    : '/app/customerSetting/templates/customer-setting-bet-limit.htm';
+                    ? 'templates/customer-setting-bet-limit-readonly.htm'
+                    : 'templates/customer-setting-bet-limit.htm';
 
                 var data = parse(betLimit, requestContext.FormType);
                 $scope.minBet = data.minBet;

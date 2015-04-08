@@ -8,7 +8,7 @@
             scope: {
                 information: '=customerSettingInformation'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-information.htm',
+            templateUrl: 'templates/customer-setting-information.htm',
             controller: ['$scope', function ($scope) {
                 $scope.resourceService = resourceService;
                 $scope.$watch('information', function () {

@@ -6,6 +6,7 @@ namespace Fanex.CustomerSetting.Messages
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Utility;
 
     /// <summary>
     /// PositionTakingMaxRow class.
@@ -13,7 +14,7 @@ namespace Fanex.CustomerSetting.Messages
     public class PositionTakingMaxRow : PositionTakingRow
     {
         [XmlAttribute]
-        public string MaxPT { get; set; }
+        public byte MaxPT { get; set; }
 
         public override string ToString(IResourceService resourceService, MessageInfo messageInfo)
         {
@@ -21,7 +22,7 @@ namespace Fanex.CustomerSetting.Messages
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, messageInfo),
                 IsLive ? Lang.MaxLive : Lang.Max,
-                MaxPT);
+                Formatter.FormatPositionTaking(MaxPT));
         }
     }
 }

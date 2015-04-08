@@ -6,8 +6,12 @@
     /// <summary>
     /// FormHandlerFactory class.
     /// </summary>
-    public class FormHandlerFactory
+    public sealed class FormHandlerFactory
     {
+        private FormHandlerFactory()
+        {
+        }
+
         /// <summary>
         /// Creates the specified form type.
         /// </summary>
@@ -36,7 +40,7 @@
                     return new AgentEditMemberFormHandler();
 
                 default:
-                    throw new Exception("Not implemented yet");
+                    throw new NotImplementedException("Not implemented yet");
             }
         }
     }

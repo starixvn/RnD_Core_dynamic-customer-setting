@@ -127,7 +127,7 @@
                 {
                     foreach (var row in templateMessage.Rows)
                     {
-                        stringBuilder.AppendFormat("<br />{0}", row.ToString(_resourceService, messageInfo));
+                        stringBuilder.AppendFormat("<div class='row'>{0}</div>", row.ToString(_resourceService, messageInfo));
                     }
                 }
             }

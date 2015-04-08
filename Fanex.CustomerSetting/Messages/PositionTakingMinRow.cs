@@ -4,6 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Utility;
 
     /// <summary>
     /// PositionTakingMinRow class.
@@ -11,7 +12,7 @@
     public class PositionTakingMinRow : PositionTakingRow
     {
         [XmlAttribute]
-        public string MinPT { get; set; }
+        public byte MinPT { get; set; }
 
         public override string ToString(IResourceService resourceService, MessageInfo messageInfo)
         {
@@ -19,7 +20,7 @@
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, messageInfo),
                 IsLive ? Lang.MinLive : Lang.Min,
-                MinPT);
+                Formatter.FormatPositionTaking(MinPT));
         }
     }
 }

@@ -11,10 +11,10 @@
     public class SimpleRow
     {
         [XmlAttribute]
-        public int SportType { get; set; }
+        public short SportType { get; set; }
 
         [XmlAttribute]
-        public int BetType { get; set; }
+        public short BetType { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

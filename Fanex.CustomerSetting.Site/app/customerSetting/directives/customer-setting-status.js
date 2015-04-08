@@ -9,7 +9,7 @@
             scope: {
                 status: '=customerSettingStatus'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-status.htm',
+            templateUrl: 'templates/customer-setting-status.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkStatus($scope);
                 var requestContext = controllerService.getRequestContext();

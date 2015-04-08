@@ -9,7 +9,7 @@
                 positionTaking: '=masterEditAgentPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/master-edit-agent-position-taking.htm',
+            templateUrl: 'templates/master-edit-agent-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;

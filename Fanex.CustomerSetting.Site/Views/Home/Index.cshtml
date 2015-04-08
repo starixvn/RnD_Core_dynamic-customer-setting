@@ -1,12 +1,19 @@
 ﻿@using Fanex.CustomerSetting.Site.UserLogin
 @using Newtonsoft.Json
 @model LoginViewModel
+@{
+    var rootUrl = Request.ApplicationPath;
+    if (rootUrl.EndsWith("/"))
+    {
+        rootUrl = rootUrl.Substring(0, rootUrl.Length - 1);
+    }
+}
 @section css{
-    <link href="/Views/Home/Content/index.css" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Home/Content/index.css" rel="stylesheet" type="text/css" />
 }
 @section scripts{
-    <script src="/app/angular-1.2.28.min.js" type="text/javascript"></script>
-    <script src="/Views/Home/Scripts/index.js" type="text/javascript"></script>
+    <script src="~/app/angular-1.2.28.min.js" type="text/javascript"></script>
+    <script src="~/Views/Home/Scripts/index.js" type="text/javascript"></script>
 }
 <div data-ng-app="indexModule" data-ng-controller="IndexController" data-ng-cloak>
     <div class="container left">
@@ -32,7 +39,7 @@
                         <div class="panel-body">
                             SuperId:
                             <input type="text" data-ng-model="superId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editSuper/{{superId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editSuper/{{superId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>
@@ -48,7 +55,7 @@
                         <div class="panel-body">
                             MasterId:
                             <input type="text" data-ng-model="masterId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>
@@ -64,7 +71,7 @@
                         <div class="panel-body">
                             AgentId:
                             <input type="text" data-ng-model="agentId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>
@@ -80,7 +87,7 @@
                         <div class="panel-body">
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/editMember/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editMember/{{memberId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>
@@ -100,7 +107,7 @@
                             </div>
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/superEditMember/{{superId}}/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/superEditMember/{{superId}}/{{memberId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>
@@ -120,7 +127,7 @@
                             </div>
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="/CustomerSetting/#/masterEditMember/{{masterId}}/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/masterEditMember/{{masterId}}/{{memberId}}/{{productId}}">
                                 Open</a>
                         </div>
                     </div>

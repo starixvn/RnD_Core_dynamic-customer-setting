@@ -2,7 +2,6 @@
 
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
-
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'loadingService', 'appSettings',
             function ($q, $rootScope, messageService, loadingService, appSettings) {
@@ -10,7 +9,7 @@
                     request: function (config) {
                         loadingService.block();
                         if (config.method === 'GET') {
-                            config.url += '?v=' + appSettings.version;
+                            config.url = appSettings.rootUrl + '/app/customerSetting/' + config.url + '?v=' + appSettings.version;
                         }
 
                         return config;

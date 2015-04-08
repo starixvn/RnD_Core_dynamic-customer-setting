@@ -198,6 +198,7 @@
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Services\XmlGenerator.cs" />
     <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\Formatter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

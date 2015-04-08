@@ -6,7 +6,7 @@
         return {
             restrict: 'AE',
             replace: true,
-            templateUrl: '/app/customerSetting/templates/customer-setting-tooltip.htm',
+            templateUrl: 'templates/customer-setting-tooltip.htm',
             scope: {},
             link: function (scope, element) {
                 tooltipService.setup(scope, element);

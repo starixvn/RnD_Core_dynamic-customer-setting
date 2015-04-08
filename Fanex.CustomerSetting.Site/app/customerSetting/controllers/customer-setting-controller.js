@@ -71,7 +71,7 @@
 
                 if (data.length === 0) {
                     if (isShowNoChange) {
-                        messageService.showError(resourceService.getString('NoChangeToUpdate'));
+                        messageService.showWarning(resourceService.getString('NoChangeToUpdate'));
                     }
                     return false;
                 }

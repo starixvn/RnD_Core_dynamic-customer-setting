@@ -52,7 +52,7 @@
             scope: {
                 discount: '=customerSettingDiscount'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-discount.htm',
+            templateUrl: 'templates/customer-setting-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;

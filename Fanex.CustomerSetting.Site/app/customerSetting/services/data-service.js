@@ -13,7 +13,8 @@
         }
 
         this.select = function (selectModel, successCallback) {
-            var request = $http.post('/CustomerSetting/Select', selectModel);
+            var url = appSettings.rootUrl + '/CustomerSetting/Select';
+            var request = $http.post(url, selectModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;
@@ -28,7 +29,8 @@
         };
 
         this.update = function (updateModel, successCallback) {
-            var request = $http.post('/CustomerSetting/Update', updateModel);
+            var url = appSettings.rootUrl + '/CustomerSetting/Update';
+            var request = $http.post(url, updateModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;

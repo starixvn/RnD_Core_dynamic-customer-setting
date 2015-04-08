@@ -161,7 +161,6 @@
     <Content Include="app\angular-1.2.28.min.js" />
     <Content Include="app\customerSetting\controllers\customer-setting-controller.js" />
     <Content Include="app\customerSetting\controllers\customer-setting-view-controller.js" />
-    <Content Include="app\customerSetting\customer-setting-page.debug.htm" />
     <Content Include="app\customerSetting\customer-setting-page.htm" />
     <Content Include="app\customerSetting\customer-setting.css" />
     <Content Include="app\customerSetting\customer-setting.js" />

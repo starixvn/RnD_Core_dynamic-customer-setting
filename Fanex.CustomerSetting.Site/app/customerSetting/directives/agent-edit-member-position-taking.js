@@ -9,7 +9,7 @@
                 positionTaking: '=agentEditMemberPositionTaking',
                 hasCopy: '='
             },
-            templateUrl: '/app/customerSetting/templates/agent-edit-member-position-taking.htm',
+            templateUrl: 'templates/agent-edit-member-position-taking.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;

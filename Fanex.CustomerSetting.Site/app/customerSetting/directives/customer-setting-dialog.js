@@ -9,7 +9,7 @@
             scope: {
                 data: '=customerSettingDialog'
             },
-            templateUrl: '/app/customerSetting/templates/customer-setting-dialog.htm',
+            templateUrl: 'templates/customer-setting-dialog.htm',
             link: function (scope) {
                 scope.resourceService = resourceService;
                 scope.isShow = false;

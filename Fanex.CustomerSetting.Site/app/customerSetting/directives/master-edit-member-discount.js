@@ -9,7 +9,7 @@
             scope: {
                 discount: '=masterEditMemberDiscount'
             },
-            templateUrl: '/app/customerSetting/templates/master-edit-member-discount.htm',
+            templateUrl: 'templates/master-edit-member-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;

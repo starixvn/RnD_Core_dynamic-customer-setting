@@ -26,14 +26,14 @@
         discountFiles[appSettings.formType.AgentEditMember] = 'discount-container.htm';
 
         this.resolveView = function () {
-            return '/app/customerSetting/templates/customer-setting-view.htm';
+            return 'templates/customer-setting-view.htm';
         };
 
         this.resolveStatus = function () {
             var settingContext = controllerService.getSettingContext();
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/status-container.htm'
+            ? 'templates/' + levelFolder + '/status-container.htm'
             : undefined;
         };
 
@@ -43,7 +43,7 @@
             var levelFolder = levelFolders[settingContext.DiscountLevel];
             var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
+            ? 'templates/' + levelFolder + '/' + fileName
             : undefined;
         };
 
@@ -51,7 +51,7 @@
             var settingContext = controllerService.getSettingContext();
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/betlimit-container.htm'
+            ? 'templates/' + levelFolder + '/betlimit-container.htm'
             : undefined;
         };
 
@@ -61,7 +61,7 @@
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];
             var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
-            ? '/app/customerSetting/templates/' + levelFolder + '/' + fileName
+            ? 'templates/' + levelFolder + '/' + fileName
             : undefined;
         };
     };
