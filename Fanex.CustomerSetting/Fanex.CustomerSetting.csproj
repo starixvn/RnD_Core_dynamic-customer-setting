@@ -118,6 +118,10 @@
     <Compile Include="FormTypes\MasterEditAgentFormHandler.cs" />
     <Compile Include="FormTypes\IFormHandler.cs" />
     <Compile Include="FormTypes\SuperEditMasterFormHandler.cs" />
+    <Compile Include="Messages\BaseMessageBuilder.cs" />
+    <Compile Include="Messages\IMessageBuilder.cs" />
+    <Compile Include="Messages\MessageBuilderFactory.cs" />
+    <Compile Include="Messages\NormalMessageBuilder.cs" />
     <Compile Include="Messages\PositionTakingMessage.cs" />
     <Compile Include="Messages\NormalMessage.cs" />
     <Compile Include="Messages\PositionTakingDownlineGroup.cs" />
@@ -130,9 +134,11 @@
     <Compile Include="Messages\PositionTakingMinRow.cs" />
     <Compile Include="Messages\PositionTakingRow.cs" />
     <Compile Include="Messages\SimpleMessage.cs" />
+    <Compile Include="Messages\SimpleMessageBuilder.cs" />
     <Compile Include="Messages\TemplateMessage.cs" />
     <Compile Include="Messages\SimpleRow.cs" />
     <Compile Include="Messages\PositionTakingDownlineRow.cs" />
+    <Compile Include="Messages\TemplateMessageBuilder.cs" />
     <Compile Include="Models\AgentQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryMemberResult.cs" />
     <Compile Include="Models\MessageInfo.cs" />
