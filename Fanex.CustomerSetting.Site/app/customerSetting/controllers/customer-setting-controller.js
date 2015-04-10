@@ -2,9 +2,9 @@
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'templateService', 'dataService', 'controllerService',
-                        'appSettings', 'modelService', 'messageService', 'resourceService'];
+                        'appSettings', 'modelService', 'messageService', 'resourceService', 'ResponseReader'];
     var customerSettingController = function ($rootScope, $scope, templateService, dataService, controllerService,
-                        appSettings, modelService, messageService, resourceService) {
+                        appSettings, modelService, messageService, resourceService, ResponseReader) {
         var selectModel = modelService.createSelectModel();
         dataService.select(selectModel, function (response) {
             controllerService.updateResponse(response);
@@ -71,7 +71,7 @@
 
                 if (data.length === 0) {
                     if (isShowNoChange) {
-                        messageService.showWarning(resourceService.getString('NoChangeToUpdate'));
+                        messageService.showNoChange();
                     }
                     return false;
                 }
@@ -210,6 +210,21 @@
                 delete (positionTaking.BetTypeName);
             });
 
+            function reload(oldData, newData) {
+                angular.forEach(newData, function (newItem) {
+                    angular.forEach(oldData, function (oldItem) {
+                        var isFound = false;
+                        if (!isFound
+                            && newItem.SportType === oldItem.SportType
+                            && newItem.BetType === oldItem.BetType
+                            && newItem.IsLive === oldItem.IsLive) {
+                            angular.copy(newItem, oldItem);
+                            isFound = true;
+                        }
+                    });
+                });
+            }
+
             var selectModel = modelService.createSelectModel();
             var updateModel = angular.extend({
                 UserName: $scope.information.UserName,
@@ -223,7 +238,33 @@
                 PositionTakingLevel: settingContext.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
             }, selectModel);
-            dataService.update(updateModel);
+            dataService.update(updateModel, function (response) {
+                var responseReader = new ResponseReader(updateModel.SettingType);
+                var settingResults = responseReader.read(response);
+                angular.forEach(settingResults, function (settingResult) {
+                    var result = settingResult.result;
+                    if (result.IsSuccess) {
+                        var settingType = settingResult.settingType;
+                        switch (settingType) {
+                            case appSettings.settingType.Status:
+                                reload($scope.statuses, statuses);
+                                break;
+
+                            case appSettings.settingType.Discount:
+                                reload($scope.discounts, discounts);
+                                break;
+
+                            case appSettings.settingType.BetLimit:
+                                reload($scope.betLimits, betLimits);
+                                break;
+
+                            case appSettings.settingType.PositionTaking:
+                                reload($scope.positionTakings, positionTakings);
+                                break;
+                        }
+                    }
+                });
+            });
         }
     };
 

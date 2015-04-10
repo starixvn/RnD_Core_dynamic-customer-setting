@@ -62,7 +62,7 @@ function ($scope, $http) {
     };
 
     $scope.login = function () {
-        $http.post("home/login", {
+        $http.post("account/login", {
             RoleId: $scope.LoginForm.RoleId,
             CustId: $scope.LoginForm.CustId,
             SubAccountId: $scope.LoginForm.SubAccountId,

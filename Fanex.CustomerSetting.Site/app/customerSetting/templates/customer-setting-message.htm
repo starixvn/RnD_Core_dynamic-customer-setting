@@ -1,0 +1,7 @@
+﻿<div class="message-container" data-ng-show="messages">
+    <div data-ng-repeat="message in messages" class="message" data-ng-class="message.messageClass">
+        <div class="icon"></div>
+        <div class="content" data-ng-bind-html="message.messageContent">
+        </div>
+    </div>
+</div>

@@ -2,7 +2,7 @@
 
 (function () {
     var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
-    var errType = {
+    var errorType = {
         none: 0,
         limit: 1,
         minBet: 2,
@@ -16,11 +16,11 @@
                 this.value = value;
                 this.limit = limit;
 
-                this.setInvalid = function (errType, errMsg) {
+                this.setInvalid = function (errorType, errMsg) {
                     var hasErrType = false;
                     angular.forEach(this.errors, function (error) {
                         if (!hasErrType) {
-                            if (error.errType === errType) {
+                            if (error.errorType === errorType) {
                                 hasErrType = true;
                             }
                         }
@@ -28,18 +28,18 @@
 
                     if (!hasErrType) {
                         this.errors.push({
-                            errType: errType,
+                            errorType: errorType,
                             errMsg: errMsg
                         });
                     }
                 };
 
-                this.setValid = function (errType) {
+                this.setValid = function (errorType) {
                     var hasErrType = false;
                     var errorIndex = -1;
                     angular.forEach(this.errors, function (error, index) {
                         if (!hasErrType) {
-                            if (error.errType === errType) {
+                            if (error.errorType === errorType) {
                                 hasErrType = true;
                                 errorIndex = index;
                             }
@@ -208,18 +208,18 @@
 
                     if (scope.minBet.value < scope.minBet.limit) {
                         var formattedNumber = $filter('number')(scope.minBet.limit);
-                        scope.minBet.setInvalid(errType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
+                        scope.minBet.setInvalid(errorType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.minBet.setValid(errType.limit);
+                        scope.minBet.setValid(errorType.limit);
                     }
 
-                    scope.maxBet.setValid(errType.minBet);
+                    scope.maxBet.setValid(errorType.minBet);
                     if (scope.minBet.value > scope.maxBet.value) {
-                        scope.minBet.setInvalid(errType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
+                        scope.minBet.setInvalid(errorType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.minBet.setValid(errType.maxBet);
+                        scope.minBet.setValid(errorType.maxBet);
                     }
                 };
 
@@ -230,25 +230,25 @@
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
                         var formattedNumber = $filter('number')(scope.maxBet.limit);
-                        scope.maxBet.setInvalid(errType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
+                        scope.maxBet.setInvalid(errorType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.maxBet.setValid(errType.limit);
+                        scope.maxBet.setValid(errorType.limit);
                     }
 
-                    scope.minBet.setValid(errType.maxBet);
+                    scope.minBet.setValid(errorType.maxBet);
                     if (scope.maxBet.value < scope.minBet.value) {
-                        scope.maxBet.setInvalid(errType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
+                        scope.maxBet.setInvalid(errorType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
                     } else {
-                        scope.maxBet.setValid(errType.minBet);
+                        scope.maxBet.setValid(errorType.minBet);
                     }
 
-                    scope.maxPerMatch.setValid(errType.maxBet);
+                    scope.maxPerMatch.setValid(errorType.maxBet);
                     if (scope.maxBet.value > scope.maxPerMatch.value) {
-                        scope.maxBet.setInvalid(errType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
+                        scope.maxBet.setInvalid(errorType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
                     }
                     else {
-                        scope.maxBet.setValid(errType.maxPerMatch);
+                        scope.maxBet.setValid(errorType.maxPerMatch);
                     }
                 };
 
@@ -259,17 +259,17 @@
 
                     if (scope.maxPerMatch.value > scope.maxPerMatch.limit) {
                         var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', $filter('number')(scope.maxPerMatch.limit));
-                        scope.maxPerMatch.setInvalid(errType.limit, errMsg);
+                        scope.maxPerMatch.setInvalid(errorType.limit, errMsg);
                     } else {
-                        scope.maxPerMatch.setValid(errType.limit);
+                        scope.maxPerMatch.setValid(errorType.limit);
                     }
 
-                    scope.maxBet.setValid(errType.maxPerMatch);
+                    scope.maxBet.setValid(errorType.maxPerMatch);
                     if (scope.maxPerMatch.value < scope.maxBet.value) {
-                        scope.maxPerMatch.setInvalid(errType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
+                        scope.maxPerMatch.setInvalid(errorType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.maxPerMatch.setValid(errType.maxBet);
+                        scope.maxPerMatch.setValid(errorType.maxBet);
                     }
                 };
 

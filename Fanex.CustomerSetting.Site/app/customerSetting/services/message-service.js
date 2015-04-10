@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings'];
-    var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings) {
+    var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings', 'resourceService'];
+    var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings, resourceService) {
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
@@ -16,11 +16,11 @@
         function generateMesage(result) {
             var messageType = appSettings.messageType.Error;
             switch (result.ErrCode) {
-                case appSettings.errCode.Success:
+                case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
                     break;
 
-                case appSettings.errCode.NoChange:
+                case appSettings.errorCode.NoChange:
                     messageType = appSettings.messageType.Warning;
                     break;
             }
@@ -57,6 +57,7 @@
             });
         }
 
+        var self = this;
         this.showMessage = function (messageType, messageContent) {
             var message = new Message(messageType, messageContent);
             showMessage(message);
@@ -68,13 +69,20 @@
         };
 
         this.showResults = function (results) {
+            // if having any successful or error messages -> remove any no-change messages
             var messages = [];
             angular.forEach(results, function (result) {
-                var message = generateMesage(result);
-                messages.push(message);
+                if (result.ErrCode !== appSettings.errorCode.NoChange) {
+                    var message = generateMesage(result);
+                    messages.push(message);
+                }
             });
 
-            showMessages(messages);
+            if (messages.length === 0) {
+                self.showNoChange();
+            } else {
+                showMessages(messages);
+            }
         };
 
         this.showSuccess = function (messageContent) {
@@ -83,6 +91,10 @@
 
         this.showWarning = function (messageContent) {
             this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+        };
+
+        this.showNoChange = function () {
+            this.showWarning(resourceService.getString('NoChangeToUpdate'));
         };
 
         this.showError = function (messageContent) {

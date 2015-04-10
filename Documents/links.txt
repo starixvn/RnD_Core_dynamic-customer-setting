@@ -14,8 +14,11 @@ https://flipboard.com/section/the-angularjs-magazine-bbIMWS
 https://docs.google.com/a/nexcel.vn/document/d/1v4jpkD6YG5QSM-gNFwD43ITtUgY62r8FsvRQXlgLt54/edit
 http://www.slideshare.net/DanWahlin/building-an-end-toend-angular-js-application
 
-Change setting level:
-exec dbo.changeSettingLevel @SettingType = 1, @SettingLevel = 1
+Change setting level on DB230/CustDB:
+exec [dbo].[changeSettingLevel]
+ @Product = 255,
+ @SettingType =1,
+ @SettingLevel =4
 
 Company select super:
 exec Acc_CustSetting_SuperSettingSelect @CustID=1177375, @ProductID=255

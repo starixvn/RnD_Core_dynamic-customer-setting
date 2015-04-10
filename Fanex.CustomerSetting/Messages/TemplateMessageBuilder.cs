@@ -11,8 +11,8 @@
     /// <summary>
     /// TemplateMessageBuilder class.
     /// </summary>
-    /// <typeparam name="M">Type of message.</typeparam>
-    /// <typeparam name="R">Type of row.</typeparam>
+    /// <typeparam name="TMessage">The type of the message.</typeparam>
+    /// <typeparam name="TRow">The type of the row.</typeparam>
     public class TemplateMessageBuilder<TMessage, TRow> : BaseMessageBuilder, IMessageBuilder
         where TMessage : TemplateMessage<TRow>
         where TRow : SimpleRow
@@ -28,8 +28,9 @@
         /// Builds the specified message information.
         /// </summary>
         /// <param name="messageInfo">The message information.</param>
-        /// <param name="resourceService">The resource service.</param>
-        /// <returns>Returns translated message.</returns>
+        /// <returns>
+        /// Returns translated message.
+        /// </returns>
         public string Build(MessageInfo messageInfo)
         {
             var templateMessage = Deserialize<TMessage>(messageInfo.ErrMsg);
@@ -49,10 +50,13 @@
                 }
                 else
                 {
+                    stringBuilder.Append("<div class='rows'>");
                     foreach (var row in templateMessage.Rows)
                     {
                         stringBuilder.AppendFormat("<div class='row'>{0}</div>", row.ToString(_resourceService, messageInfo));
                     }
+
+                    stringBuilder.Append("</div>");
                 }
             }
 
@@ -65,7 +69,6 @@
         /// <param name="messageId">The message ID.</param>
         /// <param name="rows">The position taking down-line rows.</param>
         /// <param name="messageInfo">The message information.</param>
-        /// <param name="resourceService">The resource service.</param>
         /// <returns>
         /// Returns translated message.
         /// </returns>
@@ -87,7 +90,7 @@
                 Rows = group.ToList()
             });
 
-            var stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder("<div class='rows'>");
             foreach (var group in groups)
             {
                 var roleTypeName = GetRoleTypeName(messageId);
@@ -95,6 +98,7 @@
                 stringBuilder.AppendFormat("<div class='row'>{0} - {1}: {2}</div>", group.ToString(_resourceService, messageInfo), roleTypeName, userNames);
             }
 
+            stringBuilder.Append("</div>");
             return stringBuilder.ToString();
         }
 

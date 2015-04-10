@@ -4,24 +4,18 @@
     var injectParams = ['commonService', 'resourceService', 'controllerService', 'appSettings'];
     var customerSettingDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
-            var DiscountSelect = function (min, max, value) {
-                this.min = min;
-                this.value = value;
-                this.options = commonService.generateOptions(min, max, 0.0005, 10000);
-            };
-
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return new DiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
+                    return commonService.createDiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return new DiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
+                    return commonService.createDiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
-                    return new DiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
+                    return commonService.createDiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
 
                 case appSettings.formType.AgentEditMember:
-                    return new DiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
+                    return commonService.createDiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
             }
         }
 

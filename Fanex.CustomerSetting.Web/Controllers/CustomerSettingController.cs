@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using System.Web.SessionState;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -11,6 +12,7 @@
     /// <summary>
     /// CustomerSettingController class.
     /// </summary>
+    [SessionState(SessionStateBehavior.ReadOnly)]
     public class CustomerSettingController : Controller
     {
         #region Variables

@@ -1,12 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Site.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.SessionState;
     using Fanex.CustomerSetting.Site.UserLogin;
     using Fanex.CustomerSetting.Web;
 
     /// <summary>
     /// HomeController class.
     /// </summary>
+    [SessionState(SessionStateBehavior.ReadOnly)]
     public class HomeController : Controller
     {
         private readonly ICurrentSession _currentSession;
@@ -41,25 +43,6 @@
         public ActionResult Welcome()
         {
             return View();
-        }
-
-        /// <summary>
-        /// Login action.
-        /// </summary>
-        /// <param name="viewModel">Input value.</param>
-        /// <returns>Return JSON value.</returns>
-        [HttpPost]
-        public ActionResult Login(LoginViewModel viewModel)
-        {
-            new CurrentSession
-            {
-                RoleId = viewModel.RoleId,
-                CustId = viewModel.CustId,
-                SubAccountId = viewModel.SubAccountId,
-                LanguageCode = viewModel.LanguageCode
-            };
-
-            return Json(1);
         }
     }
 }

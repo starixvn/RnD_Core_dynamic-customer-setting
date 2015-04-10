@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings'];
-    var dataService = function ($http, $rootScope, messageService, appSettings) {
+    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings', 'ResponseReader'];
+    var dataService = function ($http, $rootScope, messageService, appSettings, ResponseReader) {
         function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
@@ -36,32 +36,12 @@
                     return;
                 }
 
+                var responseReader = new ResponseReader(updateModel.SettingType);
+                var settingResults = responseReader.read(response);
                 var results = [];
-                switch (updateModel.SettingType) {
-                    case appSettings.settingType.All:
-                        results.push(response.StatusResult);
-                        results.push(response.DiscountResult);
-                        results.push(response.BetLimitResult);
-                        results.push(response.PositionTakingResult);
-                        break;
-
-                    case appSettings.settingType.Status:
-                        results.push(response.StatusResult);
-                        break;
-
-                    case appSettings.settingType.Discount:
-                        results.push(response.DiscountResult);
-                        break;
-
-                    case appSettings.settingType.BetLimit:
-                        results.push(response.BetLimitResult);
-                        break;
-
-                    case appSettings.settingType.PositionTaking:
-                        results.push(response.PositionTakingResult);
-                        break;
-                }
-
+                angular.forEach(settingResults, function (settingResult) {
+                    results.push(settingResult.result);
+                });
                 messageService.showResults(results);
 
                 if (angular.isFunction(successCallback)) {

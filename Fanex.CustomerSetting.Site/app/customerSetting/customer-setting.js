@@ -1,15 +1,23 @@
-// customer-setting - v0.0.1 - 2015-04-08 13:04:46
+// customer-setting - v0.0.1 - 2015-04-10 17:04:38
 
 'use strict';
 
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'loadingService', 'appSettings',
-            function ($q, $rootScope, messageService, loadingService, appSettings) {
+        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'appSettings',
+            function ($q, $rootScope, messageService, appSettings) {
+                var blockUI = function () {
+                    $rootScope.hasLoading = true;
+                };
+
+                var unblockUI = function () {
+                    $rootScope.hasLoading = false;
+                };
+
                 return {
                     request: function (config) {
-                        loadingService.block();
+                        blockUI();
                         if (config.method === 'GET') {
                             config.url = appSettings.rootUrl + '/app/customerSetting/' + config.url + '?v=' + appSettings.version;
                         }
@@ -17,11 +25,11 @@
                         return config;
                     },
                     response: function (response) {
-                        loadingService.unblock();
+                        unblockUI();
                         return response;
                     },
                     responseError: function (response) {
-                        loadingService.unblock();
+                        unblockUI();
                         messageService.showError('Sorry, an error occurred while processing your request.');
                         return $q.reject(response);
                     }
@@ -40,9 +48,9 @@
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'templateService', 'dataService', 'controllerService',
-                        'appSettings', 'modelService', 'messageService', 'resourceService'];
+                        'appSettings', 'modelService', 'messageService', 'resourceService', 'ResponseReader'];
     var customerSettingController = function ($rootScope, $scope, templateService, dataService, controllerService,
-                        appSettings, modelService, messageService, resourceService) {
+                        appSettings, modelService, messageService, resourceService, ResponseReader) {
         var selectModel = modelService.createSelectModel();
         dataService.select(selectModel, function (response) {
             controllerService.updateResponse(response);
@@ -109,7 +117,7 @@
 
                 if (data.length === 0) {
                     if (isShowNoChange) {
-                        messageService.showWarning(resourceService.getString('NoChangeToUpdate'));
+                        messageService.showNoChange();
                     }
                     return false;
                 }
@@ -248,6 +256,21 @@
                 delete (positionTaking.BetTypeName);
             });
 
+            function reload(oldData, newData) {
+                angular.forEach(newData, function (newItem) {
+                    angular.forEach(oldData, function (oldItem) {
+                        var isFound = false;
+                        if (!isFound
+                            && newItem.SportType === oldItem.SportType
+                            && newItem.BetType === oldItem.BetType
+                            && newItem.IsLive === oldItem.IsLive) {
+                            angular.copy(newItem, oldItem);
+                            isFound = true;
+                        }
+                    });
+                });
+            }
+
             var selectModel = modelService.createSelectModel();
             var updateModel = angular.extend({
                 UserName: $scope.information.UserName,
@@ -261,7 +284,33 @@
                 PositionTakingLevel: settingContext.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
             }, selectModel);
-            dataService.update(updateModel);
+            dataService.update(updateModel, function (response) {
+                var responseReader = new ResponseReader(updateModel.SettingType);
+                var settingResults = responseReader.read(response);
+                angular.forEach(settingResults, function (settingResult) {
+                    var result = settingResult.result;
+                    if (result.IsSuccess) {
+                        var settingType = settingResult.settingType;
+                        switch (settingType) {
+                            case appSettings.settingType.Status:
+                                reload($scope.statuses, statuses);
+                                break;
+
+                            case appSettings.settingType.Discount:
+                                reload($scope.discounts, discounts);
+                                break;
+
+                            case appSettings.settingType.BetLimit:
+                                reload($scope.betLimits, betLimits);
+                                break;
+
+                            case appSettings.settingType.PositionTaking:
+                                reload($scope.positionTakings, positionTakings);
+                                break;
+                        }
+                    }
+                });
+            });
         }
     };
 
@@ -581,7 +630,7 @@
 
 (function () {
     var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
-    var errType = {
+    var errorType = {
         none: 0,
         limit: 1,
         minBet: 2,
@@ -595,11 +644,11 @@
                 this.value = value;
                 this.limit = limit;
 
-                this.setInvalid = function (errType, errMsg) {
+                this.setInvalid = function (errorType, errMsg) {
                     var hasErrType = false;
                     angular.forEach(this.errors, function (error) {
                         if (!hasErrType) {
-                            if (error.errType === errType) {
+                            if (error.errorType === errorType) {
                                 hasErrType = true;
                             }
                         }
@@ -607,18 +656,18 @@
 
                     if (!hasErrType) {
                         this.errors.push({
-                            errType: errType,
+                            errorType: errorType,
                             errMsg: errMsg
                         });
                     }
                 };
 
-                this.setValid = function (errType) {
+                this.setValid = function (errorType) {
                     var hasErrType = false;
                     var errorIndex = -1;
                     angular.forEach(this.errors, function (error, index) {
                         if (!hasErrType) {
-                            if (error.errType === errType) {
+                            if (error.errorType === errorType) {
                                 hasErrType = true;
                                 errorIndex = index;
                             }
@@ -787,18 +836,18 @@
 
                     if (scope.minBet.value < scope.minBet.limit) {
                         var formattedNumber = $filter('number')(scope.minBet.limit);
-                        scope.minBet.setInvalid(errType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
+                        scope.minBet.setInvalid(errorType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.minBet.setValid(errType.limit);
+                        scope.minBet.setValid(errorType.limit);
                     }
 
-                    scope.maxBet.setValid(errType.minBet);
+                    scope.maxBet.setValid(errorType.minBet);
                     if (scope.minBet.value > scope.maxBet.value) {
-                        scope.minBet.setInvalid(errType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
+                        scope.minBet.setInvalid(errorType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.minBet.setValid(errType.maxBet);
+                        scope.minBet.setValid(errorType.maxBet);
                     }
                 };
 
@@ -809,25 +858,25 @@
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
                         var formattedNumber = $filter('number')(scope.maxBet.limit);
-                        scope.maxBet.setInvalid(errType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
+                        scope.maxBet.setInvalid(errorType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.maxBet.setValid(errType.limit);
+                        scope.maxBet.setValid(errorType.limit);
                     }
 
-                    scope.minBet.setValid(errType.maxBet);
+                    scope.minBet.setValid(errorType.maxBet);
                     if (scope.maxBet.value < scope.minBet.value) {
-                        scope.maxBet.setInvalid(errType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
+                        scope.maxBet.setInvalid(errorType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
                     } else {
-                        scope.maxBet.setValid(errType.minBet);
+                        scope.maxBet.setValid(errorType.minBet);
                     }
 
-                    scope.maxPerMatch.setValid(errType.maxBet);
+                    scope.maxPerMatch.setValid(errorType.maxBet);
                     if (scope.maxBet.value > scope.maxPerMatch.value) {
-                        scope.maxBet.setInvalid(errType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
+                        scope.maxBet.setInvalid(errorType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
                     }
                     else {
-                        scope.maxBet.setValid(errType.maxPerMatch);
+                        scope.maxBet.setValid(errorType.maxPerMatch);
                     }
                 };
 
@@ -838,17 +887,17 @@
 
                     if (scope.maxPerMatch.value > scope.maxPerMatch.limit) {
                         var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', $filter('number')(scope.maxPerMatch.limit));
-                        scope.maxPerMatch.setInvalid(errType.limit, errMsg);
+                        scope.maxPerMatch.setInvalid(errorType.limit, errMsg);
                     } else {
-                        scope.maxPerMatch.setValid(errType.limit);
+                        scope.maxPerMatch.setValid(errorType.limit);
                     }
 
-                    scope.maxBet.setValid(errType.maxPerMatch);
+                    scope.maxBet.setValid(errorType.maxPerMatch);
                     if (scope.maxPerMatch.value < scope.maxBet.value) {
-                        scope.maxPerMatch.setInvalid(errType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
+                        scope.maxPerMatch.setInvalid(errorType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.maxPerMatch.setValid(errType.maxBet);
+                        scope.maxPerMatch.setValid(errorType.maxBet);
                     }
                 };
 
@@ -964,24 +1013,18 @@
     var injectParams = ['commonService', 'resourceService', 'controllerService', 'appSettings'];
     var customerSettingDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
-            var DiscountSelect = function (min, max, value) {
-                this.min = min;
-                this.value = value;
-                this.options = commonService.generateOptions(min, max, 0.0005, 10000);
-            };
-
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return new DiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
+                    return commonService.createDiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return new DiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
+                    return commonService.createDiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
-                    return new DiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
+                    return commonService.createDiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
 
                 case appSettings.formType.AgentEditMember:
-                    return new DiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
+                    return commonService.createDiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
             }
         }
 
@@ -1078,6 +1121,25 @@
 
     customerSettingInformationDirective.$inject = injectParams;
     angular.module('customerSettingApp').directive('customerSettingInformation', customerSettingInformationDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = [];
+    var customerSettingMessageDirective = function () {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                messages: '=customerSettingMessage'
+            },
+            templateUrl: 'templates/customer-setting-message.htm'
+        };
+    };
+
+    customerSettingMessageDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingMessage', customerSettingMessageDirective);
 })();
 
 'use strict';
@@ -1819,50 +1881,65 @@
             return index;
         };
 
-        this.generateOptions = function (min, max, step, factor) {
-            var options = [];
-            min = Math.max(0, min);
-            max = Math.max(0, max);
-            while (max >= min) {
-                options.push(max);
-                max -= step;
-                max = Math.round(max * factor) / factor;
-            }
-            return options;
+        var OptionsBuilder = function (step, factor) {
+            this.generateOptions = function (min, max, value) {
+                var options = [];
+                min = Math.max(0, min);
+                max = Math.max(0, max);
+                while (max >= min) {
+                    options.push(max);
+                    max -= step;
+                    max = Math.round(max * factor) / factor;
+                }
+
+                if (angular.isDefined(value)) {
+                    var selectIndex = -1;
+                    angular.forEach(options, function (option, index) {
+                        if (selectIndex === -1 && option === value) {
+                            selectIndex = index;
+                        }
+                    });
+
+                    if (selectIndex === -1) {
+                        if (value < min) {
+                            options.push(value);
+                            selectIndex = options.length - 1;
+                        } else if (value > max) {
+                            options.unshift(value);
+                            selectIndex = 0;
+                        }
+                    }
+                }
+
+                return options;
+            };
+        };
+
+        var SelectBuilder = function (step, factor) {
+            var optionsBuilder = new OptionsBuilder(step, factor);
+            this.build = function (min, max, value) {
+                var options = optionsBuilder.generateOptions(min, max, value);
+                return {
+                    min: min,
+                    max: max,
+                    value: value,
+                    options: options
+                };
+            };
         };
 
         this.correctValue = function (min, max, value) {
             return Math.max(min, Math.min(max, value));
         };
 
-        var self = this;
-        var PositionTakingSelect = function (min, max, value) {
-            var options = self.generateOptions(min, max, 1, 1);
-            var selectIndex = -1;
-            angular.forEach(options, function (option, index) {
-                if (selectIndex === -1 && option === value) {
-                    selectIndex = index;
-                }
-            });
-
-            if (selectIndex === -1) {
-                if (value < min) {
-                    options.push(value);
-                    selectIndex = options.length - 1;
-                } else if (value > max) {
-                    options.unshift(value);
-                    selectIndex = 0;
-                }
-            }
-
-            this.options = options;
-            this.value = this.options[selectIndex];
-            this.min = min;
-            this.max = max;
+        this.createPositionTakingSelect = function (min, max, value) {
+            var selectBuilder = new SelectBuilder(1, 1);
+            return selectBuilder.build(min, max, value);
         };
 
-        this.createPositionTakingSelect = function (min, max, value) {
-            return new PositionTakingSelect(min, max, value);
+        this.createDiscountSelect = function (min, max, value) {
+            var selectBuilder = new SelectBuilder(0.0005, 10000);
+            return selectBuilder.build(min, max, value);
         };
     };
 
@@ -2016,8 +2093,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings'];
-    var dataService = function ($http, $rootScope, messageService, appSettings) {
+    var injectParams = ['$http', '$rootScope', 'messageService', 'appSettings', 'ResponseReader'];
+    var dataService = function ($http, $rootScope, messageService, appSettings, ResponseReader) {
         function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
@@ -2051,32 +2128,12 @@
                     return;
                 }
 
+                var responseReader = new ResponseReader(updateModel.SettingType);
+                var settingResults = responseReader.read(response);
                 var results = [];
-                switch (updateModel.SettingType) {
-                    case appSettings.settingType.All:
-                        results.push(response.StatusResult);
-                        results.push(response.DiscountResult);
-                        results.push(response.BetLimitResult);
-                        results.push(response.PositionTakingResult);
-                        break;
-
-                    case appSettings.settingType.Status:
-                        results.push(response.StatusResult);
-                        break;
-
-                    case appSettings.settingType.Discount:
-                        results.push(response.DiscountResult);
-                        break;
-
-                    case appSettings.settingType.BetLimit:
-                        results.push(response.BetLimitResult);
-                        break;
-
-                    case appSettings.settingType.PositionTaking:
-                        results.push(response.PositionTakingResult);
-                        break;
-                }
-
+                angular.forEach(settingResults, function (settingResult) {
+                    results.push(settingResult.result);
+                });
                 messageService.showResults(results);
 
                 if (angular.isFunction(successCallback)) {
@@ -2095,26 +2152,8 @@
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope'];
-    var loadingService = function ($rootScope) {
-        this.block = function () {
-            $rootScope.hasLoading = true;
-        };
-
-        this.unblock = function () {
-            $rootScope.hasLoading = false;
-        };
-    };
-
-    loadingService.$inject = injectParams;
-    angular.module('customerSettingApp').service('loadingService', loadingService);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings'];
-    var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings) {
+    var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings', 'resourceService'];
+    var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings, resourceService) {
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
@@ -2128,11 +2167,11 @@
         function generateMesage(result) {
             var messageType = appSettings.messageType.Error;
             switch (result.ErrCode) {
-                case appSettings.errCode.Success:
+                case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
                     break;
 
-                case appSettings.errCode.NoChange:
+                case appSettings.errorCode.NoChange:
                     messageType = appSettings.messageType.Warning;
                     break;
             }
@@ -2169,6 +2208,7 @@
             });
         }
 
+        var self = this;
         this.showMessage = function (messageType, messageContent) {
             var message = new Message(messageType, messageContent);
             showMessage(message);
@@ -2180,13 +2220,20 @@
         };
 
         this.showResults = function (results) {
+            // if having any successful or error messages -> remove any no-change messages
             var messages = [];
             angular.forEach(results, function (result) {
-                var message = generateMesage(result);
-                messages.push(message);
+                if (result.ErrCode !== appSettings.errorCode.NoChange) {
+                    var message = generateMesage(result);
+                    messages.push(message);
+                }
             });
 
-            showMessages(messages);
+            if (messages.length === 0) {
+                self.showNoChange();
+            } else {
+                showMessages(messages);
+            }
         };
 
         this.showSuccess = function (messageContent) {
@@ -2195,6 +2242,10 @@
 
         this.showWarning = function (messageContent) {
             this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+        };
+
+        this.showNoChange = function () {
+            this.showWarning(resourceService.getString('NoChangeToUpdate'));
         };
 
         this.showError = function (messageContent) {
@@ -2387,6 +2438,60 @@
 
     resourceService.$inject = injectParams;
     angular.module('customerSettingApp').service('resourceService', resourceService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['appSettings'];
+    var responseReaderFactory = function (appSettings) {
+        var SettingResult = function (settingType, result) {
+            this.settingType = settingType;
+            this.result = result;
+        };
+
+        var ResponseReader = function (settingType) {
+            this.settingType = settingType;
+            this.isSuccess = appSettings.errorCode.Success;
+            this.settingResults = [];
+        };
+
+        ResponseReader.prototype.read = function (response) {
+            this.isSuccess = response.IsSuccess;
+            var settingResults = [];
+            switch (this.settingType) {
+                case appSettings.settingType.All:
+                    settingResults.push(new SettingResult(appSettings.settingType.Status, response.StatusResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.Discount, response.DiscountResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, response.BetLimitResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, response.PositionTakingResult));
+                    break;
+
+                case appSettings.settingType.Status:
+                    settingResults.push(new SettingResult(appSettings.settingType.Status, response.StatusResult));
+                    break;
+
+                case appSettings.settingType.Discount:
+                    settingResults.push(new SettingResult(appSettings.settingType.Discount, response.DiscountResult));
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, response.BetLimitResult));
+                    break;
+
+                case appSettings.settingType.PositionTaking:
+                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, response.PositionTakingResult));
+                    break;
+            }
+
+            return settingResults;
+        };
+
+        return ResponseReader;
+    };
+
+    responseReaderFactory.$inject = injectParams;
+    angular.module('customerSettingApp').factory('ResponseReader', responseReaderFactory);
 })();
 
 'use strict';
@@ -2712,7 +2817,7 @@
             FormInvalid: 1,
             NoChange: 2
         },
-        errCode: {
+        errorCode: {
             Success: 0,
             ErrorValue: -1,
             NoChange: -2,

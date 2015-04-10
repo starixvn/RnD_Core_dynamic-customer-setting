@@ -12,7 +12,10 @@
         /// Creates the message builder.
         /// </summary>
         /// <param name="msgType">Type of the message.</param>
-        /// <returns>Returns interface IMessageBuilder.</returns>
+        /// <param name="resourceService">The resource service.</param>
+        /// <returns>
+        /// Returns interface IMessageBuilder.
+        /// </returns>
         public static IMessageBuilder Create(MsgType msgType, IResourceService resourceService)
         {
             switch (msgType)

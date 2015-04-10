@@ -3,11 +3,19 @@
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'loadingService', 'appSettings',
-            function ($q, $rootScope, messageService, loadingService, appSettings) {
+        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'appSettings',
+            function ($q, $rootScope, messageService, appSettings) {
+                var blockUI = function () {
+                    $rootScope.hasLoading = true;
+                };
+
+                var unblockUI = function () {
+                    $rootScope.hasLoading = false;
+                };
+
                 return {
                     request: function (config) {
-                        loadingService.block();
+                        blockUI();
                         if (config.method === 'GET') {
                             config.url = appSettings.rootUrl + '/app/customerSetting/' + config.url + '?v=' + appSettings.version;
                         }
@@ -15,11 +23,11 @@
                         return config;
                     },
                     response: function (response) {
-                        loadingService.unblock();
+                        unblockUI();
                         return response;
                     },
                     responseError: function (response) {
-                        loadingService.unblock();
+                        unblockUI();
                         messageService.showError('Sorry, an error occurred while processing your request.');
                         return $q.reject(response);
                     }

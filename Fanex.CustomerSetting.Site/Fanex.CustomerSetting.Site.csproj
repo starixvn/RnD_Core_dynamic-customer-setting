@@ -148,6 +148,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,6 +171,7 @@
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
     <Content Include="app\customerSetting\directives\agent-edit-member-position-taking.js" />
+    <Content Include="app\customerSetting\directives\customer-setting-message.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-discount.js" />
     <Content Include="app\customerSetting\directives\super-edit-member-discount.js" />
@@ -191,13 +193,14 @@
     <Content Include="app\customerSetting\services\model-service.js" />
     <Content Include="app\customerSetting\services\common-service.js" />
     <Content Include="app\customerSetting\services\controller-service.js" />
-    <Content Include="app\customerSetting\services\loading-service.js" />
     <Content Include="app\customerSetting\services\message-service.js" />
+    <Content Include="app\customerSetting\services\response-reader.js" />
     <Content Include="app\customerSetting\services\template-service.js" />
     <Content Include="app\customerSetting\services\tooltip-service.js" />
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
     <Content Include="app\customerSetting\templates\agent-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\customer-setting-message.htm" />
     <Content Include="app\customerSetting\templates\master-edit-member-discount.htm" />
     <Content Include="app\customerSetting\templates\no-group\master-edit-member-discount-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\master-edit-member-discount-container.htm" />

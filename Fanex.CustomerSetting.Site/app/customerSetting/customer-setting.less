@@ -82,35 +82,60 @@
 
     & > .message-container
     {
+        .border-box();
+        border: solid 1px @border-color;
+        background-color: #f6f5f2;
+        font-weight: bold;
+        margin-bottom: @container-margin-bottom;
+
         & > .message
         {
-            padding: 5px;
-            margin-bottom: @container-margin-bottom;
+            padding: 3px 5px;
+            & > .icon
+            {
+                float: left;
+                width: 14px;
+                height: 13px;
+                background-image: url("images/sprite.png");
+                background-repeat: no-repeat;
+            }
 
             &.success
             {
-                color: #3c763d;
-                border-color: #d6e9c6;
-                background-color: #dff0d8;
+                color: #618e11;
+                & > .icon
+                {
+                    background-position: -65px 0;
+                }
             }
 
             &.warning
             {
-                color: #8a6d3b;
-                border-color: #faebcc;
-                background-color: #fcf8e3;
+                color: #c28f06;
+                & > .icon
+                {
+                    background-position: -51px 0;
+                }
             }
 
             &.error
             {
-                color: #a94442;
-                border-color: #ebccd1;
-                background-color: #f2dede;
+                color: #f40000;
+                & > .icon
+                {
+                    background-position: -51px 0;
+                }
             }
 
-            & > .row
+            & > .content
             {
-                  padding-left: 10px;
+                padding-left: 20px;
+                line-height: 15px;
+
+                & > .rows
+                {
+                    padding-left: 15px;
+                }
             }
         }
     }
@@ -638,7 +663,7 @@
 
     button.update
     {
-        background-color: #7c98a4;
+        background-color: @border-color;
         border: 0;
         line-height: 16px;
         padding: 4px 12px;
