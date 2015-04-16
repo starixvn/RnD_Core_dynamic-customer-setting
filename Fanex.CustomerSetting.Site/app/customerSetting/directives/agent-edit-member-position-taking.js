@@ -36,17 +36,16 @@
                 });
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.agentPT.value = copyScope.agentPT.value;
-                    }
-                });
+
+                    return copy('agentPT', generateAgentPT);
+                };
 
                 // Validate
                 $scope.validate = function () {

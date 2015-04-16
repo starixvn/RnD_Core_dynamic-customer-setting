@@ -21,7 +21,8 @@ function ($scope, $http) {
         { name: "简体中文", value: "zh-CN" },
         { name: "日本語", value: "ja-JP" },
         { name: "ภาษาไทย", value: "th-TH" },
-        { name: "한국어", value: "ko-KR" }
+        { name: "한국어", value: "ko-KR" },
+        { name: "Tiếng Việt", value: "vi-VN" }
     ];
     $scope.roles = [];
     for (var key in roleType) {

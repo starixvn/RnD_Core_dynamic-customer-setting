@@ -21,10 +21,9 @@
                 function generateSuperMaxPT() {
                     var min = 0;
                     var max = positionTaking.DefaultMaxPT;
-                    var value = positionTaking.S4;
-                    if (isInitialized) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                    var value = !isInitialized
+                        ? positionTaking.S4
+                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.superMaxPT = generateSuperMaxPT();
@@ -74,19 +73,19 @@
                 $scope.superMinPT = generateSuperMinPT();
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function(field, generator){
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        $scope.superMaxPT.value = copyScope.superMaxPT.value;
-                        $scope.masterMaxPT.value = copyScope.masterMaxPT.value;
-                        $scope.agentMaxPT.value = copyScope.agentMaxPT.value;
-                        $scope.superMinPT.value = copyScope.superMinPT.value;
-                    }
-                });
+
+                    return copy('superMaxPT', generateSuperMaxPT)
+                        && copy('masterMaxPT', generateMasterMaxPT)
+                        && copy('agentMaxPT', generateAgentMaxPT)
+                        && copy('superMinPT', generateSuperMinPT);
+                };
 
                 // Validate
                 $scope.validate = function () {

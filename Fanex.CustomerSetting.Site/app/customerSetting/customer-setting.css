@@ -176,6 +176,9 @@
   height: 23px;
   line-height: 23px;
   background-color: #b5c4d0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   border-left: 1px solid #7c98a4;
   border-top: 1px solid #7c98a4;
   -webkit-box-sizing: border-box;
@@ -191,6 +194,9 @@
   height: 23px;
   line-height: 23px;
   background-color: #b5c4d0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   border-left: 1px solid #7c98a4;
   border-top: 1px solid #7c98a4;
   -webkit-box-sizing: border-box;

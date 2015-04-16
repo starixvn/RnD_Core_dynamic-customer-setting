@@ -171,6 +171,7 @@
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
     <Content Include="app\customerSetting\directives\agent-edit-member-position-taking.js" />
+    <Content Include="app\customerSetting\directives\customer-setting-copy.js" />
     <Content Include="app\customerSetting\directives\customer-setting-message.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-discount.js" />

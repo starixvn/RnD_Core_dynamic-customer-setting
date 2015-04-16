@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project>
+  <configuration createBackupFiles="False" hideEmptyRows="False" hideTranslatedRows="False" useSpellChecker="True" neutralLanguageCode="en-US" languagesToDisplay="">
+    <globalSetting name="Filter-ResourceEditorGrid">&lt;XtraSerializer version="1.0" application="View"&gt;
+  &lt;property name="#LayoutVersion" /&gt;
+  &lt;property name="ActiveFilterString" /&gt;
+&lt;/XtraSerializer&gt;</globalSetting>
+    <globalSetting name="Sort-ResourceEditorGrid">&lt;XtraSerializer version="1.0" application="View"&gt;
+  &lt;property name="#LayoutVersion" /&gt;
+  &lt;property name="SortInfo"&gt;~Xtra#Base64AAEAAAD/////AQAAAAAAAAAMAgAAAF1EZXZFeHByZXNzLlh0cmFHcmlkLnYxMy4xLCBWZXJzaW9uPTEzLjEuOC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAAADhEZXZFeHByZXNzLlh0cmFHcmlkLkNvbHVtbnMuR3JpZENvbHVtblNvcnRJbmZvQ29sbGVjdGlvbgQAAAAKZ3JvdXBDb3VudAVjbG9uZQ9jbG9uZUdyb3VwQ291bnQTQ29sbGVjdGlvbkJhc2UrbGlzdAADAAMIsgFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW0RldkV4cHJlc3MuWHRyYUdyaWQuQ29sdW1ucy5HcmlkQ29sdW1uU29ydEluZm8sIERldkV4cHJlc3MuWHRyYUdyaWQudjEzLjEsIFZlcnNpb249MTMuMS44LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YV1dCBxTeXN0ZW0uQ29sbGVjdGlvbnMuQXJyYXlMaXN0AgAAAAAAAAAJAwAAAAAAAAAJBAAAAAQDAAAAsgFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW0RldkV4cHJlc3MuWHRyYUdyaWQuQ29sdW1ucy5HcmlkQ29sdW1uU29ydEluZm8sIERldkV4cHJlc3MuWHRyYUdyaWQudjEzLjEsIFZlcnNpb249MTMuMS44LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24EAAAwRGV2RXhwcmVzcy5YdHJhR3JpZC5Db2x1bW5zLkdyaWRDb2x1bW5Tb3J0SW5mb1tdAgAAAAgICQUAAAAAAAAAAAAAAAQEAAAAHFN5c3RlbS5Db2xsZWN0aW9ucy5BcnJheUxpc3QDAAAABl9pdGVtcwVfc2l6ZQhfdmVyc2lvbgUAAAgICQYAAAABAAAABAAAAAcFAAAAAAEAAAAAAAAABC5EZXZFeHByZXNzLlh0cmFHcmlkLkNvbHVtbnMuR3JpZENvbHVtblNvcnRJbmZvAgAAABAGAAAABAAAAAkHAAAADQMMCAAAABlEZXZFeHByZXNzLlh0cmFHcmlkLnYxMy4xBQcAAAAuRGV2RXhwcmVzcy5YdHJhR3JpZC5Db2x1bW5zLkdyaWRDb2x1bW5Tb3J0SW5mbwIAAAAJU29ydE9yZGVyCkNvbHVtbk5hbWUAAQgIAAAAAQAAAAYJAAAAB2NvbE5hbWUL&lt;/property&gt;
+&lt;/XtraSerializer&gt;</globalSetting>
+    <globalSetting name="projectMruItems">&lt;?xml version='1.0' encoding='utf-8'?&gt;&lt;items&gt;&lt;item type="2" checksum="5820311248" /&gt;&lt;item type="2" checksum="6711188927" /&gt;&lt;/items&gt;</globalSetting>
+    <globalSetting name="AddNewFileGroupForm.destinationLanguagesListBox">
+    </globalSetting>
+    <globalSetting name="AddNewFileGroupForm.extensionComboBoxEdit">0</globalSetting>
+    <globalSetting name="AddNewFileGroupForm.baseFolderTextEdit.Text">
+    </globalSetting>
+    <globalSetting name="AddNewFileGroupForm.baseFileNameTextEdit.Text">
+    </globalSetting>
+    <globalSetting name="sendFileToTranslator.destinationFilePathTextEdit.Text">D:\customer-setting-renovation2.xlsx</globalSetting>
+    <globalSetting name="sendFileToTranslator.fileGroupsListBox">Error###{{{}}}###Lang</globalSetting>
+    <globalSetting name="sendFileToTranslator.languagesToExportCheckListBox">Japanese (Japan) (ja-jp)###{{{}}}###Korean (Korea) (ko-kr)###{{{}}}###Thai (Thailand) (th-th)###{{{}}}###Vietnamese (Vietnam) (vi-vn)###{{{}}}###Chinese (Simplified, PRC) (zh-cn)###{{{}}}###Chinese (Traditional, Taiwan) (zh-tw)</globalSetting>
+    <globalSetting name="sendFileToTranslator.referenceLanguageComboBoxEdit.SelectedIndex">0</globalSetting>
+    <globalSetting name="sendFileToTranslator.openFileAfterGeneratingCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.openAfterGeneratingCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.eliminateDuplicateRowsCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportWithoutDestinationTranslationOnlyCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportCompletelyEmptyRowsCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportGroupsAsOneWorkSheetCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportNameColumnCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportCommentColumnCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportReferenceLanguageColumnCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportFileGroupColumnCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportGroupsAsWorkSheetsCheckEdit.Checked">True</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportGroupsAsExcelFilesCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.exportEachLanguageIntoSeparateExcelFileCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.useCrypticExcelExportSheetNamesCheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.sendFilesToEMailReceivers2CheckEdit.Checked">False</globalSetting>
+    <globalSetting name="sendFileToTranslator.zulReceiversTextEdit.Text">someone@example.org, someone-other@example.org</globalSetting>
+    <globalSetting name="sendFileToTranslator.zulSubjectTextEdit.Text">[ZRE] Excel files for translating project "{ProjectName}"</globalSetting>
+    <globalSetting name="sendFileToTranslator.zulBodyTextEdit.Text">Please download the Excel documents in the link to translate the project "{ProjectName}".
+
+To send me the translated files back, simply use https://www.zeta-uploader.com
+
+Kind regards</globalSetting>
+    <userSetting name="leo.vo@SPVN.filesInitialDir">D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources</userSetting>
+    <userSetting name="leo.vo@SPVN.FindText">Min Bet</userSetting>
+    <userSetting name="leo.vo@SPVN.RecentFiles">D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.ja-JP.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.ko-KR.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.th-TH.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.vi-VN.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.zh-CN.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.zh-TW.resx###***###D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.ja-JP.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.ko-KR.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.th-TH.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.vi-VN.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.zh-CN.resx;D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.zh-TW.resx</userSetting>
+    <description>
+    </description>
+  </configuration>
+  <fileGroups>
+    <fileGroup name="" projectFolderUniqueID="00000000-0000-0000-0000-000000000000" orderPosition="0" ignoreDuringExportAndImport="False" uniqueID="c6861719-8b04-46d4-8124-0bfef6dc7e99">
+      <file filePath="Error.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.resx" uniqueID="4a60d300-25d0-489d-b683-a378a4cde4f2" />
+      <file filePath="Error.ja-JP.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.ja-JP.resx" uniqueID="c2cb1858-7c9d-4445-91ed-e6850e2debaf" />
+      <file filePath="Error.ko-KR.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.ko-KR.resx" uniqueID="c2a4fbb4-f029-4496-b3df-4bf2f0416ca4" />
+      <file filePath="Error.th-TH.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.th-TH.resx" uniqueID="a1770153-e142-4f23-8f1b-e0b050728591" />
+      <file filePath="Error.vi-VN.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.vi-VN.resx" uniqueID="4834dc7f-fe56-4897-a11a-e468d7b386fb" />
+      <file filePath="Error.zh-CN.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.zh-CN.resx" uniqueID="5c09d512-4465-4454-b807-c8128b2a2810" />
+      <file filePath="Error.zh-TW.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Error.zh-TW.resx" uniqueID="77f59846-0d6c-4034-b54d-aae546a37924" />
+      <remarks>
+      </remarks>
+    </fileGroup>
+    <fileGroup name="" projectFolderUniqueID="00000000-0000-0000-0000-000000000000" orderPosition="0" ignoreDuringExportAndImport="False" uniqueID="f671822a-a6ea-48fc-92e6-517ea8aa44b0">
+      <file filePath="Lang.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.resx" uniqueID="dc1e82e2-fe1e-47de-9613-7f836745237f" />
+      <file filePath="Lang.ja-JP.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.ja-JP.resx" uniqueID="8e44cb2a-276c-4286-8879-c852776307f4" />
+      <file filePath="Lang.ko-KR.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.ko-KR.resx" uniqueID="ea2145bf-9e3e-44aa-9cd1-2d8afc2f83a8" />
+      <file filePath="Lang.th-TH.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.th-TH.resx" uniqueID="1ff4cf21-d03a-486e-b529-40c196c893dd" />
+      <file filePath="Lang.vi-VN.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.vi-VN.resx" uniqueID="e2de11f2-3ab6-4b32-9349-459777e1d7ee" />
+      <file filePath="Lang.zh-CN.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.zh-CN.resx" uniqueID="c53748f0-b250-4a4b-8eb8-84df96cf8a03" />
+      <file filePath="Lang.zh-TW.resx" absoluteFilePath="D:\Work\Git\customer-setting-renovation\Fanex.CustomerSetting\Resources\Lang.zh-TW.resx" uniqueID="208c001a-5719-4e06-bf5d-f584b9521911" />
+      <remarks>
+      </remarks>
+    </fileGroup>
+  </fileGroups>
+  <projectFolders />
+</project>

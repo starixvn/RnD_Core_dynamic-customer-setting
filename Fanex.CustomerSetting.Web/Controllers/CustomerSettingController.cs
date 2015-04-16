@@ -120,7 +120,7 @@
         [HttpPost]
         public JsonResult Update(CommandModel model)
         {
-            if (_userContext == null)
+            if (_userContext == null || !_userContext.HasUpdatePermission)
             {
                 return Json(Result.AccessDenied);
             }

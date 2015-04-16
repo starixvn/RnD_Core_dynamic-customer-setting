@@ -14,7 +14,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -24,7 +23,6 @@
                     if (newValue !== oldValue) {
                         $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
                         $scope.masterPT = generateMasterPT();
-                        isCopied = false;
                     }
                 });
 
@@ -37,12 +35,9 @@
                         : positionTaking.M3;
                     var value = $scope.isDisabledMasterPT
                         ? positionTaking.M1
-                        : isCopied === true
-                            ? $scope.masterPT.value
-                            : !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1;
-                    if (isInitialized && !$scope.isDisabledMasterPT) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                        : !isInitialized
+                            ? !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1
+                            : commonService.correctValue(min, max, $scope.masterPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.masterPT = generateMasterPT();
@@ -51,20 +46,21 @@
                 $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.masterIsAuto = copyScope.masterIsAuto;
-                        if (!$scope.isDisabledMasterPT || copyScope.masterIsAuto) {
-                            $scope.masterPT.value = copyScope.masterPT.value;
-                        }
+
+                    $scope.masterIsAuto = source.masterIsAuto;
+                    if (!$scope.isDisabledMasterPT || source.masterIsAuto) {
+                        return copy('masterPT', generateMasterPT);
                     }
-                });
+
+                    return true;
+                };
 
                 // Validate
                 $scope.validate = function () {

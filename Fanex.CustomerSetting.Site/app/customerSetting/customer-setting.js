@@ -1,4 +1,4 @@
-// customer-setting - v0.0.1 - 2015-04-10 17:04:38
+// customer-setting - v0.0.1 - 2015-04-16 14:04:58
 
 'use strict';
 
@@ -382,17 +382,16 @@
                 });
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.agentPT.value = copyScope.agentPT.value;
-                    }
-                });
+
+                    return copy('agentPT', generateAgentPT);
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -526,10 +525,9 @@
                 function generateSuperMaxPT() {
                     var min = 0;
                     var max = positionTaking.DefaultMaxPT;
-                    var value = positionTaking.S4;
-                    if (isInitialized) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                    var value = !isInitialized
+                        ? positionTaking.S4
+                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.superMaxPT = generateSuperMaxPT();
@@ -579,19 +577,19 @@
                 $scope.superMinPT = generateSuperMinPT();
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function(field, generator){
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        $scope.superMaxPT.value = copyScope.superMaxPT.value;
-                        $scope.masterMaxPT.value = copyScope.masterMaxPT.value;
-                        $scope.agentMaxPT.value = copyScope.agentMaxPT.value;
-                        $scope.superMinPT.value = copyScope.superMinPT.value;
-                    }
-                });
+
+                    return copy('superMaxPT', generateSuperMaxPT)
+                        && copy('masterMaxPT', generateMasterMaxPT)
+                        && copy('agentMaxPT', generateAgentMaxPT)
+                        && copy('superMinPT', generateSuperMinPT);
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -631,11 +629,10 @@
 (function () {
     var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
     var errorType = {
-        none: 0,
-        limit: 1,
-        minBet: 2,
-        maxBet: 3,
-        maxPerMatch: 4
+        Limit: 1,
+        MinBet: 2,
+        MaxBet: 3,
+        MaxPerMatch: 4
     };
     var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
@@ -816,7 +813,19 @@
                     return;
                 }
 
+                var validateCount = 0;
+
+                function resetValidate() {
+                    validateCount = 0;
+                }
+
                 function hasValidate() {
+                    validateCount++;
+                    if (validateCount === 3) {
+                        validateCount = 0;
+                        return false;
+                    }
+
                     if (scope.minBet.value === scope.maxBet.value
                         && scope.maxBet.value === scope.maxPerMatch.value
                         && scope.maxPerMatch.value === 0) {
@@ -836,18 +845,22 @@
 
                     if (scope.minBet.value < scope.minBet.limit) {
                         var formattedNumber = $filter('number')(scope.minBet.limit);
-                        scope.minBet.setInvalid(errorType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
+                        scope.minBet.setInvalid(errorType.Limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.minBet.setValid(errorType.limit);
+                        scope.minBet.setValid(errorType.Limit);
                     }
 
-                    scope.maxBet.setValid(errorType.minBet);
+                    scope.maxBet.setValid(errorType.MinBet);
                     if (scope.minBet.value > scope.maxBet.value) {
-                        scope.minBet.setInvalid(errorType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
+                        scope.minBet.setInvalid(errorType.MaxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.minBet.setValid(errorType.maxBet);
+                        scope.minBet.setValid(errorType.MaxBet);
+                    }
+
+                    if (scope.minBet.isValid() && scope.maxPerMatch.isValid()) {
+                        validateMaxBet();
                     }
                 };
 
@@ -858,25 +871,29 @@
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
                         var formattedNumber = $filter('number')(scope.maxBet.limit);
-                        scope.maxBet.setInvalid(errorType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
+                        scope.maxBet.setInvalid(errorType.Limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.maxBet.setValid(errorType.limit);
+                        scope.maxBet.setValid(errorType.Limit);
                     }
 
-                    scope.minBet.setValid(errorType.maxBet);
+                    scope.minBet.setValid(errorType.MaxBet);
                     if (scope.maxBet.value < scope.minBet.value) {
-                        scope.maxBet.setInvalid(errorType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
+                        scope.maxBet.setInvalid(errorType.MinBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
                     } else {
-                        scope.maxBet.setValid(errorType.minBet);
+                        scope.maxBet.setValid(errorType.MinBet);
                     }
 
-                    scope.maxPerMatch.setValid(errorType.maxBet);
+                    scope.maxPerMatch.setValid(errorType.MaxBet);
                     if (scope.maxBet.value > scope.maxPerMatch.value) {
-                        scope.maxBet.setInvalid(errorType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
+                        scope.maxBet.setInvalid(errorType.MaxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
                     }
                     else {
-                        scope.maxBet.setValid(errorType.maxPerMatch);
+                        scope.maxBet.setValid(errorType.MaxPerMatch);
+                    }
+
+                    if (scope.minBet.isValid() && scope.maxBet.isValid()) {
+                        validateMaxPerMatch();
                     }
                 };
 
@@ -887,38 +904,44 @@
 
                     if (scope.maxPerMatch.value > scope.maxPerMatch.limit) {
                         var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', $filter('number')(scope.maxPerMatch.limit));
-                        scope.maxPerMatch.setInvalid(errorType.limit, errMsg);
+                        scope.maxPerMatch.setInvalid(errorType.Limit, errMsg);
                     } else {
-                        scope.maxPerMatch.setValid(errorType.limit);
+                        scope.maxPerMatch.setValid(errorType.Limit);
                     }
 
-                    scope.maxBet.setValid(errorType.maxPerMatch);
+                    scope.maxBet.setValid(errorType.MaxPerMatch);
                     if (scope.maxPerMatch.value < scope.maxBet.value) {
-                        scope.maxPerMatch.setInvalid(errorType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
+                        scope.maxPerMatch.setInvalid(errorType.MaxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.maxPerMatch.setValid(errorType.maxBet);
+                        scope.maxPerMatch.setValid(errorType.MaxBet);
+                    }
+
+                    if (scope.maxBet.isValid() && scope.maxPerMatch.isValid()) {
+                        validateMinBet();
                     }
                 };
 
+                resetValidate();
                 validateMinBet();
-                validateMaxBet();
-                validateMaxPerMatch();
 
                 scope.$watch('minBet.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMinBet();
                     }
                 });
 
                 scope.$watch('maxBet.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMaxBet();
                     }
                 });
 
                 scope.$watch('maxPerMatch.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMaxPerMatch();
                     }
                 });
@@ -928,6 +951,48 @@
 
     customerSettingBetLimitDirective.$inject = injectParams;
     angular.module('customerSettingApp').directive('customerSettingBetLimit', customerSettingBetLimitDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$rootScope', 'controllerService', 'appSettings', 'tooltipService'];
+    var customerSettingCopyDirective = function ($rootScope, controllerService, appSettings, tooltipService) {
+        return {
+            restrict: 'A',
+            link: function (scope, element) {
+                element.on('click', function () {
+                    var copy = function () {
+                        var count = 0;
+                        var scopes = controllerService.getScopes(appSettings.settingType.PositionTaking);
+                        var source = scopes[0];
+                        for (var i = 1; i < scopes.length; i++) {
+                            var scope = scopes[i];
+                            var result = scope.copy(source);
+                            if (!result) {
+                                count++;
+                            }
+
+                            if (count > 0) {
+                                tooltipService.show(element, 'Some bet types can not be copied');
+                            } else {
+                                tooltipService.hide();
+                            }
+                        }
+                    };
+
+                    if ($rootScope.$$phase) {
+                        scope.$evalAsync(copy);
+                    } else {
+                        scope.$apply(copy);
+                    }
+                });
+            }
+        };
+    };
+
+    customerSettingCopyDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingCopy', customerSettingCopyDirective);
 })();
 
 'use strict';
@@ -1249,7 +1314,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -1259,7 +1323,6 @@
                     if (newValue !== oldValue) {
                         $scope.masterPT = generateMasterPT();
                         $scope.agentMaxPT = generateAgentMaxPT();
-                        isCopied = false;
                     }
                 });
 
@@ -1267,12 +1330,9 @@
                 function generateMasterPT() {
                     var min = !$scope.masterIsAuto ? Math.max(0, positionTaking.N3 - positionTaking.A4) : 0;
                     var max = positionTaking.M3;
-                    var value = isCopied
-                        ? $scope.masterPT.value
-                        : !$scope.masterIsAuto ? positionTaking.M2 : positionTaking.UM2;
-                    if (isInitialized) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                    var value = !isInitialized
+                        ? !$scope.masterIsAuto ? positionTaking.M2 : positionTaking.UM2
+                        : commonService.correctValue(min, max, $scope.masterPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.masterPT = generateMasterPT();
@@ -1312,20 +1372,19 @@
                 $scope.agentMinPT = generateAgentMinPT();
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.masterIsAuto = copyScope.masterIsAuto;
-                        $scope.masterPT.value = copyScope.masterPT.value;
-                        $scope.agentMaxPT.value = copyScope.agentMaxPT.value;
-                        $scope.agentMinPT.value = copyScope.agentMinPT.value;
-                    }
-                });
+
+                    $scope.masterIsAuto = source.masterIsAuto;
+                    return copy('masterPT', generateMasterPT)
+                        && copy('agentMaxPT', generateAgentMaxPT)
+                        && copy('agentMinPT', generateAgentMinPT);
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -1405,7 +1464,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -1415,7 +1473,6 @@
                     if (newValue !== oldValue) {
                         $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
                         $scope.masterPT = generateMasterPT();
-                        isCopied = false;
                     }
                 });
 
@@ -1428,12 +1485,9 @@
                         : positionTaking.M3;
                     var value = $scope.isDisabledMasterPT
                         ? positionTaking.M1
-                        : isCopied === true
-                            ? $scope.masterPT.value
-                            : !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1;
-                    if (isInitialized && !$scope.isDisabledMasterPT) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                        : !isInitialized
+                            ? !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1
+                            : commonService.correctValue(min, max, $scope.masterPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.masterPT = generateMasterPT();
@@ -1442,20 +1496,21 @@
                 $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.masterIsAuto = copyScope.masterIsAuto;
-                        if (!$scope.isDisabledMasterPT || copyScope.masterIsAuto) {
-                            $scope.masterPT.value = copyScope.masterPT.value;
-                        }
+
+                    $scope.masterIsAuto = source.masterIsAuto;
+                    if (!$scope.isDisabledMasterPT || source.masterIsAuto) {
+                        return copy('masterPT', generateMasterPT);
                     }
-                });
+
+                    return true;
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -1586,7 +1641,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -1596,7 +1650,6 @@
                     if (newValue !== oldValue) {
                         $scope.superPT = generateSuperPT();
                         $scope.masterMaxPT = generateMasterMaxPT();
-                        isCopied = false;
                     }
                 });
 
@@ -1604,12 +1657,9 @@
                 function generateSuperPT() {
                     var min = !$scope.superIsAuto ? Math.max(0, positionTaking.N4 - positionTaking.M4) : 0;
                     var max = positionTaking.S4;
-                    var value = isCopied
-                        ? $scope.superPT.value
-                        : !$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3;
-                    if (isInitialized) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                    var value = !isInitialized
+                        ? !$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3
+                        : commonService.correctValue(min, max, $scope.superPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.superPT = generateSuperPT();
@@ -1649,20 +1699,19 @@
                 $scope.masterMinPT = generateMasterMinPT();
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.superIsAuto = copyScope.superIsAuto;
-                        $scope.superPT.value = copyScope.superPT.value;
-                        $scope.masterMaxPT.value = copyScope.masterMaxPT.value;
-                        $scope.masterMinPT.value = copyScope.masterMinPT.value;
-                    }
-                });
+
+                    $scope.superIsAuto = source.superIsAuto;
+                    return copy('superPT', generateSuperPT)
+                        && copy('masterMaxPT', generateMasterMaxPT)
+                        && copy('masterMinPT', generateMasterMinPT);
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -1743,7 +1792,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -1753,7 +1801,6 @@
                     if (newValue !== oldValue) {
                         $scope.isDisabledSuperPT = positionTaking.IS3 && !$scope.superIsAuto;
                         $scope.superPT = generateSuperPT();
-                        isCopied = false;
                     }
                 });
 
@@ -1766,12 +1813,9 @@
                         : positionTaking.S4;
                     var value = $scope.isDisabledSuperPT
                         ? positionTaking.S1
-                        : isCopied
-                            ? $scope.superPT.value
-                            : !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1;
-                    if (isInitialized && !$scope.isDisabledSuperPT) {
-                        value = commonService.correctValue(min, max, value);
-                    }
+                        : !isInitialized
+                            ? !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1
+                            : commonService.correctValue(min, max, $scope.superPT.value);
                     return commonService.createPositionTakingSelect(min, max, value);
                 }
                 $scope.superPT = generateSuperPT();
@@ -1783,18 +1827,17 @@
                 $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
 
                 // Copy
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-position-taking', $scope);
+                $scope.copy = function (source) {
+                    var copy = function (field, generator) {
+                        var value = source[field].value;
+                        $scope[field].value = value;
+                        $scope[field] = generator();
+                        return $scope[field].value === value;
                     };
-                }
-                $scope.$on('copy-position-taking', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        isCopied = true;
-                        $scope.superIsAuto = copyScope.superIsAuto;
-                        $scope.superPT.value = copyScope.superPT.value;
-                    }
-                });
+
+                    $scope.superIsAuto = source.superIsAuto;
+                    return copy('superPT', generateSuperPT);
+                };
 
                 // Validate
                 $scope.validate = function () {
@@ -2645,9 +2688,9 @@
         Agents: "Agents",
         BetSetting: "Bet Setting",
         Commission: "Commission",
-        CommissionForAgent: "Comm for Agent",
-        CommissionForMaster: "Comm for Master",
-        CommissionForMember: "Comm for Member",
+        CommissionForAgent: "Agent Comm",
+        CommissionForMaster: "Master Comm",
+        CommissionForMember: "Member Comm",
         CopyTooltip: "Click to duplicate the values",
         Enable: "Enable",
         EnableDownline: "Enable Downline",
@@ -2697,29 +2740,44 @@
     };
     
     resources['zh-cn'] = {
-        AccessDeniedMsg: "You do not have permission to access this page.",
+        AccessDeniedMsg: "抱歉!您没有此页面的权限",
         AgentMaxPT: "代理最高占成",
+        AgentMinPT: "代理最低占成数",
+        AgentPT: "代理占成数",
+        Agents: "代理",
         BetSetting: "投注设定",
         Commission: "佣金",
+        CommissionForAgent: "代理佣金",
+        CommissionForMaster: "总代理佣金",
+        CommissionForMember: "会员佣金",
         CopyTooltip: "Click to duplicate the values",
         Enable: "启用",
-        EnableDownline: "Enable Downline",
+        EnableDownline: "启用下线",
         Fax: "传真",
         FirstName: "名",
         GeneralInformation: "基本信息",
+        IsAuto: "是自动",
         LastName: "姓",
         Live: "现场",
         MasterMaxPT: "总代理最高占成",
+        MasterMinPT: "总代理最低占成数",
+        MasterPT: "总代理占成数",
+        Masters: "会员",
+        Max: "最高",
         MaxBet: "最高投注",
         MaxBetLessThanOrEqualMaxPerMatch: "最大投注额必须小于或等于最大单场比赛投注额",
         MaxBetLessThanOrEqualTo: "最大投注额必须小于或等于 {0}",
         MaxBetMoreThanOrEqualMinBet: "最大投注额必须大于或等于最小投注额",
+        MaxLive: "Max Live",
         MaxPerMatch: "单场限额",
         MaxPerMatchLessThanOrEqualTo: "最大单场比赛投注额必须小于或等于 {0}",
         MaxPerMatchMoreThanOrEqualMaxBet: "最大单场比赛投注额必须大于或等于最大投注额",
+        Members: "会员",
+        Min: "最低",
         MinBet: "最低投注",
         MinBetLessThanOrEqualMaxBet: "最小投注额必须小于或等于最大投注额",
         MinBetMoreThanOrEqualTo: "最大投注额必须大于或等于 {0}",
+        MinLive: "Min Live",
         MobilePhone: "手机",
         Nickname: "昵称",
         NoChangeToUpdate: "没有更新！",
@@ -2728,34 +2786,57 @@
         ProductStatus: "Product Status",
         SuperMaxPT: "超级总代理最高占成",
         SuperMinPT: "超级总代理最低占成",
+        SuperPT: "超级总代理占成数",
         Update: "更改",
+        UpdateBetSettingSuccessfully: "成功更新投注设置。",
+        UpdateCommissionSuccessfully: "成功更新佣金设置",
+        UpdateMemberPtInfo: "您已更改您的占成数",
+        UpdateMemberPtQuestion: "您是否要把所有会员的占成数更改为:",
+        UpdateMemberPtTitle: "确认更新会员的占成数",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
         UserName: "用户名"
     };
     
     resources['zh-tw'] = {
-        AccessDeniedMsg: "You do not have permission to access this page.",
+        AccessDeniedMsg: "抱歉!您沒有此頁面的權限",
         AgentMaxPT: "代理最高佔成",
+        AgentMinPT: "代理最低占成数",
+        AgentPT: "代理占成数",
+        Agents: "代理",
         BetSetting: "投注設定",
         Commission: "佣金",
+        CommissionForAgent: "代理佣金",
+        CommissionForMaster: "總代理佣金",
+        CommissionForMember: "會員佣金",
         CopyTooltip: "Click to duplicate the values",
         Enable: "啟用",
-        EnableDownline: "Enable Downline",
+        EnableDownline: "啟用下線",
         Fax: "傳真",
         FirstName: "名",
         GeneralInformation: "基本信息",
+        IsAuto: "是自動",
         LastName: "姓",
         Live: "現場",
         MasterMaxPT: "總代理最高佔成",
+        MasterMinPT: "总代理最低占成数",
+        MasterPT: "总代理占成数",
+        Masters: "會員",
+        Max: "最高",
         MaxBet: "最高投注",
         MaxBetLessThanOrEqualMaxPerMatch: "最大投注額必須小於或等於最大單場比賽投注額",
         MaxBetLessThanOrEqualTo: "最大投注額必須小於或等於 {0}",
         MaxBetMoreThanOrEqualMinBet: "最大投注額必須大於或等於最小投注額",
+        MaxLive: "Max Live",
         MaxPerMatch: "單場限額",
         MaxPerMatchLessThanOrEqualTo: "最大單場比賽投注額必須小於或等於 {0}",
         MaxPerMatchMoreThanOrEqualMaxBet: "最大單場比賽投注額必須大於或等於最大投注額",
+        Members: "會員",
+        Min: "最低",
         MinBet: "最低投注",
         MinBetLessThanOrEqualMaxBet: "最小投注額必須小於或等於最大投注額",
         MinBetMoreThanOrEqualTo: "最大投注額必須大於或等於 {0}",
+        MinLive: "Min Live",
         MobilePhone: "手機",
         Nickname: "暱稱",
         NoChangeToUpdate: "沒有更新!",
@@ -2764,8 +2845,252 @@
         ProductStatus: "Product Status",
         SuperMaxPT: "超級總代理最高佔成",
         SuperMinPT: "超級總代理最低佔成",
+        SuperPT: "超级总代理占成数",
         Update: "更改",
+        UpdateBetSettingSuccessfully: "成功更新投注設置。",
+        UpdateCommissionSuccessfully: "成功更新傭金設置",
+        UpdateMemberPtInfo: "您已更改您的占成数",
+        UpdateMemberPtQuestion: "您是否要把所有會員佔成數更改為:",
+        UpdateMemberPtTitle: "確認更新會員的佔成數",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
         UserName: "用戶名"
+    };
+    
+    resources['ko-kr'] = {
+        AccessDeniedMsg: "You do not have permission to access this page.",
+        AgentMaxPT: "에이전트 최대 PT",
+        AgentMinPT: "에이전트 최소 PT",
+        AgentPT: "에이전트 PT",
+        Agents: "에이전트",
+        BetSetting: "배팅 설정",
+        Commission: "수수료",
+        CommissionForAgent: "에이전트 수수료",
+        CommissionForMaster: "마스터 수수료",
+        CommissionForMember: "회원 수수료",
+        CopyTooltip: "Click to duplicate the values",
+        Enable: "활성화",
+        EnableDownline: "다운라인 활성화하기",
+        Fax: "팩스",
+        FirstName: "이름",
+        GeneralInformation: "일반 정보",
+        IsAuto: "자동",
+        LastName: "성",
+        Live: "라이브",
+        MasterMaxPT: "마스터 최대 PT",
+        MasterMinPT: "마스터 최소PT",
+        MasterPT: "마스터 PT",
+        Masters: "마스터",
+        Max: "최대",
+        MaxBet: "최대 배팅",
+        MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
+        MaxBetLessThanOrEqualTo: "Max Bet must be less than or equal to {0}",
+        MaxBetMoreThanOrEqualMinBet: "Max Bet must be greater than or equal to Min Bet",
+        MaxLive: "Max Live",
+        MaxPerMatch: "경기당 최대 값",
+        MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
+        MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "회원",
+        Min: "최소",
+        MinBet: "최소 배팅",
+        MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
+        MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
+        MinLive: "Min Live",
+        MobilePhone: "핸드폰",
+        Nickname: "닉네임",
+        NoChangeToUpdate: "There is no change to update!",
+        Phone: "전화",
+        PositionTaking: "거래 조건",
+        ProductStatus: "Product Status",
+        SuperMaxPT: "슈퍼 최대 PT",
+        SuperMinPT: "슈퍼 최소PT",
+        SuperPT: "슈퍼 PT",
+        Update: "업데이트",
+        UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
+        UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "포지션테이킹(PT)이 변경되었습니다",
+        UpdateMemberPtQuestion: "모든회원의 거래조건을 바꾸기를 원하십니까:",
+        UpdateMemberPtTitle: "Confirm Update Members&apos;s PT",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
+        UserName: "사용자 이름"
+    };
+    
+    resources['ja-jp'] = {
+        AccessDeniedMsg: "You do not have permission to access this page.",
+        AgentMaxPT: "Agent Max PT",
+        AgentMinPT: "Agent Min PT",
+        AgentPT: "Agent PT",
+        Agents: "Agents",
+        BetSetting: "Bet Setting",
+        Commission: "Commission",
+        CommissionForAgent: "Agent Comm",
+        CommissionForMaster: "Master Comm",
+        CommissionForMember: "Member Comm",
+        CopyTooltip: "Click to duplicate the values",
+        Enable: "Enable",
+        EnableDownline: "Enable Downline",
+        Fax: "ファックス",
+        FirstName: "名",
+        GeneralInformation: "General Information",
+        IsAuto: "Is Auto",
+        LastName: "氏",
+        Live: "ライブ",
+        MasterMaxPT: "Master Max PT",
+        MasterMinPT: "Master Min PT",
+        MasterPT: "Master PT",
+        Masters: "Masters",
+        Max: "Max",
+        MaxBet: "最大ベット",
+        MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
+        MaxBetLessThanOrEqualTo: "Max Bet must be less than or equal to {0}",
+        MaxBetMoreThanOrEqualMinBet: "Max Bet must be greater than or equal to Min Bet",
+        MaxLive: "Max Live",
+        MaxPerMatch: "1 試合毎の最大",
+        MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
+        MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "Members",
+        Min: "Min",
+        MinBet: "Min Bet",
+        MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
+        MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
+        MinLive: "Min Live",
+        MobilePhone: "携帯電話番号",
+        Nickname: "ニックネーム",
+        NoChangeToUpdate: "There is no change to update!",
+        Phone: "電話番号",
+        PositionTaking: "Position Taking",
+        ProductStatus: "Product Status",
+        SuperMaxPT: "Super Max PT",
+        SuperMinPT: "Super Min PT",
+        SuperPT: "Super PT",
+        Update: "更新",
+        UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
+        UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "You have changed your position taking",
+        UpdateMemberPtQuestion: "Do you want to update all member&apos;s position taking to:",
+        UpdateMemberPtTitle: "Confirm Update Members&apos;s PT",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
+        UserName: "ユーザー名"
+    };
+    
+    resources['th-th'] = {
+        AccessDeniedMsg: "You do not have permission to access this page.",
+        AgentMaxPT: "แบ่งสู้สูงสุดของเอ",
+        AgentMinPT: "ค่าแบ่งสู้ต่ำสุดของ",
+        AgentPT: "ค่าแบ่งสู้ของเอเย่น",
+        Agents: "ตัวแทน",
+        BetSetting: "การกำหนดการวางเดิมพัน",
+        Commission: "คอมมิชชั่น",
+        CommissionForAgent: "คอมมิชชั่นของ Agent",
+        CommissionForMaster: "คอมมิชชั่นของ Master",
+        CommissionForMember: "คอมมิชชั่นของสมาชิก",
+        CopyTooltip: "Click to duplicate the values",
+        Enable: "เปิดใช้งาน",
+        EnableDownline: "เปิดใช้งาน ดาวไลน์",
+        Fax: "แฟกซ์",
+        FirstName: "ชื่อ",
+        GeneralInformation: "ข้อมูลทั่วไป",
+        IsAuto: "คืออัตโนมัติ",
+        LastName: "นามสกุล",
+        Live: "สด",
+        MasterMaxPT: "แบ่งสู้สูงสุดของ",
+        MasterMinPT: "แบ่งสู้ขั้นต่ำของมาสเตอร์",
+        MasterPT: "ค่าแบ่งสู้ของมาสเตอร์",
+        Masters: "ตัวแทนหลัก",
+        Max: "สูงสุด",
+        MaxBet: "ค่าเดิมพันสูงสุด",
+        MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
+        MaxBetLessThanOrEqualTo: "Max Bet must be less than or equal to {0}",
+        MaxBetMoreThanOrEqualMinBet: "Max Bet must be greater than or equal to Min Bet",
+        MaxLive: "Max Live",
+        MaxPerMatch: "ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
+        MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
+        MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "สมาชิก",
+        Min: "ต่ำสุด",
+        MinBet: "ค่าเดิมพันต้ำสุด",
+        MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
+        MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
+        MinLive: "Min Live",
+        MobilePhone: "โทรศัพท์มือถือ",
+        Nickname: "ชื่อเล่น",
+        NoChangeToUpdate: "There is no change to update!",
+        Phone: "โทรศัพท์",
+        PositionTaking: "ค่าความเสี่ยง",
+        ProductStatus: "Product Status",
+        SuperMaxPT: "แบ่งสู้สูงสุดของซุปเปรอ์",
+        SuperMinPT: "แบ่งสู้ต่ำสุดของซุปเปรอ์",
+        SuperPT: "ค่าแบ่งสู้ของซุปเปอร์",
+        Update: "ล่าสุด",
+        UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
+        UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "คุณมีการเปลี่ยนค่าแบ่งสู้ของคุณ",
+        UpdateMemberPtQuestion: "คุณต้องการจะอัพเดทแบ่งสู้บนสมาชิกทั้งหมกหรือไม่:",
+        UpdateMemberPtTitle: "ยืนยันการอัพเดทการตั้งค่าความเสี่ยง",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
+        UserName: "ชื่อผู้ใช้ระบบ"
+    };
+    
+    resources['vi-vn'] = {
+        AccessDeniedMsg: "You do not have permission to access this page.",
+        AgentMaxPT: "PT lớn nhất của Agent",
+        AgentMinPT: "PT nhỏ nhất của Agent",
+        AgentPT: "PT của Agent",
+        Agents: "Agents",
+        BetSetting: "Tiền Cược",
+        Commission: "Hoa hồng",
+        CommissionForAgent: "Agent Comm",
+        CommissionForMaster: "Master Comm",
+        CommissionForMember: "Member Comm",
+        CopyTooltip: "Click to duplicate the values",
+        Enable: "Cho phép",
+        EnableDownline: "Enable Downline",
+        Fax: "Fax",
+        FirstName: "Tên",
+        GeneralInformation: "Thông tin Chung",
+        IsAuto: "Auto PT",
+        LastName: "Họ",
+        Live: "Trực Tuyến",
+        MasterMaxPT: "PT lớn nhất của Master",
+        MasterMinPT: "PT nhỏ nhất của Master",
+        MasterPT: "PT của Master",
+        Masters: "Masters",
+        Max: "Max",
+        MaxBet: "Cược lớn nhất",
+        MaxBetLessThanOrEqualMaxPerMatch: "Max Bet must be less than or equal to Max Per Match",
+        MaxBetLessThanOrEqualTo: "Max Bet must be less than or equal to {0}",
+        MaxBetMoreThanOrEqualMinBet: "Max Bet must be greater than or equal to Min Bet",
+        MaxLive: "Max Live",
+        MaxPerMatch: "Cược tối đa cho 1 trận",
+        MaxPerMatchLessThanOrEqualTo: "Max Per Match must be less than or equal to {0}",
+        MaxPerMatchMoreThanOrEqualMaxBet: "Max Per Match must be greater than or equal to Max Bet",
+        Members: "Members",
+        Min: "Nhỏ nhất",
+        MinBet: "Cược nhỏ nhất",
+        MinBetLessThanOrEqualMaxBet: "Min Bet must be less than or equal to Max Bet",
+        MinBetMoreThanOrEqualTo: "Min Bet must be greater than or equal to {0}",
+        MinLive: "Min Live",
+        MobilePhone: "Điện thoại di động",
+        Nickname: "Biệt danh",
+        NoChangeToUpdate: "Không có gi thay đổi để cập nhật!",
+        Phone: "Điện thoại",
+        PositionTaking: "PT",
+        ProductStatus: "Product Status",
+        SuperMaxPT: "PT lớn nhất của Super",
+        SuperMinPT: "PT nhỏ nhất của Super",
+        SuperPT: "PT của Super",
+        Update: "Cập nhật",
+        UpdateBetSettingSuccessfully: "Updated bet setting successfully.",
+        UpdateCommissionSuccessfully: "Updated commission setting successfully.",
+        UpdateMemberPtInfo: "Bạn đã  thay đổi giá trị PT của mình",
+        UpdateMemberPtQuestion: "Bạn có muốn cập nhật giá trị PTcủa tất cả các thành viên:",
+        UpdateMemberPtTitle: "Confirm Update Members&apos;s PT",
+        UpdatePositionTakingSuccessfully: "Updated position taking successfully.",
+        UpdateProductStatusSuccessfully: "Updated product status successfully.",
+        UserName: "Tài khoản"
     };
 
     angular.module('customerSettingApp').value('resources', resources);

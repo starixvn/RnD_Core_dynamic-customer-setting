@@ -27,7 +27,11 @@
     {
         "Lang",
         "Lang.zh-CN",
-        "Lang.zh-TW"
+        "Lang.zh-TW",
+        "Lang.ko-KR",
+        "Lang.ja-JP",
+        "Lang.th-TH",
+        "Lang.vi-VN"
     };
 
     var templateFile = Host.TemplateFile;

@@ -8,11 +8,8 @@ https://docs.google.com/a/nexcel.vn/spreadsheets/d/1uFXwI-K2QKF9048XNgaWq8J62eEN
 https://docs.google.com/a/nexcel.vn/spreadsheets/d/1fRXqXe7f1fgZwpNc2EFr5-H_yx2-9Xsdmyf0G5MHFs4/edit#gid=550221624
 
 Web:
-http://10.18.200.209:801/Javascript/AngularJs/AngularJS%20Fundamentals%20in%2060%20Minutes/
-http://weblogs.asp.net/dwahlin/learning-angularjs-by-example-the-customer-manager-application
-https://flipboard.com/section/the-angularjs-magazine-bbIMWS
 https://docs.google.com/a/nexcel.vn/document/d/1v4jpkD6YG5QSM-gNFwD43ITtUgY62r8FsvRQXlgLt54/edit
-http://www.slideshare.net/DanWahlin/building-an-end-toend-angular-js-application
+https://docs.google.com/a/nexcel.vn/spreadsheets/d/1oEN51Xw_Ie6gHBfWATV9CBl-1GSXO9HvaE5osJo2Rvs/edit#gid=757109529
 
 Change setting level on DB230/CustDB:
 exec [dbo].[changeSettingLevel]

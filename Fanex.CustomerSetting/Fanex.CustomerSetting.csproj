@@ -209,10 +209,19 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\customer-setting-renovation.zreproj" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Error.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Error.ko-KR.resx" />
+    <EmbeddedResource Include="Resources\Error.th-TH.resx" />
+    <EmbeddedResource Include="Resources\Error.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Error.zh-TW.resx" />
     <EmbeddedResource Include="Resources\Error.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Lang.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Lang.ko-KR.resx" />
+    <EmbeddedResource Include="Resources\Lang.th-TH.resx" />
+    <EmbeddedResource Include="Resources\Lang.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Lang.zh-TW.resx" />
     <EmbeddedResource Include="Resources\Error.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

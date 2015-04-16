@@ -3,11 +3,10 @@
 (function () {
     var injectParams = ['$rootScope', '$filter', 'resourceService', 'controllerService', 'appSettings'];
     var errorType = {
-        none: 0,
-        limit: 1,
-        minBet: 2,
-        maxBet: 3,
-        maxPerMatch: 4
+        Limit: 1,
+        MinBet: 2,
+        MaxBet: 3,
+        MaxPerMatch: 4
     };
     var customerSettingBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
         function parse(data, formType) {
@@ -188,7 +187,19 @@
                     return;
                 }
 
+                var validateCount = 0;
+
+                function resetValidate() {
+                    validateCount = 0;
+                }
+
                 function hasValidate() {
+                    validateCount++;
+                    if (validateCount === 3) {
+                        validateCount = 0;
+                        return false;
+                    }
+
                     if (scope.minBet.value === scope.maxBet.value
                         && scope.maxBet.value === scope.maxPerMatch.value
                         && scope.maxPerMatch.value === 0) {
@@ -208,18 +219,22 @@
 
                     if (scope.minBet.value < scope.minBet.limit) {
                         var formattedNumber = $filter('number')(scope.minBet.limit);
-                        scope.minBet.setInvalid(errorType.limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
+                        scope.minBet.setInvalid(errorType.Limit, resourceService.getFormatString('MinBetMoreThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.minBet.setValid(errorType.limit);
+                        scope.minBet.setValid(errorType.Limit);
                     }
 
-                    scope.maxBet.setValid(errorType.minBet);
+                    scope.maxBet.setValid(errorType.MinBet);
                     if (scope.minBet.value > scope.maxBet.value) {
-                        scope.minBet.setInvalid(errorType.maxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
+                        scope.minBet.setInvalid(errorType.MaxBet, resourceService.getString('MinBetLessThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.minBet.setValid(errorType.maxBet);
+                        scope.minBet.setValid(errorType.MaxBet);
+                    }
+
+                    if (scope.minBet.isValid() && scope.maxPerMatch.isValid()) {
+                        validateMaxBet();
                     }
                 };
 
@@ -230,25 +245,29 @@
 
                     if (scope.maxBet.value > scope.maxBet.limit) {
                         var formattedNumber = $filter('number')(scope.maxBet.limit);
-                        scope.maxBet.setInvalid(errorType.limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
+                        scope.maxBet.setInvalid(errorType.Limit, resourceService.getFormatString('MaxBetLessThanOrEqualTo', formattedNumber));
                     }
                     else {
-                        scope.maxBet.setValid(errorType.limit);
+                        scope.maxBet.setValid(errorType.Limit);
                     }
 
-                    scope.minBet.setValid(errorType.maxBet);
+                    scope.minBet.setValid(errorType.MaxBet);
                     if (scope.maxBet.value < scope.minBet.value) {
-                        scope.maxBet.setInvalid(errorType.minBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
+                        scope.maxBet.setInvalid(errorType.MinBet, resourceService.getString('MaxBetMoreThanOrEqualMinBet'));
                     } else {
-                        scope.maxBet.setValid(errorType.minBet);
+                        scope.maxBet.setValid(errorType.MinBet);
                     }
 
-                    scope.maxPerMatch.setValid(errorType.maxBet);
+                    scope.maxPerMatch.setValid(errorType.MaxBet);
                     if (scope.maxBet.value > scope.maxPerMatch.value) {
-                        scope.maxBet.setInvalid(errorType.maxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
+                        scope.maxBet.setInvalid(errorType.MaxPerMatch, resourceService.getString('MaxBetLessThanOrEqualMaxPerMatch'));
                     }
                     else {
-                        scope.maxBet.setValid(errorType.maxPerMatch);
+                        scope.maxBet.setValid(errorType.MaxPerMatch);
+                    }
+
+                    if (scope.minBet.isValid() && scope.maxBet.isValid()) {
+                        validateMaxPerMatch();
                     }
                 };
 
@@ -259,38 +278,44 @@
 
                     if (scope.maxPerMatch.value > scope.maxPerMatch.limit) {
                         var errMsg = resourceService.getFormatString('MaxPerMatchLessThanOrEqualTo', $filter('number')(scope.maxPerMatch.limit));
-                        scope.maxPerMatch.setInvalid(errorType.limit, errMsg);
+                        scope.maxPerMatch.setInvalid(errorType.Limit, errMsg);
                     } else {
-                        scope.maxPerMatch.setValid(errorType.limit);
+                        scope.maxPerMatch.setValid(errorType.Limit);
                     }
 
-                    scope.maxBet.setValid(errorType.maxPerMatch);
+                    scope.maxBet.setValid(errorType.MaxPerMatch);
                     if (scope.maxPerMatch.value < scope.maxBet.value) {
-                        scope.maxPerMatch.setInvalid(errorType.maxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
+                        scope.maxPerMatch.setInvalid(errorType.MaxBet, resourceService.getString('MaxPerMatchMoreThanOrEqualMaxBet'));
                     }
                     else {
-                        scope.maxPerMatch.setValid(errorType.maxBet);
+                        scope.maxPerMatch.setValid(errorType.MaxBet);
+                    }
+
+                    if (scope.maxBet.isValid() && scope.maxPerMatch.isValid()) {
+                        validateMinBet();
                     }
                 };
 
+                resetValidate();
                 validateMinBet();
-                validateMaxBet();
-                validateMaxPerMatch();
 
                 scope.$watch('minBet.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMinBet();
                     }
                 });
 
                 scope.$watch('maxBet.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMaxBet();
                     }
                 });
 
                 scope.$watch('maxPerMatch.value', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        resetValidate();
                         validateMaxPerMatch();
                     }
                 });

@@ -7,6 +7,8 @@
     /// </summary>
     public class UserContext
     {
+        public bool IsInternal { get; set; }
+
         public int CustId { get; set; }
 
         public int SubAccountId { get; set; }
@@ -14,5 +16,13 @@
         public RoleType RoleId { get; set; }
 
         public string Language { get; set; }
+
+        public bool HasUpdatePermission
+        {
+            get
+            {
+                return !IsInternal;
+            }
+        }
     }
 }
