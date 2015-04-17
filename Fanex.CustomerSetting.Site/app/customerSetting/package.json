@@ -1,5 +1,5 @@
 {
-  "name": "customer-setting",
+  "name": "Customer Setting Application",
   "version": "0.0.1",
   "description": "Grunt for Angular customer setting application",
   "main": "customer-setting-app.js",
@@ -10,6 +10,7 @@
   "license": "Nexcel",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-angular-templates": "^0.5.7",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-less": "^1.0.0",

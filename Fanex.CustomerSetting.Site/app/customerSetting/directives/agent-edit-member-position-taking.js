@@ -37,14 +37,7 @@
 
                 // Copy
                 $scope.copy = function (source) {
-                    var copy = function (field, generator) {
-                        var value = source[field].value;
-                        $scope[field].value = value;
-                        $scope[field] = generator();
-                        return $scope[field].value === value;
-                    };
-
-                    return copy('agentPT', generateAgentPT);
+                    return commonService.copyValue(source, $scope, 'agentPT', generateAgentPT);
                 };
 
                 // Validate

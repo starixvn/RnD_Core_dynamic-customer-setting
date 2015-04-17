@@ -19,7 +19,7 @@
                             }
 
                             if (count > 0) {
-                                tooltipService.show(element, 'Some bet types can not be copied');
+                                tooltipService.show(element, 'Some bet types can not be copied', 'left');
                             } else {
                                 tooltipService.hide();
                             }

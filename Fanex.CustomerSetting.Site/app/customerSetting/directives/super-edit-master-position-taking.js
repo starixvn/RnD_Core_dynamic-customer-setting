@@ -73,17 +73,10 @@
 
                 // Copy
                 $scope.copy = function (source) {
-                    var copy = function (field, generator) {
-                        var value = source[field].value;
-                        $scope[field].value = value;
-                        $scope[field] = generator();
-                        return $scope[field].value === value;
-                    };
-
                     $scope.superIsAuto = source.superIsAuto;
-                    return copy('superPT', generateSuperPT)
-                        && copy('masterMaxPT', generateMasterMaxPT)
-                        && copy('masterMinPT', generateMasterMinPT);
+                    return commonService.copyValue(source, $scope, 'superPT', generateSuperPT)
+                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && commonService.copyValue(source, $scope, 'masterMinPT', generateMasterMinPT);
                 };
 
                 // Validate

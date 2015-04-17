@@ -3,21 +3,15 @@
         {{name}}<span class="copy" title="{{resourceService.getString('CopyTooltip')}}" data-ng-show="hasCopy"
             data-customer-setting-copy> <i class="icon-copy"></i></span>
     </div>
-    <div class="master-pt">
-        <select data-ng-model="masterPT.value" data-position-taking-select-options="masterPT.options">
-        </select>
+    <div class="master-pt" data-position-taking-select="masterPT">
     </div>
     <div class="master-is-auto">
         <label class="checkbox">
             <input type="checkbox" data-ng-model="masterIsAuto" />
         </label>
     </div>
-    <div class="agent-max-pt">
-        <select data-ng-model="agentMaxPT.value" data-position-taking-select-options="agentMaxPT.options">
-        </select>
+    <div class="agent-max-pt" data-position-taking-select="agentMaxPT">
     </div>
-    <div class="agent-min-pt">
-        <select data-ng-model="agentMinPT.value" data-position-taking-select-options="agentMinPT.options">
-        </select>
+    <div class="agent-min-pt" data-position-taking-select="agentMinPT">
     </div>
 </div>

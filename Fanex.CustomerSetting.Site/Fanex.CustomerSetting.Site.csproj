@@ -163,6 +163,7 @@
     <Content Include="app\customerSetting\controllers\customer-setting-controller.js" />
     <Content Include="app\customerSetting\controllers\customer-setting-view-controller.js" />
     <Content Include="app\customerSetting\customer-setting-page.htm" />
+    <Content Include="app\customerSetting\customer-setting-templates.js" />
     <Content Include="app\customerSetting\customer-setting.css" />
     <Content Include="app\customerSetting\customer-setting.js" />
     <Content Include="app\customerSetting\customer-setting.min.css" />
@@ -175,6 +176,7 @@
     <Content Include="app\customerSetting\directives\customer-setting-message.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-discount.js" />
+    <Content Include="app\customerSetting\directives\position-taking-select.js" />
     <Content Include="app\customerSetting\directives\super-edit-member-discount.js" />
     <Content Include="app\customerSetting\directives\super-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-agent-position-taking.js" />
@@ -201,6 +203,7 @@
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
     <Content Include="app\customerSetting\templates\agent-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\position-taking-select.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-message.htm" />
     <Content Include="app\customerSetting\templates\master-edit-member-discount.htm" />
     <Content Include="app\customerSetting\templates\no-group\master-edit-member-discount-container.htm" />

@@ -5,6 +5,7 @@
     var tooltipService = function ($timeout) {
         var tooltipScope;
         var tooltipElement;
+        var tooltipAlign;
         var boundingElement;
 
         this.calculatePosition = function () {
@@ -12,7 +13,13 @@
             var tooltipRect = tooltipElement[0].getBoundingClientRect();
             var scrollX = window.pageXOffset || document.body.scrollLeft;
             var scrollY = window.pageYOffset || document.body.scrollTop;
-            var left = Math.max(0, rect.left + ((rect.right - rect.left) - (tooltipRect.right - tooltipRect.left)) / 2 + scrollX);
+            var left = 0;
+            if (tooltipAlign === 'middle') {
+                left = Math.max(0, rect.left + ((rect.right - rect.left) - (tooltipRect.right - tooltipRect.left)) / 2 + scrollX);
+            } else {
+                left = Math.max(0, rect.left + scrollX);
+            }
+
             var top = Math.max(0, rect.top - (tooltipRect.bottom - tooltipRect.top) + scrollY);
             tooltipElement.css({
                 'top': top + 'px',
@@ -30,11 +37,17 @@
             tooltipElement.addClass('ng-hide');
         };
 
-        this.show = function (element, message) {
+        this.show = function (element, message, align) {
             if (angular.isUndefined(tooltipScope)) {
                 throw 'setup is required';
             }
 
+            if (angular.isUndefined(align)) {
+                align = 'middle';
+            }
+
+            tooltipAlign = align;
+            tooltipScope.align = tooltipAlign;
             boundingElement = element[0];
             if (tooltipScope.message !== message) {
                 $timeout(function () {

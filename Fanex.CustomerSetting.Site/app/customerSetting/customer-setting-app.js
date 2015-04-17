@@ -3,8 +3,8 @@
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$rootScope', 'messageService', 'appSettings',
-            function ($q, $rootScope, messageService, appSettings) {
+        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', 'messageService',
+            function ($q, $window, $rootScope, messageService) {
                 var blockUI = function () {
                     $rootScope.hasLoading = true;
                 };
@@ -16,10 +16,6 @@
                 return {
                     request: function (config) {
                         blockUI();
-                        if (config.method === 'GET') {
-                            config.url = appSettings.rootUrl + '/app/customerSetting/' + config.url + '?v=' + appSettings.version;
-                        }
-
                         return config;
                     },
                     response: function (response) {

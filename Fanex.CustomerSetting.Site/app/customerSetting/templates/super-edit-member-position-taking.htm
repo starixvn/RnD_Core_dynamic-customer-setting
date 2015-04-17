@@ -3,9 +3,7 @@
         {{name}}<span class="copy" title="{{resourceService.getString('CopyTooltip')}}" data-ng-show="hasCopy"
             data-customer-setting-copy> <i class="icon-copy"></i></span>
     </div>
-    <div class="super-pt">
-        <select data-ng-disabled="isDisabledSuperPT" data-ng-model="superPT.value" data-position-taking-select-options="superPT.options">
-        </select>
+    <div class="super-pt" data-position-taking-select="superPT">
     </div>
     <div class="super-is-auto">
         <label class="checkbox">

@@ -21,24 +21,25 @@
                 $scope.superIsAuto = positionTaking.IS1;
                 $scope.$watch('superIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        $scope.isDisabledSuperPT = positionTaking.IS3 && !$scope.superIsAuto;
                         $scope.superPT = generateSuperPT();
                     }
                 });
 
                 // Super PT
-                $scope.isDisabledSuperPT = positionTaking.IS3 && !$scope.superIsAuto;
                 function generateSuperPT() {
                     var min = Math.max(0, positionTaking.N4 - positionTaking.M1 - positionTaking.A1);
                     var max = !$scope.superIsAuto
                         ? Math.max(positionTaking.N4 - positionTaking.M1 - positionTaking.A1, positionTaking.S4 - positionTaking.M3)
                         : positionTaking.S4;
-                    var value = $scope.isDisabledSuperPT
+                    var disabled = positionTaking.IS3 && !$scope.superIsAuto;
+                    var value = disabled
                         ? positionTaking.S1
                         : !isInitialized
                             ? !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1
                             : commonService.correctValue(min, max, $scope.superPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                    var select = commonService.createPositionTakingSelect(min, max, value);
+                    select.disabled = disabled;
+                    return select;
                 }
                 $scope.superPT = generateSuperPT();
 
@@ -50,15 +51,12 @@
 
                 // Copy
                 $scope.copy = function (source) {
-                    var copy = function (field, generator) {
-                        var value = source[field].value;
-                        $scope[field].value = value;
-                        $scope[field] = generator();
-                        return $scope[field].value === value;
-                    };
-
                     $scope.superIsAuto = source.superIsAuto;
-                    return copy('superPT', generateSuperPT);
+                    if (!$scope.superPT.disabled || source.superIsAuto) {
+                        return commonService.copyValue(source, $scope, 'superPT', generateSuperPT);
+                    }
+
+                    return true;
                 };
 
                 // Validate

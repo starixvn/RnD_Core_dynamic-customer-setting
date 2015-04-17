@@ -468,6 +468,9 @@
   border-width: 5px 5px 0;
   border-top-color: #000000;
 }
+.customer-setting .tooltip.left > .tooltip-arrow {
+  left: 12px;
+}
 .customer-setting input,
 .customer-setting button,
 .customer-setting select,

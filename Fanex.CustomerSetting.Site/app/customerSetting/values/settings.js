@@ -5,7 +5,6 @@
     var rootUrl = body.attr("data-root-url");
     angular.module('customerSettingApp').value('appSettings', {
         rootUrl: rootUrl,
-        version: '0.2',
         defaultLanguage: 'en-US',
         defaultMaxBet: 99999999999,
         betLimitMaxLength: 14,

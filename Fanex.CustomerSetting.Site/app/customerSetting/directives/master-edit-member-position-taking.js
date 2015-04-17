@@ -21,24 +21,25 @@
                 $scope.masterIsAuto = positionTaking.IM1;
                 $scope.$watch('masterIsAuto', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
                         $scope.masterPT = generateMasterPT();
                     }
                 });
 
                 // Master PT
-                $scope.isDisabledMasterPT = positionTaking.IM2 && !$scope.masterIsAuto;
                 function generateMasterPT() {
                     var min = Math.max(0, positionTaking.N3 - positionTaking.A1);
                     var max = !$scope.masterIsAuto
                         ? positionTaking.M3 - positionTaking.A1
                         : positionTaking.M3;
-                    var value = $scope.isDisabledMasterPT
+                    var disabled = positionTaking.IM2 && !$scope.masterIsAuto;
+                    var value = disabled
                         ? positionTaking.M1
                         : !isInitialized
                             ? !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1
                             : commonService.correctValue(min, max, $scope.masterPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                    var select = commonService.createPositionTakingSelect(min, max, value);
+                    select.disabled = disabled;
+                    return select;
                 }
                 $scope.masterPT = generateMasterPT();
 
@@ -47,16 +48,9 @@
 
                 // Copy
                 $scope.copy = function (source) {
-                    var copy = function (field, generator) {
-                        var value = source[field].value;
-                        $scope[field].value = value;
-                        $scope[field] = generator();
-                        return $scope[field].value === value;
-                    };
-
                     $scope.masterIsAuto = source.masterIsAuto;
-                    if (!$scope.isDisabledMasterPT || source.masterIsAuto) {
-                        return copy('masterPT', generateMasterPT);
+                    if (!$scope.masterPT.disabled || source.masterIsAuto) {
+                        return commonService.copyValue(source, $scope, 'masterPT', generateMasterPT);
                     }
 
                     return true;

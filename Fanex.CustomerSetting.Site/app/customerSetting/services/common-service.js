@@ -57,8 +57,8 @@
             this.build = function (min, max, value) {
                 var options = optionsBuilder.generateOptions(min, max, value);
                 return {
-                    min: min,
-                    max: max,
+                    valid: true,
+                    disabled: false,
                     value: value,
                     options: options
                 };
@@ -67,6 +67,14 @@
 
         this.correctValue = function (min, max, value) {
             return Math.max(min, Math.min(max, value));
+        };
+
+        this.copyValue = function (source, destination, field, generator) {
+            destination[field].value = source[field].value;
+            destination[field] = generator();
+            var isCopied = source[field].value === destination[field].value;
+            destination[field].valid = isCopied;
+            return isCopied;
         };
 
         this.createPositionTakingSelect = function (min, max, value) {
