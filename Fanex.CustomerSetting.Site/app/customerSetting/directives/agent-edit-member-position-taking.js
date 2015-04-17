@@ -14,7 +14,6 @@
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -29,9 +28,12 @@
                 }
                 $scope.agentPT = generateAgentPT();
                 $scope.$watch('agentPT.value', function (newValue, oldValue) {
+                    if ($scope.agentPT !== null && $scope.agentPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentPT = generateAgentPT();
-                        isCopied = false;
                     }
                 });
 

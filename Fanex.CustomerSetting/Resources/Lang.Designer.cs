@@ -124,7 +124,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comm for Agent.
+        ///   Looks up a localized string similar to Agent Comm.
         /// </summary>
         public static string CommissionForAgent {
             get {
@@ -133,7 +133,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comm for Master.
+        ///   Looks up a localized string similar to Master Comm.
         /// </summary>
         public static string CommissionForMaster {
             get {
@@ -142,7 +142,7 @@ namespace Fanex.CustomerSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comm for Member.
+        ///   Looks up a localized string similar to Member Comm.
         /// </summary>
         public static string CommissionForMember {
             get {
@@ -156,6 +156,15 @@ namespace Fanex.CustomerSetting.Resources {
         public static string CopyTooltip {
             get {
                 return ResourceManager.GetString("CopyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of range for highlighted values..
+        /// </summary>
+        public static string DuplicateValuesAlertMsg {
+            get {
+                return ResourceManager.GetString("DuplicateValuesAlertMsg", resourceCulture);
             }
         }
         

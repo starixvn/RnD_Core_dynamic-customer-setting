@@ -65,6 +65,11 @@
             var filePath = Server.MapPath("~/app/customerSetting/customer-setting-page.htm");
             var htmlContent = System.IO.File.ReadAllText(filePath);
             htmlContent = htmlContent.Replace("{{rootUrl}}", rootUrl);
+            var min = ".min";
+#if DEBUG
+            min = string.Empty;
+#endif
+            htmlContent = htmlContent.Replace("{{min}}", min);
             return Content(htmlContent, "text/HTML");
         }
 

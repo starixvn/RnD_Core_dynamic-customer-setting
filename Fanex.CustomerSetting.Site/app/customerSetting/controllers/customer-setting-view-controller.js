@@ -1,11 +1,12 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'messageService'];
-    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, messageService) {
+    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'controllerService', 'messageService'];
+    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, controllerService, messageService) {
         $rootScope.$on('$locationChangeStart', function () {
             $scope.view = undefined;
             messageService.hide();
+            controllerService.reset();
         });
 
         $rootScope.$on('$locationChangeSuccess', function () {

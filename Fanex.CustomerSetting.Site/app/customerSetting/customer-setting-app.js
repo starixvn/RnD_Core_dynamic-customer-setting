@@ -3,27 +3,38 @@
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', 'messageService',
-            function ($q, $window, $rootScope, messageService) {
-                var blockUI = function () {
-                    $rootScope.hasLoading = true;
-                };
+        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'messageService', 'blockUiService',
+            function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
+                function startBlockUi(config) {
+                    config.noBlock = (config.method === 'GET' && $templateCache.get(config.url));
+                    if (!config.noBlock) {
+                        blockUiService.show();
+                    }
+                }
 
-                var unblockUI = function () {
-                    $rootScope.hasLoading = false;
-                };
+                function stopBlockUi(config) {
+                    if (!config.noBlock) {
+                        blockUiService.hide();
+                    }
+                }
 
                 return {
                     request: function (config) {
-                        blockUI();
+                        startBlockUi(config);
                         return config;
                     },
                     response: function (response) {
-                        unblockUI();
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
                         return response;
                     },
                     responseError: function (response) {
-                        unblockUI();
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
                         messageService.showError('Sorry, an error occurred while processing your request.');
                         return $q.reject(response);
                     }
@@ -32,7 +43,6 @@
     } ]);
 
     customerSettingApp.run(['$rootScope', 'resourceService', 'appSettings', function ($rootScope, resourceService, appSettings) {
-        $rootScope.title = 'Customer Setting Renovation';
         resourceService.setLanguage(appSettings.defaultLanguage);
         $rootScope.resourceService = resourceService;
     } ]);

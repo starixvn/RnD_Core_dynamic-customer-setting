@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,230 +59,233 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AgentMaxPT" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AgentMaxPT" xml:space="preserve">
     <value>Agent Max PT</value>
   </data>
-	<data name="BetSetting" xml:space="preserve">
+  <data name="BetSetting" xml:space="preserve">
     <value>Bet Setting</value>
   </data>
-	<data name="Commission" xml:space="preserve">
+  <data name="Commission" xml:space="preserve">
     <value>Commission</value>
   </data>
-	<data name="EnableDownline" xml:space="preserve">
+  <data name="EnableDownline" xml:space="preserve">
     <value>Enable Downline</value>
   </data>
-	<data name="Enable" xml:space="preserve">
+  <data name="Enable" xml:space="preserve">
     <value>Enable</value>
   </data>
-	<data name="Fax" xml:space="preserve">
+  <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
-	<data name="FirstName" xml:space="preserve">
+  <data name="FirstName" xml:space="preserve">
     <value>First Name</value>
   </data>
-	<data name="GeneralInformation" xml:space="preserve">
+  <data name="GeneralInformation" xml:space="preserve">
     <value>General Information</value>
   </data>
-	<data name="LastName" xml:space="preserve">
+  <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
   </data>
-	<data name="Live" xml:space="preserve">
+  <data name="Live" xml:space="preserve">
     <value>Live</value>
   </data>
-	<data name="MasterMaxPT" xml:space="preserve">
+  <data name="MasterMaxPT" xml:space="preserve">
     <value>Master Max PT</value>
   </data>
-	<data name="MaxBet" xml:space="preserve">
+  <data name="MaxBet" xml:space="preserve">
     <value>Max Bet</value>
   </data>
-	<data name="MaxPerMatch" xml:space="preserve">
+  <data name="MaxPerMatch" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
-	<data name="MinBet" xml:space="preserve">
+  <data name="MinBet" xml:space="preserve">
     <value>Min Bet</value>
   </data>
-	<data name="MobilePhone" xml:space="preserve">
+  <data name="MobilePhone" xml:space="preserve">
     <value>Mobile Phone</value>
   </data>
-	<data name="Nickname" xml:space="preserve">
+  <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
-	<data name="Phone" xml:space="preserve">
+  <data name="Phone" xml:space="preserve">
     <value>Phone</value>
   </data>
-	<data name="PositionTaking" xml:space="preserve">
+  <data name="PositionTaking" xml:space="preserve">
     <value>Position Taking</value>
   </data>
-	<data name="ProductStatus" xml:space="preserve">
+  <data name="ProductStatus" xml:space="preserve">
     <value>Product Status</value>
   </data>
-	<data name="SuperMaxPT" xml:space="preserve">
+  <data name="SuperMaxPT" xml:space="preserve">
     <value>Super Max PT</value>
   </data>
-	<data name="SuperMinPT" xml:space="preserve">
+  <data name="SuperMinPT" xml:space="preserve">
     <value>Super Min PT</value>
   </data>
-	<data name="Update" xml:space="preserve">
+  <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
-	<data name="UserName" xml:space="preserve">
+  <data name="UserName" xml:space="preserve">
     <value>UserName</value>
   </data>
-	<data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
+  <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
     <value>Max Per Match must be greater than or equal to Max Bet</value>
   </data>
-	<data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
+  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
     <value>Max Bet must be less than or equal to Max Per Match</value>
   </data>
-	<data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
+  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
     <value>Min Bet must be less than or equal to Max Bet</value>
   </data>
-	<data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
+  <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
     <value>Max Bet must be greater than or equal to Min Bet</value>
   </data>
-	<data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
+  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>Min Bet must be greater than or equal to {0}</value>
   </data>
-	<data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
+  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
     <value>Max Bet must be less than or equal to {0}</value>
   </data>
-	<data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
+  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
     <value>Max Per Match must be less than or equal to {0}</value>
   </data>
-	<data name="CopyTooltip" xml:space="preserve">
+  <data name="CopyTooltip" xml:space="preserve">
     <value>Click to duplicate the values</value>
   </data>
-	<data name="AccessDeniedMsg" xml:space="preserve">
+  <data name="AccessDeniedMsg" xml:space="preserve">
     <value>You do not have permission to access this page.</value>
   </data>
-	<data name="NoChangeToUpdate" xml:space="preserve">
+  <data name="NoChangeToUpdate" xml:space="preserve">
     <value>There is no change to update!</value>
   </data>
-	<data name="UpdateBetSettingSuccessfully" xml:space="preserve">
+  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>Updated bet setting successfully.</value>
   </data>
-	<data name="UpdateCommissionSuccessfully" xml:space="preserve">
+  <data name="UpdateCommissionSuccessfully" xml:space="preserve">
     <value>Updated commission setting successfully.</value>
   </data>
-	<data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
+  <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
     <value>Updated position taking successfully.</value>
   </data>
-	<data name="UpdateProductStatusSuccessfully" xml:space="preserve">
+  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
     <value>Updated product status successfully.</value>
   </data>
-	<data name="Max" xml:space="preserve">
+  <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
-	<data name="MaxLive" xml:space="preserve">
+  <data name="MaxLive" xml:space="preserve">
     <value>Max Live</value>
   </data>
-	<data name="Min" xml:space="preserve">
+  <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
-	<data name="MinLive" xml:space="preserve">
+  <data name="MinLive" xml:space="preserve">
     <value>Min Live</value>
   </data>
-	<data name="Agents" xml:space="preserve">
+  <data name="Agents" xml:space="preserve">
     <value>Agents</value>
   </data>
-	<data name="Masters" xml:space="preserve">
+  <data name="Masters" xml:space="preserve">
     <value>Masters</value>
   </data>
-	<data name="Members" xml:space="preserve">
+  <data name="Members" xml:space="preserve">
     <value>Members</value>
   </data>
-	<data name="IsAuto" xml:space="preserve">
+  <data name="IsAuto" xml:space="preserve">
     <value>Is Auto</value>
   </data>
-	<data name="MasterMinPT" xml:space="preserve">
+  <data name="MasterMinPT" xml:space="preserve">
     <value>Master Min PT</value>
   </data>
-	<data name="SuperPT" xml:space="preserve">
+  <data name="SuperPT" xml:space="preserve">
     <value>Super PT</value>
   </data>
-	<data name="UpdateMemberPtInfo" xml:space="preserve">
+  <data name="UpdateMemberPtInfo" xml:space="preserve">
     <value>You have changed your position taking</value>
   </data>
-	<data name="UpdateMemberPtQuestion" xml:space="preserve">
+  <data name="UpdateMemberPtQuestion" xml:space="preserve">
     <value>Do you want to update all member's position taking to:</value>
   </data>
-	<data name="UpdateMemberPtTitle" xml:space="preserve">
+  <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>Confirm Update Members's PT</value>
   </data>
-	<data name="AgentMinPT" xml:space="preserve">
+  <data name="AgentMinPT" xml:space="preserve">
     <value>Agent Min PT</value>
   </data>
-	<data name="MasterPT" xml:space="preserve">
+  <data name="MasterPT" xml:space="preserve">
     <value>Master PT</value>
   </data>
-	<data name="AgentPT" xml:space="preserve">
+  <data name="AgentPT" xml:space="preserve">
     <value>Agent PT</value>
   </data>
-	<data name="CommissionForAgent" xml:space="preserve">
+  <data name="CommissionForAgent" xml:space="preserve">
     <value>Agent Comm</value>
   </data>
-	<data name="CommissionForMaster" xml:space="preserve">
+  <data name="CommissionForMaster" xml:space="preserve">
     <value>Master Comm</value>
   </data>
-	<data name="CommissionForMember" xml:space="preserve">
+  <data name="CommissionForMember" xml:space="preserve">
     <value>Member Comm</value>
+  </data>
+  <data name="DuplicateValuesAlertMsg" xml:space="preserve">
+    <value>Out of range for highlighted values.</value>
   </data>
 </root>

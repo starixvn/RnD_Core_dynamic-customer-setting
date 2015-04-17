@@ -37,6 +37,10 @@
                 }
                 $scope.masterPT = generateMasterPT();
                 $scope.$watch('masterPT.value', function (newValue, oldValue) {
+                    if ($scope.agentMaxPT !== null && $scope.agentMaxPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentMaxPT = generateAgentMaxPT();
                     }
@@ -55,6 +59,10 @@
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
                 $scope.$watch('agentMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.agentMinPT !== null && $scope.agentMinPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentMinPT = generateAgentMinPT();
                     }

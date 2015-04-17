@@ -1,11 +1,16 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'controllerService', 'appSettings', 'tooltipService'];
-    var customerSettingCopyDirective = function ($rootScope, controllerService, appSettings, tooltipService) {
+    var injectParams = ['$rootScope', 'controllerService', 'appSettings', 'resourceService', 'tooltipService'];
+    var customerSettingCopyDirective = function ($rootScope, controllerService, appSettings, resourceService, tooltipService) {
         return {
             restrict: 'A',
-            link: function (scope, element) {
+            link: function (scope, element, attributes) {
+                var isShow = scope.$eval(attributes.ngShow);
+                if (!isShow) {
+                    return;
+                }
+
                 element.on('click', function () {
                     var copy = function () {
                         var count = 0;
@@ -17,12 +22,16 @@
                             if (!result) {
                                 count++;
                             }
+                        }
 
-                            if (count > 0) {
-                                tooltipService.show(element, 'Some bet types can not be copied', 'left');
-                            } else {
+                        if (count > 0) {
+                            tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
+                            element.on('mouseleave', function () {
                                 tooltipService.hide();
-                            }
+                                element.off('mouseleave');
+                            });
+                        } else {
+                            tooltipService.hide();
                         }
                     };
 

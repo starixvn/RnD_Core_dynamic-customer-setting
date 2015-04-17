@@ -3,9 +3,10 @@
 
 module.exports = function (grunt) {
     var jsFiles = ['customer-setting-app.js', 'customer-setting-templates.js', '*/*.js'];
-    var banner = '/*! <%= pkg.name %> v<%= pkg.version %> | (c) <%= grunt.template.today("yyyy-mm-dd HH:mm:ss") %> Nexcel Solutions Vietnam */\r\n';
+    var pkg = grunt.file.readJSON('package.json');
+    var banner = '/*! <%= pkg.name %> v<%= pkg.version %> | (c) <%= grunt.template.today("yyyy") %> <%= pkg.license %> */\n\n';
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: pkg,
         jshint: {
             files: jsFiles,
             options: {
@@ -40,6 +41,9 @@ module.exports = function (grunt) {
         },
         less: {
             development: {
+                options: {
+                    banner: banner
+                },
                 files: {
                     'customer-setting.css': 'customer-setting.less'
                 }
@@ -52,6 +56,7 @@ module.exports = function (grunt) {
                             advanced: true
                         })
                     ],
+                    banner: banner,
                     compress: true
                 },
                 files: {
@@ -75,9 +80,25 @@ module.exports = function (grunt) {
                         removeStyleLinkTypeAttributes: true
                     },
                     bootstrap: function (module, script) {
-                        return "/*jshint -W101*/\r\n\r\nangular.module('customerSettingApp').run(['$templateCache', function($templateCache) {\r\n" + script + "} ]);";
+                        return [
+                            "/*jshint -W101*/\r\n",
+                            "angular.module('customerSettingApp').run(['$templateCache', function($templateCache) {",
+                            script,
+                            "} ]);\r\n",
+                            "/*jshint -W101*/"
+                        ].join("\r\n");
                     }
                 }
+            }
+        },
+        replace: {
+            production: {
+                src: 'customer-setting-page-template.htm',
+                dest: 'customer-setting-page.htm',
+                replacements: [{
+                    from: '{{version}}',
+                    to: '<%= pkg.version %>'
+                }]
             }
         }
     });
@@ -87,10 +108,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-text-replace');
 
-    grunt.registerTask('default', ['ngtemplates', 'jshint', 'uglify', 'concat', 'less']); // development & production.
+    grunt.registerTask('default', ['ngtemplates', 'jshint', 'uglify', 'concat', 'less', 'page']); // development & production.
     grunt.registerTask('verify', ['ngtemplates', 'jshint']); // verify codes before build.
     grunt.registerTask('css', ['less:development']); // development - css only.
-    grunt.registerTask('js', ['ngtemplates', 'concat']); // development - js only.
+    grunt.registerTask('js', ['concat']); // development - js only.
     grunt.registerTask('htm', ['ngtemplates']); // transform htm to js.
+    grunt.registerTask('page', ['replace']); // transform page.
 };

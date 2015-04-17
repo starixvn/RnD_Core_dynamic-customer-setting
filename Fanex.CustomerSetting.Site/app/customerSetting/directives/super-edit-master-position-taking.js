@@ -37,6 +37,10 @@
                 }
                 $scope.superPT = generateSuperPT();
                 $scope.$watch('superPT.value', function (newValue, oldValue) {
+                    if ($scope.masterMaxPT !== null && $scope.masterMaxPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.masterMaxPT = generateMasterMaxPT();
                     }
@@ -55,6 +59,10 @@
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.masterMinPT !== null && $scope.masterMinPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.masterMinPT = generateMasterMinPT();
                     }

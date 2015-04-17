@@ -39,7 +39,7 @@
                         <div class="panel-body">
                             SuperId:
                             <input type="text" data-ng-model="superId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editSuper/{{superId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editSuper/{{superId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="panel-body">
                             MasterId:
                             <input type="text" data-ng-model="masterId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="panel-body">
                             AgentId:
                             <input type="text" data-ng-model="agentId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         <div class="panel-body">
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/editMember/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editMember/{{memberId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                             </div>
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/superEditMember/{{superId}}/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/superEditMember/{{superId}}/{{memberId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                             </div>
                             MemberId:
                             <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-href="@rootUrl/CustomerSetting/#/masterEditMember/{{masterId}}/{{memberId}}/{{productId}}">
+                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/masterEditMember/{{masterId}}/{{memberId}}/{{productId}}?v={{version}}">
                                 Open</a>
                         </div>
                     </div>

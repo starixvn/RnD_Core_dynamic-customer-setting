@@ -8,6 +8,16 @@
         var tooltipAlign;
         var boundingElement;
 
+        this.setup = function (scope, element) {
+            if (angular.isDefined(tooltipScope)) {
+                throw 'Only one tooltip component in document';
+            }
+
+            tooltipScope = scope;
+            tooltipElement = element;
+            tooltipElement.addClass('ng-hide');
+        };
+
         this.calculatePosition = function () {
             var rect = boundingElement.getBoundingClientRect();
             var tooltipRect = tooltipElement[0].getBoundingClientRect();
@@ -25,16 +35,6 @@
                 'top': top + 'px',
                 'left': left + 'px'
             });
-        };
-
-        this.setup = function (scope, element) {
-            if (angular.isDefined(tooltipScope)) {
-                throw 'Only one tooltip component in document';
-            }
-
-            tooltipScope = scope;
-            tooltipElement = element;
-            tooltipElement.addClass('ng-hide');
         };
 
         this.show = function (element, message, align) {

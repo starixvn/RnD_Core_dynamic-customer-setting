@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html data-ng-app="customerSettingApp">
 <head>
-    <title>{{title}}</title>
-    <link href="{{rootUrl}}/app/customerSetting/customer-setting.css" rel="stylesheet"
-        type="text/css" />
+    <title>Customer Setting Application</title>
+    <link href="{{rootUrl}}/app/customerSetting/customer-setting{{min}}.css?v=0.0.4"
+        rel="stylesheet" type="text/css" />
 </head>
 <body data-ng-controller="CustomerSettingViewController" data-root-url="{{rootUrl}}">
     <div class="customer-setting" data-ng-cloak>
@@ -15,14 +15,11 @@
         </div>
         <div data-customer-setting-dialog="updateModal">
         </div>
-        <div class="loading-container" data-ng-show="hasLoading">
-            <div class="block-overlay">
-            </div>
-            <div class="block-loading">
-            </div>
+        <div data-customer-setting-block-ui>
         </div>
     </div>
     <script src="{{rootUrl}}/app/angular-1.2.28.js" type="text/javascript"></script>
-    <script src="{{rootUrl}}/app/customerSetting/customer-setting.js" type="text/javascript"></script>
+    <script src="{{rootUrl}}/app/customerSetting/customer-setting{{min}}.js?v=0.0.4"
+        type="text/javascript"></script>
 </body>
 </html>

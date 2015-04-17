@@ -9,6 +9,7 @@ function ($scope, $http) {
         Agent: 2
     };
 
+    $scope.version = 0;
     $scope.productId = 255;
     $scope.companyId = 8;
     $scope.superId = 2;

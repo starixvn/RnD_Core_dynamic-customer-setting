@@ -135,6 +135,16 @@
         this.getCustomerSetting = function () {
             return customerSetting;
         };
+
+        this.reset = function () {
+            statusScopes = [];
+            discountScopes = [];
+            betLimitScopes = [];
+            positionTakingScopes = [];
+            requestContext = new RequestContext();
+            settingContext = new SettingContext();
+            customerSetting = new CustomerSetting();
+        };
     };
 
     controllerService.$inject = injectParams;

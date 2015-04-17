@@ -1,30 +1,42 @@
-/*! Customer Setting Application v0.0.1 | (c) 2015-04-17 13:04:55 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.4 | (c) 2015 Nexcel Solutions Vietnam */
+
 'use strict';
 
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', 'messageService',
-            function ($q, $window, $rootScope, messageService) {
-                var blockUI = function () {
-                    $rootScope.hasLoading = true;
-                };
+        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'messageService', 'blockUiService',
+            function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
+                function startBlockUi(config) {
+                    config.noBlock = (config.method === 'GET' && $templateCache.get(config.url));
+                    if (!config.noBlock) {
+                        blockUiService.show();
+                    }
+                }
 
-                var unblockUI = function () {
-                    $rootScope.hasLoading = false;
-                };
+                function stopBlockUi(config) {
+                    if (!config.noBlock) {
+                        blockUiService.hide();
+                    }
+                }
 
                 return {
                     request: function (config) {
-                        blockUI();
+                        startBlockUi(config);
                         return config;
                     },
                     response: function (response) {
-                        unblockUI();
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
                         return response;
                     },
                     responseError: function (response) {
-                        unblockUI();
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
                         messageService.showError('Sorry, an error occurred while processing your request.');
                         return $q.reject(response);
                     }
@@ -33,7 +45,6 @@
     } ]);
 
     customerSettingApp.run(['$rootScope', 'resourceService', 'appSettings', function ($rootScope, resourceService, appSettings) {
-        $rootScope.title = 'Customer Setting Renovation';
         resourceService.setLanguage(appSettings.defaultLanguage);
         $rootScope.resourceService = resourceService;
     } ]);
@@ -60,7 +71,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/customer-setting-bet-limit.htm',
-    "<div class=bet-limit-item><div class=name title={{name}}>{{name}} <span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span></div><div class=min-bet><input data-ng-model=minBet.value data-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+    "<div class=bet-limit-item><div class=name title={{name}}>{{name}} <span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span></div><div class=min-bet><input data-ng-model=minBet.value data-customer-setting-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-customer-setting-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-customer-setting-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+  );
+
+
+  $templateCache.put('templates/customer-setting-block-ui.htm',
+    "<div class=loading-container data-ng-show=hasLoading><div class=block-overlay></div><div class=block-loading></div></div>"
   );
 
 
@@ -242,7 +258,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   $templateCache.put('templates/super-edit-member-position-taking.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-customer-setting-copy><i class=icon-copy></i></span></div><div class=super-pt data-position-taking-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=masterPT></div><div class=agent-pt data-ng-bind=agentPT></div></div>"
   );
+
 } ]);
+
+/*jshint -W101*/
 
 'use strict';
 
@@ -521,11 +540,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'messageService'];
-    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, messageService) {
+    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'controllerService', 'messageService'];
+    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, controllerService, messageService) {
         $rootScope.$on('$locationChangeStart', function () {
             $scope.view = undefined;
             messageService.hide();
+            controllerService.reset();
         });
 
         $rootScope.$on('$locationChangeSuccess', function () {
@@ -560,7 +580,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 controllerService.linkPositionTaking($scope);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                var isCopied = false;
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
@@ -575,9 +594,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
                 $scope.agentPT = generateAgentPT();
                 $scope.$watch('agentPT.value', function (newValue, oldValue) {
+                    if ($scope.agentPT !== null && $scope.agentPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentPT = generateAgentPT();
-                        isCopied = false;
                     }
                 });
 
@@ -616,8 +638,131 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
+    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
+        return {
+            restrict: 'AE',
+            scope: {
+                positionTaking: '=companyEditSuperPositionTaking',
+                hasCopy: '='
+            },
+            templateUrl: 'templates/company-edit-super-position-taking.htm',
+            controller: ['$scope', function ($scope) {
+                controllerService.linkPositionTaking($scope);
+                var positionTaking = $scope.positionTaking;
+                var isInitialized = false;
+                $scope.resourceService = resourceService;
+                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+
+                // Super Max PT
+                function generateSuperMaxPT() {
+                    var min = 0;
+                    var max = positionTaking.DefaultMaxPT;
+                    var value = !isInitialized
+                        ? positionTaking.S4
+                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.superMaxPT = generateSuperMaxPT();
+                $scope.$watch('superMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.superMaxPT !== null && $scope.superMaxPT.valid === false) {
+                        return;
+                    }
+
+                    if (newValue !== oldValue) {
+                        $scope.masterMaxPT = generateMasterMaxPT();
+                        $scope.superMinPT = generateSuperMinPT();
+                    }
+                });
+
+                // Master Max PT
+                function generateMasterMaxPT() {
+                    var min = 0;
+                    var max = $scope.superMaxPT.value;
+                    var value = !isInitialized
+                        ? positionTaking.M4
+                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.masterMaxPT = generateMasterMaxPT();
+                $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.agentMaxPT !== null && $scope.agentMaxPT.valid === false) {
+                        return;
+                    }
+
+                    if (newValue !== oldValue) {
+                        $scope.agentMaxPT = generateAgentMaxPT();
+                    }
+                });
+
+                // Agent Max PT
+                function generateAgentMaxPT() {
+                    var min = 0;
+                    var max = $scope.masterMaxPT.value;
+                    var value = !isInitialized
+                        ? positionTaking.A4
+                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.agentMaxPT = generateAgentMaxPT();
+
+                // Super Min PT
+                function generateSuperMinPT() {
+                    var min = 0;
+                    var max = $scope.superMaxPT.value;
+                    var value = !isInitialized
+                        ? positionTaking.N4
+                        : commonService.correctValue(min, max, $scope.superMinPT.value);
+                    return commonService.createPositionTakingSelect(min, max, value);
+                }
+                $scope.superMinPT = generateSuperMinPT();
+
+                // Copy
+                $scope.copy = function (source) {
+                    return commonService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
+                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
+                        && commonService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
+                };
+
+                // Validate
+                $scope.validate = function () {
+                    var errCode = appSettings.errorType.Success;
+                    if (positionTaking.S4 === $scope.superMaxPT.value
+                        && positionTaking.M4 === $scope.masterMaxPT.value
+                        && positionTaking.A4 === $scope.agentMaxPT.value
+                        && positionTaking.N4 === $scope.superMinPT.value) {
+                        errCode = appSettings.errorType.NoChange;
+                    }
+
+                    return {
+                        errCode: errCode,
+                        data: {
+                            SportType: positionTaking.SportType,
+                            BetType: positionTaking.BetType,
+                            IsLive: positionTaking.IsLive,
+                            S4: $scope.superMaxPT.value,
+                            M4: $scope.masterMaxPT.value,
+                            A4: $scope.agentMaxPT.value,
+                            N4: $scope.superMinPT.value
+                        }
+                    };
+                };
+
+                isInitialized = true;
+            } ]
+        };
+    };
+
+    companyEditSuperPositionTakingDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('companyEditSuperPositionTaking', companyEditSuperPositionTakingDirective);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['$filter', 'commonService', 'tooltipService', 'appSettings'];
-    var betLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
+    var customerSettingBetLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -691,123 +836,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
     };
 
-    betLimitInputDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('betLimitInput', betLimitInputDirective);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['$rootScope', 'commonService', 'resourceService', 'controllerService', 'appSettings'];
-    var companyEditSuperPositionTakingDirective = function ($rootScope, commonService, resourceService, controllerService, appSettings) {
-        return {
-            restrict: 'AE',
-            scope: {
-                positionTaking: '=companyEditSuperPositionTaking',
-                hasCopy: '='
-            },
-            templateUrl: 'templates/company-edit-super-position-taking.htm',
-            controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
-                var positionTaking = $scope.positionTaking;
-                var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
-
-                // Super Max PT
-                function generateSuperMaxPT() {
-                    var min = 0;
-                    var max = positionTaking.DefaultMaxPT;
-                    var value = !isInitialized
-                        ? positionTaking.S4
-                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
-                }
-                $scope.superMaxPT = generateSuperMaxPT();
-                $scope.$watch('superMaxPT.value', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        $scope.masterMaxPT = generateMasterMaxPT();
-                        $scope.superMinPT = generateSuperMinPT();
-                    }
-                });
-
-                // Master Max PT
-                function generateMasterMaxPT() {
-                    var min = 0;
-                    var max = $scope.superMaxPT.value;
-                    var value = !isInitialized
-                        ? positionTaking.M4
-                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
-                }
-                $scope.masterMaxPT = generateMasterMaxPT();
-                $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        $scope.agentMaxPT = generateAgentMaxPT();
-                    }
-                });
-
-                // Agent Max PT
-                function generateAgentMaxPT() {
-                    var min = 0;
-                    var max = $scope.masterMaxPT.value;
-                    var value = !isInitialized
-                        ? positionTaking.A4
-                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
-                }
-                $scope.agentMaxPT = generateAgentMaxPT();
-
-                // Super Min PT
-                function generateSuperMinPT() {
-                    var min = 0;
-                    var max = $scope.superMaxPT.value;
-                    var value = !isInitialized
-                        ? positionTaking.N4
-                        : commonService.correctValue(min, max, $scope.superMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
-                }
-                $scope.superMinPT = generateSuperMinPT();
-
-                // Copy
-                $scope.copy = function (source) {
-                    return commonService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
-                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
-                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
-                        && commonService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
-                };
-
-                // Validate
-                $scope.validate = function () {
-                    var errCode = appSettings.errorType.Success;
-                    if (positionTaking.S4 === $scope.superMaxPT.value
-                        && positionTaking.M4 === $scope.masterMaxPT.value
-                        && positionTaking.A4 === $scope.agentMaxPT.value
-                        && positionTaking.N4 === $scope.superMinPT.value) {
-                        errCode = appSettings.errorType.NoChange;
-                    }
-
-                    return {
-                        errCode: errCode,
-                        data: {
-                            SportType: positionTaking.SportType,
-                            BetType: positionTaking.BetType,
-                            IsLive: positionTaking.IsLive,
-                            S4: $scope.superMaxPT.value,
-                            M4: $scope.masterMaxPT.value,
-                            A4: $scope.agentMaxPT.value,
-                            N4: $scope.superMinPT.value
-                        }
-                    };
-                };
-
-                isInitialized = true;
-            } ]
-        };
-    };
-
-    companyEditSuperPositionTakingDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('companyEditSuperPositionTaking', companyEditSuperPositionTakingDirective);
+    customerSettingBetLimitInputDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingBetLimitInput', customerSettingBetLimitInputDirective);
 })();
 
 'use strict';
@@ -1142,11 +1172,35 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'controllerService', 'appSettings', 'tooltipService'];
-    var customerSettingCopyDirective = function ($rootScope, controllerService, appSettings, tooltipService) {
+    var injectParams = ['blockUiService'];
+    var customerSettingBlockUiDirective = function (blockUiService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            templateUrl: 'templates/customer-setting-block-ui.htm',
+            controller: ['$scope', function ($scope) {
+                blockUiService.setup($scope);
+            }]
+        };
+    };
+
+    customerSettingBlockUiDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingBlockUi', customerSettingBlockUiDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$rootScope', 'controllerService', 'appSettings', 'resourceService', 'tooltipService'];
+    var customerSettingCopyDirective = function ($rootScope, controllerService, appSettings, resourceService, tooltipService) {
         return {
             restrict: 'A',
-            link: function (scope, element) {
+            link: function (scope, element, attributes) {
+                var isShow = scope.$eval(attributes.ngShow);
+                if (!isShow) {
+                    return;
+                }
+
                 element.on('click', function () {
                     var copy = function () {
                         var count = 0;
@@ -1158,12 +1212,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                             if (!result) {
                                 count++;
                             }
+                        }
 
-                            if (count > 0) {
-                                tooltipService.show(element, 'Some bet types can not be copied', 'left');
-                            } else {
+                        if (count > 0) {
+                            tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
+                            element.on('mouseleave', function () {
                                 tooltipService.hide();
-                            }
+                                element.off('mouseleave');
+                            });
+                        } else {
+                            tooltipService.hide();
                         }
                     };
 
@@ -1523,6 +1581,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
                 $scope.masterPT = generateMasterPT();
                 $scope.$watch('masterPT.value', function (newValue, oldValue) {
+                    if ($scope.agentMaxPT !== null && $scope.agentMaxPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentMaxPT = generateAgentMaxPT();
                     }
@@ -1541,6 +1603,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
                 $scope.$watch('agentMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.agentMinPT !== null && $scope.agentMinPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.agentMinPT = generateAgentMinPT();
                     }
@@ -1868,6 +1934,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
                 $scope.superPT = generateSuperPT();
                 $scope.$watch('superPT.value', function (newValue, oldValue) {
+                    if ($scope.masterMaxPT !== null && $scope.masterMaxPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.masterMaxPT = generateMasterMaxPT();
                     }
@@ -1886,6 +1956,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
+                    if ($scope.masterMinPT !== null && $scope.masterMinPT.valid === false) {
+                        return;
+                    }
+
                     if (newValue !== oldValue) {
                         $scope.masterMinPT = generateMasterMinPT();
                     }
@@ -2097,6 +2171,42 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return dataGroups;
         };
     });
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = [];
+    var blockUiService = function () {
+        var blockUiScope;
+
+        this.setup = function (scope) {
+            if (angular.isDefined(blockUiScope)) {
+                throw 'Only one block ui component in document';
+            }
+
+            blockUiScope = scope;
+        };
+
+        this.show = function () {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = true;
+        };
+
+        this.hide = function () {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = false;
+        };
+    };
+
+    blockUiService.$inject = injectParams;
+    angular.module('customerSettingApp').service('blockUiService', blockUiService);
 })();
 
 'use strict';
@@ -2329,6 +2439,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
         this.getCustomerSetting = function () {
             return customerSetting;
+        };
+
+        this.reset = function () {
+            statusScopes = [];
+            discountScopes = [];
+            betLimitScopes = [];
+            positionTakingScopes = [];
+            requestContext = new RequestContext();
+            settingContext = new SettingContext();
+            customerSetting = new CustomerSetting();
         };
     };
 
@@ -2822,6 +2942,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         var tooltipAlign;
         var boundingElement;
 
+        this.setup = function (scope, element) {
+            if (angular.isDefined(tooltipScope)) {
+                throw 'Only one tooltip component in document';
+            }
+
+            tooltipScope = scope;
+            tooltipElement = element;
+            tooltipElement.addClass('ng-hide');
+        };
+
         this.calculatePosition = function () {
             var rect = boundingElement.getBoundingClientRect();
             var tooltipRect = tooltipElement[0].getBoundingClientRect();
@@ -2839,16 +2969,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 'top': top + 'px',
                 'left': left + 'px'
             });
-        };
-
-        this.setup = function (scope, element) {
-            if (angular.isDefined(tooltipScope)) {
-                throw 'Only one tooltip component in document';
-            }
-
-            tooltipScope = scope;
-            tooltipElement = element;
-            tooltipElement.addClass('ng-hide');
         };
 
         this.show = function (element, message, align) {
@@ -2908,6 +3028,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "Master Comm",
         CommissionForMember: "Member Comm",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "Enable",
         EnableDownline: "Enable Downline",
         Fax: "Fax",
@@ -2967,6 +3088,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "总代理佣金",
         CommissionForMember: "会员佣金",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "启用",
         EnableDownline: "启用下线",
         Fax: "传真",
@@ -3026,6 +3148,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "總代理佣金",
         CommissionForMember: "會員佣金",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "啟用",
         EnableDownline: "啟用下線",
         Fax: "傳真",
@@ -3085,6 +3208,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "마스터 수수료",
         CommissionForMember: "회원 수수료",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "활성화",
         EnableDownline: "다운라인 활성화하기",
         Fax: "팩스",
@@ -3144,6 +3268,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "Master Comm",
         CommissionForMember: "Member Comm",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "Enable",
         EnableDownline: "Enable Downline",
         Fax: "ファックス",
@@ -3203,6 +3328,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "คอมมิชชั่นของ Master",
         CommissionForMember: "คอมมิชชั่นของสมาชิก",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "เปิดใช้งาน",
         EnableDownline: "เปิดใช้งาน ดาวไลน์",
         Fax: "แฟกซ์",
@@ -3262,6 +3388,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         CommissionForMaster: "Master Comm",
         CommissionForMember: "Member Comm",
         CopyTooltip: "Click to duplicate the values",
+        DuplicateValuesAlertMsg: "Out of range for highlighted values.",
         Enable: "Cho phép",
         EnableDownline: "Enable Downline",
         Fax: "Fax",

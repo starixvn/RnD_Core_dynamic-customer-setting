@@ -2,7 +2,7 @@
 
 (function () {
     var injectParams = ['$filter', 'commonService', 'tooltipService', 'appSettings'];
-    var betLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
+    var customerSettingBetLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -76,6 +76,6 @@
         };
     };
 
-    betLimitInputDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('betLimitInput', betLimitInputDirective);
+    customerSettingBetLimitInputDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingBetLimitInput', customerSettingBetLimitInputDirective);
 })();
