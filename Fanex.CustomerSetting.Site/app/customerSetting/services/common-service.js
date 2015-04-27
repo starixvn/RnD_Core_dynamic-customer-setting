@@ -3,10 +3,12 @@
 (function () {
     var injectParams = ['$window'];
     var commonService = function ($window) {
+        // scroll to top
         this.scrollToTop = function () {
             $window.scrollTo(0, 0);
         };
 
+        // check if value is in array, return index of value or -1 if not exist
         this.inArray = function (value, array) {
             var index = -1;
             angular.forEach(array, function (arrayValue, arrayIndex) {
@@ -16,6 +18,16 @@
             });
 
             return index;
+        };
+
+        // return array of property values of obj
+        this.getPropertyValues = function (obj) {
+            var propertyValues = [];
+            for (var propertyName in obj) {
+                propertyValues.push(obj[propertyName]);
+            }
+
+            return propertyValues;
         };
 
         var OptionsBuilder = function (step, factor) {

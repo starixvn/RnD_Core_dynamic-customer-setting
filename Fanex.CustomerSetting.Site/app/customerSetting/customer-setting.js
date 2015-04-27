@@ -8,7 +8,7 @@
         $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'messageService', 'blockUiService',
             function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
                 function startBlockUi(config) {
-                    config.noBlock = (config.method === 'GET' && $templateCache.get(config.url));
+                    config.noBlock = (config.method === 'POST' || $templateCache.get(config.url));
                     if (!config.noBlock) {
                         blockUiService.show();
                     }
@@ -90,6 +90,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('templates/customer-setting-error-page.htm',
+    "<div>Please check your URL</div>"
+  );
+
+
   $templateCache.put('templates/customer-setting-information.htm',
     "<div class=information-container><div class=row><div class=col-1>{{resourceService.getString('UserName')}}</div><div class=col-2 data-ng-bind=userName></div><div class=col-3>{{resourceService.getString('Nickname')}}</div><div class=col-4 data-ng-bind=nickName></div></div><div class=row><div class=col-1>{{resourceService.getString('FirstName')}}</div><div class=col-2 data-ng-bind=firstName></div><div class=col-3>{{resourceService.getString('Phone')}}</div><div class=col-4 data-ng-bind=phone></div></div><div class=row><div class=col-1>{{resourceService.getString('LastName')}}</div><div class=col-2 data-ng-bind=lastName></div><div class=col-3>{{resourceService.getString('MobilePhone')}}</div><div class=col-4 data-ng-bind=mobilePhone></div></div><div class=row><div class=col-1>{{resourceService.getString('Fax')}}</div><div class=col-2 data-ng-bind=fax></div><div class=col-3></div><div class=col-4></div></div></div>"
   );
@@ -100,18 +105,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('templates/customer-setting-product-page.htm',
+    "<div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{resourceService.getString('GeneralInformation')}}</div><div class=body data-customer-setting-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{resourceService.getString('ProductStatus')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{resourceService.getString('Commission')}} <span data-ng-show=hasUpdateDiscount title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{resourceService.getString('BetSetting')}} <span data-ng-show=hasUpdateBetLimit title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{resourceService.getString('PositionTaking')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=information data-ng-click=updateAll()>{{resourceService.getString('Update')}}</button>"
+  );
+
+
   $templateCache.put('templates/customer-setting-status.htm',
     "<div class=status-item><div class=name title={{name}} data-ng-bind=name></div><div class=value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{resourceService.getString('Enable')}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{resourceService.getString('EnableDownline')}}</label></div></div>"
   );
 
 
   $templateCache.put('templates/customer-setting-tooltip.htm',
-    "<div class=tooltip data-ng-class=align><div class=tooltip-arrow></div><div class=tooltip-inner data-ng-bind=message></div></div>"
-  );
-
-
-  $templateCache.put('templates/customer-setting-view.htm',
-    "<div class=view data-ng-controller=CustomerSettingController><div class=container data-ng-show=information><div class=header>{{resourceService.getString('GeneralInformation')}}</div><div class=body data-customer-setting-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{resourceService.getString('ProductStatus')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{resourceService.getString('Commission')}} <span data-ng-show=hasUpdateDiscount title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{resourceService.getString('BetSetting')}} <span data-ng-show=hasUpdateBetLimit title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{resourceService.getString('PositionTaking')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=information data-ng-click=updateAll()>{{resourceService.getString('Update')}}</button></div>"
+    "<div class=tooltip-container data-ng-class=align><div class=tooltip-arrow></div><div class=tooltip-inner data-ng-bind=message></div></div>"
   );
 
 
@@ -266,9 +271,20 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = [];
+    var customerSettingErrorController = function () {
+    };
+
+    customerSettingErrorController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('CustomerSettingErrorController', customerSettingErrorController);
+} ());
+
+'use strict';
+
+(function () {
     var injectParams = ['$rootScope', '$scope', 'templateService', 'dataService', 'controllerService',
                         'appSettings', 'modelService', 'messageService', 'resourceService', 'ResponseReader'];
-    var customerSettingController = function ($rootScope, $scope, templateService, dataService, controllerService,
+    var customerSettingProductController = function ($rootScope, $scope, templateService, dataService, controllerService,
                         appSettings, modelService, messageService, resourceService, ResponseReader) {
         var selectModel = modelService.createSelectModel();
         dataService.select(selectModel, function (response) {
@@ -278,7 +294,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             var settingContext = controllerService.getSettingContext();
             resourceService.setLanguage(requestContext.Language);
 
-            $scope.information = customerSetting.Information;
+            var multipleInfo = modelService.getMultipleInfo();
+            if (multipleInfo.IsMultiple) {
+                $scope.custNames = multipleInfo.CustNames.join(',');
+            } else {
+                $scope.information = customerSetting.Information;
+            }
+
             $scope.statuses = customerSetting.Statuses;
             $scope.statusTemplate = templateService.resolveStatus();
             $scope.discounts = customerSetting.Discounts;
@@ -533,35 +555,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
     };
 
-    customerSettingController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('CustomerSettingController', customerSettingController);
-} ());
-
-'use strict';
-
-(function () {
-    var injectParams = ['$scope', '$rootScope', '$timeout', 'modelService', 'templateService', 'controllerService', 'messageService'];
-    var customerSettingViewController = function ($scope, $rootScope, $timeout, modelService, templateService, controllerService, messageService) {
-        $rootScope.$on('$locationChangeStart', function () {
-            $scope.view = undefined;
-            messageService.hide();
-            controllerService.reset();
-        });
-
-        $rootScope.$on('$locationChangeSuccess', function () {
-            if (!modelService.isValid) {
-                messageService.showError('Please check your URL');
-            } else {
-                $timeout(function () {
-                    var modelParams = modelService.params;
-                    $scope.view = templateService.resolveView(modelParams.productId);
-                });
-            }
-        });
-    };
-
-    customerSettingViewController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('CustomerSettingViewController', customerSettingViewController);
+    customerSettingProductController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('CustomerSettingProductController', customerSettingProductController);
 } ());
 
 'use strict';
@@ -1454,6 +1449,70 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
+                        'productConfiguration', 'modelService', 'messageService', 'controllerService'];
+    var customerSettingProductDirective = function ($sce, $compile, $controller, $templateCache,
+                        productConfiguration, modelService, messageService, controllerService) {
+        function getProductSetting(productId) {
+            var result;
+            angular.forEach(productConfiguration.productSettings, function (productSetting) {
+                if (angular.isUndefined(result) && productSetting.id === productId) {
+                    result = productSetting;
+                }
+            });
+
+            return result;
+        }
+
+        return {
+            restrict: 'AE',
+            link: function (scope, element) {
+                scope.$on('$locationChangeStart', function () {
+                    messageService.hide();
+                    controllerService.reset();
+                });
+                scope.$on('$locationChangeSuccess', function () {
+                    update();
+                });
+
+                function update() {
+                    var controller = productConfiguration.errorController;
+                    var templateUrl = productConfiguration.errorTemplateUrl;
+
+                    var isValid = modelService.isValid();
+                    if (isValid) {
+                        var params = modelService.getParams();
+                        var productId = params.productId;
+                        var productSetting = getProductSetting(productId);
+                        if (angular.isDefined(productSetting)) {
+                            templateUrl = productSetting.templateUrl;
+                            controller = productSetting.controller;
+                        }
+                    }
+
+                    templateUrl = $sce.getTrustedResourceUrl(templateUrl);
+                    var template = $templateCache.get(templateUrl);
+                    element.html(template);
+                    controller = $controller(controller, {
+                        $scope: scope,
+                        $template: template
+                    });
+                    element.data('$ngControllerController', controller);
+                    element.children().data('$ngControllerController', controller);
+                    var link = $compile(element.contents());
+                    link(scope);
+                }
+            }
+        };
+    };
+
+    customerSettingProductDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('customerSettingProduct', customerSettingProductDirective);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['resourceService', 'controllerService', 'appSettings'];
     var customerSettingStatusDirective = function (resourceService, controllerService, appSettings) {
         return {
@@ -2214,10 +2273,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     var injectParams = ['$window'];
     var commonService = function ($window) {
+        // scroll to top
         this.scrollToTop = function () {
             $window.scrollTo(0, 0);
         };
 
+        // check if value is in array, return index of value or -1 if not exist
         this.inArray = function (value, array) {
             var index = -1;
             angular.forEach(array, function (arrayValue, arrayIndex) {
@@ -2227,6 +2288,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
 
             return index;
+        };
+
+        // return array of property values of obj
+        this.getPropertyValues = function (obj) {
+            var propertyValues = [];
+            for (var propertyName in obj) {
+                propertyValues.push(obj[propertyName]);
+            }
+
+            return propertyValues;
         };
 
         var OptionsBuilder = function (step, factor) {
@@ -2518,6 +2589,118 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['appSettings'];
+    var formTypeFactory = function (appSettings) {
+        var CompanyEditSuper = function () {
+            this.formType = appSettings.formType.CompanyEditSuper;
+            this.pattern = '/editSuper/:superId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: 0,
+                    RoleId: appSettings.roleType.Company,
+                    TargetCustId: params.superId,
+                    TargetRoleId: appSettings.roleType.Super
+                };
+            };
+        };
+
+        var SuperEditMaster = function () {
+            this.formType = appSettings.formType.SuperEditMaster;
+            this.pattern = '/editMaster/:masterId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: 0,
+                    RoleId: appSettings.roleType.Super,
+                    TargetCustId: params.masterId,
+                    TargetRoleId: appSettings.roleType.Master
+                };
+            };
+        };
+
+        var MasterEditAgent = function () {
+            this.formType = appSettings.formType.MasterEditAgent;
+            this.pattern = '/editAgent/:agentId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: 0,
+                    RoleId: appSettings.roleType.Master,
+                    TargetCustId: params.agentId,
+                    TargetRoleId: appSettings.roleType.Agent
+                };
+            };
+        };
+
+        var AgentEditMember = function () {
+            this.formType = appSettings.formType.AgentEditMember;
+            this.pattern = '/editMember/:memberId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: 0,
+                    RoleId: appSettings.roleType.Agent,
+                    TargetCustId: params.memberId,
+                    TargetRoleId: appSettings.roleType.Member
+                };
+            };
+        };
+
+        var SuperEditMember = function () {
+            this.formType = appSettings.formType.SuperEditMember;
+            this.pattern = '/superEditMember/:superId/:memberId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: params.superId,
+                    RoleId: appSettings.roleType.Super,
+                    TargetCustId: params.memberId,
+                    TargetRoleId: appSettings.roleType.Member
+                };
+            };
+        };
+
+        var MasterEditMember = function () {
+            this.formType = appSettings.formType.MasterEditMember;
+            this.pattern = '/masterEditMember/:masterId/:memberId/:productId';
+            this.createModel = function (params) {
+                return {
+                    CustId: params.masterId,
+                    RoleId: appSettings.roleType.Master,
+                    TargetCustId: params.memberId,
+                    TargetRoleId: appSettings.roleType.Member
+                };
+            };
+        };
+
+        var FormTypeFactory = function (formType) {
+            switch (formType) {
+                case appSettings.formType.CompanyEditSuper:
+                    return new CompanyEditSuper();
+
+                case appSettings.formType.SuperEditMaster:
+                    return new SuperEditMaster();
+
+                case appSettings.formType.MasterEditAgent:
+                    return new MasterEditAgent();
+
+                case appSettings.formType.SuperEditMember:
+                    return new SuperEditMember();
+
+                case appSettings.formType.MasterEditMember:
+                    return new MasterEditMember();
+
+                case appSettings.formType.AgentEditMember:
+                    return new AgentEditMember();
+            }
+        };
+
+        return FormTypeFactory;
+    };
+
+    formTypeFactory.$inject = injectParams;
+    angular.module('customerSettingApp').factory('FormTypeFactory', formTypeFactory);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['$rootScope', '$timeout', 'commonService', '$sce', 'appSettings', 'resourceService'];
     var messageService = function ($rootScope, $timeout, commonService, $sce, appSettings, resourceService) {
         var messageClasses = {};
@@ -2630,47 +2813,45 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$location', 'appSettings'];
-    var modelService = function ($rootScope, $location, appSettings) {
-        var formSettings = [
-            {
-                formType: appSettings.formType.CompanyEditSuper,
-                pattern: '/editSuper/:superId/:productId'
-            },
-            {
-                formType: appSettings.formType.SuperEditMaster,
-                pattern: '/editMaster/:masterId/:productId'
-            },
-            {
-                formType: appSettings.formType.MasterEditAgent,
-                pattern: '/editAgent/:agentId/:productId'
-            },
-            {
-                formType: appSettings.formType.AgentEditMember,
-                pattern: '/editMember/:memberId/:productId'
-            },
-            {
-                formType: appSettings.formType.SuperEditMember,
-                pattern: '/superEditMember/:superId/:memberId/:productId'
-            },
-            {
-                formType: appSettings.formType.MasterEditMember,
-                pattern: '/masterEditMember/:masterId/:memberId/:productId'
-            }
-        ];
+    var injectParams = ['$rootScope', '$location', 'commonService', 'appSettings', 'FormTypeFactory'];
+    var modelService = function ($rootScope, $location, commonService, appSettings, FormTypeFactory) {
+        function Model() {
+            this.isValid = false;
+            this.params = {};
+            this.isMultiple = false;
+            this.custIds = [];
+            this.custNames = [];
+        }
 
-        var self = this;
-        function loadParams() {
-            var isValidModel = false;
-            var modelParams = {};
+        Model.prototype.getMultipleInfo = function () {
+            return {
+                IsMultiple: this.isMultiple,
+                CustIds: this.custIds,
+                CustNames: this.custNames
+            };
+        };
+
+        Model.prototype.reset = function () {
+            this.isValid = false;
+            this.params = {};
+            this.isMultiple = false;
+            this.custIds = [];
+            this.custNames = [];
+        };
+
+        Model.prototype.load = function () {
+            this.reset();
+
+            // read form setting type
             var path = $location.path();
-            angular.forEach(formSettings, function (formSetting) {
-                if (isValidModel) {
+            var formTypes = commonService.getPropertyValues(appSettings.formType);
+            angular.forEach(formTypes, function (formType) {
+                if (this.isValid) {
                     return;
                 }
 
-                var formType = formSetting.formType;
-                var pattern = formSetting.pattern;
+                var formTypeObj = new FormTypeFactory(formType);
+                var pattern = formTypeObj.pattern;
                 var matches = pattern.match(/\/:\w+/g);
                 var params = [];
                 angular.forEach(matches, function (match) {
@@ -2680,82 +2861,62 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
                 matches = regExp.exec(path);
                 if (matches !== null && matches.length - 1 === params.length) {
-                    isValidModel = true;
+                    this.isValid = true;
                     angular.forEach(params, function (param, index) {
-                        modelParams[param] = parseInt(matches[index + 1]);
-                    });
-                    modelParams.formType = formType;
+                        this.params[param] = parseInt(matches[index + 1]);
+                    }, this);
+
+                    this.params.formType = formType;
                 }
-            });
+            }, this);
 
-            self.isValid = isValidModel;
-            self.params = modelParams;
-        }
+            // read multiple information
+            this.isMultiple = false;
+            var queryString = $location.search();
+            var custIds = queryString.custIds;
+            var custNames = queryString.custNames;
+            if (angular.isDefined(custIds) && angular.isDefined(custNames)) {
+                custIds = custIds.split(',').map(Number);
+                custNames = custNames.split(',');
+                this.isMultiple = custIds.length === custNames.length;
+            }
 
+            if (this.isMultiple) {
+                this.custIds = custIds;
+                this.custNames = custNames;
+            }
+        };
+
+        var model = new Model();
+        model.load();
+        $rootScope.$on('$locationChangeStart', function () {
+            model.load();
+        });
+
+        this.isValid = function () {
+            return model.isValid;
+        };
+        this.getParams = function () {
+            return model.params;
+        };
+        this.getMultipleInfo = function () {
+            return model.getMultipleInfo();
+        };
         this.createSelectModel = function () {
-            var isValid = this.isValid;
-            var params = this.params;
-            if (!isValid) {
+            if (!model.isValid) {
                 return undefined;
             }
 
-            var custId;
-            var roleId;
-            var targetCustId;
-            var targetRoleId;
-            switch (params.formType) {
-                case appSettings.formType.CompanyEditSuper:
-                    targetCustId = params.superId;
-                    targetRoleId = appSettings.roleType.Super;
-                    break;
+            var formType = model.params.formType;
+            var formTypeObj = new FormTypeFactory(formType);
+            var selectModel = formTypeObj.createModel(model.params);
+            angular.extend(selectModel, {
+                FormType: model.params.formType,
+                ProductId: model.params.productId
+            });
 
-                case appSettings.formType.SuperEditMaster:
-                    targetCustId = params.masterId;
-                    targetRoleId = appSettings.roleType.Master;
-                    break;
-
-                case appSettings.formType.MasterEditAgent:
-                    targetCustId = params.agentId;
-                    targetRoleId = appSettings.roleType.Agent;
-                    break;
-
-                case appSettings.formType.SuperEditMember:
-                    custId = params.superId;
-                    roleId = appSettings.roleType.Super;
-                    targetCustId = params.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-
-                case appSettings.formType.MasterEditMember:
-                    custId = params.masterId;
-                    roleId = appSettings.roleType.Master;
-                    targetCustId = params.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-
-                case appSettings.formType.AgentEditMember:
-                    custId = params.agentId;
-                    roleId = appSettings.roleType.Agent;
-                    targetCustId = params.memberId;
-                    targetRoleId = appSettings.roleType.Member;
-                    break;
-            }
-
-            return {
-                CustId: custId,
-                RoleId: roleId,
-                TargetCustId: targetCustId,
-                TargetRoleId: targetRoleId,
-                FormType: params.formType,
-                ProductId: params.productId
-            };
+            return selectModel;
         };
-
-        $rootScope.$on('$locationChangeStart', function () {
-            loadParams();
-        });
-        
-        loadParams();
     };
 
     modelService.$inject = injectParams;
@@ -3008,6 +3169,87 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
     tooltipService.$inject = injectParams;
     angular.module('customerSettingApp').service('tooltipService', tooltipService);
+})();
+
+'use strict';
+
+(function () {
+    var body = angular.element(document.body);
+    var rootUrl = body.attr('data-root-url');
+    angular.module('customerSettingApp').value('appSettings', {
+        rootUrl: rootUrl,
+        defaultLanguage: 'en-US',
+        defaultMaxBet: 99999999999,
+        betLimitMaxLength: 14,
+        positionTakingDivider: 100,
+        formType: {
+            CompanyEditSuper: 1,
+            SuperEditMaster: 2,
+            MasterEditAgent: 3,
+            AgentEditMember: 4,
+            SuperEditMember: 5,
+            MasterEditMember: 6
+        },
+        roleType: {
+            Member: 1,
+            Agent: 2,
+            Master: 3,
+            Super: 4,
+            Company: 5
+        },
+        settingType: {
+            All: 0,
+            PositionTaking: 1,
+            BetLimit: 2,
+            Discount: 3,
+            Status: 4
+        },
+        settingLevel: {
+            Product: 1,
+            SportType: 2,
+            BetType: 3,
+            SportTypeBetType: 4
+        },
+        errorType: {
+            Success: 0,
+            FormInvalid: 1,
+            NoChange: 2
+        },
+        errorCode: {
+            Success: 0,
+            ErrorValue: -1,
+            NoChange: -2,
+            AccessDenied: -3
+        },
+        messageType: {
+            Success: 0,
+            Warning: 1,
+            Error: 2
+        }
+    });
+})();
+
+'use strict';
+
+(function () {
+    angular.module('customerSettingApp').value('productConfiguration', {
+        errorController: 'CustomerSettingErrorController',
+        errorTemplateUrl: 'templates/customer-setting-error-page.htm',
+        productSettings: [
+            {
+                id: 255,
+                name: 'demo',
+                controller: 'CustomerSettingProductController',
+                templateUrl: 'templates/customer-setting-product-page.htm'
+            },
+            {
+                id: 254,
+                name: 'demo',
+                controller: 'CustomerSettingProductController',
+                templateUrl: 'templates/customer-setting-product-page.htm'
+            }
+        ]
+    });
 })();
 
 'use strict';
@@ -3437,63 +3679,4 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     };
 
     angular.module('customerSettingApp').value('resources', resources);
-})();
-
-
-'use strict';
-
-(function () {
-    var body = angular.element(document.body);
-    var rootUrl = body.attr("data-root-url");
-    angular.module('customerSettingApp').value('appSettings', {
-        rootUrl: rootUrl,
-        defaultLanguage: 'en-US',
-        defaultMaxBet: 99999999999,
-        betLimitMaxLength: 14,
-        positionTakingDivider: 100,
-        formType: {
-            CompanyEditSuper: 1,
-            SuperEditMaster: 2,
-            MasterEditAgent: 3,
-            AgentEditMember: 4,
-            SuperEditMember: 5,
-            MasterEditMember: 6
-        },
-        roleType: {
-            Member: 1,
-            Agent: 2,
-            Master: 3,
-            Super: 4,
-            Company: 5
-        },
-        settingType: {
-            All: 0,
-            PositionTaking: 1,
-            BetLimit: 2,
-            Discount: 3,
-            Status: 4
-        },
-        settingLevel: {
-            Product: 1,
-            SportType: 2,
-            BetType: 3,
-            SportTypeBetType: 4
-        },
-        errorType: {
-            Success: 0,
-            FormInvalid: 1,
-            NoChange: 2
-        },
-        errorCode: {
-            Success: 0,
-            ErrorValue: -1,
-            NoChange: -2,
-            AccessDenied: -3
-        },
-        messageType: {
-            Success: 0,
-            Warning: 1,
-            Error: 2
-        }
-    });
 })();

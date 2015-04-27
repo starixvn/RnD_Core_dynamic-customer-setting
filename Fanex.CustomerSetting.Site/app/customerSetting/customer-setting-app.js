@@ -6,7 +6,7 @@
         $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'messageService', 'blockUiService',
             function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
                 function startBlockUi(config) {
-                    config.noBlock = (config.method === 'GET' && $templateCache.get(config.url));
+                    config.noBlock = (config.method === 'POST' || $templateCache.get(config.url));
                     if (!config.noBlock) {
                         blockUiService.show();
                     }

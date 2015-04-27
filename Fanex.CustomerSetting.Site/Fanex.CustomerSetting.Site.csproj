@@ -160,8 +160,8 @@
   <ItemGroup>
     <Content Include="app\angular-1.2.28.js" />
     <Content Include="app\angular-1.2.28.min.js" />
-    <Content Include="app\customerSetting\controllers\customer-setting-controller.js" />
-    <Content Include="app\customerSetting\controllers\customer-setting-view-controller.js" />
+    <Content Include="app\customerSetting\controllers\customer-setting-error-controller.js" />
+    <Content Include="app\customerSetting\controllers\customer-setting-product-controller.js" />
     <Content Include="app\customerSetting\customer-setting-page-template.htm" />
     <Content Include="app\customerSetting\customer-setting-page.htm" />
     <Content Include="app\customerSetting\customer-setting-templates.js" />
@@ -176,6 +176,7 @@
     <Content Include="app\customerSetting\directives\customer-setting-block-ui.js" />
     <Content Include="app\customerSetting\directives\customer-setting-copy.js" />
     <Content Include="app\customerSetting\directives\customer-setting-message.js" />
+    <Content Include="app\customerSetting\directives\customer-setting-product.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-position-taking.js" />
     <Content Include="app\customerSetting\directives\master-edit-member-discount.js" />
     <Content Include="app\customerSetting\directives\position-taking-select.js" />
@@ -196,6 +197,7 @@
     <Content Include="app\customerSetting\images\loading.gif" />
     <Content Include="app\customerSetting\images\sprite.png" />
     <Content Include="app\customerSetting\services\block-ui-service.js" />
+    <Content Include="app\customerSetting\services\form-type-factory.js" />
     <Content Include="app\customerSetting\services\model-service.js" />
     <Content Include="app\customerSetting\services\common-service.js" />
     <Content Include="app\customerSetting\services\controller-service.js" />
@@ -206,6 +208,8 @@
     <Content Include="app\customerSetting\services\resource-service.js" />
     <Content Include="app\customerSetting\services\data-service.js" />
     <Content Include="app\customerSetting\templates\agent-edit-member-position-taking.htm" />
+    <Content Include="app\customerSetting\templates\customer-setting-error-page.htm" />
+    <Content Include="app\customerSetting\templates\customer-setting-product-page.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-block-ui.htm" />
     <Content Include="app\customerSetting\templates\position-taking-select.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-message.htm" />
@@ -229,7 +233,6 @@
     <Content Include="app\customerSetting\templates\sport-group\agent-edit-member-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\sport-group\master-edit-agent-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\super-edit-master-position-taking.htm" />
-    <Content Include="app\customerSetting\templates\customer-setting-view.htm" />
     <Content Include="app\customerSetting\templates\no-group\betlimit-container.htm" />
     <Content Include="app\customerSetting\templates\no-group\company-edit-super-position-taking-container.htm" />
     <Content Include="app\customerSetting\templates\no-group\super-edit-master-position-taking-container.htm" />
@@ -242,12 +245,13 @@
     <Content Include="app\customerSetting\templates\sport-group\status-container.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-status.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-information.htm" />
+    <Content Include="app\customerSetting\values\product-configuration.js" />
     <Content Include="app\customerSetting\values\resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>resources.tt</DependentUpon>
     </Content>
-    <Content Include="app\customerSetting\values\settings.js" />
+    <Content Include="app\customerSetting\values\app-settings.js" />
     <Content Include="app\customerSetting\templates\customer-setting-bet-limit.htm" />
     <Content Include="app\customerSetting\templates\company-edit-super-position-taking.htm" />
     <Content Include="app\customerSetting\templates\customer-setting-tooltip.htm" />

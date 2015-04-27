@@ -3,7 +3,7 @@
 (function () {
     var injectParams = ['$rootScope', '$scope', 'templateService', 'dataService', 'controllerService',
                         'appSettings', 'modelService', 'messageService', 'resourceService', 'ResponseReader'];
-    var customerSettingController = function ($rootScope, $scope, templateService, dataService, controllerService,
+    var customerSettingProductController = function ($rootScope, $scope, templateService, dataService, controllerService,
                         appSettings, modelService, messageService, resourceService, ResponseReader) {
         var selectModel = modelService.createSelectModel();
         dataService.select(selectModel, function (response) {
@@ -13,7 +13,13 @@
             var settingContext = controllerService.getSettingContext();
             resourceService.setLanguage(requestContext.Language);
 
-            $scope.information = customerSetting.Information;
+            var multipleInfo = modelService.getMultipleInfo();
+            if (multipleInfo.IsMultiple) {
+                $scope.custNames = multipleInfo.CustNames.join(',');
+            } else {
+                $scope.information = customerSetting.Information;
+            }
+
             $scope.statuses = customerSetting.Statuses;
             $scope.statusTemplate = templateService.resolveStatus();
             $scope.discounts = customerSetting.Discounts;
@@ -268,6 +274,6 @@
         }
     };
 
-    customerSettingController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('CustomerSettingController', customerSettingController);
+    customerSettingProductController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('CustomerSettingProductController', customerSettingProductController);
 } ());
