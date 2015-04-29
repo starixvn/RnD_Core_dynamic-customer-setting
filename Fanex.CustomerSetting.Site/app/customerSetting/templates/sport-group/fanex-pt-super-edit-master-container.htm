@@ -1,0 +1,26 @@
+﻿<div class="position-taking-container super-edit-master" data-ng-init="positionTakingGroups=(positionTakings|fanexDataGroup)">
+    <div data-ng-repeat="positionTakingGroup in positionTakingGroups" class="sport-group">
+        <div class="sport-name" title="{{positionTakingGroup.SportTypeName}}">
+            {{positionTakingGroup.SportTypeName}}
+        </div>
+        <div class="title">
+            <div class="name">
+            </div>
+            <div class="super-pt">
+                {{resourceService.getString('SuperPT')}}
+            </div>
+            <div class="super-is-auto">
+                {{resourceService.getString('IsAuto')}}
+            </div>
+            <div class="master-max-pt">
+                {{resourceService.getString('MasterMaxPT')}}
+            </div>
+            <div class="master-min-pt">
+                {{resourceService.getString('MasterMinPT')}}
+            </div>
+        </div>
+        <div data-ng-repeat="item in positionTakingGroup.Items" data-fanex-pt-super-edit-master="item"
+            data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+        </div>
+    </div>
+</div>

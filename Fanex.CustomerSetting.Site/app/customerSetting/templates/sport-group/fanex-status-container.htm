@@ -1,0 +1,10 @@
+﻿<div class="status-container" data-ng-init="statusGroups=(statuses|fanexDataGroup)">
+    <div data-ng-repeat="statusGroup in statusGroups" class="sport-group">
+        <div class="sport-name" title="{{statusGroup.SportTypeName}}">
+            {{statusGroup.SportTypeName}}
+        </div>
+        <div data-ng-repeat="item in statusGroup.Items" data-fanex-status="item"
+            data-ng-class="{'full-width': $last && $even}">
+        </div>
+    </div>
+</div>

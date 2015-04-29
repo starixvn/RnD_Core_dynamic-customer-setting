@@ -1,0 +1,23 @@
+﻿<div data-ng-init="betLimitGroups=(betLimits|fanexDataGroup)" class="bet-limit-container">
+    <div data-ng-repeat="betLimitGroup in betLimitGroups" class="sport-group">
+        <div class="sport-name" title="{{betLimitGroup.SportTypeName}}">
+            {{betLimitGroup.SportTypeName}}
+        </div>
+        <div class="title">
+            <div class="name">
+            </div>
+            <div class="min-bet">
+                {{resourceService.getString('MinBet')}}
+            </div>
+            <div class="max-bet">
+                {{resourceService.getString('MaxBet')}}
+            </div>
+            <div class="max-per-match">
+                {{resourceService.getString('MaxPerMatch')}}
+            </div>
+        </div>
+        <div data-ng-repeat="item in betLimitGroup.Items" data-fanex-bet-limit="item"
+            data-has-copy="item==betLimits[0] && betLimits.length>=2">
+        </div>
+    </div>
+</div>

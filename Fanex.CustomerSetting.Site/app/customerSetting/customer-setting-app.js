@@ -3,10 +3,10 @@
 (function () {
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'messageService', 'blockUiService',
+        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'fanexMessageService', 'fanexBlockUiService',
             function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
                 function startBlockUi(config) {
-                    config.noBlock = (config.method === 'POST' || $templateCache.get(config.url));
+                    config.noBlock = (config.method === 'GET' && angular.isDefined($templateCache.get(config.url)));
                     if (!config.noBlock) {
                         blockUiService.show();
                     }
@@ -39,11 +39,14 @@
                         return $q.reject(response);
                     }
                 };
-            } ]);
+            }
+        ]);
     } ]);
 
-    customerSettingApp.run(['$rootScope', 'resourceService', 'appSettings', function ($rootScope, resourceService, appSettings) {
-        resourceService.setLanguage(appSettings.defaultLanguage);
-        $rootScope.resourceService = resourceService;
-    } ]);
+    customerSettingApp.run(['$rootScope', 'fanexResourceService', 'fanexAppSettings',
+        function ($rootScope, resourceService, appSettings) {
+            resourceService.setLanguage(appSettings.defaultLanguage);
+            $rootScope.resourceService = resourceService;
+        }
+     ]);
 } ());

@@ -1,4 +1,4 @@
-/*! fanex-customer-setting v0.0.4 | (c) 2015 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.5 | (c) 2015 Nexcel Solutions Vietnam */
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -13,7 +13,7 @@
   font-size: 11px;
   width: 860px;
 }
-.customer-setting > .message-container {
+.customer-setting .message-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -22,42 +22,42 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
-.customer-setting > .message-container > .message {
+.customer-setting .message-container > .message {
   padding: 3px 5px;
 }
-.customer-setting > .message-container > .message > .icon {
+.customer-setting .message-container > .message > .icon {
   float: left;
   width: 14px;
   height: 13px;
   background-image: url("images/sprite.png");
   background-repeat: no-repeat;
 }
-.customer-setting > .message-container > .message.success {
+.customer-setting .message-container > .message.success {
   color: #618e11;
 }
-.customer-setting > .message-container > .message.success > .icon {
+.customer-setting .message-container > .message.success > .icon {
   background-position: -65px 0;
 }
-.customer-setting > .message-container > .message.warning {
+.customer-setting .message-container > .message.warning {
   color: #c28f06;
 }
-.customer-setting > .message-container > .message.warning > .icon {
+.customer-setting .message-container > .message.warning > .icon {
   background-position: -51px 0;
 }
-.customer-setting > .message-container > .message.error {
+.customer-setting .message-container > .message.error {
   color: #f40000;
 }
-.customer-setting > .message-container > .message.error > .icon {
+.customer-setting .message-container > .message.error > .icon {
   background-position: -51px 0;
 }
-.customer-setting > .message-container > .message > .content {
+.customer-setting .message-container > .message > .content {
   padding-left: 20px;
   line-height: 15px;
 }
-.customer-setting > .message-container > .message > .content > .rows {
+.customer-setting .message-container > .message > .content > .rows {
   padding-left: 15px;
 }
-.customer-setting > .dialog-container > .dialog-overlay {
+.customer-setting .dialog-container > .dialog-overlay {
   z-index: 10008;
   background: white;
   opacity: 0.5;
@@ -68,7 +68,7 @@
   top: 0;
   bottom: 0;
 }
-.customer-setting > .dialog-container > .dialog-scrollable {
+.customer-setting .dialog-container > .dialog-scrollable {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -77,48 +77,48 @@
   overflow: auto;
   z-index: 10009;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content {
   width: 450px;
   margin: 100px auto auto;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header {
   padding: 1px;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-title {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-title {
   font-weight: bold;
   color: white;
   background-color: #3c3c3c;
   padding: 5px;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-close {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-header > .dialog-close {
   float: right;
   margin-right: 5px;
   margin-top: 3px;
   cursor: pointer;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body {
   padding: 5px 10px;
   text-align: left;
   background-color: #ececec;
   line-height: 20px;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
   margin-left: 20px;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer {
   text-align: right;
   background-color: #ececec;
   padding: 5px;
   border-top: 1px solid #3c3c3c;
 }
-.customer-setting > .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer button {
+.customer-setting .dialog-container > .dialog-scrollable > .dialog-content > .dialog-footer button {
   padding: 1px 6px;
   min-width: 80px;
   cursor: pointer;
 }
-.customer-setting > .loading-container > .block-overlay {
+.customer-setting .loading-container > .block-overlay {
   z-index: 10008;
   background: white;
   opacity: 0.5;
@@ -129,7 +129,7 @@
   top: 0;
   bottom: 0;
 }
-.customer-setting > .loading-container > .block-loading {
+.customer-setting .loading-container > .block-loading {
   z-index: 10009;
   background: url(images/loading.gif) no-repeat center center;
   position: fixed;
@@ -138,7 +138,7 @@
   top: 0;
   bottom: 0;
 }
-.customer-setting > .product-container > .container {
+.customer-setting .product-container > .container {
   float: left;
   width: 100%;
   border-right: 1px solid #7c98a4;
@@ -146,7 +146,7 @@
   background-color: white;
   margin-bottom: 10px;
 }
-.customer-setting > .product-container > .container > .header {
+.customer-setting .product-container > .container > .header {
   border-left: 1px solid #7c98a4;
   border-top: 1px solid #7c98a4;
   -webkit-box-sizing: border-box;
@@ -158,7 +158,7 @@
   line-height: 25px;
   background-color: #b5c4d0;
 }
-.customer-setting > .product-container > .container > .header > .update {
+.customer-setting .product-container > .container > .header > .update {
   float: right;
   width: 42px;
   line-height: 20px;
@@ -166,11 +166,11 @@
   border-left: 1px solid #7c98a4;
   cursor: pointer;
 }
-.customer-setting > .product-container > .container > .body .sport-group {
+.customer-setting .product-container > .container > .body .sport-group {
   float: left;
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body .sport-group > .sport-name {
+.customer-setting .product-container > .container > .body .sport-group > .sport-name {
   float: left;
   width: 140px;
   padding: 0 3px;
@@ -188,7 +188,7 @@
   width: 100%;
   background-color: #cadceb;
 }
-.customer-setting > .product-container > .container > .body .name {
+.customer-setting .product-container > .container > .body .name {
   float: left;
   width: 140px;
   padding: 0 3px;
@@ -204,12 +204,12 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body .name .copy {
+.customer-setting .product-container > .container > .body .name .copy {
   float: right;
   line-height: 0;
   cursor: pointer;
 }
-.customer-setting > .product-container > .container > .body .value {
+.customer-setting .product-container > .container > .body .value {
   margin-left: 140px;
   padding: 0 3px;
   overflow: hidden;
@@ -221,11 +221,11 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body .title {
+.customer-setting .product-container > .container > .body .title {
   float: left;
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body .title > div {
+.customer-setting .product-container > .container > .body .title > div {
   float: left;
   font-weight: bold;
   text-align: center;
@@ -238,11 +238,11 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body > .information-container > .row {
+.customer-setting .product-container > .container > .body > .information-container > .row {
   float: left;
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .information-container > .row > div {
+.customer-setting .product-container > .container > .body > .information-container > .row > div {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -254,37 +254,37 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body > .information-container > .row > .col-1,
-.customer-setting > .product-container > .container > .body > .information-container > .row > .col-3 {
+.customer-setting .product-container > .container > .body > .information-container > .row > .col-1,
+.customer-setting .product-container > .container > .body > .information-container > .row > .col-3 {
   width: 20%;
 }
-.customer-setting > .product-container > .container > .body > .information-container > .row > .col-2,
-.customer-setting > .product-container > .container > .body > .information-container > .row > .col-4 {
+.customer-setting .product-container > .container > .body > .information-container > .row > .col-2,
+.customer-setting .product-container > .container > .body > .information-container > .row > .col-4 {
   width: 30%;
 }
-.customer-setting > .product-container > .container > .body > .status-container .status-item {
+.customer-setting .product-container > .container > .body > .status-container .status-item {
   float: left;
   width: 50%;
 }
-.customer-setting > .product-container > .container > .body > .status-container .status-item.full-width {
+.customer-setting .product-container > .container > .body > .status-container .status-item.full-width {
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .status-container .status-item .value .downline {
+.customer-setting .product-container > .container > .body > .status-container .status-item .value .downline {
   margin-left: 10px;
 }
-.customer-setting > .product-container > .container > .body > .discount-container .discount-item {
+.customer-setting .product-container > .container > .body > .discount-container .discount-item {
   float: left;
   width: 50%;
 }
-.customer-setting > .product-container > .container > .body > .discount-container .discount-item.full-width {
+.customer-setting .product-container > .container > .body > .discount-container .discount-item.full-width {
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .discount-item {
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .master-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .agent-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .member-discount {
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .master-discount,
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .agent-discount,
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -298,16 +298,16 @@
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .master-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .agent-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.super-edit-member .member-discount {
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .master-discount,
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .agent-discount,
+.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .member-discount {
   width: 240px;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.master-edit-member .discount-item {
+.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .agent-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .member-discount {
+.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .agent-discount,
+.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -321,17 +321,17 @@
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting > .product-container > .container > .body > .discount-container.master-edit-member .agent-discount,
-.customer-setting > .product-container > .container > .body > .discount-container.master-edit-member .member-discount {
+.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .agent-discount,
+.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .member-discount {
   width: 360px;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item {
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item {
   float: left;
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match {
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -343,36 +343,36 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input {
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input {
   width: 50%;
   text-align: right;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input.full-width,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input.full-width,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input.full-width {
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input.full-width,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input.full-width,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input.full-width {
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet.read-only,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet.read-only,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match.read-only {
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet.read-only,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet.read-only,
+.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match.read-only {
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting > .product-container > .container > .body > .bet-limit-container .min-bet,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .max-bet,
-.customer-setting > .product-container > .container > .body > .bet-limit-container .max-per-match {
+.customer-setting .product-container > .container > .body > .bet-limit-container .min-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-container .max-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-container .max-per-match {
   width: 240px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container .position-taking-item {
+.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item {
   float: left;
   width: 100%;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container .position-taking-item > div {
+.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item > div {
   float: left;
   text-align: center;
   padding: 0 3px;
@@ -385,71 +385,71 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container .position-taking-item > div.name {
+.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item > div.name {
   text-align: left;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.company-edit-super .super-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.company-edit-super .master-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.company-edit-super .agent-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.company-edit-super .super-min-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .super-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .master-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .agent-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .super-min-pt {
   width: 180px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-master .super-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-master .master-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-master .master-min-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .super-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .master-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .master-min-pt {
   width: 210px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-master .super-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .super-is-auto {
   width: 90px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent .master-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-min-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .master-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-min-pt {
   width: 210px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent .master-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .master-is-auto {
   width: 90px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-max-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-min-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-max-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-min-pt {
   width: 240px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-is-auto {
   display: none;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-member .super-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-member .master-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .super-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .master-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .agent-pt {
   width: 210px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.super-edit-member .super-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .super-is-auto {
   width: 90px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member .master-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .master-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .agent-pt {
   width: 315px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member .master-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .master-is-auto {
   width: 90px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-pt,
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .agent-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-pt,
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .agent-pt {
   width: 360px;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-is-auto {
+.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-is-auto {
   display: none;
 }
-.customer-setting > .product-container > .container > .body > .position-taking-container.agent-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body > .position-taking-container.agent-edit-member .agent-pt {
   width: 720px;
 }
-.customer-setting .tooltip {
+.customer-setting .tooltip-container {
   position: absolute;
   padding: 5px 0;
   z-index: 1070;
   opacity: 1;
 }
-.customer-setting .tooltip > .tooltip-inner {
+.customer-setting .tooltip-container > .tooltip-inner {
   max-width: 300px;
   padding: 4px 8px;
   color: #ffffff;
@@ -457,7 +457,7 @@
   text-decoration: none;
   background-color: #000000;
 }
-.customer-setting .tooltip > .tooltip-arrow {
+.customer-setting .tooltip-container > .tooltip-arrow {
   position: absolute;
   width: 0;
   height: 0;
@@ -469,7 +469,7 @@
   border-width: 5px 5px 0;
   border-top-color: #000000;
 }
-.customer-setting .tooltip.left > .tooltip-arrow {
+.customer-setting .tooltip-container.left > .tooltip-arrow {
   left: 12px;
 }
 .customer-setting input,
