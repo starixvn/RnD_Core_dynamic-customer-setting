@@ -1,4 +1,5 @@
 ﻿@using Fanex.CustomerSetting.Site.UserLogin
+@using Fanex.CustomerSetting.Enumerations
 @using Newtonsoft.Json
 @model LoginViewModel
 @{
@@ -15,99 +16,34 @@
     <script src="~/app/angular-1.2.28.min.js" type="text/javascript"></script>
     <script src="~/Views/Home/Scripts/index.js" type="text/javascript"></script>
 }
-<div data-ng-app="indexModule" data-ng-controller="IndexController" data-ng-cloak>
+<div id="main" data-root-url="@rootUrl" data-ng-app="indexModule" data-ng-controller="IndexController" data-ng-cloak>
     <div class="container left">
         <span ng-init="LoginForm = @Html.Raw(JsonConvert.SerializeObject(Model))"></span>
         <div class="login-form">
             @Html.Partial("_LoginForm")
         </div>
         <div ng-show="LoginForm.HideForm">
-            <h4>
-                Customer Setting
-            </h4>
-            <strong>ProductId:</strong>
-            <input type="text" data-ng-model="productId" />
+            <div class="form-group">
+                <strong>ProductId:</strong>
+                <input type="text" data-ng-model="productId" />
+            </div>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Company edit
-                                Super </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel">
-                        <div class="panel-body">
-                            SuperId:
-                            <input type="text" data-ng-model="superId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editSuper/{{superId}}/{{productId}}?v={{version}}">
-                                Open</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                Super edit Master</a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
-                        <div class="panel-body">
-                            MasterId:
-                            <input type="text" data-ng-model="masterId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editMaster/{{masterId}}/{{productId}}?v={{version}}">
-                                Open</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
                     <div class="panel-heading" role="tab">
                         <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                Master edit Agent </a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#companyEditSuper" data-ng-click="isMultiple=false">
+                                Company edit Super </a>
                         </h4>
                     </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
+                    <div id="companyEditSuper" class="panel-collapse collapse in" role="tabpanel">
                         <div class="panel-body">
-                            AgentId:
-                            <input type="text" data-ng-model="agentId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editAgent/{{agentId}}/{{productId}}?v={{version}}">
-                                Open</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab">
-                        <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                Agent edit Member </a>
-                        </h4>
-                    </div>
-                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel">
-                        <div class="panel-body">
-                            MemberId:
-                            <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/editMember/{{memberId}}/{{productId}}?v={{version}}">
-                                Open</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab">
-                        <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                Super edit Member </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
-                        <div class="panel-body">
-                            SuperId:
-                            <input type="text" data-ng-model="superId" />
-                            <div class="separator">
+                            <div class="form-group">
+                                <label for="superId">
+                                    SuperId:
+                                </label>
+                                <input id="superId" type="text" class="form-control" data-ng-model="superId" />
                             </div>
-                            MemberId:
-                            <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/superEditMember/{{superId}}/{{memberId}}/{{productId}}?v={{version}}">
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.CompanyEditSuper))">
                                 Open</a>
                         </div>
                     </div>
@@ -115,19 +51,273 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab">
                         <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                                Master edit Member </a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#companyEditSupers" data-ng-click="isMultiple=true">
+                                Company edit Supers </a>
                         </h4>
                     </div>
-                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel">
+                    <div id="companyEditSupers" class="panel-collapse collapse" role="tabpanel">
                         <div class="panel-body">
-                            MasterId:
-                            <input type="text" data-ng-model="masterId" />
-                            <div class="separator">
+                            <div class="form-group">
+                                <label for="superIds">
+                                    SuperIds:
+                                </label>
+                                <input id="superIds" type="text" class="form-control" data-ng-model="superIds" />
                             </div>
-                            MemberId:
-                            <input type="text" data-ng-model="memberId" />
-                            <a target="setting-page" data-ng-click="version=version+1" data-ng-href="@rootUrl/CustomerSetting/#/masterEditMember/{{masterId}}/{{memberId}}/{{productId}}?v={{version}}">
+                            <div class="form-group">
+                                <label for="superNames">
+                                    SuperNames:
+                                </label>
+                                <input id="superNames" type="text" class="form-control" data-ng-model="superNames" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.CompanyEditSuper))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#superEditMaster"
+                                data-ng-click="isMultiple=false">Super edit Master</a>
+                        </h4>
+                    </div>
+                    <div id="superEditMaster" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="masterId">
+                                    MasterId:
+                                </label>
+                                <input id="masterId" type="text" class="form-control" data-ng-model="masterId" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.SuperEditMaster))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#superEditMasters"
+                                data-ng-click="isMultiple=true">Super edit Masters</a>
+                        </h4>
+                    </div>
+                    <div id="superEditMasters" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="masterIds">
+                                    MasterIds:
+                                </label>
+                                <input id="masterIds" type="text" class="form-control" data-ng-model="masterIds" />
+                            </div>
+                            <div class="form-group">
+                                <label for="masterNames">
+                                    MasterNames:
+                                </label>
+                                <input id="masterNames" type="text" class="form-control" data-ng-model="masterNames" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.SuperEditMaster))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#masterEditAgent"
+                                data-ng-click="isMultiple=false">Master edit Agent </a>
+                        </h4>
+                    </div>
+                    <div id="masterEditAgent" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="agentId">
+                                    AgentId:
+                                </label>
+                                <input id="agentId" type="text" class="form-control" data-ng-model="agentId" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.MasterEditAgent))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#masterEditAgents"
+                                data-ng-click="isMultiple=true">Master edit Agents </a>
+                        </h4>
+                    </div>
+                    <div id="masterEditAgents" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="agentIds">
+                                    AgentIds:
+                                </label>
+                                <input id="agentIds" type="text" class="form-control" data-ng-model="agentIds" />
+                            </div>
+                            <div class="form-group">
+                                <label for="agentNames">
+                                    AgentNames:
+                                </label>
+                                <input id="agentNames" type="text" class="form-control" data-ng-model="agentNames" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.MasterEditAgent))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#agentEditMember"
+                                data-ng-click="isMultiple=false">Agent edit Member </a>
+                        </h4>
+                    </div>
+                    <div id="agentEditMember" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="memberId">
+                                    MemberId:
+                                </label>
+                                <input id="memberId" type="text" class="form-control" data-ng-model="memberId" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.AgentEditMember))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#agentEditMembers"
+                                data-ng-click="isMultiple=true">Agent edit Members </a>
+                        </h4>
+                    </div>
+                    <div id="agentEditMembers" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="memberIds">
+                                    MemberIds:
+                                </label>
+                                <input id="memberIds" type="text" class="form-control" data-ng-model="memberIds" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberNames">
+                                    MemberNames:
+                                </label>
+                                <input id="memberNames" type="text" class="form-control" data-ng-model="memberNames" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.AgentEditMember))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#superEditMember"
+                                data-ng-click="isMultiple=false">Super edit Member </a>
+                        </h4>
+                    </div>
+                    <div id="superEditMember" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="superId">
+                                    SuperId:
+                                </label>
+                                <input id="superId" type="text" class="form-control" data-ng-model="superId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberId">
+                                    MemberId:
+                                </label>
+                                <input id="memberId" type="text" class="form-control" data-ng-model="memberId" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.SuperEditMember))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#superEditMembers"
+                                data-ng-click="isMultiple=true">Super edit Members </a>
+                        </h4>
+                    </div>
+                    <div id="superEditMembers" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="superId">
+                                    SuperId:
+                                </label>
+                                <input id="superId" type="text" class="form-control" data-ng-model="superId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberIds">
+                                    MemberIds:
+                                </label>
+                                <input id="memberIds" type="text" class="form-control" data-ng-model="memberIds" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.SuperEditMember))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#masterEditMember"
+                                data-ng-click="isMultiple=false">Master edit Member </a>
+                        </h4>
+                    </div>
+                    <div id="masterEditMember" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="masterId">
+                                    MasterId:
+                                </label>
+                                <input id="masterId" type="text" class="form-control" data-ng-model="masterId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberId">
+                                    MemberId:
+                                </label>
+                                <input id="memberId" type="text" class="form-control" data-ng-model="memberId" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.MasterEditMember))">
+                                Open</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#masterEditMembers"
+                                data-ng-click="isMultiple=true">Master edit Members </a>
+                        </h4>
+                    </div>
+                    <div id="masterEditMembers" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="masterId">
+                                    MasterId:
+                                </label>
+                                <input id="masterId" type="text" class="form-control" data-ng-model="masterId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberIds">
+                                    MemberIds:
+                                </label>
+                                <input id="memberIds" type="text" class="form-control" data-ng-model="memberIds" />
+                            </div>
+                            <div class="form-group">
+                                <label for="memberNames">
+                                    MemberNames:
+                                </label>
+                                <input id="memberNames" type="text" class="form-control" data-ng-model="memberNames" />
+                            </div>
+                            <a class="pull-right" href="#" data-ng-click="view(@((int)FormType.MasterEditMember))">
                                 Open</a>
                         </div>
                     </div>
@@ -136,6 +326,6 @@
         </div>
     </div>
     <div class="main">
-        <iframe name="setting-page" src="~/Home/Welcome"></iframe>
+        <iframe id="setting-page" name="setting-page" src="~/Home/Welcome"></iframe>
     </div>
 </div>

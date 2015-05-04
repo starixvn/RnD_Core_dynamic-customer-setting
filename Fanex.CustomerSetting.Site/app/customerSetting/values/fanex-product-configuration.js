@@ -3,7 +3,7 @@
 (function () {
     angular.module('customerSettingApp').value('fanexProductConfiguration', {
         errorController: 'FanexErrorController',
-        errorTemplateUrl: 'templates/customer-setting-error-page.htm',
+        errorTemplateUrl: 'templates/fanex-error-page.htm',
         productSettings: [
             {
                 id: 255,

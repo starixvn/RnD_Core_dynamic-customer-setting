@@ -2960,15 +2960,23 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 }
             }, this);
 
+            if (!this.isValid) {
+                return;
+            }
+
             // read multiple information
             this.isMultiple = false;
             var queryString = $location.search();
             var custIds = queryString.custIds;
             var custNames = queryString.custNames;
             if (angular.isDefined(custIds) && angular.isDefined(custNames)) {
+                this.isMultiple = true;
                 custIds = custIds.split(',').map(Number);
                 custNames = custNames.split(',');
-                this.isMultiple = custIds.length === custNames.length;
+                if (custIds.length !== custNames.length || custIds.length <= 1) {
+                    this.isValid = false;
+                    return;
+                }
             }
 
             if (this.isMultiple) {
@@ -3262,7 +3270,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     angular.module('customerSettingApp').value('fanexProductConfiguration', {
         errorController: 'FanexErrorController',
-        errorTemplateUrl: 'templates/customer-setting-error-page.htm',
+        errorTemplateUrl: 'templates/fanex-error-page.htm',
         productSettings: [
             {
                 id: 255,

@@ -48,6 +48,11 @@ iframe
     height: 5px;
 }
 
+.login-form
+{
+      margin-bottom: 10px;
+}
+
 .login-form > div > div > label
 {
     font-weight: normal;
