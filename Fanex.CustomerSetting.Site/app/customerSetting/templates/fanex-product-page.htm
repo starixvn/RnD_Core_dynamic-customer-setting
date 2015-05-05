@@ -48,7 +48,7 @@
         <div class="body" data-ng-include="positionTakingTemplate">
         </div>
     </div>
-    <button class="update" data-ng-show="information" data-ng-click="updateAll()">
+    <button class="update" data-ng-show="hasUpdateAll" data-ng-click="updateAll()">
         {{resourceService.getString('Update')}}
     </button>
 </div>

@@ -49,7 +49,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-product-page.htm',
-    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{resourceService.getString('GeneralInformation')}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{resourceService.getString('ProductStatus')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{resourceService.getString('Commission')}} <span data-ng-show=hasUpdateDiscount title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{resourceService.getString('BetSetting')}} <span data-ng-show=hasUpdateBetLimit title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{resourceService.getString('PositionTaking')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=information data-ng-click=updateAll()>{{resourceService.getString('Update')}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-dialog=updateModal></div>"
+    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{resourceService.getString('GeneralInformation')}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{resourceService.getString('ProductStatus')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{resourceService.getString('Commission')}} <span data-ng-show=hasUpdateDiscount title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{resourceService.getString('BetSetting')}} <span data-ng-show=hasUpdateBetLimit title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{resourceService.getString('PositionTaking')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{resourceService.getString('Update')}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-dialog=updateModal></div>"
   );
 
 
@@ -104,12 +104,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/no-group/fanex-bet-limit-container.htm',
-    "<div class=bet-limit-container><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"betLimit in betLimits\" data-fanex-bet-limit=betLimit data-has-copy=\"betLimit==betLimits[0] && betLimits.length>=2\"></div></div>"
+    "<div class=bet-limit-container><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"betLimit in betLimits\" data-fanex-bet-limit=betLimit data-form-type=formType data-has-copy=\"betLimit==betLimits[0] && betLimits.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-discount-container.htm',
-    "<div class=discount-container><div data-ng-repeat=\"discount in discounts\" data-fanex-discount=discount data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=discount-container><div data-ng-repeat=\"discount in discounts\" data-fanex-discount=discount data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
   );
 
 
@@ -154,17 +154,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/no-group/fanex-status-container.htm',
-    "<div class=status-container><div data-ng-repeat=\"status in statuses\" data-fanex-status=status data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=status-container><div data-ng-repeat=\"status in statuses\" data-fanex-status=status data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-bet-limit-container.htm',
-    "<div data-ng-init=\"betLimitGroups=(betLimits|fanexDataGroup)\" class=bet-limit-container><div data-ng-repeat=\"betLimitGroup in betLimitGroups\" class=sport-group><div class=sport-name title={{betLimitGroup.SportTypeName}}>{{betLimitGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"item in betLimitGroup.Items\" data-fanex-bet-limit=item data-has-copy=\"item==betLimits[0] && betLimits.length>=2\"></div></div></div>"
+    "<div data-ng-init=\"betLimitGroups=(betLimits|fanexDataGroup)\" class=bet-limit-container><div data-ng-repeat=\"betLimitGroup in betLimitGroups\" class=sport-group><div class=sport-name title={{betLimitGroup.SportTypeName}}>{{betLimitGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"item in betLimitGroup.Items\" data-fanex-bet-limit=item data-form-type=formType data-has-copy=\"item==betLimits[0] && betLimits.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-discount-container.htm',
-    "<div class=discount-container data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div data-ng-repeat=\"item in discountGroup.Items\" data-fanex-discount=item data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
+    "<div class=discount-container data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div data-ng-repeat=\"item in discountGroup.Items\" data-fanex-discount=item data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
   );
 
 
@@ -209,7 +209,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/sport-group/fanex-status-container.htm',
-    "<div class=status-container data-ng-init=\"statusGroups=(statuses|fanexDataGroup)\"><div data-ng-repeat=\"statusGroup in statusGroups\" class=sport-group><div class=sport-name title={{statusGroup.SportTypeName}}>{{statusGroup.SportTypeName}}</div><div data-ng-repeat=\"item in statusGroup.Items\" data-fanex-status=item data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
+    "<div class=status-container data-ng-init=\"statusGroups=(statuses|fanexDataGroup)\"><div data-ng-repeat=\"statusGroup in statusGroups\" class=sport-group><div class=sport-name title={{statusGroup.SportTypeName}}>{{statusGroup.SportTypeName}}</div><div data-ng-repeat=\"item in statusGroup.Items\" data-fanex-status=item data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
   );
 
 } ]);

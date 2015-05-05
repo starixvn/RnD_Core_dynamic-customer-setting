@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.CustomerSetting.Enumerations;
@@ -131,13 +132,52 @@
             }
 
             var commandInfo = model.CreateCommandInfo(_userContext, _modelService);
-            var validationResult = _validationService.Validate(commandInfo);
-            if (!validationResult.IsSuccess)
+            var multipleCommandInfo = commandInfo as MultipleCommandInfo;
+            if (multipleCommandInfo != null)
             {
-                return Json(validationResult);
+                return MultipleUpdate(multipleCommandInfo);
             }
 
-            return Json(_commandService.Update(commandInfo));
+            return SingleUpdate(commandInfo);
+        }
+
+        private JsonResult SingleUpdate(CommandInfo commandInfo)
+        {
+            Result result = _validationService.Validate(commandInfo);
+            if (result.IsSuccess)
+            {
+                result = _commandService.Update(commandInfo);
+            }
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Multiple update.
+        /// </summary>
+        /// <param name="multipleCommandInfo">The multiple command information.</param>
+        /// <returns>Returns list of result.</returns>
+        private JsonResult MultipleUpdate(MultipleCommandInfo multipleCommandInfo)
+        {
+            var results = new List<Result>();
+            while (true)
+            {
+                var commandInfo = multipleCommandInfo.Take();
+                if (commandInfo == null)
+                {
+                    break;
+                }
+
+                Result result = _validationService.Validate(commandInfo);
+                if (result.IsSuccess)
+                {
+                    result = _commandService.Update(commandInfo);
+                }
+
+                results.Add(result);
+            }
+
+            return Json(results);
         }
     }
 }

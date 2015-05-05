@@ -3,7 +3,7 @@
         <div class="sport-name" title="{{statusGroup.SportTypeName}}">
             {{statusGroup.SportTypeName}}
         </div>
-        <div data-ng-repeat="item in statusGroup.Items" data-fanex-status="item"
+        <div data-ng-repeat="item in statusGroup.Items" data-fanex-status="item" data-form-type="formType"
             data-ng-class="{'full-width': $last && $even}">
         </div>
     </div>

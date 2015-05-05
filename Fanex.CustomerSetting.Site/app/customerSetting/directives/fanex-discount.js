@@ -44,21 +44,21 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                discount: '=fanexDiscount'
+                discount: '=fanexDiscount',
+                formType: '=formType'
             },
             templateUrl: 'templates/fanex-discount.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkDiscount($scope);
                 var discount = $scope.discount;
-                var requestContext = controllerService.getRequestContext();
-                var data = parse(discount, requestContext.FormType);
+                var data = parse(discount, $scope.formType);
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, discount);
                 $scope.min = data.min;
                 $scope.value = data.value;
                 $scope.options = data.options;
 
                 $scope.validate = function () {
-                    var errCode = $scope.value !== getValue(discount, requestContext.FormType)
+                    var errCode = $scope.value !== getValue(discount, $scope.formType)
                     ? appSettings.errorType.Success
                     : appSettings.errorType.NoChange;
 
@@ -66,7 +66,7 @@
                         SportType: discount.SportType,
                         BetType: discount.BetType
                     };
-                    data[getName(requestContext.FormType)] = $scope.value;
+                    data[getName($scope.formType)] = $scope.value;
                     return {
                         errCode: errCode,
                         data: data

@@ -1,13 +1,11 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
-            'fanexProductConfiguration', 'fanexModelService', 'fanexMessageService', 'fanexControllerService'];
-    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
-            fanexProductConfiguration, fanexModelService, fanexMessageService, fanexControllerService) {
+    var injectParams = ['$sce', '$compile', '$controller', '$templateCache', 'fanexProductConfiguration', 'fanexModelService'];
+    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache, productConfiguration, modelService) {
         function getProductSetting(productId) {
             var result;
-            angular.forEach(fanexProductConfiguration.productSettings, function (productSetting) {
+            angular.forEach(productConfiguration.productSettings, function (productSetting) {
                 if (angular.isUndefined(result) && productSetting.id === productId) {
                     result = productSetting;
                 }
@@ -24,11 +22,11 @@
 
                     // update view
                     function update() {
-                        var controller = fanexProductConfiguration.errorController;
-                        var templateUrl = fanexProductConfiguration.errorTemplateUrl;
-                        var isValid = fanexModelService.isValid();
+                        var controller = productConfiguration.errorController;
+                        var templateUrl = productConfiguration.errorTemplateUrl;
+                        var isValid = modelService.isValid();
                         if (isValid) {
-                            var params = fanexModelService.getParams();
+                            var params = modelService.getParams();
                             var productId = params.productId;
                             var productSetting = getProductSetting(productId);
                             if (angular.isDefined(productSetting)) {
@@ -37,10 +35,10 @@
                             }
                         }
 
+                        
                         templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
-
                         linker(newScope, function (clone) {
                             clone.html(template);
                             $element.after(clone);
@@ -58,14 +56,11 @@
                             clone.children().data('$ngControllerController', controller);
                             link(newScope);
                         });
+
+                        scope.$emit('product-view-loaded');
                     }
 
-                    update();
                     scope.$on('$locationChangeSuccess', update);
-                    scope.$on('$locationChangeStart', function () {
-                        fanexMessageService.hide();
-                        fanexControllerService.reset();
-                    });
                 };
             }
         };

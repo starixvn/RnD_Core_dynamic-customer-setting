@@ -20,6 +20,10 @@
             return index;
         };
 
+        this.isArrayAndNotEmpty = function (array) {
+            return angular.isArray(array) && array.length > 0;
+        };
+
         // return array of property values of obj
         this.getPropertyValues = function (obj) {
             var propertyValues = [];

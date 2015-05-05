@@ -142,6 +142,7 @@
     <Compile Include="Models\AgentQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryMemberResult.cs" />
     <Compile Include="Models\MessageInfo.cs" />
+    <Compile Include="Models\MultipleCommandInfo.cs" />
     <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Models\SuperQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryAgentResult.cs" />

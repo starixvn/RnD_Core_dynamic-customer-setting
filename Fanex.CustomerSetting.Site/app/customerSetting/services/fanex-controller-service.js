@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexResourceService'];
-    var fanexControllerService = function (appSettings, resourceService) {
+    var injectParams = ['$rootScope', 'fanexAppSettings', 'fanexResourceService'];
+    var fanexControllerService = function ($rootScope, appSettings, resourceService) {
         var statusScopes = [];
         var discountScopes = [];
         var betLimitScopes = [];
@@ -145,6 +145,11 @@
             settingContext = new SettingContext();
             customerSetting = new CustomerSetting();
         };
+
+        var self = this;
+        $rootScope.$on('product-view-loaded', function(){
+            self.reset();
+        });
     };
 
     fanexControllerService.$inject = injectParams;

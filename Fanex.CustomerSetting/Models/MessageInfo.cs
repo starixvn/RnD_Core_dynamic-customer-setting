@@ -21,8 +21,6 @@
 
         public MsgType MsgType { get; private set; }
 
-        public string UserName { get; set; }
-
         public bool IsMultiple { get; set; }
 
         public RoleType TargetRoleId { get; set; }

@@ -1,10 +1,10 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$scope', 'fanexTemplateService', 'fanexDataService', 'fanexControllerService',
-            'fanexAppSettings', 'fanexModelService', 'fanexMessageService', 'fanexResourceService', 'fanexResponseReader'];
-    var fanexProductController = function ($rootScope, $scope, templateService, dataService, controllerService,
-            appSettings, modelService, messageService, resourceService, ResponseReader) {
+    var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexCommonService',
+            'fanexTemplateService', 'fanexDataService', 'fanexControllerService', 'fanexMessageService', 'fanexResourceService', 'fanexResponseReader'];
+    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, commonService,
+            templateService, dataService, controllerService, messageService, resourceService, ResponseReader) {
         var selectModel = modelService.createSelectModel();
         dataService.select(selectModel, function (response) {
             controllerService.updateResponse(response);
@@ -20,45 +20,52 @@
                 $scope.information = customerSetting.Information;
             }
 
+            $scope.formType = selectModel.FormType;
+
             $scope.statuses = customerSetting.Statuses;
             $scope.statusTemplate = templateService.resolveStatus();
+
             $scope.discounts = customerSetting.Discounts;
-            $scope.hasUpdateDiscount = requestContext.FormType !== appSettings.formType.SuperEditMember
-                && requestContext.FormType !== appSettings.formType.MasterEditMember;
             $scope.discountTemplate = templateService.resolveDiscount();
+            $scope.hasUpdateDiscount = $scope.formType !== appSettings.formType.SuperEditMember
+                && $scope.formType !== appSettings.formType.MasterEditMember;
+            
             $scope.betLimits = customerSetting.BetLimits;
-            $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
+            $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
+            
             $scope.positionTakings = customerSetting.PositionTakings;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
             if (requestContext.FormType === appSettings.formType.MasterEditAgent) {
                 $scope.disableAutoMPT = settingContext.DisableAutoMPT;
             }
+
+            $scope.hasUpdateAll = modelService.isValid();
         });
 
-        var selectSettingType;
+        var selectedUpdateType;
         $scope.updateStatuses = function () {
-            selectSettingType = appSettings.settingType.Status;
+            selectedUpdateType = appSettings.settingType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            selectSettingType = appSettings.settingType.Discount;
+            selectedUpdateType = appSettings.settingType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            selectSettingType = appSettings.settingType.BetLimit;
+            selectedUpdateType = appSettings.settingType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            selectSettingType = appSettings.settingType.PositionTaking;
+            selectedUpdateType = appSettings.settingType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            selectSettingType = appSettings.settingType.All;
+            selectedUpdateType = appSettings.settingType.All;
             update();
         };
 
@@ -132,7 +139,7 @@
             var betLimits;
             var discounts;
             var statuses;
-            switch (selectSettingType) {
+            switch (selectedUpdateType) {
                 case appSettings.settingType.All:
                     statuses = controllerService.getUpdateData(appSettings.settingType.Status);
                     discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
@@ -232,9 +239,9 @@
             }
 
             var selectModel = modelService.createSelectModel();
+            var multipleInfo = modelService.getMultipleInfo();
             var updateModel = angular.extend({
-                UserName: $scope.information.UserName,
-                SettingType: selectSettingType,
+                SettingType: selectedUpdateType,
                 StatusLevel: settingContext.StatusLevel,
                 StatusString: JSON.stringify(statuses),
                 DiscountLevel: settingContext.DiscountLevel,
@@ -244,6 +251,12 @@
                 PositionTakingLevel: settingContext.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
             }, selectModel);
+            if (multipleInfo.IsMultiple) {
+                updateModel = angular.extend({
+                    TargetCustIds: JSON.stringify(multipleInfo.CustIds)
+                }, updateModel);
+            }
+
             dataService.update(updateModel, function (response) {
                 var responseReader = new ResponseReader(updateModel.SettingType);
                 var settingResults = responseReader.read(response);

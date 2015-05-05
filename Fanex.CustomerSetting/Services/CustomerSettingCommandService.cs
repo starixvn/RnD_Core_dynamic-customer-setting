@@ -51,7 +51,7 @@
             Result discountResult = null;
             Result betLimitResult = null;
             Result positionTakingResult = null;
-            switch (model.SettingType)
+            switch (model.CommandType)
             {
                 case SettingType.All:
                     statusResult = UpdateStatus(model);
@@ -227,8 +227,6 @@
 
             var messageInfo = new MessageInfo(criteria)
             {
-                IsMultiple = model.IsMultiple,
-                UserName = model.UserName,
                 TargetRoleId = model.TargetRoleId,
                 SettingLevel = settingLevel,
                 SettingType = settingType

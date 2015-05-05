@@ -150,7 +150,7 @@
         private Result ValidateProductProfile(CommandInfo model)
         {
             var productProfile = _productProfileService.GetProductProfile(model.ProductId);
-            switch (model.SettingType)
+            switch (model.CommandType)
             {
                 case SettingType.All:
                     IEnumerable<BaseEntity>[] dataList =

@@ -13,6 +13,8 @@
 
         public int TargetCustId { get; set; }
 
+        public string TargetCustName { get; set; }
+
         public RoleType TargetRoleId { get; set; }
 
         public byte ProductId { get; set; }

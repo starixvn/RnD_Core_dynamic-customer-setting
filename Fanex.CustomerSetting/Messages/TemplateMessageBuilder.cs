@@ -35,11 +35,6 @@
         {
             var templateMessage = Deserialize<TMessage>(messageInfo.ErrMsg);
             var message = TranslateResource(templateMessage.MessageId, messageInfo.SettingType);
-            if (messageInfo.IsMultiple)
-            {
-                message = string.Format("{0}: {1}", messageInfo.UserName, message);
-            }
-
             var stringBuilder = new StringBuilder(message);
             if (messageInfo.SettingLevel != SettingLevel.Product)
             {

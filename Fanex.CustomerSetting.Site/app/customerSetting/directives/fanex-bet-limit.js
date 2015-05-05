@@ -117,25 +117,24 @@
             replace: true,
             scope: {
                 betLimit: '=fanexBetLimit',
+                formType: '=formType',
                 hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
                 controllerService.linkBetLimit($scope);
                 var betLimit = $scope.betLimit;
-                var requestContext = controllerService.getRequestContext();
-
-                $scope.isReadonly = requestContext.FormType === appSettings.formType.SuperEditMember
-                    || requestContext.FormType === appSettings.formType.MasterEditMember;
+                $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
+                    || $scope.formType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? 'templates/fanex-bet-limit-readonly.htm'
                     : 'templates/fanex-bet-limit.htm';
 
-                var data = parse(betLimit, requestContext.FormType);
+                var data = parse(betLimit, $scope.formType);
                 $scope.minBet = data.minBet;
                 $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = data.maxBet;
-                $scope.hasMaxBetLimit = requestContext.FormType !== appSettings.formType.CompanyEditSuper;
+                $scope.hasMaxBetLimit = $scope.formType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = data.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;

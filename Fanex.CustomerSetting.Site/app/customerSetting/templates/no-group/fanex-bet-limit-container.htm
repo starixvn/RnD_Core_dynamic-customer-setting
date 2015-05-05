@@ -12,7 +12,7 @@
             {{resourceService.getString('MaxPerMatch')}}
         </div>
     </div>
-    <div data-ng-repeat="betLimit in betLimits" data-fanex-bet-limit="betLimit"
+    <div data-ng-repeat="betLimit in betLimits" data-fanex-bet-limit="betLimit" data-form-type="formType"
         data-has-copy="betLimit==betLimits[0] && betLimits.length>=2">
     </div>
 </div>

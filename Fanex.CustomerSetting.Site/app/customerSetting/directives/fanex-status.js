@@ -7,17 +7,17 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                status: '=fanexStatus'
+                status: '=fanexStatus',
+                formType: '=formType'
             },
             templateUrl: 'templates/fanex-status.htm',
             controller: ['$scope', function ($scope) {
                 controllerService.linkStatus($scope);
-                var requestContext = controllerService.getRequestContext();
                 $scope.resourceService = resourceService;
                 $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
-                $scope.showDownline = requestContext.FormType !== appSettings.formType.AgentEditMember;
+                $scope.showDownline = $scope.formType !== appSettings.formType.AgentEditMember;
 
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;

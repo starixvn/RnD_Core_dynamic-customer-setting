@@ -18,7 +18,7 @@
                     throw "Don't use ng-options in this directive";
                 }
 
-                scope.$watchCollection(attrs.positionTakingSelectOptions, function (newValues, oldValues) {
+                scope.$watchCollection(attrs.fanexPtSelectOptions, function (newValues, oldValues) {
                     if (newValues !== oldValues) {
                         render();
                     }

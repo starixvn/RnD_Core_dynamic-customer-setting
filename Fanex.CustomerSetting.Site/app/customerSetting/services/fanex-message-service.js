@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
-    var fanexMessageService = function ($timeout, $sce, commonService, appSettings, resourceService) {
+    var injectParams = ['$rootScope', '$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
+    var fanexMessageService = function ($rootScope, $timeout, $sce, commonService, appSettings, resourceService) {
         var messageScope;
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
@@ -114,6 +114,11 @@
         this.hide = function () {
             setScopeMessages(undefined);
         };
+
+        var self = this;
+        $rootScope.$on('product-view-loaded', function(){
+            self.hide();
+        });
     };
 
     fanexMessageService.$inject = injectParams;

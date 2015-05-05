@@ -1,6 +1,6 @@
 {
   "name": "fanex-customer-setting",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Grunt for Angular customer setting application",
   "main": "customer-setting-app.js",
   "scripts": {
