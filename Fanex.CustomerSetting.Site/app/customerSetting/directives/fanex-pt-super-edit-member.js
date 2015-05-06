@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtSuperEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtSuperEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtSuperEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-super-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Is Auto
                 $scope.superIsAuto = positionTaking.IS1;
@@ -36,24 +37,24 @@
                         ? positionTaking.S1
                         : !isInitialized
                             ? !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1
-                            : commonService.correctValue(min, max, $scope.superPT.value);
-                    var select = commonService.createPositionTakingSelect(min, max, value);
+                            : ptService.correctValue(min, max, $scope.superPT.value);
+                    var select = ptService.createSelect(min, max, value);
                     select.disabled = disabled;
                     return select;
                 }
                 $scope.superPT = generateSuperPT();
 
                 // Master PT
-                $scope.masterPT = positionTaking.M1 / appSettings.positionTakingDivider;
+                $scope.masterPT = positionTaking.M1;
 
                 // Agent PT
-                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+                $scope.agentPT = positionTaking.A1;
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.superIsAuto = source.superIsAuto;
                     if (!$scope.superPT.disabled || source.superIsAuto) {
-                        return commonService.copyValue(source, $scope, 'superPT', generateSuperPT);
+                        return ptService.copyValue(source, $scope, 'superPT', generateSuperPT);
                     }
 
                     return true;

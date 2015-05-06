@@ -4,24 +4,24 @@
     var injectParams = ['$rootScope', '$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
     var fanexMessageService = function ($rootScope, $timeout, $sce, commonService, appSettings, resourceService) {
         var messageScope;
+        var messageOptions = {
+            RemoveNoChange: true
+        };
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
         messageClasses[appSettings.messageType.Error] = 'error';
 
-        var Message = function (messageType, messageContent) {
-            this.MessageType = messageType;
-            this.MessageContent = messageContent;
+        var Message = function (type, content) {
+            return {
+                'class': messageClasses[type],
+                content: $sce.trustAsHtml(content)
+            };
         };
 
-        function setScopeMessages(messages) {
-            if (angular.isDefined(messageScope)) {
-                messageScope.messages = messages;
-            }
-        }
-
-        function generateMesage(result) {
+        Message.fromSettingResult = function (settingResult) {
             var messageType = appSettings.messageType.Error;
+            var result = settingResult.result;
             switch (result.ErrCode) {
                 case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
@@ -34,91 +34,145 @@
 
             var messageContent = result.ErrMsg || 'Undefined messsage';
             return new Message(messageType, messageContent);
+        };
+
+        Message.fromSettingResults = function (settingResults) {
+            var messages = [];
+            angular.forEach(settingResults, function (settingResult) {
+                var message = Message.fromSettingResult(settingResult);
+                messages.push(message);
+            });
+
+            return messages;
+        };
+
+        var User = function (name, messages) {
+            return {
+                name: name,
+                messages: messages
+            };
+        };
+
+        function setup(scope) {
+            messageScope = scope;
+        }
+
+        function config(options) {
+            messageOptions = angular.extend(options, messageOptions);
+        }
+
+        function showSuccess(messageContent) {
+            var message = new Message(appSettings.messageType.Success, messageContent || 'Undefined success message');
+            showMessage(message);
+        }
+
+        function showWarning(messageContent) {
+            var message = new Message(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+            showMessage(message);
+        }
+
+        function showNoChange() {
+            showWarning(resourceService.getString('NoChangeToUpdate'));
+        }
+
+        function showError(messageContent) {
+            var message = new Message(appSettings.messageType.Error, messageContent || 'Undefined error message');
+            showMessage(message);
         }
 
         function showMessage(message) {
-            var htmlMessages = [];
-            htmlMessages.push({
-                messageClass: messageClasses[message.MessageType],
-                messageContent: $sce.trustAsHtml(message.MessageContent)
-            });
-            commonService.scrollToTop();
-
-            $timeout(function () {
-                setScopeMessages(htmlMessages);
-            });
+            var messages = [message];
+            showMessages(messages);
         }
 
         function showMessages(messages) {
-            var htmlMessages = [];
-            angular.forEach(messages, function (message) {
-                htmlMessages.push({
-                    messageClass: messageClasses[message.MessageType],
-                    messageContent: $sce.trustAsHtml(message.MessageContent)
-                });
-            });
+            showUserMessages(undefined, messages);
+        }
+
+        function showUserMessages(userName, userMessages) {
+            var user = new User(userName, userMessages);
+            showUser(user);
+        }
+
+        function showUser(user) {
+            var users = [user];
+            showUsers(users);
+        }
+
+        function showUsers(users) {
             commonService.scrollToTop();
 
             $timeout(function () {
-                setScopeMessages(htmlMessages);
+                messageScope.users = users;
             });
         }
 
-        this.setup = function (scope) {
-            messageScope = scope;
-        };
+        function filter(settingResults) {
+            if (messageOptions.RemoveNoChange) {
+                return filterRemoveNoChange(settingResults);
+            }
 
-        this.showMessage = function (messageType, messageContent) {
-            var message = new Message(messageType, messageContent);
-            showMessage(message);
-        };
+            return settingResults;
+        }
 
-        this.showResult = function (result) {
-            var message = generateMesage(result);
-            showMessage(message);
-        };
-
-        this.showResults = function (results) {
-            // if having any successful or error messages -> remove any no-change messages
-            var messages = [];
-            angular.forEach(results, function (result) {
+        // if having any successful or error messages -> remove any no-change results
+        function filterRemoveNoChange(settingResults) {
+            var filteredSettingResults = [];
+            angular.forEach(settingResults, function (settingResult) {
+                var result = settingResult.result;
                 if (result.ErrCode !== appSettings.errorCode.NoChange) {
-                    var message = generateMesage(result);
-                    messages.push(message);
+                    filteredSettingResults.push(settingResult);
                 }
             });
 
-            if (messages.length === 0) {
-                this.showNoChange();
-            } else {
-                showMessages(messages);
+            if (filteredSettingResults.length === 0) {
+                filteredSettingResults = settingResults[0];
             }
-        };
 
-        this.showSuccess = function (messageContent) {
-            this.showMessage(appSettings.messageType.Success, messageContent || 'Undefined success message');
-        };
+            return filteredSettingResults;
+        }
 
-        this.showWarning = function (messageContent) {
-            this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
-        };
+        // user has list of results: position taking result, bet limit result, discount result, status result.
+        function showSingle(userSettingResults) {
+            userSettingResults = filter(userSettingResults);
+            var messages = Message.fromSettingResults(userSettingResults);
+            showMessages(messages);
+        }
 
-        this.showNoChange = function () {
-            this.showWarning(resourceService.getString('NoChangeToUpdate'));
-        };
+        function showMultiple(userNames, usersSettingResults) {
+            var users = [];
+            angular.forEach(userNames, function (userName, index) {
+                var userSettingResults = usersSettingResults[index];
+                userSettingResults = filter(userSettingResults);
+                var userMessages = Message.fromSettingResults(userSettingResults);
+                var user = new User(userName, userMessages);
+                users.push(user);
+            });
 
-        this.showError = function (messageContent) {
-            this.showMessage(appSettings.messageType.Error, messageContent || 'Undefined error message');
-        };
+            showUsers(users);
+        }
 
-        this.hide = function () {
-            setScopeMessages(undefined);
-        };
+        function hide() {
+            if (angular.isDefined(messageScope)) {
+                messageScope.users = undefined;
+            }
+        }
 
-        var self = this;
-        $rootScope.$on('product-view-loaded', function(){
-            self.hide();
+        $rootScope.$on('product-view-loaded', function () {
+            hide();
         });
+
+        return {
+            setup: setup,
+            config: config,
+            hide: hide,
+            showSuccess: showSuccess,
+            showWarning: showWarning,
+            showNoChange: showNoChange,
+            showError: showError,
+            showSingle: showSingle,
+            showMultiple: showMultiple
+        };
     };
 
     fanexMessageService.$inject = injectParams;

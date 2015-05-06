@@ -75,12 +75,12 @@
         }
 
         /// <summary>
-        /// Select customer setting.
+        /// Query customer setting.
         /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Returns select JSON result.</returns>
+        /// <param name="model">The query model.</param>
+        /// <returns>Returns query JSON result.</returns>
         [HttpPost]
-        public JsonResult Select(QueryModel model)
+        public JsonResult Query(QueryModel model)
         {
             if (_userContext == null)
             {
@@ -119,14 +119,14 @@
         }
 
         /// <summary>
-        /// Update customer setting.
+        /// Command customer setting.
         /// </summary>
-        /// <param name="model">The update model.</param>
-        /// <returns>Returns update JSON result.</returns>
+        /// <param name="model">The command model.</param>
+        /// <returns>Returns command JSON result.</returns>
         [HttpPost]
-        public JsonResult Update(CommandModel model)
+        public JsonResult Command(CommandModel model)
         {
-            if (_userContext == null || !_userContext.HasUpdatePermission)
+            if (_userContext == null || !_userContext.HasCommandPermission)
             {
                 return Json(Result.AccessDenied);
             }
@@ -135,13 +135,13 @@
             var multipleCommandInfo = commandInfo as MultipleCommandInfo;
             if (multipleCommandInfo != null)
             {
-                return MultipleUpdate(multipleCommandInfo);
+                return MultipleCommand(multipleCommandInfo);
             }
 
-            return SingleUpdate(commandInfo);
+            return SingleCommand(commandInfo);
         }
 
-        private JsonResult SingleUpdate(CommandInfo commandInfo)
+        private JsonResult SingleCommand(CommandInfo commandInfo)
         {
             Result result = _validationService.Validate(commandInfo);
             if (result.IsSuccess)
@@ -153,11 +153,11 @@
         }
 
         /// <summary>
-        /// Multiple update.
+        /// Multiple command.
         /// </summary>
         /// <param name="multipleCommandInfo">The multiple command information.</param>
         /// <returns>Returns list of result.</returns>
-        private JsonResult MultipleUpdate(MultipleCommandInfo multipleCommandInfo)
+        private JsonResult MultipleCommand(MultipleCommandInfo multipleCommandInfo)
         {
             var results = new List<Result>();
             while (true)
@@ -177,7 +177,7 @@
                 results.Add(result);
             }
 
-            return Json(results);
+            return Json(new MultipleCommandResult(results));
         }
     }
 }

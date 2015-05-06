@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$window'];
-    var fanexCommonService = function ($window) {
+    var injectParams = ['$window', 'fanexProductConfiguration'];
+    var fanexCommonService = function ($window, productConfiguration) {
         // scroll to top
         this.scrollToTop = function () {
             $window.scrollTo(0, 0);
@@ -20,87 +20,31 @@
             return index;
         };
 
-        this.isArrayAndNotEmpty = function (array) {
-            return angular.isArray(array) && array.length > 0;
+        // check if object is array and it's not empty.
+        this.isArrayAndNotEmpty = function (object) {
+            return angular.isArray(object) && object.length > 0;
         };
 
-        // return array of property values of obj
-        this.getPropertyValues = function (obj) {
+        // return array of property values of object.
+        this.getPropertyValues = function (object) {
             var propertyValues = [];
-            for (var propertyName in obj) {
-                propertyValues.push(obj[propertyName]);
+            for (var propertyName in object) {
+                propertyValues.push(object[propertyName]);
             }
 
             return propertyValues;
         };
 
-        var OptionsBuilder = function (step, factor) {
-            this.generateOptions = function (min, max, value) {
-                var options = [];
-                min = Math.max(0, min);
-                max = Math.max(0, max);
-                while (max >= min) {
-                    options.push(max);
-                    max -= step;
-                    max = Math.round(max * factor) / factor;
+        // return product setting by product id.
+        this.getProductSetting = function (productId) {
+            var result = productConfiguration.defaultProductSetting;
+            angular.forEach(productConfiguration.productSettings, function (productSetting) {
+                if (productSetting.id === productId) {
+                    result = productSetting;
                 }
+            });
 
-                if (angular.isDefined(value)) {
-                    var selectIndex = -1;
-                    angular.forEach(options, function (option, index) {
-                        if (selectIndex === -1 && option === value) {
-                            selectIndex = index;
-                        }
-                    });
-
-                    if (selectIndex === -1) {
-                        if (value < min) {
-                            options.push(value);
-                            selectIndex = options.length - 1;
-                        } else if (value > max) {
-                            options.unshift(value);
-                            selectIndex = 0;
-                        }
-                    }
-                }
-
-                return options;
-            };
-        };
-
-        var SelectBuilder = function (step, factor) {
-            var optionsBuilder = new OptionsBuilder(step, factor);
-            this.build = function (min, max, value) {
-                var options = optionsBuilder.generateOptions(min, max, value);
-                return {
-                    valid: true,
-                    disabled: false,
-                    value: value,
-                    options: options
-                };
-            };
-        };
-
-        this.correctValue = function (min, max, value) {
-            return Math.max(min, Math.min(max, value));
-        };
-
-        this.copyValue = function (source, destination, field, generator) {
-            destination[field].value = source[field].value;
-            destination[field] = generator();
-            var isCopied = source[field].value === destination[field].value;
-            destination[field].valid = isCopied;
-            return isCopied;
-        };
-
-        this.createPositionTakingSelect = function (min, max, value) {
-            var selectBuilder = new SelectBuilder(1, 1);
-            return selectBuilder.build(min, max, value);
-        };
-
-        this.createDiscountSelect = function (min, max, value) {
-            var selectBuilder = new SelectBuilder(0.0005, 10000);
-            return selectBuilder.build(min, max, value);
+            return result;
         };
     };
 

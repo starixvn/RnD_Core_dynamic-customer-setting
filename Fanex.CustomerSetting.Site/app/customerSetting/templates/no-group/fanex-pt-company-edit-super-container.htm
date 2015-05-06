@@ -3,19 +3,19 @@
         <div class="name">
         </div>
         <div class="super-max-pt">
-            {{resourceService.getString('SuperMaxPT')}}
+            {{'SuperMaxPT' | fanexTranslate}}
         </div>
         <div class="master-max-pt">
-            {{resourceService.getString('MasterMaxPT')}}
+            {{'MasterMaxPT' | fanexTranslate}}
         </div>
         <div class="agent-max-pt">
-            {{resourceService.getString('AgentMaxPT')}}
+            {{'AgentMaxPT' | fanexTranslate}}
         </div>
         <div class="super-min-pt">
-            {{resourceService.getString('SuperMinPT')}}
+            {{'SuperMinPT' | fanexTranslate}}
         </div>
     </div>
-    <div data-ng-repeat="item in positionTakings" data-fanex-pt-company-edit-super="item"
-        data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+    <div data-ng-repeat="positionTaking in positionTakings" data-fanex-pt-company-edit-super="positionTaking"
+        data-setting-level="positionTakingLevel" data-has-copy="positionTaking==positionTakings[0] && positionTakings.length>=2">
     </div>
 </div>

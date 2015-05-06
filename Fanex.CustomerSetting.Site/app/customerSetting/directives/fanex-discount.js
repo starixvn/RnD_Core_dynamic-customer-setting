@@ -1,21 +1,21 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexDiscountService', 'fanexResourceService'];
+    var fanexDiscountDirective = function (appSettings, discountService, resourceService) {
         function parse(data, formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return commonService.createDiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
+                    return discountService.createSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return commonService.createDiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
+                    return discountService.createSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
-                    return commonService.createDiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
+                    return discountService.createSelect(0, data.MasterDiscount, data.AgentDiscount);
 
                 case appSettings.formType.AgentEditMember:
-                    return commonService.createDiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
+                    return discountService.createSelect(0, data.AgentDiscount, data.PlayerDiscount);
             }
         }
 
@@ -45,14 +45,16 @@
             replace: true,
             scope: {
                 discount: '=fanexDiscount',
-                formType: '=formType'
+                formType: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-discount.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkDiscount($scope);
+                discountService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
                 var data = parse(discount, $scope.formType);
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, discount);
                 $scope.min = data.min;
                 $scope.value = data.value;
                 $scope.options = data.options;

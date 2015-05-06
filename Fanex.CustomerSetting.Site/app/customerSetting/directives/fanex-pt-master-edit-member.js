@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtMasterEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtMasterEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtMasterEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-master-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Master Is Auto
                 $scope.masterIsAuto = positionTaking.IM1;
@@ -36,21 +37,21 @@
                         ? positionTaking.M1
                         : !isInitialized
                             ? !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1
-                            : commonService.correctValue(min, max, $scope.masterPT.value);
-                    var select = commonService.createPositionTakingSelect(min, max, value);
+                            : ptService.correctValue(min, max, $scope.masterPT.value);
+                    var select = ptService.createSelect(min, max, value);
                     select.disabled = disabled;
                     return select;
                 }
                 $scope.masterPT = generateMasterPT();
 
                 // Agent PT
-                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+                $scope.agentPT = positionTaking.A1;
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.masterIsAuto = source.masterIsAuto;
                     if (!$scope.masterPT.disabled || source.masterIsAuto) {
-                        return commonService.copyValue(source, $scope, 'masterPT', generateMasterPT);
+                        return ptService.copyValue(source, $scope, 'masterPT', generateMasterPT);
                     }
 
                     return true;

@@ -1,4 +1,4 @@
-/*! fanex-customer-setting v0.0.6 | (c) 2015 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.7 | (c) 2015 Nexcel Solutions Vietnam */
 
 'use strict';
 
@@ -58,13 +58,18 @@
 angular.module('customerSettingApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('templates/fanex-bet-limit-copy.htm',
+    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
+  );
+
+
   $templateCache.put('templates/fanex-bet-limit-readonly.htm',
     "<div class=bet-limit-item><div class=name title={{name}}>{{name}}</div><div class=\"min-bet read-only\" data-ng-bind=minBet></div><div class=\"max-bet read-only\" data-ng-bind=maxBet></div><div class=\"max-per-match read-only\" data-ng-bind=maxPerMatch></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-bet-limit.htm',
-    "<div class=bet-limit-item><div class=name title={{name}}>{{name}} <span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+    "<div class=bet-limit-item><div class=name title={{name}}>{{name}}<div data-fanex-bet-limit-copy=hasCopy></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
   );
 
 
@@ -74,22 +79,27 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-customer-information.htm',
-    "<div class=information-container><div class=row><div class=col-1>{{resourceService.getString('UserName')}}</div><div class=col-2 data-ng-bind=userName></div><div class=col-3>{{resourceService.getString('Nickname')}}</div><div class=col-4 data-ng-bind=nickName></div></div><div class=row><div class=col-1>{{resourceService.getString('FirstName')}}</div><div class=col-2 data-ng-bind=firstName></div><div class=col-3>{{resourceService.getString('Phone')}}</div><div class=col-4 data-ng-bind=phone></div></div><div class=row><div class=col-1>{{resourceService.getString('LastName')}}</div><div class=col-2 data-ng-bind=lastName></div><div class=col-3>{{resourceService.getString('MobilePhone')}}</div><div class=col-4 data-ng-bind=mobilePhone></div></div><div class=row><div class=col-1>{{resourceService.getString('Fax')}}</div><div class=col-2 data-ng-bind=fax></div><div class=col-3></div><div class=col-4></div></div></div>"
+    "<div class=information-container><div class=row><div class=col-1>{{'UserName' | fanexTranslate}}</div><div class=col-2 data-ng-bind=userName></div><div class=col-3>{{'Nickname' | fanexTranslate}}</div><div class=col-4 data-ng-bind=nickName></div></div><div class=row><div class=col-1>{{'FirstName' | fanexTranslate}}</div><div class=col-2 data-ng-bind=firstName></div><div class=col-3>{{'Phone' | fanexTranslate}}</div><div class=col-4 data-ng-bind=phone></div></div><div class=row><div class=col-1>{{'LastName' | fanexTranslate}}</div><div class=col-2 data-ng-bind=lastName></div><div class=col-3>{{'MobilePhone' | fanexTranslate}}</div><div class=col-4 data-ng-bind=mobilePhone></div></div><div class=row><div class=col-1>{{'Fax' | fanexTranslate}}</div><div class=col-2 data-ng-bind=fax></div><div class=col-3></div><div class=col-4></div></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-demo-page.htm',
+    "Your product is not supported."
   );
 
 
   $templateCache.put('templates/fanex-discount-master-edit-member.htm',
-    "<div class=discount-item><div class=name title={{name}} data-ng-bind=name></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
+    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-discount-super-edit-member.htm',
-    "<div class=discount-item><div class=name title={{name}} data-ng-bind=name></div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
+    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-discount.htm',
-    "<div class=discount-item><div class=name title={{name}} data-ng-bind=name></div><div class=value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
   );
 
 
@@ -99,37 +109,37 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-message.htm',
-    "<div class=message-container data-ng-show=messages><div data-ng-repeat=\"message in messages\" class=message data-ng-class=message.messageClass><div class=icon></div><div class=content data-ng-bind-html=message.messageContent></div></div></div>"
+    "<div class=message-container data-ng-show=users><div data-ng-repeat=\"user in users\"><div class=name data-ng-show=user.name>{{user.name}}</div><div data-ng-repeat=\"message in user.messages\" class=message data-ng-class=message.class><div class=icon></div><div class=content data-ng-bind-html=message.content></div></div></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-product-page.htm',
-    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{resourceService.getString('GeneralInformation')}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{resourceService.getString('ProductStatus')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{resourceService.getString('Commission')}} <span data-ng-show=hasUpdateDiscount title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{resourceService.getString('BetSetting')}} <span data-ng-show=hasUpdateBetLimit title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{resourceService.getString('PositionTaking')}} <span title=\"{{resourceService.getString('Update')}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{resourceService.getString('Update')}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-dialog=updateModal></div>"
+    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
   );
 
 
   $templateCache.put('templates/fanex-pt-agent-edit-member.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=agent-pt data-fanex-pt-select=agentPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=agent-pt data-fanex-pt-select=agentPT></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-pt-company-edit-super.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=super-max-pt data-fanex-pt-select=superMaxPT></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=super-min-pt data-fanex-pt-select=superMinPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-max-pt data-fanex-pt-select=superMaxPT></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=super-min-pt data-fanex-pt-select=superMinPT></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-pt-dialog.htm',
-    "<div class=dialog-container data-ng-show=isShow><div class=dialog-scrollable><div class=dialog-content><div class=dialog-header><div class=dialog-close data-ng-click=clickClose()><i class=icon-close></i></div><div class=dialog-title>{{resourceService.getString('UpdateMemberPtTitle')}}</div></div><div class=dialog-body><span>{{resourceService.getString('UpdateMemberPtInfo')}}</span><br><span>{{resourceService.getString('UpdateMemberPtQuestion')}}</span><table class=position-taking-group><tbody><tr data-ng-repeat=\"pt in pts\"><td>{{pt.name}}</td><td><select data-ng-model=pt.value data-fanex-pt-select-options=pt.options></select></td></tr></tbody></table></div><div class=dialog-footer><button data-ng-click=clickYes()>{{resourceService.getString('Yes')}}</button> <button data-ng-click=clickNo()>{{resourceService.getString('No')}}</button></div></div></div><div class=dialog-overlay></div></div>"
+  $templateCache.put('templates/fanex-pt-copy.htm',
+    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
   );
 
 
   $templateCache.put('templates/fanex-pt-master-edit-agent.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=agent-min-pt data-fanex-pt-select=agentMinPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=agent-min-pt data-fanex-pt-select=agentMinPT></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-pt-master-edit-member.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-pt data-ng-bind=agentPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
   );
 
 
@@ -139,17 +149,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-master.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=master-min-pt data-fanex-pt-select=masterMinPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=master-min-pt data-fanex-pt-select=masterMinPT></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-pt-super-edit-member.htm',
-    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<span class=copy title=\"{{resourceService.getString('CopyTooltip')}}\" data-ng-show=hasCopy data-fanex-pt-copy><i class=icon-copy></i></span></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=masterPT></div><div class=agent-pt data-ng-bind=agentPT></div></div>"
+    "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=\"masterPT | fanexPtFormat\"></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-update-member-dialog.htm',
+    "<div class=dialog-container data-ng-show=isShow><div class=dialog-scrollable><div class=dialog-content><div class=dialog-header><div class=dialog-close data-ng-click=clickClose()><i class=icon-close></i></div><div class=dialog-title>{{'UpdateMemberPtTitle' | fanexTranslate}}</div></div><div class=dialog-body><span>{{'UpdateMemberPtInfo' | fanexTranslate}}</span><br><span>{{'UpdateMemberPtQuestion' | fanexTranslate}}</span><table class=position-taking-group><tbody><tr data-ng-repeat=\"pt in pts\"><td>{{pt.name}}</td><td><select data-ng-model=pt.value data-fanex-pt-select-options=pt.options></select></td></tr></tbody></table></div><div class=dialog-footer><button data-ng-click=clickYes()>{{'Yes' | fanexTranslate}}</button> <button data-ng-click=clickNo()>{{'No' | fanexTranslate}}</button></div></div></div><div class=dialog-overlay></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-status.htm',
-    "<div class=status-item><div class=name title={{name}} data-ng-bind=name></div><div class=value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{resourceService.getString('Enable')}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{resourceService.getString('EnableDownline')}}</label></div></div>"
+    "<div class=status-item><div class=name title={{name}}>{{name}}</div><div class=value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
   );
 
 
@@ -159,112 +174,112 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/no-group/fanex-bet-limit-container.htm',
-    "<div class=bet-limit-container><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"betLimit in betLimits\" data-fanex-bet-limit=betLimit data-form-type=formType data-has-copy=\"betLimit==betLimits[0] && betLimits.length>=2\"></div></div>"
+    "<div class=bet-limit-container><div class=title><div class=name></div><div class=min-bet>{{'MinBet' | fanexTranslate}}</div><div class=max-bet>{{'MaxBet' | fanexTranslate}}</div><div class=max-per-match>{{'MaxPerMatch' | fanexTranslate}}</div></div><div data-ng-repeat=\"betLimit in betLimits\" data-fanex-bet-limit=betLimit data-form-type=formType data-setting-level=betLimitLevel data-has-copy=\"betLimit==betLimits[0] && betLimits.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-discount-container.htm',
-    "<div class=discount-container><div data-ng-repeat=\"discount in discounts\" data-fanex-discount=discount data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=discount-container><div data-ng-repeat=\"discount in discounts\" data-fanex-discount=discount data-setting-level=discountLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-discount-master-edit-member-container.htm',
-    "<div class=\"discount-container master-edit-member\"><div class=title><div class=name></div><div class=agent-discount>{{resourceService.getString('CommissionForAgent')}}</div><div class=member-discount>{{resourceService.getString('CommissionForMember')}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-master-edit-member=discount></div></div>"
+    "<div class=\"discount-container master-edit-member\"><div class=title><div class=name></div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-master-edit-member=discount data-setting-level=discountLevel></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-discount-super-edit-member-container.htm',
-    "<div class=\"discount-container super-edit-member\"><div class=title><div class=name></div><div class=master-discount>{{resourceService.getString('CommissionForMaster')}}</div><div class=agent-discount>{{resourceService.getString('CommissionForAgent')}}</div><div class=member-discount>{{resourceService.getString('CommissionForMember')}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-super-edit-member=discount></div></div>"
+    "<div class=\"discount-container super-edit-member\"><div class=title><div class=name></div><div class=master-discount>{{'CommissionForMaster' | fanexTranslate}}</div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-super-edit-member=discount data-setting-level=discountLevel></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-agent-edit-member-container.htm',
-    "<div class=\"position-taking-container agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-agent-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-agent-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-company-edit-super-container.htm',
-    "<div class=\"position-taking-container company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{resourceService.getString('SuperMaxPT')}}</div><div class=master-max-pt>{{resourceService.getString('MasterMaxPT')}}</div><div class=agent-max-pt>{{resourceService.getString('AgentMaxPT')}}</div><div class=super-min-pt>{{resourceService.getString('SuperMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-company-edit-super=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-company-edit-super=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-master-edit-agent-container.htm',
-    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=agent-max-pt>{{resourceService.getString('AgentMaxPT')}}</div><div class=agent-min-pt>{{resourceService.getString('AgentMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-master-edit-agent=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-master-edit-agent=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-master-edit-member-container.htm',
-    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=agent-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-master-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-master-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-super-edit-master-container.htm',
-    "<div class=\"position-taking-container super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{resourceService.getString('SuperPT')}}</div><div class=super-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=master-max-pt>{{resourceService.getString('MasterMaxPT')}}</div><div class=master-min-pt>{{resourceService.getString('MasterMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-super-edit-master=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-super-edit-master=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-pt-super-edit-member-container.htm',
-    "<div class=\"position-taking-container super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{resourceService.getString('SuperPT')}}</div><div class=super-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakings\" data-fanex-pt-super-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div>"
+    "<div class=\"position-taking-container super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-super-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
   );
 
 
   $templateCache.put('templates/no-group/fanex-status-container.htm',
-    "<div class=status-container><div data-ng-repeat=\"status in statuses\" data-fanex-status=status data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=status-container><div data-ng-repeat=\"status in statuses\" class=status-item data-fanex-status=status data-setting-level=statusLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-bet-limit-container.htm',
-    "<div data-ng-init=\"betLimitGroups=(betLimits|fanexDataGroup)\" class=bet-limit-container><div data-ng-repeat=\"betLimitGroup in betLimitGroups\" class=sport-group><div class=sport-name title={{betLimitGroup.SportTypeName}}>{{betLimitGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=min-bet>{{resourceService.getString('MinBet')}}</div><div class=max-bet>{{resourceService.getString('MaxBet')}}</div><div class=max-per-match>{{resourceService.getString('MaxPerMatch')}}</div></div><div data-ng-repeat=\"item in betLimitGroup.Items\" data-fanex-bet-limit=item data-form-type=formType data-has-copy=\"item==betLimits[0] && betLimits.length>=2\"></div></div></div>"
+    "<div data-ng-init=\"betLimitGroups=(betLimits|fanexDataGroup)\" class=bet-limit-container><div data-ng-repeat=\"betLimitGroup in betLimitGroups\" class=sport-group><div class=sport-name title={{betLimitGroup.SportTypeName}}>{{betLimitGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=min-bet>{{'MinBet' | fanexTranslate}}</div><div class=max-bet>{{'MaxBet' | fanexTranslate}}</div><div class=max-per-match>{{'MaxPerMatch' | fanexTranslate}}</div></div><div data-ng-repeat=\"betLimit in betLimitGroup.Items\" data-fanex-bet-limit=betLimit data-form-type=formType data-setting-level=betLimitLevel data-has-copy=\"betLimit==betLimits[0] && betLimits.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-discount-container.htm',
-    "<div class=discount-container data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div data-ng-repeat=\"item in discountGroup.Items\" data-fanex-discount=item data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
+    "<div class=discount-container data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount=discount data-form-type=formType data-setting-level=discountLevel data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-discount-master-edit-member-container.htm',
-    "<div class=\"discount-container master-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-discount>{{resourceService.getString('CommissionForAgent')}}</div><div class=member-discount>{{resourceService.getString('CommissionForMember')}}</div></div><div data-ng-repeat=\"item in discountGroup.Items\" data-fanex-discount-master-edit-member=item></div></div></div>"
+    "<div class=\"discount-container master-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount-master-edit-member=discount data-setting-level=discountLevel></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-discount-super-edit-member-container.htm',
-    "<div class=\"discount-container super-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-discount>{{resourceService.getString('CommissionForMaster')}}</div><div class=agent-discount>{{resourceService.getString('CommissionForAgent')}}</div><div class=member-discount>{{resourceService.getString('CommissionForMember')}}</div></div><div data-ng-repeat=\"item in discountGroup.Items\" data-fanex-discount-super-edit-member=item></div></div></div>"
+    "<div class=\"discount-container super-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-discount>{{'CommissionForMaster' | fanexTranslate}}</div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount-super-edit-member=discount data-setting-level=discountLevel></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-agent-edit-member-container.htm',
-    "<div class=\"position-taking-container agent-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-agent-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container agent-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-agent-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-company-edit-super-container.htm',
-    "<div class=\"position-taking-container company-edit-super\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-max-pt>{{resourceService.getString('SuperMaxPT')}}</div><div class=master-max-pt>{{resourceService.getString('MasterMaxPT')}}</div><div class=agent-max-pt>{{resourceService.getString('AgentMaxPT')}}</div><div class=super-min-pt>{{resourceService.getString('SuperMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-company-edit-super=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container company-edit-super\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-company-edit-super=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-master-edit-agent-container.htm',
-    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=agent-max-pt>{{resourceService.getString('AgentMaxPT')}}</div><div class=agent-min-pt>{{resourceService.getString('AgentMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-master-edit-agent=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-master-edit-agent=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-master-edit-member-container.htm',
-    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=agent-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-master-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-master-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-super-edit-master-container.htm',
-    "<div class=\"position-taking-container super-edit-master\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{resourceService.getString('SuperPT')}}</div><div class=super-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=master-max-pt>{{resourceService.getString('MasterMaxPT')}}</div><div class=master-min-pt>{{resourceService.getString('MasterMinPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-super-edit-master=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container super-edit-master\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-super-edit-master=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-pt-super-edit-member-container.htm',
-    "<div class=\"position-taking-container super-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{resourceService.getString('SuperPT')}}</div><div class=super-is-auto>{{resourceService.getString('IsAuto')}}</div><div class=master-pt>{{resourceService.getString('MasterPT')}}</div><div class=master-pt>{{resourceService.getString('AgentPT')}}</div></div><div data-ng-repeat=\"item in positionTakingGroup.Items\" data-fanex-pt-super-edit-member=item data-has-copy=\"item==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
+    "<div class=\"position-taking-container super-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-super-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 
   $templateCache.put('templates/sport-group/fanex-status-container.htm',
-    "<div class=status-container data-ng-init=\"statusGroups=(statuses|fanexDataGroup)\"><div data-ng-repeat=\"statusGroup in statusGroups\" class=sport-group><div class=sport-name title={{statusGroup.SportTypeName}}>{{statusGroup.SportTypeName}}</div><div data-ng-repeat=\"item in statusGroup.Items\" data-fanex-status=item data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
+    "<div class=status-container data-ng-init=\"statusGroups=(statuses|fanexDataGroup)\"><div data-ng-repeat=\"statusGroup in statusGroups\" class=sport-group><div class=sport-name title={{statusGroup.SportTypeName}}>{{statusGroup.SportTypeName}}</div><div data-ng-repeat=\"status in statusGroup.Items\" class=status-item data-fanex-status=status data-setting-level=statusLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
   );
 
 } ]);
@@ -286,16 +301,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexCommonService',
-            'fanexTemplateService', 'fanexDataService', 'fanexControllerService', 'fanexMessageService', 'fanexResourceService', 'fanexResponseReader'];
-    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, commonService,
-            templateService, dataService, controllerService, messageService, resourceService, ResponseReader) {
-        var selectModel = modelService.createSelectModel();
-        dataService.select(selectModel, function (response) {
-            controllerService.updateResponse(response);
-            var requestContext = controllerService.getRequestContext();
-            var customerSetting = controllerService.getCustomerSetting();
-            var settingContext = controllerService.getSettingContext();
+    var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
+            'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
+            templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
+        var queryModel = modelService.createSelectModel();
+        requestService.query(queryModel, function (queryData) {
+            var requestContext = queryData.RequestContext;
+            var customerSetting = queryData.CustomerSetting;
+            var settingContext = queryData.SettingContext;
             resourceService.setLanguage(requestContext.Language);
 
             var multipleInfo = modelService.getMultipleInfo();
@@ -305,21 +319,29 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 $scope.information = customerSetting.Information;
             }
 
-            $scope.formType = selectModel.FormType;
+            $scope.formType = queryModel.FormType;
 
+            // status
             $scope.statuses = customerSetting.Statuses;
+            $scope.statusLevel = settingContext.StatusLevel;
             $scope.statusTemplate = templateService.resolveStatus();
 
+            // discount
             $scope.discounts = customerSetting.Discounts;
+            $scope.discountLevel = settingContext.DiscountLevel;
             $scope.discountTemplate = templateService.resolveDiscount();
             $scope.hasUpdateDiscount = $scope.formType !== appSettings.formType.SuperEditMember
                 && $scope.formType !== appSettings.formType.MasterEditMember;
-            
+
+            // bet limit
             $scope.betLimits = customerSetting.BetLimits;
+            $scope.betLimitLevel = settingContext.BetLimitLevel;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
             $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
-            
+
+            // position taking
             $scope.positionTakings = customerSetting.PositionTakings;
+            $scope.positionTakingLevel = settingContext.PositionTakingLevel;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
             if (requestContext.FormType === appSettings.formType.MasterEditAgent) {
                 $scope.disableAutoMPT = settingContext.DisableAutoMPT;
@@ -328,29 +350,28 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             $scope.hasUpdateAll = modelService.isValid();
         });
 
-        var selectedUpdateType;
         $scope.updateStatuses = function () {
-            selectedUpdateType = appSettings.settingType.Status;
+            dataService.commandType = appSettings.settingType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            selectedUpdateType = appSettings.settingType.Discount;
+            dataService.commandType = appSettings.settingType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            selectedUpdateType = appSettings.settingType.BetLimit;
+            dataService.commandType = appSettings.settingType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            selectedUpdateType = appSettings.settingType.PositionTaking;
+            dataService.commandType = appSettings.settingType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            selectedUpdateType = appSettings.settingType.All;
+            dataService.commandType = appSettings.settingType.All;
             update();
         };
 
@@ -358,9 +379,33 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             update(updateMemberPT);
         });
 
+        function getUpdateData(settingType) {
+            var settingTypeHandler = new SettingTypeHandler(settingType);
+            var scopes = settingTypeHandler.getScopes();
+            var data = [];
+            var isFormInvalid = false;
+            angular.forEach(scopes, function (scope) {
+                if (!isFormInvalid) {
+                    if (angular.isFunction(scope.validate)) {
+                        var result = scope.validate();
+                        if (result.errCode === appSettings.errorType.Success) {
+                            data.push(result.data);
+                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                            isFormInvalid = true;
+                        }
+                    }
+                }
+            });
+
+            return isFormInvalid
+                ? undefined
+                : data;
+        }
+
         function update(updateMemberPT) {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var requestContext = queryData.RequestContext;
+            var settingContext = queryData.SettingContext;
 
             function hasUpdate(data, isShowNoChange) {
                 if (angular.isUndefined(data)) {
@@ -397,7 +442,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         var isAuto = pt[isAutoPTName];
                         if (isAuto === false) {
                             var ptValue = pt[ptName];
-                            var name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, pt);
+                            var name = resourceService.getDisplayName($scope.positionTakingLevel, pt);
                             memberPTs.push({
                                 SportType: pt.SportType,
                                 BetType: pt.BetType,
@@ -409,9 +454,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     });
 
                     if (memberPTs.length > 0) {
-                        $rootScope.updateModal = {
-                            MemberPTs: memberPTs
-                        };
+                        updateMemberPtService.show(memberPTs);
                         return true;
                     }
                 }
@@ -419,17 +462,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 return false;
             }
 
-            messageService.hide();
             var positionTakings;
             var betLimits;
             var discounts;
             var statuses;
-            switch (selectedUpdateType) {
+            var commandType = dataService.commandType;
+            switch (commandType) {
                 case appSettings.settingType.All:
-                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
-                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
-                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
-                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    statuses = getUpdateData(appSettings.settingType.Status);
+                    discounts = getUpdateData(appSettings.settingType.Discount);
+                    betLimits = getUpdateData(appSettings.settingType.BetLimit);
+                    positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     var hasUpdatePT;
                     if (!hasUpdate(statuses, false)
                         && !hasUpdate(discounts, false)
@@ -445,7 +488,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     break;
 
                 case appSettings.settingType.PositionTaking:
-                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     if (!hasUpdate(positionTakings, true)) {
                         return;
                     }
@@ -456,21 +499,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     break;
 
                 case appSettings.settingType.BetLimit:
-                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
+                    betLimits = getUpdateData(appSettings.settingType.BetLimit);
                     if (!hasUpdate(betLimits, true)) {
                         return;
                     }
                     break;
 
                 case appSettings.settingType.Discount:
-                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
+                    discounts = getUpdateData(appSettings.settingType.Discount);
                     if (!hasUpdate(discounts, true)) {
                         return;
                     }
                     break;
 
                 case appSettings.settingType.Status:
-                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
+                    statuses = getUpdateData(appSettings.settingType.Status);
                     if (!hasUpdate(statuses, true)) {
                         return;
                     }
@@ -523,10 +566,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 });
             }
 
-            var selectModel = modelService.createSelectModel();
             var multipleInfo = modelService.getMultipleInfo();
-            var updateModel = angular.extend({
-                SettingType: selectedUpdateType,
+            var commandModel = angular.extend({
+                CommandType: commandType,
                 StatusLevel: settingContext.StatusLevel,
                 StatusString: JSON.stringify(statuses),
                 DiscountLevel: settingContext.DiscountLevel,
@@ -535,17 +577,24 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 BetLimitString: JSON.stringify(betLimits),
                 PositionTakingLevel: settingContext.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
-            }, selectModel);
+            }, queryModel);
             if (multipleInfo.IsMultiple) {
-                updateModel = angular.extend({
+                commandModel = angular.extend({
                     TargetCustIds: JSON.stringify(multipleInfo.CustIds)
-                }, updateModel);
+                }, commandModel);
             }
 
-            dataService.update(updateModel, function (response) {
-                var responseReader = new ResponseReader(updateModel.SettingType);
-                var settingResults = responseReader.read(response);
-                angular.forEach(settingResults, function (settingResult) {
+            requestService.command(commandModel, function (commandData) {
+                if (multipleInfo.IsMultiple) {
+                    var custNames = multipleInfo.CustNames;
+                    var usersSettingResults = commandData;
+                    messageService.showMultiple(custNames, usersSettingResults);
+                    return;
+                }
+
+                var userSettingResults = commandData;
+                messageService.showSingle(userSettingResults);
+                angular.forEach(userSettingResults, function (settingResult) {
                     var result = settingResult.result;
                     if (result.IsSuccess) {
                         var settingType = settingResult.settingType;
@@ -579,8 +628,41 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$filter', 'fanexCommonService', 'fanexTooltipService', 'fanexAppSettings'];
-    var fanexBetLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
+    var injectParams = ['fanexBetLimitService'];
+    var fanexBetLimitCopyDirective = function (betLimitService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                hasCopy: '=fanexBetLimitCopy'
+            },
+            templateUrl: 'templates/fanex-bet-limit-copy.htm',
+            link: function (scope) {
+                if (!scope.hasCopy) {
+                    return;
+                }
+
+                scope.copy = function () {
+                    var scopes = betLimitService.getScopes();
+                    var source = scopes[0];
+                    for (var i = 1; i < scopes.length; i++) {
+                        var scope = scopes[i];
+                        scope.copy(source);
+                    }
+                };
+            }
+        };
+    };
+
+    fanexBetLimitCopyDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('fanexBetLimitCopy', fanexBetLimitCopyDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$filter', 'fanexAppSettings', 'fanexCommonService', 'fanexTooltipService'];
+    var fanexBetLimitInputDirective = function ($filter, appSettings, commonService, tooltipService) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -661,14 +743,14 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$filter', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
+    var injectParams = ['$filter', 'fanexAppSettings', 'fanexBetLimitService', 'fanexResourceService'];
     var errorType = {
         Limit: 1,
         MinBet: 2,
         MaxBet: 3,
         MaxPerMatch: 4
     };
-    var fanexBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
+    var fanexBetLimitDirective = function ($filter, appSettings, betLimitService, resourceService) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -777,12 +859,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             replace: true,
             scope: {
                 betLimit: '=fanexBetLimit',
-                formType: '=formType',
+                formType: '=',
+                settingLevel: '=',
                 hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                controllerService.linkBetLimit($scope);
+                betLimitService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;
                 $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
                     || $scope.formType === appSettings.formType.MasterEditMember;
@@ -798,26 +883,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 $scope.maxPerMatch = data.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, betLimit);
-                $scope.resourceService = resourceService;
 
                 if ($scope.isReadonly) {
                     return;
                 }
 
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-bet-limit', $scope);
-                    };
-                }
-
-                $scope.$on('copy-bet-limit', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        $scope.minBet.value = copyScope.minBet.value;
-                        $scope.maxBet.value = copyScope.maxBet.value;
-                        $scope.maxPerMatch.value = copyScope.maxPerMatch.value;
-                    }
-                });
+                $scope.copy = function (copyScope) {
+                    $scope.minBet.value = copyScope.minBet.value;
+                    $scope.maxBet.value = copyScope.maxBet.value;
+                    $scope.maxPerMatch.value = copyScope.maxPerMatch.value;
+                };
 
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;
@@ -1014,8 +1089,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexResourceService'];
-    var fanexCustomerInformationDirective = function (resourceService) {
+    var injectParams = [];
+    var fanexCustomerInformationDirective = function () {
         return {
             restrict: 'AE',
             scope: {
@@ -1023,7 +1098,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             },
             templateUrl: 'templates/fanex-customer-information.htm',
             controller: ['$scope', function ($scope) {
-                $scope.resourceService = resourceService;
                 $scope.$watch('information', function () {
                     if (angular.isUndefined($scope.information)) {
                         return;
@@ -1048,19 +1122,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexDiscountMasterEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexDiscountService', 'fanexResourceService'];
+    var fanexDiscountMasterEditMemberDirective = function (discountService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
-                discount: '=fanexDiscountMasterEditMember'
+                discount: '=fanexDiscountMasterEditMember',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-discount-master-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkDiscount($scope);
+                discountService.linkScope($scope);
+                
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.agentDiscount = discount.AgentDiscount;
                 $scope.memberDiscount = discount.PlayerDiscount;
             } ]
@@ -1074,19 +1150,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexSuperEditMemberDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexDiscountService', 'fanexResourceService'];
+    var fanexSuperEditMemberDiscountDirective = function (discountService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
-                discount: '=fanexDiscountSuperEditMember'
+                discount: '=fanexDiscountSuperEditMember',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-discount-super-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkDiscount($scope);
+                discountService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, $scope.discount);
                 $scope.masterDiscount = discount.MasterDiscount;
                 $scope.agentDiscount = discount.AgentDiscount;
                 $scope.memberDiscount = discount.PlayerDiscount;
@@ -1101,21 +1179,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexDiscountDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexDiscountService', 'fanexResourceService'];
+    var fanexDiscountDirective = function (appSettings, discountService, resourceService) {
         function parse(data, formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return commonService.createDiscountSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
+                    return discountService.createSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
 
                 case appSettings.formType.SuperEditMaster:
-                    return commonService.createDiscountSelect(0, data.SuperDiscount, data.MasterDiscount);
+                    return discountService.createSelect(0, data.SuperDiscount, data.MasterDiscount);
 
                 case appSettings.formType.MasterEditAgent:
-                    return commonService.createDiscountSelect(0, data.MasterDiscount, data.AgentDiscount);
+                    return discountService.createSelect(0, data.MasterDiscount, data.AgentDiscount);
 
                 case appSettings.formType.AgentEditMember:
-                    return commonService.createDiscountSelect(0, data.AgentDiscount, data.PlayerDiscount);
+                    return discountService.createSelect(0, data.AgentDiscount, data.PlayerDiscount);
             }
         }
 
@@ -1145,14 +1223,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             replace: true,
             scope: {
                 discount: '=fanexDiscount',
-                formType: '=formType'
+                formType: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-discount.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkDiscount($scope);
+                discountService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
                 var data = parse(discount, $scope.formType);
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Discount, discount);
                 $scope.min = data.min;
                 $scope.value = data.value;
                 $scope.options = data.options;
@@ -1202,19 +1282,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$sce', '$compile', '$controller', '$templateCache', 'fanexProductConfiguration', 'fanexModelService'];
-    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache, productConfiguration, modelService) {
-        function getProductSetting(productId) {
-            var result;
-            angular.forEach(productConfiguration.productSettings, function (productSetting) {
-                if (angular.isUndefined(result) && productSetting.id === productId) {
-                    result = productSetting;
-                }
-            });
-
-            return result;
-        }
-
+    var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
+            'fanexProductConfiguration', 'fanexCommonService', 'fanexModelService'];
+    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
+            productConfiguration, commonService, modelService) {
         return {
             transclude: 'element',
             compile: function (element, attr, linker) {
@@ -1229,14 +1300,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         if (isValid) {
                             var params = modelService.getParams();
                             var productId = params.productId;
-                            var productSetting = getProductSetting(productId);
+                            var productSetting = commonService.getProductSetting(productId);
                             if (angular.isDefined(productSetting)) {
                                 templateUrl = productSetting.templateUrl;
                                 controller = productSetting.controller;
                             }
                         }
 
-                        
                         templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
@@ -1274,21 +1344,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtAgentEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtAgentEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtAgentEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-agent-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
                 // Agent PT
                 function generateAgentPT() {
@@ -1296,8 +1367,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = positionTaking.A2;
                     var value = !isInitialized
                         ? positionTaking.A1
-                        : commonService.correctValue(min, max, $scope.agentPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentPT = generateAgentPT();
                 $scope.$watch('agentPT.value', function (newValue, oldValue) {
@@ -1312,7 +1383,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                 // Copy
                 $scope.copy = function (source) {
-                    return commonService.copyValue(source, $scope, 'agentPT', generateAgentPT);
+                    return ptService.copyValue(source, $scope, 'agentPT', generateAgentPT);
                 };
 
                 // Validate
@@ -1345,21 +1416,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtCompanyEditSuperDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtCompanyEditSuperDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtCompanyEditSuper',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-company-edit-super.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Max PT
                 function generateSuperMaxPT() {
@@ -1367,8 +1439,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = positionTaking.DefaultMaxPT;
                     var value = !isInitialized
                         ? positionTaking.S4
-                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superMaxPT = generateSuperMaxPT();
                 $scope.$watch('superMaxPT.value', function (newValue, oldValue) {
@@ -1388,8 +1460,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = $scope.superMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.M4
-                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
@@ -1408,8 +1480,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = $scope.masterMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.A4
-                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
 
@@ -1419,17 +1491,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = $scope.superMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N4
-                        : commonService.correctValue(min, max, $scope.superMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superMinPT = generateSuperMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
-                    return commonService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
-                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
-                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
-                        && commonService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
+                    return ptService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
+                        && ptService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && ptService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
+                        && ptService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
                 };
 
                 // Validate
@@ -1468,46 +1540,42 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'fanexControllerService', 'fanexAppSettings', 'fanexResourceService', 'fanexTooltipService'];
-    var fanexPtCopyDirective = function ($rootScope, controllerService, appSettings, resourceService, tooltipService) {
+    var injectParams = ['fanexPtService', 'fanexResourceService', 'fanexTooltipService'];
+    var fanexPtCopyDirective = function (ptService, resourceService, tooltipService) {
         return {
-            restrict: 'A',
-            link: function (scope, element, attributes) {
-                var isShow = scope.$eval(attributes.ngShow);
-                if (!isShow) {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                hasCopy: '=fanexPtCopy'
+            },
+            templateUrl: 'templates/fanex-pt-copy.htm',
+            link: function (scope, element) {
+                if (!scope.hasCopy) {
                     return;
                 }
 
-                element.on('click', function () {
-                    var copy = function () {
-                        var count = 0;
-                        var scopes = controllerService.getScopes(appSettings.settingType.PositionTaking);
-                        var source = scopes[0];
-                        for (var i = 1; i < scopes.length; i++) {
-                            var scope = scopes[i];
-                            var result = scope.copy(source);
-                            if (!result) {
-                                count++;
-                            }
+                scope.copy = function () {
+                    var count = 0;
+                    var scopes = ptService.getScopes();
+                    var source = scopes[0];
+                    for (var i = 1; i < scopes.length; i++) {
+                        var scope = scopes[i];
+                        var result = scope.copy(source);
+                        if (!result) {
+                            count++;
                         }
-
-                        if (count > 0) {
-                            tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
-                            element.on('mouseleave', function () {
-                                tooltipService.hide();
-                                element.off('mouseleave');
-                            });
-                        } else {
-                            tooltipService.hide();
-                        }
-                    };
-
-                    if ($rootScope.$$phase) {
-                        scope.$evalAsync(copy);
-                    } else {
-                        scope.$apply(copy);
                     }
-                });
+
+                    if (count > 0) {
+                        tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
+                        element.on('mouseleave', function () {
+                            tooltipService.hide();
+                            element.off('mouseleave');
+                        });
+                    } else {
+                        tooltipService.hide();
+                    }
+                };
             }
         };
     };
@@ -1519,99 +1587,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'fanexCommonService', 'fanexResourceService'];
-    var fanexPtDialogDirective = function ($rootScope, commonService, resourceService) {
-        return {
-            restrict: 'AE',
-            priority: 100,
-            replace: true,
-            scope: {
-                data: '=fanexPtDialog'
-            },
-            templateUrl: 'templates/fanex-pt-dialog.htm',
-            link: function (scope) {
-                scope.resourceService = resourceService;
-                scope.isShow = false;
-                function update(isUpdateAllMembers) {
-                    var memberPTs = [];
-                    angular.forEach(scope.pts, function (pt) {
-                        memberPTs.push({
-                            SportType: pt.sportType,
-                            BetType: pt.betType,
-                            IsLive: pt.isLive,
-                            Pt: isUpdateAllMembers ? pt.value : 0
-                        });
-                    });
-                    $rootScope.$broadcast('update-member-position-taking', {
-                        IsUpdateAllMembers: isUpdateAllMembers,
-                        MemberPTs: memberPTs
-                    });
-                }
-
-                scope.clickClose = function () {
-                    scope.isShow = false;
-                };
-                scope.clickYes = function () {
-                    scope.isShow = false;
-                    update(true);
-                };
-                scope.clickNo = function () {
-                    scope.isShow = false;
-                    update(false);
-                };
-
-                scope.$watch('data', function (newValue, oldValue) {
-                    if (newValue === oldValue) {
-                        return;
-                    }
-
-                    if (angular.isUndefined(scope.data)) {
-                        scope.isShow = false;
-                        return;
-                    }
-
-                    var memberPtss = scope.data.MemberPTs;
-                    var pts = [];
-                    angular.forEach(memberPtss, function (memberPts) {
-                        var ptSelect = commonService.createPositionTakingSelect(0, memberPts.Pt, memberPts.Pt);
-                        pts.push({
-                            sportType: memberPts.SportType,
-                            betType: memberPts.BetType,
-                            isLive: memberPts.IsLive,
-                            name: memberPts.Name,
-                            value: ptSelect.value,
-                            options: ptSelect.options
-                        });
-                    });
-                    scope.isShow = true;
-                    scope.pts = pts;
-                });
-            }
-        };
-    };
-
-    fanexPtDialogDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('fanexPtDialog', fanexPtDialogDirective);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtMasterEditAgentDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtMasterEditAgentDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtMasterEditAgent',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-master-edit-agent.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Master Is Auto
                 $scope.masterIsAuto = positionTaking.IM2;
@@ -1628,8 +1619,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = positionTaking.M3;
                     var value = !isInitialized
                         ? !$scope.masterIsAuto ? positionTaking.M2 : positionTaking.UM2
-                        : commonService.correctValue(min, max, $scope.masterPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterPT = generateMasterPT();
                 $scope.$watch('masterPT.value', function (newValue, oldValue) {
@@ -1650,8 +1641,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         : Math.min(positionTaking.M3, positionTaking.A4);
                     var value = !isInitialized
                         ? positionTaking.A2
-                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
                 $scope.$watch('agentMaxPT.value', function (newValue, oldValue) {
@@ -1670,17 +1661,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = $scope.agentMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N2
-                        : commonService.correctValue(min, max, $scope.agentMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMinPT = generateAgentMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.masterIsAuto = source.masterIsAuto;
-                    return commonService.copyValue(source, $scope, 'masterPT', generateMasterPT)
-                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
-                        && commonService.copyValue(source, $scope, 'agentMinPT', generateAgentMinPT);
+                    return ptService.copyValue(source, $scope, 'masterPT', generateMasterPT)
+                        && ptService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
+                        && ptService.copyValue(source, $scope, 'agentMinPT', generateAgentMinPT);
                 };
 
                 // Validate
@@ -1722,21 +1713,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtMasterEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtMasterEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtMasterEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-master-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Master Is Auto
                 $scope.masterIsAuto = positionTaking.IM1;
@@ -1757,21 +1749,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         ? positionTaking.M1
                         : !isInitialized
                             ? !$scope.masterIsAuto ? positionTaking.M1 : positionTaking.UM1
-                            : commonService.correctValue(min, max, $scope.masterPT.value);
-                    var select = commonService.createPositionTakingSelect(min, max, value);
+                            : ptService.correctValue(min, max, $scope.masterPT.value);
+                    var select = ptService.createSelect(min, max, value);
                     select.disabled = disabled;
                     return select;
                 }
                 $scope.masterPT = generateMasterPT();
 
                 // Agent PT
-                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+                $scope.agentPT = positionTaking.A1;
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.masterIsAuto = source.masterIsAuto;
                     if (!$scope.masterPT.disabled || source.masterIsAuto) {
-                        return commonService.copyValue(source, $scope, 'masterPT', generateMasterPT);
+                        return ptService.copyValue(source, $scope, 'masterPT', generateMasterPT);
                     }
 
                     return true;
@@ -1924,21 +1916,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtSuperEditMasterDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtSuperEditMasterDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtSuperEditMaster',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-super-edit-master.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Is Auto
                 $scope.superIsAuto = positionTaking.IS3;
@@ -1955,8 +1948,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = positionTaking.S4;
                     var value = !isInitialized
                         ? !$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3
-                        : commonService.correctValue(min, max, $scope.superPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superPT = generateSuperPT();
                 $scope.$watch('superPT.value', function (newValue, oldValue) {
@@ -1977,8 +1970,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         : Math.min(positionTaking.S4, positionTaking.M4);
                     var value = !isInitialized
                         ? positionTaking.M3
-                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
@@ -1997,17 +1990,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var max = $scope.masterMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N3
-                        : commonService.correctValue(min, max, $scope.masterMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMinPT = generateMasterMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.superIsAuto = source.superIsAuto;
-                    return commonService.copyValue(source, $scope, 'superPT', generateSuperPT)
-                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
-                        && commonService.copyValue(source, $scope, 'masterMinPT', generateMasterMinPT);
+                    return ptService.copyValue(source, $scope, 'superPT', generateSuperPT)
+                        && ptService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && ptService.copyValue(source, $scope, 'masterMinPT', generateMasterMinPT);
                 };
 
                 // Validate
@@ -2049,21 +2042,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtSuperEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtSuperEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtSuperEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-super-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Is Auto
                 $scope.superIsAuto = positionTaking.IS1;
@@ -2084,24 +2078,24 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         ? positionTaking.S1
                         : !isInitialized
                             ? !$scope.superIsAuto ? positionTaking.S1 : positionTaking.US1
-                            : commonService.correctValue(min, max, $scope.superPT.value);
-                    var select = commonService.createPositionTakingSelect(min, max, value);
+                            : ptService.correctValue(min, max, $scope.superPT.value);
+                    var select = ptService.createSelect(min, max, value);
                     select.disabled = disabled;
                     return select;
                 }
                 $scope.superPT = generateSuperPT();
 
                 // Master PT
-                $scope.masterPT = positionTaking.M1 / appSettings.positionTakingDivider;
+                $scope.masterPT = positionTaking.M1;
 
                 // Agent PT
-                $scope.agentPT = positionTaking.A1 / appSettings.positionTakingDivider;
+                $scope.agentPT = positionTaking.A1;
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.superIsAuto = source.superIsAuto;
                     if (!$scope.superPT.disabled || source.superIsAuto) {
-                        return commonService.copyValue(source, $scope, 'superPT', generateSuperPT);
+                        return ptService.copyValue(source, $scope, 'superPT', generateSuperPT);
                     }
 
                     return true;
@@ -2142,24 +2136,72 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexStatusDirective = function (resourceService, controllerService, appSettings) {
+    var injectParams = ['$rootScope', 'fanexAppSettings', 'fanexUpdateMemberPtService'];
+    var fanexPtUpdateMemberDialogDirective = function ($rootScope, appSettings, updateMemberPtService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            templateUrl: 'templates/fanex-pt-update-member-dialog.htm',
+            controller: ['$scope', function ($scope) {
+                updateMemberPtService.setup($scope);
+                $scope.settingType = appSettings.settingType.PositionTaking;
+                $scope.isShow = false;
+                $scope.clickClose = function () {
+                    $scope.isShow = false;
+                };
+                $scope.clickYes = function () {
+                    $scope.isShow = false;
+                    update(true);
+                };
+                $scope.clickNo = function () {
+                    $scope.isShow = false;
+                    update(false);
+                };
+
+                function update(isUpdateAllMembers) {
+                    var memberPTs = [];
+                    angular.forEach($scope.pts, function (pt) {
+                        memberPTs.push({
+                            SportType: pt.sportType,
+                            BetType: pt.betType,
+                            IsLive: pt.isLive,
+                            Pt: isUpdateAllMembers ? pt.value : 0
+                        });
+                    });
+                    $rootScope.$broadcast('update-member-position-taking', {
+                        IsUpdateAllMembers: isUpdateAllMembers,
+                        MemberPTs: memberPTs
+                    });
+                }
+            } ]
+        };
+    };
+
+    fanexPtUpdateMemberDialogDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('fanexPtUpdateMemberDialog', fanexPtUpdateMemberDialogDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexResourceService'];
+    var fanexStatusDirective = function (appSettings, statusService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
                 status: '=fanexStatus',
-                formType: '=formType'
+                formType: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-status.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkStatus($scope);
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
+                statusService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
                 $scope.showDownline = $scope.formType !== appSettings.formType.AgentEditMember;
-
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
                 if ($scope.status.IsDisabledUpline === true) {
@@ -2234,9 +2276,86 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDataService', 'fanexSettingResult'];
+    // this service reads response and translate into data to be useed by fanexMessageService.
+    var fanexCommandReader = function (appSettings, modelService, dataService, SettingResult) {
+        function SingleCommandReader() {
+            this.read = function (response) {
+                var userResult = response;
+                var userSettingResults = SettingResult.fromUserResult(dataService.commandType, userResult);
+                return userSettingResults;
+            };
+        }
+
+        function MultipleCommandReader() {
+            this.read = function (response) {
+                var userResults = response.Results;
+                var usersSettingResults = [];
+                angular.forEach(userResults, function (userResult) {
+                    var userSettingResults = SettingResult.fromUserResult(dataService.commandType, userResult);
+                    usersSettingResults.push(userSettingResults);
+                });
+
+                return usersSettingResults;
+            };
+        }
+
+        function CommandReader() {
+            this.read = function (response) {
+                this.isSuccess = response.IsSuccess;
+                var multipleInfo = modelService.getMultipleInfo();
+                var reader;
+                if (multipleInfo.IsMultiple) {
+                    reader = new MultipleCommandReader(multipleInfo.UserNames);
+                } else {
+                    reader = new SingleCommandReader();
+                }
+
+                dataService.commandData = reader.read(response);
+                return dataService.commandData;
+            };
+        }
+
+        return CommandReader;
+    };
+
+    fanexCommandReader.$inject = injectParams;
+    angular.module('customerSettingApp').factory('FanexCommandReader', fanexCommandReader);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$rootScope'];
+    var fanexDirectiveLinker = function ($rootScope) {
+        var directiveLinker = function () {
+            var scopes = [];
+            this.linkScope = function (scope) {
+                scopes.push(scope);
+            };
+
+            this.getScopes = function () {
+                return scopes;
+            };
+
+            $rootScope.$on('product-view-loaded', function () {
+                scopes = [];
+            });
+        };
+
+        return directiveLinker;
+    };
+
+    fanexDirectiveLinker.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexDirectiveLinker', fanexDirectiveLinker);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['fanexAppSettings'];
-    var fanexFormTypeFactory = function (appSettings) {
-        var CompanyEditSuper = function () {
+    var fanexFormTypeHandler = function (appSettings) {
+        var CompanyEditSuperHandler = function () {
             this.formType = appSettings.formType.CompanyEditSuper;
             this.pattern = '/editSuper/:superId/:productId';
             this.createModel = function (params) {
@@ -2249,7 +2368,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var SuperEditMaster = function () {
+        var SuperEditMasterHandler = function () {
             this.formType = appSettings.formType.SuperEditMaster;
             this.pattern = '/editMaster/:masterId/:productId';
             this.createModel = function (params) {
@@ -2262,7 +2381,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var MasterEditAgent = function () {
+        var MasterEditAgentHandler = function () {
             this.formType = appSettings.formType.MasterEditAgent;
             this.pattern = '/editAgent/:agentId/:productId';
             this.createModel = function (params) {
@@ -2275,7 +2394,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var AgentEditMember = function () {
+        var AgentEditMemberHandler = function () {
             this.formType = appSettings.formType.AgentEditMember;
             this.pattern = '/editMember/:memberId/:productId';
             this.createModel = function (params) {
@@ -2288,7 +2407,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var SuperEditMember = function () {
+        var SuperEditMemberHandler = function () {
             this.formType = appSettings.formType.SuperEditMember;
             this.pattern = '/superEditMember/:superId/:memberId/:productId';
             this.createModel = function (params) {
@@ -2301,7 +2420,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var MasterEditMember = function () {
+        var MasterEditMemberHandler = function () {
             this.formType = appSettings.formType.MasterEditMember;
             this.pattern = '/masterEditMember/:masterId/:memberId/:productId';
             this.createModel = function (params) {
@@ -2314,195 +2433,67 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        var FormTypeFactory = function (formType) {
+        return function (formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return new CompanyEditSuper();
+                    return new CompanyEditSuperHandler();
 
                 case appSettings.formType.SuperEditMaster:
-                    return new SuperEditMaster();
+                    return new SuperEditMasterHandler();
 
                 case appSettings.formType.MasterEditAgent:
-                    return new MasterEditAgent();
+                    return new MasterEditAgentHandler();
 
                 case appSettings.formType.SuperEditMember:
-                    return new SuperEditMember();
+                    return new SuperEditMemberHandler();
 
                 case appSettings.formType.MasterEditMember:
-                    return new MasterEditMember();
+                    return new MasterEditMemberHandler();
 
                 case appSettings.formType.AgentEditMember:
-                    return new AgentEditMember();
+                    return new AgentEditMemberHandler();
             }
         };
-
-        return FormTypeFactory;
     };
 
-    fanexFormTypeFactory.$inject = injectParams;
-    angular.module('customerSettingApp').factory('fanexFormType', fanexFormTypeFactory);
+    fanexFormTypeHandler.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexFormTypeHandler', fanexFormTypeHandler);
 })();
 
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings'];
-    var fanexResponseReaderFactory = function (appSettings) {
-        var SettingResult = function (settingType, result) {
-            this.settingType = settingType;
-            this.result = result;
-        };
+    var injectParams = ['fanexDataService'];
+    var fanexQueryReader = function (dataService) {
+        function QueryReader() {
+            this.read = function (response) {
+                var requestContext = response.RequestContext;
+                var customerSetting = response.CustomerSetting;
+                var settingContext = customerSetting.SettingContext;
+                var productName = requestContext.ProductName;
+                dataService.productName = productName;
+                dataService.queryData = {
+                    RequestContext: requestContext,
+                    CustomerSetting: customerSetting,
+                    SettingContext: settingContext
+                };
 
-        var ResponseReader = function (settingType) {
-            this.settingType = settingType;
-            this.isSuccess = appSettings.errorCode.Success;
-            this.settingResults = [];
-        };
-
-        ResponseReader.prototype.read = function (response) {
-            this.isSuccess = response.IsSuccess;
-            var settingResults = [];
-            switch (this.settingType) {
-                case appSettings.settingType.All:
-                    settingResults.push(new SettingResult(appSettings.settingType.Status, response.StatusResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.Discount, response.DiscountResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, response.BetLimitResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, response.PositionTakingResult));
-                    break;
-
-                case appSettings.settingType.Status:
-                    settingResults.push(new SettingResult(appSettings.settingType.Status, response.StatusResult));
-                    break;
-
-                case appSettings.settingType.Discount:
-                    settingResults.push(new SettingResult(appSettings.settingType.Discount, response.DiscountResult));
-                    break;
-
-                case appSettings.settingType.BetLimit:
-                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, response.BetLimitResult));
-                    break;
-
-                case appSettings.settingType.PositionTaking:
-                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, response.PositionTakingResult));
-                    break;
-            }
-
-            return settingResults;
-        };
-
-        return ResponseReader;
-    };
-
-    fanexResponseReaderFactory.$inject = injectParams;
-    angular.module('customerSettingApp').factory('fanexResponseReader', fanexResponseReaderFactory);
-})();
-
-'use strict';
-
-(function () {
-    angular.module('customerSettingApp').filter('fanexDataGroup', function () {
-        function DataGroup(sportType, sportTypeName) {
-            this.SportType = sportType;
-            this.SportTypeName = sportTypeName;
-            this.Items = [];
-            this.addItem = function (item) {
-                this.Items.push(item);
+                return dataService.queryData;
             };
         }
 
-        return function (items) {
-            var dataGroups = [];
-            var currentSportType = -1;
-            var dataGroup = null;
-            angular.forEach(items, function (item) {
-                var sportType = item.SportType;
-                var sportTypeName = item.SportTypeName;
-                if (dataGroup === null || sportType !== currentSportType) {
-                    currentSportType = sportType;
-                    dataGroup = new DataGroup(sportType, sportTypeName);
-                    dataGroups.push(dataGroup);
-                }
-                dataGroup.addItem(item);
-            });
+        return QueryReader;
+    };
 
-            return dataGroups;
-        };
-    });
+    fanexQueryReader.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexQueryReader', fanexQueryReader);
 })();
 
 'use strict';
 
 (function () {
     var injectParams = [];
-    var fanexBlockUiService = function () {
-        var blockUiScope;
-
-        this.setup = function (scope) {
-            if (angular.isDefined(blockUiScope)) {
-                throw 'Only one block ui component in document';
-            }
-
-            blockUiScope = scope;
-            blockUiScope.hasLoading = false;
-        };
-
-        this.show = function () {
-            if (angular.isUndefined(blockUiScope)) {
-                throw 'setup is required';
-            }
-
-            blockUiScope.hasLoading = true;
-        };
-
-        this.hide = function () {
-            if (angular.isUndefined(blockUiScope)) {
-                throw 'setup is required';
-            }
-
-            blockUiScope.hasLoading = false;
-        };
-    };
-
-    fanexBlockUiService.$inject = injectParams;
-    angular.module('customerSettingApp').service('fanexBlockUiService', fanexBlockUiService);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['$window'];
-    var fanexCommonService = function ($window) {
-        // scroll to top
-        this.scrollToTop = function () {
-            $window.scrollTo(0, 0);
-        };
-
-        // check if value is in array, return index of value or -1 if not exist
-        this.inArray = function (value, array) {
-            var index = -1;
-            angular.forEach(array, function (arrayValue, arrayIndex) {
-                if (index === -1 && arrayValue === value) {
-                    index = arrayIndex;
-                }
-            });
-
-            return index;
-        };
-
-        this.isArrayAndNotEmpty = function (array) {
-            return angular.isArray(array) && array.length > 0;
-        };
-
-        // return array of property values of obj
-        this.getPropertyValues = function (obj) {
-            var propertyValues = [];
-            for (var propertyName in obj) {
-                propertyValues.push(obj[propertyName]);
-            }
-
-            return propertyValues;
-        };
-
+    var fanexSelectBuilder = function () {
         var OptionsBuilder = function (step, factor) {
             this.generateOptions = function (min, max, value) {
                 var options = [];
@@ -2550,26 +2541,271 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        this.correctValue = function (min, max, value) {
-            return Math.max(min, Math.min(max, value));
+        return SelectBuilder;
+    };
+
+    fanexSelectBuilder.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexSelectBuilder', fanexSelectBuilder);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexAppSettings'];
+    var fanexSettingResult = function (appSettings) {
+        var SettingResult = function (settingType, result) {
+            this.settingType = settingType;
+            this.result = result;
         };
 
-        this.copyValue = function (source, destination, field, generator) {
-            destination[field].value = source[field].value;
-            destination[field] = generator();
-            var isCopied = source[field].value === destination[field].value;
-            destination[field].valid = isCopied;
-            return isCopied;
+        // return array of setting results of an user.
+        SettingResult.fromUserResult = function (commandType, userResult) {
+            var settingResults = [];
+            switch (commandType) {
+                case appSettings.settingType.All:
+                    settingResults.push(new SettingResult(appSettings.settingType.Status, userResult.StatusResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.Discount, userResult.DiscountResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, userResult.BetLimitResult));
+                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, userResult.PositionTakingResult));
+                    break;
+
+                case appSettings.settingType.Status:
+                    settingResults.push(new SettingResult(appSettings.settingType.Status, userResult.StatusResult));
+                    break;
+
+                case appSettings.settingType.Discount:
+                    settingResults.push(new SettingResult(appSettings.settingType.Discount, userResult.DiscountResult));
+                    break;
+
+                case appSettings.settingType.BetLimit:
+                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, userResult.BetLimitResult));
+                    break;
+
+                case appSettings.settingType.PositionTaking:
+                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, userResult.PositionTakingResult));
+                    break;
+            }
+
+            return settingResults;
         };
 
-        this.createPositionTakingSelect = function (min, max, value) {
-            var selectBuilder = new SelectBuilder(1, 1);
-            return selectBuilder.build(min, max, value);
+        return SettingResult;
+    };
+
+    fanexSettingResult.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexSettingResult', fanexSettingResult);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexDiscountService',
+            'fanexBetLimitService', 'fanexPtService'];
+    var fanexSettingTypeHandler = function (appSettings, statusService, discountService,
+            betLimitService, ptService) {
+        var StatusHandler = function () {
+            this.settingType = appSettings.settingType.Status;
+            this.getScopes = statusService.getScopes;
         };
 
-        this.createDiscountSelect = function (min, max, value) {
-            var selectBuilder = new SelectBuilder(0.0005, 10000);
-            return selectBuilder.build(min, max, value);
+        var DiscountHandler = function () {
+            this.settingType = appSettings.settingType.Discount;
+            this.getScopes = discountService.getScopes;
+        };
+
+        var BetLimitHandler = function () {
+            this.settingType = appSettings.settingType.BetLimit;
+            this.getScopes = betLimitService.getScopes;
+        };
+
+        var PositionTakingHandler = function () {
+            this.settingType = appSettings.settingType.PositionTaking;
+            this.getScopes = ptService.getScopes;
+        };
+
+        return function (settingType) {
+            switch (settingType) {
+                case appSettings.settingType.Status:
+                    return new StatusHandler();
+
+                case appSettings.settingType.Discount:
+                    return new DiscountHandler();
+
+                case appSettings.settingType.BetLimit:
+                    return new BetLimitHandler();
+
+                case appSettings.settingType.PositionTaking:
+                    return new PositionTakingHandler();
+            }
+        };
+    };
+
+    fanexSettingTypeHandler.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexSettingTypeHandler', fanexSettingTypeHandler);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = [];
+    var fanexDataGroup = function () {
+        function DataGroup(sportType, sportTypeName) {
+            this.SportType = sportType;
+            this.SportTypeName = sportTypeName;
+            this.Items = [];
+            this.addItem = function (item) {
+                this.Items.push(item);
+            };
+        }
+
+        return function (items) {
+            var dataGroups = [];
+            var currentSportType = -1;
+            var dataGroup = null;
+            angular.forEach(items, function (item) {
+                var sportType = item.SportType;
+                var sportTypeName = item.SportTypeName;
+                if (dataGroup === null || sportType !== currentSportType) {
+                    currentSportType = sportType;
+                    dataGroup = new DataGroup(sportType, sportTypeName);
+                    dataGroups.push(dataGroup);
+                }
+                dataGroup.addItem(item);
+            });
+
+            return dataGroups;
+        };
+    };
+
+    fanexDataGroup.$inject = injectParams;
+    angular.module('customerSettingApp').filter('fanexDataGroup', fanexDataGroup);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexAppSettings'];
+    var fanexPtFormat = function (appSettings) {
+        return function (value) {
+            return value / appSettings.positionTakingDivider;
+        };
+    };
+
+    fanexPtFormat.$inject = injectParams;
+    angular.module('customerSettingApp').filter('fanexPtFormat', fanexPtFormat);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexResourceService'];
+    var fanexTranslate = function (resourceService) {
+        return function (key) {
+            return resourceService.getString(key);
+        };
+    };
+
+    fanexTranslate.$inject = injectParams;
+    angular.module('customerSettingApp').filter('fanexTranslate', fanexTranslate);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexDirectiveLinker'];
+    var fanexBetLimitService = function (DirectiveLinker) {
+        var service = new DirectiveLinker();
+        return service;
+    };
+
+    fanexBetLimitService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexBetLimitService', fanexBetLimitService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = [];
+    var fanexBlockUiService = function () {
+        var blockUiScope;
+
+        this.setup = function (scope) {
+            if (angular.isDefined(blockUiScope)) {
+                throw 'Only one block ui component in document';
+            }
+
+            blockUiScope = scope;
+            blockUiScope.hasLoading = false;
+        };
+
+        this.show = function () {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = true;
+        };
+
+        this.hide = function () {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = false;
+        };
+    };
+
+    fanexBlockUiService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexBlockUiService', fanexBlockUiService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$window', 'fanexProductConfiguration'];
+    var fanexCommonService = function ($window, productConfiguration) {
+        // scroll to top
+        this.scrollToTop = function () {
+            $window.scrollTo(0, 0);
+        };
+
+        // check if value is in array, return index of value or -1 if not exist
+        this.inArray = function (value, array) {
+            var index = -1;
+            angular.forEach(array, function (arrayValue, arrayIndex) {
+                if (index === -1 && arrayValue === value) {
+                    index = arrayIndex;
+                }
+            });
+
+            return index;
+        };
+
+        // check if object is array and it's not empty.
+        this.isArrayAndNotEmpty = function (object) {
+            return angular.isArray(object) && object.length > 0;
+        };
+
+        // return array of property values of object.
+        this.getPropertyValues = function (object) {
+            var propertyValues = [];
+            for (var propertyName in object) {
+                propertyValues.push(object[propertyName]);
+            }
+
+            return propertyValues;
+        };
+
+        // return product setting by product id.
+        this.getProductSetting = function (productId) {
+            var result = productConfiguration.defaultProductSetting;
+            angular.forEach(productConfiguration.productSettings, function (productSetting) {
+                if (productSetting.id === productId) {
+                    result = productSetting;
+                }
+            });
+
+            return result;
         };
     };
 
@@ -2580,214 +2816,14 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'fanexAppSettings', 'fanexResourceService'];
-    var fanexControllerService = function ($rootScope, appSettings, resourceService) {
-        var statusScopes = [];
-        var discountScopes = [];
-        var betLimitScopes = [];
-        var positionTakingScopes = [];
-        this.linkStatus = function (scope) {
-            statusScopes.push(scope);
-        };
-        this.linkDiscount = function (scope) {
-            discountScopes.push(scope);
-        };
-        this.linkBetLimit = function (scope) {
-            betLimitScopes.push(scope);
-        };
-        this.linkPositionTaking = function (scope) {
-            positionTakingScopes.push(scope);
-        };
+    var injectParams = ['fanexAppSettings'];
 
-        this.getScopes = function (settingType) {
-            switch (settingType) {
-                case appSettings.settingType.Status:
-                    return statusScopes;
-
-                case appSettings.settingType.Discount:
-                    return discountScopes;
-
-                case appSettings.settingType.BetLimit:
-                    return betLimitScopes;
-
-                case appSettings.settingType.PositionTaking:
-                    return positionTakingScopes;
-            }
-
-            return undefined;
-        };
-
-        this.getUpdateData = function (settingType) {
-            var scopes = this.getScopes(settingType);
-            var data = [];
-            var isFormInvalid = false;
-            angular.forEach(scopes, function (scope) {
-                if (!isFormInvalid) {
-                    if (angular.isFunction(scope.validate)) {
-                        var result = scope.validate();
-                        if (result.errCode === appSettings.errorType.Success) {
-                            data.push(result.data);
-                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
-                            isFormInvalid = true;
-                        }
-                    }
-                }
-            });
-
-            return isFormInvalid
-                ? undefined
-                : data;
-        };
-
-        this.getDisplayName = function (settingType, data) {
-            var liveName = data.IsLive === true ? ' (' + resourceService.getString('Live') + ')' : '';
-            var settingLevel;
-            switch (settingType) {
-                case appSettings.settingType.PositionTaking:
-                    settingLevel = settingContext.PositionTakingLevel;
-                    break;
-
-                case appSettings.settingType.BetLimit:
-                    settingLevel = settingContext.BetLimitLevel;
-                    break;
-
-                case appSettings.settingType.Discount:
-                    settingLevel = settingContext.DiscountLevel;
-                    break;
-
-                case appSettings.settingType.Status:
-                    settingLevel = settingContext.StatusLevel;
-                    break;
-            }
-
-            switch (settingLevel) {
-                case appSettings.settingLevel.Product:
-                    return requestContext.ProductName;
-                case appSettings.settingLevel.SportType:
-                    return data.SportTypeName;
-                case appSettings.settingLevel.BetType:
-                    return data.BetTypeName + liveName;
-                case appSettings.settingLevel.SportTypeBetType:
-                    return data.BetTypeName + liveName;
-            }
-
-            return undefined;
-        };
-
-        function RequestContext() {
-            this.TargetCustId = 0;
-            this.FormType = undefined;
-            this.ProductId = 0;
-            this.ProductName = undefined;
-            this.Language = undefined;
-        }
-        function SettingContext() {
-            this.PositionTakingLevel = undefined;
-            this.BetLimitLevel = undefined;
-            this.DiscountLevel = undefined;
-            this.StatusLevel = undefined;
-            this.DisableAutoMPT = undefined;
-        }
-        function CustomerSetting() {
-            this.Information = undefined;
-            this.Statuses = undefined;
-            this.Discounts = undefined;
-            this.BetLimits = undefined;
-            this.PositionTakings = undefined;
-        }
-
-        var requestContext = new RequestContext();
-        var settingContext = new SettingContext();
-        var customerSetting = new CustomerSetting();
-        this.updateResponse = function (response) {
-            angular.copy(response.RequestContext, requestContext);
-            angular.copy(response.CustomerSetting, customerSetting);
-            angular.copy(response.CustomerSetting.SettingContext, settingContext);
-        };
-
-        this.getRequestContext = function () {
-            return requestContext;
-        };
-        this.getSettingContext = function () {
-            return settingContext;
-        };
-        this.getCustomerSetting = function () {
-            return customerSetting;
-        };
-
-        this.reset = function () {
-            statusScopes = [];
-            discountScopes = [];
-            betLimitScopes = [];
-            positionTakingScopes = [];
-            requestContext = new RequestContext();
-            settingContext = new SettingContext();
-            customerSetting = new CustomerSetting();
-        };
-
-        var self = this;
-        $rootScope.$on('product-view-loaded', function(){
-            self.reset();
-        });
-    };
-
-    fanexControllerService.$inject = injectParams;
-    angular.module('customerSettingApp').service('fanexControllerService', fanexControllerService);
-})();
-
-'use strict';
-
-(function () {
-    var injectParams = ['$http', '$rootScope', 'fanexMessageService', 'fanexAppSettings', 'fanexResponseReader'];
-    var fanexDataService = function ($http, $rootScope, messageService, appSettings, ResponseReader) {
-        function isSuccessResponse(response) {
-            if (!response.IsSuccess) {
-                messageService.showError(response.ErrMsg);
-                return false;
-            }
-
-            return true;
-        }
-
-        this.select = function (selectModel, successCallback) {
-            var url = appSettings.rootUrl + '/CustomerSetting/Select';
-            var request = $http.post(url, selectModel);
-            request.success(function (response) {
-                if (!isSuccessResponse(response)) {
-                    return;
-                }
-
-                if (angular.isFunction(successCallback)) {
-                    successCallback(response);
-                }
-            });
-
-            return request;
-        };
-
-        this.update = function (updateModel, successCallback) {
-            var url = appSettings.rootUrl + '/CustomerSetting/Update';
-            var request = $http.post(url, updateModel);
-            request.success(function (response) {
-                if (!isSuccessResponse(response)) {
-                    return;
-                }
-
-                var responseReader = new ResponseReader(updateModel.SettingType);
-                var settingResults = responseReader.read(response);
-                var results = [];
-                angular.forEach(settingResults, function (settingResult) {
-                    results.push(settingResult.result);
-                });
-                messageService.showResults(results);
-
-                if (angular.isFunction(successCallback)) {
-                    successCallback(response);
-                }
-            });
-
-            return request;
-        };
+    // this service contains data parsed from response after select and update.
+    var fanexDataService = function (appSettings) {
+        this.productName = undefined;
+        this.queryData = undefined;
+        this.commandType = appSettings.settingType.All;
+        this.commandData = undefined;
     };
 
     fanexDataService.$inject = injectParams;
@@ -2797,27 +2833,46 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['fanexDirectiveLinker', 'fanexSelectBuilder'];
+    var fanexDiscountService = function (DirectiveLinker, SelectBuilder) {
+        var service = new DirectiveLinker();
+
+        service.createSelect = function (min, max, value) {
+            var selectBuilder = new SelectBuilder(0.0005, 10000);
+            return selectBuilder.build(min, max, value);
+        };
+
+        return service;
+    };
+
+    fanexDiscountService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexDiscountService', fanexDiscountService);
+})();
+
+'use strict';
+
+(function () {
     var injectParams = ['$rootScope', '$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
     var fanexMessageService = function ($rootScope, $timeout, $sce, commonService, appSettings, resourceService) {
         var messageScope;
+        var messageOptions = {
+            RemoveNoChange: true
+        };
         var messageClasses = {};
         messageClasses[appSettings.messageType.Success] = 'success';
         messageClasses[appSettings.messageType.Warning] = 'warning';
         messageClasses[appSettings.messageType.Error] = 'error';
 
-        var Message = function (messageType, messageContent) {
-            this.MessageType = messageType;
-            this.MessageContent = messageContent;
+        var Message = function (type, content) {
+            return {
+                'class': messageClasses[type],
+                content: $sce.trustAsHtml(content)
+            };
         };
 
-        function setScopeMessages(messages) {
-            if (angular.isDefined(messageScope)) {
-                messageScope.messages = messages;
-            }
-        }
-
-        function generateMesage(result) {
+        Message.fromSettingResult = function (settingResult) {
             var messageType = appSettings.messageType.Error;
+            var result = settingResult.result;
             switch (result.ErrCode) {
                 case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
@@ -2830,91 +2885,145 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
             var messageContent = result.ErrMsg || 'Undefined messsage';
             return new Message(messageType, messageContent);
+        };
+
+        Message.fromSettingResults = function (settingResults) {
+            var messages = [];
+            angular.forEach(settingResults, function (settingResult) {
+                var message = Message.fromSettingResult(settingResult);
+                messages.push(message);
+            });
+
+            return messages;
+        };
+
+        var User = function (name, messages) {
+            return {
+                name: name,
+                messages: messages
+            };
+        };
+
+        function setup(scope) {
+            messageScope = scope;
+        }
+
+        function config(options) {
+            messageOptions = angular.extend(options, messageOptions);
+        }
+
+        function showSuccess(messageContent) {
+            var message = new Message(appSettings.messageType.Success, messageContent || 'Undefined success message');
+            showMessage(message);
+        }
+
+        function showWarning(messageContent) {
+            var message = new Message(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
+            showMessage(message);
+        }
+
+        function showNoChange() {
+            showWarning(resourceService.getString('NoChangeToUpdate'));
+        }
+
+        function showError(messageContent) {
+            var message = new Message(appSettings.messageType.Error, messageContent || 'Undefined error message');
+            showMessage(message);
         }
 
         function showMessage(message) {
-            var htmlMessages = [];
-            htmlMessages.push({
-                messageClass: messageClasses[message.MessageType],
-                messageContent: $sce.trustAsHtml(message.MessageContent)
-            });
-            commonService.scrollToTop();
-
-            $timeout(function () {
-                setScopeMessages(htmlMessages);
-            });
+            var messages = [message];
+            showMessages(messages);
         }
 
         function showMessages(messages) {
-            var htmlMessages = [];
-            angular.forEach(messages, function (message) {
-                htmlMessages.push({
-                    messageClass: messageClasses[message.MessageType],
-                    messageContent: $sce.trustAsHtml(message.MessageContent)
-                });
-            });
+            showUserMessages(undefined, messages);
+        }
+
+        function showUserMessages(userName, userMessages) {
+            var user = new User(userName, userMessages);
+            showUser(user);
+        }
+
+        function showUser(user) {
+            var users = [user];
+            showUsers(users);
+        }
+
+        function showUsers(users) {
             commonService.scrollToTop();
 
             $timeout(function () {
-                setScopeMessages(htmlMessages);
+                messageScope.users = users;
             });
         }
 
-        this.setup = function (scope) {
-            messageScope = scope;
-        };
+        function filter(settingResults) {
+            if (messageOptions.RemoveNoChange) {
+                return filterRemoveNoChange(settingResults);
+            }
 
-        this.showMessage = function (messageType, messageContent) {
-            var message = new Message(messageType, messageContent);
-            showMessage(message);
-        };
+            return settingResults;
+        }
 
-        this.showResult = function (result) {
-            var message = generateMesage(result);
-            showMessage(message);
-        };
-
-        this.showResults = function (results) {
-            // if having any successful or error messages -> remove any no-change messages
-            var messages = [];
-            angular.forEach(results, function (result) {
+        // if having any successful or error messages -> remove any no-change results
+        function filterRemoveNoChange(settingResults) {
+            var filteredSettingResults = [];
+            angular.forEach(settingResults, function (settingResult) {
+                var result = settingResult.result;
                 if (result.ErrCode !== appSettings.errorCode.NoChange) {
-                    var message = generateMesage(result);
-                    messages.push(message);
+                    filteredSettingResults.push(settingResult);
                 }
             });
 
-            if (messages.length === 0) {
-                this.showNoChange();
-            } else {
-                showMessages(messages);
+            if (filteredSettingResults.length === 0) {
+                filteredSettingResults = settingResults[0];
             }
-        };
 
-        this.showSuccess = function (messageContent) {
-            this.showMessage(appSettings.messageType.Success, messageContent || 'Undefined success message');
-        };
+            return filteredSettingResults;
+        }
 
-        this.showWarning = function (messageContent) {
-            this.showMessage(appSettings.messageType.Warning, messageContent || 'Undefined warning message');
-        };
+        // user has list of results: position taking result, bet limit result, discount result, status result.
+        function showSingle(userSettingResults) {
+            userSettingResults = filter(userSettingResults);
+            var messages = Message.fromSettingResults(userSettingResults);
+            showMessages(messages);
+        }
 
-        this.showNoChange = function () {
-            this.showWarning(resourceService.getString('NoChangeToUpdate'));
-        };
+        function showMultiple(userNames, usersSettingResults) {
+            var users = [];
+            angular.forEach(userNames, function (userName, index) {
+                var userSettingResults = usersSettingResults[index];
+                userSettingResults = filter(userSettingResults);
+                var userMessages = Message.fromSettingResults(userSettingResults);
+                var user = new User(userName, userMessages);
+                users.push(user);
+            });
 
-        this.showError = function (messageContent) {
-            this.showMessage(appSettings.messageType.Error, messageContent || 'Undefined error message');
-        };
+            showUsers(users);
+        }
 
-        this.hide = function () {
-            setScopeMessages(undefined);
-        };
+        function hide() {
+            if (angular.isDefined(messageScope)) {
+                messageScope.users = undefined;
+            }
+        }
 
-        var self = this;
-        $rootScope.$on('product-view-loaded', function(){
-            self.hide();
+        $rootScope.$on('product-view-loaded', function () {
+            hide();
         });
+
+        return {
+            setup: setup,
+            config: config,
+            hide: hide,
+            showSuccess: showSuccess,
+            showWarning: showWarning,
+            showNoChange: showNoChange,
+            showError: showError,
+            showSingle: showSingle,
+            showMultiple: showMultiple
+        };
     };
 
     fanexMessageService.$inject = injectParams;
@@ -2924,8 +3033,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$location', 'fanexCommonService', 'fanexAppSettings', 'fanexFormType'];
-    var fanexModelService = function ($rootScope, $location, commonService, appSettings, FormType) {
+    var injectParams = ['$rootScope', '$location', 'fanexCommonService', 'fanexAppSettings', 'fanexFormTypeHandler'];
+    var fanexModelService = function ($rootScope, $location, commonService, appSettings, FormTypeHandler) {
         function Model() {
             this.isValid = false;
             this.params = {};
@@ -2961,8 +3070,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     return;
                 }
 
-                var formTypeObj = new FormType(formType);
-                var pattern = formTypeObj.pattern;
+                var formTypeHandler = new FormTypeHandler(formType);
+                var pattern = formTypeHandler.pattern;
                 var matches = pattern.match(/\/:\w+/g);
                 var params = [];
                 angular.forEach(matches, function (match) {
@@ -3027,8 +3136,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             }
 
             var formType = model.params.formType;
-            var formTypeObj = new FormType(formType);
-            var selectModel = formTypeObj.createModel(model.params);
+            var formTypeHandler = new FormTypeHandler(formType);
+            var selectModel = formTypeHandler.createModel(model.params);
             angular.extend(selectModel, {
                 FormType: model.params.formType,
                 ProductId: model.params.productId
@@ -3045,8 +3154,100 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexResources', 'fanexAppSettings'];
-    var fanexResourceService = function (resources, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexDirectiveLinker', 'fanexSelectBuilder'];
+    var fanexPtService = function (appSettings, DirectiveLinker, SelectBuilder) {
+        var service = new DirectiveLinker();
+
+        service.copyValue = function (source, destination, field, generator) {
+            destination[field].value = source[field].value;
+            destination[field] = generator();
+            var isCopied = source[field].value === destination[field].value;
+            destination[field].valid = isCopied;
+            return isCopied;
+        };
+
+        service.correctValue = function (min, max, value) {
+            return Math.max(min, Math.min(max, value));
+        };
+
+        service.createSelect = function (min, max, value) {
+            var selectBuilder = new SelectBuilder(1, 1);
+            return selectBuilder.build(min, max, value);
+        };
+
+        return service;
+    };
+
+    fanexPtService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexPtService', fanexPtService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexCommonService', 'fanexMessageService'];
+    var fanexRequestService = function ($injector, $http, $rootScope, appSettings, commonService, messageService) {
+        function isSuccessResponse(response) {
+            if (!response.IsSuccess) {
+                messageService.showError(response.ErrMsg);
+                return false;
+            }
+
+            return true;
+        }
+
+        this.query = function (queryModel, successCallback) {
+            var url = appSettings.rootUrl + '/CustomerSetting/Query';
+            var request = $http.post(url, queryModel);
+            request.success(function (response) {
+                if (!isSuccessResponse(response)) {
+                    return;
+                }
+                
+                if (angular.isFunction(successCallback)) {
+                    var productId = queryModel.ProductId;
+                    var productSetting = commonService.getProductSetting(productId);
+                    var QueryReader = $injector.get(productSetting.queryReader);
+                    var queryReaderObj = new QueryReader();
+                    var data = queryReaderObj.read(response);
+                    successCallback(data);
+                }
+            });
+
+            return request;
+        };
+
+        this.command = function (commandModel, successCallback) {
+            var url = appSettings.rootUrl + '/CustomerSetting/Command';
+            var request = $http.post(url, commandModel);
+            request.success(function (response) {
+                if (!isSuccessResponse(response)) {
+                    return;
+                }
+                
+                if (angular.isFunction(successCallback)) {
+                    var productId = commandModel.ProductId;
+                    var productSetting = commonService.getProductSetting(productId);
+                    var CommandReader = $injector.get(productSetting.commandReader);
+                    var commandReaderObj = new CommandReader();
+                    var data = commandReaderObj.read(response);
+                    successCallback(data);
+                }
+            });
+
+            return request;
+        };
+    };
+
+    fanexRequestService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexRequestService', fanexRequestService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexResources', 'fanexAppSettings', 'fanexDataService'];
+    var fanexResourceService = function (resources, appSettings, dataService) {
         var resource = {};
 
         this.setLanguage = function (language) {
@@ -3080,6 +3281,20 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
         };
+
+        this.getDisplayName = function (settingLevel, data) {
+            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
+            switch (settingLevel) {
+                case appSettings.settingLevel.Product:
+                    return dataService.productName;
+                case appSettings.settingLevel.SportType:
+                    return data.SportTypeName;
+                case appSettings.settingLevel.BetType:
+                    return data.BetTypeName + liveName;
+                case appSettings.settingLevel.SportTypeBetType:
+                    return data.BetTypeName + liveName;
+            }
+        };
     };
 
     fanexResourceService.$inject = injectParams;
@@ -3089,8 +3304,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexControllerService'];
-    var fanexTemplateService = function (appSettings, controllerService) {
+    var injectParams = ['fanexDirectiveLinker'];
+    var fanexStatusService = function (DirectiveLinker) {
+        var service = new DirectiveLinker();
+        return service;
+    };
+
+    fanexStatusService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexStatusService', fanexStatusService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexAppSettings', 'fanexDataService'];
+    var fanexTemplateService = function (appSettings, dataService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -3114,7 +3342,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         discountFiles[appSettings.formType.AgentEditMember] = 'fanex-discount-container.htm';
 
         this.resolveStatus = function () {
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
             ? 'templates/' + levelFolder + '/fanex-status-container.htm'
@@ -3122,8 +3351,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolveDiscount = function () {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
+            var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.DiscountLevel];
             var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
@@ -3132,7 +3362,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolveBetLimit = function () {
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
             ? 'templates/' + levelFolder + '/fanex-bet-limit-container.htm'
@@ -3140,8 +3371,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolvePositionTaking = function () {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
+            var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];
             var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
@@ -3231,6 +3463,42 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
+    var injectParams = ['fanexPtService'];
+    var fanexUpdateMemberPtService = function (ptService) {
+        var $scope;
+        this.setup = function (scope) {
+            $scope = scope;
+        };
+
+        this.hide = function () {
+            $scope.isShow = false;
+        };
+
+        this.show = function (memberPts) {
+            var pts = [];
+            angular.forEach(memberPts, function (memberPt) {
+                var ptSelect = ptService.createSelect(0, memberPt.Pt, memberPt.Pt);
+                pts.push({
+                    sportType: memberPt.SportType,
+                    betType: memberPt.BetType,
+                    isLive: memberPt.IsLive,
+                    name: memberPt.Name,
+                    value: ptSelect.value,
+                    options: ptSelect.options
+                });
+            });
+            $scope.isShow = true;
+            $scope.pts = pts;
+        };
+    };
+
+    fanexUpdateMemberPtService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexUpdateMemberPtService', fanexUpdateMemberPtService);
+})();
+
+'use strict';
+
+(function () {
     var body = angular.element(document.body);
     var rootUrl = body.attr('data-root-url');
     angular.module('customerSettingApp').value('fanexAppSettings', {
@@ -3292,18 +3560,20 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').value('fanexProductConfiguration', {
         errorController: 'FanexErrorController',
         errorTemplateUrl: 'templates/fanex-error-page.htm',
+        defaultProductSetting: {
+            controller: 'FanexProductController',
+            templateUrl: 'templates/fanex-product-page.htm',
+            queryReader: 'fanexQueryReader',
+            commandReader: 'FanexCommandReader'
+        },
         productSettings: [
             {
-                id: 255,
+                id: 0,
                 name: 'demo',
                 controller: 'FanexProductController',
-                templateUrl: 'templates/fanex-product-page.htm'
-            },
-            {
-                id: 254,
-                name: 'demo',
-                controller: 'FanexProductController',
-                templateUrl: 'templates/fanex-product-page.htm'
+                templateUrl: 'templates/fanex-demo-page.htm',
+                queryReader: 'FanexQueryReader',
+                commandReader: 'FanexCommandReader'
             }
         ]
     });

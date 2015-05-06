@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$filter', 'fanexCommonService', 'fanexTooltipService', 'fanexAppSettings'];
-    var fanexBetLimitInputDirective = function ($filter, commonService, tooltipService, appSettings) {
+    var injectParams = ['$filter', 'fanexAppSettings', 'fanexCommonService', 'fanexTooltipService'];
+    var fanexBetLimitInputDirective = function ($filter, appSettings, commonService, tooltipService) {
         return {
             restrict: 'A',
             require: 'ngModel',

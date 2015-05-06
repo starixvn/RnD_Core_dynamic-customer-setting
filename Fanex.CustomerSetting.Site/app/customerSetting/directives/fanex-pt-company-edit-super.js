@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtCompanyEditSuperDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtCompanyEditSuperDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtCompanyEditSuper',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-company-edit-super.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Max PT
                 function generateSuperMaxPT() {
@@ -23,8 +24,8 @@
                     var max = positionTaking.DefaultMaxPT;
                     var value = !isInitialized
                         ? positionTaking.S4
-                        : commonService.correctValue(min, max, $scope.superMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superMaxPT = generateSuperMaxPT();
                 $scope.$watch('superMaxPT.value', function (newValue, oldValue) {
@@ -44,8 +45,8 @@
                     var max = $scope.superMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.M4
-                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
@@ -64,8 +65,8 @@
                     var max = $scope.masterMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.A4
-                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
 
@@ -75,17 +76,17 @@
                     var max = $scope.superMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N4
-                        : commonService.correctValue(min, max, $scope.superMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superMinPT = generateSuperMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
-                    return commonService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
-                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
-                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
-                        && commonService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
+                    return ptService.copyValue(source, $scope, 'superMaxPT', generateSuperMaxPT)
+                        && ptService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && ptService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
+                        && ptService.copyValue(source, $scope, 'superMinPT', generateSuperMinPT);
                 };
 
                 // Validate

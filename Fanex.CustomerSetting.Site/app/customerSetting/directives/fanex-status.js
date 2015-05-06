@@ -1,24 +1,24 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexStatusDirective = function (resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexResourceService'];
+    var fanexStatusDirective = function (appSettings, statusService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
                 status: '=fanexStatus',
-                formType: '=formType'
+                formType: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-status.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkStatus($scope);
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.Status, $scope.status);
+                statusService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
                 $scope.showDownline = $scope.formType !== appSettings.formType.AgentEditMember;
-
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
                 if ($scope.status.IsDisabledUpline === true) {

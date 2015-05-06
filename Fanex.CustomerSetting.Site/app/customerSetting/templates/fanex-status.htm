@@ -1,14 +1,15 @@
 ﻿<div class="status-item">
-    <div class="name" title="{{name}}" data-ng-bind="name">
+    <div class="name" title="{{name}}">
+        {{name}}
     </div>
     <div class="value">
         <label class="checkbox">
             <input type="checkbox" data-ng-model="enable" data-ng-disabled="enableDisabled" />
-            {{resourceService.getString('Enable')}}
+            {{'Enable' | fanexTranslate}}
         </label>
         <label class="checkbox downline" data-ng-show="showDownline">
             <input type="checkbox" data-ng-model="downline" data-ng-disabled="downlineDisabled" />
-            {{resourceService.getString('EnableDownline')}}
+            {{'EnableDownline' | fanexTranslate}}
         </label>
     </div>
 </div>

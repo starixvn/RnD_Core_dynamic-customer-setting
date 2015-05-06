@@ -1,7 +1,8 @@
 ﻿<div class="position-taking-item">
     <div class="name" title="{{name}}">
-        {{name}}<span class="copy" title="{{resourceService.getString('CopyTooltip')}}" data-ng-show="hasCopy"
-            data-fanex-pt-copy> <i class="icon-copy"></i></span>
+        {{name}}
+        <div data-fanex-pt-copy="hasCopy">
+        </div>
     </div>
     <div class="master-pt" data-fanex-pt-select="masterPT">
     </div>
@@ -10,6 +11,6 @@
             <input type="checkbox" data-ng-model="masterIsAuto" />
         </label>
     </div>
-    <div class="agent-pt" data-ng-bind="agentPT">
+    <div class="agent-pt" data-ng-bind="agentPT | fanexPtFormat">
     </div>
 </div>

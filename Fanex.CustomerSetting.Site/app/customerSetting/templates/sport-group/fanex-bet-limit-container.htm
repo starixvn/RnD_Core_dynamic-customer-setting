@@ -7,17 +7,17 @@
             <div class="name">
             </div>
             <div class="min-bet">
-                {{resourceService.getString('MinBet')}}
+                {{'MinBet' | fanexTranslate}}
             </div>
             <div class="max-bet">
-                {{resourceService.getString('MaxBet')}}
+                {{'MaxBet' | fanexTranslate}}
             </div>
             <div class="max-per-match">
-                {{resourceService.getString('MaxPerMatch')}}
+                {{'MaxPerMatch' | fanexTranslate}}
             </div>
         </div>
-        <div data-ng-repeat="item in betLimitGroup.Items" data-fanex-bet-limit="item" data-form-type="formType"
-            data-has-copy="item==betLimits[0] && betLimits.length>=2">
+        <div data-ng-repeat="betLimit in betLimitGroup.Items" data-fanex-bet-limit="betLimit"
+            data-form-type="formType" data-setting-level="betLimitLevel" data-has-copy="betLimit==betLimits[0] && betLimits.length>=2">
         </div>
     </div>
 </div>

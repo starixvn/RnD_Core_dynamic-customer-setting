@@ -1,14 +1,14 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$filter', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
+    var injectParams = ['$filter', 'fanexAppSettings', 'fanexBetLimitService', 'fanexResourceService'];
     var errorType = {
         Limit: 1,
         MinBet: 2,
         MaxBet: 3,
         MaxPerMatch: 4
     };
-    var fanexBetLimitDirective = function ($rootScope, $filter, resourceService, controllerService, appSettings) {
+    var fanexBetLimitDirective = function ($filter, appSettings, betLimitService, resourceService) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -117,12 +117,15 @@
             replace: true,
             scope: {
                 betLimit: '=fanexBetLimit',
-                formType: '=formType',
+                formType: '=',
+                settingLevel: '=',
                 hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
-                controllerService.linkBetLimit($scope);
+                betLimitService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;
                 $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
                     || $scope.formType === appSettings.formType.MasterEditMember;
@@ -138,26 +141,16 @@
                 $scope.maxPerMatch = data.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.BetLimit, betLimit);
-                $scope.resourceService = resourceService;
 
                 if ($scope.isReadonly) {
                     return;
                 }
 
-                if ($scope.hasCopy) {
-                    $scope.copy = function () {
-                        $rootScope.$broadcast('copy-bet-limit', $scope);
-                    };
-                }
-
-                $scope.$on('copy-bet-limit', function (event, copyScope) {
-                    if (copyScope !== $scope) {
-                        $scope.minBet.value = copyScope.minBet.value;
-                        $scope.maxBet.value = copyScope.maxBet.value;
-                        $scope.maxPerMatch.value = copyScope.maxPerMatch.value;
-                    }
-                });
+                $scope.copy = function (copyScope) {
+                    $scope.minBet.value = copyScope.minBet.value;
+                    $scope.maxBet.value = copyScope.maxBet.value;
+                    $scope.maxPerMatch.value = copyScope.maxPerMatch.value;
+                };
 
                 $scope.validate = function () {
                     var errCode = appSettings.errorType.Success;

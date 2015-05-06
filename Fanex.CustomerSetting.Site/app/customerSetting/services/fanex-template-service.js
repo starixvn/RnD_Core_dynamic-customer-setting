@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexControllerService'];
-    var fanexTemplateService = function (appSettings, controllerService) {
+    var injectParams = ['fanexAppSettings', 'fanexDataService'];
+    var fanexTemplateService = function (appSettings, dataService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -26,7 +26,8 @@
         discountFiles[appSettings.formType.AgentEditMember] = 'fanex-discount-container.htm';
 
         this.resolveStatus = function () {
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
             ? 'templates/' + levelFolder + '/fanex-status-container.htm'
@@ -34,8 +35,9 @@
         };
 
         this.resolveDiscount = function () {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
+            var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.DiscountLevel];
             var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
@@ -44,7 +46,8 @@
         };
 
         this.resolveBetLimit = function () {
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
             ? 'templates/' + levelFolder + '/fanex-bet-limit-container.htm'
@@ -52,8 +55,9 @@
         };
 
         this.resolvePositionTaking = function () {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var settingContext = queryData.SettingContext;
+            var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];
             var fileName = positionTakingFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)

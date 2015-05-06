@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtAgentEditMemberDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtAgentEditMemberDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtAgentEditMember',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-agent-edit-member.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
 
                 // Agent PT
                 function generateAgentPT() {
@@ -23,8 +24,8 @@
                     var max = positionTaking.A2;
                     var value = !isInitialized
                         ? positionTaking.A1
-                        : commonService.correctValue(min, max, $scope.agentPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentPT = generateAgentPT();
                 $scope.$watch('agentPT.value', function (newValue, oldValue) {
@@ -39,7 +40,7 @@
 
                 // Copy
                 $scope.copy = function (source) {
-                    return commonService.copyValue(source, $scope, 'agentPT', generateAgentPT);
+                    return ptService.copyValue(source, $scope, 'agentPT', generateAgentPT);
                 };
 
                 // Validate

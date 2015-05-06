@@ -1,4 +1,4 @@
-/*! fanex-customer-setting v0.0.6 | (c) 2015 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.7 | (c) 2015 Nexcel Solutions Vietnam */
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -22,39 +22,42 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
-.customer-setting .message-container > .message {
+.customer-setting .message-container .name {
   padding: 3px 5px;
 }
-.customer-setting .message-container > .message > .icon {
+.customer-setting .message-container .message {
+  padding: 3px 5px;
+}
+.customer-setting .message-container .message > .icon {
   float: left;
   width: 14px;
   height: 13px;
   background-image: url("images/sprite.png");
   background-repeat: no-repeat;
 }
-.customer-setting .message-container > .message.success {
+.customer-setting .message-container .message.success {
   color: #618e11;
 }
-.customer-setting .message-container > .message.success > .icon {
+.customer-setting .message-container .message.success > .icon {
   background-position: -65px 0;
 }
-.customer-setting .message-container > .message.warning {
+.customer-setting .message-container .message.warning {
   color: #c28f06;
 }
-.customer-setting .message-container > .message.warning > .icon {
+.customer-setting .message-container .message.warning > .icon {
   background-position: -51px 0;
 }
-.customer-setting .message-container > .message.error {
+.customer-setting .message-container .message.error {
   color: #f40000;
 }
-.customer-setting .message-container > .message.error > .icon {
+.customer-setting .message-container .message.error > .icon {
   background-position: -51px 0;
 }
-.customer-setting .message-container > .message > .content {
+.customer-setting .message-container .message > .content {
   padding-left: 20px;
   line-height: 15px;
 }
-.customer-setting .message-container > .message > .content > .rows {
+.customer-setting .message-container .message > .content > .rows {
   padding-left: 15px;
 }
 .customer-setting .dialog-container > .dialog-overlay {

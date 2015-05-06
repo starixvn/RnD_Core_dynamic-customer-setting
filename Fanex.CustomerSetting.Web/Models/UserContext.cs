@@ -17,7 +17,7 @@
 
         public string Language { get; set; }
 
-        public bool HasUpdatePermission
+        public bool HasCommandPermission
         {
             get
             {

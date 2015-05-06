@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexResources', 'fanexAppSettings'];
-    var fanexResourceService = function (resources, appSettings) {
+    var injectParams = ['fanexResources', 'fanexAppSettings', 'fanexDataService'];
+    var fanexResourceService = function (resources, appSettings, dataService) {
         var resource = {};
 
         this.setLanguage = function (language) {
@@ -35,6 +35,20 @@
             return input.replace(/{(\d+)}/g, function (match, number) {
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
+        };
+
+        this.getDisplayName = function (settingLevel, data) {
+            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
+            switch (settingLevel) {
+                case appSettings.settingLevel.Product:
+                    return dataService.productName;
+                case appSettings.settingLevel.SportType:
+                    return data.SportTypeName;
+                case appSettings.settingLevel.BetType:
+                    return data.BetTypeName + liveName;
+                case appSettings.settingLevel.SportTypeBetType:
+                    return data.BetTypeName + liveName;
+            }
         };
     };
 

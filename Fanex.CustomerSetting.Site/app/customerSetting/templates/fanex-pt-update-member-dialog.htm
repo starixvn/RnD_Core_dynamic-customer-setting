@@ -6,13 +6,13 @@
                     <i class="icon-close"></i>
                 </div>
                 <div class="dialog-title">
-                    {{resourceService.getString('UpdateMemberPtTitle')}}
+                    {{'UpdateMemberPtTitle' | fanexTranslate}}
                 </div>
             </div>
             <div class="dialog-body">
-                <span>{{resourceService.getString('UpdateMemberPtInfo')}}</span>
+                <span>{{'UpdateMemberPtInfo' | fanexTranslate}} </span>
                 <br />
-                <span>{{resourceService.getString('UpdateMemberPtQuestion')}}</span>
+                <span>{{'UpdateMemberPtQuestion' | fanexTranslate}}</span>
                 <table class="position-taking-group">
                     <tbody>
                         <tr data-ng-repeat="pt in pts">
@@ -29,10 +29,10 @@
             </div>
             <div class="dialog-footer">
                 <button data-ng-click="clickYes()">
-                    {{resourceService.getString('Yes')}}
+                    {{'Yes' | fanexTranslate}}
                 </button>
                 <button data-ng-click="clickNo()">
-                    {{resourceService.getString('No')}}
+                    {{'No' | fanexTranslate}}
                 </button>
             </div>
         </div>

@@ -3,16 +3,16 @@
         <div class="name">
         </div>
         <div class="master-pt">
-            {{resourceService.getString('MasterPT')}}
+            {{'MasterPT' | fanexTranslate}}
         </div>
         <div class="master-is-auto">
-            {{resourceService.getString('IsAuto')}}
+            {{'IsAuto' | fanexTranslate}}
         </div>
         <div class="agent-pt">
-            {{resourceService.getString('AgentPT')}}
+            {{'AgentPT' | fanexTranslate}}
         </div>
     </div>
-    <div data-ng-repeat="item in positionTakings" data-fanex-pt-master-edit-member="item"
-        data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+    <div data-ng-repeat="positionTaking in positionTakings" data-fanex-pt-master-edit-member="positionTaking"
+        data-setting-level="positionTakingLevel" data-has-copy="positionTaking==positionTakings[0] && positionTakings.length>=2">
     </div>
 </div>

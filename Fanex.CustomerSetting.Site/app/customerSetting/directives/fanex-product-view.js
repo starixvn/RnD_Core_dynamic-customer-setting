@@ -1,19 +1,10 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$sce', '$compile', '$controller', '$templateCache', 'fanexProductConfiguration', 'fanexModelService'];
-    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache, productConfiguration, modelService) {
-        function getProductSetting(productId) {
-            var result;
-            angular.forEach(productConfiguration.productSettings, function (productSetting) {
-                if (angular.isUndefined(result) && productSetting.id === productId) {
-                    result = productSetting;
-                }
-            });
-
-            return result;
-        }
-
+    var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
+            'fanexProductConfiguration', 'fanexCommonService', 'fanexModelService'];
+    var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
+            productConfiguration, commonService, modelService) {
         return {
             transclude: 'element',
             compile: function (element, attr, linker) {
@@ -28,14 +19,13 @@
                         if (isValid) {
                             var params = modelService.getParams();
                             var productId = params.productId;
-                            var productSetting = getProductSetting(productId);
+                            var productSetting = commonService.getProductSetting(productId);
                             if (angular.isDefined(productSetting)) {
                                 templateUrl = productSetting.templateUrl;
                                 controller = productSetting.controller;
                             }
                         }
 
-                        
                         templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();

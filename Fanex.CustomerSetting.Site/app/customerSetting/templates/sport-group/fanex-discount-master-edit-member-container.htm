@@ -7,13 +7,14 @@
             <div class="name">
             </div>
             <div class="agent-discount">
-                {{resourceService.getString('CommissionForAgent')}}
+                {{'CommissionForAgent' | fanexTranslate}}
             </div>
             <div class="member-discount">
-                {{resourceService.getString('CommissionForMember')}}
+                {{'CommissionForMember' | fanexTranslate}}
             </div>
         </div>
-        <div data-ng-repeat="item in discountGroup.Items" data-fanex-discount-master-edit-member="item">
+        <div data-ng-repeat="discount in discountGroup.Items" data-fanex-discount-master-edit-member="discount"
+            data-setting-level="discountLevel">
         </div>
     </div>
 </div>

@@ -2,8 +2,8 @@
 
 (function () {
     var injectParams = ['fanexAppSettings'];
-    var fanexFormTypeFactory = function (appSettings) {
-        var CompanyEditSuper = function () {
+    var fanexFormTypeHandler = function (appSettings) {
+        var CompanyEditSuperHandler = function () {
             this.formType = appSettings.formType.CompanyEditSuper;
             this.pattern = '/editSuper/:superId/:productId';
             this.createModel = function (params) {
@@ -16,7 +16,7 @@
             };
         };
 
-        var SuperEditMaster = function () {
+        var SuperEditMasterHandler = function () {
             this.formType = appSettings.formType.SuperEditMaster;
             this.pattern = '/editMaster/:masterId/:productId';
             this.createModel = function (params) {
@@ -29,7 +29,7 @@
             };
         };
 
-        var MasterEditAgent = function () {
+        var MasterEditAgentHandler = function () {
             this.formType = appSettings.formType.MasterEditAgent;
             this.pattern = '/editAgent/:agentId/:productId';
             this.createModel = function (params) {
@@ -42,7 +42,7 @@
             };
         };
 
-        var AgentEditMember = function () {
+        var AgentEditMemberHandler = function () {
             this.formType = appSettings.formType.AgentEditMember;
             this.pattern = '/editMember/:memberId/:productId';
             this.createModel = function (params) {
@@ -55,7 +55,7 @@
             };
         };
 
-        var SuperEditMember = function () {
+        var SuperEditMemberHandler = function () {
             this.formType = appSettings.formType.SuperEditMember;
             this.pattern = '/superEditMember/:superId/:memberId/:productId';
             this.createModel = function (params) {
@@ -68,7 +68,7 @@
             };
         };
 
-        var MasterEditMember = function () {
+        var MasterEditMemberHandler = function () {
             this.formType = appSettings.formType.MasterEditMember;
             this.pattern = '/masterEditMember/:masterId/:memberId/:productId';
             this.createModel = function (params) {
@@ -81,31 +81,29 @@
             };
         };
 
-        var FormTypeFactory = function (formType) {
+        return function (formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return new CompanyEditSuper();
+                    return new CompanyEditSuperHandler();
 
                 case appSettings.formType.SuperEditMaster:
-                    return new SuperEditMaster();
+                    return new SuperEditMasterHandler();
 
                 case appSettings.formType.MasterEditAgent:
-                    return new MasterEditAgent();
+                    return new MasterEditAgentHandler();
 
                 case appSettings.formType.SuperEditMember:
-                    return new SuperEditMember();
+                    return new SuperEditMemberHandler();
 
                 case appSettings.formType.MasterEditMember:
-                    return new MasterEditMember();
+                    return new MasterEditMemberHandler();
 
                 case appSettings.formType.AgentEditMember:
-                    return new AgentEditMember();
+                    return new AgentEditMemberHandler();
             }
         };
-
-        return FormTypeFactory;
     };
 
-    fanexFormTypeFactory.$inject = injectParams;
-    angular.module('customerSettingApp').factory('fanexFormType', fanexFormTypeFactory);
+    fanexFormTypeHandler.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexFormTypeHandler', fanexFormTypeHandler);
 })();

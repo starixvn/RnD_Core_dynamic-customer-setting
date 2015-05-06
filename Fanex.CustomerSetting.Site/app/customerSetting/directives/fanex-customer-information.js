@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexResourceService'];
-    var fanexCustomerInformationDirective = function (resourceService) {
+    var injectParams = [];
+    var fanexCustomerInformationDirective = function () {
         return {
             restrict: 'AE',
             scope: {
@@ -10,7 +10,6 @@
             },
             templateUrl: 'templates/fanex-customer-information.htm',
             controller: ['$scope', function ($scope) {
-                $scope.resourceService = resourceService;
                 $scope.$watch('information', function () {
                     if (angular.isUndefined($scope.information)) {
                         return;

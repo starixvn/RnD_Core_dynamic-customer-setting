@@ -7,20 +7,20 @@
             <div class="name">
             </div>
             <div class="super-pt">
-                {{resourceService.getString('SuperPT')}}
+                {{'SuperPT' | fanexTranslate}}
             </div>
             <div class="super-is-auto">
-                {{resourceService.getString('IsAuto')}}
+                {{'IsAuto' | fanexTranslate}}
             </div>
             <div class="master-pt">
-                {{resourceService.getString('MasterPT')}}
+                {{'MasterPT' | fanexTranslate}}
             </div>
             <div class="master-pt">
-                {{resourceService.getString('AgentPT')}}
+                {{'AgentPT' | fanexTranslate}}
             </div>
         </div>
-        <div data-ng-repeat="item in positionTakingGroup.Items" data-fanex-pt-super-edit-member="item"
-            data-has-copy="item==positionTakings[0] && positionTakings.length>=2">
+        <div data-ng-repeat="positionTaking in positionTakingGroup.Items" data-fanex-pt-super-edit-member="positionTaking"
+            data-setting-level="positionTakingLevel" data-has-copy="positionTaking==positionTakings[0] && positionTakings.length>=2">
         </div>
     </div>
 </div>

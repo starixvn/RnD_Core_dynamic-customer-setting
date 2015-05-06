@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtMasterEditAgentDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtMasterEditAgentDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtMasterEditAgent',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-master-edit-agent.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Master Is Auto
                 $scope.masterIsAuto = positionTaking.IM2;
@@ -32,8 +33,8 @@
                     var max = positionTaking.M3;
                     var value = !isInitialized
                         ? !$scope.masterIsAuto ? positionTaking.M2 : positionTaking.UM2
-                        : commonService.correctValue(min, max, $scope.masterPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterPT = generateMasterPT();
                 $scope.$watch('masterPT.value', function (newValue, oldValue) {
@@ -54,8 +55,8 @@
                         : Math.min(positionTaking.M3, positionTaking.A4);
                     var value = !isInitialized
                         ? positionTaking.A2
-                        : commonService.correctValue(min, max, $scope.agentMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMaxPT = generateAgentMaxPT();
                 $scope.$watch('agentMaxPT.value', function (newValue, oldValue) {
@@ -74,17 +75,17 @@
                     var max = $scope.agentMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N2
-                        : commonService.correctValue(min, max, $scope.agentMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.agentMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.agentMinPT = generateAgentMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.masterIsAuto = source.masterIsAuto;
-                    return commonService.copyValue(source, $scope, 'masterPT', generateMasterPT)
-                        && commonService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
-                        && commonService.copyValue(source, $scope, 'agentMinPT', generateAgentMinPT);
+                    return ptService.copyValue(source, $scope, 'masterPT', generateMasterPT)
+                        && ptService.copyValue(source, $scope, 'agentMaxPT', generateAgentMaxPT)
+                        && ptService.copyValue(source, $scope, 'agentMinPT', generateAgentMinPT);
                 };
 
                 // Validate

@@ -1,21 +1,22 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexCommonService', 'fanexResourceService', 'fanexControllerService', 'fanexAppSettings'];
-    var fanexPtSuperEditMasterDirective = function (commonService, resourceService, controllerService, appSettings) {
+    var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
+    var fanexPtSuperEditMasterDirective = function (appSettings, ptService, resourceService) {
         return {
             restrict: 'AE',
             scope: {
                 positionTaking: '=fanexPtSuperEditMaster',
-                hasCopy: '='
+                hasCopy: '=',
+                settingLevel: '='
             },
             templateUrl: 'templates/fanex-pt-super-edit-master.htm',
             controller: ['$scope', function ($scope) {
-                controllerService.linkPositionTaking($scope);
+                ptService.linkScope($scope);
+
                 var positionTaking = $scope.positionTaking;
                 var isInitialized = false;
-                $scope.resourceService = resourceService;
-                $scope.name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, positionTaking);
+                $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.positionTaking);
 
                 // Super Is Auto
                 $scope.superIsAuto = positionTaking.IS3;
@@ -32,8 +33,8 @@
                     var max = positionTaking.S4;
                     var value = !isInitialized
                         ? !$scope.superIsAuto ? positionTaking.S3 : positionTaking.US3
-                        : commonService.correctValue(min, max, $scope.superPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.superPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.superPT = generateSuperPT();
                 $scope.$watch('superPT.value', function (newValue, oldValue) {
@@ -54,8 +55,8 @@
                         : Math.min(positionTaking.S4, positionTaking.M4);
                     var value = !isInitialized
                         ? positionTaking.M3
-                        : commonService.correctValue(min, max, $scope.masterMaxPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMaxPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMaxPT = generateMasterMaxPT();
                 $scope.$watch('masterMaxPT.value', function (newValue, oldValue) {
@@ -74,17 +75,17 @@
                     var max = $scope.masterMaxPT.value;
                     var value = !isInitialized
                         ? positionTaking.N3
-                        : commonService.correctValue(min, max, $scope.masterMinPT.value);
-                    return commonService.createPositionTakingSelect(min, max, value);
+                        : ptService.correctValue(min, max, $scope.masterMinPT.value);
+                    return ptService.createSelect(min, max, value);
                 }
                 $scope.masterMinPT = generateMasterMinPT();
 
                 // Copy
                 $scope.copy = function (source) {
                     $scope.superIsAuto = source.superIsAuto;
-                    return commonService.copyValue(source, $scope, 'superPT', generateSuperPT)
-                        && commonService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
-                        && commonService.copyValue(source, $scope, 'masterMinPT', generateMasterMinPT);
+                    return ptService.copyValue(source, $scope, 'superPT', generateSuperPT)
+                        && ptService.copyValue(source, $scope, 'masterMaxPT', generateMasterMaxPT)
+                        && ptService.copyValue(source, $scope, 'masterMinPT', generateMasterMinPT);
                 };
 
                 // Validate

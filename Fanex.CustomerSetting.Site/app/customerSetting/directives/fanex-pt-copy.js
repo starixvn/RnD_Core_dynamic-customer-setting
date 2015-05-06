@@ -1,46 +1,42 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', 'fanexControllerService', 'fanexAppSettings', 'fanexResourceService', 'fanexTooltipService'];
-    var fanexPtCopyDirective = function ($rootScope, controllerService, appSettings, resourceService, tooltipService) {
+    var injectParams = ['fanexPtService', 'fanexResourceService', 'fanexTooltipService'];
+    var fanexPtCopyDirective = function (ptService, resourceService, tooltipService) {
         return {
-            restrict: 'A',
-            link: function (scope, element, attributes) {
-                var isShow = scope.$eval(attributes.ngShow);
-                if (!isShow) {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                hasCopy: '=fanexPtCopy'
+            },
+            templateUrl: 'templates/fanex-pt-copy.htm',
+            link: function (scope, element) {
+                if (!scope.hasCopy) {
                     return;
                 }
 
-                element.on('click', function () {
-                    var copy = function () {
-                        var count = 0;
-                        var scopes = controllerService.getScopes(appSettings.settingType.PositionTaking);
-                        var source = scopes[0];
-                        for (var i = 1; i < scopes.length; i++) {
-                            var scope = scopes[i];
-                            var result = scope.copy(source);
-                            if (!result) {
-                                count++;
-                            }
+                scope.copy = function () {
+                    var count = 0;
+                    var scopes = ptService.getScopes();
+                    var source = scopes[0];
+                    for (var i = 1; i < scopes.length; i++) {
+                        var scope = scopes[i];
+                        var result = scope.copy(source);
+                        if (!result) {
+                            count++;
                         }
-
-                        if (count > 0) {
-                            tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
-                            element.on('mouseleave', function () {
-                                tooltipService.hide();
-                                element.off('mouseleave');
-                            });
-                        } else {
-                            tooltipService.hide();
-                        }
-                    };
-
-                    if ($rootScope.$$phase) {
-                        scope.$evalAsync(copy);
-                    } else {
-                        scope.$apply(copy);
                     }
-                });
+
+                    if (count > 0) {
+                        tooltipService.show(element, resourceService.getString('DuplicateValuesAlertMsg'), 'left');
+                        element.on('mouseleave', function () {
+                            tooltipService.hide();
+                            element.off('mouseleave');
+                        });
+                    } else {
+                        tooltipService.hide();
+                    }
+                };
             }
         };
     };

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$location', 'fanexCommonService', 'fanexAppSettings', 'fanexFormType'];
-    var fanexModelService = function ($rootScope, $location, commonService, appSettings, FormType) {
+    var injectParams = ['$rootScope', '$location', 'fanexCommonService', 'fanexAppSettings', 'fanexFormTypeHandler'];
+    var fanexModelService = function ($rootScope, $location, commonService, appSettings, FormTypeHandler) {
         function Model() {
             this.isValid = false;
             this.params = {};
@@ -38,8 +38,8 @@
                     return;
                 }
 
-                var formTypeObj = new FormType(formType);
-                var pattern = formTypeObj.pattern;
+                var formTypeHandler = new FormTypeHandler(formType);
+                var pattern = formTypeHandler.pattern;
                 var matches = pattern.match(/\/:\w+/g);
                 var params = [];
                 angular.forEach(matches, function (match) {
@@ -104,8 +104,8 @@
             }
 
             var formType = model.params.formType;
-            var formTypeObj = new FormType(formType);
-            var selectModel = formTypeObj.createModel(model.params);
+            var formTypeHandler = new FormTypeHandler(formType);
+            var selectModel = formTypeHandler.createModel(model.params);
             angular.extend(selectModel, {
                 FormType: model.params.formType,
                 ProductId: model.params.productId

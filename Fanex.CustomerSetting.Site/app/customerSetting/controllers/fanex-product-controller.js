@@ -1,16 +1,15 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexCommonService',
-            'fanexTemplateService', 'fanexDataService', 'fanexControllerService', 'fanexMessageService', 'fanexResourceService', 'fanexResponseReader'];
-    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, commonService,
-            templateService, dataService, controllerService, messageService, resourceService, ResponseReader) {
-        var selectModel = modelService.createSelectModel();
-        dataService.select(selectModel, function (response) {
-            controllerService.updateResponse(response);
-            var requestContext = controllerService.getRequestContext();
-            var customerSetting = controllerService.getCustomerSetting();
-            var settingContext = controllerService.getSettingContext();
+    var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
+            'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
+            templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
+        var queryModel = modelService.createSelectModel();
+        requestService.query(queryModel, function (queryData) {
+            var requestContext = queryData.RequestContext;
+            var customerSetting = queryData.CustomerSetting;
+            var settingContext = queryData.SettingContext;
             resourceService.setLanguage(requestContext.Language);
 
             var multipleInfo = modelService.getMultipleInfo();
@@ -20,21 +19,29 @@
                 $scope.information = customerSetting.Information;
             }
 
-            $scope.formType = selectModel.FormType;
+            $scope.formType = queryModel.FormType;
 
+            // status
             $scope.statuses = customerSetting.Statuses;
+            $scope.statusLevel = settingContext.StatusLevel;
             $scope.statusTemplate = templateService.resolveStatus();
 
+            // discount
             $scope.discounts = customerSetting.Discounts;
+            $scope.discountLevel = settingContext.DiscountLevel;
             $scope.discountTemplate = templateService.resolveDiscount();
             $scope.hasUpdateDiscount = $scope.formType !== appSettings.formType.SuperEditMember
                 && $scope.formType !== appSettings.formType.MasterEditMember;
-            
+
+            // bet limit
             $scope.betLimits = customerSetting.BetLimits;
+            $scope.betLimitLevel = settingContext.BetLimitLevel;
             $scope.betLimitTemplate = templateService.resolveBetLimit();
             $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
-            
+
+            // position taking
             $scope.positionTakings = customerSetting.PositionTakings;
+            $scope.positionTakingLevel = settingContext.PositionTakingLevel;
             $scope.positionTakingTemplate = templateService.resolvePositionTaking();
             if (requestContext.FormType === appSettings.formType.MasterEditAgent) {
                 $scope.disableAutoMPT = settingContext.DisableAutoMPT;
@@ -43,29 +50,28 @@
             $scope.hasUpdateAll = modelService.isValid();
         });
 
-        var selectedUpdateType;
         $scope.updateStatuses = function () {
-            selectedUpdateType = appSettings.settingType.Status;
+            dataService.commandType = appSettings.settingType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            selectedUpdateType = appSettings.settingType.Discount;
+            dataService.commandType = appSettings.settingType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            selectedUpdateType = appSettings.settingType.BetLimit;
+            dataService.commandType = appSettings.settingType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            selectedUpdateType = appSettings.settingType.PositionTaking;
+            dataService.commandType = appSettings.settingType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            selectedUpdateType = appSettings.settingType.All;
+            dataService.commandType = appSettings.settingType.All;
             update();
         };
 
@@ -73,9 +79,33 @@
             update(updateMemberPT);
         });
 
+        function getUpdateData(settingType) {
+            var settingTypeHandler = new SettingTypeHandler(settingType);
+            var scopes = settingTypeHandler.getScopes();
+            var data = [];
+            var isFormInvalid = false;
+            angular.forEach(scopes, function (scope) {
+                if (!isFormInvalid) {
+                    if (angular.isFunction(scope.validate)) {
+                        var result = scope.validate();
+                        if (result.errCode === appSettings.errorType.Success) {
+                            data.push(result.data);
+                        } else if (result.errCode === appSettings.errorType.FormInvalid) {
+                            isFormInvalid = true;
+                        }
+                    }
+                }
+            });
+
+            return isFormInvalid
+                ? undefined
+                : data;
+        }
+
         function update(updateMemberPT) {
-            var requestContext = controllerService.getRequestContext();
-            var settingContext = controllerService.getSettingContext();
+            var queryData = dataService.queryData;
+            var requestContext = queryData.RequestContext;
+            var settingContext = queryData.SettingContext;
 
             function hasUpdate(data, isShowNoChange) {
                 if (angular.isUndefined(data)) {
@@ -112,7 +142,7 @@
                         var isAuto = pt[isAutoPTName];
                         if (isAuto === false) {
                             var ptValue = pt[ptName];
-                            var name = controllerService.getDisplayName(appSettings.settingType.PositionTaking, pt);
+                            var name = resourceService.getDisplayName($scope.positionTakingLevel, pt);
                             memberPTs.push({
                                 SportType: pt.SportType,
                                 BetType: pt.BetType,
@@ -124,9 +154,7 @@
                     });
 
                     if (memberPTs.length > 0) {
-                        $rootScope.updateModal = {
-                            MemberPTs: memberPTs
-                        };
+                        updateMemberPtService.show(memberPTs);
                         return true;
                     }
                 }
@@ -134,17 +162,17 @@
                 return false;
             }
 
-            messageService.hide();
             var positionTakings;
             var betLimits;
             var discounts;
             var statuses;
-            switch (selectedUpdateType) {
+            var commandType = dataService.commandType;
+            switch (commandType) {
                 case appSettings.settingType.All:
-                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
-                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
-                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
-                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    statuses = getUpdateData(appSettings.settingType.Status);
+                    discounts = getUpdateData(appSettings.settingType.Discount);
+                    betLimits = getUpdateData(appSettings.settingType.BetLimit);
+                    positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     var hasUpdatePT;
                     if (!hasUpdate(statuses, false)
                         && !hasUpdate(discounts, false)
@@ -160,7 +188,7 @@
                     break;
 
                 case appSettings.settingType.PositionTaking:
-                    positionTakings = controllerService.getUpdateData(appSettings.settingType.PositionTaking);
+                    positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     if (!hasUpdate(positionTakings, true)) {
                         return;
                     }
@@ -171,21 +199,21 @@
                     break;
 
                 case appSettings.settingType.BetLimit:
-                    betLimits = controllerService.getUpdateData(appSettings.settingType.BetLimit);
+                    betLimits = getUpdateData(appSettings.settingType.BetLimit);
                     if (!hasUpdate(betLimits, true)) {
                         return;
                     }
                     break;
 
                 case appSettings.settingType.Discount:
-                    discounts = controllerService.getUpdateData(appSettings.settingType.Discount);
+                    discounts = getUpdateData(appSettings.settingType.Discount);
                     if (!hasUpdate(discounts, true)) {
                         return;
                     }
                     break;
 
                 case appSettings.settingType.Status:
-                    statuses = controllerService.getUpdateData(appSettings.settingType.Status);
+                    statuses = getUpdateData(appSettings.settingType.Status);
                     if (!hasUpdate(statuses, true)) {
                         return;
                     }
@@ -238,10 +266,9 @@
                 });
             }
 
-            var selectModel = modelService.createSelectModel();
             var multipleInfo = modelService.getMultipleInfo();
-            var updateModel = angular.extend({
-                SettingType: selectedUpdateType,
+            var commandModel = angular.extend({
+                CommandType: commandType,
                 StatusLevel: settingContext.StatusLevel,
                 StatusString: JSON.stringify(statuses),
                 DiscountLevel: settingContext.DiscountLevel,
@@ -250,17 +277,24 @@
                 BetLimitString: JSON.stringify(betLimits),
                 PositionTakingLevel: settingContext.PositionTakingLevel,
                 PositionTakingString: JSON.stringify(positionTakings)
-            }, selectModel);
+            }, queryModel);
             if (multipleInfo.IsMultiple) {
-                updateModel = angular.extend({
+                commandModel = angular.extend({
                     TargetCustIds: JSON.stringify(multipleInfo.CustIds)
-                }, updateModel);
+                }, commandModel);
             }
 
-            dataService.update(updateModel, function (response) {
-                var responseReader = new ResponseReader(updateModel.SettingType);
-                var settingResults = responseReader.read(response);
-                angular.forEach(settingResults, function (settingResult) {
+            requestService.command(commandModel, function (commandData) {
+                if (multipleInfo.IsMultiple) {
+                    var custNames = multipleInfo.CustNames;
+                    var usersSettingResults = commandData;
+                    messageService.showMultiple(custNames, usersSettingResults);
+                    return;
+                }
+
+                var userSettingResults = commandData;
+                messageService.showSingle(userSettingResults);
+                angular.forEach(userSettingResults, function (settingResult) {
                     var result = settingResult.result;
                     if (result.IsSuccess) {
                         var settingType = settingResult.settingType;

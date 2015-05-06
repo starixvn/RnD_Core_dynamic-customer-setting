@@ -1,7 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    angular.module('customerSettingApp').filter('fanexDataGroup', function () {
+    var injectParams = [];
+    var fanexDataGroup = function () {
         function DataGroup(sportType, sportTypeName) {
             this.SportType = sportType;
             this.SportTypeName = sportTypeName;
@@ -28,5 +29,8 @@
 
             return dataGroups;
         };
-    });
+    };
+
+    fanexDataGroup.$inject = injectParams;
+    angular.module('customerSettingApp').filter('fanexDataGroup', fanexDataGroup);
 })();
