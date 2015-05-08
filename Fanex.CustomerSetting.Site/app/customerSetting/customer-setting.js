@@ -283,17 +283,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
-            'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
-            templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
-        var queryModel = modelService.createSelectModel();
+            templateService, requestService, messageService, resourceService, SettingTypeHandler) {
+        var queryModel = modelService.QueryModel;
         requestService.query(queryModel, function (queryData) {
             var requestContext = queryData.RequestContext;
             var customerSetting = queryData.CustomerSetting;
             var settingContext = queryData.SettingContext;
-            resourceService.setLanguage(requestContext.Language);
+            resourceService.setCurrentProductName(queryData.ProductName);
+            resourceService.setLanguage(queryData.Language);
 
-            var multipleInfo = modelService.getMultipleInfo();
+            var multipleInfo = queryModel.getMultipleInfo();
             if (multipleInfo.IsMultiple) {
                 $scope.custNames = multipleInfo.CustNames.join(',');
             } else {
@@ -328,31 +329,32 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 $scope.disableAutoMPT = settingContext.DisableAutoMPT;
             }
 
-            $scope.hasUpdateAll = modelService.isValid();
+            $scope.hasUpdateAll = queryModel;
         });
 
+        var commandType;
         $scope.updateStatuses = function () {
-            dataService.commandType = appSettings.settingType.Status;
+            commandType = appSettings.settingType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            dataService.commandType = appSettings.settingType.Discount;
+            commandType = appSettings.settingType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            dataService.commandType = appSettings.settingType.BetLimit;
+            commandType = appSettings.settingType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            dataService.commandType = appSettings.settingType.PositionTaking;
+            commandType = appSettings.settingType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            dataService.commandType = appSettings.settingType.All;
+            commandType = appSettings.settingType.All;
             update();
         };
 
@@ -384,7 +386,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
 
         function update(updateMemberPT) {
-            var queryData = dataService.queryData;
+            var queryData = requestService.QueryData;
             var requestContext = queryData.RequestContext;
             var settingContext = queryData.SettingContext;
 
@@ -447,7 +449,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             var betLimits;
             var discounts;
             var statuses;
-            var commandType = dataService.commandType;
             switch (commandType) {
                 case appSettings.settingType.All:
                     statuses = getUpdateData(appSettings.settingType.Status);
@@ -547,7 +548,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 });
             }
 
-            var multipleInfo = modelService.getMultipleInfo();
+            var multipleInfo = queryModel.getMultipleInfo();
             var commandModel = angular.extend({
                 CommandType: commandType,
                 StatusLevel: settingContext.StatusLevel,
@@ -1288,14 +1289,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     // update view
                     function update() {
                         var productViewSetting = fanexProductSettingService.errorViewSetting;
-                        var isValid = modelService.isValid();
-                        if (isValid) {
-                            var params = modelService.getParams();
-                            var productId = params.productId;
+                        var queryModel = modelService.QueryModel;
+                        if (angular.isDefined(queryModel)) {
+                            var productId = queryModel.ProductId;
                             productViewSetting = fanexProductSettingService.getViewSetting(productId);
                         }
 
-                        var templateUrl = $sce.getTrustedResourceUrl(productViewSetting.templateUrl);
+                        var templateUrl = productViewSetting.templateUrl;
+                        if (!angular.isDefined(templateUrl)) {
+                            return;
+                        }
+
+                        templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
                         linker(newScope, function (clone) {
@@ -1308,11 +1313,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                             var link = $compile(clone.contents());
                             currentElement = clone;
-                            var controller = $controller(productViewSetting.controller, {
-                                $scope: newScope
-                            });
-                            clone.data('$ngControllerController', controller);
-                            clone.children().data('$ngControllerController', controller);
+                            var controller = productViewSetting.controller;
+                            if (angular.isDefined(controller)) {
+                                controller = $controller(productViewSetting.controller, {
+                                    $scope: newScope
+                                });
+                                clone.data('$ngControllerController', controller);
+                                clone.children().data('$ngControllerController', controller);
+                            }
+
                             link(newScope);
                         });
 
@@ -2264,23 +2273,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDataService', 'fanexSettingResult'];
-    // this service reads response and translate into data to be useed by fanexMessageService.
-    var fanexCommandReader = function (appSettings, modelService, dataService, SettingResult) {
-        function SingleCommandReader() {
+    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexSettingResult'];
+    var fanexCommandReader = function (appSettings, modelService, SettingResult) {
+        function SingleCommandReader(commandType) {
             this.read = function (response) {
                 var userResult = response;
-                var userSettingResults = SettingResult.fromUserResult(dataService.commandType, userResult);
+                var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
                 return userSettingResults;
             };
         }
 
-        function MultipleCommandReader() {
+        function MultipleCommandReader(commandType) {
             this.read = function (response) {
                 var userResults = response.Results;
                 var usersSettingResults = [];
                 angular.forEach(userResults, function (userResult) {
-                    var userSettingResults = SettingResult.fromUserResult(dataService.commandType, userResult);
+                    var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
                     usersSettingResults.push(userSettingResults);
                 });
 
@@ -2288,19 +2296,26 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         }
 
-        function CommandReader() {
+        function CommandData(isSuccess, result) {
+            return {
+                IsSuccess: isSuccess,
+                Result: result
+            };
+        }
+
+        function CommandReader(commandType) {
             this.read = function (response) {
-                this.isSuccess = response.IsSuccess;
+                var isSuccess = response.IsSuccess;
                 var multipleInfo = modelService.getMultipleInfo();
                 var reader;
                 if (multipleInfo.IsMultiple) {
-                    reader = new MultipleCommandReader(multipleInfo.UserNames);
+                    reader = new MultipleCommandReader(commandType);
                 } else {
-                    reader = new SingleCommandReader();
+                    reader = new SingleCommandReader(commandType);
                 }
 
-                dataService.commandData = reader.read(response);
-                return dataService.commandData;
+                var result = reader.read(response);
+                return new CommandData(isSuccess, result);
             };
         }
 
@@ -2354,6 +2369,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/editSuper/:superId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Company,
                     TargetCustId: params.superId,
@@ -2367,6 +2384,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/editMaster/:masterId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Super,
                     TargetCustId: params.masterId,
@@ -2380,6 +2399,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/editAgent/:agentId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Master,
                     TargetCustId: params.agentId,
@@ -2393,6 +2414,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/editMember/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Agent,
                     TargetCustId: params.memberId,
@@ -2406,6 +2429,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/superEditMember/:superId/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: params.superId,
                     RoleId: appSettings.roleType.Super,
                     TargetCustId: params.memberId,
@@ -2419,6 +2444,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.pattern = '/masterEditMember/:masterId/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: params.masterId,
                     RoleId: appSettings.roleType.Master,
                     TargetCustId: params.memberId,
@@ -2459,22 +2486,125 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexDataService'];
-    var fanexQueryReader = function (dataService) {
+    var injectParams = ['$location', 'fanexAppSettings', 'fanexCommonService', 'fanexFormTypeHandler'];
+    var fanexQueryModel = function ($location, appSettings, commonService, FormTypeHandler) {
+        function QueryModel() {
+            var isValid = false;
+            var params = {};
+            var isMultiple = false;
+            var custIds = [];
+            var custNames = [];
+            var formTypeHandler;
+
+            function readSingleInformation() {
+                var path = $location.path();
+                var formTypes = commonService.getPropertyValues(appSettings.formType);
+                angular.forEach(formTypes, function (formType) {
+                    if (isValid) {
+                        return;
+                    }
+
+                    formTypeHandler = new FormTypeHandler(formType);
+                    var pattern = formTypeHandler.pattern;
+                    var matches = pattern.match(/\/:\w+/g);
+                    var queryParams = [];
+                    angular.forEach(matches, function (match) {
+                        queryParams.push(match.replace('/:', ''));
+                    });
+
+                    var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
+                    matches = regExp.exec(path);
+                    if (matches !== null && matches.length - 1 === queryParams.length) {
+                        isValid = true;
+                        angular.forEach(queryParams, function (queryParam, index) {
+                            params[queryParam] = parseInt(matches[index + 1]);
+                        });
+                    }
+                });
+            }
+
+            function readMultipleInformation() {
+                isMultiple = false;
+                var queryString = $location.search();
+                var _custIds = [];
+                var _custNames = [];
+                var custIdsQueryString = queryString.custIds;
+                var custNamesQueryString = queryString.custNames;
+                if (angular.isDefined(custIdsQueryString) && angular.isDefined(custNamesQueryString)) {
+                    isMultiple = true;
+                    _custIds = custIdsQueryString.split(',').map(Number);
+                    _custNames = custNamesQueryString.split(',');
+                    if (_custIds.length !== _custNames.length || _custIds.length <= 1) {
+                        isValid = false;
+                    }
+                }
+
+                if (isMultiple) {
+                    custIds = _custIds;
+                    custNames = _custNames;
+                }
+            }
+
+            function createModel() {
+                if (isValid) {
+                    return formTypeHandler.createModel(params);
+                }
+
+                return undefined;
+            }
+
+            readSingleInformation();
+            if (isValid) {
+                readMultipleInformation();
+            }
+
+            var model = createModel();
+            model.isValid = function () {
+                return isValid;
+            };
+
+            model.getMultipleInfo = function () {
+                return {
+                    IsMultiple: isMultiple,
+                    CustIds: custIds,
+                    CustNames: custNames
+                };
+            };
+
+            return model;
+        }
+
+        return QueryModel;
+    };
+
+    fanexQueryModel.$inject = injectParams;
+    angular.module('customerSettingApp').factory('fanexQueryModel', fanexQueryModel);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = [];
+    var fanexQueryReader = function () {
+        function QueryData(response) {
+            var requestContext = response.RequestContext;
+            var customerSetting = response.CustomerSetting;
+            var settingContext = customerSetting.SettingContext;
+            var productName = requestContext.ProductName;
+            var language = requestContext.Language;
+
+            return {
+                RequestContext: requestContext,
+                CustomerSetting: customerSetting,
+                SettingContext: settingContext,
+                ProductName: productName,
+                Language: language
+            };
+        }
+
         function QueryReader() {
             this.read = function (response) {
-                var requestContext = response.RequestContext;
-                var customerSetting = response.CustomerSetting;
-                var settingContext = customerSetting.SettingContext;
-                var productName = requestContext.ProductName;
-                dataService.productName = productName;
-                dataService.queryData = {
-                    RequestContext: requestContext,
-                    CustomerSetting: customerSetting,
-                    SettingContext: settingContext
-                };
-
-                return dataService.queryData;
+                return new QueryData(response);
             };
         }
 
@@ -2815,25 +2945,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings'];
-
-    // this service contains data parsed from response after select and update.
-    var fanexDataService = function (appSettings) {
-        return {
-            productName: undefined,
-            queryData: undefined,
-            commandType: appSettings.settingType.All,
-            commandData: undefined
-        };
-    };
-
-    fanexDataService.$inject = injectParams;
-    angular.module('customerSettingApp').service('fanexDataService', fanexDataService);
-})();
-
-'use strict';
-
-(function () {
     var injectParams = ['fanexDirectiveLinker', 'fanexSelectBuilder'];
     var fanexDiscountService = function (DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();
@@ -3034,127 +3145,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$rootScope', '$location', 'fanexCommonService', 'fanexAppSettings', 'fanexFormTypeHandler'];
-    var fanexModelService = function ($rootScope, $location, commonService, appSettings, FormTypeHandler) {
-        function Model() {
-            this.isValid = false;
-            this.params = {};
-            this.isMultiple = false;
-            this.custIds = [];
-            this.custNames = [];
-        }
-
-        Model.prototype.getMultipleInfo = function () {
-            return {
-                IsMultiple: this.isMultiple,
-                CustIds: this.custIds,
-                CustNames: this.custNames
-            };
-        };
-
-        Model.prototype.reset = function () {
-            this.isValid = false;
-            this.params = {};
-            this.isMultiple = false;
-            this.custIds = [];
-            this.custNames = [];
-        };
-
-        Model.prototype.load = function () {
-            this.reset();
-
-            // read form setting type
-            var path = $location.path();
-            var formTypes = commonService.getPropertyValues(appSettings.formType);
-            angular.forEach(formTypes, function (formType) {
-                if (this.isValid) {
-                    return;
-                }
-
-                var formTypeHandler = new FormTypeHandler(formType);
-                var pattern = formTypeHandler.pattern;
-                var matches = pattern.match(/\/:\w+/g);
-                var params = [];
-                angular.forEach(matches, function (match) {
-                    params.push(match.replace('/:', ''));
-                });
-
-                var regExp = new RegExp('^' + pattern.replace(/\/:\w+/g, '/(\\d+)') + '$');
-                matches = regExp.exec(path);
-                if (matches !== null && matches.length - 1 === params.length) {
-                    this.isValid = true;
-                    angular.forEach(params, function (param, index) {
-                        this.params[param] = parseInt(matches[index + 1]);
-                    }, this);
-
-                    this.params.formType = formType;
-                }
-            }, this);
-
-            if (!this.isValid) {
-                return;
-            }
-
-            // read multiple information
-            this.isMultiple = false;
-            var queryString = $location.search();
-            var custIds = queryString.custIds;
-            var custNames = queryString.custNames;
-            if (angular.isDefined(custIds) && angular.isDefined(custNames)) {
-                this.isMultiple = true;
-                custIds = custIds.split(',').map(Number);
-                custNames = custNames.split(',');
-                if (custIds.length !== custNames.length || custIds.length <= 1) {
-                    this.isValid = false;
-                    return;
-                }
-            }
-
-            if (this.isMultiple) {
-                this.custIds = custIds;
-                this.custNames = custNames;
-            }
-        };
-
-        var model = new Model();
-        model.load();
+    var injectParams = ['$rootScope', 'fanexQueryModel'];
+    var fanexModelService = function ($rootScope, QueryModel) {
+        var queryModel = new QueryModel();
         $rootScope.$on('$locationChangeStart', function () {
-            model.load();
+            queryModel = new QueryModel();
         });
 
-        function isValid() {
-            return model.isValid;
-        }
-
-        function getParams() {
-            return model.params;
-        }
-
-        function getMultipleInfo() {
-            return model.getMultipleInfo();
-        }
-
-        function createSelectModel() {
-            if (!model.isValid) {
-                return undefined;
-            }
-
-            var formType = model.params.formType;
-            var formTypeHandler = new FormTypeHandler(formType);
-            var selectModel = formTypeHandler.createModel(model.params);
-            angular.extend(selectModel, {
-                FormType: model.params.formType,
-                ProductId: model.params.productId
-            });
-
-            return selectModel;
-        }
-
         return {
-            isValid: isValid,
-            getParams: getParams,
-            getMultipleInfo: getMultipleInfo,
-            createSelectModel: createSelectModel
+            QueryModel: queryModel
         };
     };
 
@@ -3225,6 +3224,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexProductSettingService', 'fanexMessageService'];
     var fanexRequestService = function ($injector, $http, $rootScope, appSettings, productSettingService, messageService) {
+        var queryData;
+        var commandData;
+
         function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
@@ -3246,13 +3248,17 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var productId = queryModel.ProductId;
                     var productViewSetting = productSettingService.getViewSetting(productId);
                     var QueryReader = $injector.get(productViewSetting.queryReader);
-                    var queryReaderObj = new QueryReader();
-                    var data = queryReaderObj.read(response);
-                    successCallback(data);
+                    var queryReader = new QueryReader();
+                    queryData = queryReader.read(response);
+                    successCallback(queryData);
                 }
             });
 
             return request;
+        }
+
+        function getQueryData(){
+            return queryData;
         }
 
         function command(commandModel, successCallback) {
@@ -3267,18 +3273,24 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     var productId = commandModel.ProductId;
                     var productViewSetting = productSettingService.getViewSetting(productId);
                     var CommandReader = $injector.get(productViewSetting.commandReader);
-                    var commandReaderObj = new CommandReader();
-                    var data = commandReaderObj.read(response);
-                    successCallback(data);
+                    var commandReader = new CommandReader();
+                    commandData = commandReader.read(response);
+                    successCallback(commandData);
                 }
             });
 
             return request;
         }
 
+        function getCommandData(){
+            return commandData;
+        }
+
         return {
             query: query,
-            command: command
+            getQueryData: getQueryData,
+            command: command,
+            getCommandData: getCommandData
         };
     };
 
@@ -3289,9 +3301,14 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexResources', 'fanexAppSettings', 'fanexDataService'];
-    var fanexResourceService = function (resources, appSettings, dataService) {
+    var injectParams = ['fanexResources', 'fanexAppSettings'];
+    var fanexResourceService = function (resources, appSettings) {
         var resource = {};
+        var currentProductName;
+
+        function setCurrentProductName(productName) {
+            currentProductName = productName;
+        }
 
         function setLanguage(language) {
             var selectResource = resources[language.toLowerCase()];
@@ -3323,7 +3340,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             var liveName = data.IsLive === true ? ' (' + getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
-                    return dataService.productName;
+                    return currentProductName;
                 case appSettings.settingLevel.SportType:
                     return data.SportTypeName;
                 case appSettings.settingLevel.BetType:
@@ -3335,6 +3352,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
         setLanguage(appSettings.defaultLanguage);
         return {
+            setCurrentProductName: setCurrentProductName,
             setLanguage: setLanguage,
             getString: getString,
             getFormatString: getFormatString,
@@ -3362,8 +3380,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDataService'];
-    var fanexTemplateService = function (appSettings, dataService) {
+    var injectParams = ['fanexAppSettings', 'fanexRequestService'];
+    var fanexTemplateService = function (appSettings, requestService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -3387,7 +3405,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         discountFiles[appSettings.formType.AgentEditMember] = 'fanex-discount-container.htm';
 
         this.resolveStatus = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
@@ -3396,7 +3414,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolveDiscount = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.DiscountLevel];
@@ -3407,7 +3425,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolveBetLimit = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
@@ -3416,7 +3434,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         };
 
         this.resolvePositionTaking = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];
@@ -3632,10 +3650,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 {
                     id: 0,
                     name: 'demo',
-                    controller: 'FanexDefaultController',
-                    templateUrl: 'templates/fanex-demo-page.htm',
-                    queryReader: 'FanexQueryReader',
-                    commandReader: 'FanexCommandReader'
+                    templateUrl: 'templates/fanex-demo-page.htm'
                 }
             ]
         }

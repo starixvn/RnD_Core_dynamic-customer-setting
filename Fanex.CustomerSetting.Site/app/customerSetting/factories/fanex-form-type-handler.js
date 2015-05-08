@@ -8,6 +8,8 @@
             this.pattern = '/editSuper/:superId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Company,
                     TargetCustId: params.superId,
@@ -21,6 +23,8 @@
             this.pattern = '/editMaster/:masterId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Super,
                     TargetCustId: params.masterId,
@@ -34,6 +38,8 @@
             this.pattern = '/editAgent/:agentId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Master,
                     TargetCustId: params.agentId,
@@ -47,6 +53,8 @@
             this.pattern = '/editMember/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: 0,
                     RoleId: appSettings.roleType.Agent,
                     TargetCustId: params.memberId,
@@ -60,6 +68,8 @@
             this.pattern = '/superEditMember/:superId/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: params.superId,
                     RoleId: appSettings.roleType.Super,
                     TargetCustId: params.memberId,
@@ -73,6 +83,8 @@
             this.pattern = '/masterEditMember/:masterId/:memberId/:productId';
             this.createModel = function (params) {
                 return {
+                    FormType: this.formType,
+                    ProductId: params.productId,
                     CustId: params.masterId,
                     RoleId: appSettings.roleType.Master,
                     TargetCustId: params.memberId,

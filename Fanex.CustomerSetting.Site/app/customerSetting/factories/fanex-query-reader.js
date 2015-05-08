@@ -1,22 +1,27 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexDataService'];
-    var fanexQueryReader = function (dataService) {
+    var injectParams = [];
+    var fanexQueryReader = function () {
+        function QueryData(response) {
+            var requestContext = response.RequestContext;
+            var customerSetting = response.CustomerSetting;
+            var settingContext = customerSetting.SettingContext;
+            var productName = requestContext.ProductName;
+            var language = requestContext.Language;
+
+            return {
+                RequestContext: requestContext,
+                CustomerSetting: customerSetting,
+                SettingContext: settingContext,
+                ProductName: productName,
+                Language: language
+            };
+        }
+
         function QueryReader() {
             this.read = function (response) {
-                var requestContext = response.RequestContext;
-                var customerSetting = response.CustomerSetting;
-                var settingContext = customerSetting.SettingContext;
-                var productName = requestContext.ProductName;
-                dataService.productName = productName;
-                dataService.queryData = {
-                    RequestContext: requestContext,
-                    CustomerSetting: customerSetting,
-                    SettingContext: settingContext
-                };
-
-                return dataService.queryData;
+                return new QueryData(response);
             };
         }
 

@@ -17,10 +17,7 @@
                 {
                     id: 0,
                     name: 'demo',
-                    controller: 'FanexDefaultController',
-                    templateUrl: 'templates/fanex-demo-page.htm',
-                    queryReader: 'FanexQueryReader',
-                    commandReader: 'FanexCommandReader'
+                    templateUrl: 'templates/fanex-demo-page.htm'
                 }
             ]
         }

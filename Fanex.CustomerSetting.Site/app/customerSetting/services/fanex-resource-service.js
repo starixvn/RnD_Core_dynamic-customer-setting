@@ -1,9 +1,14 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexResources', 'fanexAppSettings', 'fanexDataService'];
-    var fanexResourceService = function (resources, appSettings, dataService) {
+    var injectParams = ['fanexResources', 'fanexAppSettings'];
+    var fanexResourceService = function (resources, appSettings) {
         var resource = {};
+        var currentProductName;
+
+        function setCurrentProductName(productName) {
+            currentProductName = productName;
+        }
 
         function setLanguage(language) {
             var selectResource = resources[language.toLowerCase()];
@@ -35,7 +40,7 @@
             var liveName = data.IsLive === true ? ' (' + getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
-                    return dataService.productName;
+                    return currentProductName;
                 case appSettings.settingLevel.SportType:
                     return data.SportTypeName;
                 case appSettings.settingLevel.BetType:
@@ -47,6 +52,7 @@
 
         setLanguage(appSettings.defaultLanguage);
         return {
+            setCurrentProductName: setCurrentProductName,
             setLanguage: setLanguage,
             getString: getString,
             getFormatString: getFormatString,

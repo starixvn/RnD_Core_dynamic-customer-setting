@@ -14,14 +14,18 @@
                     // update view
                     function update() {
                         var productViewSetting = fanexProductSettingService.errorViewSetting;
-                        var isValid = modelService.isValid();
-                        if (isValid) {
-                            var params = modelService.getParams();
-                            var productId = params.productId;
+                        var queryModel = modelService.QueryModel;
+                        if (angular.isDefined(queryModel)) {
+                            var productId = queryModel.ProductId;
                             productViewSetting = fanexProductSettingService.getViewSetting(productId);
                         }
 
-                        var templateUrl = $sce.getTrustedResourceUrl(productViewSetting.templateUrl);
+                        var templateUrl = productViewSetting.templateUrl;
+                        if (!angular.isDefined(templateUrl)) {
+                            return;
+                        }
+
+                        templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
                         linker(newScope, function (clone) {
@@ -34,11 +38,15 @@
 
                             var link = $compile(clone.contents());
                             currentElement = clone;
-                            var controller = $controller(productViewSetting.controller, {
-                                $scope: newScope
-                            });
-                            clone.data('$ngControllerController', controller);
-                            clone.children().data('$ngControllerController', controller);
+                            var controller = productViewSetting.controller;
+                            if (angular.isDefined(controller)) {
+                                controller = $controller(productViewSetting.controller, {
+                                    $scope: newScope
+                                });
+                                clone.data('$ngControllerController', controller);
+                                clone.children().data('$ngControllerController', controller);
+                            }
+
                             link(newScope);
                         });
 

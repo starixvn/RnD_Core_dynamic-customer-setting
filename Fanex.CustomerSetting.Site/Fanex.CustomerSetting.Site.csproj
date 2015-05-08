@@ -195,6 +195,7 @@
     <Content Include="app\customerSetting\directives\fanex-discount.js" />
     <Content Include="app\customerSetting\directives\fanex-pt-company-edit-super.js" />
     <Content Include="app\customerSetting\directives\fanex-tooltip.js" />
+    <Content Include="app\customerSetting\factories\fanex-query-model.js" />
     <Content Include="app\customerSetting\factories\fanex-directive-linker.js" />
     <Content Include="app\customerSetting\factories\fanex-query-reader.js" />
     <Content Include="app\customerSetting\factories\fanex-select-builder.js" />
@@ -212,7 +213,6 @@
     <Content Include="app\customerSetting\services\fanex-discount-service.js" />
     <Content Include="app\customerSetting\services\fanex-block-ui-service.js" />
     <Content Include="app\customerSetting\factories\fanex-form-type-handler.js" />
-    <Content Include="app\customerSetting\services\fanex-data-service.js" />
     <Content Include="app\customerSetting\services\fanex-model-service.js" />
     <Content Include="app\customerSetting\services\fanex-common-service.js" />
     <Content Include="app\customerSetting\services\fanex-message-service.js" />

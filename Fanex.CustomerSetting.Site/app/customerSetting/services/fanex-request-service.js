@@ -3,6 +3,9 @@
 (function () {
     var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexProductSettingService', 'fanexMessageService'];
     var fanexRequestService = function ($injector, $http, $rootScope, appSettings, productSettingService, messageService) {
+        var queryData;
+        var commandData;
+
         function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
@@ -24,13 +27,17 @@
                     var productId = queryModel.ProductId;
                     var productViewSetting = productSettingService.getViewSetting(productId);
                     var QueryReader = $injector.get(productViewSetting.queryReader);
-                    var queryReaderObj = new QueryReader();
-                    var data = queryReaderObj.read(response);
-                    successCallback(data);
+                    var queryReader = new QueryReader();
+                    queryData = queryReader.read(response);
+                    successCallback(queryData);
                 }
             });
 
             return request;
+        }
+
+        function getQueryData(){
+            return queryData;
         }
 
         function command(commandModel, successCallback) {
@@ -45,18 +52,24 @@
                     var productId = commandModel.ProductId;
                     var productViewSetting = productSettingService.getViewSetting(productId);
                     var CommandReader = $injector.get(productViewSetting.commandReader);
-                    var commandReaderObj = new CommandReader();
-                    var data = commandReaderObj.read(response);
-                    successCallback(data);
+                    var commandReader = new CommandReader();
+                    commandData = commandReader.read(response);
+                    successCallback(commandData);
                 }
             });
 
             return request;
         }
 
+        function getCommandData(){
+            return commandData;
+        }
+
         return {
             query: query,
-            command: command
+            getQueryData: getQueryData,
+            command: command,
+            getCommandData: getCommandData
         };
     };
 

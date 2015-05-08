@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDataService'];
-    var fanexTemplateService = function (appSettings, dataService) {
+    var injectParams = ['fanexAppSettings', 'fanexRequestService'];
+    var fanexTemplateService = function (appSettings, requestService) {
         var levelFolders = {};
         levelFolders[appSettings.settingLevel.Product] = 'no-group';
         levelFolders[appSettings.settingLevel.SportType] = 'no-group';
@@ -26,7 +26,7 @@
         discountFiles[appSettings.formType.AgentEditMember] = 'fanex-discount-container.htm';
 
         this.resolveStatus = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.StatusLevel];
             return angular.isDefined(levelFolder)
@@ -35,7 +35,7 @@
         };
 
         this.resolveDiscount = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.DiscountLevel];
@@ -46,7 +46,7 @@
         };
 
         this.resolveBetLimit = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var levelFolder = levelFolders[settingContext.BetLimitLevel];
             return angular.isDefined(levelFolder)
@@ -55,7 +55,7 @@
         };
 
         this.resolvePositionTaking = function () {
-            var queryData = dataService.queryData;
+            var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
             var requestContext = queryData.RequestContext;
             var levelFolder = levelFolders[settingContext.PositionTakingLevel];

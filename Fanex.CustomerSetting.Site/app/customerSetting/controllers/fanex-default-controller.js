@@ -2,17 +2,18 @@
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
-            'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
-            templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
-        var queryModel = modelService.createSelectModel();
+            templateService, requestService, messageService, resourceService, SettingTypeHandler) {
+        var queryModel = modelService.QueryModel;
         requestService.query(queryModel, function (queryData) {
             var requestContext = queryData.RequestContext;
             var customerSetting = queryData.CustomerSetting;
             var settingContext = queryData.SettingContext;
-            resourceService.setLanguage(requestContext.Language);
+            resourceService.setCurrentProductName(queryData.ProductName);
+            resourceService.setLanguage(queryData.Language);
 
-            var multipleInfo = modelService.getMultipleInfo();
+            var multipleInfo = queryModel.getMultipleInfo();
             if (multipleInfo.IsMultiple) {
                 $scope.custNames = multipleInfo.CustNames.join(',');
             } else {
@@ -47,31 +48,32 @@
                 $scope.disableAutoMPT = settingContext.DisableAutoMPT;
             }
 
-            $scope.hasUpdateAll = modelService.isValid();
+            $scope.hasUpdateAll = queryModel;
         });
 
+        var commandType;
         $scope.updateStatuses = function () {
-            dataService.commandType = appSettings.settingType.Status;
+            commandType = appSettings.settingType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            dataService.commandType = appSettings.settingType.Discount;
+            commandType = appSettings.settingType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            dataService.commandType = appSettings.settingType.BetLimit;
+            commandType = appSettings.settingType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            dataService.commandType = appSettings.settingType.PositionTaking;
+            commandType = appSettings.settingType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            dataService.commandType = appSettings.settingType.All;
+            commandType = appSettings.settingType.All;
             update();
         };
 
@@ -103,7 +105,7 @@
         }
 
         function update(updateMemberPT) {
-            var queryData = dataService.queryData;
+            var queryData = requestService.QueryData;
             var requestContext = queryData.RequestContext;
             var settingContext = queryData.SettingContext;
 
@@ -166,7 +168,6 @@
             var betLimits;
             var discounts;
             var statuses;
-            var commandType = dataService.commandType;
             switch (commandType) {
                 case appSettings.settingType.All:
                     statuses = getUpdateData(appSettings.settingType.Status);
@@ -266,7 +267,7 @@
                 });
             }
 
-            var multipleInfo = modelService.getMultipleInfo();
+            var multipleInfo = queryModel.getMultipleInfo();
             var commandModel = angular.extend({
                 CommandType: commandType,
                 StatusLevel: settingContext.StatusLevel,
