@@ -42,11 +42,4 @@
             }
         ]);
     } ]);
-
-    customerSettingApp.run(['$rootScope', 'fanexResourceService', 'fanexAppSettings',
-        function ($rootScope, resourceService, appSettings) {
-            resourceService.setLanguage(appSettings.defaultLanguage);
-            $rootScope.resourceService = resourceService;
-        }
-     ]);
 } ());

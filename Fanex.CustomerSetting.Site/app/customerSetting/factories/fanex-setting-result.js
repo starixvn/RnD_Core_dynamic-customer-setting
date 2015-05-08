@@ -3,10 +3,10 @@
 (function () {
     var injectParams = ['fanexAppSettings'];
     var fanexSettingResult = function (appSettings) {
-        var SettingResult = function (settingType, result) {
+        function SettingResult(settingType, result) {
             this.settingType = settingType;
             this.result = result;
-        };
+        }
 
         // return array of setting results of an user.
         SettingResult.fromUserResult = function (commandType, userResult) {

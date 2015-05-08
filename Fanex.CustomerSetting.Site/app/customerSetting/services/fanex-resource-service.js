@@ -5,21 +5,15 @@
     var fanexResourceService = function (resources, appSettings, dataService) {
         var resource = {};
 
-        this.setLanguage = function (language) {
-            if (angular.isUndefined(language)) {
-                language = appSettings.defaultLanguage.toLowerCase();
-            } else {
-                language = language.toLowerCase();
-            }
-
-            var selectResource = resources[language];
+        function setLanguage(language) {
+            var selectResource = resources[language.toLowerCase()];
             if (angular.isUndefined(selectResource)) {
                 selectResource = resources[appSettings.defaultLanguage.toLowerCase()];
             }
             resource = selectResource;
-        };
+        }
 
-        this.getString = function (key) {
+        function getString(key) {
             var value = resource[key];
             if (angular.isDefined(value)) {
                 value = value.replace(/&apos;|&#x0*27;/g, "'");
@@ -27,18 +21,18 @@
                 value = key;
             }
             return value;
-        };
+        }
 
-        this.getFormatString = function (key) {
-            var input = this.getString(key);
+        function getFormatString(key) {
+            var input = getString(key);
             var args = Array.prototype.slice.call(arguments, 1);
             return input.replace(/{(\d+)}/g, function (match, number) {
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
-        };
+        }
 
-        this.getDisplayName = function (settingLevel, data) {
-            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
+        function getDisplayName(settingLevel, data) {
+            var liveName = data.IsLive === true ? ' (' + getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
                     return dataService.productName;
@@ -49,6 +43,14 @@
                 case appSettings.settingLevel.SportTypeBetType:
                     return data.BetTypeName + liveName;
             }
+        }
+
+        setLanguage(appSettings.defaultLanguage);
+        return {
+            setLanguage: setLanguage,
+            getString: getString,
+            getFormatString: getFormatString,
+            getDisplayName: getDisplayName
         };
     };
 

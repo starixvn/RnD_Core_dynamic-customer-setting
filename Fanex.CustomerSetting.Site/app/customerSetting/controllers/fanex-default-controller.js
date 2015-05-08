@@ -3,7 +3,7 @@
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
             'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
-    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
+    var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
             templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
         var queryModel = modelService.createSelectModel();
         requestService.query(queryModel, function (queryData) {
@@ -321,6 +321,6 @@
         }
     };
 
-    fanexProductController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('FanexProductController', fanexProductController);
+    fanexDefaultController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('FanexDefaultController', fanexDefaultController);
 } ());

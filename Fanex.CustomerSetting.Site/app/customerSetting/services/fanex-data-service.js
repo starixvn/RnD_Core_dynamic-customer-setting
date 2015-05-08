@@ -5,10 +5,12 @@
 
     // this service contains data parsed from response after select and update.
     var fanexDataService = function (appSettings) {
-        this.productName = undefined;
-        this.queryData = undefined;
-        this.commandType = appSettings.settingType.All;
-        this.commandData = undefined;
+        return {
+            productName: undefined,
+            queryData: undefined,
+            commandType: appSettings.settingType.All,
+            commandData: undefined
+        };
     };
 
     fanexDataService.$inject = injectParams;

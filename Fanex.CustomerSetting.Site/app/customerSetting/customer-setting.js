@@ -1,4 +1,4 @@
-/*! fanex-customer-setting v0.0.7 | (c) 2015 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.0.1 | (c) 2015 Nexcel Solutions Vietnam */
 
 'use strict';
 
@@ -44,13 +44,6 @@
             }
         ]);
     } ]);
-
-    customerSettingApp.run(['$rootScope', 'fanexResourceService', 'fanexAppSettings',
-        function ($rootScope, resourceService, appSettings) {
-            resourceService.setLanguage(appSettings.defaultLanguage);
-            $rootScope.resourceService = resourceService;
-        }
-     ]);
 } ());
 
 /*jshint -W101*/
@@ -83,6 +76,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('templates/fanex-default-page.htm',
+    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
+  );
+
+
   $templateCache.put('templates/fanex-demo-page.htm',
     "Your product is not supported."
   );
@@ -110,11 +108,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
   $templateCache.put('templates/fanex-message.htm',
     "<div class=message-container data-ng-show=users><div data-ng-repeat=\"user in users\"><div class=name data-ng-show=user.name>{{user.name}}</div><div data-ng-repeat=\"message in user.messages\" class=message data-ng-class=message.class><div class=icon></div><div class=content data-ng-bind-html=message.content></div></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/fanex-product-page.htm',
-    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
   );
 
 
@@ -289,21 +282,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$timeout', 'fanexMessageService'];
-    var fanexErrorController = function ($timeout, messageService) {
-        messageService.showError('Please check your URL');
-    };
-
-    fanexErrorController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('FanexErrorController', fanexErrorController);
-} ());
-
-'use strict';
-
-(function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
             'fanexTemplateService', 'fanexRequestService', 'fanexDataService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
-    var fanexProductController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
+    var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
             templateService, requestService, dataService, messageService, resourceService, SettingTypeHandler) {
         var queryModel = modelService.createSelectModel();
         requestService.query(queryModel, function (queryData) {
@@ -621,8 +602,20 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
     };
 
-    fanexProductController.$inject = injectParams;
-    angular.module('customerSettingApp').controller('FanexProductController', fanexProductController);
+    fanexDefaultController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('FanexDefaultController', fanexDefaultController);
+} ());
+
+'use strict';
+
+(function () {
+    var injectParams = ['$timeout', 'fanexMessageService'];
+    var fanexErrorController = function ($timeout, messageService) {
+        messageService.showError('Please check your URL');
+    };
+
+    fanexErrorController.$inject = injectParams;
+    angular.module('customerSettingApp').controller('FanexErrorController', fanexErrorController);
 } ());
 
 'use strict';
@@ -1283,9 +1276,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 (function () {
     var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
-            'fanexProductConfiguration', 'fanexCommonService', 'fanexModelService'];
+            'fanexProductSettingService', 'fanexModelService'];
     var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
-            productConfiguration, commonService, modelService) {
+            fanexProductSettingService, modelService) {
         return {
             transclude: 'element',
             compile: function (element, attr, linker) {
@@ -1294,20 +1287,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                     // update view
                     function update() {
-                        var controller = productConfiguration.errorController;
-                        var templateUrl = productConfiguration.errorTemplateUrl;
+                        var productViewSetting = fanexProductSettingService.errorViewSetting;
                         var isValid = modelService.isValid();
                         if (isValid) {
                             var params = modelService.getParams();
                             var productId = params.productId;
-                            var productSetting = commonService.getProductSetting(productId);
-                            if (angular.isDefined(productSetting)) {
-                                templateUrl = productSetting.templateUrl;
-                                controller = productSetting.controller;
-                            }
+                            productViewSetting = fanexProductSettingService.getViewSetting(productId);
                         }
 
-                        templateUrl = $sce.getTrustedResourceUrl(templateUrl);
+                        var templateUrl = $sce.getTrustedResourceUrl(productViewSetting.templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
                         linker(newScope, function (clone) {
@@ -1320,7 +1308,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                             var link = $compile(clone.contents());
                             currentElement = clone;
-                            controller = $controller(controller, {
+                            var controller = $controller(productViewSetting.controller, {
                                 $scope: newScope
                             });
                             clone.data('$ngControllerController', controller);
@@ -2328,22 +2316,28 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     var injectParams = ['$rootScope'];
     var fanexDirectiveLinker = function ($rootScope) {
-        var directiveLinker = function () {
+        function DirectiveLinker() {
             var scopes = [];
-            this.linkScope = function (scope) {
-                scopes.push(scope);
-            };
 
-            this.getScopes = function () {
+            function linkScope(scope) {
+                scopes.push(scope);
+            }
+
+            function getScopes() {
                 return scopes;
-            };
+            }
 
             $rootScope.$on('product-view-loaded', function () {
                 scopes = [];
             });
-        };
 
-        return directiveLinker;
+            return {
+                linkScope: linkScope,
+                getScopes: getScopes
+            };
+        }
+
+        return DirectiveLinker;
     };
 
     fanexDirectiveLinker.$inject = injectParams;
@@ -2433,7 +2427,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        return function (formType) {
+        function FormTypeHandler(formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
                     return new CompanyEditSuperHandler();
@@ -2453,7 +2447,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 case appSettings.formType.AgentEditMember:
                     return new AgentEditMemberHandler();
             }
-        };
+        }
+
+        return FormTypeHandler;
     };
 
     fanexFormTypeHandler.$inject = injectParams;
@@ -2494,7 +2490,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     var injectParams = [];
     var fanexSelectBuilder = function () {
-        var OptionsBuilder = function (step, factor) {
+        function OptionsBuilder(step, factor) {
             this.generateOptions = function (min, max, value) {
                 var options = [];
                 min = Math.max(0, min);
@@ -2526,9 +2522,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                 return options;
             };
-        };
+        }
 
-        var SelectBuilder = function (step, factor) {
+        function SelectBuilder(step, factor) {
             var optionsBuilder = new OptionsBuilder(step, factor);
             this.build = function (min, max, value) {
                 var options = optionsBuilder.generateOptions(min, max, value);
@@ -2539,7 +2535,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     options: options
                 };
             };
-        };
+        }
 
         return SelectBuilder;
     };
@@ -2553,10 +2549,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 (function () {
     var injectParams = ['fanexAppSettings'];
     var fanexSettingResult = function (appSettings) {
-        var SettingResult = function (settingType, result) {
+        function SettingResult(settingType, result) {
             this.settingType = settingType;
             this.result = result;
-        };
+        }
 
         // return array of setting results of an user.
         SettingResult.fromUserResult = function (commandType, userResult) {
@@ -2623,7 +2619,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             this.getScopes = ptService.getScopes;
         };
 
-        return function (settingType) {
+        function SettingTypeHandler(settingType) {
             switch (settingType) {
                 case appSettings.settingType.Status:
                     return new StatusHandler();
@@ -2637,7 +2633,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 case appSettings.settingType.PositionTaking:
                     return new PositionTakingHandler();
             }
-        };
+        }
+
+        return SettingTypeHandler;
     };
 
     fanexSettingTypeHandler.$inject = injectParams;
@@ -2729,29 +2727,35 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     var fanexBlockUiService = function () {
         var blockUiScope;
 
-        this.setup = function (scope) {
+        function setup(scope) {
             if (angular.isDefined(blockUiScope)) {
                 throw 'Only one block ui component in document';
             }
 
             blockUiScope = scope;
             blockUiScope.hasLoading = false;
-        };
+        }
 
-        this.show = function () {
+        function show() {
             if (angular.isUndefined(blockUiScope)) {
                 throw 'setup is required';
             }
 
             blockUiScope.hasLoading = true;
-        };
+        }
 
-        this.hide = function () {
+        function hide() {
             if (angular.isUndefined(blockUiScope)) {
                 throw 'setup is required';
             }
 
             blockUiScope.hasLoading = false;
+        }
+
+        return {
+            setup: setup,
+            show: show,
+            hide: hide
         };
     };
 
@@ -2762,15 +2766,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$window', 'fanexProductConfiguration'];
-    var fanexCommonService = function ($window, productConfiguration) {
+    var injectParams = ['$window'];
+    var fanexCommonService = function ($window) {
         // scroll to top
-        this.scrollToTop = function () {
+        function scrollToTop() {
             $window.scrollTo(0, 0);
-        };
+        }
 
         // check if value is in array, return index of value or -1 if not exist
-        this.inArray = function (value, array) {
+        function inArray(value, array) {
             var index = -1;
             angular.forEach(array, function (arrayValue, arrayIndex) {
                 if (index === -1 && arrayValue === value) {
@@ -2779,33 +2783,28 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
 
             return index;
-        };
+        }
 
         // check if object is array and it's not empty.
-        this.isArrayAndNotEmpty = function (object) {
+        function isArrayAndNotEmpty(object) {
             return angular.isArray(object) && object.length > 0;
-        };
+        }
 
         // return array of property values of object.
-        this.getPropertyValues = function (object) {
+        function getPropertyValues(object) {
             var propertyValues = [];
             for (var propertyName in object) {
                 propertyValues.push(object[propertyName]);
             }
 
             return propertyValues;
-        };
+        }
 
-        // return product setting by product id.
-        this.getProductSetting = function (productId) {
-            var result = productConfiguration.defaultProductSetting;
-            angular.forEach(productConfiguration.productSettings, function (productSetting) {
-                if (productSetting.id === productId) {
-                    result = productSetting;
-                }
-            });
-
-            return result;
+        return {
+            scrollToTop: scrollToTop,
+            inArray: inArray,
+            isArrayAndNotEmpty: isArrayAndNotEmpty,
+            getPropertyValues: getPropertyValues
         };
     };
 
@@ -2820,10 +2819,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
     // this service contains data parsed from response after select and update.
     var fanexDataService = function (appSettings) {
-        this.productName = undefined;
-        this.queryData = undefined;
-        this.commandType = appSettings.settingType.All;
-        this.commandData = undefined;
+        return {
+            productName: undefined,
+            queryData: undefined,
+            commandType: appSettings.settingType.All,
+            commandData: undefined
+        };
     };
 
     fanexDataService.$inject = injectParams;
@@ -3121,16 +3122,19 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             model.load();
         });
 
-        this.isValid = function () {
+        function isValid() {
             return model.isValid;
-        };
-        this.getParams = function () {
+        }
+
+        function getParams() {
             return model.params;
-        };
-        this.getMultipleInfo = function () {
+        }
+
+        function getMultipleInfo() {
             return model.getMultipleInfo();
-        };
-        this.createSelectModel = function () {
+        }
+
+        function createSelectModel() {
             if (!model.isValid) {
                 return undefined;
             }
@@ -3144,11 +3148,45 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
 
             return selectModel;
+        }
+
+        return {
+            isValid: isValid,
+            getParams: getParams,
+            getMultipleInfo: getMultipleInfo,
+            createSelectModel: createSelectModel
         };
     };
 
     fanexModelService.$inject = injectParams;
     angular.module('customerSettingApp').service('fanexModelService', fanexModelService);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexProductSettings'];
+    var fanexProductSettingService = function (productSettings) {
+        function getViewSetting(productId) {
+            var viewSettings = productSettings.viewSettings;
+            var viewSetting = viewSettings['default'];
+            angular.forEach(viewSettings.products, function (productViewSetting) {
+                if (productViewSetting.id === productId) {
+                    viewSetting = productViewSetting;
+                }
+            });
+
+            return viewSetting;
+        }
+
+        return {
+            getViewSetting: getViewSetting,
+            errorViewSetting: productSettings.viewSettings.error
+        };
+    };
+
+    fanexProductSettingService.$inject = injectParams;
+    angular.module('customerSettingApp').service('fanexProductSettingService', fanexProductSettingService);
 })();
 
 'use strict';
@@ -3185,8 +3223,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexCommonService', 'fanexMessageService'];
-    var fanexRequestService = function ($injector, $http, $rootScope, appSettings, commonService, messageService) {
+    var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexProductSettingService', 'fanexMessageService'];
+    var fanexRequestService = function ($injector, $http, $rootScope, appSettings, productSettingService, messageService) {
         function isSuccessResponse(response) {
             if (!response.IsSuccess) {
                 messageService.showError(response.ErrMsg);
@@ -3196,18 +3234,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return true;
         }
 
-        this.query = function (queryModel, successCallback) {
+        function query(queryModel, successCallback) {
             var url = appSettings.rootUrl + '/CustomerSetting/Query';
             var request = $http.post(url, queryModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;
                 }
-                
+
                 if (angular.isFunction(successCallback)) {
                     var productId = queryModel.ProductId;
-                    var productSetting = commonService.getProductSetting(productId);
-                    var QueryReader = $injector.get(productSetting.queryReader);
+                    var productViewSetting = productSettingService.getViewSetting(productId);
+                    var QueryReader = $injector.get(productViewSetting.queryReader);
                     var queryReaderObj = new QueryReader();
                     var data = queryReaderObj.read(response);
                     successCallback(data);
@@ -3215,20 +3253,20 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
 
             return request;
-        };
+        }
 
-        this.command = function (commandModel, successCallback) {
+        function command(commandModel, successCallback) {
             var url = appSettings.rootUrl + '/CustomerSetting/Command';
             var request = $http.post(url, commandModel);
             request.success(function (response) {
                 if (!isSuccessResponse(response)) {
                     return;
                 }
-                
+
                 if (angular.isFunction(successCallback)) {
                     var productId = commandModel.ProductId;
-                    var productSetting = commonService.getProductSetting(productId);
-                    var CommandReader = $injector.get(productSetting.commandReader);
+                    var productViewSetting = productSettingService.getViewSetting(productId);
+                    var CommandReader = $injector.get(productViewSetting.commandReader);
                     var commandReaderObj = new CommandReader();
                     var data = commandReaderObj.read(response);
                     successCallback(data);
@@ -3236,6 +3274,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
 
             return request;
+        }
+
+        return {
+            query: query,
+            command: command
         };
     };
 
@@ -3250,21 +3293,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     var fanexResourceService = function (resources, appSettings, dataService) {
         var resource = {};
 
-        this.setLanguage = function (language) {
-            if (angular.isUndefined(language)) {
-                language = appSettings.defaultLanguage.toLowerCase();
-            } else {
-                language = language.toLowerCase();
-            }
-
-            var selectResource = resources[language];
+        function setLanguage(language) {
+            var selectResource = resources[language.toLowerCase()];
             if (angular.isUndefined(selectResource)) {
                 selectResource = resources[appSettings.defaultLanguage.toLowerCase()];
             }
             resource = selectResource;
-        };
+        }
 
-        this.getString = function (key) {
+        function getString(key) {
             var value = resource[key];
             if (angular.isDefined(value)) {
                 value = value.replace(/&apos;|&#x0*27;/g, "'");
@@ -3272,18 +3309,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 value = key;
             }
             return value;
-        };
+        }
 
-        this.getFormatString = function (key) {
-            var input = this.getString(key);
+        function getFormatString(key) {
+            var input = getString(key);
             var args = Array.prototype.slice.call(arguments, 1);
             return input.replace(/{(\d+)}/g, function (match, number) {
                 return typeof args[number] !== 'undefined' ? args[number] : match;
             });
-        };
+        }
 
-        this.getDisplayName = function (settingLevel, data) {
-            var liveName = data.IsLive === true ? ' (' + this.getString('Live') + ')' : '';
+        function getDisplayName(settingLevel, data) {
+            var liveName = data.IsLive === true ? ' (' + getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
                     return dataService.productName;
@@ -3294,6 +3331,14 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 case appSettings.settingLevel.SportTypeBetType:
                     return data.BetTypeName + liveName;
             }
+        }
+
+        setLanguage(appSettings.defaultLanguage);
+        return {
+            setLanguage: setLanguage,
+            getString: getString,
+            getFormatString: getFormatString,
+            getDisplayName: getDisplayName
         };
     };
 
@@ -3396,13 +3441,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         var tooltipAlign;
         var boundingElement;
 
-        this.setup = function (scope, element) {
+        function setup(scope, element) {
             tooltipScope = scope;
             tooltipElement = element;
             tooltipElement.addClass('ng-hide');
-        };
+        }
 
-        this.calculatePosition = function () {
+        function calculatePosition() {
             var rect = boundingElement.getBoundingClientRect();
             var tooltipRect = tooltipElement[0].getBoundingClientRect();
             var scrollX = window.pageXOffset || document.body.scrollLeft;
@@ -3419,9 +3464,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 'top': top + 'px',
                 'left': left + 'px'
             });
-        };
+        }
 
-        this.show = function (element, message, align) {
+        function show(element, message, align) {
             if (angular.isUndefined(tooltipScope)) {
                 throw 'setup is required';
             }
@@ -3441,11 +3486,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
             if (tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.removeClass('ng-hide');
-                this.calculatePosition();
+                calculatePosition();
             }
-        };
+        }
 
-        this.hide = function () {
+        function hide() {
             if (angular.isUndefined(tooltipScope)) {
                 throw 'setup is required';
             }
@@ -3453,6 +3498,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             if (!tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.addClass('ng-hide');
             }
+        }
+
+        return {
+            setup: setup,
+            calculatePosition: calculatePosition,
+            show: show,
+            hide: hide
         };
     };
 
@@ -3466,15 +3518,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     var injectParams = ['fanexPtService'];
     var fanexUpdateMemberPtService = function (ptService) {
         var $scope;
-        this.setup = function (scope) {
+
+        function setup(scope) {
             $scope = scope;
-        };
+        }
 
-        this.hide = function () {
+        function hide() {
             $scope.isShow = false;
-        };
+        }
 
-        this.show = function (memberPts) {
+        function show(memberPts) {
             var pts = [];
             angular.forEach(memberPts, function (memberPt) {
                 var ptSelect = ptService.createSelect(0, memberPt.Pt, memberPt.Pt);
@@ -3489,6 +3542,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             });
             $scope.isShow = true;
             $scope.pts = pts;
+        }
+
+        return {
+            setup: setup,
+            show: show,
+            hide: hide
         };
     };
 
@@ -3557,25 +3616,29 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    angular.module('customerSettingApp').value('fanexProductConfiguration', {
-        errorController: 'FanexErrorController',
-        errorTemplateUrl: 'templates/fanex-error-page.htm',
-        defaultProductSetting: {
-            controller: 'FanexProductController',
-            templateUrl: 'templates/fanex-product-page.htm',
-            queryReader: 'fanexQueryReader',
-            commandReader: 'FanexCommandReader'
-        },
-        productSettings: [
-            {
-                id: 0,
-                name: 'demo',
-                controller: 'FanexProductController',
-                templateUrl: 'templates/fanex-demo-page.htm',
-                queryReader: 'FanexQueryReader',
+    angular.module('customerSettingApp').value('fanexProductSettings', {
+        viewSettings: {
+            'default': {
+                controller: 'FanexDefaultController',
+                templateUrl: 'templates/fanex-default-page.htm',
+                queryReader: 'fanexQueryReader',
                 commandReader: 'FanexCommandReader'
-            }
-        ]
+            },
+            error: {
+                controller: 'FanexErrorController',
+                templateUrl: 'templates/fanex-error-page.htm'
+            },
+            products: [
+                {
+                    id: 0,
+                    name: 'demo',
+                    controller: 'FanexDefaultController',
+                    templateUrl: 'templates/fanex-demo-page.htm',
+                    queryReader: 'FanexQueryReader',
+                    commandReader: 'FanexCommandReader'
+                }
+            ]
+        }
     });
 })();
 

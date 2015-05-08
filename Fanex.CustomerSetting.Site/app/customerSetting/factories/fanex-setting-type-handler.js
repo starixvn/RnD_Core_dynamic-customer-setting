@@ -25,7 +25,7 @@
             this.getScopes = ptService.getScopes;
         };
 
-        return function (settingType) {
+        function SettingTypeHandler(settingType) {
             switch (settingType) {
                 case appSettings.settingType.Status:
                     return new StatusHandler();
@@ -39,7 +39,9 @@
                 case appSettings.settingType.PositionTaking:
                     return new PositionTakingHandler();
             }
-        };
+        }
+
+        return SettingTypeHandler;
     };
 
     fanexSettingTypeHandler.$inject = injectParams;

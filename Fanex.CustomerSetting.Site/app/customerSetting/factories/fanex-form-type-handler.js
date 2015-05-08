@@ -81,7 +81,7 @@
             };
         };
 
-        return function (formType) {
+        function FormTypeHandler(formType) {
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
                     return new CompanyEditSuperHandler();
@@ -101,7 +101,9 @@
                 case appSettings.formType.AgentEditMember:
                     return new AgentEditMemberHandler();
             }
-        };
+        }
+
+        return FormTypeHandler;
     };
 
     fanexFormTypeHandler.$inject = injectParams;

@@ -3,7 +3,7 @@
 (function () {
     var injectParams = [];
     var fanexSelectBuilder = function () {
-        var OptionsBuilder = function (step, factor) {
+        function OptionsBuilder(step, factor) {
             this.generateOptions = function (min, max, value) {
                 var options = [];
                 min = Math.max(0, min);
@@ -35,9 +35,9 @@
 
                 return options;
             };
-        };
+        }
 
-        var SelectBuilder = function (step, factor) {
+        function SelectBuilder(step, factor) {
             var optionsBuilder = new OptionsBuilder(step, factor);
             this.build = function (min, max, value) {
                 var options = optionsBuilder.generateOptions(min, max, value);
@@ -48,7 +48,7 @@
                     options: options
                 };
             };
-        };
+        }
 
         return SelectBuilder;
     };

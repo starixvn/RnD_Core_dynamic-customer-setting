@@ -93,6 +93,13 @@ function ($scope, $http) {
         }
     };
 
+    function openFrameUrl(url) {
+        var rootUrl = $('#main').data('root-url');
+        url = '{0}/{1}'.format(rootUrl, url);
+        var settingPage = $('#setting-page');
+        settingPage.attr('src', url);
+    }
+
     $scope.login = function () {
         $http.post("account/login", {
             RoleId: $scope.LoginForm.RoleId,
@@ -102,6 +109,7 @@ function ($scope, $http) {
         }).success(function () {
             $scope.LoginForm.HideForm = true;
             $('#collapseLogin').removeClass("in");
+            openFrameUrl('Home/Welcome');
         });
     };
 
@@ -113,19 +121,16 @@ function ($scope, $http) {
 
     $scope.view = function (selectedFormType) {
         var url;
-        var rootUrl = $('#main').data('root-url');
         switch (selectedFormType) {
             case formType.CompanyEditSuper:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/editSuper/{1}/{2}?custIds={3}&custNames={4}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editSuper/{0}/{1}?custIds={2}&custNames={3}'.format(
                         $scope.superIds.split(',')[0],
                         $scope.productId,
                         $scope.superIds,
                         $scope.superNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/editSuper/{1}/{2}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editSuper/{0}/{1}'.format(
                         $scope.superId,
                         $scope.productId);
                 }
@@ -133,15 +138,13 @@ function ($scope, $http) {
 
             case formType.SuperEditMaster:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/editMaster/{1}/{2}?custIds={3}&custNames={4}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editMaster/{0}/{1}?custIds={2}&custNames={3}'.format(
                         $scope.masterIds.split(',')[0],
                         $scope.productId,
                         $scope.masterIds,
                         $scope.masterNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/editMaster/{1}/{2}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editMaster/{0}/{1}'.format(
                         $scope.masterId,
                         $scope.productId);
                 }
@@ -149,15 +152,13 @@ function ($scope, $http) {
 
             case formType.MasterEditAgent:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/editAgent/{1}/{2}?custIds={3}&custNames={4}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editAgent/{0}/{1}?custIds={2}&custNames={3}'.format(
                         $scope.agentIds.split(',')[0],
                         $scope.productId,
                         $scope.agentIds,
                         $scope.agentNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/editAgent/{1}/{2}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editAgent/{0}/{1}'.format(
                         $scope.agentId,
                         $scope.productId);
                 }
@@ -165,15 +166,13 @@ function ($scope, $http) {
 
             case formType.AgentEditMember:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/editMember/{1}/{2}?custIds={3}&custNames={4}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editMember/{0}/{1}?custIds={2}&custNames={3}'.format(
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/editMember/{1}/{2}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/editMember/{0}/{1}'.format(
                         $scope.memberId,
                         $scope.productId);
                 }
@@ -181,16 +180,14 @@ function ($scope, $http) {
 
             case formType.SuperEditMember:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/superEditMember/{1}/{2}/{3}?custIds={4}&custNames={5}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/superEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}'.format(
                         $scope.superId,
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/superEditMember/{1}/{2}/{3}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/superEditMember/{0}/{1}/{2}'.format(
                         $scope.superId,
                         $scope.memberId,
                         $scope.productId);
@@ -199,16 +196,14 @@ function ($scope, $http) {
 
             case formType.MasterEditMember:
                 if ($scope.isMultiple) {
-                    url = '{0}/CustomerSetting/#/masterEditMember/{1}/{2}/{3}?custIds={4}&custNames={5}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/masterEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}'.format(
                         $scope.masterId,
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = '{0}/CustomerSetting/#/masterEditMember/{1}/{2}/{3}'.format(
-                        rootUrl,
+                    url = 'CustomerSetting/#/masterEditMember/{0}/{1}/{2}'.format(
                         $scope.masterId,
                         $scope.memberId,
                         $scope.productId);
@@ -216,8 +211,7 @@ function ($scope, $http) {
                 break;
         }
 
-        var settingPage = $('#setting-page');
-        settingPage.attr('src', url);
+        openFrameUrl(url);
     };
 
     $scope.disableButtonLogin = function () {

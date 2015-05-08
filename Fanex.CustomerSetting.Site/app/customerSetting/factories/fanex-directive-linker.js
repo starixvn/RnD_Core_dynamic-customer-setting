@@ -3,22 +3,28 @@
 (function () {
     var injectParams = ['$rootScope'];
     var fanexDirectiveLinker = function ($rootScope) {
-        var directiveLinker = function () {
+        function DirectiveLinker() {
             var scopes = [];
-            this.linkScope = function (scope) {
-                scopes.push(scope);
-            };
 
-            this.getScopes = function () {
+            function linkScope(scope) {
+                scopes.push(scope);
+            }
+
+            function getScopes() {
                 return scopes;
-            };
+            }
 
             $rootScope.$on('product-view-loaded', function () {
                 scopes = [];
             });
-        };
 
-        return directiveLinker;
+            return {
+                linkScope: linkScope,
+                getScopes: getScopes
+            };
+        }
+
+        return DirectiveLinker;
     };
 
     fanexDirectiveLinker.$inject = injectParams;

@@ -163,7 +163,7 @@
     <Content Include="app\angular-1.2.28.js" />
     <Content Include="app\angular-1.2.28.min.js" />
     <Content Include="app\customerSetting\controllers\fanex-error-controller.js" />
-    <Content Include="app\customerSetting\controllers\fanex-product-controller.js" />
+    <Content Include="app\customerSetting\controllers\fanex-default-controller.js" />
     <Content Include="app\customerSetting\customer-setting-page-template.htm" />
     <Content Include="app\customerSetting\customer-setting-page.htm" />
     <Content Include="app\customerSetting\customer-setting-templates.js" />
@@ -206,6 +206,7 @@
     <Content Include="app\customerSetting\Gruntfile.js" />
     <Content Include="app\customerSetting\images\loading.gif" />
     <Content Include="app\customerSetting\images\sprite.png" />
+    <Content Include="app\customerSetting\services\fanex-product-setting-service.js" />
     <Content Include="app\customerSetting\services\fanex-status-service.js" />
     <Content Include="app\customerSetting\services\fanex-bet-limit-service.js" />
     <Content Include="app\customerSetting\services\fanex-discount-service.js" />
@@ -227,7 +228,7 @@
     <Content Include="app\customerSetting\templates\fanex-pt-copy.htm" />
     <Content Include="app\customerSetting\templates\fanex-pt-agent-edit-member.htm" />
     <Content Include="app\customerSetting\templates\fanex-error-page.htm" />
-    <Content Include="app\customerSetting\templates\fanex-product-page.htm" />
+    <Content Include="app\customerSetting\templates\fanex-default-page.htm" />
     <Content Include="app\customerSetting\templates\fanex-block-ui.htm" />
     <Content Include="app\customerSetting\templates\fanex-pt-select.htm" />
     <Content Include="app\customerSetting\templates\fanex-message.htm" />
@@ -263,7 +264,7 @@
     <Content Include="app\customerSetting\templates\sport-group\fanex-status-container.htm" />
     <Content Include="app\customerSetting\templates\fanex-status.htm" />
     <Content Include="app\customerSetting\templates\fanex-customer-information.htm" />
-    <Content Include="app\customerSetting\values\fanex-product-configuration.js" />
+    <Content Include="app\customerSetting\values\fanex-product-settings.js" />
     <Content Include="app\customerSetting\values\fanex-app-settings.js" />
     <Content Include="app\customerSetting\templates\fanex-bet-limit.htm" />
     <Content Include="app\customerSetting\templates\fanex-pt-company-edit-super.htm" />

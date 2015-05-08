@@ -2,9 +2,9 @@
 
 (function () {
     var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
-            'fanexProductConfiguration', 'fanexCommonService', 'fanexModelService'];
+            'fanexProductSettingService', 'fanexModelService'];
     var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
-            productConfiguration, commonService, modelService) {
+            fanexProductSettingService, modelService) {
         return {
             transclude: 'element',
             compile: function (element, attr, linker) {
@@ -13,20 +13,15 @@
 
                     // update view
                     function update() {
-                        var controller = productConfiguration.errorController;
-                        var templateUrl = productConfiguration.errorTemplateUrl;
+                        var productViewSetting = fanexProductSettingService.errorViewSetting;
                         var isValid = modelService.isValid();
                         if (isValid) {
                             var params = modelService.getParams();
                             var productId = params.productId;
-                            var productSetting = commonService.getProductSetting(productId);
-                            if (angular.isDefined(productSetting)) {
-                                templateUrl = productSetting.templateUrl;
-                                controller = productSetting.controller;
-                            }
+                            productViewSetting = fanexProductSettingService.getViewSetting(productId);
                         }
 
-                        templateUrl = $sce.getTrustedResourceUrl(templateUrl);
+                        var templateUrl = $sce.getTrustedResourceUrl(productViewSetting.templateUrl);
                         var template = $templateCache.get(templateUrl);
                         var newScope = scope.$new();
                         linker(newScope, function (clone) {
@@ -39,7 +34,7 @@
 
                             var link = $compile(clone.contents());
                             currentElement = clone;
-                            controller = $controller(controller, {
+                            var controller = $controller(productViewSetting.controller, {
                                 $scope: newScope
                             });
                             clone.data('$ngControllerController', controller);

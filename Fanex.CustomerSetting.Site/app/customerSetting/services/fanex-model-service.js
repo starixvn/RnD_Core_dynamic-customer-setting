@@ -89,16 +89,19 @@
             model.load();
         });
 
-        this.isValid = function () {
+        function isValid() {
             return model.isValid;
-        };
-        this.getParams = function () {
+        }
+
+        function getParams() {
             return model.params;
-        };
-        this.getMultipleInfo = function () {
+        }
+
+        function getMultipleInfo() {
             return model.getMultipleInfo();
-        };
-        this.createSelectModel = function () {
+        }
+
+        function createSelectModel() {
             if (!model.isValid) {
                 return undefined;
             }
@@ -112,6 +115,13 @@
             });
 
             return selectModel;
+        }
+
+        return {
+            isValid: isValid,
+            getParams: getParams,
+            getMultipleInfo: getMultipleInfo,
+            createSelectModel: createSelectModel
         };
     };
 

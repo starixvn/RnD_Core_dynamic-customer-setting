@@ -5,29 +5,35 @@
     var fanexBlockUiService = function () {
         var blockUiScope;
 
-        this.setup = function (scope) {
+        function setup(scope) {
             if (angular.isDefined(blockUiScope)) {
                 throw 'Only one block ui component in document';
             }
 
             blockUiScope = scope;
             blockUiScope.hasLoading = false;
-        };
+        }
 
-        this.show = function () {
+        function show() {
             if (angular.isUndefined(blockUiScope)) {
                 throw 'setup is required';
             }
 
             blockUiScope.hasLoading = true;
-        };
+        }
 
-        this.hide = function () {
+        function hide() {
             if (angular.isUndefined(blockUiScope)) {
                 throw 'setup is required';
             }
 
             blockUiScope.hasLoading = false;
+        }
+
+        return {
+            setup: setup,
+            show: show,
+            hide: hide
         };
     };
 

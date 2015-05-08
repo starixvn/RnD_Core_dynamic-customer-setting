@@ -8,13 +8,13 @@
         var tooltipAlign;
         var boundingElement;
 
-        this.setup = function (scope, element) {
+        function setup(scope, element) {
             tooltipScope = scope;
             tooltipElement = element;
             tooltipElement.addClass('ng-hide');
-        };
+        }
 
-        this.calculatePosition = function () {
+        function calculatePosition() {
             var rect = boundingElement.getBoundingClientRect();
             var tooltipRect = tooltipElement[0].getBoundingClientRect();
             var scrollX = window.pageXOffset || document.body.scrollLeft;
@@ -31,9 +31,9 @@
                 'top': top + 'px',
                 'left': left + 'px'
             });
-        };
+        }
 
-        this.show = function (element, message, align) {
+        function show(element, message, align) {
             if (angular.isUndefined(tooltipScope)) {
                 throw 'setup is required';
             }
@@ -53,11 +53,11 @@
 
             if (tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.removeClass('ng-hide');
-                this.calculatePosition();
+                calculatePosition();
             }
-        };
+        }
 
-        this.hide = function () {
+        function hide() {
             if (angular.isUndefined(tooltipScope)) {
                 throw 'setup is required';
             }
@@ -65,6 +65,13 @@
             if (!tooltipElement.hasClass('ng-hide')) {
                 tooltipElement.addClass('ng-hide');
             }
+        }
+
+        return {
+            setup: setup,
+            calculatePosition: calculatePosition,
+            show: show,
+            hide: hide
         };
     };
 

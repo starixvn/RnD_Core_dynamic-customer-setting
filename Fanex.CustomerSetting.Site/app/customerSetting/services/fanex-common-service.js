@@ -1,15 +1,15 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$window', 'fanexProductConfiguration'];
-    var fanexCommonService = function ($window, productConfiguration) {
+    var injectParams = ['$window'];
+    var fanexCommonService = function ($window) {
         // scroll to top
-        this.scrollToTop = function () {
+        function scrollToTop() {
             $window.scrollTo(0, 0);
-        };
+        }
 
         // check if value is in array, return index of value or -1 if not exist
-        this.inArray = function (value, array) {
+        function inArray(value, array) {
             var index = -1;
             angular.forEach(array, function (arrayValue, arrayIndex) {
                 if (index === -1 && arrayValue === value) {
@@ -18,33 +18,28 @@
             });
 
             return index;
-        };
+        }
 
         // check if object is array and it's not empty.
-        this.isArrayAndNotEmpty = function (object) {
+        function isArrayAndNotEmpty(object) {
             return angular.isArray(object) && object.length > 0;
-        };
+        }
 
         // return array of property values of object.
-        this.getPropertyValues = function (object) {
+        function getPropertyValues(object) {
             var propertyValues = [];
             for (var propertyName in object) {
                 propertyValues.push(object[propertyName]);
             }
 
             return propertyValues;
-        };
+        }
 
-        // return product setting by product id.
-        this.getProductSetting = function (productId) {
-            var result = productConfiguration.defaultProductSetting;
-            angular.forEach(productConfiguration.productSettings, function (productSetting) {
-                if (productSetting.id === productId) {
-                    result = productSetting;
-                }
-            });
-
-            return result;
+        return {
+            scrollToTop: scrollToTop,
+            inArray: inArray,
+            isArrayAndNotEmpty: isArrayAndNotEmpty,
+            getPropertyValues: getPropertyValues
         };
     };
 

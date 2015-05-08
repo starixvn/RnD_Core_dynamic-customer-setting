@@ -28,6 +28,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('templates/fanex-default-page.htm',
+    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
+  );
+
+
   $templateCache.put('templates/fanex-demo-page.htm',
     "Your product is not supported."
   );
@@ -55,11 +60,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
   $templateCache.put('templates/fanex-message.htm',
     "<div class=message-container data-ng-show=users><div data-ng-repeat=\"user in users\"><div class=name data-ng-show=user.name>{{user.name}}</div><div data-ng-repeat=\"message in user.messages\" class=message data-ng-class=message.class><div class=icon></div><div class=content data-ng-bind-html=message.content></div></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/fanex-product-page.htm',
-    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-ng-include=statusTemplate></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-ng-include=betLimitTemplate></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
   );
 
 
