@@ -5,7 +5,7 @@
             'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
             templateService, requestService, messageService, resourceService, SettingTypeHandler) {
-        var queryModel = modelService.QueryModel;
+        var queryModel = modelService.getQueryModel();
         requestService.query(queryModel, function (queryData) {
             var requestContext = queryData.RequestContext;
             var customerSetting = queryData.CustomerSetting;

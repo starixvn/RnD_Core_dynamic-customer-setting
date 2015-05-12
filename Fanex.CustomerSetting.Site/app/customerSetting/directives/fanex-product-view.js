@@ -14,7 +14,7 @@
                     // update view
                     function update() {
                         var productViewSetting = fanexProductSettingService.errorViewSetting;
-                        var queryModel = modelService.QueryModel;
+                        var queryModel = modelService.getQueryModel();
                         if (angular.isDefined(queryModel)) {
                             var productId = queryModel.ProductId;
                             productViewSetting = fanexProductSettingService.getViewSetting(productId);
@@ -53,7 +53,7 @@
                         scope.$emit('product-view-loaded');
                     }
 
-                    scope.$on('$locationChangeSuccess', update);
+                    scope.$on('fanex-model-changed', update);
                 };
             }
         };

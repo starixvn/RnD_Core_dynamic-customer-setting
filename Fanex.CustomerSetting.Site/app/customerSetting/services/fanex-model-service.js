@@ -6,10 +6,13 @@
         var queryModel = new QueryModel();
         $rootScope.$on('$locationChangeStart', function () {
             queryModel = new QueryModel();
+            $rootScope.$emit('fanex-model-changed', queryModel);
         });
 
         return {
-            QueryModel: queryModel
+            getQueryModel: function(){
+                return queryModel;
+            }
         };
     };
 
