@@ -3,20 +3,12 @@
     using System;
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// FormHandlerFactory class.
-    /// </summary>
     public sealed class FormHandlerFactory
     {
         private FormHandlerFactory()
         {
         }
 
-        /// <summary>
-        /// Creates the specified form type.
-        /// </summary>
-        /// <param name="formType">Type of the form.</param>
-        /// <returns>Returns form handler.</returns>
         public static IFormHandler Create(FormType formType)
         {
             switch (formType)

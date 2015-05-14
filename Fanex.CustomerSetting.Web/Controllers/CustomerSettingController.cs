@@ -4,22 +4,20 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.FormTypes;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Web.Models;
     using Fanex.CustomerSetting.Web.Services;
 
-    /// <summary>
-    /// CustomerSettingController class.
-    /// </summary>
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class CustomerSettingController : Controller
     {
         #region Variables
 
-        private readonly ICustomerSettingQueryService _queryService;
-        private readonly ICustomerSettingCommandService _commandService;
+        private readonly IQueryService _queryService;
         private readonly UserContext _userContext;
         private readonly IValidationService _validationService;
         private readonly IModelService _modelService;
@@ -29,30 +27,24 @@
         #region Constructors
 
         public CustomerSettingController()
-            : this(null, null, null, null)
+            : this(null, null, null)
         {
         }
 
         public CustomerSettingController(
-            ICustomerSettingQueryService queryService,
-            ICustomerSettingCommandService commandService,
+            IQueryService queryService,
             IValidationService validationService,
             IModelService modelService)
         {
             var userService = ServiceFactory.CreateUserService();
             _userContext = userService.CreateUserContext();
-            _queryService = queryService ?? new CustomerSettingQueryService(_userContext.Language);
-            _commandService = commandService ?? new CustomerSettingCommandService(_userContext.Language);
+            _queryService = queryService ?? new QueryService(_userContext.Language);
             _validationService = validationService ?? new ValidationService();
             _modelService = modelService ?? new ModelService();
         }
 
         #endregion Constructors
 
-        /// <summary>
-        /// Customer setting single page.
-        /// </summary>
-        /// <returns>Returns HTML customer setting single page.</returns>
         [HttpGet]
         [OutputCache(Duration = 14400)]
         public ActionResult Index()
@@ -74,11 +66,6 @@
             return Content(htmlContent, "text/HTML");
         }
 
-        /// <summary>
-        /// Query customer setting.
-        /// </summary>
-        /// <param name="model">The query model.</param>
-        /// <returns>Returns query JSON result.</returns>
         [HttpPost]
         public JsonResult Query(QueryModel model)
         {
@@ -88,10 +75,10 @@
             }
 
             var queryInfo = model.CreateQueryInfo(_userContext);
-            var validationResult = _validationService.Validate(queryInfo);
-            if (!validationResult.IsSuccess)
+            Result result = _validationService.Validate(queryInfo);
+            if (!result.IsSuccess)
             {
-                return Json(validationResult);
+                return Json(result);
             }
 
             switch (model.FormType)
@@ -118,12 +105,6 @@
             return Json(Result.Error);
         }
 
-        /// <summary>
-        /// Command customer setting.
-        /// </summary>
-        /// <param name="model">The command model.</param>
-        /// <returns>Returns command JSON result.</returns>
-        [HttpPost]
         public JsonResult Command(CommandModel model)
         {
             if (_userContext == null || !_userContext.HasCommandPermission)
@@ -135,31 +116,43 @@
             var multipleCommandInfo = commandInfo as MultipleCommandInfo;
             if (multipleCommandInfo != null)
             {
-                return MultipleCommand(multipleCommandInfo);
+                return CommandOnCustomers(multipleCommandInfo);
             }
 
-            return SingleCommand(commandInfo);
+            return CommandOnCustomer(commandInfo);
         }
 
-        private JsonResult SingleCommand(CommandInfo commandInfo)
+        private JsonResult CommandOnCustomer(CommandInfo commandInfo)
         {
-            Result result = _validationService.Validate(commandInfo);
-            if (result.IsSuccess)
+            CommandResult commandResult = null;
+            Result validationResult = _validationService.Validate(commandInfo);
+            if (validationResult.IsSuccess)
             {
-                result = _commandService.Update(commandInfo);
+                ICommand command = CommandFactory.Get(commandInfo.CommandType);
+                commandResult = command.Do(commandInfo);
+            }
+            else
+            {
+                commandResult = new CommandResult(commandInfo.CommandType, validationResult);
             }
 
-            return Json(result);
+            return Json(commandResult);
         }
 
-        /// <summary>
-        /// Multiple command.
-        /// </summary>
-        /// <param name="multipleCommandInfo">The multiple command information.</param>
-        /// <returns>Returns list of result.</returns>
-        private JsonResult MultipleCommand(MultipleCommandInfo multipleCommandInfo)
+        private JsonResult CommandOnCustomers(MultipleCommandInfo multipleCommandInfo)
         {
-            var results = new List<Result>();
+            var formTypeHandler = FormHandlerFactory.Create(multipleCommandInfo.FormType);
+            if (formTypeHandler.IsCommandOnMember)
+            {
+                return CommandOnMembers(multipleCommandInfo);
+            }
+
+            return CommandOnNotMembers(multipleCommandInfo);
+        }
+
+        private JsonResult CommandOnNotMembers(MultipleCommandInfo multipleCommandInfo)
+        {
+            var commandResults = new List<CommandResult>();
             while (true)
             {
                 var commandInfo = multipleCommandInfo.Take();
@@ -168,16 +161,29 @@
                     break;
                 }
 
-                Result result = _validationService.Validate(commandInfo);
-                if (result.IsSuccess)
+                CommandResult commandResult = null;
+                Result validationResult = _validationService.Validate(commandInfo);
+                if (validationResult.IsSuccess)
                 {
-                    result = _commandService.Update(commandInfo);
+                    ICommand command = CommandFactory.Get(commandInfo.CommandType);
+                    commandResult = command.Do(commandInfo);
+                }
+                else
+                {
+                    commandResult = new CommandResult(commandInfo.CommandType, validationResult);
                 }
 
-                results.Add(result);
+                commandResults.Add(commandResult);
             }
 
-            return Json(new MultipleCommandResult(results));
+            return Json(commandResults);
+        }
+
+        private JsonResult CommandOnMembers(MultipleCommandInfo multipleCommandInfo)
+        {
+            ICommandOnMultipleCustomerService commandOnMembersService = new CommandOnMultipleMemberService();
+            var commandResults = commandOnMembersService.Do(multipleCommandInfo);
+            return Json(commandResults);
         }
     }
 }

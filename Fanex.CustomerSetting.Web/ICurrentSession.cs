@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Web
 {
-    /// <summary>
-    /// Properties of an authenticated user.
-    /// </summary>
     public interface ICurrentSession
     {
         int RoleId { get; set; }

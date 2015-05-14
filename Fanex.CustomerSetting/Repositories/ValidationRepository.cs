@@ -4,9 +4,6 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.Data;
 
-    /// <summary>
-    /// ValidationRepository class.
-    /// </summary>
     public class ValidationRepository : IValidationRepository
     {
         public void ValidatePermission(PermissionValidateCriteria criteria)

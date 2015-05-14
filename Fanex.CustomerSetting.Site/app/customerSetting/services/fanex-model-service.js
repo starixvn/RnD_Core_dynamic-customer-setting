@@ -10,7 +10,7 @@
         });
 
         return {
-            getQueryModel: function(){
+            getQueryModel: function () {
                 return queryModel;
             }
         };

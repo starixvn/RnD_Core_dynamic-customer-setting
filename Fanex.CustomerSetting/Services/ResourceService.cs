@@ -10,9 +10,6 @@
     using Fanex.CustomerSetting.Repositories;
     using RemotingRef;
 
-    /// <summary>
-    /// ResourceService class.
-    /// </summary>
     public class ResourceService : IResourceService
     {
         #region Variables
@@ -56,12 +53,6 @@
             return GetProductName(productId, RefLanguage);
         }
 
-        /// <summary>
-        /// Gets the name of the product.
-        /// </summary>
-        /// <param name="productId">The product ID.</param>
-        /// <param name="refLanguage">The language.</param>
-        /// <returns>Product name.</returns>
         public string GetProductName(int productId, string refLanguage)
         {
             var productResources = InternalGetProductResources();
@@ -116,11 +107,6 @@
 
         #region Utils
 
-        /// <summary>
-        /// Gets the reference language.
-        /// </summary>
-        /// <param name="language">The language code.</param>
-        /// <returns>REF language.</returns>
         private static string GetRefLanguage(string language)
         {
             var defaultRefLanguage = "en";
@@ -140,10 +126,6 @@
             }
         }
 
-        /// <summary>
-        /// Get product resources and caching.
-        /// </summary>
-        /// <returns>List of product resources.</returns>
         private IEnumerable<ProductResourceEntity> InternalGetProductResources()
         {
             var productResources = _cacheService.Get<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey);

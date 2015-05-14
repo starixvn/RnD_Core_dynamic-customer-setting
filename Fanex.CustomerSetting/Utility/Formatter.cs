@@ -3,9 +3,6 @@
     using System.Globalization;
     using Fanex.CustomerSetting.Core;
 
-    /// <summary>
-    /// Formatter class.
-    /// </summary>
     public static class Formatter
     {
         private static readonly CultureInfo EnglishCultureInfo = CultureInfo.GetCultureInfo("en-US");

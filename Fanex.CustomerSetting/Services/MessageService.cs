@@ -6,9 +6,6 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
 
-    /// <summary>
-    /// MessageService class.
-    /// </summary>
     public class MessageService : IMessageService
     {
         private readonly IResourceService _resourceService;
@@ -31,13 +28,6 @@
             _resourceService = resourceService ?? new ResourceService(languageCode);
         }
 
-        /// <summary>
-        /// Gets the translated message.
-        /// </summary>
-        /// <param name="messageInfo">The message information.</param>
-        /// <returns>
-        /// Returns translated message.
-        /// </returns>
         public string GetTranslatedMessage(MessageInfo messageInfo)
         {
             if (messageInfo.ErrCode == Result.SuccessValue)

@@ -8,11 +8,6 @@
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
 
-    /// <summary>
-    /// TemplateMessageBuilder class.
-    /// </summary>
-    /// <typeparam name="TMessage">The type of the message.</typeparam>
-    /// <typeparam name="TRow">The type of the row.</typeparam>
     public class TemplateMessageBuilder<TMessage, TRow> : BaseMessageBuilder, IMessageBuilder
         where TMessage : TemplateMessage<TRow>
         where TRow : SimpleRow
@@ -24,13 +19,6 @@
             _resourceService = resourceService;
         }
 
-        /// <summary>
-        /// Builds the specified message information.
-        /// </summary>
-        /// <param name="messageInfo">The message information.</param>
-        /// <returns>
-        /// Returns translated message.
-        /// </returns>
         public string Build(MessageInfo messageInfo)
         {
             var templateMessage = Deserialize<TMessage>(messageInfo.ErrMsg);
@@ -58,15 +46,6 @@
             return stringBuilder.ToString();
         }
 
-        /// <summary>
-        /// Translates the position taking down-line rows.
-        /// </summary>
-        /// <param name="messageId">The message ID.</param>
-        /// <param name="rows">The position taking down-line rows.</param>
-        /// <param name="messageInfo">The message information.</param>
-        /// <returns>
-        /// Returns translated message.
-        /// </returns>
         private string TranslatePositionTakingDownlineRows(
             int messageId,
             IEnumerable<PositionTakingDownlineRow> rows,
@@ -97,11 +76,6 @@
             return stringBuilder.ToString();
         }
 
-        /// <summary>
-        /// Gets the name of the role type.
-        /// </summary>
-        /// <param name="messageId">The message ID.</param>
-        /// <returns>Returns name of role type.</returns>
         private string GetRoleTypeName(int messageId)
         {
             switch ((MsgCode)messageId)

@@ -6,9 +6,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Newtonsoft.Json;
 
-    /// <summary>
-    /// ModelService class.
-    /// </summary>
     public class ModelService : IModelService
     {
         private const int MaxJsonStringLength = 10000;

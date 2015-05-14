@@ -2,9 +2,6 @@
 {
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// QueryCriteria class.
-    /// </summary>
     public abstract class QueryCriteria : CriteriaBase
     {
         protected QueryCriteria(int custId, short productId)

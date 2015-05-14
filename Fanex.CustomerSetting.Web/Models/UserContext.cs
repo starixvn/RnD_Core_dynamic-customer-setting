@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// UserContext class.
-    /// </summary>
     public class UserContext
     {
         public bool IsInternal { get; set; }

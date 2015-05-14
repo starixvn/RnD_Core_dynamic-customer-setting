@@ -13,7 +13,7 @@
             templateUrl: 'templates/fanex-discount-master-edit-member.htm',
             controller: ['$scope', function ($scope) {
                 discountService.linkScope($scope);
-                
+
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
                 $scope.agentDiscount = discount.AgentDiscount;

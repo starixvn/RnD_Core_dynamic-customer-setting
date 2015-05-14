@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// AgentQueryMemberResult class.
-    /// </summary>
     public class AgentQueryMemberResult
         : QueryResult<AgentQueryMemberCustomerSettingEntity,
             AgentQueryMemberDiscountEntity,

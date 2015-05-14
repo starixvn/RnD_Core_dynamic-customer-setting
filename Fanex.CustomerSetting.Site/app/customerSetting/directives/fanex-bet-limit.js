@@ -125,6 +125,7 @@
             controller: ['$scope', function ($scope) {
                 betLimitService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.BetLimit;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;
                 $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember

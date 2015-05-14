@@ -2,9 +2,6 @@
 {
     using System.Xml.Serialization;
 
-    /// <summary>
-    /// BaseMessage class.
-    /// </summary>
     [XmlRoot("Root")]
     public class SimpleMessage
     {

@@ -2,9 +2,6 @@
 {
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// CommandCriteria class.
-    /// </summary>
     public class CommandCriteria : CriteriaBase
     {
         public int UserId { get; set; }

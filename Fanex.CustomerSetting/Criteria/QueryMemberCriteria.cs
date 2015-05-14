@@ -1,10 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    using Fanex.CustomerSetting.Enumerations;
-
-    /// <summary>
-    /// QueryMemberCriteria class.
-    /// </summary>
     public class QueryMemberCriteria : QueryCriteria
     {
         public QueryMemberCriteria(int custId, int roleId, short productId)

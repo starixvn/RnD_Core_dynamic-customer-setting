@@ -5,9 +5,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Newtonsoft.Json.Linq;
 
-    /// <summary>
-    /// ProductStatusConverter class.
-    /// </summary>
     public class StatusJsonConverter : JsonCreationConverter<ProductStatusEntity>
     {
         private FormType _formType;
@@ -17,12 +14,6 @@
             _formType = formType;
         }
 
-        /// <summary>
-        /// Creates ProductStatusEntity.
-        /// </summary>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="jsonObject">The JSON object.</param>
-        /// <returns>Returns ProductStatusEntity.</returns>
         protected override ProductStatusEntity Create(Type objectType, JObject jsonObject)
         {
             switch (_formType)

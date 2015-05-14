@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    /// <summary>
-    /// CommandBetLimitCriteria class.
-    /// </summary>
-    public class CommandBetLimitCriteria : CommandCriteria
+    public class BetLimitCommandCriteria : CommandCriteria
     {
         public string BetLimit { get; set; }
 

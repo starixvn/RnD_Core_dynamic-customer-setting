@@ -3,9 +3,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Web.Models;
 
-    /// <summary>
-    /// UserService class.
-    /// </summary>
     public class UserService : IUserService
     {
         private ICurrentSession _currentSession;

@@ -7,21 +7,18 @@
     using Fanex.CustomerSetting.Web.Utility;
     using Newtonsoft.Json;
 
-    /// <summary>
-    /// CommandModel class.
-    /// </summary>
     public class CommandModel : BaseModel
     {
         public CommandModel()
         {
-            Ip = RequestHelpers.GetClientIp();
+            Ip = RequestHelper.GetClientIp();
         }
 
         public string TargetCustIds { get; set; }
 
         public int SubAccountId { get; set; }
 
-        public SettingType CommandType { get; set; }
+        public CommandType CommandType { get; set; }
 
         public string Ip { get; private set; }
 
@@ -41,12 +38,6 @@
 
         public string PositionTakingString { get; set; }
 
-        /// <summary>
-        /// Creates CommandInfo.
-        /// </summary>
-        /// <param name="userContext">The user context.</param>
-        /// <param name="modelService">The model service.</param>
-        /// <returns>Returns CommandInfo.</returns>
         public CommandInfo CreateCommandInfo(UserContext userContext, IModelService modelService)
         {
             if (!string.IsNullOrEmpty(this.TargetCustIds))
@@ -58,12 +49,6 @@
             return CreateSingleCommandInfo(userContext, modelService);
         }
 
-        /// <summary>
-        /// Creates single command information.
-        /// </summary>
-        /// <param name="userContext">The user context.</param>
-        /// <param name="modelService">The model service.</param>
-        /// <returns>Returns CommandInfo object.</returns>
         private CommandInfo CreateSingleCommandInfo(UserContext userContext, IModelService modelService)
         {
             return new CommandInfo
@@ -89,13 +74,6 @@
             };
         }
 
-        /// <summary>
-        /// Creates multiple command information.
-        /// </summary>
-        /// <param name="userContext">The user context.</param>
-        /// <param name="modelService">The model service.</param>
-        /// <param name="targetCustIds">The target customer ids.</param>
-        /// <returns>Returns MultipleCommandInfo object.</returns>
         private MultipleCommandInfo CreateMultipleCommandInfo(
             UserContext userContext,
             IModelService modelService,

@@ -2,9 +2,6 @@
 {
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// CompanyQuerySuperCriteria class.
-    /// </summary>
     public class CompanyQuerySuperCriteria : CriteriaBase
     {
         public int CustId { get; set; }

@@ -1,15 +1,8 @@
-﻿// <history>
-//   <change who="Kaden.Trinh" date="2015.03.04">Created and Implement current session user.</change>
-// </history>
-
-namespace Fanex.CustomerSetting.Web
+﻿namespace Fanex.CustomerSetting.Web
 {
     using System;
     using System.Web;
 
-    /// <summary>
-    /// Properties of an authenticated user.
-    /// </summary>
     public class CurrentSession : ICurrentSession
     {
         #region Constant
@@ -21,9 +14,6 @@ namespace Fanex.CustomerSetting.Web
 
         #endregion Constant
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CurrentSession" /> class.
-        /// </summary>
         public CurrentSession()
         {
         }

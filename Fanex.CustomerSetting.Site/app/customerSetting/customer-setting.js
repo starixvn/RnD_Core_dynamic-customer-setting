@@ -51,18 +51,13 @@
 angular.module('customerSettingApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('templates/fanex-bet-limit-copy.htm',
-    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
-  );
-
-
   $templateCache.put('templates/fanex-bet-limit-readonly.htm',
     "<div class=bet-limit-item><div class=name title={{name}}>{{name}}</div><div class=\"min-bet read-only\" data-ng-bind=minBet></div><div class=\"max-bet read-only\" data-ng-bind=maxBet></div><div class=\"max-per-match read-only\" data-ng-bind=maxPerMatch></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-bet-limit.htm',
-    "<div class=bet-limit-item><div class=name title={{name}}>{{name}}<div data-fanex-bet-limit-copy=hasCopy></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+    "<div class=bet-limit-item><div class=name title={{name}}>{{name}}<div data-fanex-item-copy=hasCopy data-setting-type=settingType></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
   );
 
 
@@ -103,6 +98,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
   $templateCache.put('templates/fanex-error-page.htm',
     "<div data-fanex-message></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-item-copy.htm',
+    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
   );
 
 
@@ -386,7 +386,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
 
         function update(updateMemberPT) {
-            var queryData = requestService.QueryData;
+            var queryData = requestService.getQueryData();
             var requestContext = queryData.RequestContext;
             var settingContext = queryData.SettingContext;
 
@@ -622,39 +622,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexBetLimitService'];
-    var fanexBetLimitCopyDirective = function (betLimitService) {
-        return {
-            restrict: 'AE',
-            replace: true,
-            scope: {
-                hasCopy: '=fanexBetLimitCopy'
-            },
-            templateUrl: 'templates/fanex-bet-limit-copy.htm',
-            link: function (scope) {
-                if (!scope.hasCopy) {
-                    return;
-                }
-
-                scope.copy = function () {
-                    var scopes = betLimitService.getScopes();
-                    var source = scopes[0];
-                    for (var i = 1; i < scopes.length; i++) {
-                        var scope = scopes[i];
-                        scope.copy(source);
-                    }
-                };
-            }
-        };
-    };
-
-    fanexBetLimitCopyDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('fanexBetLimitCopy', fanexBetLimitCopyDirective);
-})();
-
-'use strict';
-
-(function () {
     var injectParams = ['$filter', 'fanexAppSettings', 'fanexCommonService', 'fanexTooltipService'];
     var fanexBetLimitInputDirective = function ($filter, appSettings, commonService, tooltipService) {
         return {
@@ -861,6 +828,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             controller: ['$scope', function ($scope) {
                 betLimitService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.BetLimit;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;
                 $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
@@ -1128,7 +1096,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             templateUrl: 'templates/fanex-discount-master-edit-member.htm',
             controller: ['$scope', function ($scope) {
                 discountService.linkScope($scope);
-                
+
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.discount);
                 var discount = $scope.discount;
                 $scope.agentDiscount = discount.AgentDiscount;
@@ -1252,6 +1220,40 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
     fanexDiscountDirective.$inject = injectParams;
     angular.module('customerSettingApp').directive('fanexDiscount', fanexDiscountDirective);
+})();
+
+'use strict';
+
+(function () {
+    var injectParams = ['fanexSettingTypeHandler'];
+    var fanexItemCopyDirective = function (SettingTypeHandler) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                settingType: '=settingType',
+                hasCopy: '=fanexItemCopy'
+            },
+            templateUrl: 'templates/fanex-item-copy.htm',
+            link: function (scope) {
+                if (!scope.hasCopy) {
+                    return;
+                }
+
+                scope.copy = function () {
+                    var settingTypeHandler = new SettingTypeHandler(scope.settingType);
+                    var scopes = settingTypeHandler.getScopes();
+                    var source = scopes[0];
+                    for (var i = 1; i < scopes.length; i++) {
+                        scopes[i].copy(source);
+                    }
+                };
+            }
+        };
+    };
+
+    fanexItemCopyDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('fanexItemCopy', fanexItemCopyDirective);
 })();
 
 'use strict';
@@ -3140,7 +3142,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         });
 
         return {
-            getQueryModel: function(){
+            getQueryModel: function () {
                 return queryModel;
             }
         };
@@ -3246,7 +3248,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return request;
         }
 
-        function getQueryData(){
+        function getQueryData() {
             return queryData;
         }
 
@@ -3271,7 +3273,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return request;
         }
 
-        function getCommandData(){
+        function getCommandData() {
             return commandData;
         }
 

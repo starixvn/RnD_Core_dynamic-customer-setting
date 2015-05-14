@@ -7,9 +7,6 @@
     using Fanex.CustomerSetting.Attributes;
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// XmlGenerator class.
-    /// </summary>
     public class XmlGenerator : IXmlGenerator
     {
         private static Dictionary<Type, IList<OutputElementProperty>> outputElementProperties = new Dictionary<Type, IList<OutputElementProperty>>();
@@ -34,11 +31,6 @@
             return Generate(entities);
         }
 
-        /// <summary>
-        /// Gets the output element properties.
-        /// </summary>
-        /// <param name="type">The type of object.</param>
-        /// <returns>Returns list of output elements.</returns>
         private static IList<OutputElementProperty> GetOutputElementProperties(Type type)
         {
             if (outputElementProperties.ContainsKey(type))
@@ -84,11 +76,6 @@
             return stringBuilder.ToString();
         }
 
-        /// <summary>
-        /// Gets the name of the XML node.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns>Returns XML node name.</returns>
         private string GetNodeName(BaseEntity entity)
         {
             if (entity is ProductStatusEntity)
@@ -111,11 +98,6 @@
             return string.Empty;
         }
 
-        /// <summary>
-        /// Generates the XML of specified entity.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns>Returns XML node.</returns>
         private string Generate(BaseEntity entity)
         {
             var type = entity.GetType();

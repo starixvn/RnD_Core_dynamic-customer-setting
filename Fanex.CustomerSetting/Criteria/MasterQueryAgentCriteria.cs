@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    /// <summary>
-    /// MasterQueryAgentCriteria class.
-    /// </summary>
     public class MasterQueryAgentCriteria : QueryCriteria
     {
         public MasterQueryAgentCriteria(int custId, short productId)

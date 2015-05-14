@@ -4,9 +4,6 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.Data;
 
-    /// <summary>
-    /// ProductProfileRepository class.
-    /// </summary>
     public class ProductProfileRepository : IProductProfileRepository
     {
         public ProductProfileEntity GetProductProfile(ProductProfileQueryCriteria criteria)

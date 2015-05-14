@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Site.UserLogin
 {
-    /// <summary>
-    /// Model login class.
-    /// </summary>
     public class LoginViewModel
     {
         public LoginViewModel()

@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Attributes;
 
-    /// <summary>
-    /// MasterCommandAgentPositionTakingEntity class.
-    /// </summary>
     public class MasterCommandAgentPositionTakingEntity : MasterQueryAgentPositionTakingEntity
     {
         [OutputElement("UpdAllMems")]

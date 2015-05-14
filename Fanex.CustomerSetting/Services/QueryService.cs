@@ -9,38 +9,30 @@
     using Fanex.CustomerSetting.Repositories;
     using Fanex.CustomerSetting.Utility;
 
-    /// <summary>
-    /// CustomerSettingService class.
-    /// </summary>
-    public class CustomerSettingQueryService : ICustomerSettingQueryService
+    public class QueryService : IQueryService
     {
         #region Variables
 
-        private readonly ICustomerSettingQueryRepository _respository;
+        private readonly IQueryRepository _respository;
         private readonly IResourceService _resourceService;
 
         #endregion Variables
 
         #region Constructors
 
-        public CustomerSettingQueryService(string languageCode)
+        public QueryService(string languageCode)
             : this(languageCode, null, null)
         {
         }
 
-        public CustomerSettingQueryService(string languageCode, ICustomerSettingQueryRepository respository, IResourceService resourceService)
+        public QueryService(string languageCode, IQueryRepository respository, IResourceService resourceService)
         {
-            _respository = respository ?? new CustomerSettingQueryRepository();
+            _respository = respository ?? new QueryRepository();
             _resourceService = resourceService ?? new ResourceService(languageCode);
         }
 
         #endregion Constructors
 
-        /// <summary>
-        /// Company select super setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public CompanyQuerySuperResult CompanyQuerySuper(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
@@ -62,11 +54,6 @@
             return new CompanyQuerySuperResult(settingContext, customerSettingEntity);
         }
 
-        /// <summary>
-        /// Super select master setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public SuperQueryMasterResult SuperQueryMaster(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
@@ -84,11 +71,6 @@
             return new SuperQueryMasterResult(settingContext, customerSettingEntity);
         }
 
-        /// <summary>
-        /// Master select agent setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public MasterQueryAgentResult MasterQueryAgent(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
@@ -106,11 +88,6 @@
             return new MasterQueryAgentResult(settingContext, customerSettingEntity);
         }
 
-        /// <summary>
-        /// Super select member setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public SuperQueryMemberResult SuperQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
@@ -127,11 +104,6 @@
             return new SuperQueryMemberResult(settingContext, customerSettingEntity);
         }
 
-        /// <summary>
-        /// Master select member setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public MasterQueryMemberResult MasterQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);
@@ -148,11 +120,6 @@
             return new MasterQueryMemberResult(settingContext, customerSettingEntity);
         }
 
-        /// <summary>
-        /// Agent select member setting.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Customer Setting Result.</returns>
         public AgentQueryMemberResult AgentQueryMember(QueryInfo model)
         {
             var settingContext = CreateRequestContext(model);

@@ -6,9 +6,6 @@
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
 
-    /// <summary>
-    /// PositionTakingRow class.
-    /// </summary>
     public class PositionTakingRow : SimpleRow
     {
         [XmlAttribute]

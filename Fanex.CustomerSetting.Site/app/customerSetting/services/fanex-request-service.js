@@ -36,7 +36,7 @@
             return request;
         }
 
-        function getQueryData(){
+        function getQueryData() {
             return queryData;
         }
 
@@ -61,7 +61,7 @@
             return request;
         }
 
-        function getCommandData(){
+        function getCommandData() {
             return commandData;
         }
 

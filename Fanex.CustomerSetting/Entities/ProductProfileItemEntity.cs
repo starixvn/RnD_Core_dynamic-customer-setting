@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Entities
 {
-    /// <summary>
-    /// ProductProfileEntity class.
-    /// </summary>
     public class ProductProfileItemEntity
     {
         public byte SettingType { get; set; }

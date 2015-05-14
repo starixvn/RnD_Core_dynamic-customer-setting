@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// SuperQueryMemberResult class.
-    /// </summary>
     public class SuperQueryMemberResult
         : QueryResult<SuperQueryMemberCustomerSettingEntity,
             SuperQueryMemberDiscountEntity,

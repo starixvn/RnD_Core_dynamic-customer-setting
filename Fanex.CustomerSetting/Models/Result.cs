@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Resources;
 
-    /// <summary>
-    /// Result class.
-    /// </summary>
     public class Result
     {
         public const int SuccessValue = 0;

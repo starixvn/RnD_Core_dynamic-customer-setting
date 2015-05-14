@@ -6,9 +6,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Resources;
 
-    /// <summary>
-    /// BaseMessageBuilder class.
-    /// </summary>
     public abstract class BaseMessageBuilder
     {
         private Dictionary<SettingType, string> _prefixs = new Dictionary<SettingType, string>

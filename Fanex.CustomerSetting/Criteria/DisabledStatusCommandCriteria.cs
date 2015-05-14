@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    /// <summary>
-    /// CommandDisabledStatusCriteria class.
-    /// </summary>
-    public class CommandDisabledStatusCriteria : CommandCriteria
+    public class DisabledStatusCommandCriteria : CommandCriteria
     {
         public string IsDisabled { get; set; }
 

@@ -3,9 +3,6 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    /// <summary>
-    /// RouteConfig class.
-    /// </summary>
     public static class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)

@@ -2,9 +2,6 @@
 {
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// ProductProfileQueryCriteria class.
-    /// </summary>
     public class ProductProfileQueryCriteria : CriteriaBase
     {
         public byte ProductId { get; set; }

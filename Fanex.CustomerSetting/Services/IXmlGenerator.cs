@@ -3,9 +3,6 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// IXmlGenerator class.
-    /// </summary>
     public interface IXmlGenerator
     {
         string GenerateStatus(IEnumerable<ProductStatusEntity> entities);

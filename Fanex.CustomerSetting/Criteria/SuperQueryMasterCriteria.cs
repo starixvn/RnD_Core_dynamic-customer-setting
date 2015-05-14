@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    /// <summary>
-    /// SuperQueryMasterCriteria class.
-    /// </summary>
     public class SuperQueryMasterCriteria : QueryCriteria
     {
         public SuperQueryMasterCriteria(int custId, short productId)

@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    /// <summary>
-    /// IResourceService class.
-    /// </summary>
     public interface IResourceService
     {
         string GetProductName(int productId);

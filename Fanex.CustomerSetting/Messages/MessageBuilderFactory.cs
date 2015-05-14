@@ -3,19 +3,8 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Services;
 
-    /// <summary>
-    /// MessageBuilderFactory class.
-    /// </summary>
     public static class MessageBuilderFactory
     {
-        /// <summary>
-        /// Creates the message builder.
-        /// </summary>
-        /// <param name="msgType">Type of the message.</param>
-        /// <param name="resourceService">The resource service.</param>
-        /// <returns>
-        /// Returns interface IMessageBuilder.
-        /// </returns>
         public static IMessageBuilder Create(MsgType msgType, IResourceService resourceService)
         {
             switch (msgType)

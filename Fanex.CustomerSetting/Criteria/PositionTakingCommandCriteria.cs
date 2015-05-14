@@ -1,14 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
+    using System;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// CommandPositionTakingCriteria class.
-    /// </summary>
-    public class CommandPositionTakingCriteria : CommandCriteria
+    public class PositionTakingCommandCriteria : CommandCriteria
     {
-        public CommandPositionTakingCriteria(FormType formType)
+        public PositionTakingCommandCriteria(FormType formType)
         {
             FormType = formType;
         }
@@ -19,10 +17,6 @@
         [SpParam(Ignored = true)]
         public FormType FormType { get; private set; }
 
-        /// <summary>
-        /// Gets the setting key by form type.
-        /// </summary>
-        /// <returns>Returns stored procedure name.</returns>
         public override string GetSettingKey()
         {
             switch (FormType)
@@ -44,9 +38,10 @@
 
                 case FormType.AgentEditMember:
                     return "Acc_CustSetting_AgentPTOnMemberUpd";
-            }
 
-            return string.Empty;
+                default:
+                    throw new NotImplementedException("Not implemented yet");
+            }
         }
 
         public override bool IsValid()

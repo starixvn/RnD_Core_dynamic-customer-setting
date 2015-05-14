@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// CompanyQuerySuperResult class.
-    /// </summary>
     public class CompanyQuerySuperResult
         : QueryResult<CompanyQuerySuperCustomerSettingEntity,
             CompanyQuerySuperDiscountEntity,

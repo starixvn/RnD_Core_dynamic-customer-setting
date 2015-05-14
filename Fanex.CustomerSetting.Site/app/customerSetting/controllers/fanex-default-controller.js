@@ -105,7 +105,7 @@
         }
 
         function update(updateMemberPT) {
-            var queryData = requestService.QueryData;
+            var queryData = requestService.getQueryData();
             var requestContext = queryData.RequestContext;
             var settingContext = queryData.SettingContext;
 

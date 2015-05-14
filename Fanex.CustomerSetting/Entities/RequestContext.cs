@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// SettingContext class.
-    /// </summary>
     public class RequestContext
     {
         public int TargetCustId { get; set; }

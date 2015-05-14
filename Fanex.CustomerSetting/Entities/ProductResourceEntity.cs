@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Entities
 {
-    /// <summary>
-    /// ProductResourceEntity class.
-    /// </summary>
     public class ProductResourceEntity
     {
         public int ProductID { get; set; }

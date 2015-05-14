@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// OutputElementAttribute class.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class OutputElementAttribute : Attribute
     {

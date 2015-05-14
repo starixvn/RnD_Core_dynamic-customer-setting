@@ -3,10 +3,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
-    public interface ICustomerSettingQueryRepository
+    public interface IQueryRepository
     {
         CompanyQuerySuperCustomerSettingEntity CompanyQuerySuper(CompanyQuerySuperCriteria criteria);
 

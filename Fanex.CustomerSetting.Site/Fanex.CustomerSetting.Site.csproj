@@ -160,7 +160,6 @@
     <Compile Include="UserLogin\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\angular-1.2.28.js" />
     <Content Include="app\angular-1.2.28.min.js" />
     <Content Include="app\customerSetting\controllers\fanex-error-controller.js" />
     <Content Include="app\customerSetting\controllers\fanex-default-controller.js" />
@@ -171,7 +170,7 @@
     <Content Include="app\customerSetting\customer-setting.js" />
     <Content Include="app\customerSetting\customer-setting.min.css" />
     <Content Include="app\customerSetting\customer-setting.min.js" />
-    <Content Include="app\customerSetting\directives\fanex-bet-limit-copy.js" />
+    <Content Include="app\customerSetting\directives\fanex-item-copy.js" />
     <Content Include="app\customerSetting\directives\fanex-bet-limit-input.js" />
     <Content Include="app\customerSetting\customer-setting.less" />
     <Content Include="app\customerSetting\customer-setting-app.js" />
@@ -224,7 +223,7 @@
     <Content Include="app\customerSetting\services\fanex-request-service.js" />
     <Content Include="app\customerSetting\services\fanex-update-member-pt-service.js" />
     <Content Include="app\customerSetting\templates\fanex-demo-page.htm" />
-    <Content Include="app\customerSetting\templates\fanex-bet-limit-copy.htm" />
+    <Content Include="app\customerSetting\templates\fanex-item-copy.htm" />
     <Content Include="app\customerSetting\templates\fanex-pt-copy.htm" />
     <Content Include="app\customerSetting\templates\fanex-pt-agent-edit-member.htm" />
     <Content Include="app\customerSetting\templates\fanex-error-page.htm" />

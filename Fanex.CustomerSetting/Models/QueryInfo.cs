@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// QueryInfo class.
-    /// </summary>
     public class QueryInfo
     {
         public int CustId { get; set; }

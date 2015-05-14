@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    /// <summary>
-    /// CommandDiscountCriteria class.
-    /// </summary>
-    public class CommandDiscountCriteria : CommandCriteria
+    public class DiscountCommandCriteria : CommandCriteria
     {
         public string Discount { get; set; }
 

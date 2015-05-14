@@ -5,16 +5,8 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.Data;
 
-    /// <summary>
-    /// CustomerSettingRepository class.
-    /// </summary>
-    public class CustomerSettingQueryRepository : ICustomerSettingQueryRepository
+    public class QueryRepository : IQueryRepository
     {
-        /// <summary>
-        /// Company select super setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public CompanyQuerySuperCustomerSettingEntity CompanyQuerySuper(CompanyQuerySuperCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -40,11 +32,6 @@
             }
         }
 
-        /// <summary>
-        /// Super select master setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public SuperQueryMasterCustomerSettingEntity SuperQueryMaster(SuperQueryMasterCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -70,11 +57,6 @@
             }
         }
 
-        /// <summary>
-        /// Master select agent setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public MasterQueryAgentCustomerSettingEntity MasterQueryAgent(MasterQueryAgentCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -100,11 +82,6 @@
             }
         }
 
-        /// <summary>
-        /// Super select member setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public SuperQueryMemberCustomerSettingEntity SuperQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -128,11 +105,6 @@
             }
         }
 
-        /// <summary>
-        /// Master select member setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public MasterQueryMemberCustomerSettingEntity MasterQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -156,11 +128,6 @@
             }
         }
 
-        /// <summary>
-        /// Agent select member setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Customer Setting Entity.</returns>
         public AgentQueryMemberCustomerSettingEntity AgentQueryMember(QueryMemberCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))

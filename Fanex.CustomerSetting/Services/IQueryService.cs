@@ -2,10 +2,7 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    /// <summary>
-    /// ICustomerSettingService class.
-    /// </summary>
-    public interface ICustomerSettingQueryService
+    public interface IQueryService
     {
         CompanyQuerySuperResult CompanyQuerySuper(QueryInfo model);
 

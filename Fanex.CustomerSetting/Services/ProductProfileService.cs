@@ -7,9 +7,6 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Repositories;
 
-    /// <summary>
-    /// ProductProfileService class.
-    /// </summary>
     public class ProductProfileService : IProductProfileService
     {
         #region Variables
@@ -41,11 +38,6 @@
             return InternalGetProductProfile(productId);
         }
 
-        /// <summary>
-        /// Internals the get product profile.
-        /// </summary>
-        /// <param name="productId">The product identifier.</param>
-        /// <returns>Returns product profile.</returns>
         private ProductProfileEntity InternalGetProductProfile(byte productId)
         {
             var cacheKey = Configuration.GenerateProductProfileCacheKey(productId);

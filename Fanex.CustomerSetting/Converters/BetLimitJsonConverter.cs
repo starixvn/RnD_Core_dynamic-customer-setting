@@ -5,9 +5,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Newtonsoft.Json.Linq;
 
-    /// <summary>
-    /// Bet limit JSON converter class.
-    /// </summary>
     public class BetLimitJsonConverter : JsonCreationConverter<BetLimitEntity>
     {
         private FormType _formType;
@@ -17,12 +14,6 @@
             _formType = formType;
         }
 
-        /// <summary>
-        /// Creates BetLimitEntity object.
-        /// </summary>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="jsonObject">The JSON object.</param>
-        /// <returns>Returns BetLimitEntity.</returns>
         protected override BetLimitEntity Create(Type objectType, JObject jsonObject)
         {
             switch (_formType)

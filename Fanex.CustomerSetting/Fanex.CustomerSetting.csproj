@@ -61,16 +61,22 @@
     </Compile>
     <Compile Include="Attributes\OutputElementAttribute.cs" />
     <Compile Include="Attributes\OutputElementProperty.cs" />
+    <Compile Include="CommandTypes\AllNotPositionTakingCommand.cs" />
+    <Compile Include="CommandTypes\ICommand.cs" />
+    <Compile Include="CommandTypes\IMultipleCommand.cs" />
+    <Compile Include="CommandTypes\PositionTakingMultipleCommand.cs" />
     <Compile Include="Converters\BetLimitJsonConverter.cs" />
     <Compile Include="Converters\PositionTakingJsonConverter.cs" />
     <Compile Include="Converters\DiscountJsonConverter.cs" />
     <Compile Include="Converters\JsonCreationConverter.cs" />
     <Compile Include="Converters\StatusJsonConverter.cs" />
     <Compile Include="Core\Configuration.cs" />
-    <Compile Include="Criteria\CommandPositionTakingCriteria.cs" />
-    <Compile Include="Criteria\CommandDiscountCriteria.cs" />
-    <Compile Include="Criteria\CommandBetLimitCriteria.cs" />
+    <Compile Include="Criteria\GroupQueryOnMultipleMemberCriteria.cs" />
+    <Compile Include="Criteria\PositionTakingCommandCriteria.cs" />
+    <Compile Include="Criteria\DiscountCommandCriteria.cs" />
+    <Compile Include="Criteria\BetLimitCommandCriteria.cs" />
     <Compile Include="Criteria\MasterQueryAgentCriteria.cs" />
+    <Compile Include="Criteria\PositionTakingCommandOnGroupedMembersCriteria.cs" />
     <Compile Include="Criteria\PermissionValidateCriteria.cs" />
     <Compile Include="Criteria\ProductProfileQueryCriteria.cs" />
     <Compile Include="Criteria\ProductResourceQueryCriteria.cs" />
@@ -79,7 +85,7 @@
     <Compile Include="Criteria\QueryCriteria.cs" />
     <Compile Include="Criteria\CompanyQuerySuperCriteria.cs" />
     <Compile Include="Criteria\CommandCriteria.cs" />
-    <Compile Include="Criteria\CommandDisabledStatusCriteria.cs" />
+    <Compile Include="Criteria\DisabledStatusCommandCriteria.cs" />
     <Compile Include="Entities\AgentQueryMemberBetLimitEntity.cs" />
     <Compile Include="Entities\AgentQueryMemberCustomerSettingEntity.cs" />
     <Compile Include="Entities\AgentQueryMemberDiscountEntity.cs" />
@@ -93,6 +99,7 @@
     <Compile Include="Entities\CompanyQuerySuperPositionTakingEntity.cs" />
     <Compile Include="Entities\CompanyQuerySuperProductStatusEntity.cs" />
     <Compile Include="Entities\MasterCommandAgentPositionTakingEntity.cs" />
+    <Compile Include="Entities\MemberGroupEntity.cs" />
     <Compile Include="Entities\SuperCommandMasterPositionTakingEntity.cs" />
     <Compile Include="Entities\CustomerSettingEntity.cs" />
     <Compile Include="Entities\MasterQueryAgentBetLimitEntity.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="Entities\ProductResourceEntity.cs" />
     <Compile Include="Entities\SettingContext.cs" />
     <Compile Include="Entities\ProductStatusEntity.cs" />
+    <Compile Include="Enumerations\CommandType.cs" />
     <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />
     <Compile Include="Exceptions\CriteriaException.cs" />
@@ -145,7 +153,7 @@
     <Compile Include="Models\MasterQueryMemberResult.cs" />
     <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\MultipleCommandInfo.cs" />
-    <Compile Include="Models\MultipleCommandResult.cs" />
+    <Compile Include="Models\NoChangeCommandResult.cs" />
     <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Models\SuperQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryAgentResult.cs" />
@@ -166,10 +174,14 @@
     <Compile Include="Models\QueryResult.cs" />
     <Compile Include="Models\CommandInfo.cs" />
     <Compile Include="Models\CommandResult.cs" />
-    <Compile Include="Repositories\CustomerSettingCommandRepository.cs" />
-    <Compile Include="Repositories\ICustomerSettingCommandRepository.cs" />
+    <Compile Include="Repositories\CommandRepository.cs" />
+    <Compile Include="Repositories\ICommandOnGroupedMembersRepository.cs" />
+    <Compile Include="Repositories\ICommandRepository.cs" />
     <Compile Include="Repositories\IProductProfileRepository.cs" />
+    <Compile Include="Repositories\IQueryOnMembersRepository.cs" />
     <Compile Include="Repositories\IResourceRepository.cs" />
+    <Compile Include="Repositories\QueryOnMembersRepository.cs" />
+    <Compile Include="Repositories\CommandOnGroupedMembersRepository.cs" />
     <Compile Include="Repositories\IValidationRepository.cs" />
     <Compile Include="Repositories\ProductProfileRepository.cs" />
     <Compile Include="Repositories\ResourceRepository.cs" />
@@ -184,9 +196,19 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\ICustomerSettingCommandService.cs" />
-    <Compile Include="Services\CustomerSettingQueryService.cs" />
-    <Compile Include="Services\ICustomerSettingQueryService.cs" />
+    <Compile Include="CommandTypes\AllCommand.cs" />
+    <Compile Include="CommandTypes\BaseCommand.cs" />
+    <Compile Include="CommandTypes\BetLimitCommand.cs" />
+    <Compile Include="CommandTypes\CommandFactory.cs" />
+    <Compile Include="CommandTypes\DiscountCommand.cs" />
+    <Compile Include="Services\CommandOnMultipleNotMemberService.cs" />
+    <Compile Include="Services\ICommandOnMultipleCustomerService.cs" />
+    <Compile Include="Services\CommandOnMultipleMemberService.cs" />
+    <Compile Include="Services\IQueryOnMembersService.cs" />
+    <Compile Include="CommandTypes\PositionTakingCommand.cs" />
+    <Compile Include="Services\QueryOnMembersService.cs" />
+    <Compile Include="Services\QueryService.cs" />
+    <Compile Include="Services\IQueryService.cs" />
     <Compile Include="Entities\CustomerInformationEntity.cs" />
     <Compile Include="Entities\DiscountEntity.cs" />
     <Compile Include="Entities\PositionTakingEntity.cs" />
@@ -194,8 +216,8 @@
     <Compile Include="Enumerations\SettingType.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CustomerSettingQueryRepository.cs" />
-    <Compile Include="Repositories\ICustomerSettingQueryRepository.cs" />
+    <Compile Include="Repositories\QueryRepository.cs" />
+    <Compile Include="Repositories\IQueryRepository.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IProductProfileService.cs" />
     <Compile Include="Services\IResourceService.cs" />
@@ -204,7 +226,7 @@
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ProductProfileService.cs" />
     <Compile Include="Services\ResourceService.cs" />
-    <Compile Include="Services\CustomerSettingCommandService.cs" />
+    <Compile Include="CommandTypes\StatusCommand.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Services\XmlGenerator.cs" />
     <Compile Include="Utility\Extensions.cs" />

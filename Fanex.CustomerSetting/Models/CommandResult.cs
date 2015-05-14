@@ -1,18 +1,19 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    /// <summary>
-    /// UpdateResult class.
-    /// </summary>
+    using Fanex.CustomerSetting.Enumerations;
+
     public class CommandResult : Result
     {
-        public CommandResult(int errCode, string errMsg)
+        public CommandResult(CommandType commandType, int errCode, string errMsg)
             : base(errCode, errMsg)
         {
+            CommandType = commandType;
         }
 
-        public CommandResult(Result result)
+        public CommandResult(CommandType commandType, Result result)
             : base(result)
         {
+            CommandType = commandType;
         }
 
         public CommandResult(
@@ -20,13 +21,15 @@
             Result discountResult,
             Result betLimitResult,
             Result positionTakingResult)
-            : this(Result.Success)
+            : this(CommandType.All, Result.Success)
         {
             StatusResult = statusResult;
             DiscountResult = discountResult;
             BetLimitResult = betLimitResult;
             PositionTakingResult = positionTakingResult;
         }
+
+        public CommandType CommandType { get; private set; }
 
         public Result StatusResult { get; private set; }
 

@@ -2,9 +2,6 @@
 {
     using System.Web.Http;
 
-    /// <summary>
-    /// WEB API Configuration class.
-    /// </summary>
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)

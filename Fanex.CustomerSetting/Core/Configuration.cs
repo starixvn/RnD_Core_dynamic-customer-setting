@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Core
 {
-    /// <summary>
-    /// Constants class.
-    /// </summary>
     public static class Configuration
     {
         public const decimal MaxDiscountValue = 1m;

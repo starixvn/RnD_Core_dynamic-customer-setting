@@ -23,18 +23,18 @@
     </div>
     <div class="container" data-ng-show="discounts">
         <div class="header">
-            {{'Commission' | fanexTranslate}} <span data-ng-show="hasUpdateDiscount"
-                title="{{'Update' | fanexTranslate}}" class="update" data-ng-click="updateDiscounts()">
-                <i class="icon-update"></i></span>
+            {{'Commission' | fanexTranslate}} <span data-ng-show="hasUpdateDiscount" title="{{'Update' | fanexTranslate}}"
+                class="update" data-ng-click="updateDiscounts()"><i class="icon-update"></i>
+            </span>
         </div>
         <div class="body" data-ng-include="discountTemplate">
         </div>
     </div>
     <div class="container" data-ng-show="betLimits">
         <div class="header">
-            {{'BetSetting' | fanexTranslate}} <span data-ng-show="hasUpdateBetLimit"
-                title="{{'Update' | fanexTranslate}}" class="update" data-ng-click="updateBetLimits()">
-                <i class="icon-update"></i></span>
+            {{'BetSetting' | fanexTranslate}} <span data-ng-show="hasUpdateBetLimit" title="{{'Update' | fanexTranslate}}"
+                class="update" data-ng-click="updateBetLimits()"><i class="icon-update"></i>
+            </span>
         </div>
         <div class="body" data-ng-include="betLimitTemplate">
         </div>

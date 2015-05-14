@@ -5,9 +5,6 @@
     using Fanex.CustomerSetting.Enumerations;
     using Newtonsoft.Json.Linq;
 
-    /// <summary>
-    /// Discount JSON Converter class.
-    /// </summary>
     public class DiscountJsonConverter : JsonCreationConverter<DiscountEntity>
     {
         private FormType _formType;
@@ -17,12 +14,6 @@
             _formType = formType;
         }
 
-        /// <summary>
-        /// Creates the DiscountEntity object.
-        /// </summary>
-        /// <param name="objectType">Type of the object.</param>
-        /// <param name="jsonObject">The JSON object.</param>
-        /// <returns>Returns DiscountEntity.</returns>
         protected override DiscountEntity Create(Type objectType, JObject jsonObject)
         {
             switch (_formType)

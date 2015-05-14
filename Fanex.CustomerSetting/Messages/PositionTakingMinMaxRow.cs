@@ -6,9 +6,6 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Utility;
 
-    /// <summary>
-    /// PositionTakingMinRow class.
-    /// </summary>
     public class PositionTakingMinMaxRow : PositionTakingRow
     {
         [XmlAttribute]

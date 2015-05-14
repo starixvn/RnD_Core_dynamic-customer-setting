@@ -2,11 +2,10 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    /// <summary>
-    /// IFormHandler interface.
-    /// </summary>
     public interface IFormHandler
     {
+        bool IsCommandOnMember { get; }
+
         bool HasPermission(QueryInfo model);
     }
 }

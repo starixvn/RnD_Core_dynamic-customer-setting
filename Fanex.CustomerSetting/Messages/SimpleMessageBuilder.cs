@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    /// <summary>
-    /// SimpleMessageBuilder class.
-    /// </summary>
     public class SimpleMessageBuilder : BaseMessageBuilder, IMessageBuilder
     {
         public string Build(MessageInfo messageInfo)

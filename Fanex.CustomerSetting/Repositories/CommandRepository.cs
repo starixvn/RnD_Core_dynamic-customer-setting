@@ -4,27 +4,24 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.Data;
 
-    /// <summary>
-    /// CustomerSettingCommandRepository class.
-    /// </summary>
-    public class CustomerSettingCommandRepository : ICustomerSettingCommandRepository
+    public class CommandRepository : ICommandRepository
     {
-        public void UpdateDisabledStatus(CommandDisabledStatusCriteria criteria)
+        public void UpdateDisabledStatus(DisabledStatusCommandCriteria criteria)
         {
             Update(criteria);
         }
 
-        public void UpdateDiscount(CommandDiscountCriteria criteria)
+        public void UpdateDiscount(DiscountCommandCriteria criteria)
         {
             Update(criteria);
         }
 
-        public void UpdateBetLimit(CommandBetLimitCriteria criteria)
+        public void UpdateBetLimit(BetLimitCommandCriteria criteria)
         {
             Update(criteria);
         }
 
-        public void UpdatePositionTaking(CommandPositionTakingCriteria criteria)
+        public void UpdatePositionTaking(PositionTakingCommandCriteria criteria)
         {
             Update(criteria);
         }

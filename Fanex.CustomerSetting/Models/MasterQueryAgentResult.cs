@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Entities;
 
-    /// <summary>
-    /// MasterQueryAgentResult class.
-    /// </summary>
     public class MasterQueryAgentResult
         : QueryResult<MasterQueryAgentCustomerSettingEntity,
             MasterQueryAgentDiscountEntity,

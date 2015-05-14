@@ -11,9 +11,6 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Repositories;
 
-    /// <summary>
-    /// ValidationService class.
-    /// </summary>
     public class ValidationService : IValidationService
     {
         #region Variables
@@ -40,11 +37,6 @@
 
         #endregion Constructors
 
-        /// <summary>
-        /// Validate select model.
-        /// </summary>
-        /// <param name="model">The select model.</param>
-        /// <returns>Returns model validation.</returns>
         public Result Validate(QueryInfo model)
         {
             var result = ValidateRole(model);
@@ -62,11 +54,6 @@
             return Result.Success;
         }
 
-        /// <summary>
-        /// Validate update model.
-        /// </summary>
-        /// <param name="model">The update model.</param>
-        /// <returns>Returns model validation.</returns>
         public Result Validate(CommandInfo model)
         {
             var result = ValidateForm(model);
@@ -113,13 +100,6 @@
                 : Result.AccessDenied;
         }
 
-        /// <summary>
-        /// Validate status of customer and target customer to be open.
-        /// Validate target customer to have the exacted target customer role type.
-        /// Validate target customer to be down-line of customer.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>Returns validation result.</returns>
         private Result ValidatePermission(QueryInfo model)
         {
             var criteria = new PermissionValidateCriteria
@@ -138,11 +118,6 @@
             return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
-        /// <summary>
-        /// Validate the product profile.
-        /// </summary>
-        /// <param name="model">The update model.</param>
-        /// <returns>Returns product profile validation.</returns>
         [SuppressMessage(
            "StyleCop.CSharp.Nexcel.NexcelCustomRules",
            "SP2101:MethodMustNotContainMoreLinesThan",
@@ -152,7 +127,7 @@
             var productProfile = _productProfileService.GetProductProfile(model.ProductId);
             switch (model.CommandType)
             {
-                case SettingType.All:
+                case CommandType.All:
                     IEnumerable<BaseEntity>[] dataList =
                     {
                         model.PositionTakings,
@@ -187,7 +162,7 @@
 
                     return Result.Success;
 
-                case SettingType.PositionTaking:
+                case CommandType.PositionTaking:
                     if (model.PositionTakings == null || model.PositionTakings.Count() == 0)
                     {
                         return Result.NoChange;
@@ -195,7 +170,7 @@
 
                     return ValidateProductProfile(model.PositionTakings, productProfile);
 
-                case SettingType.BetLimit:
+                case CommandType.BetLimit:
                     if (model.BetLimits == null || model.BetLimits.Count() == 0)
                     {
                         return Result.NoChange;
@@ -203,7 +178,7 @@
 
                     return ValidateProductProfile(model.BetLimits, productProfile);
 
-                case SettingType.Discount:
+                case CommandType.Discount:
                     if (model.Discounts == null || model.Discounts.Count() == 0)
                     {
                         return Result.NoChange;
@@ -211,7 +186,7 @@
 
                     return ValidateProductProfile(model.Discounts, productProfile);
 
-                case SettingType.Status:
+                case CommandType.Status:
                     if (model.Statuses == null || model.Statuses.Count() == 0)
                     {
                         return Result.NoChange;
@@ -223,12 +198,6 @@
             return Result.Success;
         }
 
-        /// <summary>
-        /// Validate the product profile.
-        /// </summary>
-        /// <param name="entities">The validated data.</param>
-        /// <param name="productProfile">The product profile.</param>
-        /// <returns>Returns product profile validation.</returns>
         private Result ValidateProductProfile(IEnumerable<BaseEntity> entities, ProductProfileEntity productProfile)
         {
             if (productProfile == null || productProfile.Items.Count() == 0)

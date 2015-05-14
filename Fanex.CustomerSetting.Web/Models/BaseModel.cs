@@ -2,9 +2,6 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// BaseModel class.
-    /// </summary>
     public abstract class BaseModel
     {
         public int CustId { get; set; }

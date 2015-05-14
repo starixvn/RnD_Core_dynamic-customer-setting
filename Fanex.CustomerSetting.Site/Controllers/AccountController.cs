@@ -5,17 +5,9 @@
     using Fanex.CustomerSetting.Site.UserLogin;
     using Fanex.CustomerSetting.Web;
 
-    /// <summary>
-    /// AccountController class.
-    /// </summary>
     [SessionState(SessionStateBehavior.Default)]
     public class AccountController : Controller
     {
-        /// <summary>
-        /// Login action.
-        /// </summary>
-        /// <param name="viewModel">Input value.</param>
-        /// <returns>Return JSON value.</returns>
         [HttpPost]
         public ActionResult Login(LoginViewModel viewModel)
         {

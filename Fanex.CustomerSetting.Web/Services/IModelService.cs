@@ -4,9 +4,6 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Enumerations;
 
-    /// <summary>
-    /// IModelService class.
-    /// </summary>
     public interface IModelService
     {
         IEnumerable<ProductStatusEntity> ParseStatus(string status, FormType formType);

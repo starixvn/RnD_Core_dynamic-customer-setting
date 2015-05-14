@@ -5,9 +5,6 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.Data;
 
-    /// <summary>
-    /// ResourceRepository class.
-    /// </summary>
     public class ResourceRepository : IResourceRepository
     {
         public IEnumerable<ProductResourceEntity> GetProductResources(ProductResourceQueryCriteria criteria)

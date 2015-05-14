@@ -2,9 +2,6 @@
 {
     using Fanex.Data.Repository;
 
-    /// <summary>
-    /// PermissionValidateCriteria class.
-    /// </summary>
     public class PermissionValidateCriteria : CriteriaBase
     {
         public int CustId { get; set; }

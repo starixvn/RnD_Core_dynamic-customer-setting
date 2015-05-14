@@ -3,18 +3,13 @@
 angular.module('customerSettingApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('templates/fanex-bet-limit-copy.htm',
-    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
-  );
-
-
   $templateCache.put('templates/fanex-bet-limit-readonly.htm',
     "<div class=bet-limit-item><div class=name title={{name}}>{{name}}</div><div class=\"min-bet read-only\" data-ng-bind=minBet></div><div class=\"max-bet read-only\" data-ng-bind=maxBet></div><div class=\"max-per-match read-only\" data-ng-bind=maxPerMatch></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-bet-limit.htm',
-    "<div class=bet-limit-item><div class=name title={{name}}>{{name}}<div data-fanex-bet-limit-copy=hasCopy></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+    "<div class=bet-limit-item><div class=name title={{name}}>{{name}}<div data-fanex-item-copy=hasCopy data-setting-type=settingType></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
   );
 
 
@@ -55,6 +50,11 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
   $templateCache.put('templates/fanex-error-page.htm',
     "<div data-fanex-message></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-item-copy.htm',
+    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
   );
 
 

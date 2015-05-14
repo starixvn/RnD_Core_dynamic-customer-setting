@@ -5,9 +5,6 @@
     using Fanex.CustomerSetting.Site.UserLogin;
     using Fanex.CustomerSetting.Web;
 
-    /// <summary>
-    /// HomeController class.
-    /// </summary>
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class HomeController : Controller
     {
@@ -23,10 +20,6 @@
             _currentSession = currentSession ?? new CurrentSession();
         }
 
-        /// <summary>
-        /// Index page.
-        /// </summary>
-        /// <returns>Returns HTML index page.</returns>
         public ActionResult Index()
         {
             var viewModel = new LoginViewModel
