@@ -10,22 +10,23 @@
     {
         public CommandResult Do(MultipleCommandInfo multipleCommandInfo)
         {
-            var criteria = new PositionTakingCommandOnGroupedMembersCriteria(multipleCommandInfo.FormType);
+            var commandCriteria = new PositionTakingCommandOnGroupedMembersCriteria(multipleCommandInfo.FormType);
             var repository = new CommandOnGroupedMembersRepository();
-            repository.UpdatePositionTaking(criteria);
+            repository.UpdatePositionTaking(commandCriteria);
             var messageInfo = new MessageInfo
             {
-                ErrCode = criteria.ErrCode,
-                ErrMsg = criteria.ErrMsg,
-                MsgType = (MsgType)criteria.MsgType,
+                ErrCode = commandCriteria.ErrCode,
+                ErrMsg = commandCriteria.ErrMsg,
+                MsgType = (MsgType)commandCriteria.MsgType,
                 TargetRoleId = multipleCommandInfo.TargetRoleId,
                 SettingLevel = multipleCommandInfo.PositionTakingLevel,
                 SettingType = SettingType.PositionTaking
             };
 
             var messageService = new MessageService("en-US");
-            var positionTakingMessage = messageService.GetTranslatedMessage(messageInfo);
-            return new CommandResult(CommandType.PositionTaking, messageInfo.ErrCode, positionTakingMessage);
+            var messageContent = messageService.GetTranslatedMessage(messageInfo);
+            var settingResult = new SettingResult(SettingType.PositionTaking, new Result(messageInfo.ErrCode, messageContent));
+            return new CommandResult(multipleCommandInfo, settingResult);
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.FormTypes;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Web.Models;
+    using Fanex.CustomerSetting.Web.Mvc;
     using Fanex.CustomerSetting.Web.Services;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
@@ -38,7 +37,7 @@
         {
             var userService = ServiceFactory.CreateUserService();
             _userContext = userService.CreateUserContext();
-            _queryService = queryService ?? new QueryService(_userContext.Language);
+            _queryService = queryService ?? new QueryService("en-US");
             _validationService = validationService ?? new ValidationService();
             _modelService = modelService ?? new ModelService();
         }
@@ -67,7 +66,7 @@
         }
 
         [HttpPost]
-        public JsonResult Query(QueryModel model)
+        public ActionResult Query(QueryModel model)
         {
             if (_userContext == null)
             {
@@ -105,85 +104,42 @@
             return Json(Result.Error);
         }
 
-        public JsonResult Command(CommandModel model)
+        public ActionResult Command(CommandModel commandModel)
         {
             if (_userContext == null || !_userContext.HasCommandPermission)
             {
                 return Json(Result.AccessDenied);
             }
 
-            var commandInfo = model.CreateCommandInfo(_userContext, _modelService);
-            var multipleCommandInfo = commandInfo as MultipleCommandInfo;
-            if (multipleCommandInfo != null)
+            if (commandModel.IsMultiple)
             {
-                return CommandOnCustomers(multipleCommandInfo);
-            }
-
-            return CommandOnCustomer(commandInfo);
-        }
-
-        private JsonResult CommandOnCustomer(CommandInfo commandInfo)
-        {
-            CommandResult commandResult = null;
-            Result validationResult = _validationService.Validate(commandInfo);
-            if (validationResult.IsSuccess)
-            {
-                ICommand command = CommandFactory.Get(commandInfo.CommandType);
-                commandResult = command.Do(commandInfo);
+                return CommandOnMultipleCustomer(commandModel);
             }
             else
             {
-                commandResult = new CommandResult(commandInfo.CommandType, validationResult);
+                return CommandOnCustomer(commandModel);
             }
-
-            return Json(commandResult);
         }
 
-        private JsonResult CommandOnCustomers(MultipleCommandInfo multipleCommandInfo)
+        private ActionResult CommandOnCustomer(CommandModel commandModel)
         {
+            var commandInfo = commandModel.CreateCommandInfo();
+            ICommandOnCustomerService commandService = new CommandOnCustomerService();
+            CommandResult commandResult = commandService.Do(commandInfo);
+            return new JsonNetResult(commandResult);
+        }
+
+        private ActionResult CommandOnMultipleCustomer(CommandModel commandModel)
+        {
+            var multipleCommandInfo = commandModel.CreateMultipleCommandInfo();
             var formTypeHandler = FormHandlerFactory.Create(multipleCommandInfo.FormType);
-            if (formTypeHandler.IsCommandOnMember)
-            {
-                return CommandOnMembers(multipleCommandInfo);
-            }
-
-            return CommandOnNotMembers(multipleCommandInfo);
-        }
-
-        private JsonResult CommandOnNotMembers(MultipleCommandInfo multipleCommandInfo)
-        {
-            var commandResults = new List<CommandResult>();
-            while (true)
-            {
-                var commandInfo = multipleCommandInfo.Take();
-                if (commandInfo == null)
-                {
-                    break;
-                }
-
-                CommandResult commandResult = null;
-                Result validationResult = _validationService.Validate(commandInfo);
-                if (validationResult.IsSuccess)
-                {
-                    ICommand command = CommandFactory.Get(commandInfo.CommandType);
-                    commandResult = command.Do(commandInfo);
-                }
-                else
-                {
-                    commandResult = new CommandResult(commandInfo.CommandType, validationResult);
-                }
-
-                commandResults.Add(commandResult);
-            }
-
-            return Json(commandResults);
-        }
-
-        private JsonResult CommandOnMembers(MultipleCommandInfo multipleCommandInfo)
-        {
-            ICommandOnMultipleCustomerService commandOnMembersService = new CommandOnMultipleMemberService();
-            var commandResults = commandOnMembersService.Do(multipleCommandInfo);
-            return Json(commandResults);
+            ICommandOnMultipleCustomerService commandOnMultipleMemberService = new CommandOnMultipleMemberService();
+            ICommandOnMultipleCustomerService commandOnMultipleNotMemberService = new CommandOnMultipleNotMemberService();
+            ICommandOnMultipleCustomerService commandService = formTypeHandler.IsCommandOnMember
+                ? commandOnMultipleMemberService
+                : commandOnMultipleNotMemberService;
+            var commandResults = commandService.Do(multipleCommandInfo);
+            return new JsonNetResult(commandResults);
         }
     }
 }

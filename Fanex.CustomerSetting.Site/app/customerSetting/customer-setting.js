@@ -334,27 +334,27 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
         var commandType;
         $scope.updateStatuses = function () {
-            commandType = appSettings.settingType.Status;
+            commandType = appSettings.commandType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            commandType = appSettings.settingType.Discount;
+            commandType = appSettings.commandType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            commandType = appSettings.settingType.BetLimit;
+            commandType = appSettings.commandType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            commandType = appSettings.settingType.PositionTaking;
+            commandType = appSettings.commandType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            commandType = appSettings.settingType.All;
+            commandType = appSettings.commandType.All;
             update();
         };
 
@@ -450,7 +450,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             var discounts;
             var statuses;
             switch (commandType) {
-                case appSettings.settingType.All:
+                case appSettings.commandType.All:
                     statuses = getUpdateData(appSettings.settingType.Status);
                     discounts = getUpdateData(appSettings.settingType.Discount);
                     betLimits = getUpdateData(appSettings.settingType.BetLimit);
@@ -469,7 +469,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
                     break;
 
-                case appSettings.settingType.PositionTaking:
+                case appSettings.commandType.PositionTaking:
                     positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     if (!hasUpdate(positionTakings, true)) {
                         return;
@@ -480,21 +480,21 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     }
                     break;
 
-                case appSettings.settingType.BetLimit:
+                case appSettings.commandType.BetLimit:
                     betLimits = getUpdateData(appSettings.settingType.BetLimit);
                     if (!hasUpdate(betLimits, true)) {
                         return;
                     }
                     break;
 
-                case appSettings.settingType.Discount:
+                case appSettings.commandType.Discount:
                     discounts = getUpdateData(appSettings.settingType.Discount);
                     if (!hasUpdate(discounts, true)) {
                         return;
                     }
                     break;
 
-                case appSettings.settingType.Status:
+                case appSettings.commandType.Status:
                     statuses = getUpdateData(appSettings.settingType.Status);
                     if (!hasUpdate(statuses, true)) {
                         return;
@@ -569,17 +569,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             requestService.command(commandModel, function (commandData) {
                 if (multipleInfo.IsMultiple) {
                     var custNames = multipleInfo.CustNames;
-                    var usersSettingResults = commandData;
-                    messageService.showMultiple(custNames, usersSettingResults);
+                    var commandResults = commandData;
+                    messageService.showMultiple(custNames, commandResults);
                     return;
                 }
 
-                var userSettingResults = commandData;
-                messageService.showSingle(userSettingResults);
-                angular.forEach(userSettingResults, function (settingResult) {
-                    var result = settingResult.result;
-                    if (result.IsSuccess) {
-                        var settingType = settingResult.settingType;
+                var commandResult = commandData;
+                messageService.showSingle(commandResult);
+                angular.forEach(commandResult.SettingResults, function (settingResult) {
+                    if (settingResult.IsSuccess) {
+                        var settingType = settingResult.SettingType;
                         switch (settingType) {
                             case appSettings.settingType.Status:
                                 reload($scope.statuses, statuses);
@@ -2275,49 +2274,34 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexSettingResult'];
-    var fanexCommandReader = function (appSettings, modelService, SettingResult) {
-        function SingleCommandReader(commandType) {
+    var injectParams = ['fanexAppSettings', 'fanexModelService'];
+    var fanexCommandReader = function (appSettings, modelService) {
+        function SingleCommandReader() {
             this.read = function (response) {
-                var userResult = response;
-                var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
-                return userSettingResults;
+                var commandResult = response;
+                return commandResult;
             };
         }
 
-        function MultipleCommandReader(commandType) {
+        function MultipleCommandReader() {
             this.read = function (response) {
-                var userResults = response.Results;
-                var usersSettingResults = [];
-                angular.forEach(userResults, function (userResult) {
-                    var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
-                    usersSettingResults.push(userSettingResults);
-                });
-
-                return usersSettingResults;
+                var commandResults = response;
+                return commandResults;
             };
         }
 
-        function CommandData(isSuccess, result) {
-            return {
-                IsSuccess: isSuccess,
-                Result: result
-            };
-        }
-
-        function CommandReader(commandType) {
+        function CommandReader() {
             this.read = function (response) {
-                var isSuccess = response.IsSuccess;
-                var multipleInfo = modelService.getMultipleInfo();
+                var queryModel = modelService.getQueryModel();
+                var multipleInfo = queryModel.getMultipleInfo();
                 var reader;
                 if (multipleInfo.IsMultiple) {
-                    reader = new MultipleCommandReader(commandType);
+                    reader = new MultipleCommandReader();
                 } else {
-                    reader = new SingleCommandReader(commandType);
+                    reader = new SingleCommandReader();
                 }
 
-                var result = reader.read(response);
-                return new CommandData(isSuccess, result);
+                return reader.read(response);
             };
         }
 
@@ -2665,54 +2649,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings'];
-    var fanexSettingResult = function (appSettings) {
-        function SettingResult(settingType, result) {
-            this.settingType = settingType;
-            this.result = result;
-        }
-
-        // return array of setting results of an user.
-        SettingResult.fromUserResult = function (commandType, userResult) {
-            var settingResults = [];
-            switch (commandType) {
-                case appSettings.settingType.All:
-                    settingResults.push(new SettingResult(appSettings.settingType.Status, userResult.StatusResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.Discount, userResult.DiscountResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, userResult.BetLimitResult));
-                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, userResult.PositionTakingResult));
-                    break;
-
-                case appSettings.settingType.Status:
-                    settingResults.push(new SettingResult(appSettings.settingType.Status, userResult.StatusResult));
-                    break;
-
-                case appSettings.settingType.Discount:
-                    settingResults.push(new SettingResult(appSettings.settingType.Discount, userResult.DiscountResult));
-                    break;
-
-                case appSettings.settingType.BetLimit:
-                    settingResults.push(new SettingResult(appSettings.settingType.BetLimit, userResult.BetLimitResult));
-                    break;
-
-                case appSettings.settingType.PositionTaking:
-                    settingResults.push(new SettingResult(appSettings.settingType.PositionTaking, userResult.PositionTakingResult));
-                    break;
-            }
-
-            return settingResults;
-        };
-
-        return SettingResult;
-    };
-
-    fanexSettingResult.$inject = injectParams;
-    angular.module('customerSettingApp').factory('fanexSettingResult', fanexSettingResult);
-})();
-
-'use strict';
-
-(function () {
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexDiscountService',
             'fanexBetLimitService', 'fanexPtService'];
     var fanexSettingTypeHandler = function (appSettings, statusService, discountService,
@@ -2970,9 +2906,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             };
         };
 
-        Message.fromSettingResult = function (settingResult) {
+        Message.fromResult = function (result) {
             var messageType = appSettings.messageType.Error;
-            var result = settingResult.result;
             switch (result.ErrCode) {
                 case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
@@ -2987,10 +2922,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return new Message(messageType, messageContent);
         };
 
-        Message.fromSettingResults = function (settingResults) {
+        Message.fromResults = function (results) {
             var messages = [];
-            angular.forEach(settingResults, function (settingResult) {
-                var message = Message.fromSettingResult(settingResult);
+            angular.forEach(results, function (result) {
+                var message = Message.fromResult(result);
                 messages.push(message);
             });
 
@@ -3059,6 +2994,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
 
         function filter(settingResults) {
+            settingResults = commonService.getPropertyValues(settingResults);
             if (messageOptions.RemoveNoChange) {
                 return filterRemoveNoChange(settingResults);
             }
@@ -3070,8 +3006,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         function filterRemoveNoChange(settingResults) {
             var filteredSettingResults = [];
             angular.forEach(settingResults, function (settingResult) {
-                var result = settingResult.result;
-                if (result.ErrCode !== appSettings.errorCode.NoChange) {
+                if (settingResult.ErrCode !== appSettings.errorCode.NoChange) {
                     filteredSettingResults.push(settingResult);
                 }
             });
@@ -3084,18 +3019,26 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
 
         // user has list of results: position taking result, bet limit result, discount result, status result.
-        function showSingle(userSettingResults) {
-            userSettingResults = filter(userSettingResults);
-            var messages = Message.fromSettingResults(userSettingResults);
+        function showSingle(commandResult) {
+            var settingResults = commandResult.SettingResults;
+            settingResults = filter(settingResults);
+            var messages = Message.fromResults(settingResults);
             showMessages(messages);
         }
 
-        function showMultiple(userNames, usersSettingResults) {
+        function showMultiple(userNames, commandResults) {
             var users = [];
             angular.forEach(userNames, function (userName, index) {
-                var userSettingResults = usersSettingResults[index];
-                userSettingResults = filter(userSettingResults);
-                var userMessages = Message.fromSettingResults(userSettingResults);
+                var commandResult = commandResults[index];
+                var userMessages;
+                if (commandResult.IsSuccess) {
+                    var settingResults = commandResult.SettingResults;
+                    settingResults = filter(settingResults);
+                    userMessages = Message.fromResults(settingResults);
+                } else {
+                    var message = Message.fromResult(commandResult);
+                    userMessages = [message];
+                }
                 var user = new User(userName, userMessages);
                 users.push(user);
             });
@@ -3219,7 +3162,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         var commandData;
 
         function isSuccessResponse(response) {
-            if (!response.IsSuccess) {
+            if (angular.isDefined(response.IsSuccess) && response.IsSuccess === false) {
                 messageService.showError(response.ErrMsg);
                 return false;
             }
@@ -3591,7 +3534,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             Company: 5
         },
         settingType: {
-            All: 0,
             PositionTaking: 1,
             BetLimit: 2,
             Discount: 3,
@@ -3602,6 +3544,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             SportType: 2,
             BetType: 3,
             SportTypeBetType: 4
+        },
+        commandType: {
+            All: 0,
+            PositionTaking: 1,
+            BetLimit: 2,
+            Discount: 3,
+            Status: 4
         },
         errorType: {
             Success: 0,

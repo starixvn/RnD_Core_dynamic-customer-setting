@@ -198,7 +198,6 @@
     <Content Include="app\customerSetting\factories\fanex-directive-linker.js" />
     <Content Include="app\customerSetting\factories\fanex-query-reader.js" />
     <Content Include="app\customerSetting\factories\fanex-select-builder.js" />
-    <Content Include="app\customerSetting\factories\fanex-setting-result.js" />
     <Content Include="app\customerSetting\factories\fanex-setting-type-handler.js" />
     <Content Include="app\customerSetting\filters\fanex-data-group.js" />
     <Content Include="app\customerSetting\filters\fanex-pt-format.js" />

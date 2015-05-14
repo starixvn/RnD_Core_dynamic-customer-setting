@@ -5,26 +5,20 @@
 
     public class UserService : IUserService
     {
-        private ICurrentSession _currentSession;
-
-        public UserService()
-            : this(null)
-        {
-        }
-
-        public UserService(ICurrentSession currentSession)
-        {
-            _currentSession = currentSession ?? new CurrentSession();
-        }
-
         public UserContext CreateUserContext()
         {
+            var currentSession = SessionManager.CurrentSession;
+            if (currentSession == null)
+            {
+                return null;
+            }
+
             return new UserContext
             {
-                CustId = _currentSession.CustId,
-                RoleId = (RoleType)_currentSession.RoleId,
-                SubAccountId = _currentSession.SubAccountId,
-                Language = _currentSession.LanguageCode
+                CustId = currentSession.CustId,
+                RoleId = (RoleType)currentSession.RoleId,
+                SubAccountId = currentSession.SubAccountId,
+                Language = currentSession.LanguageCode
             };
         }
     }

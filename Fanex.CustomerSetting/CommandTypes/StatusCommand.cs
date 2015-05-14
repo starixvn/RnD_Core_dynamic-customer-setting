@@ -10,12 +10,13 @@
     {
         public CommandResult Do(CommandInfo commandInfo)
         {
+            var settingType = SettingType.Status;
             if (commandInfo.Statuses == null || commandInfo.Statuses.Count() == 0)
             {
-                return new NoChangeCommandResult(CommandType.Status);
+                return new CommandResult(commandInfo, new NoChangeSettingResult(settingType));
             }
 
-            var criteria = new DisabledStatusCommandCriteria
+            var commandCriteria = new DisabledStatusCommandCriteria
             {
                 UserId = commandInfo.CustId,
                 SubAccId = commandInfo.SubAccountId,
@@ -23,13 +24,14 @@
                 IsDisabled = _xmlGenerator.GenerateStatus(commandInfo.Statuses),
                 Ip = commandInfo.Ip
             };
-            if (!criteria.IsValid())
+            if (!commandCriteria.IsValid())
             {
-                throw new CriteriaException(criteria);
+                throw new CriteriaException(commandCriteria);
             }
 
-            _commandRepository.UpdateDisabledStatus(criteria);
-            return Process(criteria, commandInfo, SettingType.Status);
+            _commandRepository.UpdateDisabledStatus(commandCriteria);
+            var settingResult = Process(commandCriteria, commandInfo, settingType);
+            return new CommandResult(commandInfo, settingResult);
         }
     }
 }

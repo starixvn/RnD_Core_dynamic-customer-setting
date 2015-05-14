@@ -1,49 +1,34 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexSettingResult'];
-    var fanexCommandReader = function (appSettings, modelService, SettingResult) {
-        function SingleCommandReader(commandType) {
+    var injectParams = ['fanexAppSettings', 'fanexModelService'];
+    var fanexCommandReader = function (appSettings, modelService) {
+        function SingleCommandReader() {
             this.read = function (response) {
-                var userResult = response;
-                var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
-                return userSettingResults;
+                var commandResult = response;
+                return commandResult;
             };
         }
 
-        function MultipleCommandReader(commandType) {
+        function MultipleCommandReader() {
             this.read = function (response) {
-                var userResults = response.Results;
-                var usersSettingResults = [];
-                angular.forEach(userResults, function (userResult) {
-                    var userSettingResults = SettingResult.fromUserResult(commandType, userResult);
-                    usersSettingResults.push(userSettingResults);
-                });
-
-                return usersSettingResults;
+                var commandResults = response;
+                return commandResults;
             };
         }
 
-        function CommandData(isSuccess, result) {
-            return {
-                IsSuccess: isSuccess,
-                Result: result
-            };
-        }
-
-        function CommandReader(commandType) {
+        function CommandReader() {
             this.read = function (response) {
-                var isSuccess = response.IsSuccess;
-                var multipleInfo = modelService.getMultipleInfo();
+                var queryModel = modelService.getQueryModel();
+                var multipleInfo = queryModel.getMultipleInfo();
                 var reader;
                 if (multipleInfo.IsMultiple) {
-                    reader = new MultipleCommandReader(commandType);
+                    reader = new MultipleCommandReader();
                 } else {
-                    reader = new SingleCommandReader(commandType);
+                    reader = new SingleCommandReader();
                 }
 
-                var result = reader.read(response);
-                return new CommandData(isSuccess, result);
+                return reader.read(response);
             };
         }
 

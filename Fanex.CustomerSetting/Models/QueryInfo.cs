@@ -4,6 +4,21 @@
 
     public class QueryInfo
     {
+        public QueryInfo()
+        {
+        }
+
+        public QueryInfo(QueryInfo queryInfo)
+        {
+            this.CustId = queryInfo.CustId;
+            this.RoleId = queryInfo.RoleId;
+            this.TargetCustId = queryInfo.TargetCustId;
+            this.TargetRoleId = queryInfo.TargetRoleId;
+            this.ProductId = queryInfo.ProductId;
+            this.FormType = queryInfo.FormType;
+            this.Language = queryInfo.Language;
+        }
+
         public int CustId { get; set; }
 
         public RoleType RoleId { get; set; }

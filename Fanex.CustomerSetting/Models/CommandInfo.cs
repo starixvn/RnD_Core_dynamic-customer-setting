@@ -6,6 +6,26 @@
 
     public class CommandInfo : QueryInfo
     {
+        public CommandInfo()
+        {
+        }
+
+        public CommandInfo(CommandInfo commandInfo)
+            : base(commandInfo)
+        {
+            this.SubAccountId = commandInfo.SubAccountId;
+            this.CommandType = commandInfo.CommandType;
+            this.Ip = commandInfo.Ip;
+            this.StatusLevel = commandInfo.StatusLevel;
+            this.Statuses = commandInfo.Statuses;
+            this.DiscountLevel = commandInfo.DiscountLevel;
+            this.Discounts = commandInfo.Discounts;
+            this.BetLimitLevel = commandInfo.BetLimitLevel;
+            this.BetLimits = commandInfo.BetLimits;
+            this.PositionTakingLevel = commandInfo.PositionTakingLevel;
+            this.PositionTakings = commandInfo.PositionTakings;
+        }
+
         public int SubAccountId { get; set; }
 
         public CommandType CommandType { get; set; }

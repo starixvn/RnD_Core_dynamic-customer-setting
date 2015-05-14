@@ -11,7 +11,7 @@
         protected ICommandRepository _commandRepository = new CommandRepository();
         protected IXmlGenerator _xmlGenerator = new XmlGenerator();
 
-        protected CommandResult Process(CommandCriteria criteria, CommandInfo model, SettingType settingType)
+        protected SettingResult Process(CommandCriteria criteria, CommandInfo model, SettingType settingType)
         {
             var settingLevel = SettingLevel.BetType;
             switch (settingType)
@@ -44,8 +44,8 @@
             };
 
             var messageService = new MessageService("en-US");
-            var message = messageService.GetTranslatedMessage(messageInfo);
-            return new CommandResult(model.CommandType, messageInfo.ErrCode, message);
+            var messageContent = messageService.GetTranslatedMessage(messageInfo);
+            return new SettingResult(settingType, new Result(messageInfo.ErrCode, messageContent));
         }
     }
 }

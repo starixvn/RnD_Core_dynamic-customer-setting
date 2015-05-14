@@ -10,12 +10,13 @@
     {
         public CommandResult Do(CommandInfo commandInfo)
         {
+            var settingType = SettingType.Discount;
             if (commandInfo.Discounts == null || commandInfo.Discounts.Count() == 0)
             {
-                return new NoChangeCommandResult(CommandType.Discount);
+                return new CommandResult(commandInfo, new NoChangeSettingResult(settingType));
             }
 
-            var criteria = new DiscountCommandCriteria
+            var commandCriteria = new DiscountCommandCriteria
             {
                 UserId = commandInfo.CustId,
                 SubAccId = commandInfo.SubAccountId,
@@ -23,13 +24,14 @@
                 Discount = _xmlGenerator.GenerateDiscount(commandInfo.Discounts),
                 Ip = commandInfo.Ip
             };
-            if (!criteria.IsValid())
+            if (!commandCriteria.IsValid())
             {
-                throw new CriteriaException(criteria);
+                throw new CriteriaException(commandCriteria);
             }
 
-            _commandRepository.UpdateDiscount(criteria);
-            return Process(criteria, commandInfo, SettingType.Discount);
+            _commandRepository.UpdateDiscount(commandCriteria);
+            var settingResult = Process(commandCriteria, commandInfo, settingType);
+            return new CommandResult(commandInfo, settingResult);
         }
     }
 }

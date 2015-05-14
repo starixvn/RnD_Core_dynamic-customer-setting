@@ -5,7 +5,6 @@
     using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Utility;
 
     public class CommandOnMultipleMemberService : ICommandOnMultipleCustomerService
     {
@@ -29,35 +28,37 @@
             IList<CommandResult> ungroupedMembersCommandResults = new List<CommandResult>();
             if (groupedMemberIds.Count() > 0)
             {
-                groupedMembersCommandResults = DoGroupedMembers(multipleCommandInfo, groupedMemberIds);
+                var groupedMembersCommandsInfo = new MultipleCommandInfo(multipleCommandInfo);
+                groupedMembersCommandsInfo.TargetCustIds = groupedMemberIds;
+                groupedMembersCommandResults = DoGroupedMembers(groupedMembersCommandsInfo);
             }
 
             var ungroupedMemberIds = memberGroups.Where(x => !x.IsGrouped).Select(x => x.CustId).ToList();
             if (ungroupedMemberIds.Count() > 0)
             {
-                ungroupedMembersCommandResults = DoUngroupedMembers(multipleCommandInfo, ungroupedMemberIds);
+                var ungroupedMembersCommandsInfo = new MultipleCommandInfo(multipleCommandInfo);
+                ungroupedMembersCommandsInfo.TargetCustIds = ungroupedMemberIds;
+                ungroupedMembersCommandResults = DoUngroupedMembers(multipleCommandInfo);
             }
 
             return ArrangeCommandResults(multipleCommandInfo.TargetCustIds, groupedMemberIds, groupedMembersCommandResults, ungroupedMemberIds, ungroupedMembersCommandResults);
         }
 
-        private IList<CommandResult> DoGroupedMembers(MultipleCommandInfo commandsInfo, IList<int> memberIds)
+        private IList<CommandResult> DoGroupedMembers(MultipleCommandInfo multipleCommandInfo)
         {
             var commandResults = new List<CommandResult>();
-            var groupedMembersCommandsInfo = commandsInfo.Clone<MultipleCommandInfo>();
-            groupedMembersCommandsInfo.TargetCustIds = memberIds;
-            var hasPositionTakingCommand = groupedMembersCommandsInfo.CommandType == CommandType.All
-                || groupedMembersCommandsInfo.CommandType == CommandType.PositionTaking;
+            var hasPositionTakingCommand = multipleCommandInfo.CommandType == CommandType.All
+                || multipleCommandInfo.CommandType == CommandType.PositionTaking;
             CommandResult positionTakingMultipleCommandResult = null;
             if (hasPositionTakingCommand)
             {
                 IMultipleCommand positionTakingMultipleCommand = new PositionTakingMultipleCommand();
-                positionTakingMultipleCommandResult = positionTakingMultipleCommand.Do(groupedMembersCommandsInfo);
+                positionTakingMultipleCommandResult = positionTakingMultipleCommand.Do(multipleCommandInfo);
             }
 
             while (true)
             {
-                var commandInfo = groupedMembersCommandsInfo.Take();
+                var commandInfo = multipleCommandInfo.Take();
                 if (commandInfo == null)
                 {
                     break;
@@ -68,7 +69,15 @@
                 {
                     ICommand command = new AllNotPositionTakingCommand();
                     var allNotPositionTakingCommandResult = command.Do(commandInfo);
-                    commandResult = new CommandResult(allNotPositionTakingCommandResult.StatusResult, allNotPositionTakingCommandResult.DiscountResult, allNotPositionTakingCommandResult.BetLimitResult, positionTakingMultipleCommandResult);
+                    var settingResults = new List<SettingResult>
+                    {
+                        allNotPositionTakingCommandResult.SettingResults[SettingType.Status],
+                        allNotPositionTakingCommandResult.SettingResults[SettingType.Discount],
+                        allNotPositionTakingCommandResult.SettingResults[SettingType.BetLimit],
+                        positionTakingMultipleCommandResult.SettingResults.First().Value
+                    };
+
+                    commandResult = new CommandResult(multipleCommandInfo, settingResults);
                 }
                 else if (commandInfo.CommandType == CommandType.PositionTaking)
                 {
@@ -86,14 +95,12 @@
             return commandResults;
         }
 
-        private IList<CommandResult> DoUngroupedMembers(MultipleCommandInfo commandsInfo, IList<int> memberIds)
+        private IList<CommandResult> DoUngroupedMembers(MultipleCommandInfo multipleCommandInfo)
         {
             var commandResults = new List<CommandResult>();
-            var ungroupedMembersCommandsInfo = commandsInfo.Clone<MultipleCommandInfo>();
-            ungroupedMembersCommandsInfo.TargetCustIds = memberIds;
             while (true)
             {
-                var commandInfo = ungroupedMembersCommandsInfo.Take();
+                var commandInfo = multipleCommandInfo.Take();
                 if (commandInfo == null)
                 {
                     break;

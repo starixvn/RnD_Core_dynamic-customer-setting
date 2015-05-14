@@ -9,8 +9,18 @@
 
     public class CommandModel : BaseModel
     {
+        private IUserService _userService;
+        private IModelService _modelService;
+
         public CommandModel()
+            : this(null, null)
         {
+        }
+
+        public CommandModel(IUserService userService, IModelService modelService)
+        {
+            _userService = userService ?? new UserService();
+            _modelService = modelService ?? new ModelService();
             Ip = RequestHelper.GetClientIp();
         }
 
@@ -38,19 +48,17 @@
 
         public string PositionTakingString { get; set; }
 
-        public CommandInfo CreateCommandInfo(UserContext userContext, IModelService modelService)
+        public bool IsMultiple
         {
-            if (!string.IsNullOrEmpty(this.TargetCustIds))
+            get
             {
-                var targetCustIds = JsonConvert.DeserializeObject<List<int>>(this.TargetCustIds);
-                return CreateMultipleCommandInfo(userContext, modelService, targetCustIds);
+                return !string.IsNullOrEmpty(TargetCustIds);
             }
-
-            return CreateSingleCommandInfo(userContext, modelService);
         }
 
-        private CommandInfo CreateSingleCommandInfo(UserContext userContext, IModelService modelService)
+        public CommandInfo CreateCommandInfo()
         {
+            var userContext = _userService.CreateUserContext();
             return new CommandInfo
             {
                 CustId = userContext.CustId,
@@ -64,21 +72,20 @@
                 SubAccountId = this.SubAccountId,
                 Ip = this.Ip,
                 StatusLevel = this.StatusLevel,
-                Statuses = modelService.ParseStatus(StatusString, this.FormType),
+                Statuses = _modelService.ParseStatus(StatusString, this.FormType),
                 DiscountLevel = this.DiscountLevel,
-                Discounts = modelService.ParseDiscount(DiscountString, this.FormType),
+                Discounts = _modelService.ParseDiscount(DiscountString, this.FormType),
                 BetLimitLevel = this.BetLimitLevel,
-                BetLimits = modelService.ParseBetLimit(BetLimitString, this.FormType),
+                BetLimits = _modelService.ParseBetLimit(BetLimitString, this.FormType),
                 PositionTakingLevel = this.PositionTakingLevel,
-                PositionTakings = modelService.ParsePositionTaking(PositionTakingString, this.FormType)
+                PositionTakings = _modelService.ParsePositionTaking(PositionTakingString, this.FormType)
             };
         }
 
-        private MultipleCommandInfo CreateMultipleCommandInfo(
-            UserContext userContext,
-            IModelService modelService,
-            IEnumerable<int> targetCustIds)
+        public MultipleCommandInfo CreateMultipleCommandInfo()
         {
+            var userContext = _userService.CreateUserContext();
+            var targetCustIds = JsonConvert.DeserializeObject<List<int>>(this.TargetCustIds);
             return new MultipleCommandInfo
             {
                 CustId = userContext.CustId,
@@ -92,13 +99,13 @@
                 SubAccountId = this.SubAccountId,
                 Ip = this.Ip,
                 StatusLevel = this.StatusLevel,
-                Statuses = modelService.ParseStatus(StatusString, this.FormType),
+                Statuses = _modelService.ParseStatus(StatusString, this.FormType),
                 DiscountLevel = this.DiscountLevel,
-                Discounts = modelService.ParseDiscount(DiscountString, this.FormType),
+                Discounts = _modelService.ParseDiscount(DiscountString, this.FormType),
                 BetLimitLevel = this.BetLimitLevel,
-                BetLimits = modelService.ParseBetLimit(BetLimitString, this.FormType),
+                BetLimits = _modelService.ParseBetLimit(BetLimitString, this.FormType),
                 PositionTakingLevel = this.PositionTakingLevel,
-                PositionTakings = modelService.ParsePositionTaking(PositionTakingString, this.FormType),
+                PositionTakings = _modelService.ParsePositionTaking(PositionTakingString, this.FormType),
                 TargetCustIds = targetCustIds,
             };
         }

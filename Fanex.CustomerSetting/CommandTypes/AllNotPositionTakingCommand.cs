@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.CommandTypes
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Models;
 
     public class AllNotPositionTakingCommand : BaseCommand, ICommand
@@ -7,12 +9,22 @@
         public CommandResult Do(CommandInfo commandInfo)
         {
             ICommand statusCommand = new StatusCommand();
-            CommandResult statusResult = statusCommand.Do(commandInfo);
+            var commandResult = statusCommand.Do(commandInfo);
+            var statusResult = commandResult.SettingResults.First().Value;
             ICommand discountCommand = new DiscountCommand();
-            CommandResult discountResult = discountCommand.Do(commandInfo);
+            commandResult = discountCommand.Do(commandInfo);
+            var discountResult = commandResult.SettingResults.First().Value;
             ICommand betLimitCommand = new BetLimitCommand();
-            CommandResult betLimitResult = betLimitCommand.Do(commandInfo);
-            return new CommandResult(statusResult, discountResult, betLimitResult, null);
+            commandResult = betLimitCommand.Do(commandInfo);
+            var betLimitResult = commandResult.SettingResults.First().Value;
+            var settingResults = new List<SettingResult>
+            {
+                statusResult,
+                discountResult,
+                betLimitResult
+            };
+
+            return new CommandResult(commandInfo, settingResults);
         }
     }
 }

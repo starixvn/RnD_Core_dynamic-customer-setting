@@ -35,9 +35,10 @@
 
                 case FormType.AgentEditMember:
                     return jsonObject.ToObject<AgentQueryMemberBetLimitEntity>();
-            }
 
-            return null;
+                default:
+                    throw new NotImplementedException("Not implemented yet");
+            }
         }
     }
 }

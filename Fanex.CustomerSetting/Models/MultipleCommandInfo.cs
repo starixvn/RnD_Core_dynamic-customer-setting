@@ -2,10 +2,19 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Utility;
 
     public class MultipleCommandInfo : CommandInfo
     {
+        public MultipleCommandInfo()
+        {
+        }
+
+        public MultipleCommandInfo(MultipleCommandInfo multipleCommandInfo)
+            : base(multipleCommandInfo)
+        {
+            this.TargetCustIds = multipleCommandInfo.TargetCustIds;
+        }
+
         public IEnumerable<int> TargetCustIds { get; set; }
 
         public CommandInfo Take()
@@ -17,7 +26,7 @@
 
             var targetCustId = TargetCustIds.First();
             this.TargetCustIds = this.TargetCustIds.Skip(1);
-            var commandInfo = this.Clone<CommandInfo>();
+            var commandInfo = new CommandInfo(this);
             commandInfo.TargetCustId = targetCustId;
             return commandInfo;
         }

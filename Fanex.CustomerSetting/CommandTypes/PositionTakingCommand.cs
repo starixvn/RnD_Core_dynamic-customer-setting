@@ -10,12 +10,13 @@
     {
         public CommandResult Do(CommandInfo commandInfo)
         {
+            var settingType = SettingType.PositionTaking;
             if (commandInfo.PositionTakings == null || commandInfo.PositionTakings.Count() == 0)
             {
-                return new NoChangeCommandResult(CommandType.PositionTaking);
+                return new CommandResult(commandInfo, new NoChangeSettingResult(settingType));
             }
 
-            var criteria = new PositionTakingCommandCriteria(commandInfo.FormType)
+            var commandCriteria = new PositionTakingCommandCriteria(commandInfo.FormType)
             {
                 UserId = commandInfo.CustId,
                 SubAccId = commandInfo.SubAccountId,
@@ -23,13 +24,14 @@
                 PositionTaking = _xmlGenerator.GeneratePositionTaking(commandInfo.PositionTakings),
                 Ip = commandInfo.Ip
             };
-            if (!criteria.IsValid())
+            if (!commandCriteria.IsValid())
             {
-                throw new CriteriaException(criteria);
+                throw new CriteriaException(commandCriteria);
             }
 
-            _commandRepository.UpdatePositionTaking(criteria);
-            return Process(criteria, commandInfo, SettingType.PositionTaking);
+            _commandRepository.UpdatePositionTaking(commandCriteria);
+            var settingResult = Process(commandCriteria, commandInfo, settingType);
+            return new CommandResult(commandInfo, settingResult);
         }
     }
 }

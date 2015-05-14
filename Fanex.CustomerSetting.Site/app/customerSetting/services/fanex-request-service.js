@@ -7,7 +7,7 @@
         var commandData;
 
         function isSuccessResponse(response) {
-            if (!response.IsSuccess) {
+            if (angular.isDefined(response.IsSuccess) && response.IsSuccess === false) {
                 messageService.showError(response.ErrMsg);
                 return false;
             }

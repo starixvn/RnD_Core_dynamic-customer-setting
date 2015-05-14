@@ -153,8 +153,9 @@
     <Compile Include="Models\MasterQueryMemberResult.cs" />
     <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\MultipleCommandInfo.cs" />
-    <Compile Include="Models\NoChangeCommandResult.cs" />
+    <Compile Include="Models\NoChangeSettingResult.cs" />
     <Compile Include="Models\QueryInfo.cs" />
+    <Compile Include="Models\SettingResult.cs" />
     <Compile Include="Models\SuperQueryMemberResult.cs" />
     <Compile Include="Models\MasterQueryAgentResult.cs" />
     <Compile Include="Entities\RequestContext.cs" />
@@ -201,7 +202,9 @@
     <Compile Include="CommandTypes\BetLimitCommand.cs" />
     <Compile Include="CommandTypes\CommandFactory.cs" />
     <Compile Include="CommandTypes\DiscountCommand.cs" />
+    <Compile Include="Services\CommandOnCustomerService.cs" />
     <Compile Include="Services\CommandOnMultipleNotMemberService.cs" />
+    <Compile Include="Services\ICommandOnCustomerService.cs" />
     <Compile Include="Services\ICommandOnMultipleCustomerService.cs" />
     <Compile Include="Services\CommandOnMultipleMemberService.cs" />
     <Compile Include="Services\IQueryOnMembersService.cs" />

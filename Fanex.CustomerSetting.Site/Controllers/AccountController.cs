@@ -11,7 +11,7 @@
         [HttpPost]
         public ActionResult Login(LoginViewModel viewModel)
         {
-            new CurrentSession
+            SessionManager.CurrentSession = new CurrentSession
             {
                 RoleId = viewModel.RoleId,
                 CustId = viewModel.CustId,

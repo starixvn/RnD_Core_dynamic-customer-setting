@@ -19,9 +19,8 @@
             };
         };
 
-        Message.fromSettingResult = function (settingResult) {
+        Message.fromResult = function (result) {
             var messageType = appSettings.messageType.Error;
-            var result = settingResult.result;
             switch (result.ErrCode) {
                 case appSettings.errorCode.Success:
                     messageType = appSettings.messageType.Success;
@@ -36,10 +35,10 @@
             return new Message(messageType, messageContent);
         };
 
-        Message.fromSettingResults = function (settingResults) {
+        Message.fromResults = function (results) {
             var messages = [];
-            angular.forEach(settingResults, function (settingResult) {
-                var message = Message.fromSettingResult(settingResult);
+            angular.forEach(results, function (result) {
+                var message = Message.fromResult(result);
                 messages.push(message);
             });
 
@@ -108,6 +107,7 @@
         }
 
         function filter(settingResults) {
+            settingResults = commonService.getPropertyValues(settingResults);
             if (messageOptions.RemoveNoChange) {
                 return filterRemoveNoChange(settingResults);
             }
@@ -119,8 +119,7 @@
         function filterRemoveNoChange(settingResults) {
             var filteredSettingResults = [];
             angular.forEach(settingResults, function (settingResult) {
-                var result = settingResult.result;
-                if (result.ErrCode !== appSettings.errorCode.NoChange) {
+                if (settingResult.ErrCode !== appSettings.errorCode.NoChange) {
                     filteredSettingResults.push(settingResult);
                 }
             });
@@ -133,18 +132,26 @@
         }
 
         // user has list of results: position taking result, bet limit result, discount result, status result.
-        function showSingle(userSettingResults) {
-            userSettingResults = filter(userSettingResults);
-            var messages = Message.fromSettingResults(userSettingResults);
+        function showSingle(commandResult) {
+            var settingResults = commandResult.SettingResults;
+            settingResults = filter(settingResults);
+            var messages = Message.fromResults(settingResults);
             showMessages(messages);
         }
 
-        function showMultiple(userNames, usersSettingResults) {
+        function showMultiple(userNames, commandResults) {
             var users = [];
             angular.forEach(userNames, function (userName, index) {
-                var userSettingResults = usersSettingResults[index];
-                userSettingResults = filter(userSettingResults);
-                var userMessages = Message.fromSettingResults(userSettingResults);
+                var commandResult = commandResults[index];
+                var userMessages;
+                if (commandResult.IsSuccess) {
+                    var settingResults = commandResult.SettingResults;
+                    settingResults = filter(settingResults);
+                    userMessages = Message.fromResults(settingResults);
+                } else {
+                    var message = Message.fromResult(commandResult);
+                    userMessages = [message];
+                }
                 var user = new User(userName, userMessages);
                 users.push(user);
             });

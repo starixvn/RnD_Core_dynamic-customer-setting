@@ -53,27 +53,27 @@
 
         var commandType;
         $scope.updateStatuses = function () {
-            commandType = appSettings.settingType.Status;
+            commandType = appSettings.commandType.Status;
             update();
         };
 
         $scope.updateDiscounts = function () {
-            commandType = appSettings.settingType.Discount;
+            commandType = appSettings.commandType.Discount;
             update();
         };
 
         $scope.updateBetLimits = function () {
-            commandType = appSettings.settingType.BetLimit;
+            commandType = appSettings.commandType.BetLimit;
             update();
         };
 
         $scope.updatePositionTakings = function () {
-            commandType = appSettings.settingType.PositionTaking;
+            commandType = appSettings.commandType.PositionTaking;
             update();
         };
 
         $scope.updateAll = function () {
-            commandType = appSettings.settingType.All;
+            commandType = appSettings.commandType.All;
             update();
         };
 
@@ -169,7 +169,7 @@
             var discounts;
             var statuses;
             switch (commandType) {
-                case appSettings.settingType.All:
+                case appSettings.commandType.All:
                     statuses = getUpdateData(appSettings.settingType.Status);
                     discounts = getUpdateData(appSettings.settingType.Discount);
                     betLimits = getUpdateData(appSettings.settingType.BetLimit);
@@ -188,7 +188,7 @@
 
                     break;
 
-                case appSettings.settingType.PositionTaking:
+                case appSettings.commandType.PositionTaking:
                     positionTakings = getUpdateData(appSettings.settingType.PositionTaking);
                     if (!hasUpdate(positionTakings, true)) {
                         return;
@@ -199,21 +199,21 @@
                     }
                     break;
 
-                case appSettings.settingType.BetLimit:
+                case appSettings.commandType.BetLimit:
                     betLimits = getUpdateData(appSettings.settingType.BetLimit);
                     if (!hasUpdate(betLimits, true)) {
                         return;
                     }
                     break;
 
-                case appSettings.settingType.Discount:
+                case appSettings.commandType.Discount:
                     discounts = getUpdateData(appSettings.settingType.Discount);
                     if (!hasUpdate(discounts, true)) {
                         return;
                     }
                     break;
 
-                case appSettings.settingType.Status:
+                case appSettings.commandType.Status:
                     statuses = getUpdateData(appSettings.settingType.Status);
                     if (!hasUpdate(statuses, true)) {
                         return;
@@ -288,17 +288,16 @@
             requestService.command(commandModel, function (commandData) {
                 if (multipleInfo.IsMultiple) {
                     var custNames = multipleInfo.CustNames;
-                    var usersSettingResults = commandData;
-                    messageService.showMultiple(custNames, usersSettingResults);
+                    var commandResults = commandData;
+                    messageService.showMultiple(custNames, commandResults);
                     return;
                 }
 
-                var userSettingResults = commandData;
-                messageService.showSingle(userSettingResults);
-                angular.forEach(userSettingResults, function (settingResult) {
-                    var result = settingResult.result;
-                    if (result.IsSuccess) {
-                        var settingType = settingResult.settingType;
+                var commandResult = commandData;
+                messageService.showSingle(commandResult);
+                angular.forEach(commandResult.SettingResults, function (settingResult) {
+                    if (settingResult.IsSuccess) {
+                        var settingType = settingResult.SettingType;
                         switch (settingType) {
                             case appSettings.settingType.Status:
                                 reload($scope.statuses, statuses);

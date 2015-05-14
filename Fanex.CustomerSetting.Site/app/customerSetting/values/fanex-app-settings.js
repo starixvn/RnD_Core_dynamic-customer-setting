@@ -25,7 +25,6 @@
             Company: 5
         },
         settingType: {
-            All: 0,
             PositionTaking: 1,
             BetLimit: 2,
             Discount: 3,
@@ -36,6 +35,13 @@
             SportType: 2,
             BetType: 3,
             SportTypeBetType: 4
+        },
+        commandType: {
+            All: 0,
+            PositionTaking: 1,
+            BetLimit: 2,
+            Discount: 3,
+            Status: 4
         },
         errorType: {
             Success: 0,
