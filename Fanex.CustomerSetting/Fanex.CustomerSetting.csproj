@@ -120,6 +120,7 @@
     <Compile Include="Enumerations\MsgCode.cs" />
     <Compile Include="Enumerations\MsgType.cs" />
     <Compile Include="Exceptions\CriteriaException.cs" />
+    <Compile Include="FormTypes\BaseFormHandler.cs" />
     <Compile Include="FormTypes\CompanyEditSuperFormHandler.cs" />
     <Compile Include="FormTypes\AgentEditMemberFormHandler.cs" />
     <Compile Include="FormTypes\FormHandlerFactory.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="CommandTypes\CommandFactory.cs" />
     <Compile Include="CommandTypes\DiscountCommand.cs" />
     <Compile Include="Services\CommandOnCustomerService.cs" />
+    <Compile Include="Services\CommandOnMultipleCustomerService.cs" />
     <Compile Include="Services\CommandOnMultipleNotMemberService.cs" />
     <Compile Include="Services\ICommandOnCustomerService.cs" />
     <Compile Include="Services\ICommandOnMultipleCustomerService.cs" />
@@ -232,6 +234,12 @@
     <Compile Include="CommandTypes\StatusCommand.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Services\XmlGenerator.cs" />
+    <Compile Include="SettingTypes\BetLimitHandler.cs" />
+    <Compile Include="SettingTypes\DiscountHandler.cs" />
+    <Compile Include="SettingTypes\ISettingHandler.cs" />
+    <Compile Include="SettingTypes\PositionTakingHandler.cs" />
+    <Compile Include="SettingTypes\SettingHandlerFactory.cs" />
+    <Compile Include="SettingTypes\StatusHandler.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\Formatter.cs" />
   </ItemGroup>

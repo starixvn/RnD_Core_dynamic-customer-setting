@@ -107,7 +107,6 @@
         }
 
         function filter(settingResults) {
-            settingResults = commonService.getPropertyValues(settingResults);
             if (messageOptions.RemoveNoChange) {
                 return filterRemoveNoChange(settingResults);
             }

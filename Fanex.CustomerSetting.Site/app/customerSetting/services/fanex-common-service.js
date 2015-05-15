@@ -35,11 +35,18 @@
             return propertyValues;
         }
 
+        function copyProperties(source, destination) {
+            for (var key in source) {
+                destination[key] = source[key];
+            }
+        }
+
         return {
             scrollToTop: scrollToTop,
             inArray: inArray,
             isArrayAndNotEmpty: isArrayAndNotEmpty,
-            getPropertyValues: getPropertyValues
+            getPropertyValues: getPropertyValues,
+            copyProperties: copyProperties
         };
     };
 

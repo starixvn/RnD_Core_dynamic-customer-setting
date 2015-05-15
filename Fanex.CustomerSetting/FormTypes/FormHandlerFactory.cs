@@ -5,10 +5,6 @@
 
     public sealed class FormHandlerFactory
     {
-        private FormHandlerFactory()
-        {
-        }
-
         public static IFormHandler Create(FormType formType)
         {
             switch (formType)

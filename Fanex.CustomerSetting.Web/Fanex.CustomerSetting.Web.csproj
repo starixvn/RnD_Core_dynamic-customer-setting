@@ -51,7 +51,6 @@
     <Compile Include="CurrentSession.cs" />
     <Compile Include="ICurrentSession.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Mvc\JsonNetResult.cs" />
     <Compile Include="Services\IModelService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\ModelService.cs" />

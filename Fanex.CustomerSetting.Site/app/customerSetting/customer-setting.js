@@ -283,9 +283,9 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
-            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
-            templateService, requestService, messageService, resourceService, SettingTypeHandler) {
+            templateService, requestService, messageService, resourceService, SettingTypeHandler, commonService) {
         var queryModel = modelService.getQueryModel();
         requestService.query(queryModel, function (queryData) {
             var requestContext = queryData.RequestContext;
@@ -541,7 +541,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                             && newItem.SportType === oldItem.SportType
                             && newItem.BetType === oldItem.BetType
                             && newItem.IsLive === oldItem.IsLive) {
-                            angular.copy(newItem, oldItem);
+                            commonService.copyProperties(newItem, oldItem);
                             isFound = true;
                         }
                     });
@@ -2854,11 +2854,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             return propertyValues;
         }
 
+        function copyProperties(source, destination) {
+            for (var key in source) {
+                destination[key] = source[key];
+            }
+        }
+
         return {
             scrollToTop: scrollToTop,
             inArray: inArray,
             isArrayAndNotEmpty: isArrayAndNotEmpty,
-            getPropertyValues: getPropertyValues
+            getPropertyValues: getPropertyValues,
+            copyProperties: copyProperties
         };
     };
 
@@ -2994,7 +3001,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
         }
 
         function filter(settingResults) {
-            settingResults = commonService.getPropertyValues(settingResults);
             if (messageOptions.RemoveNoChange) {
                 return filterRemoveNoChange(settingResults);
             }

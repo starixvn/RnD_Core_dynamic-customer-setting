@@ -2,9 +2,9 @@
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
-            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler'];
+            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
-            templateService, requestService, messageService, resourceService, SettingTypeHandler) {
+            templateService, requestService, messageService, resourceService, SettingTypeHandler, commonService) {
         var queryModel = modelService.getQueryModel();
         requestService.query(queryModel, function (queryData) {
             var requestContext = queryData.RequestContext;
@@ -260,7 +260,7 @@
                             && newItem.SportType === oldItem.SportType
                             && newItem.BetType === oldItem.BetType
                             && newItem.IsLive === oldItem.IsLive) {
-                            angular.copy(newItem, oldItem);
+                            commonService.copyProperties(newItem, oldItem);
                             isFound = true;
                         }
                     });

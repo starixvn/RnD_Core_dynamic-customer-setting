@@ -3,12 +3,9 @@
     using System;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.FormTypes;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Web.Models;
-    using Fanex.CustomerSetting.Web.Mvc;
     using Fanex.CustomerSetting.Web.Services;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
@@ -16,7 +13,6 @@
     {
         #region Variables
 
-        private readonly IQueryService _queryService;
         private readonly UserContext _userContext;
         private readonly IValidationService _validationService;
         private readonly IModelService _modelService;
@@ -37,7 +33,6 @@
         {
             var userService = ServiceFactory.CreateUserService();
             _userContext = userService.CreateUserContext();
-            _queryService = queryService ?? new QueryService("en-US");
             _validationService = validationService ?? new ValidationService();
             _modelService = modelService ?? new ModelService();
         }
@@ -66,42 +61,17 @@
         }
 
         [HttpPost]
-        public ActionResult Query(QueryModel model)
+        public ActionResult Query(QueryModel queryModel)
         {
             if (_userContext == null)
             {
                 return Json(Result.AccessDenied);
             }
 
-            var queryInfo = model.CreateQueryInfo(_userContext);
-            Result result = _validationService.Validate(queryInfo);
-            if (!result.IsSuccess)
-            {
-                return Json(result);
-            }
-
-            switch (model.FormType)
-            {
-                case FormType.CompanyEditSuper:
-                    return Json(_queryService.CompanyQuerySuper(queryInfo));
-
-                case FormType.SuperEditMaster:
-                    return Json(_queryService.SuperQueryMaster(queryInfo));
-
-                case FormType.MasterEditAgent:
-                    return Json(_queryService.MasterQueryAgent(queryInfo));
-
-                case FormType.SuperEditMember:
-                    return Json(_queryService.SuperQueryMember(queryInfo));
-
-                case FormType.MasterEditMember:
-                    return Json(_queryService.MasterQueryMember(queryInfo));
-
-                case FormType.AgentEditMember:
-                    return Json(_queryService.AgentQueryMember(queryInfo));
-            }
-
-            return Json(Result.Error);
+            var queryInfo = queryModel.CreateQueryInfo(_userContext);
+            IQueryService queryService = new QueryService();
+            var queryResult = queryService.Do(queryInfo);
+            return Json(queryResult);
         }
 
         public ActionResult Command(CommandModel commandModel)
@@ -126,20 +96,15 @@
             var commandInfo = commandModel.CreateCommandInfo();
             ICommandOnCustomerService commandService = new CommandOnCustomerService();
             CommandResult commandResult = commandService.Do(commandInfo);
-            return new JsonNetResult(commandResult);
+            return Json(commandResult);
         }
 
         private ActionResult CommandOnMultipleCustomer(CommandModel commandModel)
         {
             var multipleCommandInfo = commandModel.CreateMultipleCommandInfo();
-            var formTypeHandler = FormHandlerFactory.Create(multipleCommandInfo.FormType);
-            ICommandOnMultipleCustomerService commandOnMultipleMemberService = new CommandOnMultipleMemberService();
-            ICommandOnMultipleCustomerService commandOnMultipleNotMemberService = new CommandOnMultipleNotMemberService();
-            ICommandOnMultipleCustomerService commandService = formTypeHandler.IsCommandOnMember
-                ? commandOnMultipleMemberService
-                : commandOnMultipleNotMemberService;
+            ICommandOnMultipleCustomerService commandService = new CommandOnMultipleCustomerService();
             var commandResults = commandService.Do(multipleCommandInfo);
-            return new JsonNetResult(commandResults);
+            return Json(commandResults);
         }
     }
 }

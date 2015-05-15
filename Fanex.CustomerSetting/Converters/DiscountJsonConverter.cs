@@ -35,9 +35,10 @@
 
                 case FormType.AgentEditMember:
                     return jsonObject.ToObject<AgentQueryMemberDiscountEntity>();
-            }
 
-            return null;
+                default:
+                    throw new NotImplementedException("Not implemented yet");
+            }
         }
     }
 }

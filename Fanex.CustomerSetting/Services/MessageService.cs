@@ -1,22 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Messages;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resources;
+    using Fanex.CustomerSetting.SettingTypes;
 
     public class MessageService : IMessageService
     {
         private readonly IResourceService _resourceService;
-
-        private Dictionary<SettingType, string> _successMsgs = new Dictionary<SettingType, string>
-        {
-            { SettingType.Status, Lang.UpdateProductStatusSuccessfully },
-            { SettingType.Discount, Lang.UpdateCommissionSuccessfully },
-            { SettingType.BetLimit, Lang.UpdateBetSettingSuccessfully },
-            { SettingType.PositionTaking, Lang.UpdatePositionTakingSuccessfully }
-        };
 
         public MessageService(string languageCode)
             : this(null, languageCode)
@@ -32,7 +22,8 @@
         {
             if (messageInfo.ErrCode == Result.SuccessValue)
             {
-                return _successMsgs[messageInfo.SettingType];
+                ISettingHandler settingHandler = SettingHandlerFactory.Create(messageInfo.SettingType);
+                return settingHandler.SuccessMsg;
             }
 
             var messageBuilder = MessageBuilderFactory.Create(messageInfo.MsgType, _resourceService);

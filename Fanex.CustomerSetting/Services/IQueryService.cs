@@ -4,16 +4,6 @@
 
     public interface IQueryService
     {
-        CompanyQuerySuperResult CompanyQuerySuper(QueryInfo model);
-
-        SuperQueryMasterResult SuperQueryMaster(QueryInfo model);
-
-        MasterQueryAgentResult MasterQueryAgent(QueryInfo model);
-
-        SuperQueryMemberResult SuperQueryMember(QueryInfo model);
-
-        MasterQueryMemberResult MasterQueryMember(QueryInfo model);
-
-        AgentQueryMemberResult AgentQueryMember(QueryInfo model);
+        Result Do(QueryInfo queryInfo);
     }
 }

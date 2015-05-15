@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.CommandTypes
 {
+    using System.Linq;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
@@ -10,7 +11,22 @@
     {
         public CommandResult Do(MultipleCommandInfo multipleCommandInfo)
         {
-            var commandCriteria = new PositionTakingCommandOnGroupedMembersCriteria(multipleCommandInfo.FormType);
+            var settingType = SettingType.PositionTaking;
+            if (multipleCommandInfo.PositionTakings == null || multipleCommandInfo.PositionTakings.Count() == 0)
+            {
+                return new CommandResult(multipleCommandInfo, new NoChangeSettingResult(settingType));
+            }
+
+            IXmlGenerator _xmlGenerator = new XmlGenerator();
+            var commandCriteria = new PositionTakingCommandOnGroupedMembersCriteria(multipleCommandInfo.FormType)
+            {
+                UserId = multipleCommandInfo.CustId,
+                SubAccId = multipleCommandInfo.SubAccountId,
+                CustIds = string.Join(",", multipleCommandInfo.TargetCustIds),
+                PositionTaking = _xmlGenerator.GeneratePositionTaking(multipleCommandInfo.PositionTakings),
+                Ip = multipleCommandInfo.Ip
+            };
+
             var repository = new CommandOnGroupedMembersRepository();
             repository.UpdatePositionTaking(commandCriteria);
             var messageInfo = new MessageInfo

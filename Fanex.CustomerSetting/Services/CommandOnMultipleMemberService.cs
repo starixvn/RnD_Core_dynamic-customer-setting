@@ -38,10 +38,10 @@
             {
                 var ungroupedMembersCommandsInfo = new MultipleCommandInfo(multipleCommandInfo);
                 ungroupedMembersCommandsInfo.TargetCustIds = ungroupedMemberIds;
-                ungroupedMembersCommandResults = DoUngroupedMembers(multipleCommandInfo);
+                ungroupedMembersCommandResults = DoUngroupedMembers(ungroupedMembersCommandsInfo);
             }
 
-            return ArrangeCommandResults(multipleCommandInfo.TargetCustIds, groupedMemberIds, groupedMembersCommandResults, ungroupedMemberIds, ungroupedMembersCommandResults);
+            return Join(multipleCommandInfo.TargetCustIds, groupedMemberIds, groupedMembersCommandResults, ungroupedMemberIds, ungroupedMembersCommandResults);
         }
 
         private IList<CommandResult> DoGroupedMembers(MultipleCommandInfo multipleCommandInfo)
@@ -71,10 +71,10 @@
                     var allNotPositionTakingCommandResult = command.Do(commandInfo);
                     var settingResults = new List<SettingResult>
                     {
-                        allNotPositionTakingCommandResult.SettingResults[SettingType.Status],
-                        allNotPositionTakingCommandResult.SettingResults[SettingType.Discount],
-                        allNotPositionTakingCommandResult.SettingResults[SettingType.BetLimit],
-                        positionTakingMultipleCommandResult.SettingResults.First().Value
+                        allNotPositionTakingCommandResult[SettingType.Status],
+                        allNotPositionTakingCommandResult[SettingType.Discount],
+                        allNotPositionTakingCommandResult[SettingType.BetLimit],
+                        positionTakingMultipleCommandResult[SettingType.PositionTaking]
                     };
 
                     commandResult = new CommandResult(multipleCommandInfo, settingResults);
@@ -114,7 +114,7 @@
             return commandResults;
         }
 
-        private IList<CommandResult> ArrangeCommandResults(IEnumerable<int> memberIds, IList<int> groupedMemberIds, IList<CommandResult> groupedResults, IList<int> ungroupedMemberIds, IList<CommandResult> ungroupedResults)
+        private IList<CommandResult> Join(IEnumerable<int> memberIds, IList<int> groupedMemberIds, IList<CommandResult> groupedResults, IList<int> ungroupedMemberIds, IList<CommandResult> ungroupedResults)
         {
             var commandResults = new List<CommandResult>();
             foreach (var memberId in memberIds)
@@ -128,7 +128,7 @@
                 else
                 {
                     id = ungroupedMemberIds.IndexOf(memberId);
-                    commandResult = groupedResults[id];
+                    commandResult = ungroupedResults[id];
                 }
 
                 commandResults.Add(commandResult);

@@ -7,5 +7,7 @@
         bool IsCommandOnMember { get; }
 
         bool HasPermission(QueryInfo model);
+
+        Result Query(QueryInfo queryInfo);
     }
 }

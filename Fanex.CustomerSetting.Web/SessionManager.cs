@@ -2,9 +2,6 @@
 {
     using System.Web;
 
-    /// <summary>
-    /// SessionManager class.
-    /// </summary>
     public static class SessionManager
     {
         private const string AppSessionKey = "CSR_Current_Session";

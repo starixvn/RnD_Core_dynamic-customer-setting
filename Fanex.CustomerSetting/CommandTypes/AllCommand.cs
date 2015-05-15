@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.CommandTypes
 {
     using System.Collections.Generic;
-    using System.Linq;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
     public class AllCommand : BaseCommand, ICommand
@@ -10,16 +10,16 @@
         {
             ICommand statusCommand = new StatusCommand();
             var commandResult = statusCommand.Do(commandInfo);
-            var statusResult = commandResult.SettingResults.First().Value;
+            var statusResult = commandResult[SettingType.Status];
             ICommand discountCommand = new DiscountCommand();
             commandResult = discountCommand.Do(commandInfo);
-            var discountResult = commandResult.SettingResults.First().Value;
+            var discountResult = commandResult[SettingType.Discount];
             ICommand betLimitCommand = new BetLimitCommand();
             commandResult = betLimitCommand.Do(commandInfo);
-            var betLimitResult = commandResult.SettingResults.First().Value;
+            var betLimitResult = commandResult[SettingType.BetLimit];
             ICommand positionTakingCommand = new PositionTakingCommand();
             commandResult = positionTakingCommand.Do(commandInfo);
-            var positionTakingResult = commandResult.SettingResults.First().Value;
+            var positionTakingResult = commandResult[SettingType.PositionTaking];
             var settingResults = new List<SettingResult>
             {
                 statusResult,

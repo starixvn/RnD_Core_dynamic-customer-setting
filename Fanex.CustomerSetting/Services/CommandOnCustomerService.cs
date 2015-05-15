@@ -3,9 +3,6 @@
     using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Models;
 
-    /// <summary>
-    /// CommandOnCustomerService class.
-    /// </summary>
     public class CommandOnCustomerService : ICommandOnCustomerService
     {
         private IValidationService _validationService;
