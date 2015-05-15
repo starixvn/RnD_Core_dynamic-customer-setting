@@ -5,9 +5,9 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.Data;
 
-    public class QueryOnMembersRepository : IQueryOnMembersRepository
+    public class MemberGroupRepository : IMemberGroupRepository
     {
-        public IEnumerable<MemberGroupEntity> SelectMemberGroup(GroupQueryOnMultipleMemberCriteria criteria)
+        public IEnumerable<MemberGroupEntity> SelectMemberGroups(MemberGroupSelectCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {

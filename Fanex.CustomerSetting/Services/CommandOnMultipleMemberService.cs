@@ -5,24 +5,29 @@
     using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Repositories;
 
     public class CommandOnMultipleMemberService : ICommandOnMultipleCustomerService
     {
-        private IQueryOnMembersService _queryService;
+        private readonly IMemberGroupService _memberGroupService;
+        private readonly CommandFactory _commandFactory;
 
         public CommandOnMultipleMemberService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CommandOnMultipleMemberService(IQueryOnMembersService queryService)
+        public CommandOnMultipleMemberService(
+            IMemberGroupService memberGroupService,
+            CommandFactory commandFactory)
         {
-            _queryService = queryService ?? new QueryOnMembersService();
+            _memberGroupService = memberGroupService ?? new MemberGroupService();
+            _commandFactory = commandFactory ?? new CommandFactory();
         }
 
-        public IList<CommandResult> Do(MultipleCommandInfo multipleCommandInfo)
+        public IList<CommandResult> Execute(MultipleCommandInfo multipleCommandInfo)
         {
-            var memberGroups = _queryService.SelectMemberGroup(multipleCommandInfo.TargetCustIds);
+            var memberGroups = _memberGroupService.SelectMemberGroup(multipleCommandInfo.TargetCustIds);
             var groupedMemberIds = memberGroups.Where(x => x.IsGrouped).Select(x => x.CustId).ToList();
             IList<CommandResult> groupedMembersCommandResults = new List<CommandResult>();
             IList<CommandResult> ungroupedMembersCommandResults = new List<CommandResult>();
@@ -53,7 +58,7 @@
             if (hasPositionTakingCommand)
             {
                 IMultipleCommand positionTakingMultipleCommand = new PositionTakingMultipleCommand();
-                positionTakingMultipleCommandResult = positionTakingMultipleCommand.Do(multipleCommandInfo);
+                positionTakingMultipleCommandResult = positionTakingMultipleCommand.Execute(multipleCommandInfo);
             }
 
             while (true)
@@ -68,7 +73,7 @@
                 if (commandInfo.CommandType == CommandType.All)
                 {
                     ICommand command = new AllNotPositionTakingCommand();
-                    var allNotPositionTakingCommandResult = command.Do(commandInfo);
+                    var allNotPositionTakingCommandResult = command.Execute(commandInfo);
                     var settingResults = new List<SettingResult>
                     {
                         allNotPositionTakingCommandResult[SettingType.Status],
@@ -85,8 +90,8 @@
                 }
                 else
                 {
-                    ICommand command = CommandFactory.Get(commandInfo.CommandType);
-                    commandResult = command.Do(commandInfo);
+                    ICommand command = _commandFactory.Create(commandInfo.CommandType);
+                    commandResult = command.Execute(commandInfo);
                 }
 
                 commandResults.Add(commandResult);
@@ -106,8 +111,8 @@
                     break;
                 }
 
-                ICommand command = CommandFactory.Get(commandInfo.CommandType);
-                var commandResult = command.Do(commandInfo);
+                ICommand command = _commandFactory.Create(commandInfo.CommandType);
+                var commandResult = command.Execute(commandInfo);
                 commandResults.Add(commandResult);
             }
 

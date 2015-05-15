@@ -4,6 +4,6 @@
 
     public interface IMultipleCommand
     {
-        CommandResult Do(MultipleCommandInfo multipleCommandInfo);
+        CommandResult Execute(MultipleCommandInfo multipleCommandInfo);
     }
 }

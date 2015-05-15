@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -47,6 +48,7 @@
     <Compile Include="..\Fanex.CustomerSetting.Site\Properties\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="CurrentSession.cs" />
     <Compile Include="ICurrentSession.cs" />
@@ -58,7 +60,6 @@
     <Compile Include="Models\CommandModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ServiceFactory.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Utility\RequestHelper.cs" />

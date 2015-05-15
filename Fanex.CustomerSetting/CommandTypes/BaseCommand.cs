@@ -3,33 +3,41 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Repositories;
     using Fanex.CustomerSetting.Services;
 
-    public class BaseCommand
+    public abstract class BaseCommand
     {
-        protected ICommandRepository _commandRepository = new CommandRepository();
-        protected IXmlGenerator _xmlGenerator = new XmlGenerator();
+        private readonly IMessageService _messageService;
 
-        protected SettingResult Process(CommandCriteria criteria, CommandInfo model, SettingType settingType)
+        protected BaseCommand()
+            : this(null)
+        {
+        }
+
+        protected BaseCommand(IMessageService messageService)
+        {
+            _messageService = messageService ?? new MessageService();
+        }
+
+        protected SettingResult Process(CommandCriteria criteria, CommandInfo commandInfo, SettingType settingType)
         {
             var settingLevel = SettingLevel.BetType;
             switch (settingType)
             {
                 case SettingType.Status:
-                    settingLevel = model.StatusLevel;
+                    settingLevel = commandInfo.StatusLevel;
                     break;
 
                 case SettingType.Discount:
-                    settingLevel = model.DiscountLevel;
+                    settingLevel = commandInfo.DiscountLevel;
                     break;
 
                 case SettingType.BetLimit:
-                    settingLevel = model.BetLimitLevel;
+                    settingLevel = commandInfo.BetLimitLevel;
                     break;
 
                 case SettingType.PositionTaking:
-                    settingLevel = model.PositionTakingLevel;
+                    settingLevel = commandInfo.PositionTakingLevel;
                     break;
             }
 
@@ -38,13 +46,12 @@
                 ErrCode = criteria.ErrCode,
                 ErrMsg = criteria.ErrMsg,
                 MsgType = (MsgType)criteria.MsgType,
-                TargetRoleId = model.TargetRoleId,
+                TargetRoleId = commandInfo.TargetRoleId,
                 SettingLevel = settingLevel,
                 SettingType = settingType
             };
 
-            var messageService = new MessageService("en-US");
-            var messageContent = messageService.GetTranslatedMessage(messageInfo);
+            var messageContent = _messageService.GetTranslatedMessage(messageInfo);
             return new SettingResult(settingType, new Result(messageInfo.ErrCode, messageContent));
         }
     }

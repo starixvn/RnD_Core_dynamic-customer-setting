@@ -5,10 +5,17 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Repositories;
+    using Fanex.CustomerSetting.Services;
 
     public class SuperEditMasterFormHandler : BaseFormHandler, IFormHandler
     {
-        private readonly IQueryRepository _respository = new QueryRepository();
+        private readonly IQueryRepository _queryRepository;
+
+        public SuperEditMasterFormHandler(IQueryRepository queryRepository, IResourceService resourceService)
+            : base(resourceService)
+        {
+            _queryRepository = queryRepository;
+        }
 
         public bool IsCommandOnMember
         {
@@ -18,7 +25,7 @@
             }
         }
 
-        public bool HasPermission(QueryInfo queryInfo)
+        public bool HasValidRole(QueryInfo queryInfo)
         {
             return !((queryInfo.RoleId != RoleType.Company && queryInfo.RoleId != RoleType.Super) || queryInfo.TargetRoleId != RoleType.Master);
         }
@@ -32,7 +39,7 @@
                 throw new CriteriaException(criteria);
             }
 
-            var customerSettingEntity = _respository.SuperQueryMaster(criteria);
+            var customerSettingEntity = _queryRepository.SuperQueryMaster(criteria);
             UpdateResource(customerSettingEntity.Statuses);
             UpdateResource(customerSettingEntity.Discounts);
             UpdateResource(customerSettingEntity.BetLimits);

@@ -2,6 +2,8 @@
 {
     public enum MsgCode
     {
+        None = 0,
+
         PositionTakingMastersExceedSuper = 20019,
 
         PositionTakingMastersExceedMaster = 20021,

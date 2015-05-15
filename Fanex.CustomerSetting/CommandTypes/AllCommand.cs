@@ -6,19 +6,19 @@
 
     public class AllCommand : BaseCommand, ICommand
     {
-        public CommandResult Do(CommandInfo commandInfo)
+        public CommandResult Execute(CommandInfo commandInfo)
         {
             ICommand statusCommand = new StatusCommand();
-            var commandResult = statusCommand.Do(commandInfo);
+            var commandResult = statusCommand.Execute(commandInfo);
             var statusResult = commandResult[SettingType.Status];
             ICommand discountCommand = new DiscountCommand();
-            commandResult = discountCommand.Do(commandInfo);
+            commandResult = discountCommand.Execute(commandInfo);
             var discountResult = commandResult[SettingType.Discount];
             ICommand betLimitCommand = new BetLimitCommand();
-            commandResult = betLimitCommand.Do(commandInfo);
+            commandResult = betLimitCommand.Execute(commandInfo);
             var betLimitResult = commandResult[SettingType.BetLimit];
             ICommand positionTakingCommand = new PositionTakingCommand();
-            commandResult = positionTakingCommand.Do(commandInfo);
+            commandResult = positionTakingCommand.Execute(commandInfo);
             var positionTakingResult = commandResult[SettingType.PositionTaking];
             var settingResults = new List<SettingResult>
             {

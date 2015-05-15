@@ -8,43 +8,25 @@
     using Fanex.CustomerSetting.Entities;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Repositories;
+    using Fanex.CustomerSetting.Resources;
     using RemotingRef;
 
     public class ResourceService : IResourceService
     {
-        #region Variables
-
         private readonly IResourceRepository _resourceRepository;
-        private readonly ICache _cacheService;
-
-        #endregion Variables
-
-        #region Constructors
 
         public ResourceService()
-            : this(null, null, null)
+            : this(null)
         {
         }
 
-        public ResourceService(string language)
-            : this(null, null, language)
-        {
-        }
-
-        public ResourceService(IResourceRepository resourceRepository, ICache cacheService, string language)
+        public ResourceService(IResourceRepository resourceRepository)
         {
             _resourceRepository = resourceRepository ?? new ResourceRepository();
-            _cacheService = cacheService ?? CacheService.CreateInstance(CacheType.MemoryCache);
-            RefLanguage = GetRefLanguage(language);
+            RefLanguage = GetRefLanguage(LanguageManager.CurrentLanguage);
         }
 
-        #endregion Constructors
-
-        #region Properties
-
         public string RefLanguage { get; private set; }
-
-        #endregion Properties
 
         #region Get product name
 
@@ -128,7 +110,8 @@
 
         private IEnumerable<ProductResourceEntity> InternalGetProductResources()
         {
-            var productResources = _cacheService.Get<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey);
+            var cacheService = CacheService.CreateInstance(CacheType.MemoryCache);
+            var productResources = cacheService.Get<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey);
             if (productResources == null)
             {
                 var criteria = new ProductResourceQueryCriteria();
@@ -138,7 +121,7 @@
                 }
 
                 productResources = _resourceRepository.GetProductResources(criteria);
-                _cacheService.Set<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey, productResources, Configuration.CacheTimeout);
+                cacheService.Set<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey, productResources, Configuration.CacheTimeout);
             }
 
             return productResources;

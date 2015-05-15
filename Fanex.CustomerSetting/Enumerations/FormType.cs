@@ -2,6 +2,8 @@
 {
     public enum FormType
     {
+        None = 0,
+
         CompanyEditSuper = 1,
 
         SuperEditMaster = 2,

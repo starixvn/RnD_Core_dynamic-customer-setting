@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Attributes
 {
-    internal class OutputElementProperty
+    public class OutputElementProperty
     {
         public string PropertyName { get; set; }
 

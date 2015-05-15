@@ -4,6 +4,6 @@
 
     public interface ICommand
     {
-        CommandResult Do(CommandInfo commandInfo);
+        CommandResult Execute(CommandInfo commandInfo);
     }
 }

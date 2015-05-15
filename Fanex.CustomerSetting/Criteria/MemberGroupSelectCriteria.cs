@@ -2,9 +2,9 @@
 {
     using Fanex.Data.Repository;
 
-    public class GroupQueryOnMultipleMemberCriteria : CriteriaBase
+    public class MemberGroupSelectCriteria : CriteriaBase
     {
-        public GroupQueryOnMultipleMemberCriteria()
+        public MemberGroupSelectCriteria()
         {
         }
 

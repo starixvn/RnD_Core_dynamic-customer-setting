@@ -4,6 +4,7 @@
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.CustomerSetting.Web.Configuration;
     using Fanex.Data.Configuration;
 
     public class MvcApplication : HttpApplication
@@ -14,6 +15,7 @@
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            WebConfiguration.Start();
             DbSettingProviderManager.Current.Start();
         }
     }

@@ -1,16 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.Web.Models
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Web.Services;
     using Fanex.CustomerSetting.Web.Utility;
     using Newtonsoft.Json;
 
     public class CommandModel : BaseModel
     {
-        private IUserService _userService;
-        private IModelService _modelService;
+        private readonly IUserService _userService;
+        private readonly IModelService _modelService;
 
         public CommandModel()
             : this(null, null)
@@ -59,6 +61,11 @@
         public CommandInfo CreateCommandInfo()
         {
             var userContext = _userService.CreateUserContext();
+            if (userContext == null || !userContext.HasCommandPermission)
+            {
+                throw new UnauthorizedAccessException(Lang.AccessDeniedMsg);
+            }
+
             return new CommandInfo
             {
                 CustId = userContext.CustId,
@@ -85,6 +92,11 @@
         public MultipleCommandInfo CreateMultipleCommandInfo()
         {
             var userContext = _userService.CreateUserContext();
+            if (userContext == null || !userContext.HasCommandPermission)
+            {
+                throw new UnauthorizedAccessException(Lang.AccessDeniedMsg);
+            }
+
             var targetCustIds = JsonConvert.DeserializeObject<List<int>>(this.TargetCustIds);
             return new MultipleCommandInfo
             {
@@ -106,7 +118,7 @@
                 BetLimits = _modelService.ParseBetLimit(BetLimitString, this.FormType),
                 PositionTakingLevel = this.PositionTakingLevel,
                 PositionTakings = _modelService.ParsePositionTaking(PositionTakingString, this.FormType),
-                TargetCustIds = targetCustIds,
+                TargetCustIds = targetCustIds
             };
         }
     }

@@ -6,7 +6,7 @@
     {
         bool IsCommandOnMember { get; }
 
-        bool HasPermission(QueryInfo model);
+        bool HasValidRole(QueryInfo queryInfo);
 
         Result Query(QueryInfo queryInfo);
     }

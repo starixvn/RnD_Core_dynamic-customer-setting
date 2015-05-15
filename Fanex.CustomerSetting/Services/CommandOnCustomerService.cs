@@ -5,26 +5,30 @@
 
     public class CommandOnCustomerService : ICommandOnCustomerService
     {
-        private IValidationService _validationService;
+        private readonly IValidationService _validationService;
+        private readonly ICommandFactory _commandFactory;
 
         public CommandOnCustomerService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CommandOnCustomerService(IValidationService validationService)
+        public CommandOnCustomerService(
+            IValidationService validationService,
+            ICommandFactory commandFactory)
         {
             _validationService = validationService ?? new ValidationService();
+            _commandFactory = commandFactory ?? new CommandFactory();
         }
 
-        public CommandResult Do(CommandInfo commandInfo)
+        public CommandResult Execute(CommandInfo commandInfo)
         {
             CommandResult commandResult = null;
             Result validationResult = _validationService.Validate(commandInfo);
             if (validationResult.IsSuccess)
             {
-                ICommand command = CommandFactory.Get(commandInfo.CommandType);
-                commandResult = command.Do(commandInfo);
+                ICommand command = _commandFactory.Create(commandInfo.CommandType);
+                commandResult = command.Execute(commandInfo);
             }
             else
             {

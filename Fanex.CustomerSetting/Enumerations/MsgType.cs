@@ -2,6 +2,8 @@
 {
     public enum MsgType
     {
+        None = 0,
+
         /// <summary>
         /// <Root MsgID="10018" Msg="Wrong position taking.">
         ///     <Row SportType="1" BetType="1" IsLive="0" UserName="username1" />

@@ -4,8 +4,8 @@
 
     public interface IValidationService
     {
-        Result Validate(QueryInfo model);
+        Result Validate(QueryInfo queryInfo);
 
-        Result Validate(CommandInfo model);
+        Result Validate(CommandInfo commandInfo);
     }
 }

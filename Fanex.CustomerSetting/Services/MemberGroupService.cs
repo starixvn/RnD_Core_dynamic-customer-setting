@@ -6,23 +6,23 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Repositories;
 
-    public class QueryOnMembersService : IQueryOnMembersService
+    public class MemberGroupService : IMemberGroupService
     {
-        private IQueryOnMembersRepository _repository;
+        private readonly IMemberGroupRepository _memberGroupRepository;
 
-        public QueryOnMembersService()
+        public MemberGroupService()
             : this(null)
         {
         }
 
-        public QueryOnMembersService(IQueryOnMembersRepository repository)
+        public MemberGroupService(IMemberGroupRepository memberGroupRepository)
         {
-            _repository = repository ?? new QueryOnMembersRepository();
+            _memberGroupRepository = memberGroupRepository ?? new MemberGroupRepository();
         }
 
         public IEnumerable<MemberGroupEntity> SelectMemberGroup(IEnumerable<int> custIds)
         {
-            var criteria = new GroupQueryOnMultipleMemberCriteria
+            var criteria = new MemberGroupSelectCriteria
             {
                 CustIds = string.Join(",", custIds)
             };
@@ -32,7 +32,7 @@
                 throw new CriteriaException(criteria);
             }
 
-            return _repository.SelectMemberGroup(criteria);
+            return _memberGroupRepository.SelectMemberGroups(criteria);
         }
     }
 }

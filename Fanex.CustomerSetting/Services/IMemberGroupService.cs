@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Entities;
 
-    public interface IQueryOnMembersService
+    public interface IMemberGroupService
     {
         IEnumerable<MemberGroupEntity> SelectMemberGroup(IEnumerable<int> custIds);
     }

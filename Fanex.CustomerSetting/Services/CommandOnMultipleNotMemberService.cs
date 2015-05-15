@@ -5,7 +5,7 @@
 
     public class CommandOnMultipleNotMemberService : ICommandOnMultipleCustomerService
     {
-        private ICommandOnCustomerService _commandOnCustomerService;
+        private readonly ICommandOnCustomerService _commandOnCustomerService;
 
         public CommandOnMultipleNotMemberService()
             : this(null)
@@ -17,7 +17,7 @@
             _commandOnCustomerService = commandOnCustomerService ?? new CommandOnCustomerService();
         }
 
-        public IList<CommandResult> Do(MultipleCommandInfo multipleCommandInfo)
+        public IList<CommandResult> Execute(MultipleCommandInfo multipleCommandInfo)
         {
             var commandResults = new List<CommandResult>();
             while (true)
@@ -28,7 +28,7 @@
                     break;
                 }
 
-                var commandResult = _commandOnCustomerService.Do(commandInfo);
+                var commandResult = _commandOnCustomerService.Execute(commandInfo);
                 commandResults.Add(commandResult);
             }
 

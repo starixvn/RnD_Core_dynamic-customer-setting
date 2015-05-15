@@ -4,6 +4,6 @@
 
     public interface ICommandOnCustomerService
     {
-        CommandResult Do(CommandInfo commandInfo);
+        CommandResult Execute(CommandInfo commandInfo);
     }
 }

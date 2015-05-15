@@ -6,27 +6,29 @@
 
     public class MessageService : IMessageService
     {
-        private readonly IResourceService _resourceService;
+        private readonly IMessageBuilderFactory _messageBuilderFactory;
+        private readonly ISettingHandlerFactory _settingHandlerFactory;
 
-        public MessageService(string languageCode)
-            : this(null, languageCode)
+        public MessageService()
+            : this(null, null)
         {
         }
 
-        public MessageService(IResourceService resourceService, string languageCode)
+        public MessageService(IMessageBuilderFactory messageBuilderFactory, ISettingHandlerFactory settingHandlerFactory)
         {
-            _resourceService = resourceService ?? new ResourceService(languageCode);
+            _messageBuilderFactory = messageBuilderFactory ?? new MessageBuilderFactory();
+            _settingHandlerFactory = settingHandlerFactory ?? new SettingHandlerFactory();
         }
 
         public string GetTranslatedMessage(MessageInfo messageInfo)
         {
             if (messageInfo.ErrCode == Result.SuccessValue)
             {
-                ISettingHandler settingHandler = SettingHandlerFactory.Create(messageInfo.SettingType);
+                ISettingHandler settingHandler = _settingHandlerFactory.Create(messageInfo.SettingType);
                 return settingHandler.SuccessMsg;
             }
 
-            var messageBuilder = MessageBuilderFactory.Create(messageInfo.MsgType, _resourceService);
+            var messageBuilder = _messageBuilderFactory.Create(messageInfo.MsgType);
             return messageBuilder.Build(messageInfo);
         }
     }

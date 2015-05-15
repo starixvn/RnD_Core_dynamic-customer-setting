@@ -4,8 +4,8 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Entities;
 
-    public interface IQueryOnMembersRepository
+    public interface IMemberGroupRepository
     {
-        IEnumerable<MemberGroupEntity> SelectMemberGroup(GroupQueryOnMultipleMemberCriteria criteria);
+        IEnumerable<MemberGroupEntity> SelectMemberGroups(MemberGroupSelectCriteria criteria);
     }
 }

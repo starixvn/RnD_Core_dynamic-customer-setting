@@ -5,6 +5,6 @@
 
     public interface ICommandOnMultipleCustomerService
     {
-        IList<CommandResult> Do(MultipleCommandInfo multipleCommandInfo);
+        IList<CommandResult> Execute(MultipleCommandInfo multipleCommandInfo);
     }
 }

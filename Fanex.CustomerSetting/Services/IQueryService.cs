@@ -4,6 +4,6 @@
 
     public interface IQueryService
     {
-        Result Do(QueryInfo queryInfo);
+        Result Execute(QueryInfo queryInfo);
     }
 }

@@ -3,9 +3,9 @@
     using System;
     using Fanex.CustomerSetting.Enumerations;
 
-    public sealed class SettingHandlerFactory
+    public class SettingHandlerFactory : ISettingHandlerFactory
     {
-        public static ISettingHandler Create(SettingType settingType)
+        public ISettingHandler Create(SettingType settingType)
         {
             switch (settingType)
             {

@@ -12,7 +12,7 @@
         where TMessage : TemplateMessage<TRow>
         where TRow : SimpleRow
     {
-        private IResourceService _resourceService;
+        private readonly IResourceService _resourceService;
 
         public TemplateMessageBuilder(IResourceService resourceService)
         {

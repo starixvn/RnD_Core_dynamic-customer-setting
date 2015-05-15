@@ -1,4 +1,4 @@
-/*! fanex-customer-setting v0.0.0.2 | (c) 2015 Nexcel Solutions Vietnam */
+/*! fanex-customer-setting v0.0.0.3 | (c) 2015 Nexcel Solutions Vietnam */
 
 'use strict';
 

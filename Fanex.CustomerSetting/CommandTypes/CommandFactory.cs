@@ -3,9 +3,9 @@
     using System;
     using Fanex.CustomerSetting.Enumerations;
 
-    public class CommandFactory
+    public class CommandFactory : ICommandFactory
     {
-        public static ICommand Get(CommandType commandType)
+        public ICommand Create(CommandType commandType)
         {
             switch (commandType)
             {
@@ -17,6 +17,9 @@
 
                 case CommandType.Discount:
                     return new DiscountCommand();
+
+                case CommandType.BetLimit:
+                    return new BetLimitCommand();
 
                 case CommandType.PositionTaking:
                     return new PositionTakingCommand();

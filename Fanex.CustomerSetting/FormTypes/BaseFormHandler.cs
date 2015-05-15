@@ -8,17 +8,22 @@
 
     public abstract class BaseFormHandler
     {
-        private IResourceService _resourceService = new ResourceService();
+        private readonly IResourceService _resourceService;
 
-        protected RequestContext CreateRequestContext(QueryInfo model)
+        protected BaseFormHandler(IResourceService resourceService)
+        {
+            _resourceService = resourceService;
+        }
+
+        protected RequestContext CreateRequestContext(QueryInfo queryInfo)
         {
             return new RequestContext
             {
-                TargetCustId = model.TargetCustId,
-                FormType = model.FormType,
-                ProductId = model.ProductId,
-                ProductName = _resourceService.GetProductName(model.ProductId),
-                Language = model.Language
+                TargetCustId = queryInfo.TargetCustId,
+                FormType = queryInfo.FormType,
+                ProductId = queryInfo.ProductId,
+                ProductName = _resourceService.GetProductName(queryInfo.ProductId),
+                Language = queryInfo.Language
             };
         }
 

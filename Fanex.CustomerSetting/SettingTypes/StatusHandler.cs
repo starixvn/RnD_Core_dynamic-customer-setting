@@ -8,7 +8,7 @@
         {
             get
             {
-                return Lang.UpdatePositionTakingSuccessfully;
+                return Lang.UpdateProductStatusSuccessfully;
             }
         }
     }

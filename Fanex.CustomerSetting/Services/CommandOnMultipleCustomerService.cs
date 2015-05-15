@@ -1,20 +1,26 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.FormTypes;
     using Fanex.CustomerSetting.Models;
 
     public class CommandOnMultipleCustomerService : ICommandOnMultipleCustomerService
     {
-        public IList<CommandResult> Do(MultipleCommandInfo multipleCommandInfo)
+        private readonly ICommandOnMultipleCustomerServiceFactory _commandOnMultipleCustomerServiceFactory;
+
+        public CommandOnMultipleCustomerService()
+            : this(null)
         {
-            var formTypeHandler = FormHandlerFactory.Create(multipleCommandInfo.FormType);
-            ICommandOnMultipleCustomerService commandOnMultipleMemberService = new CommandOnMultipleMemberService();
-            ICommandOnMultipleCustomerService commandOnMultipleNotMemberService = new CommandOnMultipleNotMemberService();
-            ICommandOnMultipleCustomerService commandService = formTypeHandler.IsCommandOnMember
-                ? commandOnMultipleMemberService
-                : commandOnMultipleNotMemberService;
-            return commandService.Do(multipleCommandInfo);
+        }
+
+        public CommandOnMultipleCustomerService(CommandOnMultipleCustomerServiceFactory commandOnMultipleCustomerServiceFactory)
+        {
+            _commandOnMultipleCustomerServiceFactory = commandOnMultipleCustomerServiceFactory ?? new CommandOnMultipleCustomerServiceFactory();
+        }
+
+        public IList<CommandResult> Execute(MultipleCommandInfo multipleCommandInfo)
+        {
+            var commandOnMultipleCustomerService = _commandOnMultipleCustomerServiceFactory.Create(multipleCommandInfo);
+            return commandOnMultipleCustomerService.Execute(multipleCommandInfo);
         }
     }
 }
