@@ -1,0 +1,59 @@
+/*! fanex-customer-setting-matrix v0.0.1 | (c) 2015 Nexcel Solutions Vietnam */
+.customer-setting-matrix .header {
+  display: table;
+  margin-bottom: 10px;
+}
+.customer-setting-matrix .header .navigation {
+  display: table;
+  margin: 0;
+  padding-left: 0;
+}
+.customer-setting-matrix .header .navigation > li {
+  float: left;
+  display: block;
+}
+.customer-setting-matrix .header .navigation > li > a {
+  background-color: #f8f8f8;
+  color: #333;
+  font-weight: bold;
+  padding: 5px;
+}
+.customer-setting-matrix .header .navigation > li.active > a {
+  background-color: #e7e7e7;
+}
+.customer-setting-matrix .breadcrumb {
+  display: table;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 8px 15px;
+  list-style: none;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.customer-setting-matrix .breadcrumb > li {
+  display: inline-block;
+}
+.customer-setting-matrix .breadcrumb > li + li:before {
+  padding: 0 5px;
+  content: ">";
+}
+.customer-setting-matrix .form {
+  display: table;
+  margin-bottom: 10px;
+}
+.customer-setting-matrix .form .controls {
+  float: left;
+  margin-left: 20px;
+}
+.customer-setting-matrix .form .controls:first-child {
+  margin-left: 0;
+}
+.customer-setting-matrix .message {
+  display: table;
+  margin-bottom: 10px;
+  color: #f40000;
+}
+.customer-setting-matrix .content {
+  display: table;
+  margin-bottom: 10px;
+}

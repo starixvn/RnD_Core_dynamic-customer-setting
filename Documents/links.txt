@@ -19,3 +19,7 @@ exec [dbo].[changeSettingLevel]
 
 Company select super:
 exec Acc_CustSetting_SuperSettingSelect @CustID=1177375, @ProductID=255
+
+* Customer Setting Matrix:
+https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/PTComm_Matrix
+https://docs.google.com/spreadsheets/d/11ysKrF6o5XpOBXQhPNIqeeCgnWPQRnuPGG6XBLJr-Os/edit#gid=0

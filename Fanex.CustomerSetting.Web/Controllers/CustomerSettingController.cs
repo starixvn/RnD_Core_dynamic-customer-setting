@@ -75,6 +75,7 @@
             return Json(queryResult);
         }
 
+        [HttpPost]
         public ActionResult Command(CommandModel commandModel)
         {
             if (commandModel.IsMultiple)

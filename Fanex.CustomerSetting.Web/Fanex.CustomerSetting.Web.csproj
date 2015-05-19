@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
+    <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="CurrentSession.cs" />
     <Compile Include="ICurrentSession.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -68,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj">
+      <Project>{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}</Project>
+      <Name>Fanex.CustomerSetting.Matrix</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{1CC53AF1-4620-402B-835B-9497EE11B665}</Project>
       <Name>Fanex.CustomerSetting</Name>

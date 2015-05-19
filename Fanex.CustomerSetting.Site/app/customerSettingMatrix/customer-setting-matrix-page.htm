@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html data-ng-app="customerSettingMatrixApp">
+<head>
+    <title>Customer Setting Matrix</title>
+    <link href="{{rootUrl}}/app/customerSettingMatrix/customer-setting-matrix.css" rel="stylesheet"
+        type="text/css" />
+</head>
+<body data-root-url="{{rootUrl}}" data-ng-cloak data-ng-controller="FanexPositionTakingController">
+    <div class="customer-setting-matrix">
+        <div class="header">
+            <ul class="navigation">
+                <li class="active"><a href="#">PT Matrix</a></li>
+                <li><a href="#">Commission Matrix</a></li>
+            </ul>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="#">Super</a></li>
+            <li><a href="#">Master</a></li>
+            <li><a href="#">Agent</a></li>
+            <li class="active">Member</li>
+        </ol>
+        <div class="form">
+            <div class="controls">
+                <label for="product">
+                    Product
+                </label>
+                <select name="product" data-ng-model="product" data-ng-options="product.name for product in products">
+                </select>
+            </div>
+            <div class="controls">
+                <label for="userName">
+                    Username
+                </label>
+                <input name="userName" type="text" data-ng-model="userName" />
+            </div>
+            <div class="controls">
+                <button data-ng-click="submit()">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <div class="message" data-ng-show="message" data-ng-bind="message">
+        </div>
+        <div class="result" data-ng-hide="message">
+            Result
+        </div>
+    </div>
+    <script src="{{rootUrl}}/app/angular-1.2.28.min.js" type="text/javascript"></script>
+    <script src="{{rootUrl}}/app/customerSettingMatrix/customer-setting-matrix.js" type="text/javascript"></script>
+</body>
+</html>

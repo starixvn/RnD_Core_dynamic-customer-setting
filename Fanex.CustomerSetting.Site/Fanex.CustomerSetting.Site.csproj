@@ -161,6 +161,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\angular-1.2.28.min.js" />
+    <Content Include="app\customerSettingMatrix\controllers\fanex-position-taking-controller.js" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix-page.htm" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix-templates.js" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix.css" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix.js" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix.less" />
+    <Content Include="app\customerSettingMatrix\customer-setting-matrix-app.js" />
+    <Content Include="app\customerSettingMatrix\Gruntfile.js" />
     <Content Include="app\customerSetting\controllers\fanex-error-controller.js" />
     <Content Include="app\customerSetting\controllers\fanex-default-controller.js" />
     <Content Include="app\customerSetting\customer-setting-page-template.htm" />
@@ -317,6 +325,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app\customerSettingMatrix\package.json" />
     <None Include="app\customerSetting\package.json" />
     <None Include="app\customerSetting\values\fanex-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -327,7 +336,10 @@
     <Content Include="Views\Home\Welcome.cshtml" />
     <Content Include="Views\Home\_LoginForm.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\customerSettingMatrix\directives\" />
+    <Folder Include="app\customerSettingMatrix\templates\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

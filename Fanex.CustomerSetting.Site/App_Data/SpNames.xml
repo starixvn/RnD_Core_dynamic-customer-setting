@@ -22,4 +22,7 @@
     <Setting Key="Acc_CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_AgentPTOnMemberMultiUpd" SpName="Acc_CustSetting_AgentPTOnMemberMultiUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
+  <Function Name="Customer Setting Matrix">
+    <Setting Key="Acc_CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
 </Functions>
