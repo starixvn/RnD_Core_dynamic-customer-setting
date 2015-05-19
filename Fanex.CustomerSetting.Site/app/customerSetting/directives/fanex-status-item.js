@@ -2,16 +2,16 @@
 
 (function () {
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexResourceService'];
-    var fanexStatusDirective = function (appSettings, statusService, resourceService) {
+    var fanexStatusItemDirective = function (appSettings, statusService, resourceService) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
-                status: '=fanexStatus',
+                status: '=fanexStatusItem',
                 formType: '=',
                 settingLevel: '='
             },
-            templateUrl: 'templates/fanex-status.htm',
+            templateUrl: 'templates/fanex-status-item.htm',
             controller: ['$scope', function ($scope) {
                 statusService.linkScope($scope);
 
@@ -60,6 +60,6 @@
         };
     };
 
-    fanexStatusDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('fanexStatus', fanexStatusDirective);
+    fanexStatusItemDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('fanexStatusItem', fanexStatusItemDirective);
 })();

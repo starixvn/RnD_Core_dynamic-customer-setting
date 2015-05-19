@@ -18,7 +18,7 @@
             {{'ProductStatus' | fanexTranslate}} <span title="{{'Update' | fanexTranslate}}"
                 class="update" data-ng-click="updateStatuses()"><i class="icon-update"></i></span>
         </div>
-        <div class="body" data-ng-include="statusTemplate">
+        <div class="body" data-fanex-status-container data-collection="statuses" data-setting-level="statusLevel">
         </div>
     </div>
     <div class="container" data-ng-show="discounts">
@@ -36,7 +36,7 @@
                 class="update" data-ng-click="updateBetLimits()"><i class="icon-update"></i>
             </span>
         </div>
-        <div class="body" data-ng-include="betLimitTemplate">
+        <div class="body" data-fanex-bet-limit-container data-collection="betLimits" data-setting-level="betLimitLevel">
         </div>
     </div>
     <div class="container" data-ng-show="positionTakings">

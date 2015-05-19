@@ -25,15 +25,6 @@
         discountFiles[appSettings.formType.MasterEditMember] = 'fanex-discount-master-edit-member-container.htm';
         discountFiles[appSettings.formType.AgentEditMember] = 'fanex-discount-container.htm';
 
-        this.resolveStatus = function () {
-            var queryData = requestService.getQueryData();
-            var settingContext = queryData.SettingContext;
-            var levelFolder = levelFolders[settingContext.StatusLevel];
-            return angular.isDefined(levelFolder)
-            ? 'templates/' + levelFolder + '/fanex-status-container.htm'
-            : undefined;
-        };
-
         this.resolveDiscount = function () {
             var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
@@ -42,15 +33,6 @@
             var fileName = discountFiles[requestContext.FormType];
             return angular.isDefined(levelFolder)
             ? 'templates/' + levelFolder + '/' + fileName
-            : undefined;
-        };
-
-        this.resolveBetLimit = function () {
-            var queryData = requestService.getQueryData();
-            var settingContext = queryData.SettingContext;
-            var levelFolder = levelFolders[settingContext.BetLimitLevel];
-            return angular.isDefined(levelFolder)
-            ? 'templates/' + levelFolder + '/fanex-bet-limit-container.htm'
             : undefined;
         };
 

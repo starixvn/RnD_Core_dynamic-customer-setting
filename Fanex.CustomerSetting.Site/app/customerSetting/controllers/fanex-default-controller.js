@@ -25,7 +25,6 @@
             // status
             $scope.statuses = customerSetting.Statuses;
             $scope.statusLevel = settingContext.StatusLevel;
-            $scope.statusTemplate = templateService.resolveStatus();
 
             // discount
             $scope.discounts = customerSetting.Discounts;
@@ -37,7 +36,6 @@
             // bet limit
             $scope.betLimits = customerSetting.BetLimits;
             $scope.betLimitLevel = settingContext.BetLimitLevel;
-            $scope.betLimitTemplate = templateService.resolveBetLimit();
             $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
 
             // position taking

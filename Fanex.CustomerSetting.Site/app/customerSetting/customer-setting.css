@@ -169,11 +169,7 @@
   border-left: 1px solid #7c98a4;
   cursor: pointer;
 }
-.customer-setting .product-container > .container > .body .sport-group {
-  float: left;
-  width: 100%;
-}
-.customer-setting .product-container > .container > .body .sport-group > .sport-name {
+.customer-setting .product-container > .container > .body .sport-name {
   float: left;
   width: 140px;
   padding: 0 3px;

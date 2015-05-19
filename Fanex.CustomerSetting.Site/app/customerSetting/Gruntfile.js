@@ -16,6 +16,7 @@ module.exports = function (grunt) {
                     module: true,
                     angular: true,
                     document: true,
+                    console: true,
                     window: true
                 }
             }

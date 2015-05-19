@@ -12,7 +12,7 @@
             {{'MaxPerMatch' | fanexTranslate}}
         </div>
     </div>
-    <div data-ng-repeat="betLimit in betLimits" data-fanex-bet-limit="betLimit" data-form-type="formType"
-        data-setting-level="betLimitLevel" data-has-copy="betLimit==betLimits[0] && betLimits.length>=2">
+    <div data-ng-repeat="item in items" data-fanex-bet-limit-item="item" data-form-type="formType"
+        data-setting-level="settingLevel" data-has-copy="item==items[0] && items.length>=2">
     </div>
 </div>

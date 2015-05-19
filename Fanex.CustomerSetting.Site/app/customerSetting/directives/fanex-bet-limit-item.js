@@ -8,7 +8,7 @@
         MaxBet: 3,
         MaxPerMatch: 4
     };
-    var fanexBetLimitDirective = function ($filter, appSettings, betLimitService, resourceService) {
+    var fanexBetLimitItemDirective = function ($filter, appSettings, betLimitService, resourceService) {
         function parse(data, formType) {
             var BetLimitInput = function (value, limit) {
                 this.errors = [];
@@ -116,7 +116,7 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                betLimit: '=fanexBetLimit',
+                betLimit: '=fanexBetLimitItem',
                 formType: '=',
                 settingLevel: '=',
                 hasCopy: '='
@@ -131,8 +131,8 @@
                 $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
                     || $scope.formType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
-                    ? 'templates/fanex-bet-limit-readonly.htm'
-                    : 'templates/fanex-bet-limit.htm';
+                    ? 'templates/fanex-bet-limit-item-readonly.htm'
+                    : 'templates/fanex-bet-limit-item.htm';
 
                 var data = parse(betLimit, $scope.formType);
                 $scope.minBet = data.minBet;
@@ -316,6 +316,6 @@
         };
     };
 
-    fanexBetLimitDirective.$inject = injectParams;
-    angular.module('customerSettingApp').directive('fanexBetLimit', fanexBetLimitDirective);
+    fanexBetLimitItemDirective.$inject = injectParams;
+    angular.module('customerSettingApp').directive('fanexBetLimitItem', fanexBetLimitItemDirective);
 })();
