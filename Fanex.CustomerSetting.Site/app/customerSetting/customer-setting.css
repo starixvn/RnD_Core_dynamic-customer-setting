@@ -261,29 +261,29 @@
 .customer-setting .product-container > .container > .body > .information-container > .row > .col-4 {
   width: 30%;
 }
-.customer-setting .product-container > .container > .body > .status-container .status-item {
+.customer-setting .product-container > .container > .body > .status-block .status-item {
   float: left;
   width: 50%;
 }
-.customer-setting .product-container > .container > .body > .status-container .status-item.full-width {
+.customer-setting .product-container > .container > .body > .status-block .status-item.full-width {
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .status-container .status-item .value .downline {
+.customer-setting .product-container > .container > .body > .status-block .status-item .value .downline {
   margin-left: 10px;
 }
-.customer-setting .product-container > .container > .body > .discount-container .discount-item {
+.customer-setting .product-container > .container > .body .discount-block .discount-item {
   float: left;
   width: 50%;
 }
-.customer-setting .product-container > .container > .body > .discount-container .discount-item.full-width {
+.customer-setting .product-container > .container > .body .discount-block .discount-item.full-width {
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item {
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .master-discount,
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .agent-discount,
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .discount-item > .member-discount {
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .discount-item > .master-discount,
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .discount-item > .agent-discount,
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .discount-item > .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -297,16 +297,16 @@
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .master-discount,
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .agent-discount,
-.customer-setting .product-container > .container > .body > .discount-container.super-edit-member .member-discount {
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .master-discount,
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .agent-discount,
+.customer-setting .product-container > .container > .body .discount-block.super-edit-member .member-discount {
   width: 240px;
 }
-.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item {
+.customer-setting .product-container > .container > .body .discount-block.master-edit-member .discount-item {
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .agent-discount,
-.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .discount-item > .member-discount {
+.customer-setting .product-container > .container > .body .discount-block.master-edit-member .discount-item > .agent-discount,
+.customer-setting .product-container > .container > .body .discount-block.master-edit-member .discount-item > .member-discount {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -320,17 +320,17 @@
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .agent-discount,
-.customer-setting .product-container > .container > .body > .discount-container.master-edit-member .member-discount {
+.customer-setting .product-container > .container > .body .discount-block.master-edit-member .agent-discount,
+.customer-setting .product-container > .container > .body .discount-block.master-edit-member .member-discount {
   width: 360px;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item {
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item {
   float: left;
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match {
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .min-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-per-match {
   float: left;
   padding: 0 3px;
   overflow: hidden;
@@ -342,36 +342,36 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input {
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .min-bet > input,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-bet > input,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-per-match > input {
   width: 50%;
   text-align: right;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet > input.full-width,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet > input.full-width,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match > input.full-width {
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .min-bet > input.full-width,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-bet > input.full-width,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-per-match > input.full-width {
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .min-bet.read-only,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-bet.read-only,
-.customer-setting .product-container > .container > .body > .bet-limit-container .bet-limit-item > .max-per-match.read-only {
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .min-bet.read-only,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-bet.read-only,
+.customer-setting .product-container > .container > .body > .bet-limit-block .bet-limit-item > .max-per-match.read-only {
   background-color: #b5c4d0;
   text-align: center;
 }
-.customer-setting .product-container > .container > .body > .bet-limit-container .min-bet,
-.customer-setting .product-container > .container > .body > .bet-limit-container .max-bet,
-.customer-setting .product-container > .container > .body > .bet-limit-container .max-per-match {
+.customer-setting .product-container > .container > .body > .bet-limit-block .min-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-block .max-bet,
+.customer-setting .product-container > .container > .body > .bet-limit-block .max-per-match {
   width: 240px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item {
+.customer-setting .product-container > .container > .body .position-taking-block .position-taking-item {
   float: left;
   width: 100%;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item > div {
+.customer-setting .product-container > .container > .body .position-taking-block .position-taking-item > div {
   float: left;
   text-align: center;
   padding: 0 3px;
@@ -384,62 +384,62 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container .position-taking-item > div.name {
+.customer-setting .product-container > .container > .body .position-taking-block .position-taking-item > div.name {
   text-align: left;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .super-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .master-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .agent-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.company-edit-super .super-min-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.company-edit-super .super-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.company-edit-super .master-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.company-edit-super .agent-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.company-edit-super .super-min-pt {
   width: 180px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .super-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .master-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .master-min-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-master .super-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-master .master-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-master .master-min-pt {
   width: 210px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-master .super-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-master .super-is-auto {
   width: 90px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .master-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .agent-min-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent .master-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent .agent-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent .agent-min-pt {
   width: 210px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent .master-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent .master-is-auto {
   width: 90px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-max-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .agent-min-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent.disable-auto-mpt .master-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent.disable-auto-mpt .agent-max-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent.disable-auto-mpt .agent-min-pt {
   width: 240px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-agent.disable-auto-mpt .master-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-agent.disable-auto-mpt .master-is-auto {
   display: none;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .super-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .master-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-member .super-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-member .master-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-member .agent-pt {
   width: 210px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.super-edit-member .super-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.super-edit-member .super-is-auto {
   width: 90px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .master-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member .master-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member .agent-pt {
   width: 315px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member .master-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member .master-is-auto {
   width: 90px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-pt,
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .agent-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member.disable-auto-mpt .master-pt,
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member.disable-auto-mpt .agent-pt {
   width: 360px;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.master-edit-member.disable-auto-mpt .master-is-auto {
+.customer-setting .product-container > .container > .body .position-taking-block.master-edit-member.disable-auto-mpt .master-is-auto {
   display: none;
 }
-.customer-setting .product-container > .container > .body > .position-taking-container.agent-edit-member .agent-pt {
+.customer-setting .product-container > .container > .body .position-taking-block.agent-edit-member .agent-pt {
   width: 720px;
 }
 .customer-setting .tooltip-container {

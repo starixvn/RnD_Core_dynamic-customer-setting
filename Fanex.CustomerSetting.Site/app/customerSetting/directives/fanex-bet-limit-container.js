@@ -1,14 +1,16 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDirectiveContainer'];
-    var fanexBetLimitContainerDirective = function (appSettings, modelService, DirectiveContainer) {
-        var queryModel = modelService.getQueryModel();
-        var formType = queryModel.FormType;
-        return new DirectiveContainer('templates/fanex-bet-limit-container.htm', {
-            settingType: appSettings.settingType.BetLimit,
-            formType: formType
-        });
+    var injectParams = [];
+    var fanexBetLimitContainerDirective = function () {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                model: '=fanexBetLimitContainer'
+            },
+            templateUrl: 'templates/fanex-bet-limit-container.htm'
+        };
     };
 
     fanexBetLimitContainerDirective.$inject = injectParams;

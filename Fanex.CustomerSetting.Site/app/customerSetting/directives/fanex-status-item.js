@@ -8,17 +8,18 @@
             replace: true,
             scope: {
                 status: '=fanexStatusItem',
-                formType: '=',
-                settingLevel: '='
+                settingLevel: '=',
+                formType: '='
             },
             templateUrl: 'templates/fanex-status-item.htm',
             controller: ['$scope', function ($scope) {
                 statusService.linkScope($scope);
 
+                var formType = $scope.formType;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
                 $scope.downline = !$scope.status.IsDisabledDownline;
-                $scope.showDownline = $scope.formType !== appSettings.formType.AgentEditMember;
+                $scope.showDownline = formType !== appSettings.formType.AgentEditMember;
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
                 if ($scope.status.IsDisabledUpline === true) {

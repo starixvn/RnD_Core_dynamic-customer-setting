@@ -109,6 +109,9 @@
                         maxBet: new BetLimitInput(data.MaxBet, data.MaxBetMax),
                         maxPerMatch: new BetLimitInput(data.MaxPerMatch, data.MaxPerMatchMax)
                     };
+
+                default:
+                    throw 'Not implemented yet.';
             }
         }
 
@@ -117,28 +120,27 @@
             replace: true,
             scope: {
                 betLimit: '=fanexBetLimitItem',
-                formType: '=',
                 settingLevel: '=',
-                hasCopy: '='
+                formType: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
                 betLimitService.linkScope($scope);
 
-                $scope.settingType = appSettings.settingType.BetLimit;
+                var formType = $scope.formType;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;
-                $scope.isReadonly = $scope.formType === appSettings.formType.SuperEditMember
-                    || $scope.formType === appSettings.formType.MasterEditMember;
+                $scope.isReadonly = formType === appSettings.formType.SuperEditMember
+                    || formType === appSettings.formType.MasterEditMember;
                 $scope.templateUrl = $scope.isReadonly
                     ? 'templates/fanex-bet-limit-item-readonly.htm'
                     : 'templates/fanex-bet-limit-item.htm';
 
-                var data = parse(betLimit, $scope.formType);
+                var data = parse(betLimit, formType);
                 $scope.minBet = data.minBet;
                 $scope.hasMinBetLimit = $scope.minBet.limit > 0;
                 $scope.maxBet = data.maxBet;
-                $scope.hasMaxBetLimit = $scope.formType !== appSettings.formType.CompanyEditSuper;
+                $scope.hasMaxBetLimit = formType !== appSettings.formType.CompanyEditSuper;
                 $scope.maxPerMatch = data.maxPerMatch;
                 $scope.hasMaxPerMatchLimit = $scope.hasMaxBetLimit;
                 $scope.appSettings = appSettings;

@@ -1,0 +1,22 @@
+﻿<div class="container" data-ng-show="model">
+    <div class="header">
+        {{'Commission' | fanexTranslate}} <span data-ng-show="model.HasUpdate" title="{{'Update' | fanexTranslate}}"
+            class="update" data-ng-click="model.Update()"><i class="icon-update"></i></span>
+    </div>
+    <div class="body" data-ng-switch on="formType">
+        <div data-ng-switch-when="5">
+            <div data-fanex-discount-super-edit-member-block data-collection="model.Collection"
+                data-setting-level="model.SettingLevel">
+            </div>
+        </div>
+        <div data-ng-switch-when="6">
+            <div data-fanex-discount-master-edit-member-block data-collection="model.Collection"
+                data-setting-level="model.SettingLevel">
+            </div>
+        </div>
+        <div data-ng-switch-default>
+            <div data-fanex-discount-block data-collection="model.Collection" data-setting-level="model.SettingLevel">
+            </div>
+        </div>
+    </div>
+</div>

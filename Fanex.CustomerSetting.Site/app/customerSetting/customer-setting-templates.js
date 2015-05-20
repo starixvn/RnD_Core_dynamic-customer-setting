@@ -3,8 +3,13 @@
 angular.module('customerSettingApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('templates/fanex-bet-limit-block.htm',
+    "<div class=bet-limit-block><div class=title><div class=name></div><div class=min-bet>{{'MinBet' | fanexTranslate}}</div><div class=max-bet>{{'MaxBet' | fanexTranslate}}</div><div class=max-per-match>{{'MaxPerMatch' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-bet-limit-item=item data-form-type=formType data-setting-level=settingLevel data-has-copy=\"item==items[0] && items.length>=2\"></div></div>"
+  );
+
+
   $templateCache.put('templates/fanex-bet-limit-container.htm',
-    "<div class=bet-limit-container><div class=title><div class=name></div><div class=min-bet>{{'MinBet' | fanexTranslate}}</div><div class=max-bet>{{'MaxBet' | fanexTranslate}}</div><div class=max-per-match>{{'MaxPerMatch' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-bet-limit-item=item data-form-type=formType data-setting-level=settingLevel data-has-copy=\"item==items[0] && items.length>=2\"></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-bet-limit-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div>"
   );
 
 
@@ -29,7 +34,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-default-page.htm',
-    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div class=container data-ng-show=statuses><div class=header>{{'ProductStatus' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateStatuses()><i class=icon-update></i></span></div><div class=body data-fanex-status-container data-collection=statuses data-setting-level=statusLevel></div></div><div class=container data-ng-show=discounts><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=hasUpdateDiscount title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateDiscounts()><i class=icon-update></i></span></div><div class=body data-ng-include=discountTemplate></div></div><div class=container data-ng-show=betLimits><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=hasUpdateBetLimit title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updateBetLimits()><i class=icon-update></i></span></div><div class=body data-fanex-bet-limit-container data-collection=betLimits data-setting-level=betLimitLevel></div></div><div class=container data-ng-show=positionTakings><div class=header>{{'PositionTaking' | fanexTranslate}} <span title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=updatePositionTakings()><i class=icon-update></i></span></div><div class=body data-ng-include=positionTakingTemplate></div></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
+    "<div data-fanex-message></div><div class=product-container><div class=container data-ng-show=custNames><div class=header>{{custNames}}</div></div><div class=container data-ng-show=information><div class=header>{{'GeneralInformation' | fanexTranslate}}</div><div class=body data-fanex-customer-information=information></div></div><div data-fanex-status-container=statusModel></div><div data-fanex-discount-container=discountModel></div><div data-fanex-bet-limit-container=betLimitModel></div><div data-fanex-pt-container=positionTakingModel></div><button class=update data-ng-show=hasUpdateAll data-ng-click=updateAll()>{{'Update' | fanexTranslate}}</button></div><div data-fanex-tooltip></div><div data-fanex-pt-update-member-dialog></div>"
   );
 
 
@@ -38,18 +43,38 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('templates/fanex-discount-master-edit-member.htm',
+  $templateCache.put('templates/fanex-discount-block.htm',
+    "<div class=discount-block><div data-ng-repeat=\"item in items\" data-fanex-discount-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-discount-container.htm',
+    "<div class=container data-ng-show=model><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch on=formType><div data-ng-switch-when=5><div data-fanex-discount-super-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=6><div data-fanex-discount-master-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-default><div data-fanex-discount-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-discount-item.htm',
+    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-discount-master-edit-member-block.htm',
+    "<div class=\"discount-block master-edit-member\"><div class=title><div class=name></div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-discount-master-edit-member-item=item data-setting-level=settingLevel></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-discount-master-edit-member-item.htm',
     "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-discount-super-edit-member.htm',
-    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
+  $templateCache.put('templates/fanex-discount-super-edit-member-block.htm',
+    "<div class=\"discount-block super-edit-member\"><div class=title><div class=name></div><div class=master-discount>{{'CommissionForMaster' | fanexTranslate}}</div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-discount-super-edit-member-item=item data-setting-level=settingLevel></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-discount.htm',
-    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+  $templateCache.put('templates/fanex-discount-super-edit-member-item.htm',
+    "<div class=discount-item><div class=name title={{name}}>{{name}}</div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
@@ -68,13 +93,28 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('templates/fanex-pt-agent-edit-member.htm',
+  $templateCache.put('templates/fanex-pt-agent-edit-member-block.htm',
+    "<div class=\"position-taking-block agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-agent-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-agent-edit-member-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=agent-pt data-fanex-pt-select=agentPT></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-pt-company-edit-super.htm',
+  $templateCache.put('templates/fanex-pt-company-edit-super-block.htm',
+    "<div class=\"position-taking-block company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-company-edit-super-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-company-edit-super-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-max-pt data-fanex-pt-select=superMaxPT></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=super-min-pt data-fanex-pt-select=superMinPT></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-container.htm',
+    "<div class=container data-ng-show=model><div class=header>{{'PositionTaking' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch on=formType><div data-ng-switch-when=1><div data-fanex-pt-company-edit-super-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=2><div data-fanex-pt-super-edit-master-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=3><div data-fanex-pt-master-edit-agent-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=4><div data-fanex-pt-agent-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=5><div data-fanex-pt-super-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=6><div data-fanex-pt-master-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div></div></div>"
   );
 
 
@@ -83,12 +123,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('templates/fanex-pt-master-edit-agent.htm',
+  $templateCache.put('templates/fanex-pt-master-edit-agent-block.htm',
+    "<div class=\"position-taking-block master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-agent-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-master-edit-agent-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=agent-min-pt data-fanex-pt-select=agentMinPT></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-pt-master-edit-member.htm',
+  $templateCache.put('templates/fanex-pt-master-edit-member-block.htm',
+    "<div class=\"position-taking-block master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-master-edit-member-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
   );
 
@@ -98,12 +148,22 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('templates/fanex-pt-super-edit-master.htm',
+  $templateCache.put('templates/fanex-pt-super-edit-master-block.htm',
+    "<div class=\"position-taking-block super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-master-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-super-edit-master-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=master-min-pt data-fanex-pt-select=masterMinPT></div></div>"
   );
 
 
-  $templateCache.put('templates/fanex-pt-super-edit-member.htm',
+  $templateCache.put('templates/fanex-pt-super-edit-member-block.htm',
+    "<div class=\"position-taking-block super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-pt-super-edit-member-item.htm',
     "<div class=position-taking-item><div class=name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=\"masterPT | fanexPtFormat\"></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
   );
 
@@ -113,8 +173,13 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('templates/fanex-status-block.htm',
+    "<div class=status-block><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+  );
+
+
   $templateCache.put('templates/fanex-status-container.htm',
-    "<div class=status-container><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'ProductStatus' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-status-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div>"
   );
 
 
@@ -125,96 +190,6 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
   $templateCache.put('templates/fanex-tooltip.htm',
     "<div class=tooltip-container data-ng-class=align><div class=tooltip-arrow></div><div class=tooltip-inner data-ng-bind=message></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-discount-container.htm',
-    "<div class=discount-container><div data-ng-repeat=\"discount in discounts\" data-fanex-discount=discount data-setting-level=discountLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-discount-master-edit-member-container.htm',
-    "<div class=\"discount-container master-edit-member\"><div class=title><div class=name></div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-master-edit-member=discount data-setting-level=discountLevel></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-discount-super-edit-member-container.htm',
-    "<div class=\"discount-container super-edit-member\"><div class=title><div class=name></div><div class=master-discount>{{'CommissionForMaster' | fanexTranslate}}</div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discounts\" data-fanex-discount-super-edit-member=discount data-setting-level=discountLevel></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-agent-edit-member-container.htm',
-    "<div class=\"position-taking-container agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-agent-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-company-edit-super-container.htm',
-    "<div class=\"position-taking-container company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-company-edit-super=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-master-edit-agent-container.htm',
-    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-master-edit-agent=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-master-edit-member-container.htm',
-    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-master-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-super-edit-master-container.htm',
-    "<div class=\"position-taking-container super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-super-edit-master=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/no-group/fanex-pt-super-edit-member-container.htm',
-    "<div class=\"position-taking-container super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakings\" data-fanex-pt-super-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-discount-container.htm',
-    "<div class=discount-container data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount=discount data-form-type=formType data-setting-level=discountLevel data-ng-class=\"{'full-width': $last && $even}\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-discount-master-edit-member-container.htm',
-    "<div class=\"discount-container master-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount-master-edit-member=discount data-setting-level=discountLevel></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-discount-super-edit-member-container.htm',
-    "<div class=\"discount-container super-edit-member\" data-ng-init=\"discountGroups=(discounts|fanexDataGroup)\"><div data-ng-repeat=\"discountGroup in discountGroups\" class=sport-group><div class=sport-name title={{discountGroup.SportTypeName}}>{{discountGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-discount>{{'CommissionForMaster' | fanexTranslate}}</div><div class=agent-discount>{{'CommissionForAgent' | fanexTranslate}}</div><div class=member-discount>{{'CommissionForMember' | fanexTranslate}}</div></div><div data-ng-repeat=\"discount in discountGroup.Items\" data-fanex-discount-super-edit-member=discount data-setting-level=discountLevel></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-agent-edit-member-container.htm',
-    "<div class=\"position-taking-container agent-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-agent-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-company-edit-super-container.htm',
-    "<div class=\"position-taking-container company-edit-super\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-company-edit-super=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-master-edit-agent-container.htm',
-    "<div class=\"position-taking-container master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-master-edit-agent=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-master-edit-member-container.htm',
-    "<div class=\"position-taking-container master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-master-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-super-edit-master-container.htm',
-    "<div class=\"position-taking-container super-edit-master\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-super-edit-master=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
-  );
-
-
-  $templateCache.put('templates/sport-group/fanex-pt-super-edit-member-container.htm',
-    "<div class=\"position-taking-container super-edit-member\" data-ng-init=\"positionTakingGroups=(positionTakings|fanexDataGroup)\"><div data-ng-repeat=\"positionTakingGroup in positionTakingGroups\" class=sport-group><div class=sport-name title={{positionTakingGroup.SportTypeName}}>{{positionTakingGroup.SportTypeName}}</div><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"positionTaking in positionTakingGroup.Items\" data-fanex-pt-super-edit-member=positionTaking data-setting-level=positionTakingLevel data-has-copy=\"positionTaking==positionTakings[0] && positionTakings.length>=2\"></div></div></div>"
   );
 
 } ]);

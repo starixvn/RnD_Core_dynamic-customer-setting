@@ -10,9 +10,20 @@
             compile: function (element, attr, linker) {
                 return function (scope, $element) {
                     var currentElement;
+                    var currentScope;
+
+                    function cleanup(){
+                        if (currentElement) {
+                            currentElement.remove();
+                            currentScope.$destroy();
+                            currentElement = null;
+                        }
+                    }
 
                     // update view
                     function update() {
+                        cleanup();
+
                         var productViewSetting = fanexProductSettingService.errorViewSetting;
                         var queryModel = modelService.getQueryModel();
                         if (angular.isDefined(queryModel)) {
@@ -32,12 +43,9 @@
                             clone.html(template);
                             $element.after(clone);
 
-                            if (currentElement) {
-                                currentElement.remove();
-                            }
-
                             var link = $compile(clone.contents());
                             currentElement = clone;
+                            currentScope = newScope;
                             var controller = productViewSetting.controller;
                             if (angular.isDefined(controller)) {
                                 controller = $controller(productViewSetting.controller, {

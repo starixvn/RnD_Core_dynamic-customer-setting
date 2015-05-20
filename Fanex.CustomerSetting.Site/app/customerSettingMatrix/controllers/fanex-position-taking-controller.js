@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['$scope', '$http'];
-    var fanexPositionTakingController = function ($scope, $http) {
+    var injectParams = ['$scope', '$http', 'fanexAppSettings'];
+    var fanexPositionTakingController = function ($scope, $http, appSettings) {
         $scope.products = [
             { id: 250, name: 'Product-250' },
             { id: 251, name: 'Product-251' },
@@ -31,18 +31,22 @@
             submit(productId, userName);
         };
 
-        var body = angular.element(document.body);
-        var rootUrl = body.attr('data-root-url');
+        $scope.$on('fanex-user-clicked', function(event, userName){
+            $scope.userName = userName;
+            $scope.submit();
+        });
+
         function submit(productId, userName) {
             var queryModel = {
                 ProductId: productId,
                 UserName: userName
             };
 
-            var url = rootUrl + '/CustomerSettingMatrix/PositionTaking';
+            var url = appSettings.rootUrl + '/CustomerSettingMatrix/PositionTaking';
             var request = $http.post(url, queryModel);
             request.success(function (response) {
                 console.log(response);
+                $scope.customer = response.Customer;
             });
         }
     };

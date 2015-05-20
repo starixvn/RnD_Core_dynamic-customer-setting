@@ -112,6 +112,9 @@
 
                 case appSettings.formType.AgentEditMember:
                     return new AgentEditMemberHandler();
+
+                default:
+                    throw 'Not implemented yet.';
             }
         }
 

@@ -13,40 +13,13 @@
         <div class="body" data-fanex-customer-information="information">
         </div>
     </div>
-    <div class="container" data-ng-show="statuses">
-        <div class="header">
-            {{'ProductStatus' | fanexTranslate}} <span title="{{'Update' | fanexTranslate}}"
-                class="update" data-ng-click="updateStatuses()"><i class="icon-update"></i></span>
-        </div>
-        <div class="body" data-fanex-status-container data-collection="statuses" data-setting-level="statusLevel">
-        </div>
+    <div data-fanex-status-container="statusModel">
     </div>
-    <div class="container" data-ng-show="discounts">
-        <div class="header">
-            {{'Commission' | fanexTranslate}} <span data-ng-show="hasUpdateDiscount" title="{{'Update' | fanexTranslate}}"
-                class="update" data-ng-click="updateDiscounts()"><i class="icon-update"></i>
-            </span>
-        </div>
-        <div class="body" data-ng-include="discountTemplate">
-        </div>
+    <div data-fanex-discount-container="discountModel">
     </div>
-    <div class="container" data-ng-show="betLimits">
-        <div class="header">
-            {{'BetSetting' | fanexTranslate}} <span data-ng-show="hasUpdateBetLimit" title="{{'Update' | fanexTranslate}}"
-                class="update" data-ng-click="updateBetLimits()"><i class="icon-update"></i>
-            </span>
-        </div>
-        <div class="body" data-fanex-bet-limit-container data-collection="betLimits" data-setting-level="betLimitLevel">
-        </div>
+    <div data-fanex-bet-limit-container="betLimitModel">
     </div>
-    <div class="container" data-ng-show="positionTakings">
-        <div class="header">
-            {{'PositionTaking' | fanexTranslate}} <span title="{{'Update' | fanexTranslate}}"
-                class="update" data-ng-click="updatePositionTakings()"><i class="icon-update"></i>
-            </span>
-        </div>
-        <div class="body" data-ng-include="positionTakingTemplate">
-        </div>
+    <div data-fanex-pt-container="positionTakingModel">
     </div>
     <button class="update" data-ng-show="hasUpdateAll" data-ng-click="updateAll()">
         {{'Update' | fanexTranslate}}

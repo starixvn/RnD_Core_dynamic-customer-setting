@@ -13,12 +13,6 @@
                 <li><a href="#">Commission Matrix</a></li>
             </ul>
         </div>
-        <ol class="breadcrumb">
-            <li><a href="#">Super</a></li>
-            <li><a href="#">Master</a></li>
-            <li><a href="#">Agent</a></li>
-            <li class="active">Member</li>
-        </ol>
         <div class="form">
             <div class="controls">
                 <label for="product">
@@ -40,6 +34,8 @@
             </div>
         </div>
         <div class="message" data-ng-show="message" data-ng-bind="message">
+        </div>
+        <div class="breadcrumb" data-ng-hide="message" data-fanex-breadcrumb="customer">
         </div>
         <div class="result" data-ng-hide="message">
             Result

@@ -38,6 +38,9 @@
 
                 case appSettings.settingType.PositionTaking:
                     return new PositionTakingHandler();
+
+                default:
+                    throw 'Not implemented yet.';
             }
         }
 

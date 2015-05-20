@@ -1,0 +1,18 @@
+﻿<div class="bet-limit-block">
+    <div class="title">
+        <div class="name">
+        </div>
+        <div class="min-bet">
+            {{'MinBet' | fanexTranslate}}
+        </div>
+        <div class="max-bet">
+            {{'MaxBet' | fanexTranslate}}
+        </div>
+        <div class="max-per-match">
+            {{'MaxPerMatch' | fanexTranslate}}
+        </div>
+    </div>
+    <div data-ng-repeat="item in items" data-fanex-bet-limit-item="item" data-form-type="formType"
+        data-setting-level="settingLevel" data-has-copy="item==items[0] && items.length>=2">
+    </div>
+</div>

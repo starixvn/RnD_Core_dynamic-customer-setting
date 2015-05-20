@@ -2,12 +2,11 @@
 
 (function () {
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
-            'fanexTemplateService', 'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
+            'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
-            templateService, requestService, messageService, resourceService, SettingTypeHandler, commonService) {
+            requestService, messageService, resourceService, SettingTypeHandler, commonService) {
         var queryModel = modelService.getQueryModel();
         requestService.query(queryModel, function (queryData) {
-            var requestContext = queryData.RequestContext;
             var customerSetting = queryData.CustomerSetting;
             var settingContext = queryData.SettingContext;
             resourceService.setCurrentProductName(queryData.ProductName);
@@ -23,52 +22,69 @@
             $scope.formType = queryModel.FormType;
 
             // status
-            $scope.statuses = customerSetting.Statuses;
-            $scope.statusLevel = settingContext.StatusLevel;
+            if (customerSetting.Statuses) {
+                $scope.statusModel = {
+                    Collection: customerSetting.Statuses,
+                    SettingLevel: settingContext.StatusLevel,
+                    HasUpdate: true,
+                    Update: updateStatuses
+                };
+            }
 
             // discount
-            $scope.discounts = customerSetting.Discounts;
-            $scope.discountLevel = settingContext.DiscountLevel;
-            $scope.discountTemplate = templateService.resolveDiscount();
-            $scope.hasUpdateDiscount = $scope.formType !== appSettings.formType.SuperEditMember
-                && $scope.formType !== appSettings.formType.MasterEditMember;
+            if (customerSetting.Discounts) {
+                $scope.discountModel = {
+                    Collection: customerSetting.Discounts,
+                    SettingLevel: settingContext.DiscountLevel,
+                    HasUpdate: $scope.formType !== appSettings.formType.SuperEditMember
+                    && $scope.formType !== appSettings.formType.MasterEditMember,
+                    Update: updateDiscounts
+                };
+            }
 
             // bet limit
-            $scope.betLimits = customerSetting.BetLimits;
-            $scope.betLimitLevel = settingContext.BetLimitLevel;
-            $scope.hasUpdateBetLimit = $scope.hasUpdateDiscount;
+            if (customerSetting.BetLimits) {
+                $scope.betLimitModel = {
+                    Collection: customerSetting.BetLimits,
+                    SettingLevel: settingContext.BetLimitLevel,
+                    HasUpdate: $scope.discountModel.HasUpdate,
+                    Update: updateBetLimits
+                };
+            }
 
             // position taking
-            $scope.positionTakings = customerSetting.PositionTakings;
-            $scope.positionTakingLevel = settingContext.PositionTakingLevel;
-            $scope.positionTakingTemplate = templateService.resolvePositionTaking();
-            if (requestContext.FormType === appSettings.formType.MasterEditAgent) {
-                $scope.disableAutoMPT = settingContext.DisableAutoMPT;
+            if (customerSetting.PositionTakings) {
+                $scope.positionTakingModel = {
+                    Collection: customerSetting.PositionTakings,
+                    SettingLevel: settingContext.PositionTakingLevel,
+                    HasUpdate: true,
+                    Update: updatePositionTakings
+                };
             }
 
             $scope.hasUpdateAll = queryModel;
         });
 
         var commandType;
-        $scope.updateStatuses = function () {
+        function updateStatuses() {
             commandType = appSettings.commandType.Status;
             update();
-        };
+        }
 
-        $scope.updateDiscounts = function () {
+        function updateDiscounts() {
             commandType = appSettings.commandType.Discount;
             update();
-        };
+        }
 
-        $scope.updateBetLimits = function () {
+        function updateBetLimits() {
             commandType = appSettings.commandType.BetLimit;
             update();
-        };
+        }
 
-        $scope.updatePositionTakings = function () {
+        function updatePositionTakings() {
             commandType = appSettings.commandType.PositionTaking;
             update();
-        };
+        }
 
         $scope.updateAll = function () {
             commandType = appSettings.commandType.All;
@@ -142,7 +158,7 @@
                         var isAuto = pt[isAutoPTName];
                         if (isAuto === false) {
                             var ptValue = pt[ptName];
-                            var name = resourceService.getDisplayName($scope.positionTakingLevel, pt);
+                            var name = resourceService.getDisplayName($scope.positionTakingModel.SettingLevel, pt);
                             memberPTs.push({
                                 SportType: pt.SportType,
                                 BetType: pt.BetType,
@@ -217,6 +233,9 @@
                         return;
                     }
                     break;
+
+                default:
+                    throw 'Not implemented yet.';
             }
 
             if (angular.isDefined(updateMemberPT)) {
@@ -298,19 +317,19 @@
                         var settingType = settingResult.SettingType;
                         switch (settingType) {
                             case appSettings.settingType.Status:
-                                reload($scope.statuses, statuses);
+                                reload($scope.statusModel.Collection, statuses);
                                 break;
 
                             case appSettings.settingType.Discount:
-                                reload($scope.discounts, discounts);
+                                reload($scope.discountModel.Collection, discounts);
                                 break;
 
                             case appSettings.settingType.BetLimit:
-                                reload($scope.betLimits, betLimits);
+                                reload($scope.betLimitModel.Collection, betLimits);
                                 break;
 
                             case appSettings.settingType.PositionTaking:
-                                reload($scope.positionTakings, positionTakings);
+                                reload($scope.positionTakingModel.Collection, positionTakings);
                                 break;
                         }
                     }

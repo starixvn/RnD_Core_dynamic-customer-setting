@@ -41,12 +41,18 @@
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
                     return currentProductName;
+
                 case appSettings.settingLevel.SportType:
                     return data.SportTypeName;
+
                 case appSettings.settingLevel.BetType:
                     return data.BetTypeName + liveName;
+
                 case appSettings.settingLevel.SportTypeBetType:
                     return data.BetTypeName + liveName;
+
+                default:
+                    throw 'Not implemented yet.';
             }
         }
 

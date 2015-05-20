@@ -1,14 +1,16 @@
 ﻿'use strict';
 
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDirectiveContainer'];
-    var fanexStatusContainerDirective = function (appSettings, modelService, DirectiveContainer) {
-        var queryModel = modelService.getQueryModel();
-        var formType = queryModel.FormType;
-        return new DirectiveContainer('templates/fanex-status-container.htm', {
-            settingType: appSettings.settingType.Status,
-            formType: formType
-        });
+    var injectParams = [];
+    var fanexStatusContainerDirective = function () {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                model: '=fanexStatusContainer'
+            },
+            templateUrl: 'templates/fanex-status-container.htm'
+        };
     };
 
     fanexStatusContainerDirective.$inject = injectParams;
