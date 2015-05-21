@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$timeout'];
     var fanexTooltipService = function ($timeout) {
         var tooltipScope;

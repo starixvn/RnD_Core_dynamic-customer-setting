@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
             'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,

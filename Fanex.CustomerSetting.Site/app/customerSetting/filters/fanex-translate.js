@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexResourceService'];
     var fanexTranslate = function (resourceService) {
         return function (key) {

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexMessageService'];
     var fanexMessageDirective = function (fanexMessageService) {
         return {

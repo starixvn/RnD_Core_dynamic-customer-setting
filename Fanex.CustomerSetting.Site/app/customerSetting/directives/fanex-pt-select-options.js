@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$parse', 'fanexAppSettings'];
     var fanexPtSelectOptionsDirective = function ($parse, appSettings) {
         var optionTemplate = angular.element(document.createElement('option'));

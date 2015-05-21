@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings'];
     var fanexFormTypeHandler = function (appSettings) {
         var CompanyEditSuperHandler = function () {

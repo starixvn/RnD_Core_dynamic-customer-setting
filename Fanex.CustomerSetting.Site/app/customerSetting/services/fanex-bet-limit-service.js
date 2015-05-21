@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexDirectiveLinker'];
     var fanexBetLimitService = function (DirectiveLinker) {
         var service = new DirectiveLinker();

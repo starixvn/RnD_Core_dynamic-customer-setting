@@ -9,15 +9,19 @@
     public class PositionTakingMatrixService : IPositionTakingMatrixService
     {
         private readonly IPositionTakingMatrixRepository _positionTakingMatrixRepository;
+        private readonly IResourceService _resourceService;
 
         public PositionTakingMatrixService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public PositionTakingMatrixService(IPositionTakingMatrixRepository positionTakingMatrixRepository)
+        public PositionTakingMatrixService(
+            IPositionTakingMatrixRepository positionTakingMatrixRepository,
+            IResourceService resourceService)
         {
             _positionTakingMatrixRepository = positionTakingMatrixRepository ?? new PositionTakingMatrixRepository();
+            _resourceService = resourceService ?? new ResourceService();
         }
 
         public PositionTakingMatrixEntity Query(QueryInfo queryInfo)
@@ -33,7 +37,14 @@
                 throw new ArgumentException("criteria is not valid");
             }
 
-            return _positionTakingMatrixRepository.Query(criteria);
+            var result = _positionTakingMatrixRepository.Query(criteria);
+            foreach (var setting in result.Settings)
+            {
+                setting.SportTypeName = _resourceService.GetSportTypeName(setting.SportType);
+                setting.BetTypeName = _resourceService.GetBetTypeName(setting.BetType);
+            }
+
+            return result;
         }
     }
 }

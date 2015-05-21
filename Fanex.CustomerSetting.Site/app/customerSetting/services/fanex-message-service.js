@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope', '$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
     var fanexMessageService = function ($rootScope, $timeout, $sce, commonService, appSettings, resourceService) {
         var messageScope;

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$window'];
     var fanexCommonService = function ($window) {
         // scroll to top

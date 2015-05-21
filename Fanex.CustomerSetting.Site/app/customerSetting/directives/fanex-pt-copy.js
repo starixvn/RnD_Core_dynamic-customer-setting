@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexPtService', 'fanexResourceService', 'fanexTooltipService'];
     var fanexPtCopyDirective = function (ptService, resourceService, tooltipService) {
         return {

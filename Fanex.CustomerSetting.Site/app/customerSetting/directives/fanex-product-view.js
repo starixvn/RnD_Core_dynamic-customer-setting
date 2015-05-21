@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
             'fanexProductSettingService', 'fanexModelService'];
     var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,

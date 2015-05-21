@@ -1,8 +1,7 @@
-﻿'use strict';
-
-(function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexDiscountMasterEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+﻿(function () {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexDiscountMasterEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-discount-master-edit-member-block.htm');
     };
 

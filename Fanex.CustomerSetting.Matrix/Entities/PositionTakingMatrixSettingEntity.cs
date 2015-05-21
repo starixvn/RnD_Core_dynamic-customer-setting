@@ -4,7 +4,11 @@
     {
         public short SportType { get; set; }
 
+        public string SportTypeName { get; set; }
+
         public short BetType { get; set; }
+
+        public string BetTypeName { get; set; }
 
         public bool IsLive { get; set; }
 
@@ -22,8 +26,8 @@
 
         public bool IsAutoMasterPT { get; set; }
 
-        public byte MinPT { get; set; }
+        public byte AgentPT { get; set; }
 
-        public byte MaxPT { get; set; }
+        public byte MinPT { get; set; }
     }
 }

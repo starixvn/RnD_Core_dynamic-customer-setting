@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtMasterEditAgentItemDirective = function (appSettings, ptService, resourceService) {
         return {

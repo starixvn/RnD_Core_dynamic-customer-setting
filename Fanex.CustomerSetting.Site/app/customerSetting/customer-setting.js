@@ -1,8 +1,7 @@
 /*! fanex-customer-setting v0.0.1 | (c) 2015 Nexcel Solutions Vietnam */
 
-'use strict';
-
 (function () {
+    'use strict';
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'fanexMessageService', 'fanexBlockUiService',
@@ -142,7 +141,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-agent-edit-member-block.htm',
-    "<div class=\"position-taking-block agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-agent-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-agent-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -152,7 +151,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-company-edit-super-block.htm',
-    "<div class=\"position-taking-block company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-company-edit-super-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-company-edit-super-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -172,7 +171,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-agent-block.htm',
-    "<div class=\"position-taking-block master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-agent-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-agent-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -182,7 +181,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-member-block.htm',
-    "<div class=\"position-taking-block master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -197,7 +196,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-master-block.htm',
-    "<div class=\"position-taking-block super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-master-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-master-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -207,7 +206,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-member-block.htm',
-    "<div class=\"position-taking-block super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -244,9 +243,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 /*jshint -W101*/
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope', '$scope', 'fanexAppSettings', 'fanexModelService', 'fanexUpdateMemberPtService',
             'fanexRequestService', 'fanexMessageService', 'fanexResourceService', 'fanexSettingTypeHandler', 'fanexCommonService'];
     var fanexDefaultController = function ($rootScope, $scope, appSettings, modelService, updateMemberPtService,
@@ -588,9 +586,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').controller('FanexDefaultController', fanexDefaultController);
 } ());
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$timeout', 'fanexMessageService'];
     var fanexErrorController = function ($timeout, messageService) {
         messageService.showError('Please check your URL');
@@ -600,11 +597,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').controller('FanexErrorController', fanexErrorController);
 } ());
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDirectiveBlock'];
-    var fanexBetLimitBlockDirective = function (appSettings, modelService, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexModelService', 'fanexDirectiveBlock'];
+    var fanexBetLimitBlockDirective = function (modelService, DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-bet-limit-block.htm', function (scope) {
             var queryModel = modelService.getQueryModel();
             scope.formType = queryModel.FormType;
@@ -615,9 +611,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexBetLimitBlock', fanexBetLimitBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexBetLimitContainerDirective = function () {
         return {
@@ -634,9 +629,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexBetLimitContainer', fanexBetLimitContainerDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$filter', 'fanexAppSettings', 'fanexCommonService', 'fanexTooltipService'];
     var fanexBetLimitInputDirective = function ($filter, appSettings, commonService, tooltipService) {
         return {
@@ -716,9 +710,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexBetLimitInput', fanexBetLimitInputDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$filter', 'fanexAppSettings', 'fanexBetLimitService', 'fanexResourceService'];
     var errorType = {
         Limit: 1,
@@ -1040,9 +1033,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexBetLimitItem', fanexBetLimitItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$compile', '$templateCache', 'fanexBlockUiService'];
     var fanexBlockUiDirective = function ($compile, $templateCache, blockUiService) {
         return {
@@ -1065,9 +1057,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexBlockUi', fanexBlockUiDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexCustomerInformationDirective = function () {
         return {
@@ -1098,11 +1089,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexCustomerInformation', fanexCustomerInformationDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDirectiveBlock'];
-    var fanexDiscountBlockDirective = function (appSettings, modelService, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexModelService', 'fanexDirectiveBlock'];
+    var fanexDiscountBlockDirective = function (modelService, DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-discount-block.htm', function (scope) {
             var queryModel = modelService.getQueryModel();
             scope.formType = queryModel.FormType;
@@ -1113,9 +1103,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountBlock', fanexDiscountBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexModelService'];
     var fanexDiscountContainerDirective = function (modelService) {
         return {
@@ -1136,9 +1125,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountContainer', fanexDiscountContainerDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexDiscountService', 'fanexResourceService'];
     var fanexDiscountDirective = function (appSettings, discountService, resourceService) {
         function parse(data, formType) {
@@ -1228,11 +1216,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountItem', fanexDiscountDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexDiscountMasterEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexDiscountMasterEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-discount-master-edit-member-block.htm');
     };
 
@@ -1240,9 +1227,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountMasterEditMemberBlock', fanexDiscountMasterEditMemberBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexDiscountService', 'fanexResourceService'];
     var fanexDiscountMasterEditMemberItemDirective = function (discountService, resourceService) {
         return {
@@ -1268,11 +1254,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountMasterEditMemberItem', fanexDiscountMasterEditMemberItemDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexDiscountSuperEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexDiscountSuperEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-discount-super-edit-member-block.htm');
     };
 
@@ -1280,9 +1265,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountSuperEditMemberBlock', fanexDiscountSuperEditMemberBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexDiscountService', 'fanexResourceService'];
     var fanexSuperEditMemberDiscountItemDirective = function (discountService, resourceService) {
         return {
@@ -1309,9 +1293,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexDiscountSuperEditMemberItem', fanexSuperEditMemberDiscountItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexSettingTypeHandler'];
     var fanexItemCopyDirective = function (SettingTypeHandler) {
         return {
@@ -1343,9 +1326,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexItemCopy', fanexItemCopyDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexMessageService'];
     var fanexMessageDirective = function (fanexMessageService) {
         return {
@@ -1362,9 +1344,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexMessage', fanexMessageDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
             'fanexProductSettingService', 'fanexModelService'];
     var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
@@ -1435,11 +1416,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexProductView', fanexProductViewDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexPtAgentEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexPtAgentEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-agent-edit-member-block.htm');
     };
 
@@ -1447,9 +1427,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtAgentEditMemberBlock', fanexPtAgentEditMemberBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtAgentEditMemberItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -1519,11 +1498,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtAgentEditMemberItem', fanexPtAgentEditMemberItemDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexPtCompanyEditSuperBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexPtCompanyEditSuperBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-company-edit-super-block.htm');
     };
 
@@ -1531,9 +1509,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtCompanyEditSuperBlock', fanexPtCompanyEditSuperBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtCompanyEditSuperItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -1655,9 +1632,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtCompanyEditSuperItem', fanexPtCompanyEditSuperItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexModelService'];
     var fanexPtContainerDirective = function (modelService) {
         return {
@@ -1678,9 +1654,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtContainer', fanexPtContainerDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexPtService', 'fanexResourceService', 'fanexTooltipService'];
     var fanexPtCopyDirective = function (ptService, resourceService, tooltipService) {
         return {
@@ -1725,11 +1700,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtCopy', fanexPtCopyDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexRequestService', 'fanexDirectiveBlock'];
-    var fanexPtMasterEditAgentBlockDirective = function (appSettings, requestService, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexRequestService', 'fanexDirectiveBlock'];
+    var fanexPtMasterEditAgentBlockDirective = function (requestService, DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-master-edit-agent-block.htm', function(scope){
             var queryData = requestService.getQueryData();
             var settingContext = queryData.SettingContext;
@@ -1741,9 +1715,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtMasterEditAgentBlock', fanexPtMasterEditAgentBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtMasterEditAgentItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -1867,11 +1840,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtMasterEditAgentItem', fanexPtMasterEditAgentItemDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexPtMasterEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexPtMasterEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-master-edit-member-block.htm');
     };
 
@@ -1879,9 +1851,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtMasterEditMemberBlock', fanexPtMasterEditMemberBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtMasterEditMemberItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -1970,9 +1941,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtMasterEditMemberItem', fanexPtMasterEditMemberItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$parse', 'fanexAppSettings'];
     var fanexPtSelectOptionsDirective = function ($parse, appSettings) {
         var optionTemplate = angular.element(document.createElement('option'));
@@ -2051,9 +2021,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSelectOptions', fanexPtSelectOptionsDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope'];
     var fanexPtSelectDirective = function ($rootScope) {
         return {
@@ -2082,11 +2051,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSelect', fanexPtSelectDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexPtSuperEditMasterBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexPtSuperEditMasterBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-super-edit-master-block.htm');
     };
 
@@ -2094,9 +2062,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSuperEditMasterBlock', fanexPtSuperEditMasterBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtSuperEditMasterItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -2220,11 +2187,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSuperEditMasterItem', fanexPtSuperEditMasterItemDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexPtSuperEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexPtSuperEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-pt-super-edit-member-block.htm');
     };
 
@@ -2232,9 +2198,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSuperEditMemberBlock', fanexPtSuperEditMemberBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtSuperEditMemberItemDirective = function (appSettings, ptService, resourceService) {
         return {
@@ -2326,9 +2291,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtSuperEditMemberItem', fanexPtSuperEditMemberItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope', 'fanexAppSettings', 'fanexUpdateMemberPtService'];
     var fanexPtUpdateMemberDialogDirective = function ($rootScope, appSettings, updateMemberPtService) {
         return {
@@ -2374,11 +2338,10 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexPtUpdateMemberDialog', fanexPtUpdateMemberDialogDirective);
 })();
 
-'use strict';
-
 (function () {
-    var injectParams = ['fanexAppSettings', 'fanexModelService', 'fanexDirectiveBlock'];
-    var fanexStatusBlockDirective = function (appSettings, modelService, DirectiveBlock) {
+    'use strict';
+    var injectParams = ['fanexModelService', 'fanexDirectiveBlock'];
+    var fanexStatusBlockDirective = function (modelService, DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-status-block.htm', function (scope) {
             var queryModel = modelService.getQueryModel();
             scope.formType = queryModel.FormType;
@@ -2389,9 +2352,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexStatusBlock', fanexStatusBlockDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexStatusContainerDirective = function () {
         return {
@@ -2408,9 +2370,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexStatusContainer', fanexStatusContainerDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexResourceService'];
     var fanexStatusItemDirective = function (appSettings, statusService, resourceService) {
         return {
@@ -2475,9 +2436,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexStatusItem', fanexStatusItemDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexTooltipService'];
     var fanexTooltipDirective = function (tooltipService) {
         return {
@@ -2501,9 +2461,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').directive('fanexTooltip', fanexTooltipDirective);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexModelService'];
     var fanexCommandReader = function (appSettings, modelService) {
         function SingleCommandReader() {
@@ -2542,9 +2501,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('FanexCommandReader', fanexCommandReader);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$compile', '$templateCache', '$filter', 'fanexAppSettings'];
     var fanexDirectiveBlock = function ($compile, $templateCache, $filter, appSettings) {
         return function (templateUrl, extendScope) {
@@ -2593,6 +2551,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                     }
 
                     var template = $templateCache.get(templateUrl);
+                    var groupIndex = 0;
                     function appendGroup(items) {
                         var $template = angular.element(template);
                         $element.append($template);
@@ -2600,10 +2559,15 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         var childScope = $scope.$new();
                         childScope.items = items;
                         childScope.settingLevel = $scope.settingLevel;
+                        childScope.groupIndex = groupIndex;
+                        if (groupIndex === 0 && $scope.collection.length > 0) {
+                            childScope.hasCopy = true;
+                        }
                         if (angular.isFunction(extendScope)) {
                             extendScope(childScope);
                         }
                         link(childScope);
+                        groupIndex++;
                     }
                 }
             };
@@ -2614,9 +2578,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexDirectiveBlock', fanexDirectiveBlock);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope'];
     var fanexDirectiveLinker = function ($rootScope) {
         function DirectiveLinker() {
@@ -2647,9 +2610,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexDirectiveLinker', fanexDirectiveLinker);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings'];
     var fanexFormTypeHandler = function (appSettings) {
         var CompanyEditSuperHandler = function () {
@@ -2774,9 +2736,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexFormTypeHandler', fanexFormTypeHandler);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$location', 'fanexAppSettings', 'fanexCommonService', 'fanexFormTypeHandler'];
     var fanexQueryModel = function ($location, appSettings, commonService, FormTypeHandler) {
         var isValid = false;
@@ -2858,9 +2819,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexQueryModel', fanexQueryModel);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexQueryReader = function () {
         function QueryData(response) {
@@ -2892,9 +2852,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexQueryReader', fanexQueryReader);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexSelectBuilder = function () {
         function OptionsBuilder(step, factor) {
@@ -2951,9 +2910,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexSelectBuilder', fanexSelectBuilder);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexDiscountService',
             'fanexBetLimitService', 'fanexPtService'];
     var fanexSettingTypeHandler = function (appSettings, statusService, discountService,
@@ -3004,9 +2962,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').factory('fanexSettingTypeHandler', fanexSettingTypeHandler);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexDataGroup = function () {
         function DataGroup(sportType, sportTypeName) {
@@ -3041,13 +2998,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').filter('fanexDataGroup', fanexDataGroup);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings'];
     var fanexPtFormat = function (appSettings) {
         return function (value) {
-            return value / appSettings.positionTakingDivider;
+            if (angular.isNumber(value)) {
+                return value / appSettings.positionTakingDivider;
+            }
+
+            return undefined;
         };
     };
 
@@ -3055,9 +3015,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').filter('fanexPtFormat', fanexPtFormat);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexResourceService'];
     var fanexTranslate = function (resourceService) {
         return function (key) {
@@ -3069,9 +3028,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').filter('fanexTranslate', fanexTranslate);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexDirectiveLinker'];
     var fanexBetLimitService = function (DirectiveLinker) {
         var service = new DirectiveLinker();
@@ -3082,9 +3040,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexBetLimitService', fanexBetLimitService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = [];
     var fanexBlockUiService = function () {
         var blockUiScope;
@@ -3125,9 +3082,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexBlockUiService', fanexBlockUiService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$window'];
     var fanexCommonService = function ($window) {
         // scroll to top
@@ -3181,9 +3137,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexCommonService', fanexCommonService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexDirectiveLinker', 'fanexSelectBuilder'];
     var fanexDiscountService = function (DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();
@@ -3200,9 +3155,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexDiscountService', fanexDiscountService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope', '$timeout', '$sce', 'fanexCommonService', 'fanexAppSettings', 'fanexResourceService'];
     var fanexMessageService = function ($rootScope, $timeout, $sce, commonService, appSettings, resourceService) {
         var messageScope;
@@ -3387,9 +3341,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexMessageService', fanexMessageService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$rootScope', 'fanexQueryModel'];
     var fanexModelService = function ($rootScope, QueryModel) {
         var queryModel = new QueryModel();
@@ -3409,9 +3362,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexModelService', fanexModelService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexProductSettings'];
     var fanexProductSettingService = function (productSettings) {
         function getViewSetting(productId) {
@@ -3436,9 +3388,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexProductSettingService', fanexProductSettingService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexDirectiveLinker', 'fanexSelectBuilder'];
     var fanexPtService = function (appSettings, DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();
@@ -3467,9 +3418,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexPtService', fanexPtService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexProductSettingService', 'fanexMessageService'];
     var fanexRequestService = function ($injector, $http, $rootScope, appSettings, productSettingService, messageService) {
         var queryData;
@@ -3546,9 +3496,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexRequestService', fanexRequestService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexResources', 'fanexAppSettings'];
     var fanexResourceService = function (resources, appSettings) {
         var resource = {};
@@ -3618,9 +3567,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexResourceService', fanexResourceService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexDirectiveLinker'];
     var fanexStatusService = function (DirectiveLinker) {
         var service = new DirectiveLinker();
@@ -3631,9 +3579,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexStatusService', fanexStatusService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['$timeout'];
     var fanexTooltipService = function ($timeout) {
         var tooltipScope;
@@ -3712,9 +3659,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexTooltipService', fanexTooltipService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var injectParams = ['fanexPtService'];
     var fanexUpdateMemberPtService = function (ptService) {
         var $scope;
@@ -3755,9 +3701,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     angular.module('customerSettingApp').service('fanexUpdateMemberPtService', fanexUpdateMemberPtService);
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     var body = angular.element(document.body);
     var rootUrl = body.attr('data-root-url');
     angular.module('customerSettingApp').value('fanexAppSettings', {
@@ -3819,9 +3764,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     });
 })();
 
-'use strict';
-
 (function () {
+    'use strict';
     angular.module('customerSettingApp').value('fanexProductSettings', {
         viewSettings: {
             'default': {

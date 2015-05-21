@@ -18,7 +18,7 @@
                 <label for="product">
                     Product
                 </label>
-                <select name="product" data-ng-model="product" data-ng-options="product.name for product in products">
+                <select name="product" data-ng-model="product" data-ng-options="product.Name for product in products">
                 </select>
             </div>
             <div class="controls">
@@ -35,10 +35,11 @@
         </div>
         <div class="message" data-ng-show="message" data-ng-bind="message">
         </div>
-        <div class="breadcrumb" data-ng-hide="message" data-fanex-breadcrumb="customer">
+        <div class="breadcrumb" data-ng-show="customer" data-fanex-breadcrumb>
         </div>
-        <div class="result" data-ng-hide="message">
-            Result
+        <div class="result" data-ng-show="settings">
+            <div data-fanex-position-taking-matrix>
+            </div>
         </div>
     </div>
     <script src="{{rootUrl}}/app/angular-1.2.28.min.js" type="text/javascript"></script>

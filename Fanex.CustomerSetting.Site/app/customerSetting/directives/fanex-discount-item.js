@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexDiscountService', 'fanexResourceService'];
     var fanexDiscountDirective = function (appSettings, discountService, resourceService) {
         function parse(data, formType) {

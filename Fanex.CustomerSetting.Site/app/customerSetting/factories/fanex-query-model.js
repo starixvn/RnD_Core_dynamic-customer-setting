@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$location', 'fanexAppSettings', 'fanexCommonService', 'fanexFormTypeHandler'];
     var fanexQueryModel = function ($location, appSettings, commonService, FormTypeHandler) {
         var isValid = false;

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexTooltipService'];
     var fanexTooltipDirective = function (tooltipService) {
         return {

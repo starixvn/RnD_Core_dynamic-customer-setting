@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexSettingTypeHandler'];
     var fanexItemCopyDirective = function (SettingTypeHandler) {
         return {

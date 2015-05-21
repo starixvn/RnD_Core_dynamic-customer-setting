@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var body = angular.element(document.body);
     var rootUrl = body.attr('data-root-url');
     angular.module('customerSettingApp').value('fanexAppSettings', {

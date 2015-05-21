@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexDirectiveLinker', 'fanexSelectBuilder'];
     var fanexPtService = function (appSettings, DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();

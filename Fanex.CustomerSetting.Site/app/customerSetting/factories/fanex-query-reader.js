@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = [];
     var fanexQueryReader = function () {
         function QueryData(response) {

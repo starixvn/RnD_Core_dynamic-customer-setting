@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexPtService'];
     var fanexUpdateMemberPtService = function (ptService) {
         var $scope;

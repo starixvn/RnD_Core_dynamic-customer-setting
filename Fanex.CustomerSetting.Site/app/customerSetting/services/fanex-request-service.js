@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$injector', '$http', '$rootScope', 'fanexAppSettings', 'fanexProductSettingService', 'fanexMessageService'];
     var fanexRequestService = function ($injector, $http, $rootScope, appSettings, productSettingService, messageService) {
         var queryData;

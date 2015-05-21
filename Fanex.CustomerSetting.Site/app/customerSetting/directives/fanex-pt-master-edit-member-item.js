@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexPtService', 'fanexResourceService'];
     var fanexPtMasterEditMemberItemDirective = function (appSettings, ptService, resourceService) {
         return {

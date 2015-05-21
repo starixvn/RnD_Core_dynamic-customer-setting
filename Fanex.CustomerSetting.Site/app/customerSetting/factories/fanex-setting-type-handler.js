@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexDiscountService',
             'fanexBetLimitService', 'fanexPtService'];
     var fanexSettingTypeHandler = function (appSettings, statusService, discountService,

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$timeout', 'fanexMessageService'];
     var fanexErrorController = function ($timeout, messageService) {
         messageService.showError('Please check your URL');

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexProductSettings'];
     var fanexProductSettingService = function (productSettings) {
         function getViewSetting(productId) {

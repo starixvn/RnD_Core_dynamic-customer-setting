@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope'];
     var fanexDirectiveLinker = function ($rootScope) {
         function DirectiveLinker() {

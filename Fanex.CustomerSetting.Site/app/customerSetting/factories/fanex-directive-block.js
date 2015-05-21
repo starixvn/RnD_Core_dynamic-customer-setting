@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$compile', '$templateCache', '$filter', 'fanexAppSettings'];
     var fanexDirectiveBlock = function ($compile, $templateCache, $filter, appSettings) {
         return function (templateUrl, extendScope) {
@@ -49,6 +48,7 @@
                     }
 
                     var template = $templateCache.get(templateUrl);
+                    var groupIndex = 0;
                     function appendGroup(items) {
                         var $template = angular.element(template);
                         $element.append($template);
@@ -56,10 +56,15 @@
                         var childScope = $scope.$new();
                         childScope.items = items;
                         childScope.settingLevel = $scope.settingLevel;
+                        childScope.groupIndex = groupIndex;
+                        if (groupIndex === 0 && $scope.collection.length > 0) {
+                            childScope.hasCopy = true;
+                        }
                         if (angular.isFunction(extendScope)) {
                             extendScope(childScope);
                         }
                         link(childScope);
+                        groupIndex++;
                     }
                 }
             };

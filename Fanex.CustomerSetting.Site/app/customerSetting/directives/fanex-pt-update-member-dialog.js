@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope', 'fanexAppSettings', 'fanexUpdateMemberPtService'];
     var fanexPtUpdateMemberDialogDirective = function ($rootScope, appSettings, updateMemberPtService) {
         return {

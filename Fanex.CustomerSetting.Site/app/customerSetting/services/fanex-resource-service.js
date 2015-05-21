@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexResources', 'fanexAppSettings'];
     var fanexResourceService = function (resources, appSettings) {
         var resource = {};

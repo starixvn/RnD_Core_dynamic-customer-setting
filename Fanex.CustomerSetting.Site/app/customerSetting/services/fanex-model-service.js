@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope', 'fanexQueryModel'];
     var fanexModelService = function ($rootScope, QueryModel) {
         var queryModel = new QueryModel();

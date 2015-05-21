@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexDirectiveLinker', 'fanexSelectBuilder'];
     var fanexDiscountService = function (DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();

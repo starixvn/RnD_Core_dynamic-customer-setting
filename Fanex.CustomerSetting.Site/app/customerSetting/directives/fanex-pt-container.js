@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexModelService'];
     var fanexPtContainerDirective = function (modelService) {
         return {

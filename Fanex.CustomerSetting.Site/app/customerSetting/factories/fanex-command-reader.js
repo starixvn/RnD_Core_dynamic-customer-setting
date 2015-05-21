@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexModelService'];
     var fanexCommandReader = function (appSettings, modelService) {
         function SingleCommandReader() {

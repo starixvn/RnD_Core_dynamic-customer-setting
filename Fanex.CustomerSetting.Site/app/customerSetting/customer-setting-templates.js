@@ -94,7 +94,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-agent-edit-member-block.htm',
-    "<div class=\"position-taking-block agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-agent-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block agent-edit-member\"><div class=title><div class=name></div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-agent-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -104,7 +104,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-company-edit-super-block.htm',
-    "<div class=\"position-taking-block company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-company-edit-super-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block company-edit-super\"><div class=title><div class=name></div><div class=super-max-pt>{{'SuperMaxPT' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=super-min-pt>{{'SuperMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-company-edit-super-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -124,7 +124,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-agent-block.htm',
-    "<div class=\"position-taking-block master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-agent-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block master-edit-agent\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-max-pt>{{'AgentMaxPT' | fanexTranslate}}</div><div class=agent-min-pt>{{'AgentMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-agent-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -134,7 +134,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-member-block.htm',
-    "<div class=\"position-taking-block master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block master-edit-member\" data-ng-class=\"{ 'disable-auto-mpt' : disableAutoMPT }\"><div class=title><div class=name></div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=agent-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-master-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -149,7 +149,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-master-block.htm',
-    "<div class=\"position-taking-block super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-master-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block super-edit-master\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-max-pt>{{'MasterMaxPT' | fanexTranslate}}</div><div class=master-min-pt>{{'MasterMinPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-master-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -159,7 +159,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-member-block.htm',
-    "<div class=\"position-taking-block super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && items.length>=2\"></div></div>"
+    "<div class=\"position-taking-block super-edit-member\"><div class=title><div class=name></div><div class=super-pt>{{'SuperPT' | fanexTranslate}}</div><div class=super-is-auto>{{'IsAuto' | fanexTranslate}}</div><div class=master-pt>{{'MasterPT' | fanexTranslate}}</div><div class=master-pt>{{'AgentPT' | fanexTranslate}}</div></div><div data-ng-repeat=\"item in items\" data-fanex-pt-super-edit-member-item=item data-setting-level=settingLevel data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 

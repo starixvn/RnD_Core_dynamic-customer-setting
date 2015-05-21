@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings', 'fanexStatusService', 'fanexResourceService'];
     var fanexStatusItemDirective = function (appSettings, statusService, resourceService) {
         return {

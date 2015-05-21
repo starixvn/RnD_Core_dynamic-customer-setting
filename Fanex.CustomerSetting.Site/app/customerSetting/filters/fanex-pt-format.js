@@ -1,10 +1,13 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexAppSettings'];
     var fanexPtFormat = function (appSettings) {
         return function (value) {
-            return value / appSettings.positionTakingDivider;
+            if (angular.isNumber(value)) {
+                return value / appSettings.positionTakingDivider;
+            }
+
+            return undefined;
         };
     };
 

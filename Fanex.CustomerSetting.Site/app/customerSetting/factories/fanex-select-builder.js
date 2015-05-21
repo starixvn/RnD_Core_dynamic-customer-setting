@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = [];
     var fanexSelectBuilder = function () {
         function OptionsBuilder(step, factor) {

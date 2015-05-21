@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$compile', '$templateCache', 'fanexBlockUiService'];
     var fanexBlockUiDirective = function ($compile, $templateCache, blockUiService) {
         return {

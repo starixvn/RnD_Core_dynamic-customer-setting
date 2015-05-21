@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['fanexDiscountService', 'fanexResourceService'];
     var fanexDiscountMasterEditMemberItemDirective = function (discountService, resourceService) {
         return {

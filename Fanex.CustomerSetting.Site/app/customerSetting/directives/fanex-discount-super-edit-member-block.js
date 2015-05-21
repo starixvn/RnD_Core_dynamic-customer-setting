@@ -1,8 +1,7 @@
-﻿'use strict';
-
-(function () {
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveBlock'];
-    var fanexDiscountSuperEditMemberBlockDirective = function (appSettings, DirectiveBlock) {
+﻿(function () {
+    'use strict';
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexDiscountSuperEditMemberBlockDirective = function (DirectiveBlock) {
         return new DirectiveBlock('templates/fanex-discount-super-edit-member-block.htm');
     };
 

@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$filter', 'fanexAppSettings', 'fanexCommonService', 'fanexTooltipService'];
     var fanexBetLimitInputDirective = function ($filter, appSettings, commonService, tooltipService) {
         return {

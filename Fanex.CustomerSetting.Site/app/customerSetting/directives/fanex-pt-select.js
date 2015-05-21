@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = ['$rootScope'];
     var fanexPtSelectDirective = function ($rootScope) {
         return {

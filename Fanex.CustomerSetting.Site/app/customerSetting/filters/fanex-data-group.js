@@ -1,6 +1,5 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
+    'use strict';
     var injectParams = [];
     var fanexDataGroup = function () {
         function DataGroup(sportType, sportTypeName) {

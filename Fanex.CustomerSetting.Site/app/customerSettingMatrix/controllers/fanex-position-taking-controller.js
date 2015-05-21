@@ -1,40 +1,51 @@
-﻿'use strict';
-
-(function () {
-    var injectParams = ['$scope', '$http', 'fanexAppSettings'];
-    var fanexPositionTakingController = function ($scope, $http, appSettings) {
+﻿(function () {
+    'use strict';
+    var injectParams = ['$scope', '$http', 'fanexAppSettings', 'fanexResourceService'];
+    var fanexPositionTakingController = function ($scope, $http, appSettings, resourceService) {
         $scope.products = [
-            { id: 250, name: 'Product-250' },
-            { id: 251, name: 'Product-251' },
-            { id: 252, name: 'Product-252' },
-            { id: 253, name: 'Product-253' },
-            { id: 254, name: 'Product-254' },
-            { id: 255, name: 'Product-255' }
+            { Id: 250, Name: 'Product-250' },
+            { Id: 251, Name: 'Product-251' },
+            { Id: 252, Name: 'Product-252' },
+            { Id: 253, Name: 'Product-253' },
+            { Id: 254, Name: 'Product-254' },
+            { Id: 255, Name: 'Product-255' }
         ];
         $scope.product = $scope.products[0];
         $scope.userName = '428RM';
         $scope.submit = function () {
             var product = $scope.product;
-            var productId = product.id;
+            var productId = product.Id;
+            var productName = product.Name;
+            resourceService.ProductName = productName;
             if (angular.isUndefined(productId)) {
-                $scope.message = 'Please select a product!';
+                showMessage('Please select a product!');
                 return;
             }
 
             var userName = $scope.userName;
             if (angular.isUndefined(userName) || userName === '') {
-                $scope.message = 'Please input username!';
+                showMessage('Please input username!');
                 return;
             }
 
-            $scope.message = undefined;
+            hideMessage();
             submit(productId, userName);
         };
 
-        $scope.$on('fanex-user-clicked', function(event, userName){
+        $scope.$on('fanex-user-clicked', function (event, userName) {
             $scope.userName = userName;
             $scope.submit();
         });
+
+        function showMessage(message) {
+            $scope.customer = undefined;
+            $scope.settings = undefined;
+            $scope.message = message;
+        }
+
+        function hideMessage() {
+            $scope.message = undefined;
+        }
 
         function submit(productId, userName) {
             var queryModel = {
@@ -45,8 +56,8 @@
             var url = appSettings.rootUrl + '/CustomerSettingMatrix/PositionTaking';
             var request = $http.post(url, queryModel);
             request.success(function (response) {
-                console.log(response);
                 $scope.customer = response.Customer;
+                $scope.settings = response.Settings;
             });
         }
     };
