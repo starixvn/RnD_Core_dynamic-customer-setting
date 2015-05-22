@@ -3,7 +3,7 @@
         {{'PositionTaking' | fanexTranslate}} <span data-ng-show="model.HasUpdate" title="{{'Update' | fanexTranslate}}"
             class="update" data-ng-click="model.Update()"><i class="icon-update"></i></span>
     </div>
-    <div class="body" data-ng-switch on="formType">
+    <div class="body" data-ng-switch="formType">
         <div data-ng-switch-when="1">
             <div data-fanex-pt-company-edit-super-block data-collection="model.Collection" data-setting-level="model.SettingLevel">
             </div>

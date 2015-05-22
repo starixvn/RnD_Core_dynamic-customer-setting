@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['fanexAppSettings', 'fanexDirectiveLinker', 'fanexSelectBuilder'];
-    var fanexPtService = function (appSettings, DirectiveLinker, SelectBuilder) {
+    var injectParams = ['fanexDirectiveLinker', 'fanexSelectBuilder'];
+    var fanexPtService = function (DirectiveLinker, SelectBuilder) {
         var service = new DirectiveLinker();
 
         service.copyValue = function (source, destination, field, generator) {

@@ -6,14 +6,14 @@
         type="text/css" />
 </head>
 <body data-root-url="{{rootUrl}}" data-ng-cloak data-ng-controller="FanexPositionTakingController">
-    <div class="customer-setting-matrix">
-        <div class="header">
+    <div class="customer-setting-matrix" data-fanex-block-ui>
+        <div class="header-container">
             <ul class="navigation">
                 <li class="active"><a href="#">PT Matrix</a></li>
                 <li><a href="#">Commission Matrix</a></li>
             </ul>
         </div>
-        <div class="form">
+        <div class="form-container">
             <div class="controls">
                 <label for="product">
                     Product
@@ -33,11 +33,11 @@
                 </button>
             </div>
         </div>
-        <div class="message" data-ng-show="message" data-ng-bind="message">
+        <div class="message-container" data-ng-show="message" data-ng-bind="message">
         </div>
-        <div class="breadcrumb" data-ng-show="customer" data-fanex-breadcrumb>
+        <div class="breadcrumb-container" data-ng-show="customer" data-fanex-breadcrumb>
         </div>
-        <div class="result" data-ng-show="settings">
+        <div class="result-container" data-ng-show="settings">
             <div data-fanex-position-taking-matrix>
             </div>
         </div>

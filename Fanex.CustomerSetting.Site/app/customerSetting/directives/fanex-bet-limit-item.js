@@ -120,12 +120,14 @@
             scope: {
                 betLimit: '=fanexBetLimitItem',
                 settingLevel: '=',
-                formType: '='
+                formType: '=',
+                hasCopy: '='
             },
             template: '<div data-ng-include="templateUrl"></div>',
             controller: ['$scope', function ($scope) {
                 betLimitService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.BetLimit;
                 var formType = $scope.formType;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.betLimit);
                 var betLimit = $scope.betLimit;

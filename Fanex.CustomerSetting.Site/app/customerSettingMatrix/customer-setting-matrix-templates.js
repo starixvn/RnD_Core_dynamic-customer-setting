@@ -3,8 +3,13 @@
 angular.module('customerSettingMatrixApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('templates/fanex-block-ui.htm',
+    "<div class=loading-container data-ng-show=hasLoading><div class=block-overlay></div><div class=block-loading></div></div>"
+  );
+
+
   $templateCache.put('templates/fanex-breadcrumb.htm',
-    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch on=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
+    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
   );
 
 

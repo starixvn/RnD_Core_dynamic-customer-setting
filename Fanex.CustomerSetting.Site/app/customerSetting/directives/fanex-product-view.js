@@ -3,7 +3,7 @@
     var injectParams = ['$sce', '$compile', '$controller', '$templateCache',
             'fanexProductSettingService', 'fanexModelService'];
     var fanexProductViewDirective = function ($sce, $compile, $controller, $templateCache,
-            fanexProductSettingService, modelService) {
+            productSettingService, modelService) {
         return {
             transclude: 'element',
             compile: function (element, attr, linker) {
@@ -23,11 +23,11 @@
                     function update() {
                         cleanup();
 
-                        var productViewSetting = fanexProductSettingService.errorViewSetting;
+                        var productViewSetting = productSettingService.errorViewSetting;
                         var queryModel = modelService.getQueryModel();
                         if (angular.isDefined(queryModel)) {
                             var productId = queryModel.ProductId;
-                            productViewSetting = fanexProductSettingService.getViewSetting(productId);
+                            productViewSetting = productSettingService.getViewSetting(productId);
                         }
 
                         var templateUrl = productViewSetting.templateUrl;

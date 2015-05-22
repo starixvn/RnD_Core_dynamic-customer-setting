@@ -2,9 +2,20 @@
     'use strict';
     var injectParams = ['$rootScope', 'fanexQueryModel'];
     var fanexModelService = function ($rootScope, QueryModel) {
-        var queryModel = new QueryModel();
+        var queryModel;
+        function createModel() {
+            try {
+                queryModel = new QueryModel();
+            }
+            catch (error) {
+                alert('Your URL is not valid');
+                throw error;
+            }
+        }
+
+        queryModel = createModel();
         $rootScope.$on('$locationChangeStart', function () {
-            queryModel = new QueryModel();
+            createModel();
             $rootScope.$emit('fanex-model-changed', queryModel);
         });
 

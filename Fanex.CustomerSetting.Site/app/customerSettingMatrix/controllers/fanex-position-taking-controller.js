@@ -18,17 +18,17 @@
             var productName = product.Name;
             resourceService.ProductName = productName;
             if (angular.isUndefined(productId)) {
-                showMessage('Please select a product!');
+                $scope.showMessage('Please select a product!');
                 return;
             }
 
             var userName = $scope.userName;
             if (angular.isUndefined(userName) || userName === '') {
-                showMessage('Please input username!');
+                $scope.showMessage('Please input username!');
                 return;
             }
 
-            hideMessage();
+            $scope.hideMessage();
             submit(productId, userName);
         };
 
@@ -37,15 +37,15 @@
             $scope.submit();
         });
 
-        function showMessage(message) {
+        $scope.showMessage = function (message) {
             $scope.customer = undefined;
             $scope.settings = undefined;
             $scope.message = message;
-        }
+        };
 
-        function hideMessage() {
+        $scope.hideMessage = function () {
             $scope.message = undefined;
-        }
+        };
 
         function submit(productId, userName) {
             var queryModel = {

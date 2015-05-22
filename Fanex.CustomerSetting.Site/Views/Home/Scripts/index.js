@@ -1,17 +1,20 @@
 ﻿'use strict';
 
-if (!String.prototype.format) {
-    Object.defineProperty(String.prototype, 'format', {
-        value: function () {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] !== 'undefined'
-                ? args[number]
-                : match;
-            });
-        }
-    });
-}
+String.format = function () {
+    // The string containing the format items (e.g. "{0}")
+    // will and always has to be the first argument.
+    var theString = arguments[0];
+
+    // start with the second argument (i = 1)
+    for (var i = 1; i < arguments.length; i++) {
+        // "gm" = RegEx options for Global search (more than one instance)
+        // and for Multiline search
+        var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+        theString = theString.replace(regEx, arguments[i]);
+    }
+
+    return theString;
+};
 
 angular.module('indexModule', []).controller('IndexController', ['$scope', '$http',
 function ($scope, $http) {
@@ -95,7 +98,7 @@ function ($scope, $http) {
 
     function openFrameUrl(url) {
         var rootUrl = $('#main').data('root-url');
-        url = '{0}/{1}'.format(rootUrl, url);
+        url = String.format('{0}/{1}', rootUrl, url);
         var settingPage = $('#setting-page');
         settingPage.attr('src', url);
     }
@@ -124,13 +127,13 @@ function ($scope, $http) {
         switch (selectedFormType) {
             case formType.CompanyEditSuper:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/editSuper/{0}/{1}?custIds={2}&custNames={3}'.format(
+                    url = String.format('CustomerSetting/#/editSuper/{0}/{1}?custIds={2}&custNames={3}',
                         $scope.superIds.split(',')[0],
                         $scope.productId,
                         $scope.superIds,
                         $scope.superNames);
                 } else {
-                    url = 'CustomerSetting/#/editSuper/{0}/{1}'.format(
+                    url = String.format('CustomerSetting/#/editSuper/{0}/{1}',
                         $scope.superId,
                         $scope.productId);
                 }
@@ -138,13 +141,13 @@ function ($scope, $http) {
 
             case formType.SuperEditMaster:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/editMaster/{0}/{1}?custIds={2}&custNames={3}'.format(
+                    url = String.format('CustomerSetting/#/editMaster/{0}/{1}?custIds={2}&custNames={3}',
                         $scope.masterIds.split(',')[0],
                         $scope.productId,
                         $scope.masterIds,
                         $scope.masterNames);
                 } else {
-                    url = 'CustomerSetting/#/editMaster/{0}/{1}'.format(
+                    url = String.format('CustomerSetting/#/editMaster/{0}/{1}',
                         $scope.masterId,
                         $scope.productId);
                 }
@@ -152,13 +155,13 @@ function ($scope, $http) {
 
             case formType.MasterEditAgent:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/editAgent/{0}/{1}?custIds={2}&custNames={3}'.format(
+                    url = String.format('CustomerSetting/#/editAgent/{0}/{1}?custIds={2}&custNames={3}',
                         $scope.agentIds.split(',')[0],
                         $scope.productId,
                         $scope.agentIds,
                         $scope.agentNames);
                 } else {
-                    url = 'CustomerSetting/#/editAgent/{0}/{1}'.format(
+                    url = String.format('CustomerSetting/#/editAgent/{0}/{1}',
                         $scope.agentId,
                         $scope.productId);
                 }
@@ -166,13 +169,13 @@ function ($scope, $http) {
 
             case formType.AgentEditMember:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/editMember/{0}/{1}?custIds={2}&custNames={3}'.format(
+                    url = String.format('CustomerSetting/#/editMember/{0}/{1}?custIds={2}&custNames={3}',
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = 'CustomerSetting/#/editMember/{0}/{1}'.format(
+                    url = String.format('CustomerSetting/#/editMember/{0}/{1}',
                         $scope.memberId,
                         $scope.productId);
                 }
@@ -180,14 +183,14 @@ function ($scope, $http) {
 
             case formType.SuperEditMember:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/superEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}'.format(
+                    url = String.format('CustomerSetting/#/superEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}',
                         $scope.superId,
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = 'CustomerSetting/#/superEditMember/{0}/{1}/{2}'.format(
+                    url = String.format('CustomerSetting/#/superEditMember/{0}/{1}/{2}',
                         $scope.superId,
                         $scope.memberId,
                         $scope.productId);
@@ -196,14 +199,14 @@ function ($scope, $http) {
 
             case formType.MasterEditMember:
                 if ($scope.isMultiple) {
-                    url = 'CustomerSetting/#/masterEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}'.format(
+                    url = String.format('CustomerSetting/#/masterEditMember/{0}/{1}/{2}?custIds={3}&custNames={4}',
                         $scope.masterId,
                         $scope.memberIds.split(',')[0],
                         $scope.productId,
                         $scope.memberIds,
                         $scope.memberNames);
                 } else {
-                    url = 'CustomerSetting/#/masterEditMember/{0}/{1}/{2}'.format(
+                    url = String.format('CustomerSetting/#/masterEditMember/{0}/{1}/{2}',
                         $scope.masterId,
                         $scope.memberId,
                         $scope.productId);

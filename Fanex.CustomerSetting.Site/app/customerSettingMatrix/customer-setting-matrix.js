@@ -2,7 +2,47 @@
 
 (function () {
     'use strict';
-    angular.module('customerSettingMatrixApp', []);
+    var customerSettingMatrixApp = angular.module('customerSettingMatrixApp', []);
+    customerSettingMatrixApp.config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.interceptors.push(['$q', '$rootScope', '$templateCache', 'fanexBlockUiService',
+            function ($q, $rootScope, $templateCache, blockUiService) {
+                function startBlockUi(config) {
+                    config.noBlock = (config.method === 'GET' && angular.isDefined($templateCache.get(config.url)));
+                    if (!config.noBlock) {
+                        blockUiService.show();
+                    }
+                }
+
+                function stopBlockUi(config) {
+                    if (!config.noBlock) {
+                        blockUiService.hide();
+                    }
+                }
+
+                return {
+                    request: function (config) {
+                        startBlockUi(config);
+                        return config;
+                    },
+                    response: function (response) {
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
+                        return response;
+                    },
+                    responseError: function (response) {
+                        if (response) {
+                            stopBlockUi(response.config);
+                        }
+
+                        $rootScope.showMessage('Sorry, an error occurred while processing your request.');
+                        return $q.reject(response);
+                    }
+                };
+            }
+        ]);
+    } ]);
 } ());
 
 /*jshint -W101*/
@@ -10,8 +50,13 @@
 angular.module('customerSettingMatrixApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('templates/fanex-block-ui.htm',
+    "<div class=loading-container data-ng-show=hasLoading><div class=block-overlay></div><div class=block-loading></div></div>"
+  );
+
+
   $templateCache.put('templates/fanex-breadcrumb.htm',
-    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch on=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
+    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
   );
 
 
@@ -43,17 +88,17 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
             var productName = product.Name;
             resourceService.ProductName = productName;
             if (angular.isUndefined(productId)) {
-                showMessage('Please select a product!');
+                $scope.showMessage('Please select a product!');
                 return;
             }
 
             var userName = $scope.userName;
             if (angular.isUndefined(userName) || userName === '') {
-                showMessage('Please input username!');
+                $scope.showMessage('Please input username!');
                 return;
             }
 
-            hideMessage();
+            $scope.hideMessage();
             submit(productId, userName);
         };
 
@@ -62,15 +107,15 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
             $scope.submit();
         });
 
-        function showMessage(message) {
+        $scope.showMessage = function (message) {
             $scope.customer = undefined;
             $scope.settings = undefined;
             $scope.message = message;
-        }
+        };
 
-        function hideMessage() {
+        $scope.hideMessage = function () {
             $scope.message = undefined;
-        }
+        };
 
         function submit(productId, userName) {
             var queryModel = {
@@ -89,6 +134,30 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
     fanexPositionTakingController.$inject = injectParams;
     angular.module('customerSettingMatrixApp').controller('FanexPositionTakingController', fanexPositionTakingController);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['$compile', '$templateCache', 'fanexBlockUiService'];
+    var fanexBlockUiDirective = function ($compile, $templateCache, blockUiService) {
+        return {
+            restrict: 'A',
+            compile: function () {
+                return function (scope, element) {
+                    var template = $templateCache.get('templates/fanex-block-ui.htm');
+                    var clone = angular.element(template);
+                    element.append(clone);
+                    var newScope = scope.$new();
+                    var link = $compile(clone);
+                    link(newScope);
+                    blockUiService.setup(newScope);
+                };
+            }
+        };
+    };
+
+    fanexBlockUiDirective.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').directive('fanexBlockUi', fanexBlockUiDirective);
 })();
 
 (function () {
@@ -322,32 +391,44 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         }
 
         var ProductHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
+                var isLive;
                 var groups = [];
-                var name = resourceService.ProductName;
-                var group = new SettingGroup(name);
-                group.Tables = tables;
-                groups.push(group);
+                var group;
+                angular.forEach(tables, function (table) {
+                    var row = table.Rows[0];
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
+                        var name = resourceService.ProductName;
+                        name += row.IsLive ? ' (Live)' : '';
+                        group = new SettingGroup(name);
+                        groups.push(group);
+                    }
+
+                    group.Tables.push(table);
+                });
+
                 return groups;
             };
         };
 
         var SportTypeHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
-                var sportType = -1;
+                var isLive;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {
                     var row = table.Rows[0];
-                    if (row.SportType !== sportType) {
-                        sportType = row.SportType;
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
                         var name = row.SportTypeName;
+                        name += row.IsLive ? ' (Live)' : '';
                         group = new SettingGroup(name);
                         groups.push(group);
                     }
@@ -360,18 +441,19 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         };
 
         var BetTypeHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
-                var betType = -1;
+                var isLive;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {
                     var row = table.Rows[0];
-                    if (row.BetType !== betType) {
-                        betType = row.BetType;
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
                         var name = row.BetTypeName;
+                        name += row.IsLive ? ' (Live)' : '';
                         group = new SettingGroup(name);
                         groups.push(group);
                     }
@@ -386,13 +468,13 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         var SportTypeBetTypeHandler = function () {
             this.getTableName = function (row) {
                 var name = row.BetTypeName;
-                if(row.IsLive){
+                if (row.IsLive) {
                     name += ' (Live)';
                 }
                 return name;
             };
             this.generateGroups = function (tables) {
-                var sportType = -1;
+                var sportType;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {
@@ -471,6 +553,48 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
     fanexRoleFormat.$inject = injectParams;
     angular.module('customerSettingMatrixApp').filter('fanexRoleFormat', fanexRoleFormat);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = [];
+    var fanexBlockUiService = function () {
+        var blockUiScope;
+
+        function setup(scope) {
+            if (angular.isDefined(blockUiScope)) {
+                throw 'Only one block ui component in document';
+            }
+
+            blockUiScope = scope;
+            blockUiScope.hasLoading = false;
+        }
+
+        function show() {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = true;
+        }
+
+        function hide() {
+            if (angular.isUndefined(blockUiScope)) {
+                throw 'setup is required';
+            }
+
+            blockUiScope.hasLoading = false;
+        }
+
+        return {
+            setup: setup,
+            show: show,
+            hide: hide
+        };
+    };
+
+    fanexBlockUiService.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').service('fanexBlockUiService', fanexBlockUiService);
 })();
 
 (function () {

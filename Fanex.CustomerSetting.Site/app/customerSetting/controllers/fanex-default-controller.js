@@ -36,7 +36,7 @@
                     Collection: customerSetting.Discounts,
                     SettingLevel: settingContext.DiscountLevel,
                     HasUpdate: $scope.formType !== appSettings.formType.SuperEditMember
-                    && $scope.formType !== appSettings.formType.MasterEditMember,
+                        && $scope.formType !== appSettings.formType.MasterEditMember,
                     Update: updateDiscounts
                 };
             }
@@ -46,7 +46,8 @@
                 $scope.betLimitModel = {
                     Collection: customerSetting.BetLimits,
                     SettingLevel: settingContext.BetLimitLevel,
-                    HasUpdate: $scope.discountModel.HasUpdate,
+                    HasUpdate: $scope.formType !== appSettings.formType.SuperEditMember
+                        && $scope.formType !== appSettings.formType.MasterEditMember,
                     Update: updateBetLimits
                 };
             }

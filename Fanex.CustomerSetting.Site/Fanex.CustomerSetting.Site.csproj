@@ -168,6 +168,7 @@
     <Content Include="app\customerSettingMatrix\customer-setting-matrix.js" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix.less" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix-app.js" />
+    <Content Include="app\customerSettingMatrix\directives\fanex-block-ui.js" />
     <Content Include="app\customerSettingMatrix\directives\fanex-breadcrumb.js" />
     <Content Include="app\customerSettingMatrix\directives\fanex-position-taking-matrix.js" />
     <Content Include="app\customerSettingMatrix\factories\fanex-role-type-handler.js" />
@@ -176,7 +177,10 @@
     <Content Include="app\customerSettingMatrix\filters\fanex-pt-format.js" />
     <Content Include="app\customerSettingMatrix\Gruntfile.js" />
     <Content Include="app\customerSettingMatrix\images\auto-pt.gif" />
+    <Content Include="app\customerSettingMatrix\images\loading.gif" />
+    <Content Include="app\customerSettingMatrix\services\fanex-block-ui-service.js" />
     <Content Include="app\customerSettingMatrix\services\fanex-resource-service.js" />
+    <Content Include="app\customerSettingMatrix\templates\fanex-block-ui.htm" />
     <Content Include="app\customerSettingMatrix\templates\fanex-breadcrumb.htm" />
     <Content Include="app\customerSettingMatrix\templates\fanex-position-taking-matrix.htm" />
     <Content Include="app\customerSettingMatrix\values\fanex-app-settings.js" />

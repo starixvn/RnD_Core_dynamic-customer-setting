@@ -38,7 +38,7 @@
                             var groupCollection = $filter('fanexDataGroup')($scope.collection);
                             angular.forEach(groupCollection, function (dataGroup) {
                                 var sportTypeName = dataGroup.SportTypeName;
-                                var groupedTemplate = '<div class="sport-name" title="' + sportTypeName + '">' + sportTypeName + '</div>';
+                                var groupedTemplate = '<div class="group-name" title="' + sportTypeName + '">' + sportTypeName + '</div>';
                                 $element.append(groupedTemplate);
                                 appendGroup(dataGroup.Items);
                             });

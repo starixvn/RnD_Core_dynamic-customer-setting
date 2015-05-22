@@ -8,32 +8,44 @@
         }
 
         var ProductHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
+                var isLive;
                 var groups = [];
-                var name = resourceService.ProductName;
-                var group = new SettingGroup(name);
-                group.Tables = tables;
-                groups.push(group);
+                var group;
+                angular.forEach(tables, function (table) {
+                    var row = table.Rows[0];
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
+                        var name = resourceService.ProductName;
+                        name += row.IsLive ? ' (Live)' : '';
+                        group = new SettingGroup(name);
+                        groups.push(group);
+                    }
+
+                    group.Tables.push(table);
+                });
+
                 return groups;
             };
         };
 
         var SportTypeHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
-                var sportType = -1;
+                var isLive;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {
                     var row = table.Rows[0];
-                    if (row.SportType !== sportType) {
-                        sportType = row.SportType;
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
                         var name = row.SportTypeName;
+                        name += row.IsLive ? ' (Live)' : '';
                         group = new SettingGroup(name);
                         groups.push(group);
                     }
@@ -46,18 +58,19 @@
         };
 
         var BetTypeHandler = function () {
-            this.getTableName = function (row) {
-                return row.IsLive ? ' Live' : 'Non-Live';
+            this.getTableName = function () {
+                return undefined;
             };
             this.generateGroups = function (tables) {
-                var betType = -1;
+                var isLive;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {
                     var row = table.Rows[0];
-                    if (row.BetType !== betType) {
-                        betType = row.BetType;
+                    if (row.IsLive !== isLive) {
+                        isLive = row.IsLive;
                         var name = row.BetTypeName;
+                        name += row.IsLive ? ' (Live)' : '';
                         group = new SettingGroup(name);
                         groups.push(group);
                     }
@@ -72,13 +85,13 @@
         var SportTypeBetTypeHandler = function () {
             this.getTableName = function (row) {
                 var name = row.BetTypeName;
-                if(row.IsLive){
+                if (row.IsLive) {
                     name += ' (Live)';
                 }
                 return name;
             };
             this.generateGroups = function (tables) {
-                var sportType = -1;
+                var sportType;
                 var groups = [];
                 var group;
                 angular.forEach(tables, function (table) {

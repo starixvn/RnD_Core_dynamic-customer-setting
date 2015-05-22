@@ -2,8 +2,8 @@
     'use strict';
     var customerSettingApp = angular.module('customerSettingApp', []);
     customerSettingApp.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$window', '$rootScope', '$templateCache', 'fanexMessageService', 'fanexBlockUiService',
-            function ($q, $window, $rootScope, $templateCache, messageService, blockUiService) {
+        $httpProvider.interceptors.push(['$q', '$templateCache', 'fanexMessageService', 'fanexBlockUiService',
+            function ($q, $templateCache, messageService, blockUiService) {
                 function startBlockUi(config) {
                     config.noBlock = (config.method === 'GET' && angular.isDefined($templateCache.get(config.url)));
                     if (!config.noBlock) {

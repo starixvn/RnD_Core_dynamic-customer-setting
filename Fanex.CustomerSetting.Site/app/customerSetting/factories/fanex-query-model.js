@@ -43,7 +43,14 @@
             var custNamesQueryString = queryString.custNames;
             if (angular.isDefined(custIdsQueryString) && angular.isDefined(custNamesQueryString)) {
                 isMultiple = true;
-                custIds = custIdsQueryString.split(',').map(Number);
+                var custIdTexts = custIdsQueryString.split(',');
+                custIds = [];
+                angular.forEach(custIdTexts, function (custIdText) {
+                    var custId = parseInt(custIdText);
+                    if (angular.isNumber(custId)) {
+                        custIds.push(custId);
+                    }
+                });
                 custNames = custNamesQueryString.split(',');
                 if (custIds.length !== custNames.length || custIds.length <= 1) {
                     isValid = false;
@@ -54,15 +61,20 @@
         function QueryModel() {
             isValid = false;
             readSingleInformation();
-            if (isValid) {
-                readMultipleInformation();
+            if (!isValid) {
+                throw 'Model is not valid';
             }
 
+            readMultipleInformation();
             if (!isValid) {
-                return undefined;
+                throw 'Multiple information is not valid';
             }
 
             var model = formTypeHandler.createModel(viewParams);
+            if (isMultiple && custIds[0] !== model.TargetCustId) {
+                throw 'First customer in multiple information must be edited customer';
+            }
+
             model.getMultipleInfo = function () {
                 return {
                     IsMultiple: isMultiple,

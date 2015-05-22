@@ -39,10 +39,10 @@
             var liveName = data.IsLive === true ? ' (' + getString('Live') + ')' : '';
             switch (settingLevel) {
                 case appSettings.settingLevel.Product:
-                    return currentProductName;
+                    return currentProductName + liveName;
 
                 case appSettings.settingLevel.SportType:
-                    return data.SportTypeName;
+                    return data.SportTypeName + liveName;
 
                 case appSettings.settingLevel.BetType:
                     return data.BetTypeName + liveName;
