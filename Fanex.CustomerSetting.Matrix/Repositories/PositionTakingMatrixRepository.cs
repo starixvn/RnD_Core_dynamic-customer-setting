@@ -7,7 +7,7 @@
 
     public class PositionTakingMatrixRepository : IPositionTakingMatrixRepository
     {
-        public PositionTakingMatrixEntity Query(PositionTakingMatrixQueryCriteria criteria)
+        public PositionTakingMatrixEntity Query(SettingMatrixQueryCriteria criteria)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {

@@ -1,0 +1,7 @@
+﻿<div class="header-container">
+    <ul class="navigation">
+        <li data-ng-repeat="navigationItem in navigationItems" data-ng-click="activeNavigationItem(navigationItem)" data-ng-class="{'active': selectedNavigationItem==navigationItem}">
+            <a href="#">{{navigationItem.Text}}</a>
+        </li>
+    </ul>
+</div>

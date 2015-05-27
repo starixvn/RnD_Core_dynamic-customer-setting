@@ -1,53 +1,15 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['fanexAppSettings', 'fanexSettingLevelHandler'];
-    var fanexRoleTypeHandler = function (appSettings, SettingLevelHandler) {
-        function SettingTable(name, rows) {
-            return {
-                Name: name,
-                Rows: rows
-            };
-        }
-
-        var BaseHandler = function (total) {
-            this.total = total;
-            this.generateTables = function (settingLevel, settings) {
-                var settingLevelHandler = new SettingLevelHandler(settingLevel);
-                var tables = [];
-                var length = settings.length / total;
-                for (var i = 0; i < length; i++) {
-                    var name;
-                    var rows = [];
-                    for (var j = 0; j < total; j++) {
-                        var index = i * total + j;
-                        var setting = settings[index];
-                        var roleId = setting.RoleId;
-                        var roleTypeHandler = new RoleTypeHandler(roleId);
-                        var row = roleTypeHandler.createRow(setting);
-                        name = settingLevelHandler.getTableName(setting);
-                        angular.extend(row, {
-                            SportType: setting.SportType,
-                            SportTypeName: setting.SportTypeName,
-                            BetType: setting.BetType,
-                            BetTypeName: setting.BetTypeName,
-                            IsLive: setting.IsLive,
-                            RoleId: setting.RoleId
-                        });
-                        rows.push(row);
-                    }
-
-                    var table = new SettingTable(name, rows);
-                    tables.push(table);
-                }
-
-                return tables;
-            };
+    var injectParams = ['fanexAppSettings'];
+    var fanexRoleTypeHandler = function (appSettings) {
+        var BaseHandler = function (roleName, positionTakingRowTotal) {
+            this.RoleName = roleName;
+            this.PositionTakingRowTotal = positionTakingRowTotal;
         };
 
         var SuperHandler = function () {
-            BaseHandler.call(this, 1);
-            this.RoleName = 'Super (4)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Super (4)', 1);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,
@@ -58,9 +20,8 @@
         };
 
         var MasterHandler = function () {
-            BaseHandler.call(this, 2);
-            this.RoleName = 'Master (3)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Master (3)', 2);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,
@@ -72,9 +33,8 @@
         };
 
         var AgentHandler = function () {
-            BaseHandler.call(this, 3);
-            this.RoleName = 'Agent (2)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Agent (2)', 3);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     MasterPT: setting.MasterPT,
                     AgentPT: setting.AgentPT,
@@ -86,9 +46,8 @@
         };
 
         var MemberHandler = function () {
-            BaseHandler.call(this, 4);
-            this.RoleName = 'Member (1)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Member (1)', 4);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,

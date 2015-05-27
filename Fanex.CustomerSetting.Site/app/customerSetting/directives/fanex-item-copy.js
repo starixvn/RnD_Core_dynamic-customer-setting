@@ -6,15 +6,10 @@
             restrict: 'AE',
             replace: true,
             scope: {
-                settingType: '=settingType',
-                hasCopy: '=fanexItemCopy'
+                settingType: '=settingType'
             },
             templateUrl: 'templates/fanex-item-copy.htm',
             link: function (scope) {
-                if (!scope.hasCopy) {
-                    return;
-                }
-
                 scope.copy = function () {
                     var settingTypeHandler = new SettingTypeHandler(scope.settingType);
                     var scopes = settingTypeHandler.getScopes();

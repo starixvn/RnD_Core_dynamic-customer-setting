@@ -2,111 +2,80 @@
     'use strict';
     var injectParams = ['fanexAppSettings', 'fanexResourceService'];
     var fanexSettingLevelHandler = function (appSettings, resourceService) {
-        function SettingGroup(name) {
-            this.Name = name;
-            this.Tables = [];
-        }
-
-        var ProductHandler = function () {
-            this.getTableName = function () {
+        var BaseHandler = function () {
+            this.getPositionTakingTableName = function () {
                 return undefined;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = resourceService.ProductName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
+            this.getCommissionTableName = function () {
+                return undefined;
+            };
+            this.isSamePositionTakingGroup = function (table1, table2) {
+                return table1 !== undefined
+                    && table2 !== undefined
+                    && table1.Rows[0].IsLive === table2.Rows[0].IsLive;
+            };
+            this.isSameCommissionTable = function () {
+                return true;
+            };
+        };
 
-                    group.Tables.push(table);
-                });
-
-                return groups;
+        var ProductHandler = function () {
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function () {
+                return resourceService.ProductName;
+            };
+            this.getCommissionColumnName = function () {
+                return 'Comm';
             };
         };
 
         var SportTypeHandler = function () {
-            this.getTableName = function () {
-                return undefined;
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function (row) {
+                return row.SportTypeName;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = row.SportTypeName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getCommissionColumnName = function (setting) {
+                return setting.SportTypeName;
             };
         };
 
         var BetTypeHandler = function () {
-            this.getTableName = function () {
-                return undefined;
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function (row) {
+                return row.BetTypeName;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = row.BetTypeName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getCommissionColumnName = function (setting) {
+                return setting.BetTypeName;
             };
         };
 
         var SportTypeBetTypeHandler = function () {
-            this.getTableName = function (row) {
-                var name = row.BetTypeName;
-                if (row.IsLive) {
+            BaseHandler.call(this);
+            this.getPositionTakingTableName = function (setting) {
+                var name = setting.BetTypeName;
+                if (setting.IsLive) {
                     name += ' (Live)';
                 }
                 return name;
             };
-            this.generateGroups = function (tables) {
-                var sportType;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.SportType !== sportType) {
-                        sportType = row.SportType;
-                        var name = row.SportTypeName;
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getPositionTakingGroupName = function (row) {
+                return row.SportTypeName;
+            };
+            this.getCommissionColumnName = function (setting) {
+                return this.getPositionTakingTableName(setting);
+            };
+            this.getCommissionTableName = function (setting) {
+                return setting.SportTypeName;
+            };
+            this.isSamePositionTakingGroup = function (table1, table2) {
+                return table1 !== undefined
+                    && table2 !== undefined
+                    && table1.Rows[0].SportType === table2.Rows[0].SportType;
+            };
+            this.isSameCommissionTable = function (setting1, setting2) {
+                return setting1 !== undefined
+                    && setting2 !== undefined
+                    && setting1.SportType === setting2.SportType;
             };
         };
 

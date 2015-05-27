@@ -5,6 +5,6 @@
 
     public interface IPositionTakingMatrixRepository
     {
-        PositionTakingMatrixEntity Query(PositionTakingMatrixQueryCriteria criteria);
+        PositionTakingMatrixEntity Query(SettingMatrixQueryCriteria criteria);
     }
 }

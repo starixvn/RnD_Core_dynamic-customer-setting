@@ -161,16 +161,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\angular-1.2.28.min.js" />
-    <Content Include="app\customerSettingMatrix\controllers\fanex-position-taking-controller.js" />
+    <Content Include="app\customerSettingMatrix\controllers\fanex-page-controller.js" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix-page.htm" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix-templates.js" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix.css" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix.js" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix.less" />
     <Content Include="app\customerSettingMatrix\customer-setting-matrix-app.js" />
+    <Content Include="app\customerSettingMatrix\directives\fanex-form.js" />
+    <Content Include="app\customerSettingMatrix\directives\fanex-header.js" />
+    <Content Include="app\customerSettingMatrix\directives\fanex-commission-matrix.js" />
     <Content Include="app\customerSettingMatrix\directives\fanex-block-ui.js" />
     <Content Include="app\customerSettingMatrix\directives\fanex-breadcrumb.js" />
     <Content Include="app\customerSettingMatrix\directives\fanex-position-taking-matrix.js" />
+    <Content Include="app\customerSettingMatrix\factories\fanex-commission-handler.js" />
+    <Content Include="app\customerSettingMatrix\factories\fanex-position-taking-handler.js" />
     <Content Include="app\customerSettingMatrix\factories\fanex-role-type-handler.js" />
     <Content Include="app\customerSettingMatrix\factories\fanex-setting-level-handler.js" />
     <Content Include="app\customerSettingMatrix\filters\fanex-role-format.js" />
@@ -179,7 +184,12 @@
     <Content Include="app\customerSettingMatrix\images\auto-pt.gif" />
     <Content Include="app\customerSettingMatrix\images\loading.gif" />
     <Content Include="app\customerSettingMatrix\services\fanex-block-ui-service.js" />
+    <Content Include="app\customerSettingMatrix\services\fanex-common-service.js" />
     <Content Include="app\customerSettingMatrix\services\fanex-resource-service.js" />
+    <Content Include="app\customerSettingMatrix\templates\fanex-form.htm" />
+    <Content Include="app\customerSettingMatrix\templates\fanex-header.htm" />
+    <Content Include="app\customerSettingMatrix\templates\fanex-page.htm" />
+    <Content Include="app\customerSettingMatrix\templates\fanex-commission-matrix.htm" />
     <Content Include="app\customerSettingMatrix\templates\fanex-block-ui.htm" />
     <Content Include="app\customerSettingMatrix\templates\fanex-breadcrumb.htm" />
     <Content Include="app\customerSettingMatrix\templates\fanex-position-taking-matrix.htm" />

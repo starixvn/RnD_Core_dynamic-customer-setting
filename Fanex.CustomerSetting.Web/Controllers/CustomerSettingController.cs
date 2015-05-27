@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Web.Configuration;
     using Fanex.CustomerSetting.Web.Models;
     using Fanex.CustomerSetting.Web.Services;
 
@@ -50,10 +51,7 @@
             var filePath = Server.MapPath("~/app/customerSetting/customer-setting-page.htm");
             var htmlContent = System.IO.File.ReadAllText(filePath);
             htmlContent = htmlContent.Replace("{{rootUrl}}", rootUrl);
-            var min = ".min";
-#if DEBUG
-            min = string.Empty;
-#endif
+            var min = WebConfiguration.Settings.IsMinifiedVersion ? ".min" : string.Empty;
             htmlContent = htmlContent.Replace("{{min}}", min);
             return Content(htmlContent, "text/HTML");
         }

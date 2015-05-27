@@ -5,7 +5,7 @@
         return {
             restrict: 'AE',
             replace: true,
-            scope: true,
+            scope: false,
             templateUrl: 'templates/fanex-breadcrumb.htm',
             controller: ['$scope', function ($scope) {
                 $scope.$watch('customer', function (newCustomer, oldCustomer) {
@@ -15,8 +15,13 @@
                 });
 
                 function render() {
-                    var lines = [];
                     var customer = $scope.customer;
+                    if (angular.isUndefined(customer)) {
+                        $scope.lines = undefined;
+                        return;
+                    }
+
+                    var lines = [];
                     switch (customer.RoleId) {
                         case appSettings.roleType.Super:
                             break;
@@ -43,10 +48,6 @@
                     lines.push({ Id: customer.CustId, Name: customer.UserName });
                     $scope.lines = lines;
                 }
-
-                $scope.show = function (userName) {
-                    $scope.$emit('fanex-user-clicked', userName);
-                };
             } ]
         };
     };

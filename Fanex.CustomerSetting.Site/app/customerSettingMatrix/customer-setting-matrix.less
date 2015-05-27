@@ -1,4 +1,9 @@
-﻿body, input, select, textbox
+﻿[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+{
+    display: none !important;
+}
+
+body, input, select, textbox
 {
     font-size: 11px;
     font-family: Tahoma, Arial, helvetica, sans-serif;
@@ -93,23 +98,28 @@ table
 .breadcrumb-container
 {
     display: table;
-    margin: 0;
     margin-bottom: 10px;
-    padding: 8px 15px;
-    list-style: none;
-    background-color: #f5f5f5;
-    border-radius: 4px;
 
-    & > li
+    ol
     {
-        display: inline-block;
+        margin: 0;
+        padding: 8px 15px;
+        list-style: none;
+        background-color: #f5f5f5;
+        border-radius: 4px;
 
-        &+li:before
+        li
         {
-            padding: 0 5px;
-            content: ">";
+            display: inline-block;
+
+            &+li:before
+            {
+                padding: 0 5px;
+                content: ">";
+            }
         }
     }
+    
 }
 
 .form-container

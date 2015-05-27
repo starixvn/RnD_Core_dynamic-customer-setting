@@ -102,6 +102,9 @@ button.update {
   width: 15px;
   height: 15px;
 }
+.pull-left {
+  float: left;
+}
 .message-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -309,7 +312,7 @@ button.update {
   width: 100%;
   background-color: #cadceb;
 }
-.product-container > .container > .body .group-name .copy {
+.product-container > .container > .body .group-name .item-copy {
   float: right;
   line-height: 0;
   cursor: pointer;
@@ -347,7 +350,7 @@ button.update {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.product-container > .container > .body .col-name .copy {
+.product-container > .container > .body .col-name .item-copy {
   float: right;
   line-height: 0;
   cursor: pointer;

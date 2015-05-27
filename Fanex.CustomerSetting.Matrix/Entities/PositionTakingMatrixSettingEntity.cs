@@ -1,18 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Entities
 {
-    public class PositionTakingMatrixSettingEntity
+    public class PositionTakingMatrixSettingEntity : BaseMatrixSettingEntity
     {
-        public short SportType { get; set; }
-
-        public string SportTypeName { get; set; }
-
-        public short BetType { get; set; }
-
-        public string BetTypeName { get; set; }
-
         public bool IsLive { get; set; }
-
-        public byte RoleId { get; set; }
 
         public byte SuperPT { get; set; }
 

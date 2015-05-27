@@ -1,4 +1,12 @@
 /*! fanex-customer-setting-matrix v0.0.1 | (c) 2015 Nexcel Solutions Vietnam */
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
 body,
 input,
 select,
@@ -67,17 +75,19 @@ table td:first-child {
 }
 .breadcrumb-container {
   display: table;
-  margin: 0;
   margin-bottom: 10px;
+}
+.breadcrumb-container ol {
+  margin: 0;
   padding: 8px 15px;
   list-style: none;
   background-color: #f5f5f5;
   border-radius: 4px;
 }
-.breadcrumb-container > li {
+.breadcrumb-container ol li {
   display: inline-block;
 }
-.breadcrumb-container > li + li:before {
+.breadcrumb-container ol li + li:before {
   padding: 0 5px;
   content: ">";
 }

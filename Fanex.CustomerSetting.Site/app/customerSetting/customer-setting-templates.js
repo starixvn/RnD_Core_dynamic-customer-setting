@@ -14,12 +14,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-bet-limit-item-readonly.htm',
-    "<div class=bet-limit-item><div class=col-name title={{name}}>{{name}}</div><div class=\"min-bet read-only\" data-ng-bind=minBet></div><div class=\"max-bet read-only\" data-ng-bind=maxBet></div><div class=\"max-per-match read-only\" data-ng-bind=maxPerMatch></div></div>"
+    "<div class=bet-limit-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=\"min-bet read-only\" data-ng-bind=minBet></div><div class=\"max-bet read-only\" data-ng-bind=maxBet></div><div class=\"max-per-match read-only\" data-ng-bind=maxPerMatch></div></div>"
   );
 
 
   $templateCache.put('templates/fanex-bet-limit-item.htm',
-    "<div class=bet-limit-item><div class=col-name title={{name}}>{{name}}<div data-fanex-item-copy=hasCopy data-setting-type=settingType></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
+    "<div class=bet-limit-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-item-copy data-setting-type=settingType></div></div><div class=min-bet><input data-ng-model=minBet.value data-fanex-bet-limit-input data-error-message=minBet.errorMessage() data-ng-class=\"{'full-width': !hasMinBetLimit, 'invalid': !minBet.isValid()}\"> <span data-ng-show=hasMinBetLimit>&gt;&#61;{{minBet.limit | number}}</span></div><div class=max-bet><input data-ng-model=maxBet.value data-fanex-bet-limit-input data-error-message=maxBet.errorMessage() data-ng-class=\"{'full-width': !hasMaxBetLimit, 'invalid': !maxBet.isValid()}\"> <span data-ng-show=hasMaxBetLimit>&lt;&#61;{{maxBet.limit | number}}</span></div><div class=max-per-match><input data-ng-model=maxPerMatch.value data-fanex-bet-limit-input data-error-message=maxPerMatch.errorMessage() data-ng-class=\"{'full-width': !hasMaxPerMatchLimit, 'invalid': !maxPerMatch.isValid()}\"> <span data-ng-show=hasMaxPerMatchLimit>&lt;&#61;{{maxPerMatch.limit | number}}</span></div></div>"
   );
 
 
@@ -54,7 +54,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-item.htm',
-    "<div class=discount-item><div class=col-name title={{name}}>{{name}}</div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
   );
 
 
@@ -64,7 +64,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-master-edit-member-item.htm',
-    "<div class=discount-item><div class=col-name title={{name}}>{{name}}</div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
+    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
@@ -74,7 +74,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-super-edit-member-item.htm',
-    "<div class=discount-item><div class=col-name title={{name}}>{{name}}</div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
+    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=master-discount data-ng-bind=masterDiscount></div><div class=agent-discount data-ng-bind=agentDiscount></div><div class=member-discount data-ng-bind=memberDiscount></div></div>"
   );
 
 
@@ -84,7 +84,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-item-copy.htm',
-    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
+    "<div class=item-copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-click=copy()><i class=icon-copy></i></div>"
   );
 
 
@@ -99,7 +99,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-agent-edit-member-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=agent-pt data-fanex-pt-select=agentPT></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=agent-pt data-fanex-pt-select=agentPT></div></div>"
   );
 
 
@@ -109,7 +109,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-company-edit-super-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-max-pt data-fanex-pt-select=superMaxPT></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=super-min-pt data-fanex-pt-select=superMinPT></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=super-max-pt data-fanex-pt-select=superMaxPT></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=super-min-pt data-fanex-pt-select=superMinPT></div></div>"
   );
 
 
@@ -119,7 +119,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-copy.htm',
-    "<span class=copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-show=hasCopy data-ng-click=copy()><i class=icon-copy></i></span>"
+    "<div class=item-copy title=\"{{'CopyTooltip' | fanexTranslate}}\" data-ng-click=copy()><i class=icon-copy></i></div>"
   );
 
 
@@ -129,7 +129,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-agent-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=agent-min-pt data-fanex-pt-select=agentMinPT></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-max-pt data-fanex-pt-select=agentMaxPT></div><div class=agent-min-pt data-fanex-pt-select=agentMinPT></div></div>"
   );
 
 
@@ -139,7 +139,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-master-edit-member-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=master-pt data-fanex-pt-select=masterPT></div><div class=master-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"masterIsAuto\"></label></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
   );
 
 
@@ -154,7 +154,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-master-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=master-min-pt data-fanex-pt-select=masterMinPT></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-max-pt data-fanex-pt-select=masterMaxPT></div><div class=master-min-pt data-fanex-pt-select=masterMinPT></div></div>"
   );
 
 
@@ -164,7 +164,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-super-edit-member-item.htm',
-    "<div class=position-taking-item><div class=col-name title={{name}}>{{name}}<div data-fanex-pt-copy=hasCopy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=\"masterPT | fanexPtFormat\"></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
+    "<div class=position-taking-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-pt-copy></div></div><div class=super-pt data-fanex-pt-select=superPT></div><div class=super-is-auto><label class=checkbox><input type=checkbox data-ng-model=\"superIsAuto\"></label></div><div class=master-pt data-ng-bind=\"masterPT | fanexPtFormat\"></div><div class=agent-pt data-ng-bind=\"agentPT | fanexPtFormat\"></div></div>"
   );
 
 
@@ -184,7 +184,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-item.htm',
-    "<div class=status-item><div class=col-name title={{name}}>{{name}}</div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
+    "<div class=status-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
   );
 
 

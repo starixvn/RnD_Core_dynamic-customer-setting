@@ -49,6 +49,7 @@
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\WebConfiguration.cs" />
+    <Compile Include="Configuration\WebSettings.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="CurrentSession.cs" />

@@ -15,8 +15,16 @@
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            WebConfiguration.Start();
             DbSettingProviderManager.Current.Start();
+            var isMinifiedVersion = false;
+#if DEBUG
+            isMinifiedVersion = true;
+#endif
+            var webSettings = new WebSettings
+            {
+                IsMinifiedVersion = isMinifiedVersion
+            };
+            WebConfiguration.Start(webSettings);
         }
     }
 }

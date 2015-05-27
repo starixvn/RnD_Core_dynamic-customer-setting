@@ -13,7 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{5697E4DC-4C04-474A-83C0-5B24B1344DB9}"
 	ProjectSection(SolutionItems) = preProject
-		Documents\links.txt = Documents\links.txt
+		Documents\customer-setting-matrix.txt = Documents\customer-setting-matrix.txt
+		Documents\customer-setting-renovation.txt = Documents\customer-setting-renovation.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E806ACFD-285F-46CA-8522-495B23638BD4}"

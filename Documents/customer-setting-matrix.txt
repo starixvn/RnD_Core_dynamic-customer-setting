@@ -1,0 +1,28 @@
+https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/PTComm_Matrix
+https://docs.google.com/spreadsheets/d/11ysKrF6o5XpOBXQhPNIqeeCgnWPQRnuPGG6XBLJr-Os/edit#gid=0
+
+* Position Taking Matrix:
+- Query super:
+exec [dbo].[Acc_CustSetting_PTMatrix]   
+   @ProductID  = 255,
+   @UserName  = 'SA-RM'
+
+- Query master:
+exec [dbo].[Acc_CustSetting_PTMatrix]   
+   @ProductID  = 255,
+   @UserName  = 'mrm'
+
+- Query agent:
+exec [dbo].[Acc_CustSetting_PTMatrix]   
+   @ProductID  = 255,
+   @UserName  = 'wsrm'
+
+- Query member:
+exec [dbo].[Acc_CustSetting_PTMatrix]   
+   @ProductID  = 255,
+   @UserName  = '428RM'
+
+* Commission Matrix:
+exec [dbo].[Acc_CustSetting_CommMatrix]   
+   @ProductID = 252,
+   @UserName = '428RM'

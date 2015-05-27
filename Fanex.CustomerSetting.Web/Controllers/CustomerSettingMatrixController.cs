@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Fanex.CustomerSetting.Matrix.Enumerations;
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Services;
 
@@ -10,18 +11,23 @@
     public class CustomerSettingMatrixController : Controller
     {
         private readonly IPositionTakingMatrixService _positionTakingMatrixService;
+        private readonly ICommissionMatrixService _commissionMatrixService;
 
         public CustomerSettingMatrixController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerSettingMatrixController(IPositionTakingMatrixService positionTakingMatrixService)
+        public CustomerSettingMatrixController(
+            IPositionTakingMatrixService positionTakingMatrixService,
+            ICommissionMatrixService commissionMatrixService)
         {
             _positionTakingMatrixService = positionTakingMatrixService ?? new PositionTakingMatrixService();
+            _commissionMatrixService = commissionMatrixService ?? new CommissionMatrixService();
         }
 
         [HttpGet]
+        [OutputCache(Duration = 14400)]
         public ActionResult Index()
         {
             var rootUrl = Request.ApplicationPath;
@@ -37,16 +43,31 @@
         }
 
         [HttpPost]
-        public ActionResult PositionTaking(int productId, string userName)
+        public ActionResult Query(QueryInfo queryInfo)
         {
-            var queryInfo = new QueryInfo
+            switch (queryInfo.SettingType)
             {
-                ProductId = productId,
-                UserName = userName
-            };
+                case SettingType.PositionTaking:
+                    return QueryPositionTaking(queryInfo);
 
+                case SettingType.Commission:
+                    return QueryCommission(queryInfo);
+
+                default:
+                    throw new NotImplementedException("Not implemented yet");
+            }
+        }
+
+        private ActionResult QueryPositionTaking(QueryInfo queryInfo)
+        {
             var positionTakingMatrix = _positionTakingMatrixService.Query(queryInfo);
             return Json(positionTakingMatrix);
+        }
+
+        private ActionResult QueryCommission(QueryInfo queryInfo)
+        {
+            var commissionMatrix = _commissionMatrixService.Query(queryInfo);
+            return Json(commissionMatrix);
         }
     }
 }

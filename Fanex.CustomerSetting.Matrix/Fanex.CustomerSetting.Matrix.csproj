@@ -79,17 +79,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\CommissionMatrixQueryCriteria.cs" />
-    <Compile Include="Criteria\PositionTakingMatrixQueryCriteria.cs" />
+    <Compile Include="..\Fanex.CustomerSetting.Site\Properties\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Criteria\SettingMatrixQueryCriteria.cs" />
+    <Compile Include="Entities\CommissionMatrixCustomerEntity.cs" />
+    <Compile Include="Entities\BaseMatrixSettingEntity.cs" />
+    <Compile Include="Entities\CommissionMatrixEntity.cs" />
+    <Compile Include="Entities\CommissionMatrixSettingEntity.cs" />
     <Compile Include="Entities\PositionTakingMatrixCustomerEntity.cs" />
     <Compile Include="Entities\PositionTakingMatrixEntity.cs" />
     <Compile Include="Entities\PositionTakingMatrixSettingEntity.cs" />
+    <Compile Include="Entities\BaseMatrixCustomerEntity.cs" />
+    <Compile Include="Enumerations\SettingType.cs" />
     <Compile Include="Models\QueryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CommissionMatrixRepository.cs" />
     <Compile Include="Repositories\ICommissionMatrixRepository.cs" />
     <Compile Include="Repositories\IPositionTakingMatrixRepository.cs" />
     <Compile Include="Repositories\PositionTakingMatrixRepository.cs" />
+    <Compile Include="Services\CommissionMatrixService.cs" />
+    <Compile Include="Services\ICommissionMatrixService.cs" />
     <Compile Include="Services\IPositionTakingMatrixService.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\PositionTakingMatrixService.cs" />

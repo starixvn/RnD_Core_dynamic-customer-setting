@@ -3,6 +3,7 @@
     using System;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Entities;
+    using Fanex.CustomerSetting.Matrix.Enumerations;
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Repositories;
 
@@ -26,7 +27,7 @@
 
         public PositionTakingMatrixEntity Query(QueryInfo queryInfo)
         {
-            var criteria = new PositionTakingMatrixQueryCriteria
+            var criteria = new SettingMatrixQueryCriteria(SettingType.PositionTaking)
             {
                 ProductId = queryInfo.ProductId,
                 UserName = queryInfo.UserName

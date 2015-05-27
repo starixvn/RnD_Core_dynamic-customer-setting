@@ -56,7 +56,27 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
 
   $templateCache.put('templates/fanex-breadcrumb.htm',
-    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
+    "<div class=breadcrumb-container><ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=selectUserName(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-commission-matrix.htm',
+    "<div class=group data-ng-repeat=\"table in tables\"><div data-ng-show=table.Name class=group-name>{{table.Name}}</div><div class=table><table><colgroup><col width=\"80\"><col width=50 data-ng-repeat=\"column in table.TotalOfColumn\"></colgroup><thead><tr><th></th><th data-ng-repeat=\"column in table.Columns\">{{column.Name}}</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.Rows\"><td>{{row.Name}}</td><td data-ng-repeat=\"column in row.Columns\">{{column.Value}}</td></tr></tbody></table></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-form.htm',
+    "<div class=form-container><div class=controls><label for=product>Product</label><select name=product data-ng-model=product data-ng-options=\"product.Name for product in products\"></select></div><div class=controls><label for=userName>Username</label><input name=userName data-ng-model=\"userName\"></div><div class=controls><button data-ng-click=submit()>Submit</button></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-header.htm',
+    "<div class=header-container><ul class=navigation><li data-ng-repeat=\"navigationItem in navigationItems\" data-ng-click=activeNavigationItem(navigationItem) data-ng-class=\"{'active': selectedNavigationItem==navigationItem}\"><a href=#>{{navigationItem.Text}}</a></li></ul></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-page.htm',
+    "<div data-fanex-header></div><div data-fanex-form></div><div class=message-container data-ng-show=message data-ng-bind=message></div><div data-ng-show=customer data-fanex-breadcrumb></div><div class=result-container data-ng-show=settings data-ng-switch=selectedNavigationItem.Value><div data-ng-switch-when=0 data-fanex-position-taking-matrix></div><div data-ng-switch-when=1 data-fanex-commission-matrix></div></div>"
   );
 
 
@@ -70,70 +90,48 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
 (function () {
     'use strict';
-    var injectParams = ['$scope', '$http', 'fanexAppSettings', 'fanexResourceService'];
-    var fanexPositionTakingController = function ($scope, $http, appSettings, resourceService) {
-        $scope.products = [
-            { Id: 250, Name: 'Product-250' },
-            { Id: 251, Name: 'Product-251' },
-            { Id: 252, Name: 'Product-252' },
-            { Id: 253, Name: 'Product-253' },
-            { Id: 254, Name: 'Product-254' },
-            { Id: 255, Name: 'Product-255' }
-        ];
-        $scope.product = $scope.products[0];
-        $scope.userName = '428RM';
-        $scope.submit = function () {
-            var product = $scope.product;
-            var productId = product.Id;
-            var productName = product.Name;
-            resourceService.ProductName = productName;
-            if (angular.isUndefined(productId)) {
-                $scope.showMessage('Please select a product!');
-                return;
-            }
-
-            var userName = $scope.userName;
-            if (angular.isUndefined(userName) || userName === '') {
-                $scope.showMessage('Please input username!');
-                return;
-            }
-
-            $scope.hideMessage();
-            submit(productId, userName);
-        };
-
-        $scope.$on('fanex-user-clicked', function (event, userName) {
-            $scope.userName = userName;
-            $scope.submit();
-        });
-
-        $scope.showMessage = function (message) {
+    var injectParams = ['$scope', '$http', 'fanexAppSettings'];
+    var fanexPageController = function ($scope, $http, appSettings) {
+        $scope.pageUrl = 'templates/fanex-page.htm';
+        $scope.changeSettingType = function (settingType) {
+            $scope.settingType = settingType;
+            $scope.message = undefined;
             $scope.customer = undefined;
             $scope.settings = undefined;
-            $scope.message = message;
         };
-
-        $scope.hideMessage = function () {
-            $scope.message = undefined;
-        };
-
-        function submit(productId, userName) {
+        $scope.productId = 0;
+        $scope.userName = '428RM';
+        $scope.submitForm = function (productId, userName) {
+            $scope.productId = productId;
+            $scope.userName = userName;
+            var url = appSettings.rootUrl + '/CustomerSettingMatrix/Query';
             var queryModel = {
                 ProductId: productId,
-                UserName: userName
+                UserName: userName,
+                SettingType: $scope.settingType
             };
-
-            var url = appSettings.rootUrl + '/CustomerSettingMatrix/PositionTaking';
             var request = $http.post(url, queryModel);
             request.success(function (response) {
                 $scope.customer = response.Customer;
                 $scope.settings = response.Settings;
             });
-        }
+        };
+        $scope.selectUserName = function (userName) {
+            $scope.userName = userName;
+            $scope.submitForm($scope.productId, $scope.userName);
+        };
+        $scope.showMessage = function (message) {
+            $scope.customer = undefined;
+            $scope.settings = undefined;
+            $scope.message = message;
+        };
+        $scope.hideMessage = function () {
+            $scope.message = undefined;
+        };
     };
 
-    fanexPositionTakingController.$inject = injectParams;
-    angular.module('customerSettingMatrixApp').controller('FanexPositionTakingController', fanexPositionTakingController);
+    fanexPageController.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').controller('FanexPageController', fanexPageController);
 })();
 
 (function () {
@@ -167,7 +165,7 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         return {
             restrict: 'AE',
             replace: true,
-            scope: true,
+            scope: false,
             templateUrl: 'templates/fanex-breadcrumb.htm',
             controller: ['$scope', function ($scope) {
                 $scope.$watch('customer', function (newCustomer, oldCustomer) {
@@ -177,8 +175,13 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
                 });
 
                 function render() {
-                    var lines = [];
                     var customer = $scope.customer;
+                    if (angular.isUndefined(customer)) {
+                        $scope.lines = undefined;
+                        return;
+                    }
+
+                    var lines = [];
                     switch (customer.RoleId) {
                         case appSettings.roleType.Super:
                             break;
@@ -205,10 +208,6 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
                     lines.push({ Id: customer.CustId, Name: customer.UserName });
                     $scope.lines = lines;
                 }
-
-                $scope.show = function (userName) {
-                    $scope.$emit('fanex-user-clicked', userName);
-                };
             } ]
         };
     };
@@ -219,8 +218,116 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
 (function () {
     'use strict';
-    var injectParams = ['$compile', 'fanexAppSettings', 'fanexSettingLevelHandler', 'fanexRoleTypeHandler'];
-    var fanexPositionTakingMatrixDirective = function ($compile, appSettings, SettingLevelHandler, RoleTypeHandler) {
+    var injectParams = ['$compile', 'fanexAppSettings', 'fanexCommissionHandler'];
+    var fanexCommissionMatrixDirective = function ($compile, appSettings, CommissionHandler) {
+        return {
+            restrict: 'AE',
+            scope: true,
+            templateUrl: 'templates/fanex-commission-matrix.htm',
+            controller: ['$scope', function ($scope) {
+                $scope.$watch('settings', function (newSettings, oldSettings) {
+                    if (newSettings !== oldSettings) {
+                        update();
+                    }
+                });
+
+                function update() {
+                    var customer = $scope.customer;
+                    var settings = $scope.settings;
+                    var roleId = customer.RoleId;
+                    var settingLevel = customer.SettingLevel;
+                    var commissionHandler = new CommissionHandler(roleId, settingLevel);
+                    $scope.tables = commissionHandler.createTables(settings);
+                }
+            } ]
+        };
+    };
+
+    fanexCommissionMatrixDirective.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').directive('fanexCommissionMatrix', fanexCommissionMatrixDirective);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['$http', 'fanexAppSettings', 'fanexResourceService'];
+    var fanexFormDirective = function ($http, appSettings, resourceService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: false,
+            templateUrl: 'templates/fanex-form.htm',
+            controller: ['$scope', function ($scope) {
+                $scope.products = [
+                    { Id: 250, Name: 'Product-250' },
+                    { Id: 251, Name: 'Product-251' },
+                    { Id: 252, Name: 'Product-252' },
+                    { Id: 253, Name: 'Product-253' },
+                    { Id: 254, Name: 'Product-254' },
+                    { Id: 255, Name: 'Product-255' }
+                ];
+                $scope.product = $scope.products[0];
+                $scope.submit = function () {
+                    var product = $scope.product;
+                    var productId = product.Id;
+                    var productName = product.Name;
+                    resourceService.ProductName = productName;
+                    var userName = $scope.userName;
+
+                    if (angular.isUndefined(productId)) {
+                        $scope.showMessage('Please select a product!');
+                        return;
+                    }
+
+                    if (angular.isUndefined(userName) || userName === '') {
+                        $scope.showMessage('Please input username!');
+                        return;
+                    }
+
+                    $scope.hideMessage();
+                    $scope.submitForm(productId, userName);
+                };
+            } ]
+        };
+    };
+
+    fanexFormDirective.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').directive('fanexForm', fanexFormDirective);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['fanexAppSettings'];
+    var fanexHeaderDirective = function (appSettings) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: false,
+            templateUrl: 'templates/fanex-header.htm',
+            controller: ['$scope', function ($scope) {
+                $scope.navigationItems = [{
+                    Value: appSettings.settingType.PositionTaking,
+                    Text: 'PT Matrix'
+                }, {
+                    Value: appSettings.settingType.Commission,
+                    Text: 'Commission Matrix'
+                }];
+                $scope.activeNavigationItem = function (navigationItem) {
+                    $scope.selectedNavigationItem = navigationItem;
+                    $scope.changeSettingType(navigationItem.Value);
+                };
+                $scope.activeNavigationItem($scope.navigationItems[0]);
+            } ]
+        };
+    };
+
+    fanexHeaderDirective.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').directive('fanexHeader', fanexHeaderDirective);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['$compile', 'fanexAppSettings', 'fanexPositionTakingHandler'];
+    var fanexPositionTakingMatrixDirective = function ($compile, appSettings, PositionTakingHandler) {
         return {
             restrict: 'AE',
             scope: true,
@@ -234,15 +341,12 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
                 function update() {
                     var customer = $scope.customer;
-                    var settings = $scope.settings;
-                    var settingLevel = customer.SettingLevel;
-                    var settingLevelHandler = new SettingLevelHandler(settingLevel);
-                    var roleId = customer.RoleId;
-                    var roleTypeHandler = new RoleTypeHandler(roleId);
-                    var settingTables = roleTypeHandler.generateTables(settingLevel, settings);
-                    var settingGroups = settingLevelHandler.generateGroups(settingTables);
                     $scope.disableAutoMPT = customer.DisableAutoMPT;
-                    $scope.groups = settingGroups;
+                    var settings = $scope.settings;
+                    var roleId = customer.RoleId;
+                    var settingLevel = customer.SettingLevel;
+                    var positionTakingHandler = new PositionTakingHandler(roleId, settingLevel);
+                    $scope.groups = positionTakingHandler.createGroups(settings);
                 }
             } ]
         };
@@ -254,8 +358,130 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
 (function () {
     'use strict';
-    var injectParams = ['fanexAppSettings', 'fanexSettingLevelHandler'];
-    var fanexRoleTypeHandler = function (appSettings, SettingLevelHandler) {
+    var injectParams = ['fanexAppSettings', 'fanexCommonService', 'fanexSettingLevelHandler', 'fanexRoleTypeHandler'];
+    var fanexCommissionHandler = function (appSettings, commonService, SettingLevelHandler, RoleTypeHandler) {
+        function SettingTable(name, rows) {
+            var columns = rows[0].Columns;
+            var totalOfColumn = columns.length;
+            return {
+                Name: name,
+                Rows: rows,
+                Columns: columns,
+                TotalOfColumn: totalOfColumn
+            };
+        }
+
+        function SettingRow(name, columns) {
+            return {
+                Name: name,
+                Columns: columns
+            };
+        }
+
+        function SettingColumn(name, value) {
+            return {
+                Name: name,
+                Value: value
+            };
+        }
+
+        function inArray(value, array) {
+            var index = -1;
+            angular.forEach(array, function (arrayValue, arrayIndex) {
+                if (index === -1 && arrayValue === value) {
+                    index = arrayIndex;
+                }
+            });
+
+            return index;
+        }
+
+        function getRoleIds(settings) {
+            var roleId;
+            var roleIds = [];
+            var index = 0;
+            while (index < settings.length) {
+                var setting = settings[index];
+                if (roleId !== setting.RoleId) {
+                    roleId = setting.RoleId;
+                    if (inArray(roleId, roleIds) === -1) {
+                        roleIds.push(roleId);
+                    }
+                }
+
+                index++;
+            }
+
+            return roleIds;
+        }
+
+        function createTable(settingLevel, settings) {
+            var settingLevelHandler = new SettingLevelHandler(settingLevel);
+            var name = settingLevelHandler.getCommissionTableName(settings[0]);
+            var roleIds = getRoleIds(settings);
+            var rows = [];
+            for (var i = 0; i < roleIds.length; i++) {
+                var roleId = roleIds[i];
+                var roleSettings = [];
+                for (var j = 0; j < settings.length; j++) {
+                    var setting = settings[j];
+                    if (setting.RoleId === roleId) {
+                        roleSettings.push(setting);
+                    }
+                }
+
+                var row = createRow(settingLevel, roleSettings);
+                rows.push(row);
+            }
+
+            return new SettingTable(name, rows);
+        }
+
+        function createRow(settingLevel, settings) {
+            var settingLevelHandler = new SettingLevelHandler(settingLevel);
+            var roleId = settings[0].RoleId;
+            var roleTypeHandler = new RoleTypeHandler(roleId);
+            var rowName = roleTypeHandler.RoleName;
+            var columns = [];
+            for (var i = 0; i < settings.length; i++) {
+                var setting = settings[i];
+                var columnValue = setting.Discount;
+                var columnName = settingLevelHandler.getCommissionColumnName(setting);
+                var column = new SettingColumn(columnName, columnValue);
+                columns.push(column);
+            }
+
+            return new SettingRow(rowName, columns);
+        }
+
+        function CommissionHandler(roleId, settingLevel) {
+            this.roleId = roleId;
+            this.settingLevel = settingLevel;
+            this.createTables = function (settings) {
+                var tables = [];
+                var settingLevelHandler = new SettingLevelHandler(this.settingLevel);
+                var groups = commonService.group(settings, settingLevelHandler.isSameCommissionTable);
+                for (var i = 0; i < groups.length; i++) {
+                    var tableSettings = groups[i];
+                    var table = createTable(this.settingLevel, tableSettings);
+                    tables.push(table);
+                }
+
+                return tables;
+            };
+        }
+
+        return CommissionHandler;
+    };
+
+    fanexCommissionHandler.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').factory('fanexCommissionHandler', fanexCommissionHandler);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['fanexAppSettings', 'fanexSettingLevelHandler', 'fanexRoleTypeHandler'];
+    var fanexPositionTakingHandler = function (appSettings, SettingLevelHandler, RoleTypeHandler) {
         function SettingTable(name, rows) {
             return {
                 Name: name,
@@ -263,45 +489,95 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
             };
         }
 
-        var BaseHandler = function (total) {
-            this.total = total;
-            this.generateTables = function (settingLevel, settings) {
-                var settingLevelHandler = new SettingLevelHandler(settingLevel);
-                var tables = [];
-                var length = settings.length / total;
-                for (var i = 0; i < length; i++) {
-                    var name;
-                    var rows = [];
-                    for (var j = 0; j < total; j++) {
-                        var index = i * total + j;
-                        var setting = settings[index];
-                        var roleId = setting.RoleId;
-                        var roleTypeHandler = new RoleTypeHandler(roleId);
-                        var row = roleTypeHandler.createRow(setting);
-                        name = settingLevelHandler.getTableName(setting);
-                        angular.extend(row, {
-                            SportType: setting.SportType,
-                            SportTypeName: setting.SportTypeName,
-                            BetType: setting.BetType,
-                            BetTypeName: setting.BetTypeName,
-                            IsLive: setting.IsLive,
-                            RoleId: setting.RoleId
-                        });
-                        rows.push(row);
-                    }
+        function SettingGroup(name) {
+            this.Name = name;
+            this.Tables = [];
+        }
 
-                    var table = new SettingTable(name, rows);
-                    tables.push(table);
+        function createTables(roleId, settingLevel, settings) {
+            var roleTypeHandler = new RoleTypeHandler(roleId);
+            var settingLevelHandler = new SettingLevelHandler(settingLevel);
+            var total = roleTypeHandler.PositionTakingRowTotal;
+            var tables = [];
+            var length = settings.length / total;
+            for (var i = 0; i < length; i++) {
+                var tableName;
+                var tableRows = [];
+                for (var j = 0; j < total; j++) {
+                    var index = i * total + j;
+                    var setting = settings[index];
+                    var settingRoleId = setting.RoleId;
+                    roleTypeHandler = new RoleTypeHandler(settingRoleId);
+                    var tableRow = roleTypeHandler.createPositionTakingRow(setting);
+                    tableName = settingLevelHandler.getPositionTakingTableName(setting);
+                    angular.extend(tableRow, {
+                        SportType: setting.SportType,
+                        SportTypeName: setting.SportTypeName,
+                        BetType: setting.BetType,
+                        BetTypeName: setting.BetTypeName,
+                        IsLive: setting.IsLive,
+                        RoleId: setting.RoleId
+                    });
+
+                    tableRows.push(tableRow);
                 }
 
-                return tables;
+                var table = new SettingTable(tableName, tableRows);
+                tables.push(table);
+            }
+
+            return tables;
+        }
+
+        function createGroups(settingLevel, tables) {
+            var groups = [];
+            var group;
+            var currentTable;
+            var settingLevelHandler = new SettingLevelHandler(settingLevel);
+            angular.forEach(tables, function (table) {
+                if (!settingLevelHandler.isSamePositionTakingGroup(currentTable, table)) {
+                    currentTable = table;
+                    var tableRow = table.Rows[0];
+                    var groupName = settingLevelHandler.getPositionTakingGroupName(tableRow);
+                    groupName += tableRow.IsLive ? ' (Live)' : '';
+                    group = new SettingGroup(groupName);
+                    groups.push(group);
+                }
+
+                group.Tables.push(table);
+            });
+
+            return groups;
+        }
+
+        function PositionTakingHandler(roleId, settingLevel) {
+            this.roleId = roleId;
+            this.settingLevel = settingLevel;
+            this.createGroups = function (settings) {
+                var tables = createTables(this.roleId, this.settingLevel, settings);
+                return createGroups(this.settingLevel, tables);
             };
+        }
+
+        return PositionTakingHandler;
+    };
+
+    fanexPositionTakingHandler.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').factory('fanexPositionTakingHandler', fanexPositionTakingHandler);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = ['fanexAppSettings'];
+    var fanexRoleTypeHandler = function (appSettings) {
+        var BaseHandler = function (roleName, positionTakingRowTotal) {
+            this.RoleName = roleName;
+            this.PositionTakingRowTotal = positionTakingRowTotal;
         };
 
         var SuperHandler = function () {
-            BaseHandler.call(this, 1);
-            this.RoleName = 'Super (4)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Super (4)', 1);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,
@@ -312,9 +588,8 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         };
 
         var MasterHandler = function () {
-            BaseHandler.call(this, 2);
-            this.RoleName = 'Master (3)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Master (3)', 2);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,
@@ -326,9 +601,8 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         };
 
         var AgentHandler = function () {
-            BaseHandler.call(this, 3);
-            this.RoleName = 'Agent (2)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Agent (2)', 3);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     MasterPT: setting.MasterPT,
                     AgentPT: setting.AgentPT,
@@ -340,9 +614,8 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
         };
 
         var MemberHandler = function () {
-            BaseHandler.call(this, 4);
-            this.RoleName = 'Member (1)';
-            this.createRow = function (setting) {
+            BaseHandler.call(this, 'Member (1)', 4);
+            this.createPositionTakingRow = function (setting) {
                 return {
                     SuperPT: setting.SuperPT,
                     MasterPT: setting.MasterPT,
@@ -385,111 +658,80 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
     'use strict';
     var injectParams = ['fanexAppSettings', 'fanexResourceService'];
     var fanexSettingLevelHandler = function (appSettings, resourceService) {
-        function SettingGroup(name) {
-            this.Name = name;
-            this.Tables = [];
-        }
-
-        var ProductHandler = function () {
-            this.getTableName = function () {
+        var BaseHandler = function () {
+            this.getPositionTakingTableName = function () {
                 return undefined;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = resourceService.ProductName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
+            this.getCommissionTableName = function () {
+                return undefined;
+            };
+            this.isSamePositionTakingGroup = function (table1, table2) {
+                return table1 !== undefined
+                    && table2 !== undefined
+                    && table1.Rows[0].IsLive === table2.Rows[0].IsLive;
+            };
+            this.isSameCommissionTable = function () {
+                return true;
+            };
+        };
 
-                    group.Tables.push(table);
-                });
-
-                return groups;
+        var ProductHandler = function () {
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function () {
+                return resourceService.ProductName;
+            };
+            this.getCommissionColumnName = function () {
+                return 'Comm';
             };
         };
 
         var SportTypeHandler = function () {
-            this.getTableName = function () {
-                return undefined;
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function (row) {
+                return row.SportTypeName;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = row.SportTypeName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getCommissionColumnName = function (setting) {
+                return setting.SportTypeName;
             };
         };
 
         var BetTypeHandler = function () {
-            this.getTableName = function () {
-                return undefined;
+            BaseHandler.call(this);
+            this.getPositionTakingGroupName = function (row) {
+                return row.BetTypeName;
             };
-            this.generateGroups = function (tables) {
-                var isLive;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.IsLive !== isLive) {
-                        isLive = row.IsLive;
-                        var name = row.BetTypeName;
-                        name += row.IsLive ? ' (Live)' : '';
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getCommissionColumnName = function (setting) {
+                return setting.BetTypeName;
             };
         };
 
         var SportTypeBetTypeHandler = function () {
-            this.getTableName = function (row) {
-                var name = row.BetTypeName;
-                if (row.IsLive) {
+            BaseHandler.call(this);
+            this.getPositionTakingTableName = function (setting) {
+                var name = setting.BetTypeName;
+                if (setting.IsLive) {
                     name += ' (Live)';
                 }
                 return name;
             };
-            this.generateGroups = function (tables) {
-                var sportType;
-                var groups = [];
-                var group;
-                angular.forEach(tables, function (table) {
-                    var row = table.Rows[0];
-                    if (row.SportType !== sportType) {
-                        sportType = row.SportType;
-                        var name = row.SportTypeName;
-                        group = new SettingGroup(name);
-                        groups.push(group);
-                    }
-
-                    group.Tables.push(table);
-                });
-
-                return groups;
+            this.getPositionTakingGroupName = function (row) {
+                return row.SportTypeName;
+            };
+            this.getCommissionColumnName = function (setting) {
+                return this.getPositionTakingTableName(setting);
+            };
+            this.getCommissionTableName = function (setting) {
+                return setting.SportTypeName;
+            };
+            this.isSamePositionTakingGroup = function (table1, table2) {
+                return table1 !== undefined
+                    && table2 !== undefined
+                    && table1.Rows[0].SportType === table2.Rows[0].SportType;
+            };
+            this.isSameCommissionTable = function (setting1, setting2) {
+                return setting1 !== undefined
+                    && setting2 !== undefined
+                    && setting1.SportType === setting2.SportType;
             };
         };
 
@@ -600,6 +842,37 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 (function () {
     'use strict';
     var injectParams = [];
+    var fanexCommonService = function () {
+        function group(array, condition) {
+            var results = [];
+            var currentItem;
+            var items = [];
+            angular.forEach(array, function (item) {
+                if (angular.isDefined(currentItem) && !condition(currentItem, item)) {
+                    results.push(items);
+                    items = [];
+                }
+
+                items.push(item);
+                currentItem = item;
+            });
+
+            results.push(items);
+            return results;
+        }
+
+        return {
+            group: group
+        };
+    };
+
+    fanexCommonService.$inject = injectParams;
+    angular.module('customerSettingMatrixApp').service('fanexCommonService', fanexCommonService);
+})();
+
+(function () {
+    'use strict';
+    var injectParams = [];
     var fanexResourceService = function () {
         var productName;
         return {
@@ -628,6 +901,10 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
             SportType: 2,
             BetType: 3,
             SportTypeBetType: 4
+        },
+        settingType: {
+            PositionTaking: 0,
+            Commission: 1
         }
     });
 })();

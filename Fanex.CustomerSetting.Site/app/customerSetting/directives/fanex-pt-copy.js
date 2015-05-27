@@ -5,15 +5,8 @@
         return {
             restrict: 'AE',
             replace: true,
-            scope: {
-                hasCopy: '=fanexPtCopy'
-            },
             templateUrl: 'templates/fanex-pt-copy.htm',
             link: function (scope, element) {
-                if (!scope.hasCopy) {
-                    return;
-                }
-
                 scope.copy = function () {
                     var count = 0;
                     var scopes = ptService.getScopes();

@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['$compile', 'fanexAppSettings', 'fanexSettingLevelHandler', 'fanexRoleTypeHandler'];
-    var fanexPositionTakingMatrixDirective = function ($compile, appSettings, SettingLevelHandler, RoleTypeHandler) {
+    var injectParams = ['$compile', 'fanexAppSettings', 'fanexPositionTakingHandler'];
+    var fanexPositionTakingMatrixDirective = function ($compile, appSettings, PositionTakingHandler) {
         return {
             restrict: 'AE',
             scope: true,
@@ -15,15 +15,12 @@
 
                 function update() {
                     var customer = $scope.customer;
-                    var settings = $scope.settings;
-                    var settingLevel = customer.SettingLevel;
-                    var settingLevelHandler = new SettingLevelHandler(settingLevel);
-                    var roleId = customer.RoleId;
-                    var roleTypeHandler = new RoleTypeHandler(roleId);
-                    var settingTables = roleTypeHandler.generateTables(settingLevel, settings);
-                    var settingGroups = settingLevelHandler.generateGroups(settingTables);
                     $scope.disableAutoMPT = customer.DisableAutoMPT;
-                    $scope.groups = settingGroups;
+                    var settings = $scope.settings;
+                    var roleId = customer.RoleId;
+                    var settingLevel = customer.SettingLevel;
+                    var positionTakingHandler = new PositionTakingHandler(roleId, settingLevel);
+                    $scope.groups = positionTakingHandler.createGroups(settings);
                 }
             } ]
         };

@@ -24,5 +24,6 @@
   </Function>
   <Function Name="Customer Setting Matrix">
     <Setting Key="Acc_CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>

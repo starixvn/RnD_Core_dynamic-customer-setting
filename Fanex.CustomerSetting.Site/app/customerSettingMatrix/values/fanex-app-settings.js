@@ -15,6 +15,10 @@
             SportType: 2,
             BetType: 3,
             SportTypeBetType: 4
+        },
+        settingType: {
+            PositionTaking: 0,
+            Commission: 1
         }
     });
 })();

@@ -9,7 +9,27 @@ angular.module('customerSettingMatrixApp').run(['$templateCache', function($temp
 
 
   $templateCache.put('templates/fanex-breadcrumb.htm',
-    "<ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=show(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol>"
+    "<div class=breadcrumb-container><ol><li data-ng-repeat=\"line in lines\" data-ng-switch=$last data-ng-class=\"{'active': $last}\"><a href=# ng-switch-when=false data-ng-click=selectUserName(line.Name)>{{line.Name}} ({{line.Id}})</a> <span ng-switch-when=true>{{line.Name}} ({{line.Id}})</span></li></ol></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-commission-matrix.htm',
+    "<div class=group data-ng-repeat=\"table in tables\"><div data-ng-show=table.Name class=group-name>{{table.Name}}</div><div class=table><table><colgroup><col width=\"80\"><col width=50 data-ng-repeat=\"column in table.TotalOfColumn\"></colgroup><thead><tr><th></th><th data-ng-repeat=\"column in table.Columns\">{{column.Name}}</th></tr></thead><tbody><tr data-ng-repeat=\"row in table.Rows\"><td>{{row.Name}}</td><td data-ng-repeat=\"column in row.Columns\">{{column.Value}}</td></tr></tbody></table></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-form.htm',
+    "<div class=form-container><div class=controls><label for=product>Product</label><select name=product data-ng-model=product data-ng-options=\"product.Name for product in products\"></select></div><div class=controls><label for=userName>Username</label><input name=userName data-ng-model=\"userName\"></div><div class=controls><button data-ng-click=submit()>Submit</button></div></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-header.htm',
+    "<div class=header-container><ul class=navigation><li data-ng-repeat=\"navigationItem in navigationItems\" data-ng-click=activeNavigationItem(navigationItem) data-ng-class=\"{'active': selectedNavigationItem==navigationItem}\"><a href=#>{{navigationItem.Text}}</a></li></ul></div>"
+  );
+
+
+  $templateCache.put('templates/fanex-page.htm',
+    "<div data-fanex-header></div><div data-fanex-form></div><div class=message-container data-ng-show=message data-ng-bind=message></div><div data-ng-show=customer data-fanex-breadcrumb></div><div class=result-container data-ng-show=settings data-ng-switch=selectedNavigationItem.Value><div data-ng-switch-when=0 data-fanex-position-taking-matrix></div><div data-ng-switch-when=1 data-fanex-commission-matrix></div></div>"
   );
 
 
