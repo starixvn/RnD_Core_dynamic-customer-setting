@@ -1,18 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    using Fanex.Data.Repository;
-
-    public class PermissionValidateCriteria : CriteriaBase
+    public class PermissionValidateCriteria : ResultCriteria
     {
         public int CustId { get; set; }
 
         public int TargetCustId { get; set; }
 
         public int TargetRoleId { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

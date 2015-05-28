@@ -11,5 +11,13 @@
                 return Lang.UpdateCommissionSuccessfully;
             }
         }
+
+        public string ErrorMsgPrefix
+        {
+            get
+            {
+                return "Discount";
+            }
+        }
     }
 }

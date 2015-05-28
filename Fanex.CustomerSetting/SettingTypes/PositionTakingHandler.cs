@@ -11,5 +11,13 @@
                 return Lang.UpdatePositionTakingSuccessfully;
             }
         }
+
+        public string ErrorMsgPrefix
+        {
+            get
+            {
+                return "PositionTaking";
+            }
+        }
     }
 }

@@ -139,8 +139,8 @@
 
         function showMultiple(userNames, commandResults) {
             var users = [];
-            angular.forEach(userNames, function (userName, index) {
-                var commandResult = commandResults[index];
+            angular.forEach(commandResults, function (commandResult, index) {
+                var userName = userNames[index];
                 var userMessages;
                 if (commandResult.IsSuccess) {
                     var settingResults = commandResult.SettingResults;

@@ -10,12 +10,14 @@
                 scope.copy = function () {
                     var count = 0;
                     var scopes = ptService.getScopes();
-                    var source = scopes[0];
+                    var copyScope = scopes[0];
                     for (var i = 1; i < scopes.length; i++) {
-                        var scope = scopes[i];
-                        var result = scope.copy(source);
-                        if (!result) {
-                            count++;
+                        var itemScope = scopes[i];
+                        if (angular.isFunction(itemScope.copy)) {
+                            var result = itemScope.copy(copyScope);
+                            if (!result) {
+                                count++;
+                            }
                         }
                     }
 

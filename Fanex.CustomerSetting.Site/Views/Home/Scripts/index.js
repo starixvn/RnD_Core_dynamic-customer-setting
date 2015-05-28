@@ -100,7 +100,12 @@ function ($scope, $http) {
         var rootUrl = $('#main').data('root-url');
         url = String.format('{0}/{1}', rootUrl, url);
         var settingPage = $('#setting-page');
+        var currentUrl = settingPage.attr('src');
         settingPage.attr('src', url);
+        if (currentUrl === url) {
+            console.log('test');
+            settingPage[0].contentDocument.location.reload(true);
+        }
     }
 
     $scope.login = function () {

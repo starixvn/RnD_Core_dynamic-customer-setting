@@ -44,7 +44,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-block.htm',
-    "<div class=discount-block><div data-ng-repeat=\"item in items\" data-fanex-discount-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=discount-block><div data-ng-repeat=\"item in items\" data-fanex-discount-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\" data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -54,7 +54,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-item.htm',
-    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-item-copy data-setting-type=settingType></div></div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
   );
 
 
@@ -174,7 +174,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-block.htm',
-    "<div class=status-block><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=status-block><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\" data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -184,7 +184,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-item.htm',
-    "<div class=status-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
+    "<div class=status-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-item-copy data-setting-type=settingType></div></div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
   );
 
 

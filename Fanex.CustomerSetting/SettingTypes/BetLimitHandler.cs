@@ -11,5 +11,13 @@
                 return Lang.UpdateBetSettingSuccessfully;
             }
         }
+
+        public string ErrorMsgPrefix
+        {
+            get
+            {
+                return "BetLimit";
+            }
+        }
     }
 }

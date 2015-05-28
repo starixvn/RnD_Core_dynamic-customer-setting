@@ -5,5 +5,7 @@
     public interface IValidationRepository
     {
         void ValidatePermission(PermissionValidateCriteria criteria);
+
+        void ValidatePermission(PermissionValidateMultipleCriteria criteria);
     }
 }

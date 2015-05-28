@@ -86,6 +86,37 @@
             return Result.Success;
         }
 
+        public Result Validate(MultipleCommandInfo multipleCommandInfo)
+        {
+            var commandInfo = new CommandInfo(multipleCommandInfo);
+            commandInfo.TargetCustId = multipleCommandInfo.TargetCustIds.First();
+            var result = ValidateForm(commandInfo);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            result = ValidateRole(commandInfo);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            result = ValidatePermission(multipleCommandInfo);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            result = ValidateProductProfile(commandInfo);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            return Result.Success;
+        }
+
         private Result ValidateForm(CommandInfo commandInfo)
         {
             return (commandInfo.FormType == FormType.SuperEditMember || commandInfo.FormType == FormType.MasterEditMember)
@@ -110,6 +141,24 @@
                 CustId = queryInfo.CustId,
                 TargetCustId = queryInfo.TargetCustId,
                 TargetRoleId = (int)queryInfo.TargetRoleId
+            };
+
+            if (!criteria.IsValid())
+            {
+                throw new CriteriaException(criteria);
+            }
+
+            _validationRepository.ValidatePermission(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
+        }
+
+        private Result ValidatePermission(MultipleCommandInfo multipleCommandInfo)
+        {
+            var criteria = new PermissionValidateMultipleCriteria
+            {
+                CustId = multipleCommandInfo.CustId,
+                TargetCustIds = string.Join(",", multipleCommandInfo.TargetCustIds),
+                TargetRoleId = (int)multipleCommandInfo.TargetRoleId
             };
 
             if (!criteria.IsValid())

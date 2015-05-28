@@ -1,20 +1,24 @@
 ﻿namespace Fanex.CustomerSetting.Messages
 {
-    using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Resources;
+    using Fanex.CustomerSetting.SettingTypes;
 
     public abstract class BaseMessageBuilder
     {
-        private Dictionary<SettingType, string> _prefixs = new Dictionary<SettingType, string>
+        private readonly ISettingHandlerFactory _settingHandlerFactory;
+
+        protected BaseMessageBuilder()
+            : this(null)
         {
-            { SettingType.Status, "Status" },
-            { SettingType.Discount, "Discount" },
-            { SettingType.BetLimit, "BetLimit" },
-            { SettingType.PositionTaking, "PositionTaking" }
-        };
+        }
+
+        protected BaseMessageBuilder(ISettingHandlerFactory settingHandlerFactory)
+        {
+            _settingHandlerFactory = settingHandlerFactory ?? new SettingHandlerFactory();
+        }
 
         protected T Deserialize<T>(string text) where T : SimpleMessage
         {
@@ -27,7 +31,8 @@
 
         protected string TranslateResource(int messageId, SettingType settingType)
         {
-            var prefix = _prefixs[settingType];
+            var settingTypeHandler = _settingHandlerFactory.Create(settingType);
+            var prefix = settingTypeHandler.ErrorMsgPrefix;
             var key = string.Format("{0}_{1}", prefix, messageId);
             var message = Error.ResourceManager.GetString(key);
             return !string.IsNullOrEmpty(message)

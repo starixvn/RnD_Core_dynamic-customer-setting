@@ -13,9 +13,12 @@
                 scope.copy = function () {
                     var settingTypeHandler = new SettingTypeHandler(scope.settingType);
                     var scopes = settingTypeHandler.getScopes();
-                    var source = scopes[0];
+                    var copyScope = scopes[0];
                     for (var i = 1; i < scopes.length; i++) {
-                        scopes[i].copy(source);
+                        var itemScope = scopes[i];
+                        if (angular.isFunction(itemScope.copy)) {
+                            itemScope.copy(copyScope);
+                        }
                     }
                 };
             }

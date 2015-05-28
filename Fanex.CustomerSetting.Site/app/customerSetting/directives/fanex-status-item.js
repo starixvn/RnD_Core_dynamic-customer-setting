@@ -8,16 +8,18 @@
             scope: {
                 status: '=fanexStatusItem',
                 settingLevel: '=',
-                formType: '='
+                formType: '=',
+                hasCopy: '='
             },
             templateUrl: 'templates/fanex-status-item.htm',
             controller: ['$scope', function ($scope) {
                 statusService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.Status;
                 var formType = $scope.formType;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
-                $scope.downline = !$scope.status.IsDisabledDownline;
+                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
                 $scope.showDownline = formType !== appSettings.formType.AgentEditMember;
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
@@ -34,12 +36,16 @@
                             if (!$scope.enable) {
                                 $scope.downline = false;
                             }
-                            else {
-                                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
-                            }
                         }
                     });
                 }
+
+                $scope.copy = function (copyScope) {
+                    $scope.enable = copyScope.enable;
+                    if ($scope.enable && $scope.status.IsDisabled) {
+                        $scope.downline = copyScope.downline;
+                    }
+                };
 
                 $scope.validate = function () {
                     var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline

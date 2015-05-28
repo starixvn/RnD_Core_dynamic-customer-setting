@@ -7,5 +7,7 @@
         Result Validate(QueryInfo queryInfo);
 
         Result Validate(CommandInfo commandInfo);
+
+        Result Validate(MultipleCommandInfo multipleCommandInfo);
     }
 }

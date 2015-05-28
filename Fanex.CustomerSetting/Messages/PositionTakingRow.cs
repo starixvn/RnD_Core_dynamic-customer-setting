@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Messages
 {
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
@@ -14,7 +13,7 @@
         public override string ToString(IResourceService resourceService, MessageInfo messageInfo)
         {
             var message = base.ToString(resourceService, messageInfo);
-            if (IsLive && (messageInfo.SettingLevel == SettingLevel.BetType || messageInfo.SettingLevel == SettingLevel.SportTypeBetType))
+            if (IsLive)
             {
                 message += string.Format(" ({0})", Lang.Live);
             }

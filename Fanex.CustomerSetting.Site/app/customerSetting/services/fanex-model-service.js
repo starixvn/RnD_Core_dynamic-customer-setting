@@ -8,12 +8,12 @@
                 queryModel = new QueryModel();
             }
             catch (error) {
-                alert('Your URL is not valid');
-                throw error;
+                if (typeof console !== 'undefined') {
+                    console.error(error);
+                }
             }
         }
 
-        queryModel = createModel();
         $rootScope.$on('$locationChangeStart', function () {
             createModel();
             $rootScope.$emit('fanex-model-changed', queryModel);

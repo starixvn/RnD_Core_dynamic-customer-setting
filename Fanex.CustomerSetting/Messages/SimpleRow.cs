@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Messages
 {
+    using System;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
@@ -17,6 +18,9 @@
         {
             switch (messageInfo.SettingLevel)
             {
+                case SettingLevel.Product:
+                    return string.Empty;
+
                 case SettingLevel.SportType:
                     return resourceService.GetSportTypeName(SportType);
 
@@ -28,9 +32,10 @@
                         "{0} - {1}",
                         resourceService.GetSportTypeName(SportType),
                         resourceService.GetBetTypeName(BetType));
-            }
 
-            return string.Empty;
+                default:
+                    throw new NotImplementedException("Not implemented yet");
+            }
         }
     }
 }

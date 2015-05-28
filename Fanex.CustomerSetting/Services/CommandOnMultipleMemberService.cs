@@ -5,28 +5,37 @@
     using Fanex.CustomerSetting.CommandTypes;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Repositories;
 
     public class CommandOnMultipleMemberService : ICommandOnMultipleCustomerService
     {
+        private readonly IValidationService _validationService;
         private readonly IMemberGroupService _memberGroupService;
         private readonly CommandFactory _commandFactory;
 
         public CommandOnMultipleMemberService()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
         public CommandOnMultipleMemberService(
+            IValidationService validationService,
             IMemberGroupService memberGroupService,
             CommandFactory commandFactory)
         {
+            _validationService = validationService ?? new ValidationService();
             _memberGroupService = memberGroupService ?? new MemberGroupService();
             _commandFactory = commandFactory ?? new CommandFactory();
         }
 
         public IList<CommandResult> Execute(MultipleCommandInfo multipleCommandInfo)
         {
+            Result validationResult = _validationService.Validate(multipleCommandInfo);
+            if (!validationResult.IsSuccess)
+            {
+                var commandResult = new CommandResult(multipleCommandInfo, validationResult);
+                return new List<CommandResult> { commandResult };
+            }
+
             var memberGroups = _memberGroupService.SelectMemberGroup(multipleCommandInfo.TargetCustIds);
             var groupedMemberIds = memberGroups.Where(x => x.IsGrouped).Select(x => x.CustId).ToList();
             IList<CommandResult> groupedMembersCommandResults = new List<CommandResult>();

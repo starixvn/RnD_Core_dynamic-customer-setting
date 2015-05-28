@@ -16,9 +16,9 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             DbSettingProviderManager.Current.Start();
-            var isMinifiedVersion = false;
+            var isMinifiedVersion = true;
 #if DEBUG
-            isMinifiedVersion = true;
+            isMinifiedVersion = false;
 #endif
             var webSettings = new WebSettings
             {

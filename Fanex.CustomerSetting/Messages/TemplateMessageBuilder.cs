@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resources;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingTypes;
 
     public class TemplateMessageBuilder<TMessage, TRow> : BaseMessageBuilder, IMessageBuilder
         where TMessage : TemplateMessage<TRow>
@@ -15,6 +16,13 @@
         private readonly IResourceService _resourceService;
 
         public TemplateMessageBuilder(IResourceService resourceService)
+            : base()
+        {
+            _resourceService = resourceService;
+        }
+
+        public TemplateMessageBuilder(IResourceService resourceService, ISettingHandlerFactory settingHandlerFactory)
+            : base(settingHandlerFactory)
         {
             _resourceService = resourceService;
         }

@@ -57,7 +57,7 @@
                         childScope.items = items;
                         childScope.settingLevel = $scope.settingLevel;
                         childScope.groupIndex = groupIndex;
-                        if (groupIndex === 0 && $scope.collection.length > 0) {
+                        if (groupIndex === 0 && $scope.collection.length >= 2) {
                             childScope.hasCopy = true;
                         }
                         if (angular.isFunction(extendScope)) {

@@ -76,6 +76,7 @@
     <Compile Include="Converters\XmlOutputElementPropertyMapping.cs" />
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Criteria\MemberGroupSelectCriteria.cs" />
+    <Compile Include="Criteria\PermissionValidateMultipleCriteria.cs" />
     <Compile Include="Criteria\PositionTakingCommandCriteria.cs" />
     <Compile Include="Criteria\DiscountCommandCriteria.cs" />
     <Compile Include="Criteria\BetLimitCommandCriteria.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Criteria\ProductProfileQueryCriteria.cs" />
     <Compile Include="Criteria\ProductResourceQueryCriteria.cs" />
     <Compile Include="Criteria\QueryMemberCriteria.cs" />
+    <Compile Include="Criteria\ResultCriteria.cs" />
     <Compile Include="Criteria\SuperQueryMasterCriteria.cs" />
     <Compile Include="Criteria\QueryCriteria.cs" />
     <Compile Include="Criteria\CompanyQuerySuperCriteria.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Models\QueryResult.cs" />
     <Compile Include="Models\CommandInfo.cs" />
     <Compile Include="Models\CommandResult.cs" />
+    <Compile Include="Repositories\ResultRepository.cs" />
     <Compile Include="Repositories\CommandRepository.cs" />
     <Compile Include="Repositories\ICommandOnGroupedMembersRepository.cs" />
     <Compile Include="Repositories\ICommandRepository.cs" />

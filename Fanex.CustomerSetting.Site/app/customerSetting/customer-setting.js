@@ -91,7 +91,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-block.htm',
-    "<div class=discount-block><div data-ng-repeat=\"item in items\" data-fanex-discount-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=discount-block><div data-ng-repeat=\"item in items\" data-fanex-discount-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\" data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -101,7 +101,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-item.htm',
-    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
+    "<div class=discount-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-item-copy data-setting-type=settingType></div></div><div class=col-value><select data-ng-model=value data-ng-options=\"option for option in options\"></select></div></div>"
   );
 
 
@@ -221,7 +221,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-block.htm',
-    "<div class=status-block><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\"></div></div>"
+    "<div class=status-block><div data-ng-repeat=\"item in items\" data-fanex-status-item=item data-setting-level=settingLevel data-form-type=formType data-ng-class=\"{'full-width': $last && $even}\" data-has-copy=\"$first && hasCopy\"></div></div>"
   );
 
 
@@ -231,7 +231,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-item.htm',
-    "<div class=status-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div></div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
+    "<div class=status-item><div class=col-name title={{name}}><div class=pull-left>{{name}}</div><div data-ng-if=hasCopy data-fanex-item-copy data-setting-type=settingType></div></div><div class=col-value><label class=checkbox><input type=checkbox data-ng-model=enable data-ng-disabled=\"enableDisabled\"> {{'Enable' | fanexTranslate}}</label><label class=\"checkbox downline\" data-ng-show=showDownline><input type=checkbox data-ng-model=downline data-ng-disabled=\"downlineDisabled\"> {{'EnableDownline' | fanexTranslate}}</label></div></div>"
   );
 
 
@@ -1133,22 +1133,39 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
     var injectParams = ['fanexAppSettings', 'fanexDiscountService', 'fanexResourceService'];
     var fanexDiscountDirective = function (appSettings, discountService, resourceService) {
         function parse(data, formType) {
+            var min = 0;
+            var max;
+            var value;
             switch (formType) {
                 case appSettings.formType.CompanyEditSuper:
-                    return discountService.createSelect(0, data.DefaultMaxDiscount, data.SuperDiscount);
+                    value = data.SuperDiscount;
+                    max = data.DefaultMaxDiscount;
+                    break;
 
                 case appSettings.formType.SuperEditMaster:
-                    return discountService.createSelect(0, data.SuperDiscount, data.MasterDiscount);
+                    value = data.MasterDiscount;
+                    max = data.SuperDiscount;
+                    break;
 
                 case appSettings.formType.MasterEditAgent:
-                    return discountService.createSelect(0, data.MasterDiscount, data.AgentDiscount);
+                    value = data.AgentDiscount;
+                    max = data.MasterDiscount;
+                    break;
 
                 case appSettings.formType.AgentEditMember:
-                    return discountService.createSelect(0, data.AgentDiscount, data.PlayerDiscount);
+                    value = data.PlayerDiscount;
+                    max = data.AgentDiscount;
+                    break;
 
                 default:
                     throw 'Not implemented yet.';
             }
+
+            return {
+                min: min,
+                max: max,
+                value: value
+            };
         }
 
         function getName(formType) {
@@ -1181,20 +1198,29 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             scope: {
                 discount: '=fanexDiscountItem',
                 settingLevel: '=',
-                formType: '='
+                formType: '=',
+                hasCopy: '='
             },
             templateUrl: 'templates/fanex-discount-item.htm',
             controller: ['$scope', function ($scope) {
                 discountService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.Discount;
                 var formType = $scope.formType;
                 var discount = $scope.discount;
                 var settingLevel = $scope.settingLevel;
                 $scope.name = resourceService.getDisplayName(settingLevel, discount);
                 var data = parse(discount, formType);
-                $scope.min = data.min;
-                $scope.value = data.value;
-                $scope.options = data.options;
+                var select = discountService.createSelect(data.min, data.max, data.value);
+                $scope.value = select.value;
+                $scope.options = select.options;
+
+                $scope.copy = function (copyScope) {
+                    var data = parse(discount, formType);
+                    if (copyScope.value >= data.min && copyScope.value <= data.max) {
+                        $scope.value = copyScope.value;
+                    }
+                };
 
                 $scope.validate = function () {
                     var errCode = $scope.value !== getValue(discount, formType)
@@ -1311,9 +1337,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 scope.copy = function () {
                     var settingTypeHandler = new SettingTypeHandler(scope.settingType);
                     var scopes = settingTypeHandler.getScopes();
-                    var source = scopes[0];
+                    var copyScope = scopes[0];
                     for (var i = 1; i < scopes.length; i++) {
-                        scopes[i].copy(source);
+                        var itemScope = scopes[i];
+                        if (angular.isFunction(itemScope.copy)) {
+                            itemScope.copy(copyScope);
+                        }
                     }
                 };
             }
@@ -1664,12 +1693,14 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 scope.copy = function () {
                     var count = 0;
                     var scopes = ptService.getScopes();
-                    var source = scopes[0];
+                    var copyScope = scopes[0];
                     for (var i = 1; i < scopes.length; i++) {
-                        var scope = scopes[i];
-                        var result = scope.copy(source);
-                        if (!result) {
-                            count++;
+                        var itemScope = scopes[i];
+                        if (angular.isFunction(itemScope.copy)) {
+                            var result = itemScope.copy(copyScope);
+                            if (!result) {
+                                count++;
+                            }
                         }
                     }
 
@@ -2371,16 +2402,18 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
             scope: {
                 status: '=fanexStatusItem',
                 settingLevel: '=',
-                formType: '='
+                formType: '=',
+                hasCopy: '='
             },
             templateUrl: 'templates/fanex-status-item.htm',
             controller: ['$scope', function ($scope) {
                 statusService.linkScope($scope);
 
+                $scope.settingType = appSettings.settingType.Status;
                 var formType = $scope.formType;
                 $scope.name = resourceService.getDisplayName($scope.settingLevel, $scope.status);
                 $scope.enable = !$scope.status.IsDisabled;
-                $scope.downline = !$scope.status.IsDisabledDownline;
+                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
                 $scope.showDownline = formType !== appSettings.formType.AgentEditMember;
                 $scope.enableDisabled = false;
                 $scope.downlineDisabled = true;
@@ -2397,12 +2430,16 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                             if (!$scope.enable) {
                                 $scope.downline = false;
                             }
-                            else {
-                                $scope.downline = !$scope.status.IsDisabled && !$scope.status.IsDisabledDownline;
-                            }
                         }
                     });
                 }
+
+                $scope.copy = function (copyScope) {
+                    $scope.enable = copyScope.enable;
+                    if ($scope.enable && $scope.status.IsDisabled) {
+                        $scope.downline = copyScope.downline;
+                    }
+                };
 
                 $scope.validate = function () {
                     var errCode = $scope.enable === $scope.status.IsDisabled || $scope.downline === $scope.status.IsDisabledDownline
@@ -2551,7 +2588,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                         childScope.items = items;
                         childScope.settingLevel = $scope.settingLevel;
                         childScope.groupIndex = groupIndex;
-                        if (groupIndex === 0 && $scope.collection.length > 0) {
+                        if (groupIndex === 0 && $scope.collection.length >= 2) {
                             childScope.hasCopy = true;
                         }
                         if (angular.isFunction(extendScope)) {
@@ -3299,8 +3336,8 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
         function showMultiple(userNames, commandResults) {
             var users = [];
-            angular.forEach(userNames, function (userName, index) {
-                var commandResult = commandResults[index];
+            angular.forEach(commandResults, function (commandResult, index) {
+                var userName = userNames[index];
                 var userMessages;
                 if (commandResult.IsSuccess) {
                     var settingResults = commandResult.SettingResults;
@@ -3354,12 +3391,12 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
                 queryModel = new QueryModel();
             }
             catch (error) {
-                alert('Your URL is not valid');
-                throw error;
+                if (typeof console !== 'undefined') {
+                    console.error(error);
+                }
             }
         }
 
-        queryModel = createModel();
         $rootScope.$on('$locationChangeStart', function () {
             createModel();
             $rootScope.$emit('fanex-model-changed', queryModel);

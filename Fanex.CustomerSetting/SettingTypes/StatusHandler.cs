@@ -11,5 +11,13 @@
                 return Lang.UpdateProductStatusSuccessfully;
             }
         }
+
+        public string ErrorMsgPrefix
+        {
+            get
+            {
+                return "Status";
+            }
+        }
     }
 }
