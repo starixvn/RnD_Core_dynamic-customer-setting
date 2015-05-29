@@ -25,6 +25,7 @@
                 $scope.statusModel = {
                     Collection: customerSetting.Statuses,
                     SettingLevel: settingContext.StatusLevel,
+                    FormType: queryModel.FormType,
                     HasUpdate: true,
                     Update: updateStatuses
                 };
@@ -35,6 +36,7 @@
                 $scope.discountModel = {
                     Collection: customerSetting.Discounts,
                     SettingLevel: settingContext.DiscountLevel,
+                    FormType: queryModel.FormType,
                     HasUpdate: $scope.formType !== appSettings.formType.SuperEditMember
                         && $scope.formType !== appSettings.formType.MasterEditMember,
                     Update: updateDiscounts
@@ -46,6 +48,7 @@
                 $scope.betLimitModel = {
                     Collection: customerSetting.BetLimits,
                     SettingLevel: settingContext.BetLimitLevel,
+                    FormType: queryModel.FormType,
                     HasUpdate: $scope.formType !== appSettings.formType.SuperEditMember
                         && $scope.formType !== appSettings.formType.MasterEditMember,
                     Update: updateBetLimits
@@ -57,6 +60,7 @@
                 $scope.positionTakingModel = {
                     Collection: customerSetting.PositionTakings,
                     SettingLevel: settingContext.PositionTakingLevel,
+                    FormType: queryModel.FormType,
                     HasUpdate: true,
                     Update: updatePositionTakings
                 };

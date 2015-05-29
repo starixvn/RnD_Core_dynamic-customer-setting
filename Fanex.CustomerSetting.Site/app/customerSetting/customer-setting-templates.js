@@ -9,7 +9,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-bet-limit-container.htm',
-    "<div class=container data-ng-show=model><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-bet-limit-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'BetSetting' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-bet-limit-block data-model=model></div></div>"
   );
 
 
@@ -49,7 +49,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-discount-container.htm',
-    "<div class=container data-ng-show=model><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch=formType><div data-ng-switch-when=5><div data-fanex-discount-super-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=6><div data-fanex-discount-master-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-default><div data-fanex-discount-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'Commission' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch=model.FormType><div data-ng-switch-when=5><div data-fanex-discount-super-edit-member-block data-model=model></div></div><div data-ng-switch-when=6><div data-fanex-discount-master-edit-member-block data-model=model></div></div><div data-ng-switch-default><div data-fanex-discount-block data-model=model></div></div></div></div>"
   );
 
 
@@ -114,7 +114,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-pt-container.htm',
-    "<div class=container data-ng-show=model><div class=header>{{'PositionTaking' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch=formType><div data-ng-switch-when=1><div data-fanex-pt-company-edit-super-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=2><div data-fanex-pt-super-edit-master-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=3><div data-fanex-pt-master-edit-agent-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=4><div data-fanex-pt-agent-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=5><div data-fanex-pt-super-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div><div data-ng-switch-when=6><div data-fanex-pt-master-edit-member-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'PositionTaking' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-ng-switch=model.FormType><div data-ng-switch-when=1><div data-fanex-pt-company-edit-super-block data-model=model></div></div><div data-ng-switch-when=2><div data-fanex-pt-super-edit-master-block data-model=model></div></div><div data-ng-switch-when=3><div data-fanex-pt-master-edit-agent-block data-model=model></div></div><div data-ng-switch-when=4><div data-fanex-pt-agent-edit-member-block data-model=model></div></div><div data-ng-switch-when=5><div data-fanex-pt-super-edit-member-block data-model=model></div></div><div data-ng-switch-when=6><div data-fanex-pt-master-edit-member-block data-model=model></div></div></div></div>"
   );
 
 
@@ -179,7 +179,7 @@ angular.module('customerSettingApp').run(['$templateCache', function($templateCa
 
 
   $templateCache.put('templates/fanex-status-container.htm',
-    "<div class=container data-ng-show=model><div class=header>{{'ProductStatus' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-status-block data-collection=model.Collection data-setting-level=model.SettingLevel></div></div>"
+    "<div class=container data-ng-show=model><div class=header>{{'ProductStatus' | fanexTranslate}} <span data-ng-show=model.HasUpdate title=\"{{'Update' | fanexTranslate}}\" class=update data-ng-click=model.Update()><i class=icon-update></i></span></div><div class=body data-fanex-status-block data-model=model></div></div>"
   );
 
 

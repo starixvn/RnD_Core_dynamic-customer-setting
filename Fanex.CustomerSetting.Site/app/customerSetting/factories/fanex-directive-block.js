@@ -6,36 +6,41 @@
             return {
                 restrict: 'AE',
                 scope: {
-                    collection: '=',
-                    settingLevel: '='
+                    model: '='
                 },
                 link: function ($scope, $element) {
-                    var hasChangeCollection = false;
-                    var hasChangeSettingType = false;
-
-                    $scope.$watch('collection', function (newCollection, oldCollection) {
-                        if (newCollection !== oldCollection) {
-                            hasChangeCollection = true;
-                            checkToUpdate();
+                    $scope.$watch('model', function () {
+                        if (angular.isUndefined($scope.model)) {
+                            return;
                         }
-                    });
 
-                    $scope.$watch('settingLevel', function (newSettingLevel, oldSettingLevel) {
-                        if (newSettingLevel !== oldSettingLevel) {
-                            hasChangeSettingType = true;
-                            checkToUpdate();
+                        var template = $templateCache.get(templateUrl);
+                        var groupIndex = 0;
+                        var collection = $scope.model.Collection;
+                        var settingLevel = $scope.model.SettingLevel;
+                        var formType = $scope.model.FormType;
+
+                        function appendGroup(items) {
+                            var $template = angular.element(template);
+                            $element.append($template);
+                            var link = $compile($template);
+                            var childScope = $scope.$new();
+                            childScope.items = items;
+                            childScope.settingLevel = settingLevel;
+                            childScope.formType = formType;
+                            childScope.groupIndex = groupIndex;
+                            if (groupIndex === 0 && collection.length >= 2) {
+                                childScope.hasCopy = true;
+                            }
+                            if (angular.isFunction(extendScope)) {
+                                extendScope(childScope);
+                            }
+                            link(childScope);
+                            groupIndex++;
                         }
-                    });
 
-                    function checkToUpdate() {
-                        if (hasChangeCollection && hasChangeSettingType) {
-                            update();
-                        }
-                    }
-
-                    function update() {
-                        if ($scope.settingLevel === appSettings.settingLevel.SportTypeBetType) {
-                            var groupCollection = $filter('fanexDataGroup')($scope.collection);
+                        if (settingLevel === appSettings.settingLevel.SportTypeBetType) {
+                            var groupCollection = $filter('fanexDataGroup')(collection);
                             angular.forEach(groupCollection, function (dataGroup) {
                                 var sportTypeName = dataGroup.SportTypeName;
                                 var groupedTemplate = '<div class="group-name" title="' + sportTypeName + '">' + sportTypeName + '</div>';
@@ -43,29 +48,9 @@
                                 appendGroup(dataGroup.Items);
                             });
                         } else {
-                            appendGroup($scope.collection);
+                            appendGroup(collection);
                         }
-                    }
-
-                    var template = $templateCache.get(templateUrl);
-                    var groupIndex = 0;
-                    function appendGroup(items) {
-                        var $template = angular.element(template);
-                        $element.append($template);
-                        var link = $compile($template);
-                        var childScope = $scope.$new();
-                        childScope.items = items;
-                        childScope.settingLevel = $scope.settingLevel;
-                        childScope.groupIndex = groupIndex;
-                        if (groupIndex === 0 && $scope.collection.length >= 2) {
-                            childScope.hasCopy = true;
-                        }
-                        if (angular.isFunction(extendScope)) {
-                            extendScope(childScope);
-                        }
-                        link(childScope);
-                        groupIndex++;
-                    }
+                    });
                 }
             };
         };

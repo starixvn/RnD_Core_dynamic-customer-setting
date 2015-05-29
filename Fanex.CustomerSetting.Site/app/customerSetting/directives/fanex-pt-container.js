@@ -1,18 +1,14 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['fanexModelService'];
-    var fanexPtContainerDirective = function (modelService) {
+    var injectParams = [];
+    var fanexPtContainerDirective = function () {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
                 model: '=fanexPtContainer'
             },
-            templateUrl: 'templates/fanex-pt-container.htm',
-            controller: ['$scope', function ($scope) {
-                var queryModel = modelService.getQueryModel();
-                $scope.formType = queryModel.FormType;
-            }]
+            templateUrl: 'templates/fanex-pt-container.htm'
         };
     };
 

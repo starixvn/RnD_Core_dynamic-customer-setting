@@ -3,19 +3,17 @@
         {{'Commission' | fanexTranslate}} <span data-ng-show="model.HasUpdate" title="{{'Update' | fanexTranslate}}"
             class="update" data-ng-click="model.Update()"><i class="icon-update"></i></span>
     </div>
-    <div class="body" data-ng-switch="formType">
+    <div class="body" data-ng-switch="model.FormType">
         <div data-ng-switch-when="5">
-            <div data-fanex-discount-super-edit-member-block data-collection="model.Collection"
-                data-setting-level="model.SettingLevel">
+            <div data-fanex-discount-super-edit-member-block data-model="model">
             </div>
         </div>
         <div data-ng-switch-when="6">
-            <div data-fanex-discount-master-edit-member-block data-collection="model.Collection"
-                data-setting-level="model.SettingLevel">
+            <div data-fanex-discount-master-edit-member-block data-model="model">
             </div>
         </div>
         <div data-ng-switch-default>
-            <div data-fanex-discount-block data-collection="model.Collection" data-setting-level="model.SettingLevel">
+            <div data-fanex-discount-block data-model="model">
             </div>
         </div>
     </div>

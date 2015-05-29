@@ -1,18 +1,14 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['fanexModelService'];
-    var fanexDiscountContainerDirective = function (modelService) {
+    var injectParams = [];
+    var fanexDiscountContainerDirective = function () {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
                 model: '=fanexDiscountContainer'
             },
-            templateUrl: 'templates/fanex-discount-container.htm',
-            controller: ['$scope', function ($scope) {
-                var queryModel = modelService.getQueryModel();
-                $scope.formType = queryModel.FormType;
-            }]
+            templateUrl: 'templates/fanex-discount-container.htm'
         };
     };
 

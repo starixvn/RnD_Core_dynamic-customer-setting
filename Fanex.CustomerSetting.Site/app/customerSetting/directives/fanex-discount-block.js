@@ -1,11 +1,8 @@
 ﻿(function () {
     'use strict';
-    var injectParams = ['fanexModelService', 'fanexDirectiveBlock'];
-    var fanexDiscountBlockDirective = function (modelService, DirectiveBlock) {
-        return new DirectiveBlock('templates/fanex-discount-block.htm', function (scope) {
-            var queryModel = modelService.getQueryModel();
-            scope.formType = queryModel.FormType;
-        });
+    var injectParams = ['fanexDirectiveBlock'];
+    var fanexDiscountBlockDirective = function (DirectiveBlock) {
+        return new DirectiveBlock('templates/fanex-discount-block.htm');
     };
 
     fanexDiscountBlockDirective.$inject = injectParams;
