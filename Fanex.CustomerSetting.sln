@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting", "Fanex.CustomerSetting\Fanex.CustomerSetting.csproj", "{1CC53AF1-4620-402B-835B-9497EE11B665}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tests", "Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj", "{05620634-813E-471F-9B8C-9A6E09914FA4}"
@@ -30,6 +32,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Site"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix", "Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj", "{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewImplementation", "NewImplementation", "{FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CS.Core", "Fanex.CS.Core\Fanex.CS.Core.csproj", "{5ACEF400-FB41-4440-831C-13E49785CA97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CS.SettingType2.Template1", "Fanex.CS.SettingType2.Template1\Fanex.CS.SettingType2.Template1.csproj", "{83F286BD-A3B4-4910-9935-579BC26F440B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CS.SettingType1.Template1", "Fanex.CS.SettingType1.Template1\Fanex.CS.SettingType1.Template1.csproj", "{6E88600E-26EC-4D99-9BC5-97CFCE818A10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CS.SettingType3.Template1", "Fanex.CS.SettingType3.Template1\Fanex.CS.SettingType3.Template1.csproj", "{954CA7B3-C742-42EC-9931-65778E05531E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CS.SettingType4.Template1", "Fanex.CS.SettingType4.Template1\Fanex.CS.SettingType4.Template1.csproj", "{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +70,35 @@ Global
 		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACEF400-FB41-4440-831C-13E49785CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACEF400-FB41-4440-831C-13E49785CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACEF400-FB41-4440-831C-13E49785CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACEF400-FB41-4440-831C-13E49785CA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83F286BD-A3B4-4910-9935-579BC26F440B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F286BD-A3B4-4910-9935-579BC26F440B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F286BD-A3B4-4910-9935-579BC26F440B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F286BD-A3B4-4910-9935-579BC26F440B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E88600E-26EC-4D99-9BC5-97CFCE818A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E88600E-26EC-4D99-9BC5-97CFCE818A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E88600E-26EC-4D99-9BC5-97CFCE818A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E88600E-26EC-4D99-9BC5-97CFCE818A10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{954CA7B3-C742-42EC-9931-65778E05531E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{954CA7B3-C742-42EC-9931-65778E05531E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{954CA7B3-C742-42EC-9931-65778E05531E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{954CA7B3-C742-42EC-9931-65778E05531E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5ACEF400-FB41-4440-831C-13E49785CA97} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
+		{83F286BD-A3B4-4910-9935-579BC26F440B} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
+		{6E88600E-26EC-4D99-9BC5-97CFCE818A10} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
+		{954CA7B3-C742-42EC-9931-65778E05531E} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
+		{A8DF35A6-2A1A-47E9-BE0E-91AA72D34E90} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
 	EndGlobalSection
 EndGlobal
