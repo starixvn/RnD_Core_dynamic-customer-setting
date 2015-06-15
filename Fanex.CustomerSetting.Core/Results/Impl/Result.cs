@@ -1,5 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Core.Results.Impl
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Result : IResult
     {
         public const int SuccessValue = 0;
@@ -8,14 +11,15 @@
         public const int AccessDeniedValue = -3;
 
         public Result(Result result)
-            : this(result.ErrCode, result.ErrMsg)
+            : this(result.ErrCode, result.ErrMsg, result.SubMessages)
         {
         }
 
-        public Result(int errCode, string errMsg)
+        public Result(int errCode, string errMsg, IEnumerable<string> subMessages = null)
         {
             ErrCode = errCode;
             ErrMsg = errMsg;
+            SubMessages = subMessages;
         }
 
         public static Result Success
@@ -61,5 +65,7 @@
                 return ErrCode == SuccessValue;
             }
         }
+
+        public IEnumerable<string> SubMessages { get; private set; }
     }
 }

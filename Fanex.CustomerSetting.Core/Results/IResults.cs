@@ -4,11 +4,11 @@
 
     public interface IResults
     {
-        IEnumerable<IResult> ResultList { get; set; }
+        IEnumerable<IResult> ResultList { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
-        int Id { get; set; }
+        int Id { get; }
 
         bool IsSuccessful { get; }
     }

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.Models
 {
+    using Fanex.CustomerSetting.Core.Enumerations;
+
     public class Customer
     {
         public int Id { get; set; }
@@ -22,5 +24,7 @@
         public string Fax { get; set; }
 
         public string Email { get; set; }
+
+        public CustomerLevel Level { get; set; }
     }
 }

@@ -11,6 +11,8 @@
 
         public byte SettingTemplate { get; set; }
 
+        private byte SettingLevel { get; set; }
+
         public IEnumerable<ISettingItem> SettingItems { get; set; }
 
         public virtual string ToXml()
@@ -18,13 +20,33 @@
             return string.Empty;
         }
 
-        public IResults Validate()
+        public IResult Validate()
         {
-            return new Results
+            if (!SettingItems.Any())
             {
-                Id = Id,
-                ResultList = SettingItems.Select(item => item.Validate())
-            };
+                return Result.Success;
+            }
+
+            return GetValidationResult();
+        }
+
+        private IResult GetValidationResult()
+        {
+            var failedValidationResults = SettingItems
+                .Select(item => item.Validate())
+                .Where(result => !result.IsSuccessful);
+            if (!failedValidationResults.Any())
+            {
+                return Result.Success;
+            }
+
+            return GetFailedValidationResult(failedValidationResults);
+        }
+
+        private IResult GetFailedValidationResult(IEnumerable<IResult> failedValidationResults)
+        {
+            var firstResult = failedValidationResults.FirstOrDefault();
+            return new Result(firstResult.ErrCode, firstResult.ErrMsg, failedValidationResults.Select(result => result.ErrMsg));
         }
     }
 }

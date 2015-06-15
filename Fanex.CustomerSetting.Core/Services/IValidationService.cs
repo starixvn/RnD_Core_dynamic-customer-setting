@@ -12,8 +12,8 @@
     {
         IResult ValidateSettingQuery(SettingQuery settingQuery);
 
-        IResults ValidateSettingCommand(SettingCommand settingCommand);
+        IResult ValidateSettingCommand(SettingCommand settingCommand);
 
-        IMultipleResults ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand);
+        IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand);
     }
 }

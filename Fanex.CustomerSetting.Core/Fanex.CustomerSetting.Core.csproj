@@ -92,8 +92,15 @@
     <Compile Include="Criteria\Customer\CustomerQueryCriteria.cs" />
     <Compile Include="Criteria\Product\ProductResourceQueryCriteria.cs" />
     <Compile Include="Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
+    <Compile Include="Criteria\ResultCriteria.cs" />
+    <Compile Include="Criteria\Validation\PermissionValidateCriteria.cs" />
+    <Compile Include="Criteria\Validation\PermissionValidateMultipleCriteria.cs" />
+    <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
+    <Compile Include="DataAccesses\Impl\DefaultSettingDataAccessFactory.cs" />
+    <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccessFactory.cs" />
+    <Compile Include="DataAccesses\IValidationDataAccess.cs" />
     <Compile Include="Dtos\ProductNameDto.cs" />
     <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
@@ -120,8 +127,10 @@
     <Compile Include="Results\IResult.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\Impl\CustomerService.cs" />
+    <Compile Include="Services\Impl\ProductService.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
     <Compile Include="Services\Impl\ValidationService.cs" />
+    <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\IValidationService.cs" />
     <Compile Include="Tasks\SettingPostTasks.cs" />

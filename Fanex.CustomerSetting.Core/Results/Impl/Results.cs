@@ -5,16 +5,18 @@
 
     public class Results : IResults
     {
-        public Results()
+        public Results(int id, string name, IEnumerable<IResult> results)
         {
-            ResultList = new List<IResult>();
+            Id = id;
+            Name = name;
+            ResultList = results;
         }
 
-        public IEnumerable<IResult> ResultList { get; set; }
+        public IEnumerable<IResult> ResultList { get; private set; }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         public virtual bool IsSuccessful
         {
