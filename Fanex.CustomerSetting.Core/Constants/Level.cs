@@ -1,0 +1,11 @@
+﻿namespace Fanex.CustomerSetting.Core.Constants
+{
+    public class Level
+    {
+        public const int Member = 1;
+        public const int Agent = 2;
+        public const int Master = 3;
+        public const int Super = 4;
+        public const int Company = 5;
+    }
+}
