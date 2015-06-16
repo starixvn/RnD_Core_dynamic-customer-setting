@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Resolvers
+﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Models;

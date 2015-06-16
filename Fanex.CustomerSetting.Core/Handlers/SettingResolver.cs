@@ -1,0 +1,151 @@
+﻿namespace Fanex.CustomerSetting.Core.Handlers
+{
+    using System;
+    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Core.DataAccesses;
+    using Fanex.CustomerSetting.Core.Messages;
+    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Core.Tasks;
+
+    public class SettingResolver : ISettingResolver
+    {
+        private const string HandlerKeyFormat = "{0}_{1}";
+        private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
+        private const string DataAccessFactoryTypeFormat = "{0}.DataAccess.SettingType{1}DataAccessFactory";
+        private const string SettingPreTasksTypeFormat = "{0}.Tasks.SettingType{1}PreTasks";
+        private const string SettingPostTasksTypeFormat = "{0}.Tasks.SettingType{1}PostTasks";
+        private const string MessageBuilderTypeFormat = "{0}.Messages.SettingType{1}MessageBuilder";
+        private const string TranslatorTypeFormat = "{0}.Handlers.SettingType{1}Translator";
+        private const string TypeWithAssemblyFormat = "{0}, {1}";
+        private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactories = new Dictionary<string, ISettingDataAccessFactory>();
+        private static Dictionary<string, SettingPreTasks> _settingPreTasksList = new Dictionary<string, SettingPreTasks>();
+        private static Dictionary<string, SettingPostTasks> _settingPostTasksList = new Dictionary<string, SettingPostTasks>();
+        private static Dictionary<string, IMessageBuilder> _messageBuilders = new Dictionary<string, IMessageBuilder>();
+        private static Dictionary<string, ITranslator> _translators = new Dictionary<string, ITranslator>();
+
+        public ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType)
+        {
+            ISettingDataAccessFactory settingDataAccessFactory = null;
+            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
+            if (SettingResolver._settingDataAccessFactories.ContainsKey(factoryKey))
+            {
+                settingDataAccessFactory = SettingResolver._settingDataAccessFactories[factoryKey];
+            }
+            else
+            {
+                string fullTypeName = GetFullTypeName(DataAccessFactoryTypeFormat, settingType.Id, settingType.SettingTemplate);
+                Type settingDataAccessFactoryType = Type.GetType(fullTypeName);
+
+                if (settingDataAccessFactoryType != null)
+                {
+                    settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingDataAccessFactory;
+                    SettingResolver._settingDataAccessFactories.Add(factoryKey, settingDataAccessFactory);
+                }
+            }
+
+            return settingDataAccessFactory;
+        }
+
+        private static string GetFullTypeName(
+            string typeNameFormat, 
+            byte settingTypeId, 
+            byte settingTemplate)
+        {
+            string assemblyName = string.Format(AssemblyFormat, settingTypeId, settingTemplate);
+            string typeName = string.Format(typeNameFormat, assemblyName, settingTypeId);
+            return string.Format(TypeWithAssemblyFormat, typeName, assemblyName);
+        }
+
+        public SettingPreTasks ResolveSettingPreTasks(SettingType settingType)
+        {
+            SettingPreTasks settingPreTasks = null;
+            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
+            if (SettingResolver._settingPreTasksList.ContainsKey(factoryKey))
+            {
+                settingPreTasks = SettingResolver._settingPreTasksList[factoryKey];
+            }
+            else
+            {
+                string fullTypeName = GetFullTypeName(SettingPreTasksTypeFormat, settingType.Id, settingType.SettingTemplate);
+                Type preTasksType = Type.GetType(fullTypeName);
+
+                if (preTasksType != null)
+                {
+                    settingPreTasks = Activator.CreateInstance(preTasksType) as SettingPreTasks;
+                    SettingResolver._settingPreTasksList.Add(factoryKey, settingPreTasks);
+                }
+            }
+
+            return settingPreTasks;
+        }
+
+        public SettingPostTasks ResolveSettingPostTasks(SettingType settingType)
+        {
+            SettingPostTasks settingPostTasks = null;
+            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
+            if (SettingResolver._settingPostTasksList.ContainsKey(factoryKey))
+            {
+                settingPostTasks = SettingResolver._settingPostTasksList[factoryKey];
+            }
+            else
+            {
+                string fullTypeName = GetFullTypeName(SettingPostTasksTypeFormat, settingType.Id, settingType.SettingTemplate);
+                Type postTasksType = Type.GetType(fullTypeName);
+
+                if (postTasksType != null)
+                {
+                    settingPostTasks = Activator.CreateInstance(postTasksType) as SettingPostTasks;
+                    SettingResolver._settingPostTasksList.Add(factoryKey, settingPostTasks);
+                }
+            }
+
+            return settingPostTasks;
+        }
+
+        public IMessageBuilder ResolveMessageBuilder(SettingType settingType)
+        {
+            IMessageBuilder messageBuilder = null;
+            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
+            if (SettingResolver._messageBuilders.ContainsKey(factoryKey))
+            {
+                messageBuilder = SettingResolver._messageBuilders[factoryKey];
+            }
+            else
+            {
+                string fullTypeName = GetFullTypeName(MessageBuilderTypeFormat, settingType.Id, settingType.SettingTemplate);
+                Type messageBuilderType = Type.GetType(fullTypeName);
+
+                if (messageBuilderType != null)
+                {
+                    messageBuilder = Activator.CreateInstance(messageBuilderType) as IMessageBuilder;
+                    SettingResolver._messageBuilders.Add(factoryKey, messageBuilder);
+                }
+            }
+
+            return messageBuilder;
+        }
+
+        public ITranslator ResolverTranslator(SettingType settingType)
+        {
+            ITranslator translator = null;
+            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
+            if (SettingResolver._messageBuilders.ContainsKey(factoryKey))
+            {
+                translator = SettingResolver._translators[factoryKey];
+            }
+            else
+            {
+                string fullTypeName = GetFullTypeName(TranslatorTypeFormat, settingType.Id, settingType.SettingTemplate);
+                Type translatorType = Type.GetType(fullTypeName);
+
+                if (translatorType != null)
+                {
+                    translator = Activator.CreateInstance(translatorType) as ITranslator;
+                    SettingResolver._translators.Add(factoryKey, translator);
+                }
+            }
+
+            return translator;
+        }
+    }
+}

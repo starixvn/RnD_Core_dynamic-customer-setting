@@ -5,9 +5,10 @@
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Criteria.Customer;
+    using Fanex.CustomerSetting.Core.Handlers;
+    using Fanex.CustomerSetting.Core.Messages;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Models.Params;
-    using Fanex.CustomerSetting.Core.Resolvers;
     using Fanex.CustomerSetting.Core.Results;
     using Fanex.CustomerSetting.Core.Results.Impl;
     using Fanex.CustomerSetting.Core.Tasks;
@@ -85,6 +86,12 @@
                     customerSettingType = postTasks.PostGetSetting(settingQuery, customerSettingType);
                 }
 
+                ITranslator translator = _settingResolver.ResolverTranslator(productSettingType);
+                if (translator != null)
+                {
+                    translator.Translate(customerSettingType);
+                }
+
                 customerSettingTypes.Add(customerSettingType);
             }
 
@@ -137,6 +144,12 @@
                     {
                         updateSettingResult = postTasks.PostUpdateSetting(customer, settingType, settingCommand.UplineLevel, updateSettingResult);
                     }
+                }
+
+                IMessageBuilder messageBuilder = _settingResolver.ResolveMessageBuilder(settingType);
+                if (messageBuilder != null)
+                {
+                    updateSettingResult = messageBuilder.Build(settingType, updateSettingResult);
                 }
 
                 results.Add(updateSettingResult);

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Resolvers
+﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.Messages;
@@ -14,5 +14,7 @@
         SettingPostTasks ResolveSettingPostTasks(SettingType settingType);
 
         IMessageBuilder ResolveMessageBuilder(SettingType settingType);
+
+        ITranslator ResolverTranslator(SettingType settingType);
     }
 }
