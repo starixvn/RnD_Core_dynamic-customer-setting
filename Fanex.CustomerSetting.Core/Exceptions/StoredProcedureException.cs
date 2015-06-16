@@ -5,6 +5,7 @@
     using System.Runtime.Serialization;
     using System.Text;
     using Fanex.Data.Configuration;
+using Fanex.NAP.Framework.Data;
 
     [Serializable]
     public class StoredProcedureException : Exception
@@ -16,6 +17,11 @@
         {
             _settingKey = settingKey;
             _params = parameters;
+        }
+
+        public StoredProcedureException(ICriteria criteria)
+            : this(criteria.GetSettingKey(), criteria.GetSpParams())
+        {
         }
 
         public StoredProcedureException(

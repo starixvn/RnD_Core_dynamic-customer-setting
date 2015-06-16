@@ -84,12 +84,6 @@
                     customerSettingType = postTasks.PostGetSetting(settingQuery, customerSettingType);
                 }
 
-                ITranslator translator = _settingResolver.ResolverTranslator(productSettingType);
-                if (translator != null)
-                {
-                    translator.Translate(customerSettingType);
-                }
-
                 customerSettingTypes.Add(customerSettingType);
             }
 
@@ -142,12 +136,6 @@
                     {
                         updateSettingResult = postTasks.PostUpdateSetting(customer, settingType, settingCommand.UplineLevel, updateSettingResult);
                     }
-                }
-
-                IMessageBuilder messageBuilder = _settingResolver.ResolveMessageBuilder(settingType);
-                if (messageBuilder != null)
-                {
-                    updateSettingResult = messageBuilder.Build(settingType, updateSettingResult);
                 }
 
                 results.Add(updateSettingResult);

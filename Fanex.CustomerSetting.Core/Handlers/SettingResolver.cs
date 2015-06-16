@@ -13,14 +13,10 @@
         private const string DataAccessFactoryTypeFormat = "{0}.DataAccess.SettingType{1}DataAccessFactory";
         private const string SettingPreTasksTypeFormat = "{0}.Tasks.SettingType{1}PreTasks";
         private const string SettingPostTasksTypeFormat = "{0}.Tasks.SettingType{1}PostTasks";
-        private const string MessageBuilderTypeFormat = "{0}.Messages.SettingType{1}MessageBuilder";
-        private const string TranslatorTypeFormat = "{0}.Handlers.SettingType{1}Translator";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
         private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactories = new Dictionary<string, ISettingDataAccessFactory>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksList = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksList = new Dictionary<string, SettingPostTasks>();
-        private static Dictionary<string, IMessageBuilder> _messageBuilders = new Dictionary<string, IMessageBuilder>();
-        private static Dictionary<string, ITranslator> _translators = new Dictionary<string, ITranslator>();
 
         public ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType)
         {
@@ -99,52 +95,6 @@
             }
 
             return settingPostTasks;
-        }
-
-        public IMessageBuilder ResolveMessageBuilder(SettingType settingType)
-        {
-            IMessageBuilder messageBuilder = null;
-            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
-            if (SettingResolver._messageBuilders.ContainsKey(factoryKey))
-            {
-                messageBuilder = SettingResolver._messageBuilders[factoryKey];
-            }
-            else
-            {
-                string fullTypeName = GetFullTypeName(MessageBuilderTypeFormat, settingType.Id, settingType.SettingTemplate);
-                Type messageBuilderType = Type.GetType(fullTypeName);
-
-                if (messageBuilderType != null)
-                {
-                    messageBuilder = Activator.CreateInstance(messageBuilderType) as IMessageBuilder;
-                    SettingResolver._messageBuilders.Add(factoryKey, messageBuilder);
-                }
-            }
-
-            return messageBuilder;
-        }
-
-        public ITranslator ResolverTranslator(SettingType settingType)
-        {
-            ITranslator translator = null;
-            var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
-            if (SettingResolver._messageBuilders.ContainsKey(factoryKey))
-            {
-                translator = SettingResolver._translators[factoryKey];
-            }
-            else
-            {
-                string fullTypeName = GetFullTypeName(TranslatorTypeFormat, settingType.Id, settingType.SettingTemplate);
-                Type translatorType = Type.GetType(fullTypeName);
-
-                if (translatorType != null)
-                {
-                    translator = Activator.CreateInstance(translatorType) as ITranslator;
-                    SettingResolver._translators.Add(factoryKey, translator);
-                }
-            }
-
-            return translator;
         }
     }
 }

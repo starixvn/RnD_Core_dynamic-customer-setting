@@ -12,5 +12,8 @@
         public const byte SportTypeLevel = 2;
         public const byte BetTypeLevel = 3;
         public const byte SportTypeBetTypeLevel = 4;
+
+        public const byte ErrorWithRawMessage = 101;
+        public const byte ErrorWithMessageId = 100;
     }
 }

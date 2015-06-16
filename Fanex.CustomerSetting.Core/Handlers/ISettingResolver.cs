@@ -11,9 +11,5 @@
         SettingPreTasks ResolveSettingPreTasks(SettingType settingType);
 
         SettingPostTasks ResolveSettingPostTasks(SettingType settingType);
-
-        IMessageBuilder ResolveMessageBuilder(SettingType settingType);
-
-        ITranslator ResolverTranslator(SettingType settingType);
     }
 }

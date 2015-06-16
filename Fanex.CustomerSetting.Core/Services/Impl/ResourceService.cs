@@ -2,13 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Caching;
     using Fanex.CustomerSetting.Core.Dtos;
+    using Fanex.CustomerSetting.Core.Exceptions;
     using Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product;
     using Fanex.NAP.Framework.Data;
     using RemotingRef;
 
     public class ResourceService : IResourceService
     {
+        private const string ProductResourceCacheKey = "ProductResourceCacheKey";
+        private const int CacheTimeout = 12 * 60 * 60; // 1 day
         private readonly IDynamicRepository _resourceRepository;
 
         public ResourceService()
@@ -106,22 +110,21 @@
 
         private IEnumerable<ProductNameDto> InternalGetProductResources()
         {
-            return _resourceRepository.Fetch<ProductNameDto>(new ProductResourceQueryCriteria());
-            ////var cacheService = CacheService.CreateInstance(CacheType.MemoryCache);
-            ////var productResources = cacheService.Get<IEnumerable<ProductNameDto>>(Configuration.ProductResourceCacheKey);
-            ////if (productResources == null)
-            ////{
-            ////    var criteria = new ProductResourceQueryCriteria();
-            ////    if (!criteria.IsValid())
-            ////    {
-            ////        throw new CriteriaException(criteria);
-            ////    }
+            var cacheService = CacheService.CreateInstance(CacheType.MemoryCache);
+            var productResources = cacheService.Get<IEnumerable<ProductNameDto>>(ProductResourceCacheKey);
+            if (productResources == null)
+            {
+                var criteria = new ProductResourceQueryCriteria();
+                if (!criteria.IsValid())
+                {
+                    throw new StoredProcedureException(criteria);
+                }
 
-            ////    productResources = _resourceRepository.GetProductResources(criteria);
-            ////    cacheService.Set<IEnumerable<ProductResourceEntity>>(Configuration.ProductResourceCacheKey, productResources, Configuration.CacheTimeout);
-            ////}
+                productResources = _resourceRepository.Fetch<ProductNameDto>(new ProductResourceQueryCriteria());
+                cacheService.Set<IEnumerable<ProductNameDto>>(ProductResourceCacheKey, productResources, CacheTimeout);
+            }
 
-            ////return productResources;
+            return productResources;
         }
 
         #endregion Utils
