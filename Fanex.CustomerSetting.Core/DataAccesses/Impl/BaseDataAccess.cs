@@ -3,16 +3,16 @@
     using System;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
+    using Fanex.CustomerSetting.Core.StoredProcedureParams.Commands;
     using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
 
     public class BaseDataAccess
     {
-        public IResult ExecuteNonQuery(ICriteria criteria)
+        public IResult ExecuteNonQuery(BaseCommand command)
         {
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(command.GetSettingKey()))
             {
-                objectDb.ExecuteNonQuery(criteria.GetSpParams());
+                objectDb.ExecuteNonQuery(command.GetSpParams());
                 var outputParams = objectDb.GetOuputParams();
                 return new Result(
                     Convert.ToInt32(outputParams["errcode"]),

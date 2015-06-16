@@ -2,14 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Criteria.Validation;
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
+    using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation;
 
     public class ValidationService : IValidationService
     {
@@ -187,17 +187,22 @@
 
         private IResult ValidatePermissionMultiple(MultipleSettingCommand multipleSettingCommand)
         {
-            IEnumerable<int> custIds = multipleSettingCommand.Customers.Select(cust => cust.Id);
+            if (multipleSettingCommand.Setting.Customer.Level == CustomerLevel.Member)
+            {
+                IEnumerable<int> custIds = multipleSettingCommand.Customers.Select(cust => cust.Id);
 
-            var permissionMultipleValidationResult = _validationDataAccess.ValidatePermissionMultiple(
-                new PermissionValidationMultipleCommand
-                {
-                    CustId = _settingContext.Actor.Id,
-                    TargetRoleId = (int)multipleSettingCommand.Setting.Customer.Level,
-                    TargetCustIds = string.Join(",", custIds)
-                });
+                var permissionMultipleValidationResult = _validationDataAccess.ValidatePermissionMultiple(
+                    new PermissionValidationMultipleCommand
+                    {
+                        CustId = _settingContext.Actor.Id,
+                        TargetRoleId = (int)multipleSettingCommand.Setting.Customer.Level,
+                        TargetCustIds = string.Join(",", custIds)
+                    });
 
-            return permissionMultipleValidationResult;
+                return permissionMultipleValidationResult;
+            }
+
+            return Result.Success;
         }
     }
 }

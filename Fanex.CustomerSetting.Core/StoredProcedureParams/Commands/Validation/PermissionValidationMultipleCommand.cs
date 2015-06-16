@@ -1,8 +1,8 @@
-﻿namespace Fanex.CustomerSetting.Core.Criteria.Validation
+﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation
 {
     using Fanex.NAP.Framework.Data;
 
-    public class PermissionValidationMultipleCommand : ResultCommand
+    public class PermissionValidationMultipleCommand : BaseCommand
     {
         public int CustId { get; set; }
 

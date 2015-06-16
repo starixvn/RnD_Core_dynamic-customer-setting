@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Criteria.Product;
     using Fanex.CustomerSetting.Core.Dtos;
+    using Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product;
     using Fanex.NAP.Framework.Data;
     using RemotingRef;
 

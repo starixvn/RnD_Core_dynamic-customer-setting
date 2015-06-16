@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Criteria.Product
+﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product
 {
     using System;
     using System.Collections.Generic;

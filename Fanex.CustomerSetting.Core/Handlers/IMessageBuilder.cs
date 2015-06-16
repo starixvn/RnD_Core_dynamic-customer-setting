@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
-    using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Models;
 
     public interface IMessageBuilder
     {

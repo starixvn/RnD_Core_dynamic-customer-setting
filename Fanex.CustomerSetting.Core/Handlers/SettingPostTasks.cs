@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.Core.Models;
 
     public class SettingPostTasks
     {

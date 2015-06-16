@@ -1,6 +1,6 @@
-﻿namespace Fanex.CustomerSetting.Core.Criteria.Validation
+﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation
 {
-    public class PermissionValidationCommand : ResultCommand
+    public class PermissionValidationCommand : BaseCommand
     {
         public int CustId { get; set; }
 

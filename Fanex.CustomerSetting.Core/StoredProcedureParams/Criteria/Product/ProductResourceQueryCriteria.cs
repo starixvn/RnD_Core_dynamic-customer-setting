@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Criteria.Product
+﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product
 {
     using Fanex.NAP.Framework.Data;
 
