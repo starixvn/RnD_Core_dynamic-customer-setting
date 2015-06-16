@@ -9,8 +9,6 @@
 
         Product Product { get; set; }
 
-        IList<SettingType> SettingTypes { get; set; }
-
-        IResults Validate();
+        IEnumerable<SettingType> SettingTypes { get; set; }
     }
 }

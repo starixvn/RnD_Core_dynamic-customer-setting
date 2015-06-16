@@ -4,9 +4,11 @@
 
     public interface IResult
     {
-        int ErrCode { get; }
+        int Code { get; }
 
-        string ErrMsg { get; }
+        string Message { get; }
+
+        int MsgType { get; }
 
         bool IsSuccessful { get; }
 

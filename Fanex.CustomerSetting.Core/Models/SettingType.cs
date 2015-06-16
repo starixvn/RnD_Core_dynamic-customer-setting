@@ -46,7 +46,7 @@
         private IResult GetFailedValidationResult(IEnumerable<IResult> failedValidationResults)
         {
             var firstResult = failedValidationResults.FirstOrDefault();
-            return new Result(firstResult.ErrCode, firstResult.ErrMsg, failedValidationResults.Select(result => result.ErrMsg));
+            return new Result(firstResult.Code, firstResult.Message, failedValidationResults.Select(result => result.Message));
         }
     }
 }

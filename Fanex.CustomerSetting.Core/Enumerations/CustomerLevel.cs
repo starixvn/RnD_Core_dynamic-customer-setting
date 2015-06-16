@@ -1,15 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Core.Enumerations
 {
-    using Fanex.CustomerSetting.Core.Constants;
-
     public enum CustomerLevel : byte
     {
-        Member = Level.Member,
+        Member = Constants.MemberLevel,
 
-        Agent = Level.Agent,
+        Agent = Constants.AgentLevel,
 
-        Master = Level.Master,
+        Master = Constants.MasterLevel,
 
-        Super = Level.Super,
+        Super = Constants.SuperLevel,
     }
 }

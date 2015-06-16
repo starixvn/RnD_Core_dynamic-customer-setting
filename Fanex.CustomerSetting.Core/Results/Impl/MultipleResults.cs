@@ -5,12 +5,12 @@
 
     public class MultipleResults : IMultipleResults
     {
-        public MultipleResults()
+        public MultipleResults(IEnumerable<IResults> resultsList)
         {
-            ResultsList = new List<IResults>();
+            ResultsList = resultsList;
         }
 
-        public List<IResults> ResultsList { get; set; }
+        public IEnumerable<IResults> ResultsList { get; private set; }
 
         public bool IsSuccessful
         {

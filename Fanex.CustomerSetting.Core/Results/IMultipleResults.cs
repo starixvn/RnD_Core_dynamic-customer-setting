@@ -7,7 +7,7 @@
 
     public interface IMultipleResults
     {
-        List<IResults> ResultsList { get; set; }
+        IEnumerable<IResults> ResultsList { get; }
 
         bool IsSuccessful { get; }
     }

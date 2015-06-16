@@ -8,8 +8,8 @@
 
         string Language { get; set; }
 
-        string Ip { get; set; }
+        string Ip { get; }
 
-        byte System { get; set; }
+        byte System { get; }
     }
 }

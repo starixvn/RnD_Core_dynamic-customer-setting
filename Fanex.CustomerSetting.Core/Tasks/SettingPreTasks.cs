@@ -14,7 +14,7 @@
             throw new NotImplementedException("PreGetSetting is not implemented");
         }
 
-        public virtual IResults PreUpdateSetting(
+        public virtual IResult PreUpdateSetting(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel)

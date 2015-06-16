@@ -11,14 +11,14 @@
         public const int AccessDeniedValue = -3;
 
         public Result(Result result)
-            : this(result.ErrCode, result.ErrMsg, result.SubMessages)
+            : this(result.Code, result.Message, result.SubMessages)
         {
         }
 
         public Result(int errCode, string errMsg, IEnumerable<string> subMessages = null)
         {
-            ErrCode = errCode;
-            ErrMsg = errMsg;
+            Code = errCode;
+            Message = errMsg;
             SubMessages = subMessages;
         }
 
@@ -54,15 +54,17 @@
             }
         }
 
-        public int ErrCode { get; private set; }
+        public int Code { get; private set; }
 
-        public string ErrMsg { get; private set; }
+        public string Message { get; private set; }
+
+        public int MsgType { get; private set; }
 
         public bool IsSuccessful
         {
             get
             {
-                return ErrCode == SuccessValue;
+                return Code == SuccessValue;
             }
         }
 

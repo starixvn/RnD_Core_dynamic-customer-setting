@@ -4,12 +4,12 @@
 
     public class UpdateCustomerSettingParams
     {
-        private ISettingContext SettingContext { get; set; }
+        public ISettingContext SettingContext { get; set; }
 
-        private Customer Customer { get; set; }
+        public Customer Customer { get; set; }
 
-        private SettingType SettingType { get; set; }
+        public SettingType SettingType { get; set; }
 
-        private CustomerLevel? UplineLevel { get; set; }
+        public CustomerLevel? UplineLevel { get; set; }
     }
 }

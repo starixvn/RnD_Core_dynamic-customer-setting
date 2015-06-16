@@ -9,18 +9,18 @@
 
     public class SettingPostTasks
     {
-        public virtual void PostGetSetting(
+        public virtual SettingType PostGetSetting(
             SettingQuery settingQuery,
             SettingType settingType)
         {
             throw new NotImplementedException("PostGetSetting is not implemented");
         }
 
-        public virtual IResults PostUpdateSetting(
+        public virtual IResult PostUpdateSetting(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResults results)
+            IResult result)
         {
             throw new NotImplementedException("PostUpdateSetting is not implemented");
         }

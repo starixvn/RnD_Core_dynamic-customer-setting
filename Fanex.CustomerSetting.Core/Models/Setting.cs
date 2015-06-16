@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Core.Results;
 
     public class Setting : ISetting
@@ -12,11 +10,6 @@
 
         public Product Product { get; set; }
 
-        public IList<SettingType> SettingTypes { get; set; }
-
-        public IResults Validate()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<SettingType> SettingTypes { get; set; }
     }
 }
