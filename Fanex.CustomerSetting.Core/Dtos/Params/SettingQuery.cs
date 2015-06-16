@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Models.Params
+﻿namespace Fanex.CustomerSetting.Core.Dtos.Params
 {
     using Fanex.CustomerSetting.Core.Enumerations;
 

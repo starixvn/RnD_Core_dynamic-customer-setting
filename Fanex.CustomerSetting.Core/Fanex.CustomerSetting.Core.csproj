@@ -90,12 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Criteria\Customer\CustomerQueryCriteria.cs" />
-    <Compile Include="Criteria\Product\ProductResourceQueryCriteria.cs" />
-    <Compile Include="Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
-    <Compile Include="Criteria\ResultCriteria.cs" />
-    <Compile Include="Criteria\Validation\PermissionValidateCriteria.cs" />
-    <Compile Include="Criteria\Validation\PermissionValidateMultipleCriteria.cs" />
+    <Compile Include="StoredProcedureParams\Criteria\Customer\CustomerQueryCriteria.cs" />
+    <Compile Include="StoredProcedureParams\Criteria\Product\ProductResourceQueryCriteria.cs" />
+    <Compile Include="StoredProcedureParams\Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
+    <Compile Include="StoredProcedureParams\Commands\ResultCommand.cs" />
+    <Compile Include="StoredProcedureParams\Commands\Validation\PermissionValidationCommand.cs" />
+    <Compile Include="StoredProcedureParams\Commands\Validation\PermissionValidationMultipleCommand.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\DefaultSettingDataAccessFactory.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
@@ -105,22 +105,22 @@
     <Compile Include="Dtos\ProductNameDto.cs" />
     <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
-    <Compile Include="Exceptions\DatabaseException.cs" />
+    <Compile Include="Exceptions\StoredProcedureException.cs" />
     <Compile Include="Handlers\ITranslator.cs" />
-    <Compile Include="Messages\BaseMessageBuilder.cs" />
-    <Compile Include="Messages\BaseSportTypeBetTypeRow.cs" />
-    <Compile Include="Messages\IMessageBuilder.cs" />
-    <Compile Include="Messages\ISettingItemMessageRow.cs" />
-    <Compile Include="Messages\SimpleMessage.cs" />
-    <Compile Include="Messages\TemplateMessage.cs" />
+    <Compile Include="Dtos\Messages\BaseMessageBuilder.cs" />
+    <Compile Include="Dtos\Messages\BaseSportTypeBetTypeRow.cs" />
+    <Compile Include="Handlers\IMessageBuilder.cs" />
+    <Compile Include="Dtos\Messages\ISettingItemMessageRow.cs" />
+    <Compile Include="Dtos\Messages\SimpleMessage.cs" />
+    <Compile Include="Dtos\Messages\TemplateMessage.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
-    <Compile Include="Models\Params\MultipleSettingCommand.cs" />
-    <Compile Include="Models\Params\SettingCommand.cs" />
-    <Compile Include="Models\Params\SettingQuery.cs" />
-    <Compile Include="Models\Params\UpdateCustomerSettingParams.cs" />
+    <Compile Include="Dtos\Params\MultipleSettingCommand.cs" />
+    <Compile Include="Dtos\Params\SettingCommand.cs" />
+    <Compile Include="Dtos\Params\SettingQuery.cs" />
+    <Compile Include="Dtos\Params\UpdateCustomerSettingParams.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SettingContext.cs" />
@@ -130,12 +130,12 @@
     <Compile Include="Handlers\ISettingResolver.cs" />
     <Compile Include="Handlers\SettingContextManager.cs" />
     <Compile Include="Handlers\SettingResolver.cs" />
-    <Compile Include="Results\IResults.cs" />
-    <Compile Include="Results\Impl\Results.cs" />
-    <Compile Include="Results\Impl\MultipleResults.cs" />
-    <Compile Include="Results\Impl\Result.cs" />
-    <Compile Include="Results\IMultipleResults.cs" />
-    <Compile Include="Results\IResult.cs" />
+    <Compile Include="Dtos\Results\IResults.cs" />
+    <Compile Include="Dtos\Results\Impl\Results.cs" />
+    <Compile Include="Dtos\Results\Impl\MultipleResults.cs" />
+    <Compile Include="Dtos\Results\Impl\Result.cs" />
+    <Compile Include="Dtos\Results\IMultipleResults.cs" />
+    <Compile Include="Dtos\Results\IResult.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\Impl\CustomerService.cs" />
     <Compile Include="Services\Impl\ProductService.cs" />
@@ -144,8 +144,8 @@
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\IValidationService.cs" />
-    <Compile Include="Tasks\SettingPostTasks.cs" />
-    <Compile Include="Tasks\SettingPreTasks.cs" />
+    <Compile Include="Handlers\SettingPostTasks.cs" />
+    <Compile Include="Handlers\SettingPreTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

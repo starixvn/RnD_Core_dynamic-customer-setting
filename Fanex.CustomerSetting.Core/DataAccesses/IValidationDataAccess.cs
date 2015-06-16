@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses
 {
     using Fanex.CustomerSetting.Core.Criteria.Validation;
-    using Fanex.CustomerSetting.Core.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
 
     public interface IValidationDataAccess
     {
-        IResult ValidatePermission(PermissionValidateCriteria criteria);
+        IResult ValidatePermission(PermissionValidationCommand criteria);
 
-        IResult ValidatePermissionMultiple(PermissionValidateMultipleCriteria criteria);
+        IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand criteria);
     }
 }

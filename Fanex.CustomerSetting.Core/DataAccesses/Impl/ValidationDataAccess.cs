@@ -1,16 +1,16 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses.Impl
 {
     using Fanex.CustomerSetting.Core.Criteria.Validation;
-    using Fanex.CustomerSetting.Core.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
 
     public class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
     {
-        public IResult ValidatePermission(PermissionValidateCriteria criteria)
+        public IResult ValidatePermission(PermissionValidationCommand criteria)
         {
             return ExecuteNonQuery(criteria);
         }
 
-        public IResult ValidatePermissionMultiple(PermissionValidateMultipleCriteria criteria)
+        public IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand criteria)
         {
             return ExecuteNonQuery(criteria);
         }

@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class ResultCriteria : CriteriaBase
+    public class ResultCommand : CriteriaBase
     {
         public int ErrCode { get; set; }
 

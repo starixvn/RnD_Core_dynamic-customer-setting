@@ -3,9 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Core.DataAccesses;
-    using Fanex.CustomerSetting.Core.Messages;
+    using Fanex.CustomerSetting.Core.Dtos.Messages;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Tasks;
 
     public class SettingResolver : ISettingResolver
     {

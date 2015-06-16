@@ -6,12 +6,11 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Criteria.Customer;
     using Fanex.CustomerSetting.Core.Handlers;
-    using Fanex.CustomerSetting.Core.Messages;
+    using Fanex.CustomerSetting.Core.Dtos.Messages;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Models.Params;
-    using Fanex.CustomerSetting.Core.Results;
-    using Fanex.CustomerSetting.Core.Results.Impl;
-    using Fanex.CustomerSetting.Core.Tasks;
+    using Fanex.CustomerSetting.Core.Dtos.Params;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.NAP.Framework.Data;
 
     public class CustomerService : ICustomerService

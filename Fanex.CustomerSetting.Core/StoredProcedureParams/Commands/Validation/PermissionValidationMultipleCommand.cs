@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class PermissionValidateMultipleCriteria : ResultCriteria
+    public class PermissionValidationMultipleCommand : ResultCommand
     {
         public int CustId { get; set; }
 

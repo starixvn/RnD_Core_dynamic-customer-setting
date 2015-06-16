@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Core.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
 
     public class Setting : ISetting
     {

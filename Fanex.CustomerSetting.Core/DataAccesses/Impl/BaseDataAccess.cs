@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses.Impl
 {
     using System;
-    using Fanex.CustomerSetting.Core.Results;
-    using Fanex.CustomerSetting.Core.Results.Impl;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
 

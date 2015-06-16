@@ -7,18 +7,18 @@
     using Fanex.Data.Configuration;
 
     [Serializable]
-    public class DatabaseException : Exception
+    public class StoredProcedureException : Exception
     {
         private Hashtable _params;
         private string _settingKey;
 
-        public DatabaseException(string settingKey, Hashtable parameters)
+        public StoredProcedureException(string settingKey, Hashtable parameters)
         {
             _settingKey = settingKey;
             _params = parameters;
         }
 
-        public DatabaseException(
+        public StoredProcedureException(
             string settingKey,
             Hashtable parameters,
             string message)
@@ -28,7 +28,7 @@
             _params = parameters;
         }
 
-        public DatabaseException(
+        public StoredProcedureException(
             string settingKey,
             Hashtable parameters,
             string message,

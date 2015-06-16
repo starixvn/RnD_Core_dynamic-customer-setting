@@ -1,6 +1,7 @@
-﻿namespace Fanex.CustomerSetting.Core.Models.Params
+﻿namespace Fanex.CustomerSetting.Core.Dtos.Params
 {
     using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.Core.Models;
 
     public class UpdateCustomerSettingParams
     {

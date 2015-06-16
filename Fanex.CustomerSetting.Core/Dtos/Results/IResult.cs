@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Results
+﻿namespace Fanex.CustomerSetting.Core.Dtos.Results
 {
     using System.Collections.Generic;
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Criteria.Validation
 {
-    public class PermissionValidateCriteria : ResultCriteria
+    public class PermissionValidationCommand : ResultCommand
     {
         public int CustId { get; set; }
 

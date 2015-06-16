@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Results;
-    using Fanex.CustomerSetting.Core.Results.Impl;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
 
     public class SettingType
     {

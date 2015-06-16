@@ -7,9 +7,9 @@
     using Fanex.CustomerSetting.Core.DataAccesses.Impl;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Models.Params;
-    using Fanex.CustomerSetting.Core.Results;
-    using Fanex.CustomerSetting.Core.Results.Impl;
+    using Fanex.CustomerSetting.Core.Dtos.Params;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
 
     public class ValidationService : IValidationService
     {
@@ -105,7 +105,7 @@
 
         private IResult ValidatePermission(int customerId, CustomerLevel customerLevel)
         {
-            return _validationDataAccess.ValidatePermission(new PermissionValidateCriteria
+            return _validationDataAccess.ValidatePermission(new PermissionValidationCommand
             {
                 CustId = _settingContext.Actor.Id,
                 TargetCustId = customerId,
@@ -190,7 +190,7 @@
             IEnumerable<int> custIds = multipleSettingCommand.Customers.Select(cust => cust.Id);
 
             var permissionMultipleValidationResult = _validationDataAccess.ValidatePermissionMultiple(
-                new PermissionValidateMultipleCriteria
+                new PermissionValidationMultipleCommand
                 {
                     CustId = _settingContext.Actor.Id,
                     TargetRoleId = (int)multipleSettingCommand.Setting.Customer.Level,

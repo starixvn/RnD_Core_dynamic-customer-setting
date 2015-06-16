@@ -1,11 +1,11 @@
-﻿namespace Fanex.CustomerSetting.Core.Tasks
+﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
     using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Models.Params;
-    using Fanex.CustomerSetting.Core.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Params;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
 
     public class SettingPostTasks
     {
