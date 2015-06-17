@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Models
 {
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
 
     public abstract class SportTypeBetTypeSettingItem : ISettingItem
     {

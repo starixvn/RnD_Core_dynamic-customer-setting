@@ -34,7 +34,7 @@
             throw new NotImplementedException("Pre-Update Setting is not implemented");
         }
 
-        public virtual IMultipleResults PreUpdateMultipleSetting(
+        public virtual IResult PreUpdateMultipleSetting(
             IList<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel)

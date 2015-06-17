@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.CustomerSetting.Core.SPObjects.Commands;
     using Fanex.Data;
 

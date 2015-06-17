@@ -8,8 +8,8 @@
     {
         ISetting GetCustomerSetting(SettingQuery settingQuery);
 
-        IResults UpdateCustomerSetting(SettingCommand settingCommand);
+        IResult UpdateCustomerSetting(SettingCommand settingCommand);
 
-        IMultipleResults UpdateMultipleCustomerSetting(MultipleSettingCommand multipleSettingCommand);
+        IResult UpdateMultipleCustomerSetting(MultipleSettingCommand multipleSettingCommand);
     }
 }

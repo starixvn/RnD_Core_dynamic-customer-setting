@@ -37,11 +37,11 @@
             throw new NotImplementedException("Post-Update Setting is not implemented");
         }
 
-        public virtual IMultipleResults PostUpdateMultipleSetting(
+        public virtual IResult PostUpdateMultipleSetting(
             IList<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IMultipleResults multipleResults)
+            IResult result)
         {
             throw new NotImplementedException("Post-Update Multiple Setting is not implemented");
         }

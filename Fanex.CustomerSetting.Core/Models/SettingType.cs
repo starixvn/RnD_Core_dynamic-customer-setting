@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
 
     public class SettingType
     {

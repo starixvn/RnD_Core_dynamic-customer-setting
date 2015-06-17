@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.DataAccesses.Impl;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
@@ -35,10 +35,9 @@
 
         public IResult ValidateSettingQuery(SettingQuery settingQuery)
         {
-            if (settingQuery == null)
-            {
-                throw new ArgumentNullException("settingQuery");
-            }
+            Check.Argument.IsNotNull(settingQuery, "settingQuery");
+            Check.Argument.IsNotNegativeOrZero(settingQuery.CustomerId, "settingQuery.CustomerId");
+            Check.Argument.IsNotNegativeOrZero((byte)settingQuery.CustomerLevel, "settingQuery.CustomerLevel");
 
             return ValidateViewingPermission(settingQuery.CustomerId, settingQuery.CustomerLevel);
         }
