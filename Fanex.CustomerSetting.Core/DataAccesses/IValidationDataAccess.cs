@@ -5,8 +5,8 @@
 
     public interface IValidationDataAccess
     {
-        IResult ValidatePermission(PermissionValidationCommand criteria);
+        IResult ValidatePermission(PermissionValidationCommand command);
 
-        IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand criteria);
+        IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand command);
     }
 }

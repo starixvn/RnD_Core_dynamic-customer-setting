@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
     using Fanex.CustomerSetting.Core.DataAccesses;
-    using Fanex.CustomerSetting.Core.Dtos.Messages;
     using Fanex.CustomerSetting.Core.Models;
 
     public interface ISettingResolver

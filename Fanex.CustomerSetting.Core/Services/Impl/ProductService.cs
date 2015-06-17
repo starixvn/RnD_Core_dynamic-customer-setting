@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.Services.Impl
 {
     using System.Collections.Generic;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
@@ -20,33 +21,10 @@
             _productRepository = productRepository ?? new DynamicRepository();
         }
 
-        public Product GetProduct(byte productId)
-        {
-            IEnumerable<SettingType> settingTypes = GetProductSettingTypes(productId);
-
-            //// Implement caching here
-            string productName = GetProductName(productId);
-
-            return new Product
-                {
-                    Id = productId,
-                    Name = productName,
-                    SettingTypes = settingTypes
-                };
-        }
-
-        private string GetProductName(byte productId)
-        {
-            ProductNameDto productName = _productRepository.Get<ProductNameDto>(new ProductResourceQueryCriteria
-            {
-                ProductId = productId
-            });
-
-            return productName.ProductName;
-        }
-
         public IEnumerable<SettingType> GetProductSettingTypes(byte productId)
         {
+            Check.Argument.IsNotNegativeOrZero(productId, "productId");
+
             IEnumerable<SettingType> settingTypes = _productRepository.Fetch<SettingType>(new
                 ProductSettingTypesQueryCriteria
             {

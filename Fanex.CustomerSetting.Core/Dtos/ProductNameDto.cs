@@ -1,5 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Core.Dtos
 {
+    using System;
+
+    [Serializable]
     public class ProductNameDto
     {
         public int ProductId { get; set; }

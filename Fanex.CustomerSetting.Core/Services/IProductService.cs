@@ -5,8 +5,6 @@
 
     public interface IProductService
     {
-        Product GetProduct(byte productId);
-
         IEnumerable<SettingType> GetProductSettingTypes(byte productId);
     }
 }

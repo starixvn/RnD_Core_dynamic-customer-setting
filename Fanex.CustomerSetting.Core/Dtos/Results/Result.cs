@@ -12,11 +12,6 @@
         public const int AccessDeniedValue = -3;
         public const int DataIsNotValid = -4;
 
-        public Result(Result result)
-            : this(result.Code, result.Message, result.SubMessages)
-        {
-        }
-
         public Result(int code, string message)
         {
             Code = code;

@@ -91,7 +91,7 @@
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\SportTypeBetTypeSettingItem.cs" />
     <Compile Include="Resources\Error.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -105,7 +105,7 @@
     </Compile>
     <Compile Include="SPObjects\Commands\BaseCommand.cs" />
     <Compile Include="SPObjects\Criteria\Customer\CustomerQueryCriteria.cs" />
-    <Compile Include="SPObjects\Criteria\Product\ProductResourceQueryCriteria.cs" />
+    <Compile Include="SPObjects\Criteria\Product\ProductNamesQueryCriteria.cs" />
     <Compile Include="SPObjects\Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="SPObjects\Commands\Validation\PermissionValidationCommand.cs" />
     <Compile Include="SPObjects\Commands\Validation\PermissionValidationMultipleCommand.cs" />
@@ -119,11 +119,6 @@
     <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
     <Compile Include="Exceptions\StoredProcedureException.cs" />
-    <Compile Include="Dtos\Messages\BaseMessageBuilder.cs" />
-    <Compile Include="Dtos\Messages\BaseSportTypeBetTypeRow.cs" />
-    <Compile Include="Dtos\Messages\ISettingItemMessageRow.cs" />
-    <Compile Include="Dtos\Messages\SimpleMessage.cs" />
-    <Compile Include="Dtos\Messages\TemplateMessage.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />

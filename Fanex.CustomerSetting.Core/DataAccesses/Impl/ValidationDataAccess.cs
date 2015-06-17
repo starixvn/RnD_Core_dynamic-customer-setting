@@ -5,14 +5,14 @@
 
     public class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
     {
-        public IResult ValidatePermission(PermissionValidationCommand criteria)
+        public IResult ValidatePermission(PermissionValidationCommand command)
         {
-            return ExecuteNonQuery(criteria);
+            return ExecuteNonQuery(command);
         }
 
-        public IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand criteria)
+        public IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand command)
         {
-            return ExecuteNonQuery(criteria);
+            return ExecuteNonQuery(command);
         }
     }
 }

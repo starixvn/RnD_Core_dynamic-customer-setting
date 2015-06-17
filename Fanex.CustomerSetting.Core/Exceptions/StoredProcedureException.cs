@@ -32,21 +32,14 @@
             }
         }
 
-        public StoredProcedureException(
-            string settingKey,
-            Hashtable parameters,
-            string message)
+        public StoredProcedureException(string settingKey, Hashtable parameters, string message)
             : base(message)
         {
             _settingKey = settingKey;
             _params = parameters;
         }
 
-        public StoredProcedureException(
-            string settingKey,
-            Hashtable parameters,
-            string message,
-            Exception innerException)
+        public StoredProcedureException(string settingKey, Hashtable parameters, string message, Exception innerException)
             : base(message, innerException)
         {
             _settingKey = settingKey;

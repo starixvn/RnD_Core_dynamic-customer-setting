@@ -13,10 +13,11 @@
 
     public class ResourceService : IResourceService
     {
-        private const string ProductResourceCacheKey = "ProductResourceCacheKey";
-        private const int CacheTimeout = 12 * 60 * 60; // 1 day
+        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey";
+        private const int ProductNamesCacheTimeout = 12 * 60 * 60; // 1 day
         private readonly IDynamicRepository _resourceRepository;
         private readonly ISettingContext _settingContext;
+        private string _refLanguage;
 
         public ResourceService()
             : this(null, null)
@@ -27,71 +28,45 @@
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _settingContext = settingContext ?? SettingContextManager.SettingContext;
-            RefLanguage = GetRefLanguage(_settingContext.Language);
+            _refLanguage = GetRefLanguage(_settingContext.Language);
         }
-
-        public string RefLanguage { get; private set; }
-
-        #region Get product name
 
         public string GetProductName(int productId)
         {
-            return GetProductName(productId, RefLanguage);
-        }
-
-        public string GetProductName(int productId, string refLanguage)
-        {
-            var productResources = InternalGetProductResources();
+            var productResources = GetProductResources();
             var productResource = productResources.Where(x => x.ProductId == productId).FirstOrDefault();
             if (productResource != null)
             {
-                var propertyName = string.Format("ProductName{0}", refLanguage.ToUpper());
-                var property = productResource.GetType().GetProperty(propertyName);
-                return property == null
-                    ? productResource.ProductName
-                    : property.GetValue(productResource, null).ToString();
+                return GetProductNameWithLanguage(productResource);
             }
 
             return string.Format("Product {0}", productId);
         }
 
-        #endregion Get product name
-
-        #region Get sport type name
+        private string GetProductNameWithLanguage(ProductNameDto productResource)
+        {
+            var propertyName = string.Format("ProductName{0}", _refLanguage.ToUpper());
+            var property = productResource.GetType().GetProperty(propertyName);
+            return property == null
+                ? productResource.ProductName
+                : property.GetValue(productResource, null).ToString();
+        }
 
         public string GetSportTypeName(int sportTypeId)
         {
-            return GetSportTypeName(sportTypeId, RefLanguage);
-        }
-
-        public string GetSportTypeName(int sportTypeId, string refLanguage)
-        {
-            var sportTypeName = RefData.GetSportName(sportTypeId.ToString(), refLanguage);
+            var sportTypeName = RefData.GetSportName(sportTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format("Sport Type {0}", sportTypeId)
                 : sportTypeName;
         }
 
-        #endregion Get sport type name
-
-        #region Get bet type name
-
         public string GetBetTypeName(int betTypeId)
         {
-            return GetBetTypeName(betTypeId, RefLanguage);
-        }
-
-        public string GetBetTypeName(int betTypeId, string refLanguage)
-        {
-            var betTypeName = RefData.GetBetTypeName(betTypeId.ToString(), refLanguage);
+            var betTypeName = RefData.GetBetTypeName(betTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format("Bet Type {0}", betTypeId)
                 : betTypeName;
         }
-
-        #endregion Get bet type name
-
-        #region Utils
 
         private string GetRefLanguage(string language)
         {
@@ -112,27 +87,25 @@
             }
         }
 
-        private IEnumerable<ProductNameDto> InternalGetProductResources()
+        private IEnumerable<ProductNameDto> GetProductResources()
         {
             using (var cacheService = CacheService.CreateInstance(CacheType.MemoryCache))
             {
-                var productResources = cacheService.Get<IEnumerable<ProductNameDto>>(ProductResourceCacheKey);
-                if (productResources == null)
+                var productNames = cacheService.Get<IEnumerable<ProductNameDto>>(ProductNamesCacheKey);
+                if (productNames == null)
                 {
-                    var criteria = new ProductResourceQueryCriteria();
+                    var criteria = new ProductNamesQueryCriteria();
                     if (!criteria.IsValid())
                     {
                         throw new StoredProcedureException(criteria);
                     }
 
-                    productResources = _resourceRepository.Fetch<ProductNameDto>(new ProductResourceQueryCriteria());
-                    cacheService.Set<IEnumerable<ProductNameDto>>(ProductResourceCacheKey, productResources, CacheTimeout);
+                    productNames = _resourceRepository.Fetch<ProductNameDto>(new ProductNamesQueryCriteria());
+                    cacheService.Set<IEnumerable<ProductNameDto>>(ProductNamesCacheKey, productNames, ProductNamesCacheTimeout);
                 }
 
-                return productResources;
+                return productNames;
             }
         }
-
-        #endregion Utils
     }
 }
