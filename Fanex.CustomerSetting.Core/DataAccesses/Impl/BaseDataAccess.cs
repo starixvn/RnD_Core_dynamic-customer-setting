@@ -3,7 +3,7 @@
     using System;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
-    using Fanex.CustomerSetting.Core.StoredProcedureParams.Commands;
+    using Fanex.CustomerSetting.Core.SPObjects.Commands;
     using Fanex.Data;
 
     public class BaseDataAccess

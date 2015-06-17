@@ -9,6 +9,18 @@
 
     public class SettingPreTasks
     {
+        public SettingPreTasks()
+            : this(null)
+        {
+        }
+
+        public SettingPreTasks(ISettingContext settingContext)
+        {
+            SettingContext = settingContext ?? SettingContextManager.SettingContext;
+        }
+
+        protected ISettingContext SettingContext { get; set; }
+
         public virtual void PreGetSetting(SettingQuery settingQuery)
         {
             throw new NotImplementedException("PreGetSetting is not implemented");

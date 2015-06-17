@@ -1,0 +1,35 @@
+﻿namespace Fanex.CustomerSetting.Core.Models
+{
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
+
+    public abstract class SportTypeBetTypeSettingItem : ISettingItem
+    {
+        private const string SportTypeBetTypeXmlFormat = "SportType=\"{0}\" BetType=\"{1}\"";
+
+        public short SportTypeId { get; set; }
+
+        public string SportTypeName { get; set; }
+
+        public short BetTypeId { get; set; }
+
+        public string BetTypeName { get; set; }
+
+        public byte SettingLevel { get; set; }
+
+        public IResult Validate()
+        {
+            if (SportTypeId <= 0 || BetTypeId <= 0)
+            {
+                return Result.DataError;
+            }
+
+            return Result.Success;
+        }
+
+        public string ToXml()
+        {
+            return string.Format(SportTypeBetTypeXmlFormat, SportTypeId, BetTypeId);
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation
+﻿namespace Fanex.CustomerSetting.Core.SPObjects.Commands.Validation
 {
     public class PermissionValidationCommand : BaseCommand
     {

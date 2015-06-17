@@ -74,7 +74,7 @@
 
         public byte System { get; set; }
 
-        public string Ip
+        public string IP
         {
             get
             {

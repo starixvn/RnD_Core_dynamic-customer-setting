@@ -9,6 +9,18 @@
 
     public class SettingPostTasks
     {
+        public SettingPostTasks()
+            : this(null)
+        {
+        }
+
+        public SettingPostTasks(ISettingContext settingContext)
+        {
+            SettingContext = settingContext ?? SettingContextManager.SettingContext;
+        }
+
+        protected ISettingContext SettingContext { get; set; }
+
         public virtual SettingType PostGetSetting(
             SettingQuery settingQuery,
             SettingType settingType)

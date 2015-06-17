@@ -10,7 +10,16 @@
             ResultsList = resultsList;
         }
 
-        public IEnumerable<IResults> ResultsList { get; private set; }
+        public static MultipleResults SuccessMultipleResults
+        {
+            get
+            {
+                return new MultipleResults(new List<Results>
+                    {
+                        Results.SuccessResults
+                    });
+            }
+        }
 
         public bool IsSuccessful
         {
@@ -19,5 +28,7 @@
                 return ResultsList.Where(x => !x.IsSuccessful).FirstOrDefault() == null;
             }
         }
+
+        public IEnumerable<IResults> ResultsList { get; private set; }
     }
 }

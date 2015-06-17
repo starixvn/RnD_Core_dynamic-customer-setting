@@ -70,6 +70,15 @@ namespace Fanex.CustomerSetting.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data is not valid..
+        /// </summary>
+        public static string DataIsNotValid {
+            get {
+                return ResourceManager.GetString("DataIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fax.
         /// </summary>
         public static string Fax {
@@ -138,6 +147,15 @@ namespace Fanex.CustomerSetting.Core.Resources {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops... you are here because of a system error, please notify your administrator..
+        /// </summary>
+        public static string SystemError {
+            get {
+                return ResourceManager.GetString("SystemError", resourceCulture);
             }
         }
         

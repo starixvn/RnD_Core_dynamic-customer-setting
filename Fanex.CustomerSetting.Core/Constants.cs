@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Core
 {
-    public class Constants
+    public static class Constants
     {
-        public const byte MemberLevel = 1;
-        public const byte AgentLevel = 2;
-        public const byte MasterLevel = 3;
-        public const byte SuperLevel = 4;
-        public const byte CompanyLevel = 5;
+        internal const byte MemberLevel = 1;
+        internal const byte AgentLevel = 2;
+        internal const byte MasterLevel = 3;
+        internal const byte SuperLevel = 4;
+        internal const byte CompanyLevel = 5;
 
         public const byte ProductLevel = 1;
         public const byte SportTypeLevel = 2;

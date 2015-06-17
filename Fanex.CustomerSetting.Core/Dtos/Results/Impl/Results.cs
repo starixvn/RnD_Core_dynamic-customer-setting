@@ -12,9 +12,19 @@
             ResultList = results;
         }
 
-        public IEnumerable<IResult> ResultList { get; private set; }
-
-        public string Name { get; private set; }
+        public static Results SuccessResults
+        {
+            get
+            {
+                return new Results(
+                    0, 
+                    string.Empty, 
+                    new List<Result>
+                    {
+                        Result.Success
+                    });
+            }
+        }
 
         public int Id { get; private set; }
 
@@ -25,5 +35,9 @@
                 return ResultList.Where(x => !x.IsSuccessful).FirstOrDefault() == null;
             }
         }
+
+        public string Name { get; private set; }
+
+        public IEnumerable<IResult> ResultList { get; private set; }
     }
 }

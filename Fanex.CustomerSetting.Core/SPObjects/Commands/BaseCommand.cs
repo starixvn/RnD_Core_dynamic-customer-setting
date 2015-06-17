@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Commands
+﻿namespace Fanex.CustomerSetting.Core.SPObjects.Commands
 {
     using System;
     using System.Collections.Generic;

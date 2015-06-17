@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Core.DataAccesses;
-    using Fanex.CustomerSetting.Core.Dtos.Messages;
     using Fanex.CustomerSetting.Core.Models;
 
     public class SettingResolver : ISettingResolver
@@ -17,6 +16,17 @@
         private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactories = new Dictionary<string, ISettingDataAccessFactory>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksList = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksList = new Dictionary<string, SettingPostTasks>();
+        private readonly ISettingContext _settingContext;
+
+        public SettingResolver()
+            : this(null)
+        {
+        }
+
+        public SettingResolver(ISettingContext settingContext)
+        {
+            _settingContext = settingContext ?? SettingContextManager.SettingContext;
+        }
 
         public ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType)
         {
@@ -42,8 +52,8 @@
         }
 
         private static string GetFullTypeName(
-            string typeNameFormat, 
-            byte settingTypeId, 
+            string typeNameFormat,
+            byte settingTypeId,
             byte settingTemplate)
         {
             string assemblyName = string.Format(AssemblyFormat, settingTypeId, settingTemplate);
@@ -66,7 +76,7 @@
 
                 if (preTasksType != null)
                 {
-                    settingPreTasks = Activator.CreateInstance(preTasksType) as SettingPreTasks;
+                    settingPreTasks = Activator.CreateInstance(preTasksType, _settingContext) as SettingPreTasks;
                     SettingResolver._settingPreTasksList.Add(factoryKey, settingPreTasks);
                 }
             }
@@ -89,7 +99,7 @@
 
                 if (postTasksType != null)
                 {
-                    settingPostTasks = Activator.CreateInstance(postTasksType) as SettingPostTasks;
+                    settingPostTasks = Activator.CreateInstance(postTasksType, _settingContext) as SettingPostTasks;
                     SettingResolver._settingPostTasksList.Add(factoryKey, settingPostTasks);
                 }
             }

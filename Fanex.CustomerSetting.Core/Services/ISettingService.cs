@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Models;
 
-    public interface ICustomerService
+    public interface ISettingService
     {
         ISetting GetCustomerSetting(SettingQuery settingQuery);
 

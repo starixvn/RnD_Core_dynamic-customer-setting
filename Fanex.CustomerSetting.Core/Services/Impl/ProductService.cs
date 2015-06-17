@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product;
+    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.NAP.Framework.Data;
 
     public class ProductService : IProductService

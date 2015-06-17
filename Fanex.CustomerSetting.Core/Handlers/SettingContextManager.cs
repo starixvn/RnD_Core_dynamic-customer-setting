@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.Handlers
 {
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Core.Configurations;
     using Fanex.CustomerSetting.Core.Models;
 
     /// <summary>
@@ -15,7 +16,10 @@
     {
         private SettingContextManager()
         {
-            SettingContext = new SettingContext();
+            var settingContext = new SettingContext();
+            settingContext.System = CustomerSettings.Settings.SystemId;
+
+            SettingContext = settingContext;
         }
 
         public static ISettingContext SettingContext { get; private set; }

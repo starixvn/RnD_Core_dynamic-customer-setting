@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses
 {
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation;
+    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
     public interface IValidationDataAccess
     {

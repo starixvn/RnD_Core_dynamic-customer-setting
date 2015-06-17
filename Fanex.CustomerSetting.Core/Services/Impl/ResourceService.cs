@@ -5,7 +5,9 @@
     using Fanex.Caching;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Exceptions;
-    using Fanex.CustomerSetting.Core.StoredProcedureParams.Criteria.Product;
+    using Fanex.CustomerSetting.Core.Handlers;
+    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.NAP.Framework.Data;
     using RemotingRef;
 
@@ -14,16 +16,18 @@
         private const string ProductResourceCacheKey = "ProductResourceCacheKey";
         private const int CacheTimeout = 12 * 60 * 60; // 1 day
         private readonly IDynamicRepository _resourceRepository;
+        private readonly ISettingContext _settingContext;
 
         public ResourceService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public ResourceService(IDynamicRepository resourceRepository)
+        public ResourceService(ISettingContext settingContext, IDynamicRepository resourceRepository)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
-            RefLanguage = "GetRefLanguage(LanguageManager.CurrentLanguage)";
+            _settingContext = settingContext ?? SettingContextManager.SettingContext;
+            RefLanguage = GetRefLanguage(_settingContext.Language);
         }
 
         public string RefLanguage { get; private set; }
@@ -38,7 +42,7 @@
         public string GetProductName(int productId, string refLanguage)
         {
             var productResources = InternalGetProductResources();
-            var productResource = productResources.Where(x => x.ProductID == productId).FirstOrDefault();
+            var productResource = productResources.Where(x => x.ProductId == productId).FirstOrDefault();
             if (productResource != null)
             {
                 var propertyName = string.Format("ProductName{0}", refLanguage.ToUpper());
@@ -55,16 +59,16 @@
 
         #region Get sport type name
 
-        public string GetSportTypeName(int sportType)
+        public string GetSportTypeName(int sportTypeId)
         {
-            return GetSportTypeName(sportType, RefLanguage);
+            return GetSportTypeName(sportTypeId, RefLanguage);
         }
 
-        public string GetSportTypeName(int sportType, string refLanguage)
+        public string GetSportTypeName(int sportTypeId, string refLanguage)
         {
-            var sportTypeName = RefData.GetSportName(sportType.ToString(), refLanguage);
+            var sportTypeName = RefData.GetSportName(sportTypeId.ToString(), refLanguage);
             return string.IsNullOrEmpty(sportTypeName)
-                ? string.Format("Sport Type {0}", sportType)
+                ? string.Format("Sport Type {0}", sportTypeId)
                 : sportTypeName;
         }
 
@@ -72,16 +76,16 @@
 
         #region Get bet type name
 
-        public string GetBetTypeName(int betType)
+        public string GetBetTypeName(int betTypeId)
         {
-            return GetBetTypeName(betType, RefLanguage);
+            return GetBetTypeName(betTypeId, RefLanguage);
         }
 
-        public string GetBetTypeName(int betType, string refLanguage)
+        public string GetBetTypeName(int betTypeId, string refLanguage)
         {
-            var betTypeName = RefData.GetBetTypeName(betType.ToString(), refLanguage);
+            var betTypeName = RefData.GetBetTypeName(betTypeId.ToString(), refLanguage);
             return string.IsNullOrEmpty(betTypeName)
-                ? string.Format("Bet Type {0}", betType)
+                ? string.Format("Bet Type {0}", betTypeId)
                 : betTypeName;
         }
 
@@ -89,7 +93,7 @@
 
         #region Utils
 
-        private static string GetRefLanguage(string language)
+        private string GetRefLanguage(string language)
         {
             var defaultRefLanguage = "en";
             if (string.IsNullOrEmpty(language))

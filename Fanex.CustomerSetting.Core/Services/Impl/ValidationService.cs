@@ -9,7 +9,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation;
+    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
     public class ValidationService : IValidationService
     {

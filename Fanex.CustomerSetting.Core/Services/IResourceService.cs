@@ -6,12 +6,12 @@
 
         string GetProductName(int productId, string refLanguage);
 
-        string GetSportTypeName(int sportType);
+        string GetSportTypeName(int sportTypeId);
 
-        string GetSportTypeName(int sportType, string refLanguage);
+        string GetSportTypeName(int sportTypeId, string refLanguage);
 
-        string GetBetTypeName(int betType);
+        string GetBetTypeName(int betTypeId);
 
-        string GetBetTypeName(int betType, string refLanguage);
+        string GetBetTypeName(int betTypeId, string refLanguage);
     }
 }

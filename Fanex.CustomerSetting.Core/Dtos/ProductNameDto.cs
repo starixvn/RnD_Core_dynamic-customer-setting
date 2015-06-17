@@ -2,7 +2,7 @@
 {
     public class ProductNameDto
     {
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         public string ProductName { get; set; }
 
@@ -26,6 +26,6 @@
 
         public string ProductNameRU { get; set; }
 
-        public string ProductNameID { get; set; }
+        public string ProductNameId { get; set; }
     }
 }

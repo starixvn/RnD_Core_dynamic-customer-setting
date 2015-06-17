@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Core.Resources;
 
     public class Result : IResult
     {
@@ -9,6 +10,7 @@
         public const int ErrorValue = -1;
         public const int NoChangeValue = -2;
         public const int AccessDeniedValue = -3;
+        public const int DataIsNotValid = -4;
 
         public Result(Result result)
             : this(result.Code, result.Message, result.SubMessages)
@@ -34,7 +36,7 @@
         {
             get
             {
-                return new Result(AccessDeniedValue, "Lang.AccessDeniedMsg");
+                return new Result(AccessDeniedValue, Lang.AccessDeniedMsg);
             }
         }
 
@@ -42,15 +44,23 @@
         {
             get
             {
-                return new Result(NoChangeValue, "Lang.NoChangeToUpdate");
+                return new Result(NoChangeValue, Lang.NoChangeToUpdate);
             }
         }
 
-        public static Result Error
+        public static Result SystemError
         {
             get
             {
-                return new Result(ErrorValue, "Oops... you are here because of a system error, please notify your administrator.");
+                return new Result(ErrorValue, Lang.SystemError);
+            }
+        }
+
+        public static Result DataError
+        {
+            get
+            {
+                return new Result(DataIsNotValid, Lang.DataIsNotValid);
             }
         }
 

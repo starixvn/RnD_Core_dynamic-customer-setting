@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.StoredProcedureParams.Commands.Validation
+﻿namespace Fanex.CustomerSetting.Core.SPObjects.Commands.Validation
 {
     using Fanex.NAP.Framework.Data;
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Enumerations
 {
-    public enum CustomerLevel : byte
+    public enum CustomerLevel : int
     {
         Member = Constants.MemberLevel,
 
