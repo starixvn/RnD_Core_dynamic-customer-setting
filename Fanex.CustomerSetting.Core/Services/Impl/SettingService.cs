@@ -44,18 +44,22 @@
         public ISetting GetCustomerSetting(SettingQuery settingQuery)
         {
             CheckSettingQueryArguments(settingQuery);
-            var validationResult = _validationService.ValidateSettingQuery(settingQuery);
-            if (!validationResult.IsSuccessful)
-            {
-                throw new MethodAccessException(validationResult.Message);
-            }
-
+            ValidateSettingQuery(settingQuery);
             ISetting setting = new Setting();
             setting.Customer = GetCustomer(settingQuery.CustomerId, settingQuery.CustomerLevel);
             setting.Product = GetProduct(settingQuery.ProductId);
             setting.SettingTypes = GetCustomerSettingTypes(settingQuery, setting.Product);
 
             return setting;
+        }
+
+        private void ValidateSettingQuery(SettingQuery settingQuery)
+        {
+            var validationResult = _validationService.ValidateSettingQuery(settingQuery);
+            if (!validationResult.IsSuccessful)
+            {
+                throw new MethodAccessException(validationResult.Message);
+            }
         }
 
         private IList<SettingType> GetCustomerSettingTypes(SettingQuery settingQuery, Product product)
@@ -141,7 +145,30 @@
         public IResults UpdateCustomerSetting(SettingCommand settingCommand)
         {
             CheckSettingCommandArguments(settingCommand);
+            var validationResults = ValidateSettingCommand(settingCommand);
+            if (!validationResults.IsSuccessful)
+            {
+                return validationResults;
+            }
+
             return UpdateSingleCustomerSetting(settingCommand);
+        }
+
+        private IResults ValidateSettingCommand(SettingCommand settingCommand)
+        {
+            var validationResult = _validationService.ValidateSettingCommand(settingCommand);
+            if (!validationResult.IsSuccessful)
+            {
+                return new Results(
+                    0,
+                    string.Empty,
+                    new List<IResult>
+                    {
+                        validationResult
+                    });
+            }
+
+            return Results.SuccessResults;
         }
 
         private void CheckSettingCommandArguments(SettingCommand settingCommand)
@@ -231,6 +258,11 @@
         public IMultipleResults UpdateMultipleCustomerSetting(MultipleSettingCommand multipleSettingCommand)
         {
             CheckMultipleSettingCommandAgruments(multipleSettingCommand);
+            var validationResult = ValidateMultipleSettingCommand(multipleSettingCommand);
+            if (!validationResult.IsSuccessful)
+            {
+                return validationResult;
+            }
 
             var resultsList = new List<IResults>();
             var product = multipleSettingCommand.Setting.Product;
@@ -246,6 +278,26 @@
             }
 
             return new MultipleResults(resultsList);
+        }
+
+        private IMultipleResults ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
+        {
+            var validationResult = _validationService.ValidateMultipleSettingCommand(multipleSettingCommand);
+            if (!validationResult.IsSuccessful)
+            {
+                return new MultipleResults(new List<IResults>
+                    {
+                        new Results(
+                            0,
+                            string.Empty,
+                            new List<IResult>
+                            {
+                                validationResult
+                            })
+                    });
+            }
+
+            return MultipleResults.SuccessMultipleResults;
         }
 
         private IMultipleResults UpdateSetingTypeForMultipleCustomers(
