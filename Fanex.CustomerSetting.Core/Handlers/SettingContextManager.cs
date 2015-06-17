@@ -12,9 +12,9 @@
     /// Actor, Sub account, Language will be set when user login.
     /// Language can be set later when user want to change language.
     /// </summary>
-    public class SettingContextManager
+    public static class SettingContextManager
     {
-        private SettingContextManager()
+        static SettingContextManager()
         {
             var settingContext = new SettingContext();
             settingContext.System = CustomerSettings.Settings.SystemId;

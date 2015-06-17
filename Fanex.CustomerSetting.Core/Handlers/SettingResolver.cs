@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.Models;
 
@@ -86,6 +87,8 @@
 
         public SettingPostTasks ResolveSettingPostTasks(SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
             SettingPostTasks settingPostTasks = null;
             var factoryKey = string.Format(HandlerKeyFormat, settingType.Id, settingType.SettingTemplate);
             if (SettingResolver._settingPostTasksList.ContainsKey(factoryKey))

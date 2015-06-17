@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.Dtos.Results.Impl
 {
-    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Core.Resources;
 
     public class Result : IResult
@@ -68,6 +68,7 @@
 
         public string Message { get; private set; }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Reviewed")]
         public int MsgType { get; private set; }
 
         public bool IsSuccessful

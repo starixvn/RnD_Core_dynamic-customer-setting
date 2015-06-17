@@ -11,7 +11,7 @@
 
         public byte SettingTemplate { get; set; }
 
-        private byte SettingLevel { get; set; }
+        public byte SettingLevel { get; set; }
 
         public IEnumerable<ISettingItem> SettingItems { get; set; }
 

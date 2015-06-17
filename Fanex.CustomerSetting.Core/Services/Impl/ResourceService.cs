@@ -114,21 +114,23 @@
 
         private IEnumerable<ProductNameDto> InternalGetProductResources()
         {
-            var cacheService = CacheService.CreateInstance(CacheType.MemoryCache);
-            var productResources = cacheService.Get<IEnumerable<ProductNameDto>>(ProductResourceCacheKey);
-            if (productResources == null)
+            using (var cacheService = CacheService.CreateInstance(CacheType.MemoryCache))
             {
-                var criteria = new ProductResourceQueryCriteria();
-                if (!criteria.IsValid())
+                var productResources = cacheService.Get<IEnumerable<ProductNameDto>>(ProductResourceCacheKey);
+                if (productResources == null)
                 {
-                    throw new StoredProcedureException(criteria);
+                    var criteria = new ProductResourceQueryCriteria();
+                    if (!criteria.IsValid())
+                    {
+                        throw new StoredProcedureException(criteria);
+                    }
+
+                    productResources = _resourceRepository.Fetch<ProductNameDto>(new ProductResourceQueryCriteria());
+                    cacheService.Set<IEnumerable<ProductNameDto>>(ProductResourceCacheKey, productResources, CacheTimeout);
                 }
 
-                productResources = _resourceRepository.Fetch<ProductNameDto>(new ProductResourceQueryCriteria());
-                cacheService.Set<IEnumerable<ProductNameDto>>(ProductResourceCacheKey, productResources, CacheTimeout);
+                return productResources;
             }
-
-            return productResources;
         }
 
         #endregion Utils

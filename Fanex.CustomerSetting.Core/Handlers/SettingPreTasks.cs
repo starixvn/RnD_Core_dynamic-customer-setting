@@ -23,7 +23,7 @@
 
         public virtual void PreGetSetting(SettingQuery settingQuery)
         {
-            throw new NotImplementedException("PreGetSetting is not implemented");
+            throw new NotImplementedException("Pre-Get Setting is not implemented");
         }
 
         public virtual IResult PreUpdateSetting(
@@ -31,7 +31,7 @@
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            throw new NotImplementedException("PreUpdateSetting is not implemented");
+            throw new NotImplementedException("Pre-Update Setting is not implemented");
         }
 
         public virtual IMultipleResults PreUpdateMultipleSetting(
@@ -39,7 +39,7 @@
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            throw new NotImplementedException("PreUpdateMultipleSetting is not implemented");
+            throw new NotImplementedException("Pre-Update Multiple Setting is not implemented");
         }
     }
 }

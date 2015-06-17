@@ -5,7 +5,7 @@
     using System.Runtime.Serialization;
     using System.Text;
     using Fanex.Data.Configuration;
-using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Framework.Data;
 
     [Serializable]
     public class StoredProcedureException : Exception
@@ -20,8 +20,16 @@ using Fanex.NAP.Framework.Data;
         }
 
         public StoredProcedureException(ICriteria criteria)
-            : this(criteria.GetSettingKey(), criteria.GetSpParams())
         {
+            if (criteria != null)
+            {
+                _settingKey = criteria.GetSettingKey();
+                _params = criteria.GetSpParams();
+            }
+            else
+            {
+                throw new ArgumentNullException("criteria");
+            }
         }
 
         public StoredProcedureException(

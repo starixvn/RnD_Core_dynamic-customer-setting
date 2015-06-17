@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses.Impl
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Dtos.Results.Impl;
     using Fanex.CustomerSetting.Core.SPObjects.Commands;
@@ -8,6 +9,7 @@
 
     public class BaseDataAccess
     {
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
         public IResult ExecuteNonQuery(BaseCommand command)
         {
             using (var objectDb = new ObjectDb(command.GetSettingKey()))

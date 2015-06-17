@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Services.Impl
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Core.DataAccesses;
@@ -34,6 +35,11 @@
 
         public IResult ValidateSettingQuery(SettingQuery settingQuery)
         {
+            if (settingQuery == null)
+            {
+                throw new ArgumentNullException("settingQuery");
+            }
+
             return ValidateViewingPermission(settingQuery.CustomerId, settingQuery.CustomerLevel);
         }
 
@@ -65,7 +71,7 @@
                     return ValidateLevelForViewingMasterSetting(actorLevel);
 
                 case CustomerLevel.Agent:
-                    return ValidateLevelForViewingSuperSetting(actorLevel);
+                    return ValidateLevelForViewingAgentSetting(actorLevel);
             }
 
             return Result.Success;

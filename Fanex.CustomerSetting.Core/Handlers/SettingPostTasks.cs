@@ -25,7 +25,7 @@
             SettingQuery settingQuery,
             SettingType settingType)
         {
-            throw new NotImplementedException("PostGetSetting is not implemented");
+            throw new NotImplementedException("Post-Get Setting is not implemented");
         }
 
         public virtual IResult PostUpdateSetting(
@@ -34,7 +34,7 @@
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            throw new NotImplementedException("PostUpdateSetting is not implemented");
+            throw new NotImplementedException("Post-Update Setting is not implemented");
         }
 
         public virtual IMultipleResults PostUpdateMultipleSetting(
@@ -43,7 +43,7 @@
             CustomerLevel? uplineLevel,
             IMultipleResults multipleResults)
         {
-            throw new NotImplementedException("PostUpdateMultipleSetting is not implemented");
+            throw new NotImplementedException("Post-Update Multiple Setting is not implemented");
         }
     }
 }
