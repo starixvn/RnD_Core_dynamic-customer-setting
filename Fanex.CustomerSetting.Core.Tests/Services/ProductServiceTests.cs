@@ -39,7 +39,7 @@
 
         [TestCase(1)]
         [TestCase(100)]
-        public void GetProductSettingTypes_ProductIdGreaterThanZero_ExecuteFetchMethodOnDynamicRepository(byte productId)
+        public void GetProductSettingTypes_ProductIdIsGreaterThanZero_ExecuteFetchMethodOnDynamicRepository(byte productId)
         {
             //// Act
             _productService.GetProductSettingTypes(productId);

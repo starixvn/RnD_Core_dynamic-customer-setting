@@ -298,21 +298,58 @@
                 actualSettingCommand => actualSettingCommand == settingCommand));
         }
 
-        ////[Test]
-        ////public void UpdateCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
-        ////{
-        ////    //// Arrange
-        ////    SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
-        ////    var productSettingTypes = FakeObjectManager.CreateProductFakeObject().SettingTypes;
-        ////    _validationService.ValidateSettingCommand(settingCommand).Returns(Result.Success);
-        ////    SetupSettingTypeDataAccessStubForQuery(settingQuery);
+        [Test]
+        public void UpdateCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            _validationService.ValidateSettingCommand(settingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(settingCommand);
 
-        ////    //// Act
-        ////    _settingService.GetCustomerSetting(settingQuery);
+            //// Act
+            _settingService.UpdateCustomerSetting(settingCommand);
 
-        ////    //// Assert
-        ////    _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
-        ////}
+            //// Assert
+            _settingResolver.Received(settingCommand.Setting.SettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
+        }
+
+        private void SetupSettingTypeDataAccessStubForCommand(SettingCommand settingCommand)
+        {
+            var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            _settingDataAccess.UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>()).Returns(Result.Success);
+            _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
+            _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            _validationService.ValidateSettingCommand(settingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(settingCommand);
+
+            //// Act
+            _settingService.UpdateCustomerSetting(settingCommand);
+
+            //// Assert
+            _settingResolver.Received(settingCommand.Setting.SettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_ExecuteUpdateSettingTypeOnSettingDataAccess()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            _validationService.ValidateSettingCommand(settingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(settingCommand);
+
+            //// Act
+            _settingService.UpdateCustomerSetting(settingCommand);
+
+            //// Assert
+            _settingDataAccess.Received(settingCommand.Setting.SettingTypes.Count()).UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>());
+        }
 
         #endregion Update Customer Setting Tests
     }
