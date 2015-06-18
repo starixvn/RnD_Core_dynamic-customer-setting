@@ -42,8 +42,7 @@
             
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _validationService.ValidateSettingQuery(settingQuery)
-                    ));
+                    () => _validationService.ValidateSettingQuery(settingQuery)));
         }
 
         [TestCase(0)]
@@ -57,8 +56,7 @@
 
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _validationService.ValidateSettingQuery(settingQuery)
-                    ));
+                    () => _validationService.ValidateSettingQuery(settingQuery)));
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -194,8 +192,7 @@
                 Arg.Is<PermissionValidationCommand>(
                 command => command.CustId == _settingContext.Actor.Id
                     && command.TargetCustId == settingQuery.CustomerId
-                    && command.TargetRoleId == (int)settingQuery.CustomerLevel
-                ));
+                    && command.TargetRoleId == (int)settingQuery.CustomerLevel));
         }
 
         [Test]
@@ -222,9 +219,6 @@
         {
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
-
-
         }
-        
     }
 }

@@ -11,15 +11,14 @@
     [TestFixture]
     public class CustomerServiceTests
     {
-        private ISettingService _settingService;
-        private IValidationService _validationService;
-        private IProductService _productService;
-        private ISettingContext _settingContext;
+        ////private ISettingService _settingService;
+        ////private IValidationService _validationService;
+        ////private IProductService _productService;
+        ////private ISettingContext _settingContext;
 
         [SetUp]
         public void Setup()
         {
         }
-
     }
 }

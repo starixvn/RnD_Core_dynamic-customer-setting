@@ -24,6 +24,7 @@
             {
                 return _actor;
             }
+
             set
             {
                 _actor = value;
@@ -36,6 +37,7 @@
             {
                 return _subAccount;
             }
+
             set
             {
                 _subAccount = value;
@@ -48,6 +50,7 @@
             {
                 return _language;
             }
+
             set
             {
                 _language = value;
