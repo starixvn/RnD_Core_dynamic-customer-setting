@@ -10,7 +10,6 @@
     public class SettingPostTasks
     {
         public SettingPostTasks()
-            : this(null)
         {
         }
 

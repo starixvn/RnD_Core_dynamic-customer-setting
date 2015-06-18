@@ -10,7 +10,6 @@
     public class SettingPreTasks
     {
         public SettingPreTasks()
-            : this(null)
         {
         }
 

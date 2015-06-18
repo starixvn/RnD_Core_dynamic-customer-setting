@@ -8,7 +8,7 @@
 
     public class SettingResolver : ISettingResolver
     {
-        private const string cacheKeyFormat = "{0}_{1}";
+        private const string CacheKeyFormat = "{0}_{1}";
         private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
         private const string DataAccessFactoryTypeFormat = "{0}.DataAccess.SettingType{1}DataAccessFactory";
         private const string SettingPreTasksTypeFormat = "{0}.Tasks.SettingType{1}PreTasks";
@@ -129,9 +129,9 @@
             return settingPostTasks;
         }
 
-        private static string GenerateCacheKey(SettingType settingType)
+        private string GenerateCacheKey(SettingType settingType)
         {
-            return string.Format(cacheKeyFormat, settingType.Id, settingType.SettingTemplate);
+            return string.Format(CacheKeyFormat, settingType.Id, settingType.SettingTemplate);
         }
 
         private SettingPostTasks GetSettingPostTasksHandlerFromCache(string cacheKey)

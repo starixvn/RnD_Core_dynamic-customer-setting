@@ -100,5 +100,35 @@
                 UplineLevel = uplineLevel
             };
         }
+
+        public static SettingQuery CreateSettingQueryFakeObject(
+            int customerId = 1, 
+            CustomerLevel customerLevel = CustomerLevel.Member,
+            byte productId = 1,
+            CustomerLevel? uplineLevel = CustomerLevel.Master)
+        {
+            return new SettingQuery
+            {
+                CustomerId = customerId,
+                CustomerLevel = customerLevel,
+                ProductId = productId,
+                UplineLevel = uplineLevel
+            };
+        }
+
+        public static Product CreateProductFakeObject(byte productId = 1)
+        {
+            return new Product
+            {
+                Id = 1,
+                SettingTypes = new List<SettingType>
+                {
+                    FakeObjectManager.CreateSettingTypeFakeObject(1, 1),
+                    FakeObjectManager.CreateSettingTypeFakeObject(2, 1),
+                    FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
+                    FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
+                }
+            };
+        }
     }
 }

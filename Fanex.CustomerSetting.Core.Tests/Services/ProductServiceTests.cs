@@ -13,7 +13,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ProductServiceTest
+    public class ProductServiceTests
     {
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
@@ -46,8 +46,7 @@
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
-                criteria => criteria.ProductId == productId
-                ));
+                criteria => criteria.ProductId == productId));
         }
     }
 }

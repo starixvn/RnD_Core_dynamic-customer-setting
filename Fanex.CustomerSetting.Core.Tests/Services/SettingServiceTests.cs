@@ -3,11 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+    using Fanex.CustomerSetting.Core.DataAccesses;
+    using Fanex.CustomerSetting.Core.Dtos.Params;
+    using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Services;
     using Fanex.CustomerSetting.Core.Services.Impl;
+    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Customer;
     using Fanex.CustomerSetting.Core.Tests.Models;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
@@ -22,6 +26,10 @@
         private ISettingContext _settingContext;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
+        private ISettingDataAccessFactory _settingDataAccessFactory;
+        private ISettingDataAccess _settingDataAccess;
+        private SettingPreTasks _settingPreTasksHandler;
+        private SettingPostTasks _settingPostTasksHandler;
 
         [SetUp]
         public void Setup()
@@ -30,6 +38,11 @@
             _settingContext = new SettingContextStub();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
+            _settingResolver = Substitute.For<ISettingResolver>();
+            _settingDataAccessFactory = Substitute.For<ISettingDataAccessFactory>();
+            _settingDataAccess = Substitute.For<ISettingDataAccess>();
+            _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>();
+            _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>();
 
             _settingService = new SettingService(
                 _settingContext,
@@ -38,5 +51,269 @@
                 _settingResolver,
                 _dymanicRepository);
         }
+
+        #region Get Customer Setting Tests
+
+        [Test]
+        public void GetCustomerSetting_SettingQueryIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            SettingQuery settingQuery = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _settingService.GetCustomerSetting(settingQuery)));
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void GetCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        {
+            //// Arrange
+            SettingQuery settingQuery = new SettingQuery
+            {
+                CustomerId = customerId
+            };
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.GetCustomerSetting(settingQuery)));
+        }
+
+        [Test]
+        public void GetCustomerSetting_ProductIdIsZero_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            settingQuery.ProductId = 0;
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.GetCustomerSetting(settingQuery)));
+        }
+
+        [Test]
+        public void GetCustomerSetting_CustomerLevelValueIsZero_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            settingQuery.CustomerLevel = (CustomerLevel)0;
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.GetCustomerSetting(settingQuery)));
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteValidateSettingQueryMethodOnValidationService()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            _validationService.ValidateSettingQuery(Arg.Any<SettingQuery>()).Returns(Result.Success);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _validationService.Received().ValidateSettingQuery(Arg.Is<SettingQuery>(
+                actualSettingQuery => actualSettingQuery.CustomerId == settingQuery.CustomerId
+                    && actualSettingQuery.CustomerLevel == settingQuery.CustomerLevel
+                    && actualSettingQuery.ProductId == settingQuery.ProductId
+                    && actualSettingQuery.UplineLevel == settingQuery.UplineLevel));
+        }
+
+        [Test]
+        public void GetCustomerSetting_QuerySettingIsNotValid_ThrowInvalidOperationException()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            _validationService.ValidateSettingQuery(Arg.Any<SettingQuery>()).Returns(Result.AccessDenied);
+
+            //// Act
+            Assert.Throws<InvalidOperationException>(
+                new TestDelegate(
+                    () => _settingService.GetCustomerSetting(settingQuery)));
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteGetCustomerMethodOnDynamicRepository()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            _validationService.ValidateSettingQuery(Arg.Any<SettingQuery>()).Returns(Result.Success);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _dymanicRepository.Received().Get<Customer>(Arg.Is<CustomerQueryCriteria>(
+                    criteria => criteria.CustId == settingQuery.CustomerId));
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteGetProductSettingTypesMethodOnProductService()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            _validationService.ValidateSettingQuery(Arg.Any<SettingQuery>()).Returns(Result.Success);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
+                    productId => productId == settingQuery.ProductId));
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            var productSettingTypes = FakeObjectManager.CreateProductFakeObject().SettingTypes;
+            _validationService.ValidateSettingQuery(settingQuery).Returns(Result.Success);
+            _productService.GetProductSettingTypes(settingQuery.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(settingQuery);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
+        }
+
+        private void SetupSettingTypeDataAccessStubForQuery(SettingQuery settingQuery)
+        {
+            var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            _settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery).Returns(customerSettingType);
+            _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
+            _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            var productSettingTypes = FakeObjectManager.CreateProductFakeObject().SettingTypes;
+            _validationService.ValidateSettingQuery(settingQuery).Returns(Result.Success);
+            _productService.GetProductSettingTypes(settingQuery.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(settingQuery);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
+        }
+
+        [Test]
+        public void GetCustomerSetting_ExecuteGetCustomerSettingTypeMethodOnSettingDataAccess()
+        {
+            //// Arrange
+            SettingQuery settingQuery = FakeObjectManager.CreateSettingQueryFakeObject();
+            var productSettingTypes = FakeObjectManager.CreateProductFakeObject().SettingTypes;
+            _validationService.ValidateSettingQuery(settingQuery).Returns(Result.Success);
+            _productService.GetProductSettingTypes(settingQuery.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(settingQuery);
+
+            //// Act
+            _settingService.GetCustomerSetting(settingQuery);
+
+            //// Assert
+            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(_settingContext.Actor, settingQuery);
+        }
+
+        #endregion Get Customer Setting Tests
+
+        #region Update Customer Setting Tests
+
+        [Test]
+        public void UpdateCustomerSetting_SettingCommandIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            SettingCommand settingCommand = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _settingService.UpdateCustomerSetting(settingCommand)));
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_SettingIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            settingCommand.Setting = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _settingService.UpdateCustomerSetting(settingCommand)));
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void UpdateCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            settingCommand.Setting.Customer.Id = customerId;
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.UpdateCustomerSetting(settingCommand)));
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_SettingTypesIsEmpty_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+            settingCommand.Setting.SettingTypes = new List<SettingType>();
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.UpdateCustomerSetting(settingCommand)));
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_ExecuteValidateSettingCommandMethodOnValidationService()
+        {
+            //// Arrange
+            SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+
+            //// Act
+            _settingService.UpdateCustomerSetting(settingCommand);
+
+            //// Assert
+            _validationService.Received().ValidateSettingCommand(Arg.Is<SettingCommand>(
+                actualSettingCommand => actualSettingCommand == settingCommand));
+        }
+
+        ////[Test]
+        ////public void UpdateCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
+        ////{
+        ////    //// Arrange
+        ////    SettingCommand settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
+        ////    var productSettingTypes = FakeObjectManager.CreateProductFakeObject().SettingTypes;
+        ////    _validationService.ValidateSettingCommand(settingCommand).Returns(Result.Success);
+        ////    SetupSettingTypeDataAccessStubForQuery(settingQuery);
+
+        ////    //// Act
+        ////    _settingService.GetCustomerSetting(settingQuery);
+
+        ////    //// Assert
+        ////    _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
+        ////}
+
+        #endregion Update Customer Setting Tests
     }
 }

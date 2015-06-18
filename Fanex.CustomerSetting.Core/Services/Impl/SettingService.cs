@@ -36,7 +36,7 @@
             _settingContext = settingContext ?? SettingContextManager.SettingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService();
-            _settingResolver = settingResolver ?? new SettingResolver();
+            _settingResolver = settingResolver ?? new SettingResolver(_settingContext);
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
@@ -87,8 +87,11 @@
                 {
                     CustId = customerId
                 });
-
-            customer.Level = customerLevel;
+            
+            if (customer != null)
+            {
+                customer.Level = customerLevel;
+            }
 
             return customer;
         }
@@ -159,6 +162,7 @@
             Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
             Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
             Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Product.Id, "settingQuery.CustomerLevel");
+            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting");
             Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.SettingTypes.Count(), "settingCommand.Setting.SettingTypes.Count");
         }
 

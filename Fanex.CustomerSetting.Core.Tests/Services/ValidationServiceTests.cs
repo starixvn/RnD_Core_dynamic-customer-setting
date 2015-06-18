@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Core.Tests.Services
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
@@ -35,7 +35,7 @@
         #region Validatie Setting Query Tests
 
         [Test]
-        public void ValidateSettingQuery_SettingQueryIsNull_ThrownArgumentNullException()
+        public void ValidateSettingQuery_SettingQueryIsNull_ThrowArgumentNullException()
         {
             //// Arrange
             SettingQuery settingQuery = null;
@@ -228,7 +228,7 @@
         #region validate Setting Command Tests
 
         [Test]
-        public void ValidateSettingCommand_SettingCommandIsNull_ThrownArgumentNullException()
+        public void ValidateSettingCommand_SettingCommandIsNull_ThrowArgumentNullException()
         {
             //// Arrange
             SettingCommand settingCommand = null;
@@ -265,8 +265,7 @@
             _validationDataAccess.Received().ValidatePermission(Arg.Is<PermissionValidationCommand>(
                 command => command.ActorId == _settingContext.Actor.Id
                     && command.CustomerId == settingCommand.Setting.Customer.Id
-                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level
-                ));
+                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level));
         }
 
         [Test]
@@ -281,8 +280,7 @@
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == settingCommand.Setting.Product.Id
-                ));
+                productId => productId == settingCommand.Setting.Product.Id));
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -479,7 +477,7 @@
         #region Validate Multiple Setting Command Tests
 
         [Test]
-        public void ValidateMultipleSettingCommand_MultipleSettingCommandIsNull_ThrownArgumentNullException()
+        public void ValidateMultipleSettingCommand_MultipleSettingCommandIsNull_ThrowArgumentNullException()
         {
             //// Arrange
             MultipleSettingCommand multipleSettingCommand = null;
@@ -491,7 +489,7 @@
         }
 
         [Test]
-        public void ValidateMultipleSettingCommand_CustomersIsNull_ThrownArgumentNullException()
+        public void ValidateMultipleSettingCommand_CustomersIsNull_ThrowArgumentNullException()
         {
             //// Arrange
             MultipleSettingCommand settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
@@ -516,8 +514,7 @@
             _validationDataAccess.Received().ValidatePermission(Arg.Is<PermissionValidationCommand>(
                 command => command.ActorId == _settingContext.Actor.Id
                     && command.CustomerId == settingCommand.Setting.Customer.Id
-                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level
-                ));
+                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level));
         }
 
         [Test]
@@ -532,8 +529,7 @@
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == settingCommand.Setting.Product.Id
-                ));
+                productId => productId == settingCommand.Setting.Product.Id));
         }
 
         [Test]
@@ -550,8 +546,7 @@
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(Arg.Is<PermissionValidationMultipleCommand>(
                 command => command.ActorId == _settingContext.Actor.Id
-                    && command.MemberIds == string.Join(",", settingCommand.Customers.Select(cust => cust.Id))
-                ));
+                    && command.MemberIds == string.Join(",", settingCommand.Customers.Select(cust => cust.Id))));
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -750,7 +745,6 @@
             settingItemMock.Received().Validate();
         }
 
-        #endregion
-
+        #endregion Validate Multiple Setting Command Tests
     }
 }
