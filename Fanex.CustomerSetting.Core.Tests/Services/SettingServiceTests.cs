@@ -352,5 +352,126 @@
         }
 
         #endregion Update Customer Setting Tests
+
+        #region Update Multiple Customer Setting Tests
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_MultipleSettingCommandIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand)));
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_SettingIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            multipleSettingCommand.Setting = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand)));
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_NumberOfCustomerIsZero_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            multipleSettingCommand.Customers = new List<Customer>();
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand)));
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_NumberOfSettingTypesIsZero_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            multipleSettingCommand.Setting.SettingTypes = new List<SettingType>();
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand)));
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_ExecuteValidateMultipleSettingCommandMethodOnValidationService()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand);
+
+            //// Assert
+            _validationService.Received().ValidateMultipleSettingCommand(multipleSettingCommand);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            _validationService.ValidateMultipleSettingCommand(multipleSettingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(multipleSettingCommand);
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand);
+
+            //// Assert
+            var numOfSettingTypes = multipleSettingCommand.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * multipleSettingCommand.Customers.Count();
+            var numOfExecuteResultSettingPreTasksMethod = numOfSettingTypes + numOfSettingTypesEachCustomer;
+            _settingResolver.Received(numOfExecuteResultSettingPreTasksMethod).ResolveSettingPreTasks(Arg.Any<SettingType>());
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            _validationService.ValidateMultipleSettingCommand(multipleSettingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(multipleSettingCommand);
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand);
+
+            //// Assert
+            var numOfSettingTypes = multipleSettingCommand.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * multipleSettingCommand.Customers.Count();
+            var numOfExecuteResultSettingPostTasksMethod = numOfSettingTypes + numOfSettingTypesEachCustomer;
+            _settingResolver.Received(numOfExecuteResultSettingPostTasksMethod).ResolveSettingPostTasks(Arg.Any<SettingType>());
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_ExecuteUpdateSettingTypeOnSettingDataAccess()
+        {
+            //// Arrange
+            MultipleSettingCommand multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
+            _validationService.ValidateMultipleSettingCommand(multipleSettingCommand).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(multipleSettingCommand);
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(multipleSettingCommand);
+
+            //// Assert
+            var numOfSettingTypes = multipleSettingCommand.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * multipleSettingCommand.Customers.Count();
+            _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>());
+        }
+
+        #endregion
     }
 }

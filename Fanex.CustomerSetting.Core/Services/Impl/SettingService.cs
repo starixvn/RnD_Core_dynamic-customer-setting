@@ -168,13 +168,7 @@
 
         private IResult ValidateSettingCommand(SettingCommand settingCommand)
         {
-            var validationResult = _validationService.ValidateSettingCommand(settingCommand);
-            if (!validationResult.IsSuccessful)
-            {
-                return validationResult;
-            }
-
-            return Result.Success;
+            return _validationService.ValidateSettingCommand(settingCommand);
         }
 
         private IResult UpdateSingleCustomerSetting(SettingCommand settingCommand)
@@ -283,20 +277,14 @@
         {
             Check.Argument.IsNotNull(multipleSettingCommand, "multipleSettingCommand");
             Check.Argument.IsNotNull(multipleSettingCommand.Setting, "multipleSettingCommand.Setting");
-            Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Setting.Product.Id, "multipleSettingCommand.CustomerLevel");
+            Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Setting.Product.Id, "multipleSettingCommand.Setting.Product.Id");
             Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Setting.SettingTypes.Count(), "multipleSettingCommand.Setting.SettingTypes.Count");
             Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Customers.Count(), "multipleSettingCommand.Customers.Count");
         }
 
         private IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
         {
-            var validationResult = _validationService.ValidateMultipleSettingCommand(multipleSettingCommand);
-            if (!validationResult.IsSuccessful)
-            {
-                return validationResult;
-            }
-
-            return Result.Success;
+            return _validationService.ValidateMultipleSettingCommand(multipleSettingCommand);
         }
 
         private IResult UpdateSetingTypeForMultipleCustomers(
