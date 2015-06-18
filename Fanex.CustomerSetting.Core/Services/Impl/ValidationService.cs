@@ -120,11 +120,7 @@
 
         public IResult ValidateSettingCommand(SettingCommand settingCommand)
         {
-            Check.Argument.IsNotNull(settingCommand, "settingCommand");
-            Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
-            Check.Argument.IsNotNull(settingCommand.Setting.Customer, "settingCommand.Setting.Customer");
-            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
-            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting.SettingTypes");
+            CheckValidateSettingCommandArguments(settingCommand);
 
             var setting = settingCommand.Setting;
             var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
@@ -146,6 +142,15 @@
             }
 
             return Result.Success;
+        }
+
+        private void CheckValidateSettingCommandArguments(SettingCommand settingCommand)
+        {
+            Check.Argument.IsNotNull(settingCommand, "settingCommand");
+            Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
+            Check.Argument.IsNotNull(settingCommand.Setting.Customer, "settingCommand.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
+            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting.SettingTypes");
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
@@ -178,9 +183,7 @@
 
         public IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
         {
-            Check.Argument.IsNotNull(multipleSettingCommand, "settingCommand");
-            Check.Argument.IsNotNull(multipleSettingCommand.Setting, "settingCommand.Setting");
-            Check.Argument.IsNotNull(multipleSettingCommand.Customers, "multipleSettingCommand.Customers");
+            CheckMultipleSettingCommandArguments(multipleSettingCommand);
 
             var commandValidationResult = ValidateSettingCommand(multipleSettingCommand);
             if (!commandValidationResult.IsSuccessful)
@@ -199,17 +202,24 @@
             return Result.Success;
         }
 
+        private void CheckMultipleSettingCommandArguments(MultipleSettingCommand multipleSettingCommand)
+        {
+            Check.Argument.IsNotNull(multipleSettingCommand, "settingCommand");
+            Check.Argument.IsNotNull(multipleSettingCommand.Setting, "settingCommand.Setting");
+            Check.Argument.IsNotNull(multipleSettingCommand.Customers, "multipleSettingCommand.Customers");
+        }
+
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<Customer> customers, CustomerLevel customerLevel)
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                IEnumerable<int> custIds = customers.Select(cust => cust.Id);
+                IEnumerable<int> memberIds = customers.Select(cust => cust.Id);
 
                 var permissionValidationResult = _validationDataAccess.ValidatePermissionMultiple(
                     new PermissionValidationMultipleCommand
                     {
                         ActorId = _settingContext.Actor.Id,
-                        CustomerIds = string.Join(",", custIds)
+                        MemberIds = string.Join(",", memberIds)
                     });
 
                 return permissionValidationResult;

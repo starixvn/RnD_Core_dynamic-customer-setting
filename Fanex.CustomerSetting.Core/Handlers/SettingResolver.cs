@@ -8,15 +8,15 @@
 
     public class SettingResolver : ISettingResolver
     {
-        private const string HandlerCachedKeyFormat = "{0}_{1}";
+        private const string cacheKeyFormat = "{0}_{1}";
         private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
         private const string DataAccessFactoryTypeFormat = "{0}.DataAccess.SettingType{1}DataAccessFactory";
         private const string SettingPreTasksTypeFormat = "{0}.Tasks.SettingType{1}PreTasks";
         private const string SettingPostTasksTypeFormat = "{0}.Tasks.SettingType{1}PostTasks";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
-        private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactories = new Dictionary<string, ISettingDataAccessFactory>();
-        private static Dictionary<string, SettingPreTasks> _settingPreTasksList = new Dictionary<string, SettingPreTasks>();
-        private static Dictionary<string, SettingPostTasks> _settingPostTasksList = new Dictionary<string, SettingPostTasks>();
+        private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactoriesCached = new Dictionary<string, ISettingDataAccessFactory>();
+        private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
+        private static Dictionary<string, SettingPostTasks> _settingPostTasksListCached = new Dictionary<string, SettingPostTasks>();
         private readonly ISettingContext _settingContext;
 
         public SettingResolver()
@@ -32,25 +32,25 @@
         public ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType)
         {
             ISettingDataAccessFactory settingDataAccessFactory = null;
-            var factoryKey = string.Format(HandlerCachedKeyFormat, settingType.Id, settingType.SettingTemplate);
-            if (SettingResolver._settingDataAccessFactories.ContainsKey(factoryKey))
+            var cacheKey = GenerateCacheKey(settingType);
+            if (SettingResolver._settingDataAccessFactoriesCached.ContainsKey(cacheKey))
             {
-                settingDataAccessFactory = GetSettingDataAccessFactoryFromCache(factoryKey);
+                settingDataAccessFactory = GetSettingDataAccessFactoryFromCache(cacheKey);
             }
             else
             {
-                settingDataAccessFactory = CreateSettingDataAccessInstanceAndCache(settingType, factoryKey);
+                settingDataAccessFactory = CreateSettingDataAccessInstanceAndCache(settingType, cacheKey);
             }
 
             return settingDataAccessFactory;
         }
 
-        private ISettingDataAccessFactory GetSettingDataAccessFactoryFromCache(string factoryKey)
+        private ISettingDataAccessFactory GetSettingDataAccessFactoryFromCache(string cacheKey)
         {
-            return SettingResolver._settingDataAccessFactories[factoryKey];
+            return SettingResolver._settingDataAccessFactoriesCached[cacheKey];
         }
 
-        private ISettingDataAccessFactory CreateSettingDataAccessInstanceAndCache(SettingType settingType, string factoryKey)
+        private ISettingDataAccessFactory CreateSettingDataAccessInstanceAndCache(SettingType settingType, string cacheKey)
         {
             ISettingDataAccessFactory settingDataAccessFactory = null;
             string fullTypeName = GetFullTypeName(DataAccessFactoryTypeFormat, settingType.Id, settingType.SettingTemplate);
@@ -59,7 +59,7 @@
             if (settingDataAccessFactoryType != null)
             {
                 settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingDataAccessFactory;
-                SettingResolver._settingDataAccessFactories.Add(factoryKey, settingDataAccessFactory);
+                SettingResolver._settingDataAccessFactoriesCached.Add(cacheKey, settingDataAccessFactory);
             }
 
             return settingDataAccessFactory;
@@ -78,25 +78,25 @@
         public SettingPreTasks ResolveSettingPreTasks(SettingType settingType)
         {
             SettingPreTasks settingPreTasks = null;
-            var factoryKey = string.Format(HandlerCachedKeyFormat, settingType.Id, settingType.SettingTemplate);
-            if (SettingResolver._settingPreTasksList.ContainsKey(factoryKey))
+            var cacheKey = GenerateCacheKey(settingType);
+            if (SettingResolver._settingPreTasksCached.ContainsKey(cacheKey))
             {
-                settingPreTasks = GetSettingPreTasksHandlerFromCache(factoryKey);
+                settingPreTasks = GetSettingPreTasksHandlerFromCache(cacheKey);
             }
             else
             {
-                settingPreTasks = CreateSettingPreTasksHandlerAndCache(settingType, factoryKey);
+                settingPreTasks = CreateSettingPreTasksHandlerAndCache(settingType, cacheKey);
             }
 
             return settingPreTasks;
         }
 
-        private SettingPreTasks GetSettingPreTasksHandlerFromCache(string factoryKey)
+        private SettingPreTasks GetSettingPreTasksHandlerFromCache(string cacheKey)
         {
-            return SettingResolver._settingPreTasksList[factoryKey];
+            return SettingResolver._settingPreTasksCached[cacheKey];
         }
 
-        private SettingPreTasks CreateSettingPreTasksHandlerAndCache(SettingType settingType, string factoryKey)
+        private SettingPreTasks CreateSettingPreTasksHandlerAndCache(SettingType settingType, string cacheKey)
         {
             SettingPreTasks settingPreTasks = null;
             string fullTypeName = GetFullTypeName(SettingPreTasksTypeFormat, settingType.Id, settingType.SettingTemplate);
@@ -105,7 +105,7 @@
             if (preTasksType != null)
             {
                 settingPreTasks = Activator.CreateInstance(preTasksType, _settingContext) as SettingPreTasks;
-                SettingResolver._settingPreTasksList.Add(factoryKey, settingPreTasks);
+                SettingResolver._settingPreTasksCached.Add(cacheKey, settingPreTasks);
             }
 
             return settingPreTasks;
@@ -116,25 +116,30 @@
             Check.Argument.IsNotNull(settingType, "settingType");
 
             SettingPostTasks settingPostTasks = null;
-            var factoryKey = string.Format(HandlerCachedKeyFormat, settingType.Id, settingType.SettingTemplate);
-            if (SettingResolver._settingPostTasksList.ContainsKey(factoryKey))
+            var cacheKey = GenerateCacheKey(settingType);
+            if (SettingResolver._settingPostTasksListCached.ContainsKey(cacheKey))
             {
-                settingPostTasks = GetSettingPostTasksHandlerFromCache(factoryKey);
+                settingPostTasks = GetSettingPostTasksHandlerFromCache(cacheKey);
             }
             else
             {
-                settingPostTasks = CreateSettingPostTasksAndCache(settingType, factoryKey);
+                settingPostTasks = CreateSettingPostTasksAndCache(settingType, cacheKey);
             }
 
             return settingPostTasks;
         }
 
-        private SettingPostTasks GetSettingPostTasksHandlerFromCache(string factoryKey)
+        private static string GenerateCacheKey(SettingType settingType)
         {
-            return SettingResolver._settingPostTasksList[factoryKey];
+            return string.Format(cacheKeyFormat, settingType.Id, settingType.SettingTemplate);
         }
 
-        private SettingPostTasks CreateSettingPostTasksAndCache(SettingType settingType, string factoryKey)
+        private SettingPostTasks GetSettingPostTasksHandlerFromCache(string cacheKey)
+        {
+            return SettingResolver._settingPostTasksListCached[cacheKey];
+        }
+
+        private SettingPostTasks CreateSettingPostTasksAndCache(SettingType settingType, string cacheKey)
         {
             SettingPostTasks settingPostTasks = null;
             string fullTypeName = GetFullTypeName(SettingPostTasksTypeFormat, settingType.Id, settingType.SettingTemplate);
@@ -143,7 +148,7 @@
             if (postTasksType != null)
             {
                 settingPostTasks = Activator.CreateInstance(postTasksType, _settingContext) as SettingPostTasks;
-                SettingResolver._settingPostTasksList.Add(factoryKey, settingPostTasks);
+                SettingResolver._settingPostTasksListCached.Add(cacheKey, settingPostTasks);
             }
 
             return settingPostTasks;

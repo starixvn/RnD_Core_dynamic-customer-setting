@@ -14,7 +14,8 @@
         public static SettingCommand CreateSettingCommandFakeObject(
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Master,
-            byte productId = 1)
+            byte productId = 1,
+            CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
             return new SettingCommand
             {
@@ -36,7 +37,8 @@
                         FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
                         FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
                     }
-                }
+                },
+                UplineLevel = uplineLevel
             };
         }
 
@@ -54,6 +56,48 @@
                        SportTypeId = 1
                    }
                 }
+            };
+        }
+
+        public static MultipleSettingCommand CreateMultipleSettingCommandFakeObject(
+            int customerId = 1,
+            CustomerLevel customerLevel = CustomerLevel.Master,
+            byte productId = 1,
+            CustomerLevel? uplineLevel = CustomerLevel.Super)
+        {
+            return new MultipleSettingCommand
+            {
+                Customers = new List<Customer>
+                {
+                    new Customer
+                    {
+                        Id = customerId
+                    },
+                    new Customer
+                    {
+                        Id = 2
+                    }
+                },
+                Setting = new Setting
+                {
+                    Product = new Product
+                    {
+                        Id = productId
+                    },
+                    Customer = new Customer
+                    {
+                        Id = customerId,
+                        Level = customerLevel
+                    },
+                    SettingTypes = new List<SettingType>
+                    {
+                        FakeObjectManager.CreateSettingTypeFakeObject(1, 1),
+                        FakeObjectManager.CreateSettingTypeFakeObject(2, 1),
+                        FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
+                        FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
+                    }
+                },
+                UplineLevel = uplineLevel
             };
         }
     }

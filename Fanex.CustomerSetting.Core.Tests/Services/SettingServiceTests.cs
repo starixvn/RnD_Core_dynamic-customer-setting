@@ -9,7 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class CustomerServiceTests
+    public class SettingServiceTests
     {
         ////private ISettingService _settingService;
         ////private IValidationService _validationService;

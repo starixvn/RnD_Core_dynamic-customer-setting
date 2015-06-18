@@ -5,8 +5,6 @@
 
     public interface ISettingItem
     {
-        byte SettingLevel { get; set; }
-
         IResult Validate();
 
         string ToXml();

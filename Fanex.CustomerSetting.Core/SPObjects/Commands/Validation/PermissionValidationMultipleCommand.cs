@@ -8,7 +8,7 @@
         public int ActorId { get; set; }
 
         [SpParam(SqlParamName = "TargetCustIDLst")]
-        public string CustomerIds { get; set; }
+        public string MemberIds { get; set; }
 
         public override string GetSettingKey()
         {
@@ -17,7 +17,7 @@
 
         public override bool IsValid()
         {
-            return ActorId > 0 && !string.IsNullOrEmpty(CustomerIds);
+            return ActorId > 0 && !string.IsNullOrEmpty(MemberIds);
         }
     }
 }

@@ -65,7 +65,7 @@
             var validationResult = _validationService.ValidateSettingQuery(settingQuery);
             if (!validationResult.IsSuccessful)
             {
-                throw new AccessViolationException(validationResult.Message);
+                throw new InvalidOperationException(validationResult.Message);
             }
         }
 

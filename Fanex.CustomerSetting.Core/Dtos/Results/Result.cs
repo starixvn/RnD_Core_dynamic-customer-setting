@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Core.Dtos.Results
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Core.Resources;
@@ -52,10 +53,18 @@
         {
             Id = id;
             Name = name;
-            Code = result.Code;
-            Message = result.Message;
-            SubMessages = result.SubMessages;
-            SubResults = result.SubResults;
+
+            if (result != null)
+            {
+                Code = result.Code;
+                Message = result.Message;
+                SubMessages = result.SubMessages;
+                SubResults = result.SubResults;
+            }
+            else
+            {
+                throw new ArgumentNullException("result");
+            }
         }
 
         public Result(IEnumerable<IResult> subResults)
