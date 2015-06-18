@@ -1,12 +1,16 @@
 ﻿namespace Fanex.CustomerSetting.Core.SPObjects.Commands.Validation
 {
+    using Fanex.NAP.Framework.Data;
     public class PermissionValidationCommand : BaseCommand
     {
-        public int CustId { get; set; }
+        [SpParam(SqlParamName = "CustId")]
+        public int ActorId { get; set; }
 
-        public int TargetCustId { get; set; }
+        [SpParam(SqlParamName = "TargetCustId")]
+        public int CustomerId { get; set; }
 
-        public int TargetRoleId { get; set; }
+        [SpParam(SqlParamName = "TargetRoleId")]
+        public int CustomerLevelId { get; set; }
 
         public override string GetSettingKey()
         {
@@ -15,7 +19,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && TargetCustId > 0 && TargetRoleId > 0;
+            return ActorId > 0 && CustomerId > 0 && CustomerLevelId > 0;
         }
     }
 }

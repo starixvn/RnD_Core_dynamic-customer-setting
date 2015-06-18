@@ -34,9 +34,9 @@
             IDynamicRepository dynamicRepository)
         {
             _settingContext = settingContext ?? SettingContextManager.SettingContext;
-            _validationService = validationService ?? new ValidationService();
             _productService = productService ?? new ProductService();
-            _settingResolver = settingResolver ?? new SettingResolver(_settingContext);
+            _validationService = validationService ?? new ValidationService();
+            _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
@@ -65,20 +65,19 @@
             var validationResult = _validationService.ValidateSettingQuery(settingQuery);
             if (!validationResult.IsSuccessful)
             {
-                throw new MethodAccessException(validationResult.Message);
+                throw new AccessViolationException(validationResult.Message);
             }
         }
 
         private Product GetProduct(byte productId)
         {
             IEnumerable<SettingType> productSettingTypes = _productService.GetProductSettingTypes(productId);
-            var product = new Product
+
+            return new Product
             {
                 Id = productId,
                 SettingTypes = productSettingTypes
             };
-
-            return product;
         }
 
         private Customer GetCustomer(int customerId, CustomerLevel customerLevel)
@@ -99,19 +98,20 @@
             var customerSettingTypes = new List<SettingType>();
             foreach (var productSettingType in product.SettingTypes)
             {
-                DoPreGetSettingTasks(settingQuery, productSettingType);
+                RunPreGetSettingTasks(settingQuery, productSettingType);
                 var customerSettingType = GetCustomerSettingType(settingQuery, productSettingType);
-                customerSettingType = DoPostGetSettingTasks(settingQuery, productSettingType, customerSettingType);
+                customerSettingType = RunPostGetSettingTasks(settingQuery, customerSettingType);
                 customerSettingTypes.Add(customerSettingType);
             }
 
             return customerSettingTypes;
         }
 
-        private void DoPreGetSettingTasks(SettingQuery settingQuery, SettingType productSettingType)
+        private void RunPreGetSettingTasks(SettingQuery settingQuery, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-            if (preTasks != null && !preTasks.GetType().GetMethod("PreGetSetting").IsVirtual)
+            if (preTasks != null 
+                && !preTasks.GetType().GetMethod("PreGetSetting").IsVirtual)
             {
                 preTasks.PreGetSetting(settingQuery);
             }
@@ -127,13 +127,13 @@
             return customerSettingType;
         }
 
-        private SettingType DoPostGetSettingTasks(
+        private SettingType RunPostGetSettingTasks(
             SettingQuery settingQuery,
-            SettingType productSettingType,
             SettingType customerSettingType)
         {
-            SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(productSettingType);
-            if (postTasks != null && !postTasks.GetType().GetMethod("PostGetSetting").IsVirtual)
+            SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
+            if (postTasks != null 
+                && !postTasks.GetType().GetMethod("PostGetSetting").IsVirtual)
             {
                 customerSettingType = postTasks.PostGetSetting(settingQuery, customerSettingType);
             }
@@ -177,40 +177,42 @@
         {
             var settingTypes = settingCommand.Setting.SettingTypes;
             var customer = settingCommand.Setting.Customer;
+            var uplineLevel = settingCommand.UplineLevel;
             var results = new List<IResult>();
 
             foreach (var settingType in settingTypes)
             {
-                var result = UpdateSettingType(settingCommand, customer, settingType);
+                var result = UpdateSettingType(customer, settingType, uplineLevel);
                 results.Add(result);
             }
 
             return new Result(results);
         }
 
-        private IResult UpdateSettingType(SettingCommand settingCommand, Customer customer, SettingType settingType)
+        private IResult UpdateSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
-            var preTaskResult = DoPreUpdateSettingTasks(settingCommand, customer, settingType);
+            var preTaskResult = RunPreUpdateSettingTasks(customer, settingType, uplineLevel);
             if (!preTaskResult.IsSuccessful)
             {
                 return preTaskResult;
             }
 
-            var updateResult = UpdateSetting(customer, settingType, settingCommand.UplineLevel);
+            var updateResult = UpdateSetting(customer, settingType, uplineLevel);
             if (updateResult.IsSuccessful)
             {
-                updateResult = DoPostUpdateSettingTasks(customer, settingType, settingCommand.UplineLevel, updateResult);
+                updateResult = RunPostUpdateSettingTasks(customer, settingType, uplineLevel, updateResult);
             }
 
             return updateResult;
         }
 
-        private IResult DoPreUpdateSettingTasks(SettingCommand settingCommand, Customer customer, SettingType settingType)
+        private IResult RunPreUpdateSettingTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
-            if (preTasks != null && !preTasks.GetType().GetMethod("PreUpdateSetting").IsVirtual)
+            if (preTasks != null 
+                && !preTasks.GetType().GetMethod("PreUpdateSetting").IsVirtual)
             {
-                var preTaskResult = preTasks.PreUpdateSetting(customer, settingType, settingCommand.UplineLevel);
+                var preTaskResult = preTasks.PreUpdateSetting(customer, settingType, uplineLevel);
                 return preTaskResult;
             }
 
@@ -233,14 +235,15 @@
             return updateSettingResult;
         }
 
-        private IResult DoPostUpdateSettingTasks(
+        private IResult RunPostUpdateSettingTasks(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult updateSettingResult)
         {
             SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
-            if (postTasks != null && !postTasks.GetType().GetMethod("PostUpdateSetting").IsVirtual)
+            if (postTasks != null 
+                && !postTasks.GetType().GetMethod("PostUpdateSetting").IsVirtual)
             {
                 updateSettingResult = postTasks.PostUpdateSetting(customer, settingType, uplineLevel, updateSettingResult);
             }
@@ -257,20 +260,19 @@
                 return validationResult;
             }
 
-            var product = multipleSettingCommand.Setting.Product;
             var customerLevel = multipleSettingCommand.Setting.Customer.Level;
             var uplineLevel = multipleSettingCommand.UplineLevel;
             var customers = multipleSettingCommand.Customers;
             var settingTypes = multipleSettingCommand.Setting.SettingTypes;
-            var resultsList = new List<IResult>();
+            var results = new List<IResult>();
 
             foreach (var settingType in settingTypes)
             {
-                var results = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, product, settingType);
-                resultsList.AddRange(results.SubResults);
+                var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
+                results.AddRange(result.SubResults);
             }
 
-            return new Result(resultsList);
+            return new Result(results);
         }
 
         private void CheckMultipleSettingCommandAgruments(MultipleSettingCommand multipleSettingCommand)
@@ -297,27 +299,26 @@
             IList<Customer> customers,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
-            Product product,
             SettingType settingType)
         {
-            var preTasksResult = DoPreUpdateMultipleSettingTasks(customers, settingType, uplineLevel);
+            var preTasksResult = RunPreUpdateMultipleSettingTasks(customers, settingType, uplineLevel);
             if (!preTasksResult.IsSuccessful)
             {
                 return preTasksResult;
             }
 
-            var results = UpdateSettingTypeOfMultipleCustomers(customers, customerLevel, settingType, product, uplineLevel);
+            var results = UpdateSettingTypeOfMultipleCustomers(customers, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
 
             if (updatedResult.IsSuccessful)
             {
-                updatedResult = DoPostUpdateMultipleSettingTasks(customers, settingType, uplineLevel, updatedResult);
+                updatedResult = RunPostUpdateMultipleSettingTasks(customers, settingType, uplineLevel, updatedResult);
             }
 
             return updatedResult;
         }
 
-        private IResult DoPreUpdateMultipleSettingTasks(
+        private IResult RunPreUpdateMultipleSettingTasks(
             IList<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel)
@@ -336,13 +337,12 @@
             IList<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
-            Product product,
             CustomerLevel? uplineLevel)
         {
             var settingTypeResults = new List<IResult>();
             foreach (var customer in customers)
             {
-                var settingCommand = CreateSingleSettingCommand(customer.Id, customerLevel, settingType, product, uplineLevel);
+                var settingCommand = CreateSingleSettingCommand(customer.Id, customerLevel, settingType, uplineLevel);
                 var updateResult = UpdateSingleCustomerSetting(settingCommand);
                 settingTypeResults.Add(new Result(customer.Id, customer.UserName, updateResult));
             }
@@ -354,7 +354,6 @@
             int customerId,
             CustomerLevel customerLevel,
             SettingType settingType,
-            Product product,
             CustomerLevel? uplineLevel)
         {
             var singleSettingCommand = new SettingCommand
@@ -362,7 +361,6 @@
                 Setting = new Setting
                 {
                     Customer = new Customer { Id = customerId, Level = customerLevel },
-                    Product = product,
                     SettingTypes = new List<SettingType> { settingType }
                 },
                 UplineLevel = uplineLevel
@@ -371,19 +369,20 @@
             return singleSettingCommand;
         }
 
-        private IResult DoPostUpdateMultipleSettingTasks(
+        private IResult RunPostUpdateMultipleSettingTasks(
             IList<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult settingTypeMultipleResults)
+            IResult settingTypeMultipleResult)
         {
             SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
-            if (postTasks != null && !postTasks.GetType().GetMethod("PostUpdateMultipleSetting").IsVirtual)
+            if (postTasks != null 
+                && !postTasks.GetType().GetMethod("PostUpdateMultipleSetting").IsVirtual)
             {
-                settingTypeMultipleResults = postTasks.PostUpdateMultipleSetting(customers, settingType, uplineLevel, settingTypeMultipleResults);
+                settingTypeMultipleResult = postTasks.PostUpdateMultipleSetting(customers, settingType, uplineLevel, settingTypeMultipleResult);
             }
 
-            return settingTypeMultipleResults;
+            return settingTypeMultipleResult;
         }
     }
 }

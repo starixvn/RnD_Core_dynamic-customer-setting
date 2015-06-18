@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Caching;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Exceptions;
     using Fanex.CustomerSetting.Core.Handlers;
@@ -33,6 +34,8 @@
 
         public string GetProductName(int productId)
         {
+            Check.Argument.IsNotNegativeOrZero(productId, "productId");
+
             var productResources = GetProductResources();
             var productResource = productResources.Where(x => x.ProductId == productId).FirstOrDefault();
             if (productResource != null)
@@ -54,6 +57,8 @@
 
         public string GetSportTypeName(int sportTypeId)
         {
+            Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
+
             var sportTypeName = RefData.GetSportName(sportTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format("Sport Type {0}", sportTypeId)
@@ -62,6 +67,8 @@
 
         public string GetBetTypeName(int betTypeId)
         {
+            Check.Argument.IsNotNegativeOrZero(betTypeId, "sportTypeId");
+
             var betTypeName = RefData.GetBetTypeName(betTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format("Bet Type {0}", betTypeId)

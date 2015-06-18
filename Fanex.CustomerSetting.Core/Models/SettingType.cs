@@ -8,6 +8,8 @@
     {
         public byte Id { get; set; }
 
+        public string Name { get; set; }
+
         public byte SettingTemplate { get; set; }
 
         public byte SettingLevel { get; set; }
@@ -23,7 +25,7 @@
         {
             if (!SettingItems.Any())
             {
-                return Result.Success;
+                return Result.NoChange;
             }
 
             return GetValidationResult();
@@ -39,13 +41,7 @@
                 return Result.Success;
             }
 
-            return GetFailedValidationResult(failedValidationResults);
-        }
-
-        private IResult GetFailedValidationResult(IEnumerable<IResult> failedValidationResults)
-        {
-            var firstResult = failedValidationResults.FirstOrDefault();
-            return new Result(firstResult.Code, firstResult.Message, failedValidationResults.Select(result => result.Message));
+            return new Result(failedValidationResults);
         }
     }
 }

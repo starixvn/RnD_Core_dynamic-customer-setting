@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Core.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
@@ -9,6 +8,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
@@ -28,7 +28,7 @@
             IValidationDataAccess validationDataAccess,
             IProductService productService)
         {
-            _settingContext = settingContext;
+            _settingContext = settingContext ?? SettingContextManager.SettingContext;
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
             _productService = productService ?? new ProductService();
         }
@@ -44,13 +44,13 @@
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel)
         {
-            var levelValidationResult = ValidateLevel(_settingContext.Actor.Level, customerLevel);
+            var levelValidationResult = ValidateActorLevel(_settingContext.Actor.Level, customerLevel);
             if (!levelValidationResult.IsSuccessful)
             {
                 return levelValidationResult;
             }
 
-            var permissionValidationResult = ValidatePermission(customerId, customerLevel);
+            var permissionValidationResult = ValidateActorPermission(customerId, customerLevel);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;
@@ -59,24 +59,24 @@
             return Result.Success;
         }
 
-        private IResult ValidateLevel(UserLevel actorLevel, CustomerLevel customerLevel)
+        private IResult ValidateActorLevel(UserLevel actorLevel, CustomerLevel customerLevel)
         {
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return ValidateLevelForViewingSuperSetting(actorLevel);
+                    return ValidateActorLevelForViewingSuperSetting(actorLevel);
 
                 case CustomerLevel.Master:
-                    return ValidateLevelForViewingMasterSetting(actorLevel);
+                    return ValidateActorLevelForViewingMasterSetting(actorLevel);
 
                 case CustomerLevel.Agent:
-                    return ValidateLevelForViewingAgentSetting(actorLevel);
+                    return ValidateActorLevelForViewingAgentSetting(actorLevel);
             }
 
             return Result.Success;
         }
 
-        private IResult ValidateLevelForViewingSuperSetting(UserLevel actorLevel)
+        private IResult ValidateActorLevelForViewingSuperSetting(UserLevel actorLevel)
         {
             if (actorLevel != UserLevel.Company)
             {
@@ -86,7 +86,7 @@
             return Result.Success;
         }
 
-        private IResult ValidateLevelForViewingMasterSetting(UserLevel actorLevel)
+        private IResult ValidateActorLevelForViewingMasterSetting(UserLevel actorLevel)
         {
             if (actorLevel != UserLevel.Company
                 && actorLevel != UserLevel.Super)
@@ -97,7 +97,7 @@
             return Result.Success;
         }
 
-        private IResult ValidateLevelForViewingAgentSetting(UserLevel actorLevel)
+        private IResult ValidateActorLevelForViewingAgentSetting(UserLevel actorLevel)
         {
             if (actorLevel != UserLevel.Company
                 && actorLevel != UserLevel.Master)
@@ -108,35 +108,38 @@
             return Result.Success;
         }
 
-        private IResult ValidatePermission(int customerId, CustomerLevel customerLevel)
+        private IResult ValidateActorPermission(int customerId, CustomerLevel customerLevel)
         {
             return _validationDataAccess.ValidatePermission(new PermissionValidationCommand
             {
-                CustId = _settingContext.Actor.Id,
-                TargetCustId = customerId,
-                TargetRoleId = (int)customerLevel
+                ActorId = _settingContext.Actor.Id,
+                CustomerId = customerId,
+                CustomerLevelId = (int)customerLevel
             });
         }
 
         public IResult ValidateSettingCommand(SettingCommand settingCommand)
         {
-            var viewingPermissionValidationResult = ValidateViewingPermission(
-                settingCommand.Setting.Customer.Id,
-                settingCommand.Setting.Customer.Level);
+            Check.Argument.IsNotNull(settingCommand, "settingCommand");
+            Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
+            Check.Argument.IsNotNull(settingCommand.Setting.Customer, "settingCommand.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
+            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting.SettingTypes");
+
+            var setting = settingCommand.Setting;
+            var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
             if (!viewingPermissionValidationResult.IsSuccessful)
             {
                 return viewingPermissionValidationResult;
             }
 
-            var productProfileValidationResult = ValidateProductProfile(
-                settingCommand.Setting.Product.Id,
-                settingCommand.Setting.SettingTypes);
+            var productProfileValidationResult = ValidateProductProfile(setting.Product.Id, setting.SettingTypes);
             if (!productProfileValidationResult.IsSuccessful)
             {
                 return productProfileValidationResult;
             }
 
-            var settingTypesValidationResult = ValidateSettingTypes(settingCommand.Setting.SettingTypes);
+            var settingTypesValidationResult = ValidateSettingTypes(setting.SettingTypes);
             if (!settingTypesValidationResult.IsSuccessful)
             {
                 return settingTypesValidationResult;
@@ -148,9 +151,9 @@
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId);
-            foreach (var settingType in customerSettingTypes)
+            foreach (var customerSettingType in customerSettingTypes)
             {
-                if (!productSettingTypes.Where(stt => stt.Id == settingType.Id).Any())
+                if (!productSettingTypes.Where(stt => stt.Id == customerSettingType.Id).Any())
                 {
                     return Result.AccessDenied;
                 }
@@ -163,10 +166,10 @@
         {
             foreach (SettingType settingType in settingTypes)
             {
-                var settingTypeValidationResult = settingType.Validate();
-                if (!settingTypeValidationResult.IsSuccessful)
+                var validationResult = settingType.Validate();
+                if (!validationResult.IsSuccessful)
                 {
-                    return settingTypeValidationResult;
+                    return validationResult;
                 }
             }
 
@@ -175,36 +178,41 @@
 
         public IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
         {
-            var settingCommandValidationResult = ValidateSettingCommand(multipleSettingCommand);
-            if (!settingCommandValidationResult.IsSuccessful)
+            Check.Argument.IsNotNull(multipleSettingCommand, "settingCommand");
+            Check.Argument.IsNotNull(multipleSettingCommand.Setting, "settingCommand.Setting");
+            Check.Argument.IsNotNull(multipleSettingCommand.Customers, "multipleSettingCommand.Customers");
+
+            var commandValidationResult = ValidateSettingCommand(multipleSettingCommand);
+            if (!commandValidationResult.IsSuccessful)
             {
-                return settingCommandValidationResult;
+                return commandValidationResult;
             }
 
-            var permissionMultipleValidationResult = ValidatePermissionMultiple(multipleSettingCommand);
-            if (!permissionMultipleValidationResult.IsSuccessful)
+            var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
+                multipleSettingCommand.Customers,
+                multipleSettingCommand.Setting.Customer.Level);
+            if (!permissionValidationResult.IsSuccessful)
             {
-                return permissionMultipleValidationResult;
+                return permissionValidationResult;
             }
 
             return Result.Success;
         }
 
-        private IResult ValidatePermissionMultiple(MultipleSettingCommand multipleSettingCommand)
+        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<Customer> customers, CustomerLevel customerLevel)
         {
-            if (multipleSettingCommand.Setting.Customer.Level == CustomerLevel.Member)
+            if (customerLevel == CustomerLevel.Member)
             {
-                IEnumerable<int> custIds = multipleSettingCommand.Customers.Select(cust => cust.Id);
+                IEnumerable<int> custIds = customers.Select(cust => cust.Id);
 
-                var permissionMultipleValidationResult = _validationDataAccess.ValidatePermissionMultiple(
+                var permissionValidationResult = _validationDataAccess.ValidatePermissionMultiple(
                     new PermissionValidationMultipleCommand
                     {
-                        CustId = _settingContext.Actor.Id,
-                        TargetRoleId = (int)multipleSettingCommand.Setting.Customer.Level,
-                        TargetCustIds = string.Join(",", custIds)
+                        ActorId = _settingContext.Actor.Id,
+                        CustomerIds = string.Join(",", custIds)
                     });
 
-                return permissionMultipleValidationResult;
+                return permissionValidationResult;
             }
 
             return Result.Success;

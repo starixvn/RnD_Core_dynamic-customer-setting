@@ -10,9 +10,10 @@
     {
         #region Constant
 
-        public const string ActorSessionKey = "CSR_ACTOR";
-        public const string SubAccountSessionKey = "CSR_SUB_ACCOUNT";
-        public const string LanguageSessionKey = "CSR_LANGUAGE_CODE";
+        private const string ActorSessionKey = "Fanex.CustomerSetting.Core.Actor";
+        private const string SubAccountSessionKey = "Fanex.CustomerSetting.Core.SubAccount";
+        private const string LanguageSessionKey = "Fanex.CustomerSetting.Core.Language";
+        private const string DefaultLanguage = "en-US";
 
         #endregion Constant
 
@@ -24,9 +25,7 @@
         {
             get
             {
-                return (HttpContext.Current != null)
-                ? (User)HttpContext.Current.Session[ActorSessionKey]
-                : new User();
+                return (User)HttpContext.Current.Session[ActorSessionKey];
             }
 
             set
@@ -39,9 +38,7 @@
         {
             get
             {
-                return (HttpContext.Current != null)
-                ? (User)HttpContext.Current.Session[SubAccountSessionKey]
-                : new User();
+                return (User)HttpContext.Current.Session[SubAccountSessionKey];
             }
 
             set
@@ -63,12 +60,12 @@
                     }
                 }
 
-                return "en-US";
+                return DefaultLanguage;
             }
 
             set
             {
-                HttpContext.Current.Session[LanguageSessionKey] = !string.IsNullOrEmpty(value) ? value : "en-US";
+                HttpContext.Current.Session[LanguageSessionKey] = !string.IsNullOrEmpty(value) ? value : DefaultLanguage;
             }
         }
 

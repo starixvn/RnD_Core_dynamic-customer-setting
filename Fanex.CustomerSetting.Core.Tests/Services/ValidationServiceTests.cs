@@ -190,9 +190,9 @@
 
             _validationDataAccess.Received().ValidatePermission(
                 Arg.Is<PermissionValidationCommand>(
-                command => command.CustId == _settingContext.Actor.Id
-                    && command.TargetCustId == settingQuery.CustomerId
-                    && command.TargetRoleId == (int)settingQuery.CustomerLevel));
+                command => command.ActorId == _settingContext.Actor.Id
+                    && command.CustomerId == settingQuery.CustomerId
+                    && command.CustomerLevelId == (int)settingQuery.CustomerLevel));
         }
 
         [Test]

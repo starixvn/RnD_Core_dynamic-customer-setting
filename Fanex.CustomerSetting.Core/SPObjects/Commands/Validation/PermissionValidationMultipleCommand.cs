@@ -4,12 +4,11 @@
 
     public class PermissionValidationMultipleCommand : BaseCommand
     {
-        public int CustId { get; set; }
+        [SpParam(SqlParamName = "CustId")]
+        public int ActorId { get; set; }
 
         [SpParam(SqlParamName = "TargetCustIDLst")]
-        public string TargetCustIds { get; set; }
-
-        public int TargetRoleId { get; set; }
+        public string CustomerIds { get; set; }
 
         public override string GetSettingKey()
         {
@@ -18,7 +17,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && !string.IsNullOrEmpty(TargetCustIds) && TargetRoleId > 0;
+            return ActorId > 0 && !string.IsNullOrEmpty(CustomerIds);
         }
     }
 }
