@@ -18,6 +18,10 @@
     <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -344,10 +348,6 @@
     <ProjectReference Include="..\Fanex.CustomerSetting.Web\Fanex.CustomerSetting.Web.csproj">
       <Project>{13E80B0F-33A6-4AAC-9A4E-071A8062528A}</Project>
       <Name>Fanex.CustomerSetting.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
-      <Project>{1CC53AF1-4620-402B-835B-9497EE11B665}</Project>
-      <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

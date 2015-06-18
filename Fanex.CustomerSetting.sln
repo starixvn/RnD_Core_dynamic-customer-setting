@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting", "Fanex.CustomerSetting\Fanex.CustomerSetting.csproj", "{1CC53AF1-4620-402B-835B-9497EE11B665}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tests", "Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj", "{05620634-813E-471F-9B8C-9A6E09914FA4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{7EFE7BDF-593E-4F12-B29F-4393BAF87A0B}"
 	ProjectSection(SolutionItems) = preProject
 		CodeAnalysis\CodeAnalysisConfiguration.xml = CodeAnalysis\CodeAnalysisConfiguration.xml
@@ -26,23 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E806AC
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Web", "Fanex.CustomerSetting.Web\Fanex.CustomerSetting.Web.csproj", "{13E80B0F-33A6-4AAC-9A4E-071A8062528A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Site", "Fanex.CustomerSetting.Site\Fanex.CustomerSetting.Site.csproj", "{62B8A743-E762-4852-B22D-450E732EBDCF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix", "Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj", "{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewImplementation", "NewImplementation", "{FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Core", "Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj", "{5ACEF400-FB41-4440-831C-13E49785CA97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{45BEE070-BE51-4583-B04F-EE1A570A6F8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Core.Tests", "Fanex.CustomerSetting.Core.Tests\Fanex.CustomerSetting.Core.Tests.csproj", "{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{23A0CA47-728B-47BD-A08E-CC3C66400717}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Resources", "Fanex.CustomerSetting.Resources\Fanex.CustomerSetting.Resources.csproj", "{4FE98503-230F-4699-BC24-FF3C511253E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,26 +34,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1CC53AF1-4620-402B-835B-9497EE11B665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CC53AF1-4620-402B-835B-9497EE11B665}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CC53AF1-4620-402B-835B-9497EE11B665}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CC53AF1-4620-402B-835B-9497EE11B665}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05620634-813E-471F-9B8C-9A6E09914FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05620634-813E-471F-9B8C-9A6E09914FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05620634-813E-471F-9B8C-9A6E09914FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05620634-813E-471F-9B8C-9A6E09914FA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13E80B0F-33A6-4AAC-9A4E-071A8062528A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13E80B0F-33A6-4AAC-9A4E-071A8062528A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13E80B0F-33A6-4AAC-9A4E-071A8062528A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13E80B0F-33A6-4AAC-9A4E-071A8062528A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62B8A743-E762-4852-B22D-450E732EBDCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62B8A743-E762-4852-B22D-450E732EBDCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62B8A743-E762-4852-B22D-450E732EBDCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62B8A743-E762-4852-B22D-450E732EBDCF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5ACEF400-FB41-4440-831C-13E49785CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5ACEF400-FB41-4440-831C-13E49785CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ACEF400-FB41-4440-831C-13E49785CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,23 +42,11 @@ Global
 		{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FE98503-230F-4699-BC24-FF3C511253E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FE98503-230F-4699-BC24-FF3C511253E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FE98503-230F-4699-BC24-FF3C511253E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FE98503-230F-4699-BC24-FF3C511253E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1CC53AF1-4620-402B-835B-9497EE11B665} = {23A0CA47-728B-47BD-A08E-CC3C66400717}
-		{05620634-813E-471F-9B8C-9A6E09914FA4} = {23A0CA47-728B-47BD-A08E-CC3C66400717}
-		{13E80B0F-33A6-4AAC-9A4E-071A8062528A} = {23A0CA47-728B-47BD-A08E-CC3C66400717}
-		{62B8A743-E762-4852-B22D-450E732EBDCF} = {23A0CA47-728B-47BD-A08E-CC3C66400717}
-		{4A7872C6-2612-4D68-B90E-B1B9DC0BB546} = {23A0CA47-728B-47BD-A08E-CC3C66400717}
-		{5ACEF400-FB41-4440-831C-13E49785CA97} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
-		{45BEE070-BE51-4583-B04F-EE1A570A6F8B} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
 		{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3} = {45BEE070-BE51-4583-B04F-EE1A570A6F8B}
-		{4FE98503-230F-4699-BC24-FF3C511253E3} = {FCAB6D3F-250F-4B7F-8DBE-2DD06BD8B750}
 	EndGlobalSection
 EndGlobal
