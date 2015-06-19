@@ -59,7 +59,7 @@
         {
             Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
 
-            var sportTypeName = RefData.GetSportName(sportTypeId.ToString(), _refLanguage);
+            var sportTypeName = RemotingRefApiHandler.RemotingRefApi.GetSportTypeName(sportTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format("Sport Type {0}", sportTypeId)
                 : sportTypeName;
@@ -69,7 +69,7 @@
         {
             Check.Argument.IsNotNegativeOrZero(betTypeId, "sportTypeId");
 
-            var betTypeName = RefData.GetBetTypeName(betTypeId.ToString(), _refLanguage);
+            var betTypeName = RemotingRefApiHandler.RemotingRefApi.GetBetTypeName(betTypeId.ToString(), _refLanguage);
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format("Bet Type {0}", betTypeId)
                 : betTypeName;

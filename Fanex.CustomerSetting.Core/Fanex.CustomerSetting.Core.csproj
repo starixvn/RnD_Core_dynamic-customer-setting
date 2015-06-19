@@ -91,6 +91,9 @@
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Handlers\IRemotingRefApi.cs" />
+    <Compile Include="Handlers\Impl\RemotingRefApi.cs" />
+    <Compile Include="Handlers\Impl\RemotingRefApiHandler.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\SportTypeBetTypeSettingItem.cs" />
     <Compile Include="Resources\Error.Designer.cs">
@@ -134,8 +137,8 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handlers\ISettingResolver.cs" />
-    <Compile Include="Handlers\SettingContextManager.cs" />
-    <Compile Include="Handlers\SettingResolver.cs" />
+    <Compile Include="Handlers\Impl\SettingContextManager.cs" />
+    <Compile Include="Handlers\Impl\SettingResolver.cs" />
     <Compile Include="Dtos\Results\Result.cs" />
     <Compile Include="Dtos\Results\IResult.cs" />
     <Compile Include="Services\ISettingService.cs" />
