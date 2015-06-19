@@ -40,6 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccesses\BasePositionTakingDataAccess.cs" />
+    <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
+    <Compile Include="DataAccesses\MasterPositionTakingDataAccess.cs" />
+    <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />
+    <Compile Include="DataAccesses\SettingType1DataAccessFactory.cs" />
+    <Compile Include="Dtos\UpdateMultipleMemberPositionTakingParams.cs" />
+    <Compile Include="Handlers\SettingType1PreTasks.cs" />
+    <Compile Include="Models\MasterPositionTaking.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\AgentOnMemberPositionTakingItem.cs" />
     <Compile Include="Models\BasePositionTakingItem.cs" />
@@ -49,6 +57,8 @@
     <Compile Include="Models\MasterPositionTakingItem.cs" />
     <Compile Include="Models\SuperOnMemberPositionTakingItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IMemberGroupService.cs" />
+    <Compile Include="Services\MemberGroupService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj">
@@ -56,6 +66,10 @@
       <Name>Fanex.CustomerSetting.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fanex.CustomerSetting.SettingType1.Template1.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

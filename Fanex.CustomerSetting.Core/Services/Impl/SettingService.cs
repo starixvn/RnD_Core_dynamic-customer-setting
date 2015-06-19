@@ -263,13 +263,7 @@
             var uplineLevel = multipleSettingCommand.UplineLevel;
             var customers = multipleSettingCommand.Customers;
             var settingTypes = multipleSettingCommand.Setting.SettingTypes;
-            var results = new List<IResult>();
-
-            foreach (var settingType in settingTypes)
-            {
-                var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
-                results.AddRange(result.SubResults);
-            }
+            var results = UpdateSettingTypesForMultipleCustomers(settingTypes, customers, customerLevel, uplineLevel);
 
             return new Result(results);
         }
@@ -286,6 +280,23 @@
         private IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
         {
             return _validationService.ValidateMultipleSettingCommand(multipleSettingCommand);
+        }
+
+        private List<IResult> UpdateSettingTypesForMultipleCustomers(
+            IEnumerable<SettingType> settingTypes,
+            IList<Customer> customers,
+            CustomerLevel customerLevel,
+            CustomerLevel? uplineLevel)
+        {
+            var results = new List<IResult>();
+
+            foreach (var settingType in settingTypes)
+            {
+                var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
+                results.AddRange(result.SubResults);
+            }
+
+            return results;
         }
 
         private IResult UpdateSetingTypeForMultipleCustomers(
