@@ -181,14 +181,14 @@
 
             foreach (var settingType in settingTypes)
             {
-                var result = UpdateSettingType(customer, settingType, uplineLevel);
+                var result = UpdateCustomerSettingType(customer, settingType, uplineLevel);
                 results.Add(result);
             }
 
             return new Result(results);
         }
 
-        private IResult UpdateSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
+        private IResult UpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             var preTaskResult = RunPreUpdateSettingTasks(customer, settingType, uplineLevel);
             if (!preTaskResult.IsSuccessful)
@@ -222,7 +222,7 @@
         {
             var settingTypeDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(settingType);
             var settingTypeDataAccess = settingTypeDataAccessFactory.Create(customer.Level);
-            var updateSettingResult = settingTypeDataAccess.UpdateCustomerSetting(
+            var result = settingTypeDataAccess.UpdateCustomerSetting(
                 new UpdateCustomerSettingParams
                 {
                     Customer = customer,
@@ -231,7 +231,7 @@
                     UplineLevel = uplineLevel
                 });
 
-            return updateSettingResult;
+            return result;
         }
 
         private IResult RunPostUpdateSettingTasks(
@@ -284,7 +284,7 @@
 
         private List<IResult> UpdateSettingTypesForMultipleCustomers(
             IEnumerable<SettingType> settingTypes,
-            IList<Customer> customers,
+            IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel)
         {
@@ -300,18 +300,19 @@
         }
 
         private IResult UpdateSetingTypeForMultipleCustomers(
-            IList<Customer> customers,
+            IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
             SettingType settingType)
         {
             var preTasksResult = RunPreUpdateMultipleSettingTasks(customers, settingType, uplineLevel);
-            if (!preTasksResult.IsSuccessful)
+            if (!preTasksResult.Result.IsSuccessful)
             {
-                return preTasksResult;
+                return preTasksResult.Result;
             }
 
-            var results = UpdateSettingTypeOfMultipleCustomers(customers, customerLevel, settingType, uplineLevel);
+            var customersNeedForUpdating = GetCustomersNeedForUpdating(preTasksResult.CustomersNeedForUpdating, customers);
+            var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
 
             if (updatedResult.IsSuccessful)
@@ -322,8 +323,27 @@
             return updatedResult;
         }
 
-        private IResult RunPreUpdateMultipleSettingTasks(
-            IList<Customer> customers,
+        /// <summary>
+        /// This is for the case we want to update multiple member has same position setting group
+        /// We need to update grouped member on pre tasks and return un-grouped member to update one by one.
+        /// </summary>
+        /// <param name="customersReturnFromPreTask">Customer list return from pre task, may be different with original customer list.</param>
+        /// <param name="originalCustomers">Original customer list.</param>
+        /// <returns>List customer will be update one by one.</returns>
+        private IEnumerable<Customer> GetCustomersNeedForUpdating(
+            IEnumerable<Customer> customersReturnFromPreTask,
+            IEnumerable<Customer> originalCustomers)
+        {
+            if (customersReturnFromPreTask != null && customersReturnFromPreTask.Any())
+            {
+                return customersReturnFromPreTask;
+            }
+
+            return originalCustomers;
+        }
+
+        private PreUpdateMultipleSettingResult RunPreUpdateMultipleSettingTasks(
+            IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
@@ -334,11 +354,14 @@
                 return preTaskResult;
             }
 
-            return Result.Success;
+            return new PreUpdateMultipleSettingResult
+            {
+                Result = Result.Success
+            };
         }
 
-        private List<IResult> UpdateSettingTypeOfMultipleCustomers(
-            IList<Customer> customers,
+        private List<IResult> UpdateSettingTypeOfEachCustomer(
+            IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
@@ -374,7 +397,7 @@
         }
 
         private IResult RunPostUpdateMultipleSettingTasks(
-            IList<Customer> customers,
+            IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult settingTypeMultipleResult)

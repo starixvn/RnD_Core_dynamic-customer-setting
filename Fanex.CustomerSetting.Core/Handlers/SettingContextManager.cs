@@ -31,16 +31,7 @@
             Check.Argument.IsNotNegativeOrZero((byte)actor.Level, "actor.Level");
 
             SettingContext.Actor = actor;
-            SetSubAccount(subAccount);
-        }
-
-        private static void SetSubAccount(User subAccount)
-        {
-            if (subAccount != null)
-            {
-                Check.Argument.IsNotNegativeOrZero(subAccount.Id, "subAccount.Id");
-                SettingContext.SubAccount = subAccount;
-            }
+            SettingContext.SubAccount = subAccount ?? new User();
         }
 
         public static void SetLanguage(string language)

@@ -99,9 +99,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>

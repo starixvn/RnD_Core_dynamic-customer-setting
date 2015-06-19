@@ -5,6 +5,6 @@
 
     public class MultipleSettingCommand : SettingCommand
     {
-        public IList<Customer> Customers { get; set; }
+        public IEnumerable<Customer> Customers { get; set; }
     }
 }

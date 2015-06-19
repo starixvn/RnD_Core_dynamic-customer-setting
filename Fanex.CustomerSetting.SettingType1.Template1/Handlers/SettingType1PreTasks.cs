@@ -8,8 +8,8 @@
 
     public class SettingType1PreTasks : SettingPreTasks
     {
-        public override IResult PreUpdateMultipleSetting(
-            IList<Customer> customers,
+        public override PreUpdateMultipleSettingResult PreUpdateMultipleSetting(
+            IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {

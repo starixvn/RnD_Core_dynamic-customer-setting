@@ -37,7 +37,7 @@
         }
 
         public virtual IResult PostUpdateMultipleSetting(
-            IList<Customer> customers,
+            IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)

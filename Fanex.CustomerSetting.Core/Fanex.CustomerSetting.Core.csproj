@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Dtos\Results\PreUpdateMultipleSettingResult.cs" />
     <Compile Include="Handlers\IRemotingRefApi.cs" />
     <Compile Include="Handlers\Impl\RemotingRefApi.cs" />
     <Compile Include="Handlers\RemotingRefApiHandler.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="Handlers\SettingPreTasks.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
