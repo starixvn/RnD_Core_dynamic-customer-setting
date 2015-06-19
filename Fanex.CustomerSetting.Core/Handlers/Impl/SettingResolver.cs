@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.Handlers
+﻿namespace Fanex.CustomerSetting.Core.Handlers.Impl
 {
     using System;
     using System.Collections.Generic;

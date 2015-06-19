@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Handlers;
+    using Fanex.CustomerSetting.Core.Handlers.Impl;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.SPObjects.Criteria.Customer;
     using Fanex.NAP.Framework.Data;
@@ -87,7 +88,7 @@
                 {
                     CustId = customerId
                 });
-            
+
             if (customer != null)
             {
                 customer.Level = customerLevel;
@@ -113,7 +114,7 @@
         private void RunPreGetSettingTasks(SettingQuery settingQuery, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-            if (preTasks != null 
+            if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreGetSetting").IsVirtual)
             {
                 preTasks.PreGetSetting(settingQuery);
@@ -135,7 +136,7 @@
             SettingType customerSettingType)
         {
             SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
-            if (postTasks != null 
+            if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostGetSetting").IsVirtual)
             {
                 customerSettingType = postTasks.PostGetSetting(settingQuery, customerSettingType);
@@ -207,7 +208,7 @@
         private IResult RunPreUpdateSettingTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
-            if (preTasks != null 
+            if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreUpdateSetting").IsVirtual)
             {
                 var preTaskResult = preTasks.PreUpdateSetting(customer, settingType, uplineLevel);
@@ -240,7 +241,7 @@
             IResult updateSettingResult)
         {
             SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
-            if (postTasks != null 
+            if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateSetting").IsVirtual)
             {
                 updateSettingResult = postTasks.PostUpdateSetting(customer, settingType, uplineLevel, updateSettingResult);
@@ -368,7 +369,7 @@
             IResult settingTypeMultipleResult)
         {
             SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
-            if (postTasks != null 
+            if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateMultipleSetting").IsVirtual)
             {
                 settingTypeMultipleResult = postTasks.PostUpdateMultipleSetting(customers, settingType, uplineLevel, settingTypeMultipleResult);

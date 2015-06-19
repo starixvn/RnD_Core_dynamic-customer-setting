@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Core.Tests.SPObjects.Command.Validation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
     using NUnit.Framework;
 
