@@ -16,7 +16,7 @@
 
         public byte SettingLevel { get; set; }
 
-        public IResult Validate()
+        public virtual IResult Validate()
         {
             if (SportTypeId <= 0 || BetTypeId <= 0)
             {
@@ -26,7 +26,7 @@
             return Result.Success;
         }
 
-        public string ToXml()
+        public virtual string ToXml()
         {
             return string.Format(SportTypeBetTypeXmlFormat, SportTypeId, BetTypeId);
         }
