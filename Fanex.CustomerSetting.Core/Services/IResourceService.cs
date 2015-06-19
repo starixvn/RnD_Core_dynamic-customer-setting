@@ -2,7 +2,7 @@
 {
     public interface IResourceService
     {
-        string GetProductName(int productId);
+        string GetProductName(byte productId);
 
         string GetSportTypeName(int sportTypeId);
 
