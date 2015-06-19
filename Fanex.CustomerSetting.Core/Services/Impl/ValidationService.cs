@@ -14,9 +14,9 @@
 
     public class ValidationService : IValidationService
     {
-        private ISettingContext _settingContext;
-        private IValidationDataAccess _validationDataAccess;
-        private IProductService _productService;
+        private readonly ISettingContext _settingContext;
+        private readonly IValidationDataAccess _validationDataAccess;
+        private readonly IProductService _productService;
 
         public ValidationService()
             : this(null, null, null)

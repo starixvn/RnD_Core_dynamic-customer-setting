@@ -433,8 +433,8 @@
             //// Assert
             var numOfSettingTypes = multipleSettingCommand.Setting.SettingTypes.Count();
             var numOfSettingTypesEachCustomer = numOfSettingTypes * multipleSettingCommand.Customers.Count();
-            var numOfExecuteResultSettingPreTasksMethod = numOfSettingTypes + numOfSettingTypesEachCustomer;
-            _settingResolver.Received(numOfExecuteResultSettingPreTasksMethod).ResolveSettingPreTasks(Arg.Any<SettingType>());
+            var numOfResolveSettingPreTasksMethodExecution = numOfSettingTypes + numOfSettingTypesEachCustomer;
+            _settingResolver.Received(numOfResolveSettingPreTasksMethodExecution).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
 
         [Test]
