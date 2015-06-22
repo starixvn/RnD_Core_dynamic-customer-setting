@@ -2,12 +2,15 @@
 {
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.SettingType1.Template1.Models;
 
     public class MasterPositionTakingDataAccess : BasePositionTakingDataAccess
     {
-        public override SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
+        public override SettingType GetCustomerSettingType(GetCustomerSettingTypeParams getParams)
         {
-            return base.GetCustomerSettingType(actor, settingQuery);
+            var masterSettingType = base.GetCustomerSettingType(getParams);
+
+            return masterSettingType;
         }
     }
 }

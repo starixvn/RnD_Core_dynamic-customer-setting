@@ -189,7 +189,7 @@
         private void SetupSettingTypeDataAccessStubForQuery(SettingQuery settingQuery)
         {
             var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
-            _settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery).Returns(customerSettingType);
+            _settingDataAccess.GetCustomerSettingType(Arg.Any<GetCustomerSettingTypeParams>()).Returns(customerSettingType);
             _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
             _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
         }
@@ -225,7 +225,7 @@
             _settingService.GetCustomerSetting(settingQuery);
 
             //// Assert
-            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(_settingContext.Actor, settingQuery);
+            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<GetCustomerSettingTypeParams>());
         }
 
         #endregion Get Customer Setting Tests

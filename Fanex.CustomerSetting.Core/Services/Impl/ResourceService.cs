@@ -5,7 +5,6 @@
     using Fanex.Caching;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Dtos;
-    using Fanex.CustomerSetting.Core.Exceptions;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
@@ -104,12 +103,6 @@
                 var productNames = cacheService.Get<IEnumerable<ProductNameDto>>(ProductNamesCacheKey);
                 if (productNames == null)
                 {
-                    var criteria = new ProductNamesQueryCriteria();
-                    if (!criteria.IsValid())
-                    {
-                        throw new StoredProcedureException(criteria);
-                    }
-
                     productNames = _resourceRepository.Fetch<ProductNameDto>(new ProductNamesQueryCriteria());
                     cacheService.Set<IEnumerable<ProductNameDto>>(ProductNamesCacheKey, productNames, ProductNamesCacheTimeout);
                 }

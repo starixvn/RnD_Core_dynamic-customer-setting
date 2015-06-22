@@ -125,7 +125,11 @@
         {
             ISettingDataAccessFactory settingDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(productSettingType);
             ISettingDataAccess settingDataAccess = settingDataAccessFactory.Create(settingQuery.CustomerLevel);
-            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery);
+            var customerSettingType = settingDataAccess.GetCustomerSettingType(new GetCustomerSettingTypeParams
+                {
+                    Actor = _settingContext.Actor,
+                    SettingQuery = settingQuery
+                });
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             return customerSettingType;

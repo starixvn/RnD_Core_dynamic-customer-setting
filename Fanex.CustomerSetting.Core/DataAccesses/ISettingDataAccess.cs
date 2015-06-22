@@ -6,8 +6,8 @@
 
     public interface ISettingDataAccess
     {
-        SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery);
+        SettingType GetCustomerSettingType(GetCustomerSettingTypeParams getParams);
 
-        IResult UpdateCustomerSetting(UpdateCustomerSettingParams updateCustomerSettingParams);
+        IResult UpdateCustomerSetting(UpdateCustomerSettingParams updateParams);
     }
 }

@@ -3,7 +3,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Models;
 
-    public class SuperPositionTakingItem : SportTypeBetTypeSettingItem
+    public class SuperPositionTakingItem : BasePositionTakingItem
     {
         private const string PositionTakingXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT =\"{2}\" AgentPT = \"{3}\" SuperMinPT=\"{4}\"/>";
 

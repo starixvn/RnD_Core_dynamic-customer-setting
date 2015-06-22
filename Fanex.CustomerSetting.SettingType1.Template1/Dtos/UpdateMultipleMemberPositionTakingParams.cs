@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos
 {
+    using Fanex.CustomerSetting.Core.Enumerations;
+
     public class UpdateMultipleMemberPositionTakingParams
     {
         public string CustIds { get; set; }
@@ -11,5 +13,7 @@
         public string IP { get; set; }
 
         public string PositionTakingXml { get; set; }
+
+        public CustomerLevel UplineLevel { get; set; }
     }
 }

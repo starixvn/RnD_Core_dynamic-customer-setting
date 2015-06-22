@@ -3,7 +3,7 @@
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Models;
 
-    public class AgentOnMemberPositionTakingItem : SportTypeBetTypeSettingItem
+    public class AgentOnMemberPositionTakingItem : BasePositionTakingItem
     {
         private const string PositionTakingXmlFormat = "<PT {0} AgentPT=\"{1}\"/>";
 
