@@ -107,12 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
-    <Compile Include="SPObjects\Commands\BaseCommand.cs" />
-    <Compile Include="SPObjects\Criteria\Customer\CustomerQueryCriteria.cs" />
-    <Compile Include="SPObjects\Criteria\Product\ProductNamesQueryCriteria.cs" />
-    <Compile Include="SPObjects\Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
-    <Compile Include="SPObjects\Commands\Validation\PermissionValidationCommand.cs" />
-    <Compile Include="SPObjects\Commands\Validation\PermissionValidationMultipleCommand.cs" />
+    <Compile Include="Criteria\Customer\CustomerQueryCriteria.cs" />
+    <Compile Include="Criteria\Product\ProductNamesQueryCriteria.cs" />
+    <Compile Include="Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccess.cs" />

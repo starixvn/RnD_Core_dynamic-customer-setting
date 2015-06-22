@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Core.Criteria.Product;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Services;
     using Fanex.CustomerSetting.Core.Services.Impl;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.CustomerSetting.Core.Tests.Models;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
@@ -55,7 +55,7 @@
             //// Assert
             _remotingRefApi.Received().GetSportTypeName(
                 Arg.Is<string>(
-                    sportTypeIdString => sportTypeIdString == sportTypeId.ToString()), 
+                    sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
                 Arg.Any<string>());
         }
 
@@ -100,7 +100,7 @@
             //// Assert
             _remotingRefApi.Received().GetBetTypeName(
                 Arg.Is<string>(
-                    betTypeIdString => betTypeIdString == betTypeId.ToString()), 
+                    betTypeIdString => betTypeIdString == betTypeId.ToString()),
                 Arg.Any<string>());
         }
 
@@ -162,6 +162,6 @@
             Assert.AreEqual("Product 1", actualProductName);
         }
 
-        #endregion
+        #endregion Get Product Name
     }
 }

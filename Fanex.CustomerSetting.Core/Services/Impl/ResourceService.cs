@@ -4,12 +4,11 @@
     using System.Linq;
     using Fanex.Caching;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Core.Criteria.Product;
     using Fanex.CustomerSetting.Core.Dtos;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.NAP.Framework.Data;
-    using RemotingRef;
 
     public class ResourceService : IResourceService
     {

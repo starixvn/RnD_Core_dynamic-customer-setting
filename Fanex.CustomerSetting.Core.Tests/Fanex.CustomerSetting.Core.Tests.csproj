@@ -90,10 +90,8 @@
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingServiceTests.cs" />
     <Compile Include="Services\ValidationServiceTests.cs" />
-    <Compile Include="SPObjects\Command\Validation\PermissionValidationCommandTests.cs" />
-    <Compile Include="SPObjects\Command\Validation\PermissionValidationMultipleCommandTests.cs" />
-    <Compile Include="SPObjects\Criteria\Customer\CustomerQueryCriteriaTests.cs" />
-    <Compile Include="SPObjects\Criteria\Product\ProductSettingTypesQueryCriteriaTests.cs" />
+    <Compile Include="Criteria\Customer\CustomerQueryCriteriaTests.cs" />
+    <Compile Include="Criteria\Product\ProductSettingTypesQueryCriteriaTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

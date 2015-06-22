@@ -10,7 +10,6 @@
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Services;
     using Fanex.CustomerSetting.Core.Services.Impl;
-    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
     using Fanex.CustomerSetting.Core.Tests.Models;
     using NSubstitute;
     using NUnit.Framework;
@@ -75,7 +74,8 @@
                 CustomerLevel = customerLevel
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
+                .Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateSettingQuery(settingQuery);
@@ -114,7 +114,8 @@
                 CustomerLevel = downlineLevel
             };
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
+                .Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateSettingQuery(settingQuery);
@@ -153,7 +154,8 @@
                 CustomerLevel = downlineLevel
             };
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
+                .Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateSettingQuery(settingQuery);
@@ -192,7 +194,7 @@
                 CustomerLevel = CustomerLevel.Member
             };
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateSettingQuery(settingQuery);
@@ -216,11 +218,7 @@
             _validationService.ValidateSettingQuery(settingQuery);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(
-                Arg.Is<PermissionValidationCommand>(
-                command => command.ActorId == _settingContext.Actor.Id
-                    && command.CustomerId == settingQuery.CustomerId
-                    && command.CustomerLevelId == (int)settingQuery.CustomerLevel));
+            _validationDataAccess.Received().ValidatePermission(_settingContext.Actor.Id, settingQuery.CustomerId, (byte)settingQuery.CustomerLevel);
         }
 
         #endregion Validatie Setting Query Tests
@@ -262,10 +260,10 @@
             _validationService.ValidateSettingCommand(settingCommand);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(Arg.Is<PermissionValidationCommand>(
-                command => command.ActorId == _settingContext.Actor.Id
-                    && command.CustomerId == settingCommand.Setting.Customer.Id
-                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level));
+            _validationDataAccess.Received().ValidatePermission(
+                _settingContext.Actor.Id,
+                settingCommand.Setting.Customer.Id,
+                (byte)settingCommand.Setting.Customer.Level);
         }
 
         [Test]
@@ -273,7 +271,7 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             _validationService.ValidateSettingCommand(settingCommand);
@@ -292,7 +290,7 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -324,7 +322,7 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -356,7 +354,7 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -388,7 +386,7 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject(1, CustomerLevel.Member);
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -403,7 +401,7 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             settingCommand.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingTypeFakeObject(1)
@@ -426,7 +424,7 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             settingCommand.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingTypeFakeObject(1)
@@ -462,7 +460,7 @@
                     }
                 }
             };
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -511,10 +509,10 @@
             _validationService.ValidateMultipleSettingCommand(settingCommand);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(Arg.Is<PermissionValidationCommand>(
-                command => command.ActorId == _settingContext.Actor.Id
-                    && command.CustomerId == settingCommand.Setting.Customer.Id
-                    && command.CustomerLevelId == (int)settingCommand.Setting.Customer.Level));
+            _validationDataAccess.Received().ValidatePermission(
+                _settingContext.Actor.Id,
+                settingCommand.Setting.Customer.Id,
+                (byte)settingCommand.Setting.Customer.Level);
         }
 
         [Test]
@@ -522,7 +520,7 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             _validationService.ValidateMultipleSettingCommand(settingCommand);
@@ -537,16 +535,16 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject(1, CustomerLevel.Member);
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
             _validationService.ValidateMultipleSettingCommand(settingCommand);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermissionMultiple(Arg.Is<PermissionValidationMultipleCommand>(
-                command => command.ActorId == _settingContext.Actor.Id
-                    && command.MemberIds == string.Join(",", settingCommand.Customers.Select(cust => cust.Id))));
+            _validationDataAccess.Received().ValidatePermissionMultiple(
+                Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", settingCommand.Customers.Select(cust => cust.Id))));
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -558,8 +556,8 @@
             //// Arrange
             var multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(multipleSettingCommand.Setting.Product.Id).Returns(multipleSettingCommand.Setting.SettingTypes);
 
             //// Act
@@ -591,8 +589,8 @@
             //// Arrange
             var multipleSettingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(multipleSettingCommand.Setting.Product.Id).Returns(multipleSettingCommand.Setting.SettingTypes);
 
             //// Act
@@ -624,8 +622,8 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -657,8 +655,8 @@
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject(1, CustomerLevel.Member);
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act
@@ -673,8 +671,8 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             settingCommand.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingTypeFakeObject(1)
@@ -697,8 +695,8 @@
         {
             //// Arrange
             var settingCommand = FakeObjectManager.CreateMultipleSettingCommandFakeObject();
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             settingCommand.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingTypeFakeObject(1)
@@ -734,8 +732,8 @@
                     }
                 }
             };
-            _validationDataAccess.ValidatePermission(Arg.Any<PermissionValidationCommand>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<PermissionValidationMultipleCommand>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
 
             //// Act

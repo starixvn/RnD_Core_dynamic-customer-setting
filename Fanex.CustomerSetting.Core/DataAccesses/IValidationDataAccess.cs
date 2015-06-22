@@ -1,12 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses
 {
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
     public interface IValidationDataAccess
     {
-        IResult ValidatePermission(PermissionValidationCommand command);
+        IResult ValidatePermission(int actorId, int customerId, byte customerLevelId);
 
-        IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand command);
+        IResult ValidatePermissionMultiple(int actorId, string memberIds);
     }
 }

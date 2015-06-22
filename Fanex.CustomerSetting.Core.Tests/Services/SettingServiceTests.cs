@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Core.Criteria.Customer;
     using Fanex.CustomerSetting.Core.DataAccesses;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
@@ -11,7 +12,6 @@
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Services;
     using Fanex.CustomerSetting.Core.Services.Impl;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Customer;
     using Fanex.CustomerSetting.Core.Tests.Models;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
@@ -317,7 +317,7 @@
         {
             var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
             _settingDataAccess.UpdateCustomerSetting(
-                Arg.Any<ISettingContext>(), 
+                Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>()).Returns(Result.Success);
@@ -484,6 +484,6 @@
                 Arg.Any<CustomerLevel?>());
         }
 
-        #endregion
+        #endregion Update Multiple Customer Setting Tests
     }
 }

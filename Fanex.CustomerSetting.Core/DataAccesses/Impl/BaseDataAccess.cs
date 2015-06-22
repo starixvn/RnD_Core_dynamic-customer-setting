@@ -4,17 +4,16 @@
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.SPObjects.Commands;
     using Fanex.Data;
 
     public class BaseDataAccess
     {
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
-        protected IResult ExecuteNonQuery(BaseCommand command)
+        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParams)
         {
-            using (var objectDb = new ObjectDb(command.GetSettingKey()))
+            using (var objectDb = new ObjectDb(settingKey))
             {
-                objectDb.ExecuteNonQuery(command.GetSpParams());
+                objectDb.ExecuteNonQuery(storedProcedureParams);
                 var outputParams = objectDb.GetOuputParams();
                 return ReadOutputWithoutMessageType(outputParams);
             }

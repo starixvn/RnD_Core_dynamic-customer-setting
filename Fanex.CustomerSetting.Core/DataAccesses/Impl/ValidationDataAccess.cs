@@ -1,18 +1,30 @@
 ﻿namespace Fanex.CustomerSetting.Core.DataAccesses.Impl
 {
     using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
     public class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
     {
-        public IResult ValidatePermission(PermissionValidationCommand command)
+        public IResult ValidatePermission(int actorId, int customerId, byte customerLevelId)
         {
-            return ExecuteNonQuery(command);
+            return ExecuteNonQuery(
+                "Acc_CustSetting_PermissionValidate", 
+                new 
+                {
+                    CustId = actorId,
+                    TargetCustId = customerId,
+                    TargetRoleId = customerLevelId
+                });
         }
 
-        public IResult ValidatePermissionMultiple(PermissionValidationMultipleCommand command)
+        public IResult ValidatePermissionMultiple(int actorId, string memberIds)
         {
-            return ExecuteNonQuery(command);
+            return ExecuteNonQuery(
+                "Acc_CustSetting_MultiCustPermissionValidate", 
+                new
+                {
+                    CustId = actorId,
+                    TargetCustIDLst = memberIds
+                });
         }
     }
 }

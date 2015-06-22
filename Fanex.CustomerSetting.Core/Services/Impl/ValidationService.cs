@@ -10,7 +10,6 @@
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.SPObjects.Commands.Validation;
 
     public class ValidationService : IValidationService
     {
@@ -110,12 +109,7 @@
 
         private IResult ValidateActorPermission(int customerId, CustomerLevel customerLevel)
         {
-            return _validationDataAccess.ValidatePermission(new PermissionValidationCommand
-            {
-                ActorId = _settingContext.Actor.Id,
-                CustomerId = customerId,
-                CustomerLevelId = (int)customerLevel
-            });
+            return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
         public IResult ValidateSettingCommand(SettingCommand settingCommand)
@@ -215,12 +209,7 @@
             {
                 IEnumerable<int> memberIds = customers.Select(cust => cust.Id);
 
-                var permissionValidationResult = _validationDataAccess.ValidatePermissionMultiple(
-                    new PermissionValidationMultipleCommand
-                    {
-                        ActorId = _settingContext.Actor.Id,
-                        MemberIds = string.Join(",", memberIds)
-                    });
+                var permissionValidationResult = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
                 return permissionValidationResult;
             }

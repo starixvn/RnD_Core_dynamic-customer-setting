@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Core.SPObjects.Criteria.Customer
+﻿namespace Fanex.CustomerSetting.Core.Criteria.Customer
 {
     using Fanex.NAP.Framework.Data;
 

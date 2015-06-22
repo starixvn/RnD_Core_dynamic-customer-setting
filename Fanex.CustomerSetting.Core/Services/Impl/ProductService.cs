@@ -2,9 +2,8 @@
 {
     using System.Collections.Generic;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Core.Dtos;
+    using Fanex.CustomerSetting.Core.Criteria.Product;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.NAP.Framework.Data;
 
     public class ProductService : IProductService

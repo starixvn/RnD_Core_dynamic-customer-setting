@@ -1,13 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Core.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using Fanex.CustomerSetting.Core.Criteria.Product;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.Core.Services;
     using Fanex.CustomerSetting.Core.Services.Impl;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Product;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -28,7 +25,7 @@
         [Test]
         public void GetProductSettingTypes_ProductIdIsZero_ThrowArgumentOutOfRangeException()
         {
-            //// Arrange 
+            //// Arrange
             byte productId = 0;
 
             //// Act

@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Core.DataAccesses;
+    using Fanex.CustomerSetting.Core.Criteria.Customer;
     using Fanex.CustomerSetting.Core.Dtos.Params;
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Handlers.Impl;
     using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.SPObjects.Criteria.Customer;
     using Fanex.NAP.Framework.Data;
 
     public class SettingService : ISettingService
