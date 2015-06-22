@@ -13,14 +13,14 @@
 
     public class BasePositionTakingDataAccess : BaseDataAccess, ISettingDataAccess
     {
-        public virtual SettingType GetCustomerSettingType(GetCustomerSettingTypeParams getParams)
+        public virtual SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingPositionTaking(getParams.SettingQuery.CustomerLevel);
+            var settingKey = GetSettingKeyForGettingPositionTaking(settingQuery.CustomerLevel);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 return new SettingType
                 {
-                    SettingItems = QueryPositionTakingItems(objectDb, getParams)
+                    SettingItems = QueryPositionTakingItems(objectDb, settingQuery)
                 };
             }
         }
@@ -46,11 +46,11 @@
             }
         }
 
-        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, GetCustomerSettingTypeParams getParams)
+        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, SettingQuery settingQuery)
         {
-            var storedProcedureParams = GetSPParamsForGettingPositionTaking(getParams);
+            var storedProcedureParams = GetSPParamsForGettingPositionTaking(settingQuery);
 
-            switch (getParams.SettingQuery.CustomerLevel)
+            switch (settingQuery.CustomerLevel)
             {
                 case CustomerLevel.Super:
                     return objectDb.Query<SuperPositionTakingItem>(storedProcedureParams);
@@ -62,7 +62,7 @@
                     return objectDb.Query<AgentPositionTakingItem>(storedProcedureParams);
 
                 case CustomerLevel.Member:
-                    switch (getParams.SettingQuery.UplineLevel.Value)
+                    switch (settingQuery.UplineLevel.Value)
                     {
                         case CustomerLevel.Super:
                             return objectDb.Query<SuperOnMemberPositionTakingItem>(storedProcedureParams);
@@ -82,10 +82,9 @@
             }
         }
 
-        private dynamic GetSPParamsForGettingPositionTaking(GetCustomerSettingTypeParams getParams)
+        private dynamic GetSPParamsForGettingPositionTaking(SettingQuery settingQuery)
         {
-            var settingQuery = getParams.SettingQuery;
-            switch (getParams.SettingQuery.CustomerLevel)
+            switch (settingQuery.CustomerLevel)
             {
                 case CustomerLevel.Super:
                 case CustomerLevel.Master:
@@ -109,10 +108,14 @@
             }
         }
 
-        public virtual IResult UpdateCustomerSetting(UpdateCustomerSettingParams updateParams)
+        public virtual IResult UpdateCustomerSetting(
+            ISettingContext settingContext, 
+            Customer customer, 
+            SettingType settingType, 
+            CustomerLevel? uplineLevel)
         {
-            var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(updateParams);
-            var settingKey = GetSettingKeyForUpdatingPositionTaking(updateParams.Customer.Level, updateParams.UplineLevel);
+            var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType, uplineLevel);
+            var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel);
 
             using (var objectDb = new ObjectDb(settingKey))
             {
@@ -122,18 +125,22 @@
             }
         }
 
-        private dynamic GetSPParamsForUpdatingPositionTaking(UpdateCustomerSettingParams updateParams)
+        private dynamic GetSPParamsForUpdatingPositionTaking(
+            ISettingContext settingContext,
+            Customer customer,
+            SettingType settingType,
+            CustomerLevel? uplineLevel)
         {
             return new
             {
-                UserId = updateParams.SettingContext.Actor.Id,
-                SubAccId = updateParams.SettingContext.SubAccount.Id,
-                CustId = updateParams.Customer.Id,
-                Ip = updateParams.SettingContext.IP,
+                UserId = settingContext.Actor.Id,
+                SubAccId = settingContext.SubAccount.Id,
+                CustId = customer.Id,
+                Ip = settingContext.IP,
                 ErrCode = 0,
                 ErrMsg = string.Empty,
                 MsgType = 0,
-                PT = updateParams.SettingType.ToXml()
+                PT = settingType.ToXml()
             };
         }
 

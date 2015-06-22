@@ -4,6 +4,7 @@
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Core.Dtos.Results;
+    using Fanex.CustomerSetting.Core.Enumerations;
     using Fanex.CustomerSetting.Core.Handlers;
     using Fanex.CustomerSetting.Core.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
@@ -37,7 +38,7 @@
             return _memberGroupDataAccess.GetGroupedMembers(memberIds);
         }
 
-        public IResult UpdateGroupedMembersSetting(IEnumerable<Customer> groupedMembers, SettingType settingType)
+        public IResult UpdateGroupedMembersSetting(IEnumerable<Customer> groupedMembers, CustomerLevel uplineLevel, SettingType settingType)
         {
             Check.Argument.IsNotNull(groupedMembers, "groupedMembers");
             Check.Argument.IsNotNegativeOrZero(groupedMembers.Count(), "groupedMembers.Count");
@@ -47,7 +48,8 @@
                 CustIds = GetMemberIds(groupedMembers),
                 IP = _settingContext.IP,
                 UserId = _settingContext.Actor.Id,
-                SubAccId = _settingContext.SubAccount.Id
+                SubAccId = _settingContext.SubAccount.Id,
+                UplineLevel = uplineLevel
             };
 
             return _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParams);

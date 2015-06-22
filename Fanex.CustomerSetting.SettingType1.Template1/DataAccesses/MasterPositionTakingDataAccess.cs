@@ -6,9 +6,9 @@
 
     public class MasterPositionTakingDataAccess : BasePositionTakingDataAccess
     {
-        public override SettingType GetCustomerSettingType(GetCustomerSettingTypeParams getParams)
+        public override SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
         {
-            var masterSettingType = base.GetCustomerSettingType(getParams);
+            var masterSettingType = base.GetCustomerSettingType(actor, settingQuery);
 
             return masterSettingType;
         }

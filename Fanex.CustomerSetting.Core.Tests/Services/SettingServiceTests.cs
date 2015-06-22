@@ -189,7 +189,7 @@
         private void SetupSettingTypeDataAccessStubForQuery(SettingQuery settingQuery)
         {
             var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
-            _settingDataAccess.GetCustomerSettingType(Arg.Any<GetCustomerSettingTypeParams>()).Returns(customerSettingType);
+            _settingDataAccess.GetCustomerSettingType(Arg.Any<User>(), settingQuery).Returns(customerSettingType);
             _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
             _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
         }
@@ -225,7 +225,7 @@
             _settingService.GetCustomerSetting(settingQuery);
 
             //// Assert
-            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<GetCustomerSettingTypeParams>());
+            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), settingQuery);
         }
 
         #endregion Get Customer Setting Tests
@@ -316,7 +316,11 @@
         private void SetupSettingTypeDataAccessStubForCommand(SettingCommand settingCommand)
         {
             var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
-            _settingDataAccess.UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>()).Returns(Result.Success);
+            _settingDataAccess.UpdateCustomerSetting(
+                Arg.Any<ISettingContext>(), 
+                Arg.Any<Customer>(),
+                Arg.Any<SettingType>(),
+                Arg.Any<CustomerLevel?>()).Returns(Result.Success);
             _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
             _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
         }
@@ -348,7 +352,11 @@
             _settingService.UpdateCustomerSetting(settingCommand);
 
             //// Assert
-            _settingDataAccess.Received(settingCommand.Setting.SettingTypes.Count()).UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>());
+            _settingDataAccess.Received(settingCommand.Setting.SettingTypes.Count()).UpdateCustomerSetting(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<Customer>(),
+                Arg.Any<SettingType>(),
+                Arg.Any<CustomerLevel?>());
         }
 
         #endregion Update Customer Setting Tests
@@ -469,7 +477,11 @@
             //// Assert
             var numOfSettingTypes = multipleSettingCommand.Setting.SettingTypes.Count();
             var numOfSettingTypesEachCustomer = numOfSettingTypes * multipleSettingCommand.Customers.Count();
-            _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSetting(Arg.Any<UpdateCustomerSettingParams>());
+            _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSetting(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<Customer>(),
+                Arg.Any<SettingType>(),
+                Arg.Any<CustomerLevel?>());
         }
 
         #endregion

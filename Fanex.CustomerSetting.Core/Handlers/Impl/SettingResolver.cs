@@ -10,9 +10,9 @@
     {
         private const string CacheKeyFormat = "{0}_{1}";
         private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
-        private const string DataAccessFactoryTypeFormat = "{0}.DataAccess.SettingType{1}DataAccessFactory";
-        private const string SettingPreTasksTypeFormat = "{0}.Tasks.SettingType{1}PreTasks";
-        private const string SettingPostTasksTypeFormat = "{0}.Tasks.SettingType{1}PostTasks";
+        private const string DataAccessFactoryTypeFormat = "{0}.DataAccesses.SettingType{1}DataAccessFactory";
+        private const string SettingPreTasksTypeFormat = "{0}.Handlers.SettingType{1}PreTasks";
+        private const string SettingPostTasksTypeFormat = "{0}.Handlers.SettingType{1}PostTasks";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
         private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactoriesCached = new Dictionary<string, ISettingDataAccessFactory>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();

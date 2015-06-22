@@ -91,7 +91,6 @@
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Dtos\Params\GetCustomerSettingTypeParams.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleSettingResult.cs" />
     <Compile Include="Handlers\IRemotingRefApi.cs" />
     <Compile Include="Handlers\Impl\RemotingRefApi.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="SPObjects\Commands\Validation\PermissionValidationCommand.cs" />
     <Compile Include="SPObjects\Commands\Validation\PermissionValidationMultipleCommand.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
-    <Compile Include="DataAccesses\Impl\DefaultSettingDataAccessFactory.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccessFactory.cs" />
@@ -130,7 +128,6 @@
     <Compile Include="Dtos\Params\MultipleSettingCommand.cs" />
     <Compile Include="Dtos\Params\SettingCommand.cs" />
     <Compile Include="Dtos\Params\SettingQuery.cs" />
-    <Compile Include="Dtos\Params\UpdateCustomerSettingParams.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SettingContext.cs" />

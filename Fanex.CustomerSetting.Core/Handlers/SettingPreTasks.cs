@@ -35,6 +35,7 @@
 
         public virtual PreUpdateMultipleSettingResult PreUpdateMultipleSetting(
             IEnumerable<Customer> customers,
+            CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {

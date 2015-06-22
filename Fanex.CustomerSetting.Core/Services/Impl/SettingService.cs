@@ -123,13 +123,9 @@
 
         private SettingType GetCustomerSettingType(SettingQuery settingQuery, SettingType productSettingType)
         {
-            ISettingDataAccessFactory settingDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(productSettingType);
-            ISettingDataAccess settingDataAccess = settingDataAccessFactory.Create(settingQuery.CustomerLevel);
-            var customerSettingType = settingDataAccess.GetCustomerSettingType(new GetCustomerSettingTypeParams
-                {
-                    Actor = _settingContext.Actor,
-                    SettingQuery = settingQuery
-                });
+            var settingDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(productSettingType);
+            var settingDataAccess = settingDataAccessFactory.Create(settingQuery.CustomerLevel);
+            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery);
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             return customerSettingType;
@@ -226,14 +222,7 @@
         {
             var settingTypeDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(settingType);
             var settingTypeDataAccess = settingTypeDataAccessFactory.Create(customer.Level);
-            var result = settingTypeDataAccess.UpdateCustomerSetting(
-                new UpdateCustomerSettingParams
-                {
-                    Customer = customer,
-                    SettingContext = _settingContext,
-                    SettingType = settingType,
-                    UplineLevel = uplineLevel
-                });
+            var result = settingTypeDataAccess.UpdateCustomerSetting(_settingContext, customer, settingType, uplineLevel);
 
             return result;
         }
@@ -309,7 +298,7 @@
             CustomerLevel? uplineLevel,
             SettingType settingType)
         {
-            var preTasksResult = RunPreUpdateMultipleSettingTasks(customers, settingType, uplineLevel);
+            var preTasksResult = RunPreUpdateMultipleSettingTasks(customers, customerLevel, settingType, uplineLevel);
             if (!preTasksResult.Result.IsSuccessful)
             {
                 return preTasksResult.Result;
@@ -348,13 +337,14 @@
 
         private PreUpdateMultipleSettingResult RunPreUpdateMultipleSettingTasks(
             IEnumerable<Customer> customers,
+            CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null && !preTasks.GetType().GetMethod("PreUpdateMultipleSetting").IsVirtual)
             {
-                var preTaskResult = preTasks.PreUpdateMultipleSetting(customers, settingType, uplineLevel);
+                var preTaskResult = preTasks.PreUpdateMultipleSetting(customers, customerLevel, settingType, uplineLevel);
                 return preTaskResult;
             }
 
