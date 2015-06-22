@@ -24,12 +24,10 @@
 
         public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParams updateParams)
         {
-            using (var objectDb = new ObjectDb(GetSettingKeyOfUpdateGroupedMembersSetting(updateParams.UplineLevel)))
-            {
-                objectDb.ExecuteNonQuery(GetSPParamsOfUpdateGroupedMembersSetting(updateParams));
-                var outputParams = objectDb.GetOuputParams();
-                return ReadOutputWithMessageType(outputParams);
-            }
+            var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParams.UplineLevel);
+            var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParams);
+
+            return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
 
         private string GetSettingKeyOfUpdateGroupedMembersSetting(CustomerLevel uplineLevel)

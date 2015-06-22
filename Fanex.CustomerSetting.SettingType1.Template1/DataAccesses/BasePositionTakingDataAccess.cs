@@ -117,12 +117,7 @@
             var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType, uplineLevel);
             var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel);
 
-            using (var objectDb = new ObjectDb(settingKey))
-            {
-                objectDb.ExecuteNonQuery(storedProcedureParams);
-                var outputParams = objectDb.GetOuputParams();
-                return ReadOutputWithoutMessageType(outputParams);
-            }
+            return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
 
         private dynamic GetSPParamsForUpdatingPositionTaking(
