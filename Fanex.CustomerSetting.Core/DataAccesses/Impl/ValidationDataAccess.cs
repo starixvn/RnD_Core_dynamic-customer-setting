@@ -12,8 +12,11 @@
                 {
                     CustId = actorId,
                     TargetCustId = customerId,
-                    TargetRoleId = customerLevelId
-                });
+                    TargetRoleId = customerLevelId,
+                    ErrCode = 1,
+                    ErrMsg = string.Empty
+                },
+                false);
         }
 
         public IResult ValidatePermissionMultiple(int actorId, string memberIds)
@@ -23,8 +26,11 @@
                 new
                 {
                     CustId = actorId,
-                    TargetCustIDLst = memberIds
-                });
+                    TargetCustIDLst = memberIds,
+                    ErrCode = 1,
+                    ErrMsg = string.Empty
+                },
+                false);
         }
     }
 }

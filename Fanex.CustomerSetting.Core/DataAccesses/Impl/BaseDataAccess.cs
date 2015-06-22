@@ -9,13 +9,20 @@
     public class BaseDataAccess
     {
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
-        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParams)
+        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParams, bool isReadMessageType = true)
         {
             using (var objectDb = new ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParams);
                 var outputParams = objectDb.GetOuputParams();
-                return ReadOutputWithoutMessageType(outputParams);
+                if (isReadMessageType)
+                {
+                    return ReadOutputWithMessageType(outputParams);
+                }
+                else
+                {
+                    return ReadOutputWithoutMessageType(outputParams);
+                }
             }
         }
 
