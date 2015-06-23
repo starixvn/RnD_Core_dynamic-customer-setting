@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\SettingType1Constants.cs" />
     <Compile Include="Constants\SettingType1ErrorCodes.cs" />
     <Compile Include="DataAccesses\BasePositionTakingDataAccess.cs" />
     <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />

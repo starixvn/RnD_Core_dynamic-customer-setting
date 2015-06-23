@@ -2,8 +2,6 @@
 {
     public static class SettingType1ErrorCodes
     {
-        public const int MaxPositionTaking = 100;
-
         //////// Edit Super
         public const int MasterMaxPTIsGreaterThanSuperMaxPT = 1001;
         public const int AgentMaxPTIsGreaterThanMasterMaxPT = 1002;

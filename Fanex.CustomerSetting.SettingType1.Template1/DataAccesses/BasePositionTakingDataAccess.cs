@@ -8,6 +8,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
 
@@ -92,7 +93,8 @@
                     return new
                     {
                         CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId
+                        ProductId = settingQuery.ProductId,
+                        SettingType = SettingType1Constants.SettingType
                     };
 
                 case CustomerLevel.Member:
@@ -100,7 +102,8 @@
                     {
                         CustId = settingQuery.CustomerId,
                         ProductId = settingQuery.ProductId,
-                        RoleId = settingQuery.UplineLevel.Value
+                        RoleId = settingQuery.UplineLevel.Value,
+                        SettingType = SettingType1Constants.SettingType
                     };
 
                 default:
