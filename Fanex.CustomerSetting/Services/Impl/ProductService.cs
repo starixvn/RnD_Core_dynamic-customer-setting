@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria.Product;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.NAP.Framework.Data;
 

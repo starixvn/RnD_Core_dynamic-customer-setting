@@ -5,11 +5,11 @@
     using System.Linq;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.CustomerSetting.Tests.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
+    using Fanex.CustomerSetting.Tests;
+    using Fanex.CustomerSetting.Tests.Models;
     using NSubstitute;
     using NUnit.Framework;
 

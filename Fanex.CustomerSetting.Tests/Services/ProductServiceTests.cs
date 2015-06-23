@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Criteria.Product;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;

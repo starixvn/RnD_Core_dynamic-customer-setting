@@ -1,11 +1,13 @@
-﻿namespace Fanex.CustomerSetting.Tests.Services
+﻿namespace Fanex.CustomerSetting.Resource.Services
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Criteria.Product;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Criteria;
+    using Fanex.CustomerSetting.Resource.Dtos;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -20,6 +22,7 @@
         private IDynamicRepository _dymanicRepository;
         private ISettingContext _settingContext;
         private IRemotingRefApi _remotingRefApi;
+        private string _language;
 
         [SetUp]
         public void Setup()
@@ -27,8 +30,8 @@
             _settingContext = new SettingContextStub();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
             _remotingRefApi = Substitute.For<IRemotingRefApi>();
-            RemotingRefApiHandler.RemotingRefApi = _remotingRefApi;
-            _resourceService = new ResourceService(_settingContext, _dymanicRepository);
+            _language = "en-US";
+            _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi);
         }
 
         #region Get Sport Name
@@ -40,7 +43,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _resourceService.GetSportTypeName(sportTypeId)));
+                    () => _resourceService.GetSportTypeName(sportTypeId, _language)));
         }
 
         [Test]
@@ -50,7 +53,7 @@
             int sportTypeId = 1;
 
             //// Act
-            _resourceService.GetSportTypeName(sportTypeId);
+            _resourceService.GetSportTypeName(sportTypeId, _language);
 
             //// Assert
             _remotingRefApi.Received().GetSportTypeName(
@@ -68,7 +71,7 @@
             _remotingRefApi.GetSportTypeName(sportTypeId.ToString(), Arg.Any<string>()).Returns(sportNameFromApi);
 
             //// Act
-            var actualSportTypeName = _resourceService.GetSportTypeName(sportTypeId);
+            var actualSportTypeName = _resourceService.GetSportTypeName(sportTypeId, _language);
 
             //// Assert
             Assert.AreEqual("Sport Type 1", actualSportTypeName);
@@ -85,7 +88,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _resourceService.GetBetTypeName(betTypeId)));
+                    () => _resourceService.GetBetTypeName(betTypeId, _language)));
         }
 
         [Test]
@@ -95,7 +98,7 @@
             int betTypeId = 1;
 
             //// Act
-            _resourceService.GetBetTypeName(betTypeId);
+            _resourceService.GetBetTypeName(betTypeId, _language);
 
             //// Assert
             _remotingRefApi.Received().GetBetTypeName(
@@ -113,7 +116,7 @@
             _remotingRefApi.GetBetTypeName(betTypeId.ToString(), Arg.Any<string>()).Returns(betTypeNameFromApi);
 
             //// Act
-            var actualBetTypeName = _resourceService.GetBetTypeName(betTypeId);
+            var actualBetTypeName = _resourceService.GetBetTypeName(betTypeId, _language);
 
             //// Assert
             Assert.AreEqual("Bet Type 1", actualBetTypeName);
@@ -132,7 +135,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _resourceService.GetProductName(productId)));
+                    () => _resourceService.GetProductName(productId, _language)));
         }
 
         [Test]
@@ -142,10 +145,10 @@
             byte productId = 1;
 
             //// Act
-            _resourceService.GetProductName(productId);
+            _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            _dymanicRepository.Received().Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>());
+            _dymanicRepository.Received().Fetch<ProductNameResource>(Arg.Any<ProductNamesQueryCriteria>());
         }
 
         [Test]
@@ -153,10 +156,10 @@
         {
             //// Arrange
             byte productId = 1;
-            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto>());
+            _dymanicRepository.Fetch<ProductNameResource>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameResource>());
 
             //// Act
-            var actualProductName = _resourceService.GetProductName(productId);
+            var actualProductName = _resourceService.GetProductName(productId, _language);
 
             //// Assert
             Assert.AreEqual("Product 1", actualProductName);

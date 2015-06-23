@@ -4,10 +4,11 @@
     using System.Linq;
     using Fanex.Caching;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria.Product;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Criteria;
     using Fanex.NAP.Framework.Data;
 
     public class ResourceService : IResourceService

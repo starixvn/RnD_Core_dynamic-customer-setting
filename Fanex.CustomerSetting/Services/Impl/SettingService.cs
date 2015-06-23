@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria.Customer;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;

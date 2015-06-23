@@ -106,9 +106,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
-    <Compile Include="Criteria\Customer\CustomerQueryCriteria.cs" />
-    <Compile Include="Criteria\Product\ProductNamesQueryCriteria.cs" />
-    <Compile Include="Criteria\Product\ProductSettingTypesQueryCriteria.cs" />
+    <Compile Include="Criteria\CustomerQueryCriteria.cs" />
+    <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingDataAccess.cs" />
@@ -159,6 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fanex.CustomerSetting.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
+      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
+      <Name>Fanex.CustomerSetting.Resource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

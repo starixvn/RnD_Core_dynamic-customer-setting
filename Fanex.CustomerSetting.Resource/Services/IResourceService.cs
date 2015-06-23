@@ -1,0 +1,11 @@
+﻿namespace Fanex.CustomerSetting.Resource.Services
+{
+    public interface IResourceService
+    {
+        string GetProductName(byte productId, string language);
+
+        string GetSportTypeName(int sportTypeId, string language);
+
+        string GetBetTypeName(int betTypeId, string language);
+    }
+}

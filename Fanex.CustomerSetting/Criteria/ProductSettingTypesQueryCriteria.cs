@@ -1,9 +1,5 @@
-﻿namespace Fanex.CustomerSetting.Criteria.Product
+﻿namespace Fanex.CustomerSetting.Criteria
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.NAP.Framework.Data;
 
     public class ProductSettingTypesQueryCriteria : CriteriaBase

@@ -1,6 +1,6 @@
-﻿namespace Fanex.CustomerSetting.Tests.SPObjects.Criteria.Customer
+﻿namespace Fanex.CustomerSetting.Tests.Criteria
 {
-    using Fanex.CustomerSetting.Criteria.Customer;
+    using Fanex.CustomerSetting.Criteria;
     using NUnit.Framework;
 
     [TestFixture]

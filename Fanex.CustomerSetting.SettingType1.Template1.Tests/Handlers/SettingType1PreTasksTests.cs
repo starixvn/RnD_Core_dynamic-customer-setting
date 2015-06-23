@@ -5,10 +5,10 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.CustomerSetting.Tests.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Handlers;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
+    using Fanex.CustomerSetting.Tests;
+    using Fanex.CustomerSetting.Tests.Models;
     using NSubstitute;
     using NUnit.Framework;
 
