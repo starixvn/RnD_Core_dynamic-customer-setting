@@ -1,0 +1,44 @@
+﻿namespace Fanex.CustomerSetting.DataAccesses.Impl
+{
+    using System;
+    using System.Collections;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.Data;
+
+    public class BaseDataAccess
+    {
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
+        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParams, bool isReadMessageType = true)
+        {
+            using (var objectDb = new ObjectDb(settingKey))
+            {
+                objectDb.ExecuteNonQuery(storedProcedureParams);
+                var outputParams = objectDb.GetOuputParams();
+                if (isReadMessageType)
+                {
+                    return ReadOutputWithMessageType(outputParams);
+                }
+                else
+                {
+                    return ReadOutputWithoutMessageType(outputParams);
+                }
+            }
+        }
+
+        protected IResult ReadOutputWithoutMessageType(Hashtable outputParams)
+        {
+            return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    Convert.ToString(outputParams["errmsg"]));
+        }
+
+        protected IResult ReadOutputWithMessageType(Hashtable outputParams)
+        {
+            return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    Convert.ToString(outputParams["errmsg"]),
+                    Convert.ToInt32(outputParams["msgtype"]));
+        }
+    }
+}

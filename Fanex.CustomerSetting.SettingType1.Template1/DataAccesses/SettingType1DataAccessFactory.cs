@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.DataAccesses
 {
     using System;
-    using Fanex.CustomerSetting.Core.DataAccesses;
-    using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.DataAccesses;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
 
     public class SettingType1DataAccessFactory : ISettingDataAccessFactory

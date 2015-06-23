@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
 
     public interface IMemberGroupService
     {

@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Handlers;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
 
@@ -24,7 +24,7 @@
             ISettingContext settingContext,
             IMemberGroupDataAccess memberGroupDataAccess)
         {
-            _settingContext = settingContext ?? SettingContextManager.SettingContext;
+            _settingContext = settingContext;
             _memberGroupDataAccess = memberGroupDataAccess ?? new MemberGroupDataAccess();
         }
 

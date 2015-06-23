@@ -62,13 +62,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Core.Tests\Fanex.CustomerSetting.Core.Tests.csproj">
+    <ProjectReference Include="..\Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj">
       <Project>{acbfcea2-a3f7-4527-98fa-abd1e7f451c3}</Project>
-      <Name>Fanex.CustomerSetting.Core.Tests</Name>
+      <Name>Fanex.CustomerSetting.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj">
+    <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
-      <Name>Fanex.CustomerSetting.Core</Name>
+      <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.SettingType1.Template1\Fanex.CustomerSetting.SettingType1.Template1.csproj">
       <Project>{1f9436d3-f8aa-48c9-b1a7-7659eaa7bdcc}</Project>

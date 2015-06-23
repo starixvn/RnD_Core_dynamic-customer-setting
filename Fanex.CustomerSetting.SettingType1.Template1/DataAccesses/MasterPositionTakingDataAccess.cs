@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.DataAccesses
 {
-    using Fanex.CustomerSetting.Core.Dtos.Params;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Dtos.Params;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
 
     public class MasterPositionTakingDataAccess : BasePositionTakingDataAccess

@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Tests;
-    using Fanex.CustomerSetting.Core.Tests.Models;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Tests;
+    using Fanex.CustomerSetting.Tests.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;

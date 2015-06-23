@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos
 {
-    using Fanex.CustomerSetting.Core.Enumerations;
+    using Fanex.CustomerSetting.Enumerations;
 
     public class UpdateMultipleMemberPositionTakingParams
     {

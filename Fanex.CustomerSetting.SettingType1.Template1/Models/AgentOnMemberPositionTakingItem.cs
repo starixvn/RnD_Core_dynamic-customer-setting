@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models
 {
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Models;
 
     public class AgentOnMemberPositionTakingItem : BasePositionTakingItem
     {

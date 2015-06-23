@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Core.DataAccesses;
-    using Fanex.CustomerSetting.Core.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Core.Dtos.Params;
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.DataAccesses;
+    using Fanex.CustomerSetting.DataAccesses.Impl;
+    using Fanex.CustomerSetting.Dtos.Params;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
 

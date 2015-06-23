@@ -97,9 +97,9 @@
     <Compile Include="Services\MemberGroupService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj">
+    <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
-      <Name>Fanex.CustomerSetting.Core</Name>
+      <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Models;
-    using Fanex.CustomerSetting.Core.Tests;
-    using Fanex.CustomerSetting.Core.Tests.Models;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Tests;
+    using Fanex.CustomerSetting.Tests.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Handlers;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
     using NSubstitute;

@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Core.Dtos.Results;
-    using Fanex.CustomerSetting.Core.Enumerations;
-    using Fanex.CustomerSetting.Core.Handlers;
-    using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
 
     public class SettingType1PreTasks : SettingPreTasks
