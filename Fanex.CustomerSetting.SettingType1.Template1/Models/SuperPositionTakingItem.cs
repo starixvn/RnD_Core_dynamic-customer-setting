@@ -2,17 +2,30 @@
 {
     using Fanex.CustomerSetting.Core.Dtos.Results;
     using Fanex.CustomerSetting.Core.Models;
+    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
 
     public class SuperPositionTakingItem : BasePositionTakingItem
     {
-        private const string PositionTakingXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT =\"{2}\" AgentPT = \"{3}\" SuperMinPT=\"{4}\"/>";
+        private const string PositionTakingXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT=\"{2}\" AgentPT=\"{3}\" SuperMinPT=\"{4}\"/>";
 
+        /// <summary>
+        /// Super Max PT
+        /// </summary>
         public byte S4 { get; set; }
 
+        /// <summary>
+        /// Master Max PT
+        /// </summary>
         public byte M4 { get; set; }
 
+        /// <summary>
+        /// Agent Max PT
+        /// </summary>
         public byte A4 { get; set; }
 
+        /// <summary>
+        /// Super Min PT
+        /// </summary>
         public byte N4 { get; set; }
 
         public byte DefaultMaxPT { get; set; }
@@ -25,16 +38,19 @@
                 return baseResult;
             }
 
-            //// Will code more business here
-            if (S4 < 0
-                || M4 < 0
-                || A4 < 0
-                || N4 < 0
-                || M4 > S4
-                || A4 > M4
-                || N4 > S4)
+            if (M4 > S4)
             {
-                return Result.DataError;
+                return new Result(SettingType1ErrorCodes.MasterMaxPTIsGreaterThanSuperMaxPT);
+            }
+
+            if (A4 > M4)
+            {
+                return new Result(SettingType1ErrorCodes.AgentMaxPTIsGreaterThanMasterMaxPT);
+            }
+
+            if (N4 > S4)
+            {
+                return new Result(SettingType1ErrorCodes.SuperMinPTIsGreaterThanSuperMaxPT);
             }
 
             return Result.Success;

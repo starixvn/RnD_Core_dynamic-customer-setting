@@ -6,6 +6,9 @@
     {
         private static IRemotingRefApi _remotingRefApi = new RemotingRefApi();
 
+        /// <summary>
+        /// For unittest purpose.
+        /// </summary>
         public static IRemotingRefApi RemotingRefApi
         {
             get { return _remotingRefApi; }

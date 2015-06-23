@@ -71,6 +71,8 @@
 
         public byte System { get; set; }
 
+        public string Domain { get; set; }
+
         public string IP
         {
             get

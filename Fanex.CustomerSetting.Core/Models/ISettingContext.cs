@@ -11,5 +11,7 @@
         string IP { get; }
 
         byte System { get; }
+
+        string Domain { get; }
     }
 }

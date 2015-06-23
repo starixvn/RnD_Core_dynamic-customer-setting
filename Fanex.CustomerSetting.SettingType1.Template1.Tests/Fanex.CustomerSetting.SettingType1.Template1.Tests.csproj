@@ -48,12 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\SettingType1PreTasksTests.cs" />
+    <Compile Include="Models\AgentOnMemberPositionTakingItemTests.cs" />
+    <Compile Include="Models\AgentPositionTakingItemTests.cs" />
+    <Compile Include="Models\MasterOnMemberPositionTakingItemTests.cs" />
+    <Compile Include="Models\MasterPositionTakingItemTests.cs" />
+    <Compile Include="Models\SuperOnMemberPositionTakingItemTests.cs" />
+    <Compile Include="Models\SuperPositionTakingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MemberGroupServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Core.Tests\Fanex.CustomerSetting.Core.Tests.csproj">
+      <Project>{acbfcea2-a3f7-4527-98fa-abd1e7f451c3}</Project>
+      <Name>Fanex.CustomerSetting.Core.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Core\Fanex.CustomerSetting.Core.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting.Core</Name>
@@ -63,10 +75,9 @@
       <Name>Fanex.CustomerSetting.SettingType1.Template1</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="DataAccesses\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

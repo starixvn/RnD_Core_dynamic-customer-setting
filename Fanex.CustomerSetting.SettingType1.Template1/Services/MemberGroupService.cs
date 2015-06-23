@@ -49,7 +49,8 @@
                 IP = _settingContext.IP,
                 UserId = _settingContext.Actor.Id,
                 SubAccId = _settingContext.SubAccount.Id,
-                UplineLevel = uplineLevel
+                UplineLevel = uplineLevel,
+                PositionTakingXml = settingType.ToXml()
             };
 
             return _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParams);

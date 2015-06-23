@@ -18,6 +18,7 @@
         {
             var settingContext = new SettingContext();
             settingContext.System = CustomerSettings.Settings.SystemId;
+            settingContext.Domain = CustomerSettings.Settings.Domain;
 
             SettingContext = settingContext;
         }

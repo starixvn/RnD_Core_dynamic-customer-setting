@@ -6,6 +6,7 @@
     {
         private const string CustomerSettingsName = "CustomerSettings";
         private const string SystemIdName = "SystemId";
+        private const string DomainName = "DomainName";
         private const string CustomValidationServiceTypeName = "CustomValidationServiceType";
 
         private static CustomerSettings _settings = ConfigurationManager.GetSection(CustomerSettingsName) as CustomerSettings;
@@ -23,6 +24,13 @@
         {
             get { return (byte)this[SystemIdName]; }
             set { this[SystemIdName] = value; }
+        }
+
+        [ConfigurationProperty(DomainName, IsRequired = true)]
+        public string Domain
+        {
+            get { return (string)this[DomainName]; }
+            set { this[DomainName] = value; }
         }
 
         [ConfigurationProperty(CustomValidationServiceTypeName, IsRequired = false)]

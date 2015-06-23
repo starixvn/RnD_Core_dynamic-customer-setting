@@ -66,5 +66,10 @@
         {
             get { return 1; }
         }
+
+        public string Domain
+        {
+            get { return "Domain Name"; }
+        }
     }
 }

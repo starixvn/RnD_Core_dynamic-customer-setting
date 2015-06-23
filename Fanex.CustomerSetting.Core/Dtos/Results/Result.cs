@@ -13,6 +13,11 @@
         public const int AccessDeniedValue = -3;
         public const int DataIsNotValid = -4;
 
+        public Result(int code)
+            : this(code, string.Empty)
+        { 
+        }
+
         public Result(int code, string message)
         {
             Code = code;

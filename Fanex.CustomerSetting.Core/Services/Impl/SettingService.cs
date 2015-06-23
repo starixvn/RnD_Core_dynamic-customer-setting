@@ -36,7 +36,7 @@
             _settingContext = settingContext ?? SettingContextManager.SettingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService();
-            _settingResolver = settingResolver ?? new SettingResolver(_settingContext);
+            _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 

@@ -10,7 +10,7 @@
 
         public override string ToXml()
         {
-            return string.Format(BasePositionTakingXmlFormat, base.ToXml(), IsLive);
+            return string.Format(BasePositionTakingXmlFormat, base.ToXml(), IsLive ? 1 : 0);
         }
     }
 }

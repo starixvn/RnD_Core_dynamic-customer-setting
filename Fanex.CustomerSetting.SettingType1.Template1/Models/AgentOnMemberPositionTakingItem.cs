@@ -7,10 +7,19 @@
     {
         private const string PositionTakingXmlFormat = "<PT {0} AgentPT=\"{1}\"/>";
 
+        /// <summary>
+        /// Agent PT
+        /// </summary>
         public byte A1 { get; set; }
 
+        /// <summary>
+        /// Agent Max PT
+        /// </summary>
         public byte A2 { get; set; }
 
+        /// <summary>
+        /// Agent Min PT
+        /// </summary>
         public byte N2 { get; set; }
 
         public override IResult Validate()
@@ -19,12 +28,6 @@
             if (!baseResult.IsSuccessful)
             {
                 return baseResult;
-            }
-
-            //// Will code more business here
-            if (A1 < 0)
-            {
-                return Result.DataError;
             }
 
             return Result.Success;

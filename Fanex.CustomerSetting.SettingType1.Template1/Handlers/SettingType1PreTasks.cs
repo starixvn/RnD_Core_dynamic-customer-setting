@@ -33,11 +33,11 @@
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                var groupedCustomer = _memberGroupService.GetGroupedMembers(customers);
-                var ungroupedCustomer = GetUnGroupedMember(customers, groupedCustomer);
+                var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
+                var ungroupedMembers = GetUnGroupedMembers(customers, groupedMembers);
                 return new PreUpdateMultipleSettingResult
                     {
-                        CustomersNeedForUpdating = ungroupedCustomer,
+                        CustomersNeedForUpdating = ungroupedMembers,
                         Result = UpdateGroupedMembers(customers, uplineLevel.Value, settingType)
                     };
             }
@@ -51,20 +51,33 @@
         }
 
         private IResult UpdateGroupedMembers(
-            IEnumerable<Customer> customers,
+            IEnumerable<Customer> members,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
-            var result = _memberGroupService.UpdateGroupedMembersSetting(customers, uplineLevel, settingType);
+            var result = _memberGroupService.UpdateGroupedMembersSetting(members, uplineLevel, settingType);
 
             return result;
         }
 
-        private IEnumerable<Customer> GetUnGroupedMember(
-            IEnumerable<Customer> originalCustomers,
-            IEnumerable<Customer> groupedCustomers)
+        private IEnumerable<Customer> GetUnGroupedMembers(
+            IEnumerable<Customer> originalMembers,
+            IEnumerable<Customer> groupedMembers)
         {
-            return originalCustomers.Except(groupedCustomers);
+            return originalMembers.Except(groupedMembers, new CustomerComparer());
+        }
+
+        private class CustomerComparer : IEqualityComparer<Customer>
+        {
+            public bool Equals(Customer firstCustomer, Customer secondCustomer)
+            {
+                return firstCustomer.Id == secondCustomer.Id;
+            }
+
+            public int GetHashCode(Customer hashCode)
+            {
+                return hashCode.Id.GetHashCode();
+            }
         }
     }
 }

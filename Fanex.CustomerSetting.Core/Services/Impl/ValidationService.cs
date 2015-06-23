@@ -152,7 +152,7 @@
             var productSettingTypes = _productService.GetProductSettingTypes(productId);
             foreach (var customerSettingType in customerSettingTypes)
             {
-                if (!productSettingTypes.Where(stt => stt.Id == customerSettingType.Id).Any())
+                if (!productSettingTypes.Any(stt => stt.Id == customerSettingType.Id))
                 {
                     return Result.AccessDenied;
                 }
