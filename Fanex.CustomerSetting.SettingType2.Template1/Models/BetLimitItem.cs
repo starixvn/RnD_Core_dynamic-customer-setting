@@ -2,6 +2,7 @@
 {
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.SettingType2.Template1.Constants;
 
     public class BetLimitItem : SportTypeBetTypeSettingItem
     {
@@ -21,6 +22,38 @@
             if (!baseResult.IsSuccessful)
             {
                 return baseResult;
+            }
+
+            if (MinBet == 0
+                && MaxBet == 0
+                && MaxPerMatch == 0)
+            {
+                return Result.Success;
+            }
+
+            if (MinBet < 0)
+            {
+                return new Result(SettingType2ErrorCodes.MinBetIsNegative);
+            }
+
+            if (MaxBet < 0)
+            {
+                return new Result(SettingType2ErrorCodes.MaxBetIsNegative);
+            }
+
+            if (MaxPerMatch < 0)
+            {
+                return new Result(SettingType2ErrorCodes.MaxPerMatchIsNegative);
+            }
+
+            if (MinBet > MaxBet)
+            {
+                return new Result(SettingType2ErrorCodes.MinBetIsGreaterThanMaxBet);
+            }
+
+            if (MaxBet > MaxPerMatch)
+            {
+                return new Result(SettingType2ErrorCodes.MaxBetIsGreaterThanMaxPerMatch);
             }
 
             return Result.Success;
