@@ -26,7 +26,6 @@
         private ISettingContext _settingContext;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
-        private ISettingDataAccessFactory _settingDataAccessFactory;
         private ISettingDataAccess _settingDataAccess;
         private SettingPreTasks _settingPreTasksHandler;
         private SettingPostTasks _settingPostTasksHandler;
@@ -39,7 +38,6 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
-            _settingDataAccessFactory = Substitute.For<ISettingDataAccessFactory>();
             _settingDataAccess = Substitute.For<ISettingDataAccess>();
             _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>(_settingContext);
             _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_settingContext);
@@ -190,8 +188,7 @@
         {
             var customerSettingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
             _settingDataAccess.GetCustomerSettingType(Arg.Any<User>(), settingQuery).Returns(customerSettingType);
-            _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
-            _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
+            _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
         [Test]
@@ -321,8 +318,7 @@
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>()).Returns(Result.Success);
-            _settingDataAccessFactory.Create(Arg.Any<CustomerLevel>()).Returns(_settingDataAccess);
-            _settingResolver.ResolveSettingDataAccessFactory(Arg.Any<SettingType>()).Returns(_settingDataAccessFactory);
+            _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
         [Test]

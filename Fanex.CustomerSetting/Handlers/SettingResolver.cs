@@ -10,11 +10,11 @@
     {
         private const string CacheKeyFormat = "{0}_{1}";
         private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
-        private const string DataAccessFactoryTypeFormat = "{0}.DataAccesses.SettingType{1}DataAccessFactory";
+        private const string DataAccessTypeFormat = "{0}.DataAccesses.SettingType{1}DataAccess";
         private const string SettingPreTasksTypeFormat = "{0}.Handlers.SettingType{1}PreTasks";
         private const string SettingPostTasksTypeFormat = "{0}.Handlers.SettingType{1}PostTasks";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
-        private static Dictionary<string, ISettingDataAccessFactory> _settingDataAccessFactoriesCached = new Dictionary<string, ISettingDataAccessFactory>();
+        private static Dictionary<string, ISettingDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingDataAccess>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksListCached = new Dictionary<string, SettingPostTasks>();
         private readonly ISettingContext _settingContext;
@@ -24,37 +24,37 @@
             _settingContext = settingContext;
         }
 
-        public ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType)
+        public ISettingDataAccess ResolveSettingDataAccess(SettingType settingType)
         {
-            ISettingDataAccessFactory settingDataAccessFactory = null;
+            ISettingDataAccess settingDataAccess = null;
             var cacheKey = GenerateCacheKey(settingType);
-            if (SettingResolver._settingDataAccessFactoriesCached.ContainsKey(cacheKey))
+            if (SettingResolver._settingDataAccessesCached.ContainsKey(cacheKey))
             {
-                settingDataAccessFactory = GetSettingDataAccessFactoryFromCache(cacheKey);
+                settingDataAccess = GetSettingDataAccessFromCache(cacheKey);
             }
             else
             {
-                settingDataAccessFactory = CreateSettingDataAccessInstanceAndCache(settingType, cacheKey);
+                settingDataAccess = CreateSettingDataAccessInstanceAndCache(settingType, cacheKey);
             }
 
-            return settingDataAccessFactory;
+            return settingDataAccess;
         }
 
-        private ISettingDataAccessFactory GetSettingDataAccessFactoryFromCache(string cacheKey)
+        private ISettingDataAccess GetSettingDataAccessFromCache(string cacheKey)
         {
-            return SettingResolver._settingDataAccessFactoriesCached[cacheKey];
+            return SettingResolver._settingDataAccessesCached[cacheKey];
         }
 
-        private ISettingDataAccessFactory CreateSettingDataAccessInstanceAndCache(SettingType settingType, string cacheKey)
+        private ISettingDataAccess CreateSettingDataAccessInstanceAndCache(SettingType settingType, string cacheKey)
         {
-            ISettingDataAccessFactory settingDataAccessFactory = null;
-            string fullTypeName = GetFullTypeName(DataAccessFactoryTypeFormat, settingType.Id, settingType.SettingTemplate);
+            ISettingDataAccess settingDataAccessFactory = null;
+            string fullTypeName = GetFullTypeName(DataAccessTypeFormat, settingType.Id, settingType.SettingTemplate);
             Type settingDataAccessFactoryType = Type.GetType(fullTypeName);
 
             if (settingDataAccessFactoryType != null)
             {
-                settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingDataAccessFactory;
-                SettingResolver._settingDataAccessFactoriesCached.Add(cacheKey, settingDataAccessFactory);
+                settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingDataAccess;
+                SettingResolver._settingDataAccessesCached.Add(cacheKey, settingDataAccessFactory);
             }
 
             return settingDataAccessFactory;

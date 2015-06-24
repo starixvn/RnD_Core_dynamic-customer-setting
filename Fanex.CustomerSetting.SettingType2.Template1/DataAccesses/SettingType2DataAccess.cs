@@ -14,7 +14,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using Fanex.Data;
 
-    public class BetLimitDataAccess : BaseDataAccess, ISettingDataAccess
+    public class SettingType2DataAccess : BaseDataAccess, ISettingDataAccess
     {
         public SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
         {

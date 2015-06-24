@@ -5,7 +5,7 @@
 
     public interface ISettingResolver
     {
-        ISettingDataAccessFactory ResolveSettingDataAccessFactory(SettingType settingType);
+        ISettingDataAccess ResolveSettingDataAccess(SettingType settingType);
 
         SettingPreTasks ResolveSettingPreTasks(SettingType settingType);
 

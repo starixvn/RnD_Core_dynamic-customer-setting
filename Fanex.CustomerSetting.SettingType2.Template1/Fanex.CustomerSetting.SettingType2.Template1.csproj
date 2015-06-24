@@ -67,8 +67,7 @@
   <ItemGroup>
     <Compile Include="Constants\SettingType2Constants.cs" />
     <Compile Include="Constants\SettingType2ErrorCodes.cs" />
-    <Compile Include="DataAccesses\BetLimitDataAccess.cs" />
-    <Compile Include="DataAccesses\SettingType2DataAccessFactory.cs" />
+    <Compile Include="DataAccesses\SettingType2DataAccess.cs" />
     <Compile Include="Dtos\BetLimitItemDto.cs" />
     <Compile Include="Models\BetLimitItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

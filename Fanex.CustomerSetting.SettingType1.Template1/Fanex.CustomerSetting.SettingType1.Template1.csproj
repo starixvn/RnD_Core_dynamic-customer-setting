@@ -72,11 +72,9 @@
   <ItemGroup>
     <Compile Include="Constants\SettingType1Constants.cs" />
     <Compile Include="Constants\SettingType1ErrorCodes.cs" />
-    <Compile Include="DataAccesses\BasePositionTakingDataAccess.cs" />
+    <Compile Include="DataAccesses\SettingType1DataAccess.cs" />
     <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
-    <Compile Include="DataAccesses\MasterPositionTakingDataAccess.cs" />
     <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />
-    <Compile Include="DataAccesses\SettingType1DataAccessFactory.cs" />
     <Compile Include="Dtos\UpdateMultipleMemberPositionTakingParams.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
     <Compile Include="Models\MasterPositionTaking.cs" />

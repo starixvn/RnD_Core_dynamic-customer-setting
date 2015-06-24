@@ -11,7 +11,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class BaseCommissionDataAccess : BaseDataAccess, ISettingDataAccess
+    public class SettingType3DataAccess : BaseDataAccess, ISettingDataAccess
     {
         public SettingType GetCustomerSettingType(
             User actor, 

@@ -121,8 +121,7 @@
 
         private SettingType GetCustomerSettingType(SettingQuery settingQuery, SettingType productSettingType)
         {
-            var settingDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(productSettingType);
-            var settingDataAccess = settingDataAccessFactory.Create(settingQuery.CustomerLevel);
+            var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
             var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery);
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
@@ -218,8 +217,7 @@
 
         private IResult UpdateSetting(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
-            var settingTypeDataAccessFactory = _settingResolver.ResolveSettingDataAccessFactory(settingType);
-            var settingTypeDataAccess = settingTypeDataAccessFactory.Create(customer.Level);
+            var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
             var result = settingTypeDataAccess.UpdateCustomerSetting(_settingContext, customer, settingType, uplineLevel);
 
             return result;
