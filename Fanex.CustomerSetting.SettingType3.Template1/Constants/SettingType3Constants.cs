@@ -1,0 +1,7 @@
+﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Constants
+{
+    internal static class SettingType3Constants
+    {
+        public const byte SettingType = 3;
+    }
+}

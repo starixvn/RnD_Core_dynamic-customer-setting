@@ -31,16 +31,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperSettingSelect";
+                    return "Acc_CustSetting_SuperPTSelect";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterSettingSelect";
+                    return "Acc_CustSetting_MasterPTSelect";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentSettingSelect";
+                    return "Acc_CustSetting_AgentPTSelect";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberSettingSelect";
+                    return "Acc_CustSetting_MemberPTSelect";
 
                 default:
                     throw new ArgumentOutOfRangeException("This customer level is not supported");

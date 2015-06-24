@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Web.Test", "Fanex.CustomerSetting.Web.Test\Fanex.CustomerSetting.Web.Test.csproj", "{FE935E40-CAA1-49C1-885D-855849C6B6F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType4.Template1", "Fanex.CustomerSetting.SettingType4.Template1\Fanex.CustomerSetting.SettingType4.Template1.csproj", "{17008F66-76C2-482C-B8E0-E838F809EE53}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Site", "Fanex.CustomerSetting.Site\Fanex.CustomerSetting.Site.csproj", "{2E959550-A3B1-40E8-981F-EB95D4D32EA7}"
 EndProject
 Global
@@ -98,6 +100,10 @@ Global
 		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17008F66-76C2-482C-B8E0-E838F809EE53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17008F66-76C2-482C-B8E0-E838F809EE53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17008F66-76C2-482C-B8E0-E838F809EE53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17008F66-76C2-482C-B8E0-E838F809EE53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU

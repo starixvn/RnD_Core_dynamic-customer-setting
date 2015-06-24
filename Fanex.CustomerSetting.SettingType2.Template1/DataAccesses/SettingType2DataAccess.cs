@@ -22,7 +22,8 @@
             IEnumerable<BetLimitItemDto> betLimitItemDtoList = null;
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                betLimitItemDtoList = objectDb.Query<BetLimitItemDto>(GetSPParamsForGettingBetLimit(settingQuery));
+                var parameterValues = GetSPParamsForGettingSettingTypeSetting(settingQuery, SettingType2Constants.SettingType);
+                betLimitItemDtoList = objectDb.Query<BetLimitItemDto>(parameterValues);
             }
 
             return new SettingType
@@ -55,44 +56,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperSettingSelect";
+                    return "Acc_CustSetting_SuperBetLimitSelect";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterSettingSelect";
+                    return "Acc_CustSetting_MasterBetLimitSelect";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentSettingSelect";
+                    return "Acc_CustSetting_AgentBetLimitSelect";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberSettingSelect";
-
-                default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
-            }
-        }
-
-        private dynamic GetSPParamsForGettingBetLimit(SettingQuery settingQuery)
-        {
-            switch (settingQuery.CustomerLevel)
-            {
-                case CustomerLevel.Super:
-                case CustomerLevel.Master:
-                case CustomerLevel.Agent:
-                    return new
-                    {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
-                        SettingType = SettingType2Constants.SettingType
-                    };
-
-                case CustomerLevel.Member:
-                    return new
-                    {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
-                        RoleId = settingQuery.UplineLevel.Value,
-                        SettingType = SettingType2Constants.SettingType
-                    };
+                    return "Acc_CustSetting_MemberBetLimitSelect";
 
                 default:
                     throw new ArgumentOutOfRangeException("This customer level is not supported");

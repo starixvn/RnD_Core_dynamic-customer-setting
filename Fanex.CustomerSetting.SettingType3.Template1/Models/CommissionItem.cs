@@ -10,7 +10,7 @@
 
         public decimal CommRate { get; set; }
 
-        public CommissionItem Constraint { get; set; }
+        public CommissionItem Upline { get; set; }
 
         public override IResult Validate()
         {

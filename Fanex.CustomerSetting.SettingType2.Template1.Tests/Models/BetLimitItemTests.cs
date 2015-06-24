@@ -58,7 +58,6 @@
                 MaxPerMatch = 12
             };
             
-
             //// Act
             var actualXmlFormatted = _betLimitItem.ToXml();
 

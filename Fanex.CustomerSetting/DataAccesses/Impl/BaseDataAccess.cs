@@ -3,7 +3,9 @@
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.Data;
 
     public class BaseDataAccess
@@ -39,6 +41,34 @@
                     Convert.ToInt32(outputParams["errcode"]),
                     Convert.ToString(outputParams["errmsg"]),
                     Convert.ToInt32(outputParams["msgtype"]));
+        }
+
+        protected dynamic GetSPParamsForGettingSettingTypeSetting(SettingQuery settingQuery, byte settingType)
+        {
+            switch (settingQuery.CustomerLevel)
+            {
+                case CustomerLevel.Super:
+                case CustomerLevel.Master:
+                case CustomerLevel.Agent:
+                    return new
+                    {
+                        CustId = settingQuery.CustomerId,
+                        ProductId = settingQuery.ProductId,
+                        SettingType = settingType
+                    };
+
+                case CustomerLevel.Member:
+                    return new
+                    {
+                        CustId = settingQuery.CustomerId,
+                        ProductId = settingQuery.ProductId,
+                        RoleId = settingQuery.UplineLevel.Value,
+                        SettingType = settingType
+                    };
+
+                default:
+                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+            }
         }
     }
 }

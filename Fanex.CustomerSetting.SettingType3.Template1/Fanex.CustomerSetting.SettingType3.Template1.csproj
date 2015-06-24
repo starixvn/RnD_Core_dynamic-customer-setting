@@ -65,8 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\SettingType3Constants.cs" />
     <Compile Include="Constants\SettingType3ErrorCodes.cs" />
     <Compile Include="DataAccesses\SettingType3DataAccess.cs" />
+    <Compile Include="Dtos\CommissionDto.cs" />
     <Compile Include="Models\CommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
