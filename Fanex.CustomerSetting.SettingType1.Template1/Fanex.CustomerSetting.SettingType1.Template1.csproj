@@ -107,7 +107,6 @@
     <Content Include="Fanex.CustomerSetting.SettingType1.Template1.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

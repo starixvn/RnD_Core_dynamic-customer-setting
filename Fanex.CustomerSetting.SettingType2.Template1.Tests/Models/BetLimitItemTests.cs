@@ -44,5 +44,27 @@
             //// Assert
             Assert.AreEqual(errorCode, actualResult.Code);
         }
+
+        [Test]
+        public void ToXml_ReturnFormattedXml()
+        {
+            //// Arrange
+            _betLimitItem = new BetLimitItem
+            {
+                SportTypeId = 1,
+                BetTypeId = 1,
+                MinBet = 10,
+                MaxBet = 11,
+                MaxPerMatch = 12
+            };
+            
+
+            //// Act
+            var actualXmlFormatted = _betLimitItem.ToXml();
+
+            //// Assert
+            var expectedXmlFormatted = "<BetLimit SportType=\"1\" BetType=\"1\" MinBet=\"10\" MaxBet=\"11\" MaxPerMatch=\"12\"/>";
+            Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
+        }
     }
 }

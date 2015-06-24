@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType2.Template1.Tests", "Fanex.CustomerSetting.SettingType2.Template1.Tests\Fanex.CustomerSetting.SettingType2.Template1.Tests.csproj", "{5F4DB691-FA74-40A9-9C92-211926760CE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3.Template1", "Fanex.CustomerSetting.SettingType3.Template1\Fanex.CustomerSetting.SettingType3.Template1.csproj", "{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{5F4DB691-FA74-40A9-9C92-211926760CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F4DB691-FA74-40A9-9C92-211926760CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F4DB691-FA74-40A9-9C92-211926760CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

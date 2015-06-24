@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Constants
 {
-    public static class SettingType1ErrorCodes
+    internal static class SettingType1ErrorCodes
     {
         //////// Edit Super
         public const int MasterMaxPTIsGreaterThanSuperMaxPT = 1001;

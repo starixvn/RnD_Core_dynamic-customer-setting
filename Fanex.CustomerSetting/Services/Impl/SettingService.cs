@@ -9,7 +9,6 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
-    using Fanex.CustomerSetting.Handlers.Impl;
     using Fanex.CustomerSetting.Models;
     using Fanex.NAP.Framework.Data;
 
