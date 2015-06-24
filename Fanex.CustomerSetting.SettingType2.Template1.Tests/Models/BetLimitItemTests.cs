@@ -27,7 +27,7 @@
         [TestCase(-1, 2, 3, 7003)]
         [TestCase(1, -2, 3, 7004)]
         [TestCase(1, 2, -3, 7005)]
-        public void Validate_InvalidPositionTaking_ReturnErrorCode(
+        public void Validate_InvalidBetLimit_ReturnErrorCode(
             decimal minBet,
             decimal maxBet,
             decimal maxPerMatch,

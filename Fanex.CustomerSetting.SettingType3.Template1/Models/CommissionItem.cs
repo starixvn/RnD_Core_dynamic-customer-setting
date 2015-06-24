@@ -6,7 +6,7 @@
 
     public class CommissionItem : SportTypeBetTypeSettingItem
     {
-        private const string CommissionXmlFormat = "<Discount {0} Discount=\"{1}\" />";
+        private const string CommissionXmlFormat = "<Discount {0} Discount=\"{1}\"/>";
 
         public decimal CommRate { get; set; }
 

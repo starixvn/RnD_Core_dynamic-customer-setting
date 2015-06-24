@@ -6,6 +6,8 @@
 
     public class SettingType
     {
+        private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
+
         public byte Id { get; set; }
 
         public string Name { get; set; }
@@ -18,7 +20,9 @@
 
         public virtual string ToXml()
         {
-            return string.Empty;
+            var settingItemsXml = string.Join(string.Empty, SettingItems.Select(settingItem => settingItem.ToXml()));
+
+            return string.Format(SettingTypeXmlFormat, settingItemsXml);
         }
 
         public IResult Validate()

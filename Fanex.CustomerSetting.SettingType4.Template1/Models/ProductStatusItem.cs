@@ -6,7 +6,7 @@
 
     public class ProductStatusItem : SportTypeBetTypeSettingItem
     {
-        private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"2\" />";
+        private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
 
         public bool IsDisabled { get; set; }
 
