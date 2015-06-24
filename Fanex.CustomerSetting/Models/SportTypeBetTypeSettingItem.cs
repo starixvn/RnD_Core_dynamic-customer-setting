@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Dtos.Results;
 
-    public abstract class SportTypeBetTypeSettingItem : ISettingItem
+    public class SportTypeBetTypeSettingItem : ISettingItem
     {
         private const string SportTypeBetTypeXmlFormat = "SportType=\"{0}\" BetType=\"{1}\"";
 
@@ -13,8 +13,6 @@
         public short BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
-
-        public byte SettingLevel { get; set; }
 
         public virtual IResult Validate()
         {

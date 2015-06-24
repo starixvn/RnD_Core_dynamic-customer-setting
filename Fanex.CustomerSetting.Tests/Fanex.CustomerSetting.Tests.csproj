@@ -85,6 +85,8 @@
     <Compile Include="Dtos\Results\ResultTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
+    <Compile Include="Models\SettingTypeTests.cs" />
+    <Compile Include="Models\SportTypeBetTypeSettingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\SettingServiceTests.cs" />
