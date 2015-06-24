@@ -86,3 +86,5 @@ UpgradeLog*.XML
 
 #Grunt
 node_modules
+bower_components
+**/Typings/**/

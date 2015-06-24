@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../../../../../typings/tsd.d.ts" />
 class AppSetting {
     static defaultLanguage: string = 'en-US';
     static commonErrorCodes = {

@@ -208,11 +208,20 @@
     <Content Include="Content\Libraries\Bootstrap\CSS\bootstrap.css" />
     <Content Include="Content\Libraries\Bootstrap\CSS\bootstrap.min.css" />
     <Content Include="Content\Libraries\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\site.css">
+      <DependentUpon>site.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
+    <Content Include="Gruntfile.js" />
     <Content Include="Scripts\Libraries\AngularJs\angular.js" />
     <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Libraries\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\Libraries\JQuery\jquery-1.11.2.min.js" />
+    <Content Include="Scripts\Libraries\Modernizr\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -229,11 +238,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\CustomerSetting\Scripts\App\Core\Controllers\" />
     <Folder Include="Areas\CustomerSetting\Scripts\App\Core\Directives\" />
-    <Folder Include="Areas\CustomerSetting\Scripts\App\Core\Views\" />
+    <Folder Include="Areas\CustomerSetting\Scripts\App\Core\Templates\" />
     <Folder Include="Areas\CustomerSetting\Scripts\App\SettingType1.Template1\Directives\" />
     <Folder Include="Areas\CustomerSetting\Scripts\App\SettingType1.Template1\Filters\" />
     <Folder Include="Areas\CustomerSetting\Scripts\App\SettingType1.Template1\Services\" />
-    <Folder Include="Areas\CustomerSetting\Scripts\App\SettingType1.Template1\Views\" />
+    <Folder Include="Areas\CustomerSetting\Scripts\App\SettingType1.Template1\Templates\" />
     <Folder Include="Areas\CustomerSetting\Scripts\Specs\Core\Controllers\" />
     <Folder Include="Areas\CustomerSetting\Scripts\Specs\Core\Directives\" />
     <Folder Include="Areas\CustomerSetting\Scripts\Specs\Core\Filters\" />
@@ -262,6 +271,13 @@
     <Content Include="Areas\CustomerSetting\Scripts\Libraries\AngularJs\angular.min.js.map" />
     <Content Include="Areas\CustomerSetting\Scripts\Libraries\Fanex\fanex-blockui.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Content\site.scss" />
+    <Content Include="Content\site.css.map">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="tsd.json" />
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>
@@ -297,14 +313,7 @@
     <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\App\Core\Models\common-enums.ts" />
     <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\App\Core\Services\resource-service.ts" />
     <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Libraries\Fanex\fanex-blockui.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-animate.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-cookies.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-mocks.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-resource.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-route.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular-sanitize.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\AngularJs\angular.d.ts" />
-    <TypeScriptCompile Include="Areas\CustomerSetting\Scripts\Typings\JQuery\jquery.d.ts" />
+    <TypeScriptCompile Include="Typings\tsd.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

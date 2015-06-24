@@ -1,5 +1,31 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+<div class="container">
+    <h3>Customer Setting Renovation Demo Site</h3>
+    <div class="form-area">
+        <div class="form-tab">
+            <h5></h5>
+        </div>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="control-label">Role Type</label>
+                <select class="form-control"
+                        data-ng-options="item.value as item.name for item in roles"
+                        data-ng-model="actorInfo.roleId"
+                        data-ng-change="changeRole()"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Actor ID</label>
+                <input type="number" maxlength="15" data-ng-model="actorInfo.actorId" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sub-account ID</label>
+                <input type="number" maxlength="15" data-ng-model="actorInfo.subAccId" />
+            </div>
+        </form>
+    </div>
+    <div class="content">
+        <iframe id="setting-content" />
+    </div>
+</div>
