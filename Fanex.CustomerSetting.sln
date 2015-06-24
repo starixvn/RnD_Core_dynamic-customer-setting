@@ -44,6 +44,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3.Template1", "Fanex.CustomerSetting.SettingType3.Template1\Fanex.CustomerSetting.SettingType3.Template1.csproj", "{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Web.Test", "Fanex.CustomerSetting.Web.Test\Fanex.CustomerSetting.Web.Test.csproj", "{FE935E40-CAA1-49C1-885D-855849C6B6F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Site", "Fanex.CustomerSetting.Site\Fanex.CustomerSetting.Site.csproj", "{2E959550-A3B1-40E8-981F-EB95D4D32EA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +94,14 @@ Global
 		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE935E40-CAA1-49C1-885D-855849C6B6F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +111,6 @@ Global
 		{CE9918D0-67A4-4B5C-8E01-5F15A01E1130} = {45BEE070-BE51-4583-B04F-EE1A570A6F8B}
 		{B32FBDD1-6605-4452-B424-19431AFC37E2} = {45BEE070-BE51-4583-B04F-EE1A570A6F8B}
 		{5F4DB691-FA74-40A9-9C92-211926760CE4} = {45BEE070-BE51-4583-B04F-EE1A570A6F8B}
+		{FE935E40-CAA1-49C1-885D-855849C6B6F9} = {45BEE070-BE51-4583-B04F-EE1A570A6F8B}
 	EndGlobalSection
 EndGlobal
