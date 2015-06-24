@@ -12,7 +12,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
 
-    public class SettingType1DataAccess : BaseDataAccess, ISettingDataAccess
+    public class SettingType1DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
         public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
@@ -111,7 +111,7 @@
             }
         }
 
-        public virtual IResult UpdateCustomerSetting(
+        public virtual IResult UpdateCustomerSettingType(
             ISettingContext settingContext, 
             Customer customer, 
             SettingType settingType, 

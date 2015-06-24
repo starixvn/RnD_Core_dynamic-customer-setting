@@ -26,7 +26,7 @@
         private ISettingContext _settingContext;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
-        private ISettingDataAccess _settingDataAccess;
+        private ISettingTypeDataAccess _settingDataAccess;
         private SettingPreTasks _settingPreTasksHandler;
         private SettingPostTasks _settingPostTasksHandler;
 
@@ -38,7 +38,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
-            _settingDataAccess = Substitute.For<ISettingDataAccess>();
+            _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
             _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>(_settingContext);
             _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_settingContext);
 
@@ -107,7 +107,7 @@
         }
 
         [Test]
-        public void GetCustomerSetting_ExecuteValidateSettingQueryMethodOnValidationService()
+        public void GetCustomerSetting_ExecuteValidateQuerySettingMethodOnValidationService()
         {
             //// Arrange
             QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
@@ -282,7 +282,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_ExecuteValidateSettingCommandMethodOnValidationService()
+        public void UpdateCustomerSetting_ExecuteValidateUpdatingSettingMethodOnValidationService()
         {
             //// Arrange
             UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -313,7 +313,7 @@
         private void SetupSettingTypeDataAccessStubForCommand(UpdatingSettingParams updatingParams)
         {
             var customerSettingType = FakeObjectManager.CreateSettingType(1);
-            _settingDataAccess.UpdateCustomerSetting(
+            _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
@@ -337,7 +337,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_ExecuteUpdateSettingTypeOnSettingDataAccess()
+        public void UpdateCustomerSetting_ExecuteUpdateCustomerSettingTypeOnSettingDataAccess()
         {
             //// Arrange
             UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -348,7 +348,7 @@
             _settingService.UpdateCustomerSetting(updatingParams);
 
             //// Assert
-            _settingDataAccess.Received(updatingParams.Setting.SettingTypes.Count()).UpdateCustomerSetting(
+            _settingDataAccess.Received(updatingParams.Setting.SettingTypes.Count()).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
@@ -360,10 +360,10 @@
         #region Update Multiple Customer Setting Tests
 
         [Test]
-        public void UpdateMultipleCustomerSetting_updatingMultipleSettingParamsIsNull_ThrowArgumentNullException()
+        public void UpdateMultipleCustomerSetting_UpdateMultipleSettingParamsIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = null;
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -375,7 +375,7 @@
         public void UpdateMultipleCustomerSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             updatingMultipleSettingParams.Setting = null;
 
             //// Act
@@ -388,7 +388,7 @@
         public void UpdateMultipleCustomerSetting_NumberOfCustomerIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             updatingMultipleSettingParams.Customers = new List<Customer>();
 
             //// Act
@@ -401,7 +401,7 @@
         public void UpdateMultipleCustomerSetting_NumberOfSettingTypesIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             updatingMultipleSettingParams.Setting.SettingTypes = new List<SettingType>();
 
             //// Act
@@ -411,10 +411,10 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_ExecuteValidateupdatingMultipleSettingParamsMethodOnValidationService()
+        public void UpdateMultipleCustomerSetting_ExecuteValidateUpdatingMultipleSettingMethodOnValidationService()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
 
             //// Act
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams);
@@ -427,7 +427,7 @@
         public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
 
@@ -445,7 +445,7 @@
         public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
 
@@ -460,10 +460,10 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_ExecuteUpdateSettingTypeOnSettingDataAccess()
+        public void UpdateMultipleCustomerSetting_ExecuteUpdateCustomerSettingTypeOnSettingDataAccess()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
 
@@ -473,7 +473,7 @@
             //// Assert
             var numOfSettingTypes = updatingMultipleSettingParams.Setting.SettingTypes.Count();
             var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParams.Customers.Count();
-            _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSetting(
+            _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),

@@ -34,13 +34,13 @@
             _productService = productService ?? new ProductService();
         }
 
-        public IResult ValidateQuerySetting(QuerySettingParams settingQueryParams)
+        public IResult ValidateQuerySetting(QuerySettingParams queryParams)
         {
-            Check.Argument.IsNotNull(settingQueryParams, "settingQueryParams");
-            Check.Argument.IsNotNegativeOrZero(settingQueryParams.CustomerId, "settingQueryParams.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)settingQueryParams.CustomerLevel, "settingQueryParams.CustomerLevel");
+            Check.Argument.IsNotNull(queryParams, "queryParams");
+            Check.Argument.IsNotNegativeOrZero(queryParams.CustomerId, "queryParams.CustomerId");
+            Check.Argument.IsNotNegativeOrZero((byte)queryParams.CustomerLevel, "queryParams.CustomerLevel");
 
-            return ValidateViewingPermission(settingQueryParams.CustomerId, settingQueryParams.CustomerLevel);
+            return ValidateViewingPermission(queryParams.CustomerId, queryParams.CustomerLevel);
         }
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel)
@@ -177,19 +177,19 @@
             return Result.Success;
         }
 
-        public IResult ValidateUpdatingMultipleSetting(UpdateMultipleSettingParams updatingMultipleSettingParams)
+        public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParams updatingMultipleParams)
         {
-            CheckupdatingMultipleSettingParamsArguments(updatingMultipleSettingParams);
+            CheckUpdatingMultipleSettingArguments(updatingMultipleParams);
 
-            var commandValidationResult = ValidateUpdatingSetting(updatingMultipleSettingParams);
-            if (!commandValidationResult.IsSuccessful)
+            var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParams);
+            if (!updatingSettingValidationResult.IsSuccessful)
             {
-                return commandValidationResult;
+                return updatingSettingValidationResult;
             }
 
             var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
-                updatingMultipleSettingParams.Customers,
-                updatingMultipleSettingParams.Setting.Customer.Level);
+                updatingMultipleParams.Customers,
+                updatingMultipleParams.Setting.Customer.Level);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;
@@ -198,7 +198,7 @@
             return Result.Success;
         }
 
-        private void CheckupdatingMultipleSettingParamsArguments(UpdateMultipleSettingParams updatingMultipleParams)
+        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParams updatingMultipleParams)
         {
             Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
             Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");

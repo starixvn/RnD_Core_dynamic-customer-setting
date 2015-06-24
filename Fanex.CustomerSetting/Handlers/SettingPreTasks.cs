@@ -16,26 +16,26 @@
 
         protected ISettingContext SettingContext { get; set; }
 
-        public virtual void PreGetSetting(QuerySettingParams settingQuery)
+        public virtual void PreGetCustomerSettingType(QuerySettingParams queryParams)
         {
-            throw new NotImplementedException("Pre-Get Setting is not implemented");
+            throw new NotImplementedException("Pre-Get Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PreUpdateSetting(
+        public virtual IResult PreUpdateCustomerSettingType(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            throw new NotImplementedException("Pre-Update Setting is not implemented");
+            throw new NotImplementedException("Pre-Update Customer Setting Type is not implemented");
         }
 
-        public virtual PreUpdateMultipleSettingResult PreUpdateMultipleSetting(
+        public virtual PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            throw new NotImplementedException("Pre-Update Multiple Setting is not implemented");
+            throw new NotImplementedException("Pre-Update Multiple Customer Setting Type is not implemented");
         }
     }
 }

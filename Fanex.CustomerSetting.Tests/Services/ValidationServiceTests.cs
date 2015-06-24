@@ -478,7 +478,7 @@
         public void ValidateupdatingMultipleSettingParams_updatingMultipleSettingParamsIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleSettingParams updatingMultipleSettingParams = null;
+            UpdatingMultipleSettingParams updatingMultipleSettingParams = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -490,7 +490,7 @@
         public void ValidateupdatingMultipleSettingParams_CustomersIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleSettingParams settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParams settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             settingCommand.Customers = null;
 
             //// Act

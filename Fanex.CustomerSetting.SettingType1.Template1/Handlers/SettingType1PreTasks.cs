@@ -25,7 +25,7 @@
             _memberGroupService = memberGroupService ?? new MemberGroupService();
         }
 
-        public override PreUpdateMultipleSettingResult PreUpdateMultipleSetting(
+        public override PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
@@ -35,7 +35,7 @@
             {
                 var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
                 var ungroupedMembers = GetUnGroupedMembers(customers, groupedMembers);
-                return new PreUpdateMultipleSettingResult
+                return new PreUpdateMultipleCustomersSettingTypeResult
                     {
                         CustomersNeedForUpdating = ungroupedMembers,
                         Result = UpdateGroupedMembers(customers, uplineLevel.Value, settingType)
@@ -43,7 +43,7 @@
             }
             else
             {
-                return new PreUpdateMultipleSettingResult
+                return new PreUpdateMultipleCustomersSettingTypeResult
                 {
                     Result = Result.Success
                 };

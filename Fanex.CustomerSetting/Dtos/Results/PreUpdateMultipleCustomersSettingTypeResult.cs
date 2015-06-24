@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models;
 
-    public class PreUpdateMultipleSettingResult
+    public class PreUpdateMultipleCustomersSettingTypeResult
     {
         public IEnumerable<Customer> CustomersNeedForUpdating { get; set; }
 

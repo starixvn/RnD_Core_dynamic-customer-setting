@@ -90,14 +90,14 @@
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Dtos\Results\PreUpdateMultipleSettingResult.cs" />
+    <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
     <Compile Include="Criteria\CustomerQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
-    <Compile Include="DataAccesses\ISettingDataAccess.cs" />
+    <Compile Include="DataAccesses\ISettingTypeDataAccess.cs" />
     <Compile Include="DataAccesses\IValidationDataAccess.cs" />
     <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />

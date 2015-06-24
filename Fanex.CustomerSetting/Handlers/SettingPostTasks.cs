@@ -16,29 +16,29 @@
 
         protected ISettingContext SettingContext { get; set; }
 
-        public virtual SettingType PostGetSetting(
+        public virtual SettingType PostGetCustomerSettingType(
             QuerySettingParams queryParams,
             SettingType settingType)
         {
-            throw new NotImplementedException("Post-Get Setting is not implemented");
+            throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PostUpdateSetting(
+        public virtual IResult PostUpdateCustomerSettingType(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            throw new NotImplementedException("Post-Update Setting is not implemented");
+            throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PostUpdateMultipleSetting(
+        public virtual IResult PostUpdateMultipleCustomersSettingType(
             IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            throw new NotImplementedException("Post-Update Multiple Setting is not implemented");
+            throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");
         }
     }
 }

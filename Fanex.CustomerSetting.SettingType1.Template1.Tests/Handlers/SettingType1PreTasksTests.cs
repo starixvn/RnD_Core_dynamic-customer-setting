@@ -34,7 +34,7 @@
         public void PreUpdateMultipleSetting_CustomerIsNotMember_ReturnSuccessResult(CustomerLevel customerLevel)
         {
             //// Act
-            var result = _settingType1PreTasks.PreUpdateMultipleSetting(null, customerLevel, null, null);
+            var result = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(null, customerLevel, null, null);
 
             //// Assert
             Assert.IsTrue(result.Result.IsSuccessful);
@@ -54,7 +54,7 @@
             };
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleSetting(members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             _memberGroupService.Received().GetGroupedMembers(members);
@@ -76,7 +76,7 @@
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleSetting(members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             _memberGroupService.Received().UpdateGroupedMembersSetting(
@@ -102,7 +102,7 @@
             _memberGroupService.UpdateGroupedMembersSetting(Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType).Returns(Result.Success);
 
             //// Act
-            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleSetting(members, customerLevel, settingType, uplineLevel);
+            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             Assert.AreEqual(1, actualPreTaskResult.CustomersNeedForUpdating.Count());

@@ -14,7 +14,7 @@
         private const string SettingPreTasksTypeFormat = "{0}.Handlers.SettingType{1}PreTasks";
         private const string SettingPostTasksTypeFormat = "{0}.Handlers.SettingType{1}PostTasks";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
-        private static Dictionary<string, ISettingDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingDataAccess>();
+        private static Dictionary<string, ISettingTypeDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingTypeDataAccess>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksCached = new Dictionary<string, SettingPostTasks>();
         private readonly ISettingContext _settingContext;
@@ -24,9 +24,9 @@
             _settingContext = settingContext;
         }
 
-        public ISettingDataAccess ResolveSettingDataAccess(SettingType settingType)
+        public ISettingTypeDataAccess ResolveSettingDataAccess(SettingType settingType)
         {
-            ISettingDataAccess settingDataAccess = null;
+            ISettingTypeDataAccess settingDataAccess = null;
             var cacheKey = GenerateCacheKey(settingType);
             if (SettingResolver._settingDataAccessesCached.ContainsKey(cacheKey))
             {
@@ -40,20 +40,20 @@
             return settingDataAccess;
         }
 
-        private ISettingDataAccess GetSettingDataAccessFromCache(string cacheKey)
+        private ISettingTypeDataAccess GetSettingDataAccessFromCache(string cacheKey)
         {
             return SettingResolver._settingDataAccessesCached[cacheKey];
         }
 
-        private ISettingDataAccess CreateSettingDataAccessInstanceAndCache(SettingType settingType, string cacheKey)
+        private ISettingTypeDataAccess CreateSettingDataAccessInstanceAndCache(SettingType settingType, string cacheKey)
         {
-            ISettingDataAccess settingDataAccessFactory = null;
+            ISettingTypeDataAccess settingDataAccessFactory = null;
             string fullTypeName = GetFullTypeName(DataAccessTypeFormat, settingType.Id, settingType.SettingTemplate);
             Type settingDataAccessFactoryType = Type.GetType(fullTypeName);
 
             if (settingDataAccessFactoryType != null)
             {
-                settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingDataAccess;
+                settingDataAccessFactory = Activator.CreateInstance(settingDataAccessFactoryType) as ISettingTypeDataAccess;
                 SettingResolver._settingDataAccessesCached.Add(cacheKey, settingDataAccessFactory);
             }
 

@@ -59,13 +59,13 @@
             };
         }
 
-        public static UpdateMultipleSettingParams CreateUpdatingMultipleSettingParams(
+        public static UpdatingMultipleSettingParams CreateUpdatingMultipleSettingParams(
             int customerId = 1,
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
-            return new UpdateMultipleSettingParams
+            return new UpdatingMultipleSettingParams
             {
                 Customers = new List<Customer>
                 {
