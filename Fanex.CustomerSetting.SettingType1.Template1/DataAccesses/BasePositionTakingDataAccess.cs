@@ -132,7 +132,7 @@
             return new
             {
                 UserId = settingContext.Actor.Id,
-                SubAccId = settingContext.SubAccount.Id,
+                SubAccId = settingContext.Actor.SubAccountId,
                 CustId = customer.Id,
                 Ip = settingContext.IP,
                 ErrCode = 0,

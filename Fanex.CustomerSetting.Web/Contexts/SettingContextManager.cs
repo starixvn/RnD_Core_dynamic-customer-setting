@@ -16,23 +16,18 @@
     {
         static SettingContextManager()
         {
-            var settingContext = new SettingContext();
-            settingContext.System = CustomerSettings.Settings.SystemId;
-            settingContext.Domain = CustomerSettings.Settings.Domain;
-
-            SettingContext = settingContext;
+            SettingContext = new SettingContext();
         }
 
         public static ISettingContext SettingContext { get; private set; }
 
-        public static void SetActor(User actor, User subAccount)
+        public static void SetActor(User actor)
         {
             Check.Argument.IsNotNull(actor, "actor");
             Check.Argument.IsNotNegativeOrZero(actor.Id, "actor.Id");
             Check.Argument.IsNotNegativeOrZero((byte)actor.Level, "actor.Level");
 
             SettingContext.Actor = actor;
-            SettingContext.SubAccount = subAccount ?? new User();
         }
 
         public static void SetLanguage(string language)

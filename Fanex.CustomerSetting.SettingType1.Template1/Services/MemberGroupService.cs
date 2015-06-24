@@ -48,7 +48,7 @@
                 CustIds = GetMemberIds(groupedMembers),
                 IP = _settingContext.IP,
                 UserId = _settingContext.Actor.Id,
-                SubAccId = _settingContext.SubAccount.Id,
+                SubAccId = _settingContext.Actor.SubAccountId,
                 UplineLevel = uplineLevel,
                 PositionTakingXml = settingType.ToXml()
             };

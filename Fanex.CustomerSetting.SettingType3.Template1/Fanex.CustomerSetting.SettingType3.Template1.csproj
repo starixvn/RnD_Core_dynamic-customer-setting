@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\SettingType3ErrorCodes.cs" />
+    <Compile Include="DataAccesses\BaseCommissionDataAccess.cs" />
     <Compile Include="DataAccesses\SettingType3DataAccessFactory.cs" />
     <Compile Include="Models\CommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

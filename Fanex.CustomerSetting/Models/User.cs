@@ -8,6 +8,8 @@
 
         public string Name { get; set; }
 
+        public int SubAccountId { get; set; }
+
         public UserLevel Level { get; set; }
     }
 }

@@ -122,7 +122,7 @@
                     parameters => parameters.CustIds == string.Join(",", members.Select(member => member.Id))
                         && parameters.UserId == _settingContext.Actor.Id
                         && parameters.UplineLevel == uplineLevel
-                        && parameters.SubAccId == _settingContext.SubAccount.Id
+                        && parameters.SubAccId == _settingContext.Actor.SubAccountId
                         && parameters.IP == _settingContext.IP
                         && parameters.PositionTakingXml == settingType.ToXml()));
         }

@@ -4,8 +4,6 @@
     {
         User Actor { get; set; }
 
-        User SubAccount { get; set; }
-
         string Language { get; set; }
 
         string IP { get; }
