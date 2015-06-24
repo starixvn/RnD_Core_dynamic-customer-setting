@@ -7,7 +7,7 @@
 
     public interface ISettingDataAccess
     {
-        SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery);
+        SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery);
 
         IResult UpdateCustomerSetting(ISettingContext settingContext, Customer customer, SettingType settingType, CustomerLevel? uplineLevel);
     }

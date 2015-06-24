@@ -6,10 +6,10 @@
 
     public interface ISettingService
     {
-        ISetting GetCustomerSetting(SettingQuery settingQuery);
+        ISetting GetCustomerSetting(QuerySettingParams querySettingParams);
 
-        IResult UpdateCustomerSetting(SettingCommand settingCommand);
+        IResult UpdateCustomerSetting(UpdatingSettingParams updatingParams);
 
-        IResult UpdateMultipleCustomerSetting(MultipleSettingCommand multipleSettingCommand);
+        IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParams updatingMultipleSettingParams);
     }
 }

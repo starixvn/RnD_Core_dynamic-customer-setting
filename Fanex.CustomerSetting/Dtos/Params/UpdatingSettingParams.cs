@@ -3,7 +3,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class SettingCommand
+    public class UpdatingSettingParams
     {
         public ISetting Setting { get; set; }
 

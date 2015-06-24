@@ -45,7 +45,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<Customer> members = new List<Customer>
             {
@@ -65,7 +65,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<Customer> members = new List<Customer>
             {
@@ -90,7 +90,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<Customer> members = new List<Customer>
             {

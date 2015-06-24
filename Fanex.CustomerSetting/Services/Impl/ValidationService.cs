@@ -1,8 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -32,13 +34,13 @@
             _productService = productService ?? new ProductService();
         }
 
-        public IResult ValidateSettingQuery(SettingQuery settingQuery)
+        public IResult ValidateQuerySetting(QuerySettingParams settingQueryParams)
         {
-            Check.Argument.IsNotNull(settingQuery, "settingQuery");
-            Check.Argument.IsNotNegativeOrZero(settingQuery.CustomerId, "settingQuery.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)settingQuery.CustomerLevel, "settingQuery.CustomerLevel");
+            Check.Argument.IsNotNull(settingQueryParams, "settingQueryParams");
+            Check.Argument.IsNotNegativeOrZero(settingQueryParams.CustomerId, "settingQueryParams.CustomerId");
+            Check.Argument.IsNotNegativeOrZero((byte)settingQueryParams.CustomerLevel, "settingQueryParams.CustomerLevel");
 
-            return ValidateViewingPermission(settingQuery.CustomerId, settingQuery.CustomerLevel);
+            return ValidateViewingPermission(settingQueryParams.CustomerId, settingQueryParams.CustomerLevel);
         }
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel)
@@ -112,11 +114,11 @@
             return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
-        public IResult ValidateSettingCommand(SettingCommand settingCommand)
+        public IResult ValidateUpdatingSetting(UpdatingSettingParams updatingParams)
         {
-            CheckValidateSettingCommandArguments(settingCommand);
+            CheckUpdatingSettingArguments(updatingParams);
 
-            var setting = settingCommand.Setting;
+            var setting = updatingParams.Setting;
             var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
             if (!viewingPermissionValidationResult.IsSuccessful)
             {
@@ -138,13 +140,13 @@
             return Result.Success;
         }
 
-        private void CheckValidateSettingCommandArguments(SettingCommand settingCommand)
+        private void CheckUpdatingSettingArguments(UpdatingSettingParams updatingParams)
         {
-            Check.Argument.IsNotNull(settingCommand, "settingCommand");
-            Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
-            Check.Argument.IsNotNull(settingCommand.Setting.Customer, "settingCommand.Setting.Customer");
-            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
-            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting.SettingTypes");
+            Check.Argument.IsNotNull(updatingParams, "updatingParams");
+            Check.Argument.IsNotNull(updatingParams.Setting, "updatingParams.Setting");
+            Check.Argument.IsNotNull(updatingParams.Setting.Customer, "updatingParams.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Customer.Id, "updatingParams.Setting.Customer.Id");
+            Check.Argument.IsNotNull(updatingParams.Setting.SettingTypes, "updatingParams.Setting.SettingTypes");
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
@@ -175,19 +177,19 @@
             return Result.Success;
         }
 
-        public IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
+        public IResult ValidateUpdatingMultipleSetting(UpdateMultipleSettingParams updatingMultipleSettingParams)
         {
-            CheckMultipleSettingCommandArguments(multipleSettingCommand);
+            CheckupdatingMultipleSettingParamsArguments(updatingMultipleSettingParams);
 
-            var commandValidationResult = ValidateSettingCommand(multipleSettingCommand);
+            var commandValidationResult = ValidateUpdatingSetting(updatingMultipleSettingParams);
             if (!commandValidationResult.IsSuccessful)
             {
                 return commandValidationResult;
             }
 
             var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
-                multipleSettingCommand.Customers,
-                multipleSettingCommand.Setting.Customer.Level);
+                updatingMultipleSettingParams.Customers,
+                updatingMultipleSettingParams.Setting.Customer.Level);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;
@@ -196,11 +198,11 @@
             return Result.Success;
         }
 
-        private void CheckMultipleSettingCommandArguments(MultipleSettingCommand multipleSettingCommand)
+        private void CheckupdatingMultipleSettingParamsArguments(UpdateMultipleSettingParams updatingMultipleParams)
         {
-            Check.Argument.IsNotNull(multipleSettingCommand, "settingCommand");
-            Check.Argument.IsNotNull(multipleSettingCommand.Setting, "settingCommand.Setting");
-            Check.Argument.IsNotNull(multipleSettingCommand.Customers, "multipleSettingCommand.Customers");
+            Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
+            Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");
+            Check.Argument.IsNotNull(updatingMultipleParams.Customers, "updatingMultipleParams.Customers");
         }
 
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<Customer> customers, CustomerLevel customerLevel)

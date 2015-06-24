@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    public class BasePositionTakingItem : SportTypeBetTypeSettingItem
+    public class BasePositionTakingItem : DefaultSettingItem
     {
         private const string BasePositionTakingXmlFormat = "{0} IsLive=\"{1}\"";
 

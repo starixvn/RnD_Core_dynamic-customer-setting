@@ -92,17 +92,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleSettingResult.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
-    <Compile Include="Models\SportTypeBetTypeSettingItem.cs" />
-    <Compile Include="Resources\Error.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Error.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Lang.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Lang.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\DefaultSettingItem.cs" />
     <Compile Include="Criteria\CustomerQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
@@ -115,9 +105,9 @@
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
-    <Compile Include="Dtos\Params\MultipleSettingCommand.cs" />
-    <Compile Include="Dtos\Params\SettingCommand.cs" />
-    <Compile Include="Dtos\Params\SettingQuery.cs" />
+    <Compile Include="Dtos\Params\UpdateMultipleSettingParams.cs" />
+    <Compile Include="Dtos\Params\UpdatingSettingParams.cs" />
+    <Compile Include="Dtos\Params\QuerySettingParams.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SettingType.cs" />
@@ -138,16 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Error.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Error.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Lang.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fanex.CustomerSetting.xml" />

@@ -39,29 +39,29 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public ISetting GetCustomerSetting(SettingQuery settingQuery)
+        public ISetting GetCustomerSetting(QuerySettingParams querySettingParams)
         {
-            CheckSettingQueryArguments(settingQuery);
-            ValidateSettingQuery(settingQuery);
+            CheckSettingQueryArguments(querySettingParams);
+            ValidateSettingQuery(querySettingParams);
             ISetting setting = new Setting();
-            setting.Customer = GetCustomer(settingQuery.CustomerId, settingQuery.CustomerLevel);
-            setting.Product = GetProduct(settingQuery.ProductId);
-            setting.SettingTypes = GetCustomerSettingTypes(settingQuery, setting.Product);
+            setting.Customer = GetCustomer(querySettingParams.CustomerId, querySettingParams.CustomerLevel);
+            setting.Product = GetProduct(querySettingParams.ProductId);
+            setting.SettingTypes = GetCustomerSettingTypes(querySettingParams, setting.Product);
 
             return setting;
         }
 
-        private void CheckSettingQueryArguments(SettingQuery settingQuery)
+        private void CheckSettingQueryArguments(QuerySettingParams queryParams)
         {
-            Check.Argument.IsNotNull(settingQuery, "settingQuery");
-            Check.Argument.IsNotNegativeOrZero(settingQuery.CustomerId, "settingQuery.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)settingQuery.CustomerLevel, "settingQuery.CustomerLevel");
-            Check.Argument.IsNotNegativeOrZero(settingQuery.ProductId, "settingQuery.ProductId");
+            Check.Argument.IsNotNull(queryParams, "settingQuery");
+            Check.Argument.IsNotNegativeOrZero(queryParams.CustomerId, "queryParams.CustomerId");
+            Check.Argument.IsNotNegativeOrZero((byte)queryParams.CustomerLevel, "queryParams.CustomerLevel");
+            Check.Argument.IsNotNegativeOrZero(queryParams.ProductId, "queryParams.ProductId");
         }
 
-        private void ValidateSettingQuery(SettingQuery settingQuery)
+        private void ValidateSettingQuery(QuerySettingParams queryParams)
         {
-            var validationResult = _validationService.ValidateSettingQuery(settingQuery);
+            var validationResult = _validationService.ValidateQuerySetting(queryParams);
             if (!validationResult.IsSuccessful)
             {
                 throw new InvalidOperationException(validationResult.Message);
@@ -95,85 +95,85 @@
             return customer;
         }
 
-        private IList<SettingType> GetCustomerSettingTypes(SettingQuery settingQuery, Product product)
+        private IList<SettingType> GetCustomerSettingTypes(QuerySettingParams queryParams, Product product)
         {
             var customerSettingTypes = new List<SettingType>();
             foreach (var productSettingType in product.SettingTypes)
             {
-                RunPreGetSettingTasks(settingQuery, productSettingType);
-                var customerSettingType = GetCustomerSettingType(settingQuery, productSettingType);
-                customerSettingType = RunPostGetSettingTasks(settingQuery, customerSettingType);
+                RunPreGetSettingTasks(queryParams, productSettingType);
+                var customerSettingType = GetCustomerSettingType(queryParams, productSettingType);
+                customerSettingType = RunPostGetSettingTasks(queryParams, customerSettingType);
                 customerSettingTypes.Add(customerSettingType);
             }
 
             return customerSettingTypes;
         }
 
-        private void RunPreGetSettingTasks(SettingQuery settingQuery, SettingType productSettingType)
+        private void RunPreGetSettingTasks(QuerySettingParams queryParams, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
             if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreGetSetting").IsVirtual)
             {
-                preTasks.PreGetSetting(settingQuery);
+                preTasks.PreGetSetting(queryParams);
             }
         }
 
-        private SettingType GetCustomerSettingType(SettingQuery settingQuery, SettingType productSettingType)
+        private SettingType GetCustomerSettingType(QuerySettingParams queryParams, SettingType productSettingType)
         {
             var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
-            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, settingQuery);
+            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParams);
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             return customerSettingType;
         }
 
         private SettingType RunPostGetSettingTasks(
-            SettingQuery settingQuery,
+            QuerySettingParams queryParams,
             SettingType customerSettingType)
         {
-            SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
+            var postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostGetSetting").IsVirtual)
             {
-                customerSettingType = postTasks.PostGetSetting(settingQuery, customerSettingType);
+                customerSettingType = postTasks.PostGetSetting(queryParams, customerSettingType);
             }
 
             return customerSettingType;
         }
 
-        public IResult UpdateCustomerSetting(SettingCommand settingCommand)
+        public IResult UpdateCustomerSetting(UpdatingSettingParams updatingParams)
         {
-            CheckSettingCommandArguments(settingCommand);
-            var validationResult = ValidateSettingCommand(settingCommand);
+            CheckUpdatingSettingArguments(updatingParams);
+            var validationResult = ValidateUpdatingSetting(updatingParams);
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
             }
 
-            return UpdateSingleCustomerSetting(settingCommand);
+            return UpdateSingleCustomerSetting(updatingParams);
         }
 
-        private void CheckSettingCommandArguments(SettingCommand settingCommand)
+        private void CheckUpdatingSettingArguments(UpdatingSettingParams updatingParams)
         {
-            Check.Argument.IsNotNull(settingCommand, "settingCommand");
-            Check.Argument.IsNotNull(settingCommand.Setting, "settingCommand.Setting");
-            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Customer.Id, "settingCommand.Setting.Customer.Id");
-            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.Product.Id, "settingQuery.CustomerLevel");
-            Check.Argument.IsNotNull(settingCommand.Setting.SettingTypes, "settingCommand.Setting");
-            Check.Argument.IsNotNegativeOrZero(settingCommand.Setting.SettingTypes.Count(), "settingCommand.Setting.SettingTypes.Count");
+            Check.Argument.IsNotNull(updatingParams, "updatingParams");
+            Check.Argument.IsNotNull(updatingParams.Setting, "updatingParams.Setting");
+            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Customer.Id, "updatingParams.Setting.Customer.Id");
+            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Product.Id, "updatingParams.CustomerLevel");
+            Check.Argument.IsNotNull(updatingParams.Setting.SettingTypes, "updatingParams.Setting");
+            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.SettingTypes.Count(), "updatingParams.Setting.SettingTypes.Count");
         }
 
-        private IResult ValidateSettingCommand(SettingCommand settingCommand)
+        private IResult ValidateUpdatingSetting(UpdatingSettingParams updatingParams)
         {
-            return _validationService.ValidateSettingCommand(settingCommand);
+            return _validationService.ValidateUpdatingSetting(updatingParams);
         }
 
-        private IResult UpdateSingleCustomerSetting(SettingCommand settingCommand)
+        private IResult UpdateSingleCustomerSetting(UpdatingSettingParams updatingParams)
         {
-            var settingTypes = settingCommand.Setting.SettingTypes;
-            var customer = settingCommand.Setting.Customer;
-            var uplineLevel = settingCommand.UplineLevel;
+            var settingTypes = updatingParams.Setting.SettingTypes;
+            var customer = updatingParams.Setting.Customer;
+            var uplineLevel = updatingParams.UplineLevel;
             var results = new List<IResult>();
 
             foreach (var settingType in settingTypes)
@@ -193,18 +193,18 @@
                 return preTaskResult;
             }
 
-            var updateResult = UpdateSetting(customer, settingType, uplineLevel);
-            if (updateResult.IsSuccessful)
+            var updatingResult = UpdateSetting(customer, settingType, uplineLevel);
+            if (updatingResult.IsSuccessful)
             {
-                updateResult = RunPostUpdateSettingTasks(customer, settingType, uplineLevel, updateResult);
+                updatingResult = RunPostUpdateSettingTasks(customer, settingType, uplineLevel, updatingResult);
             }
 
-            return updateResult;
+            return updatingResult;
         }
 
         private IResult RunPreUpdateSettingTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
-            SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
+            var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreUpdateSetting").IsVirtual)
             {
@@ -227,48 +227,48 @@
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult updateSettingResult)
+            IResult updatingResult)
         {
-            SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
+            var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateSetting").IsVirtual)
             {
-                updateSettingResult = postTasks.PostUpdateSetting(customer, settingType, uplineLevel, updateSettingResult);
+                updatingResult = postTasks.PostUpdateSetting(customer, settingType, uplineLevel, updatingResult);
             }
 
-            return updateSettingResult;
+            return updatingResult;
         }
 
-        public IResult UpdateMultipleCustomerSetting(MultipleSettingCommand multipleSettingCommand)
+        public IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParams updatingMultipleParams)
         {
-            CheckMultipleSettingCommandAgruments(multipleSettingCommand);
-            var validationResult = ValidateMultipleSettingCommand(multipleSettingCommand);
+            CheckUpdatingMultipleAgruments(updatingMultipleParams);
+            var validationResult = ValidateUpdatingMultipleSetting(updatingMultipleParams);
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
             }
 
-            var customerLevel = multipleSettingCommand.Setting.Customer.Level;
-            var uplineLevel = multipleSettingCommand.UplineLevel;
-            var customers = multipleSettingCommand.Customers;
-            var settingTypes = multipleSettingCommand.Setting.SettingTypes;
+            var customerLevel = updatingMultipleParams.Setting.Customer.Level;
+            var uplineLevel = updatingMultipleParams.UplineLevel;
+            var customers = updatingMultipleParams.Customers;
+            var settingTypes = updatingMultipleParams.Setting.SettingTypes;
             var results = UpdateSettingTypesForMultipleCustomers(settingTypes, customers, customerLevel, uplineLevel);
 
             return new Result(results);
         }
 
-        private void CheckMultipleSettingCommandAgruments(MultipleSettingCommand multipleSettingCommand)
+        private void CheckUpdatingMultipleAgruments(UpdateMultipleSettingParams updatingMultipleParams)
         {
-            Check.Argument.IsNotNull(multipleSettingCommand, "multipleSettingCommand");
-            Check.Argument.IsNotNull(multipleSettingCommand.Setting, "multipleSettingCommand.Setting");
-            Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Setting.Product.Id, "multipleSettingCommand.Setting.Product.Id");
-            Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Setting.SettingTypes.Count(), "multipleSettingCommand.Setting.SettingTypes.Count");
-            Check.Argument.IsNotNegativeOrZero(multipleSettingCommand.Customers.Count(), "multipleSettingCommand.Customers.Count");
+            Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
+            Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParams.Setting.Product.Id, "updatingMultipleParams.Setting.Product.Id");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParams.Setting.SettingTypes.Count(), "updatingMultipleParams.Setting.SettingTypes.Count");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParams.Customers.Count(), "updatingMultipleParams.Customers.Count");
         }
 
-        private IResult ValidateMultipleSettingCommand(MultipleSettingCommand multipleSettingCommand)
+        private IResult ValidateUpdatingMultipleSetting(UpdateMultipleSettingParams updatingMultipleParams)
         {
-            return _validationService.ValidateMultipleSettingCommand(multipleSettingCommand);
+            return _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
         }
 
         private List<IResult> UpdateSettingTypesForMultipleCustomers(
@@ -297,9 +297,14 @@
             var preTasksResult = RunPreUpdateMultipleSettingTasks(customers, customerLevel, settingType, uplineLevel);
             if (!preTasksResult.Result.IsSuccessful)
             {
-                return preTasksResult.Result;
+                if (preTasksResult.IsStopUpdating)
+                {
+                    return preTasksResult.Result;
+                }
             }
 
+            //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
+            //// because we already updated setting for them, so we need to remove them out of customer list.
             var customersNeedForUpdating = GetCustomersNeedForUpdating(preTasksResult.CustomersNeedForUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
@@ -337,7 +342,7 @@
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
+            var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null && !preTasks.GetType().GetMethod("PreUpdateMultipleSetting").IsVirtual)
             {
                 var preTaskResult = preTasks.PreUpdateMultipleSetting(customers, customerLevel, settingType, uplineLevel);
@@ -359,21 +364,21 @@
             var settingTypeResults = new List<IResult>();
             foreach (var customer in customers)
             {
-                var settingCommand = CreateSingleSettingCommand(customer.Id, customerLevel, settingType, uplineLevel);
-                var updateResult = UpdateSingleCustomerSetting(settingCommand);
+                var updatingParams = CreateSingleUpdatingSettingParams(customer.Id, customerLevel, settingType, uplineLevel);
+                var updateResult = UpdateSingleCustomerSetting(updatingParams);
                 settingTypeResults.Add(new Result(customer.Id, customer.UserName, updateResult));
             }
 
             return settingTypeResults;
         }
 
-        private SettingCommand CreateSingleSettingCommand(
+        private UpdatingSettingParams CreateSingleUpdatingSettingParams(
             int customerId,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            var singleSettingCommand = new SettingCommand
+            var updateParams = new UpdatingSettingParams
             {
                 Setting = new Setting
                 {
@@ -383,7 +388,7 @@
                 UplineLevel = uplineLevel
             };
 
-            return singleSettingCommand;
+            return updateParams;
         }
 
         private IResult RunPostUpdateMultipleSettingTasks(
@@ -392,7 +397,7 @@
             CustomerLevel? uplineLevel,
             IResult settingTypeMultipleResult)
         {
-            SettingPostTasks postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
+            var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateMultipleSetting").IsVirtual)
             {

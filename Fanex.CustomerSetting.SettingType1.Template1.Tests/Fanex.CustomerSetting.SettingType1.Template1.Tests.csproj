@@ -51,6 +51,7 @@
     <Compile Include="Handlers\SettingType1PreTasksTests.cs" />
     <Compile Include="Models\AgentOnMemberPositionTakingItemTests.cs" />
     <Compile Include="Models\AgentPositionTakingItemTests.cs" />
+    <Compile Include="Models\BasePositionTakingItemTests.cs" />
     <Compile Include="Models\MasterOnMemberPositionTakingItemTests.cs" />
     <Compile Include="Models\MasterPositionTakingItemTests.cs" />
     <Compile Include="Models\SuperOnMemberPositionTakingItemTests.cs" />

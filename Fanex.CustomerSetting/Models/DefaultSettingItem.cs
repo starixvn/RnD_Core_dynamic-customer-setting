@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Dtos.Results;
 
-    public class SportTypeBetTypeSettingItem : ISettingItem
+    public class DefaultSettingItem : ISettingItem
     {
         private const string SportTypeBetTypeXmlFormat = "SportType=\"{0}\" BetType=\"{1}\"";
 

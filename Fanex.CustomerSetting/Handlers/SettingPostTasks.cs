@@ -17,7 +17,7 @@
         protected ISettingContext SettingContext { get; set; }
 
         public virtual SettingType PostGetSetting(
-            SettingQuery settingQuery,
+            QuerySettingParams queryParams,
             SettingType settingType)
         {
             throw new NotImplementedException("Post-Get Setting is not implemented");

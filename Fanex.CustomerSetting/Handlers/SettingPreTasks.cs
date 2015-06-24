@@ -16,7 +16,7 @@
 
         protected ISettingContext SettingContext { get; set; }
 
-        public virtual void PreGetSetting(SettingQuery settingQuery)
+        public virtual void PreGetSetting(QuerySettingParams settingQuery)
         {
             throw new NotImplementedException("Pre-Get Setting is not implemented");
         }

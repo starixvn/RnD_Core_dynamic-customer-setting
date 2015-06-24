@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
 
-    public class CommissionItem : SportTypeBetTypeSettingItem
+    public class CommissionItem : DefaultSettingItem
     {
         private const string CommissionXmlFormat = "<Discount {0} Discount=\"{1}\"/>";
 

@@ -14,7 +14,7 @@
 
     public class SettingType1DataAccess : BaseDataAccess, ISettingDataAccess
     {
-        public virtual SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
+        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
             var settingKey = GetSettingKeyForGettingPositionTaking(settingQuery.CustomerLevel);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
@@ -47,7 +47,7 @@
             }
         }
 
-        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, SettingQuery settingQuery)
+        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParams settingQuery)
         {
             var storedProcedureParams = GetSPParamsForGettingPositionTaking(settingQuery);
 
@@ -83,7 +83,7 @@
             }
         }
 
-        private dynamic GetSPParamsForGettingPositionTaking(SettingQuery settingQuery)
+        private dynamic GetSPParamsForGettingPositionTaking(QuerySettingParams settingQuery)
         {
             switch (settingQuery.CustomerLevel)
             {

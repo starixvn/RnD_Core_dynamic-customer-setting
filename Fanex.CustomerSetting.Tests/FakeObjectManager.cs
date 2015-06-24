@@ -11,13 +11,13 @@
 
     public static class FakeObjectManager
     {
-        public static SettingCommand CreateSettingCommandFakeObject(
+        public static UpdatingSettingParams CreateUpdatingSettingParams(
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
-            return new SettingCommand
+            return new UpdatingSettingParams
             {
                 Setting = new Setting
                 {
@@ -32,17 +32,17 @@
                     },
                     SettingTypes = new List<SettingType>
                     {
-                        FakeObjectManager.CreateSettingTypeFakeObject(1, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(2, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
+                        FakeObjectManager.CreateSettingType(1, 1),
+                        FakeObjectManager.CreateSettingType(2, 1),
+                        FakeObjectManager.CreateSettingType(3, 1),
+                        FakeObjectManager.CreateSettingType(4, 1)
                     }
                 },
                 UplineLevel = uplineLevel
             };
         }
 
-        public static SettingType CreateSettingTypeFakeObject(byte settingTypeId, byte settingTemplate = 1)
+        public static SettingType CreateSettingType(byte settingTypeId, byte settingTemplate = 1)
         {
             return new SettingType
             {
@@ -59,13 +59,13 @@
             };
         }
 
-        public static MultipleSettingCommand CreateMultipleSettingCommandFakeObject(
+        public static UpdateMultipleSettingParams CreateUpdatingMultipleSettingParams(
             int customerId = 1,
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
-            return new MultipleSettingCommand
+            return new UpdateMultipleSettingParams
             {
                 Customers = new List<Customer>
                 {
@@ -91,23 +91,23 @@
                     },
                     SettingTypes = new List<SettingType>
                     {
-                        FakeObjectManager.CreateSettingTypeFakeObject(1, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(2, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
-                        FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
+                        FakeObjectManager.CreateSettingType(1, 1),
+                        FakeObjectManager.CreateSettingType(2, 1),
+                        FakeObjectManager.CreateSettingType(3, 1),
+                        FakeObjectManager.CreateSettingType(4, 1)
                     }
                 },
                 UplineLevel = uplineLevel
             };
         }
 
-        public static SettingQuery CreateSettingQueryFakeObject(
+        public static QuerySettingParams CreateQuerySettingParams(
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Member,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Master)
         {
-            return new SettingQuery
+            return new QuerySettingParams
             {
                 CustomerId = customerId,
                 CustomerLevel = customerLevel,
@@ -116,17 +116,17 @@
             };
         }
 
-        public static Product CreateProductFakeObject(byte productId = 1)
+        public static Product CreateProduct(byte productId = 1)
         {
             return new Product
             {
                 Id = 1,
                 SettingTypes = new List<SettingType>
                 {
-                    FakeObjectManager.CreateSettingTypeFakeObject(1, 1),
-                    FakeObjectManager.CreateSettingTypeFakeObject(2, 1),
-                    FakeObjectManager.CreateSettingTypeFakeObject(3, 1),
-                    FakeObjectManager.CreateSettingTypeFakeObject(4, 1)
+                    FakeObjectManager.CreateSettingType(1, 1),
+                    FakeObjectManager.CreateSettingType(2, 1),
+                    FakeObjectManager.CreateSettingType(3, 1),
+                    FakeObjectManager.CreateSettingType(4, 1)
                 }
             };
         }

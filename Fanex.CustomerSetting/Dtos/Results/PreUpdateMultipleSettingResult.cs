@@ -7,6 +7,8 @@
     {
         public IEnumerable<Customer> CustomersNeedForUpdating { get; set; }
 
+        public bool IsStopUpdating { get; set; }
+
         public IResult Result { get; set; }
     }
 }

@@ -43,26 +43,26 @@
                     Convert.ToInt32(outputParams["msgtype"]));
         }
 
-        protected dynamic GetSPParamsForGettingSettingTypeSetting(SettingQuery settingQuery, byte settingType)
+        protected dynamic GetSPParamsForGettingSettingTypeSetting(QuerySettingParams querySettingParams, byte settingType)
         {
-            switch (settingQuery.CustomerLevel)
+            switch (querySettingParams.CustomerLevel)
             {
                 case CustomerLevel.Super:
                 case CustomerLevel.Master:
                 case CustomerLevel.Agent:
                     return new
                     {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
+                        CustId = querySettingParams.CustomerId,
+                        ProductId = querySettingParams.ProductId,
                         SettingType = settingType
                     };
 
                 case CustomerLevel.Member:
                     return new
                     {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
-                        RoleId = settingQuery.UplineLevel.Value,
+                        CustId = querySettingParams.CustomerId,
+                        ProductId = querySettingParams.ProductId,
+                        RoleId = querySettingParams.UplineLevel.Value,
                         SettingType = settingType
                     };
 

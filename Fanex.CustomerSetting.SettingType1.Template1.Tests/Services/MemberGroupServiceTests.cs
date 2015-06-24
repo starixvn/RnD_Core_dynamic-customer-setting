@@ -111,7 +111,7 @@
                 new Customer { Id = 2 }
             };
             var uplineLevel = CustomerLevel.Master;
-            var settingType = FakeObjectManager.CreateSettingTypeFakeObject(1);
+            var settingType = FakeObjectManager.CreateSettingType(1);
 
             //// Act
             _memberGroupService.UpdateGroupedMembersSetting(members, CustomerLevel.Master, settingType);

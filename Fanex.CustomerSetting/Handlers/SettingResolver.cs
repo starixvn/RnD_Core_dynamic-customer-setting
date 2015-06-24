@@ -16,7 +16,7 @@
         private const string TypeWithAssemblyFormat = "{0}, {1}";
         private static Dictionary<string, ISettingDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingDataAccess>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
-        private static Dictionary<string, SettingPostTasks> _settingPostTasksListCached = new Dictionary<string, SettingPostTasks>();
+        private static Dictionary<string, SettingPostTasks> _settingPostTasksCached = new Dictionary<string, SettingPostTasks>();
         private readonly ISettingContext _settingContext;
 
         public SettingResolver(ISettingContext settingContext)
@@ -112,7 +112,7 @@
 
             SettingPostTasks settingPostTasks = null;
             var cacheKey = GenerateCacheKey(settingType);
-            if (SettingResolver._settingPostTasksListCached.ContainsKey(cacheKey))
+            if (SettingResolver._settingPostTasksCached.ContainsKey(cacheKey))
             {
                 settingPostTasks = GetSettingPostTasksHandlerFromCache(cacheKey);
             }
@@ -131,7 +131,7 @@
 
         private SettingPostTasks GetSettingPostTasksHandlerFromCache(string cacheKey)
         {
-            return SettingResolver._settingPostTasksListCached[cacheKey];
+            return SettingResolver._settingPostTasksCached[cacheKey];
         }
 
         private SettingPostTasks CreateSettingPostTasksAndCache(SettingType settingType, string cacheKey)
@@ -143,7 +143,7 @@
             if (postTasksType != null)
             {
                 settingPostTasks = Activator.CreateInstance(postTasksType, _settingContext) as SettingPostTasks;
-                SettingResolver._settingPostTasksListCached.Add(cacheKey, settingPostTasks);
+                SettingResolver._settingPostTasksCached.Add(cacheKey, settingPostTasks);
             }
 
             return settingPostTasks;

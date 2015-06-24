@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Dtos.Results
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Dtos.Results;
     using NSubstitute;
     using NUnit.Framework;
@@ -16,8 +13,8 @@
         {
             //// Arrange
             IResult subResult = Substitute.For<IResult>();
-            var result = new Result(new List<IResult> 
-            { 
+            var result = new Result(new List<IResult>
+            {
                 subResult
             });
 

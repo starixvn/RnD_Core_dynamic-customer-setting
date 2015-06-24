@@ -18,7 +18,7 @@
     {
         public SettingType GetCustomerSettingType(
             User actor,
-            SettingQuery settingQuery)
+            QuerySettingParams settingQuery)
         {
             var settingKey = GetSettingKeyForGettingProductStatus(settingQuery.CustomerLevel);
             IEnumerable<ProductStatusItemDto> productStatusItemDtoList = null;

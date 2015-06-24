@@ -16,7 +16,7 @@
 
     public class SettingType2DataAccess : BaseDataAccess, ISettingDataAccess
     {
-        public SettingType GetCustomerSettingType(User actor, SettingQuery settingQuery)
+        public SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
             var settingKey = GetSettingKeyForGettingBetLimit(settingQuery.CustomerLevel);
             IEnumerable<BetLimitItemDto> betLimitItemDtoList = null;

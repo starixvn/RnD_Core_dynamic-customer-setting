@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Resources;
+    using Fanex.CustomerSetting.Resource.Resources;
 
     public class Result : IResult
     {
@@ -15,7 +15,7 @@
 
         public Result(int code)
             : this(code, string.Empty)
-        { 
+        {
         }
 
         public Result(int code, string message)

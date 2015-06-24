@@ -18,7 +18,7 @@
     {
         public SettingType GetCustomerSettingType(
             User actor,
-            SettingQuery settingQuery)
+            QuerySettingParams settingQuery)
         {
             var settingKey = GetSettingKeyForGettingCommission(settingQuery.CustomerLevel);
             IEnumerable<CommissionItemDto> commissionItemDtoList = null;

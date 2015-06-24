@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
 
-    public class BetLimitItem : SportTypeBetTypeSettingItem
+    public class BetLimitItem : DefaultSettingItem
     {
         private const string BetLimitXmlFormat = "<BetLimit {0} MinBet=\"{1}\" MaxBet=\"{2}\" MaxPerMatch=\"{3}\"/>";
 

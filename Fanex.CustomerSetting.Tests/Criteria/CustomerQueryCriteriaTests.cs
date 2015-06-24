@@ -36,6 +36,19 @@
             Assert.IsTrue(actualResult);
         }
 
+        [Test]
+        public void GetSettingKey_ReturnSettingKey()
+        {
+            //// Arrange
+            var criteria = CreateCustomerQueryCriteriaFakeObject();
+
+            //// Act
+            var actualSettingKey = criteria.GetSettingKey();
+
+            //// Arrange
+            Assert.AreEqual("Acc_CustSetting_SettingDetailSelect", actualSettingKey);
+        }
+
         private CustomerQueryCriteria CreateCustomerQueryCriteriaFakeObject()
         {
             return new CustomerQueryCriteria

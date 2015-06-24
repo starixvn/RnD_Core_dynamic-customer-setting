@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using NSubstitute;
@@ -16,9 +13,12 @@
         public void ToXml_ReturnFormattedXml()
         {
             //// Arrange
-            var settingType = new SettingType 
+            var settingType = new SettingType
             {
-                SettingItems = new List<ISettingItem>()
+                SettingItems = new List<ISettingItem>
+                {
+                    new SettingItemStub()
+                }
             };
 
             //// Act

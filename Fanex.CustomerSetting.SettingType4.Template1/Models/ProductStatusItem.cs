@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
 
-    public class ProductStatusItem : SportTypeBetTypeSettingItem
+    public class ProductStatusItem : DefaultSettingItem
     {
         private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
 
