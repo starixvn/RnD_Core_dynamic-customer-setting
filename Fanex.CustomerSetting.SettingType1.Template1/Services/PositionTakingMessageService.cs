@@ -14,7 +14,7 @@
         private const string ResourceKeyPerfix = "PositionTaking";
         private readonly IResourceService _resourceService;
         private readonly ISettingContext _settingContext;
-        private readonly ResourceManager _resourceManager = SettingType1Template1Error.ResourceManager;
+        private readonly ResourceManager _resourceManager = PositionTakingError.ResourceManager;
 
         public PositionTakingMessageService()
         {
@@ -26,75 +26,75 @@
             _settingContext = settingContext;
         }
 
-        public MessageContent TranslateMessage(int msgType, string rawMessage)
+        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel)
         {
             var baseMessage = TranslateSimpleMessage(msgType, rawMessage);
             if (string.IsNullOrEmpty(baseMessage))
             {
-                return TranslatePositionTakingViolationMessage(msgType, rawMessage);
+                return TranslatePositionTakingViolationMessage(msgType, rawMessage, settingLevel);
             }
 
             return new MessageContent(baseMessage);
         }
 
-        private MessageContent TranslatePositionTakingViolationMessage(int msgType, string rawMessage)
+        private MessageContent TranslatePositionTakingViolationMessage(int msgType, string rawMessage, byte settingLevel)
         {
             switch ((PositionTakingMessageType)msgType)
             {
                 case PositionTakingMessageType.WrongPositionTaking:
-                    return TranslateWrongPositionTakingMessage(rawMessage);
+                    return TranslateWrongPositionTakingMessage(rawMessage, settingLevel);
 
                 case PositionTakingMessageType.DownlinePTViolation:
-                    return TranslateDownlinePTViolationMessage(rawMessage);
+                    return TranslateDownlinePTViolationMessage(rawMessage, settingLevel);
 
                 case PositionTakingMessageType.MinPTViolation:
-                    return TranslateMinPTViolationMessage(rawMessage);
+                    return TranslateMinPTViolationMessage(rawMessage, settingLevel);
 
                 case PositionTakingMessageType.MaxPTViolation:
-                    return TranslateMaxPTViolationMessage(rawMessage);
+                    return TranslateMaxPTViolationMessage(rawMessage, settingLevel);
 
                 case PositionTakingMessageType.MinMaxPTViolation:
-                    return TranslateMinMaxPTViolationMessage(rawMessage);
+                    return TranslateMinMaxPTViolationMessage(rawMessage, settingLevel);
             }
 
             return new MessageContent(rawMessage);
         }
 
-        private MessageContent TranslateWrongPositionTakingMessage(string rawMessage)
+        private MessageContent TranslateWrongPositionTakingMessage(string rawMessage, byte settingLevel)
         {
             var positionTakingRoot = Deserialize<MessageRoot<WrongPTMessageRow>>(rawMessage);
-            return GetMessageContent<WrongPTMessageRow>(positionTakingRoot);
+            return GetMessageContent<WrongPTMessageRow>(positionTakingRoot, settingLevel);
         }
 
-        private MessageContent TranslateDownlinePTViolationMessage(string rawMessage)
+        private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel)
         {
             var positionTakingRoot = Deserialize<DownlinePTViolationMessageRoot>(rawMessage);
             positionTakingRoot.GroupUsernameBySportTypeBetType();
-            return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot);
+            return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
-        private MessageContent TranslateMinPTViolationMessage(string rawMessage)
+        private MessageContent TranslateMinPTViolationMessage(string rawMessage, byte settingLevel)
         {
             var positionTakingRoot = Deserialize<MessageRoot<MinPTViolationMessageRow>>(rawMessage);
-            return GetMessageContent<MinPTViolationMessageRow>(positionTakingRoot);
+            return GetMessageContent<MinPTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
-        private MessageContent TranslateMaxPTViolationMessage(string rawMessage)
+        private MessageContent TranslateMaxPTViolationMessage(string rawMessage, byte settingLevel)
         {
             var positionTakingRoot = Deserialize<MessageRoot<MaxPTViolationMessageRow>>(rawMessage);
-            return GetMessageContent<MaxPTViolationMessageRow>(positionTakingRoot);
+            return GetMessageContent<MaxPTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
-        private MessageContent TranslateMinMaxPTViolationMessage(string rawMessage)
+        private MessageContent TranslateMinMaxPTViolationMessage(string rawMessage, byte settingLevel)
         {
             var positionTakingRoot = Deserialize<MessageRoot<MinMaxPTViolationMessageRow>>(rawMessage);
-            return GetMessageContent<MinMaxPTViolationMessageRow>(positionTakingRoot);
+            return GetMessageContent<MinMaxPTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
-        private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot) where T : IMessageRow
+        private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot, byte settingLevel) where T : IMessageRow
         {
-            var subMessages = positionTakingRoot.ToSubMessage(_resourceService, _settingContext.Language, 1);
-            var mainMessage = GetGeneralMessage(_resourceManager, positionTakingRoot, ResourceKeyPerfix);
+            var subMessages = positionTakingRoot.ToSubMessage(_resourceService, _settingContext.Language, settingLevel);
+            var mainMessage = GetMainMessage(_resourceManager, positionTakingRoot, ResourceKeyPerfix);
             return new MessageContent(mainMessage, subMessages);
         }
     }

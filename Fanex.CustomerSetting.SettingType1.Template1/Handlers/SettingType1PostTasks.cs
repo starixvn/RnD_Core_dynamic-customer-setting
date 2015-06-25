@@ -37,7 +37,7 @@
             }
             else
             {
-                var messageContent = _messageService.TranslateMessage(result.MsgType, result.Message);
+                var messageContent = _messageService.TranslateMessage(result.MsgType, result.Message, settingType.SettingLevel);
                 return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
             }
         }

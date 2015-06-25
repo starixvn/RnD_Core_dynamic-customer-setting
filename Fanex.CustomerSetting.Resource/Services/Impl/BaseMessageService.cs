@@ -39,13 +39,13 @@
 
             if (simpleMessage != null)
             {
-                return GetGeneralMessage(Error.ResourceManager, simpleMessage);
+                return GetMainMessage(Error.ResourceManager, simpleMessage);
             }
 
             return rawMessage;
         }
 
-        protected string GetGeneralMessage(
+        protected string GetMainMessage(
             ResourceManager resouceManager, SimpleMessage simpleMessage, string messagePrefix = "Msg")
         {
             var key = string.Format("{0}_{1}", messagePrefix, simpleMessage.MessageId);
