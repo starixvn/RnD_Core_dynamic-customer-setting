@@ -40,17 +40,17 @@
 
             if (M4 > S4)
             {
-                return new Result(SettingType1ErrorCodes.MasterMaxPTIsGreaterThanSuperMaxPT);
+                return new Result(SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode);
             }
 
             if (A4 > M4)
             {
-                return new Result(SettingType1ErrorCodes.AgentMaxPTIsGreaterThanMasterMaxPT);
+                return new Result(SettingType1Constants.AgentMaxPTIsGreaterThanMasterMaxPTErrorCode);
             }
 
             if (N4 > S4)
             {
-                return new Result(SettingType1ErrorCodes.SuperMinPTIsGreaterThanSuperMaxPT);
+                return new Result(SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode);
             }
 
             return Result.Success;

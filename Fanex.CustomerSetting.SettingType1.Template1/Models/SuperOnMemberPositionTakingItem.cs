@@ -64,12 +64,12 @@
             //// Will code more business here
             if (!IS1 && US1 > 0)
             {
-                return new Result(SettingType1ErrorCodes.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet);
+                return new Result(SettingType1Constants.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
             }
 
             if (IS1 && S1 > 0)
             {
-                return new Result(SettingType1ErrorCodes.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet);
+                return new Result(SettingType1Constants.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
             }
 
             return Result.Success;

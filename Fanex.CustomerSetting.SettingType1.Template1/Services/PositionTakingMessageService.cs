@@ -11,18 +11,19 @@
 
     public class PositionTakingMessageService : BaseMessageService, IMessageService
     {
-        private const string ResourceKeyPerfix = "PositionTaking";
-        private readonly IResourceService _resourceService;
         private readonly ISettingContext _settingContext;
         private readonly ResourceManager _resourceManager = PositionTakingError.ResourceManager;
 
-        public PositionTakingMessageService()
+        public PositionTakingMessageService() : 
+            this(null, null)
         {
         }
 
-        public PositionTakingMessageService(ISettingContext settingContext, IResourceService resourceService)
+        public PositionTakingMessageService(
+            ISettingContext settingContext, 
+            IResourceService resourceService)
+            : base(resourceService)
         {
-            _resourceService = resourceService ?? new ResourceService();
             _settingContext = settingContext;
         }
 
@@ -37,7 +38,10 @@
             return new MessageContent(baseMessage);
         }
 
-        private MessageContent TranslatePositionTakingViolationMessage(int msgType, string rawMessage, byte settingLevel)
+        private MessageContent TranslatePositionTakingViolationMessage(
+            int msgType, 
+            string rawMessage, 
+            byte settingLevel)
         {
             switch ((PositionTakingMessageType)msgType)
             {
@@ -93,8 +97,8 @@
 
         private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot, byte settingLevel) where T : IMessageRow
         {
-            var subMessages = positionTakingRoot.ToSubMessage(_resourceService, _settingContext.Language, settingLevel);
-            var mainMessage = GetMainMessage(_resourceManager, positionTakingRoot, ResourceKeyPerfix);
+            var subMessages = positionTakingRoot.ToSubMessage(ResourceService, _settingContext.Language, settingLevel);
+            var mainMessage = GetMainMessage(_resourceManager, positionTakingRoot.MessageId);
             return new MessageContent(mainMessage, subMessages);
         }
     }

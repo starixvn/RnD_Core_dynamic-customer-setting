@@ -63,99 +63,99 @@ namespace Fanex.CustomerSetting.SettingType2.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Wrong Min bet/ Max bet/ Max per match.
         /// </summary>
-        public static string BetLimit_10003 {
+        public static string Msg_10003 {
             get {
-                return ResourceManager.GetString("BetLimit_10003", resourceCulture);
+                return ResourceManager.GetString("Msg_10003", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Min bet must be less than max bet and max bet must be less than max bet per match.
         /// </summary>
-        public static string BetLimit_10005 {
+        public static string Msg_10005 {
             get {
-                return ResourceManager.GetString("BetLimit_10005", resourceCulture);
+                return ResourceManager.GetString("Msg_10005", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Min bet must be equal to or greater than Agent min bet.
         /// </summary>
-        public static string BetLimit_10006 {
+        public static string Msg_10006 {
             get {
-                return ResourceManager.GetString("BetLimit_10006", resourceCulture);
+                return ResourceManager.GetString("Msg_10006", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max bet must be equal to or less than Agent max bet.
         /// </summary>
-        public static string BetLimit_10007 {
+        public static string Msg_10007 {
             get {
-                return ResourceManager.GetString("BetLimit_10007", resourceCulture);
+                return ResourceManager.GetString("Msg_10007", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max Per Match must be equal to or less than Agent Max Per Match.
         /// </summary>
-        public static string BetLimit_10008 {
+        public static string Msg_10008 {
             get {
-                return ResourceManager.GetString("BetLimit_10008", resourceCulture);
+                return ResourceManager.GetString("Msg_10008", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Min bet must be equal to or greater than Super Agent min bet.
         /// </summary>
-        public static string BetLimit_10016 {
+        public static string Msg_10016 {
             get {
-                return ResourceManager.GetString("BetLimit_10016", resourceCulture);
+                return ResourceManager.GetString("Msg_10016", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max bet must be equal to or less than Super Agent max bet.
         /// </summary>
-        public static string BetLimit_10017 {
+        public static string Msg_10017 {
             get {
-                return ResourceManager.GetString("BetLimit_10017", resourceCulture);
+                return ResourceManager.GetString("Msg_10017", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max Per Match must be equal to or less than Super Agent Max Per Match.
         /// </summary>
-        public static string BetLimit_10018 {
+        public static string Msg_10018 {
             get {
-                return ResourceManager.GetString("BetLimit_10018", resourceCulture);
+                return ResourceManager.GetString("Msg_10018", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Min bet must be equal to or greater than Master Agent min bet.
         /// </summary>
-        public static string BetLimit_10019 {
+        public static string Msg_10019 {
             get {
-                return ResourceManager.GetString("BetLimit_10019", resourceCulture);
+                return ResourceManager.GetString("Msg_10019", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max bet must be equal to or less than Master Agent max bet.
         /// </summary>
-        public static string BetLimit_10020 {
+        public static string Msg_10020 {
             get {
-                return ResourceManager.GetString("BetLimit_10020", resourceCulture);
+                return ResourceManager.GetString("Msg_10020", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Max Per Match must be equal to or less than Master Agent Max Per Match.
         /// </summary>
-        public static string BetLimit_10021 {
+        public static string Msg_10021 {
             get {
-                return ResourceManager.GetString("BetLimit_10021", resourceCulture);
+                return ResourceManager.GetString("Msg_10021", resourceCulture);
             }
         }
     }

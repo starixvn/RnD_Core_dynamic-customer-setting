@@ -63,18 +63,18 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
         /// </summary>
-        internal static string Status_60031 {
+        internal static string Msg_60031 {
             get {
-                return ResourceManager.GetString("Status_60031", resourceCulture);
+                return ResourceManager.GetString("Msg_60031", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
         /// </summary>
-        internal static string Status_60032 {
+        internal static string Msg_60032 {
             get {
-                return ResourceManager.GetString("Status_60032", resourceCulture);
+                return ResourceManager.GetString("Msg_60032", resourceCulture);
             }
         }
     }

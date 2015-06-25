@@ -3,5 +3,6 @@
     internal static class SettingType3Constants
     {
         public const byte SettingType = 3;
+        public const int CommRateIsNegativeErrorCode = 5101;
     }
 }

@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\SettingType1Constants.cs" />
-    <Compile Include="Constants\SettingType1ErrorCodes.cs" />
     <Compile Include="DataAccesses\SettingType1DataAccess.cs" />
     <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
     <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />

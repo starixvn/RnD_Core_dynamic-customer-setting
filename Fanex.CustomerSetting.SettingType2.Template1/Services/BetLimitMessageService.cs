@@ -9,18 +9,19 @@
 
     public class BetLimitMessageService : BaseMessageService, IMessageService
     {
-        private const string ResourceKeyPerfix = "BetLimit";
-        private readonly IResourceService _resourceService;
         private readonly ISettingContext _settingContext;
         private readonly ResourceManager _resourceManager = BetLimitError.ResourceManager;
 
-        public BetLimitMessageService()
+        public BetLimitMessageService() : 
+            this(null, null)
         {
         }
 
-        public BetLimitMessageService(ISettingContext settingContext, IResourceService resourceService)
+        public BetLimitMessageService(
+            ISettingContext settingContext, 
+            IResourceService resourceService)
+            : base(resourceService)
         {
-            _resourceService = resourceService ?? new ResourceService();
             _settingContext = settingContext;
         }
 
@@ -29,18 +30,10 @@
             var baseMessage = TranslateSimpleMessage(msgType, rawMessage);
             if (string.IsNullOrEmpty(baseMessage))
             {
-                return TranslateBetLimitViolationMessage(msgType, rawMessage, settingLevel);
+                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, _settingContext.Language);
             }
 
             return new MessageContent(baseMessage);
-        }
-
-        private MessageContent TranslateBetLimitViolationMessage(int msgType, string rawMessage, byte settingLevel)
-        {
-            var betLimitRoot = Deserialize<MessageRoot<DefaultMessageRow>>(rawMessage);
-            var subMessages = betLimitRoot.ToSubMessage(_resourceService, _settingContext.Language, settingLevel);
-            var mainMessage = GetMainMessage(_resourceManager, betLimitRoot, ResourceKeyPerfix);
-            return new MessageContent(mainMessage, subMessages);
         }
     }
 }

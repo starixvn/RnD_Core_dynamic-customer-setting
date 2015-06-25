@@ -1,21 +1,22 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Handlers;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.NAP.Framework.Data;
-    using NSubstitute;
-    using NUnit.Framework;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using Fanex.CustomerSetting.Criteria;
+using Fanex.CustomerSetting.DataAccesses;
+using Fanex.CustomerSetting.Dtos.Params;
+using Fanex.CustomerSetting.Dtos.Results;
+using Fanex.CustomerSetting.Enumerations;
+using Fanex.CustomerSetting.Handlers;
+using Fanex.CustomerSetting.Models;
+using Fanex.CustomerSetting.Services;
+using Fanex.CustomerSetting.Services.Impl;
+using Fanex.CustomerSetting.Tests.Models;
+using Fanex.NAP.Framework.Data;
+using NSubstitute;
+using NUnit.Framework;
 
     [TestFixture]
     public class SettingServiceTests
@@ -27,8 +28,9 @@
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
         private ISettingTypeDataAccess _settingDataAccess;
-        private SettingPreTasks _settingPreTasksHandler;
-        private SettingPostTasks _settingPostTasksHandler;
+        private IResourceService _resourceService;
+        ////private SettingPreTasks _settingPreTasksHandler;
+        ////private SettingPostTasks _settingPostTasksHandler;
 
         [SetUp]
         public void Setup()
@@ -39,8 +41,9 @@
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
-            _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>(_settingContext);
-            _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_settingContext);
+            _resourceService = Substitute.For<IResourceService>();
+            //////_settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>(_settingContext);
+            //////_settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_settingContext, _resourceService);
 
             _settingService = new SettingService(
                 _settingContext,

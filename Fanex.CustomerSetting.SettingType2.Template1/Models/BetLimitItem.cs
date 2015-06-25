@@ -33,27 +33,27 @@
 
             if (MinBet < 0)
             {
-                return new Result(SettingType2ErrorCodes.MinBetIsNegative);
+                return new Result(SettingType2Constants.MinBetIsNegativeErrorCode);
             }
 
             if (MaxBet < 0)
             {
-                return new Result(SettingType2ErrorCodes.MaxBetIsNegative);
+                return new Result(SettingType2Constants.MaxBetIsNegativeErrorCode);
             }
 
             if (MaxPerMatch < 0)
             {
-                return new Result(SettingType2ErrorCodes.MaxPerMatchIsNegative);
+                return new Result(SettingType2Constants.MaxPerMatchIsNegativeErrorCode);
             }
 
             if (MinBet > MaxBet)
             {
-                return new Result(SettingType2ErrorCodes.MinBetIsGreaterThanMaxBet);
+                return new Result(SettingType2Constants.MinBetIsGreaterThanMaxBetErrorCode);
             }
 
             if (MaxBet > MaxPerMatch)
             {
-                return new Result(SettingType2ErrorCodes.MaxBetIsGreaterThanMaxPerMatch);
+                return new Result(SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode);
             }
 
             return Result.Success;

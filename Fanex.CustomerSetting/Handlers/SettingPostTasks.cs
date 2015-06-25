@@ -2,25 +2,49 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Services;
 
     public class SettingPostTasks
     {
-        public SettingPostTasks(ISettingContext settingContext)
+        protected readonly ISettingContext SettingContext;
+        protected readonly IResourceService ResourceService;
+
+        public SettingPostTasks(
+            ISettingContext settingContext,
+            IResourceService resourceService)
         {
             SettingContext = settingContext;
+            ResourceService = resourceService;
         }
-
-        protected ISettingContext SettingContext { get; set; }
 
         public virtual SettingType PostGetCustomerSettingType(
             QuerySettingParams queryParams,
             SettingType settingType)
         {
             throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
+        }
+
+        protected SettingType MapSportTypeBetTypeName(SettingType settingType)
+        {
+            if (settingType != null && settingType.SettingItems.Any())
+            {
+                foreach (ISettingItem settingItem in settingType.SettingItems)
+                {
+                    if (settingItem is DefaultSettingItem)
+                    {
+                        var concreteSettingItem = settingItem as DefaultSettingItem;
+                        concreteSettingItem.BetTypeName = ResourceService.GetBetTypeName(concreteSettingItem.BetTypeId, SettingContext.Language);
+                        concreteSettingItem.SportTypeName = ResourceService.GetSportTypeName(concreteSettingItem.SportTypeId, SettingContext.Language);
+                    }
+                }
+            }
+
+            return settingType;
         }
 
         public virtual IResult PostUpdateCustomerSettingType(

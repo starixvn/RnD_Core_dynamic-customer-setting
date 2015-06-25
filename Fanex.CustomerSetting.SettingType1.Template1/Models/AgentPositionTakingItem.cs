@@ -62,17 +62,17 @@
             //// Will code more business here
             if (IM2 && M2 > 0)
             {
-                return new Result(SettingType1ErrorCodes.MasterPTIsGreaterThanZeroWhenIsAutoIsSet);
+                return new Result(SettingType1Constants.MasterPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
             }
 
             if (!IM2 && UM2 > 0)
             {
-                return new Result(SettingType1ErrorCodes.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet);
+                return new Result(SettingType1Constants.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
             }
 
             if (N2 > A2)
             {
-                return new Result(SettingType1ErrorCodes.AgentMinPTIsGreaterThanAgentMaxPT);
+                return new Result(SettingType1Constants.AgentMinPTIsGreaterThanAgentMaxPTErrorCode);
             }
 
             return Result.Success;

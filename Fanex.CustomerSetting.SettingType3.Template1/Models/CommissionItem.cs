@@ -22,7 +22,7 @@
 
             if (CommRate < 0)
             {
-                return new Result(SettingType3ErrorCodes.CommRateIsNegative);
+                return new Result(SettingType3Constants.CommRateIsNegativeErrorCode);
             }
 
             return Result.Success;

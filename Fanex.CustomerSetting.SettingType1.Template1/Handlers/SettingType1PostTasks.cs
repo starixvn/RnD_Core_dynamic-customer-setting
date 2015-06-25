@@ -15,7 +15,6 @@
     public class SettingType1PostTasks : SettingPostTasks
     {
         private readonly IMessageService _messageService;
-        private readonly IResourceService _resourceService;
 
         public SettingType1PostTasks() :
             this(null, null, null)
@@ -26,28 +25,14 @@
             ISettingContext settingContext,
             IMessageService messageService,
             IResourceService resourceService)
-            : base(settingContext)
+            : base(settingContext, resourceService)
         {
             _messageService = messageService ?? new PositionTakingMessageService();
-            _resourceService = resourceService ?? new ResourceService();
         }
 
         public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
         {
-            if (settingType != null && settingType.SettingItems.Any())
-            {
-                foreach (ISettingItem settingItem in settingType.SettingItems)
-                {
-                    if (settingItem is BasePositionTakingItem)
-                    {
-                        var concreteSettingItem = settingItem as BasePositionTakingItem;
-                        concreteSettingItem.BetTypeName = _resourceService.GetBetTypeName(concreteSettingItem.BetTypeId, SettingContext.Language);
-                        concreteSettingItem.SportTypeName = _resourceService.GetSportTypeName(concreteSettingItem.SportTypeId, SettingContext.Language);
-                    }
-                }
-            }
-
-            return settingType;
+            return MapSportTypeBetTypeName(settingType);
         }
 
         public override IResult PostUpdateCustomerSettingType(

@@ -62,17 +62,17 @@
             //// Will code more business here
             if (IS3 && S3 > 0)
             {
-                return new Result(SettingType1ErrorCodes.SuperPTIsGreaterThanZeroWhenIsAutoIsSet);
+                return new Result(SettingType1Constants.SuperPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
             }
 
             if (!IS3 && US3 > 0)
             {
-                return new Result(SettingType1ErrorCodes.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet);
+                return new Result(SettingType1Constants.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
             }
 
             if (N3 > M3)
             {
-                return new Result(SettingType1ErrorCodes.MasterMinPTIsGreaterThanMasterMaxPT);
+                return new Result(SettingType1Constants.MasterMinPTIsGreaterThanMasterMaxPTErrorCode);
             }
 
             return Result.Success;

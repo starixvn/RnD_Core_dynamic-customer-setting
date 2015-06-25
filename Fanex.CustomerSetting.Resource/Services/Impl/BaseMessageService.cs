@@ -9,6 +9,13 @@
 
     public class BaseMessageService
     {
+        protected readonly IResourceService ResourceService;
+
+        public BaseMessageService(IResourceService resourceService)
+        {
+            ResourceService = resourceService ?? new ResourceService();
+        }
+
         protected string TranslateSimpleMessage(int msgType, string rawMessage)
         {
             switch ((MessageType)msgType)
@@ -24,6 +31,18 @@
             }
         }
 
+        private string TranslateMessage(string rawMessage)
+        {
+            var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
+
+            if (simpleMessage != null)
+            {
+                return GetMainMessage(Error.ResourceManager, simpleMessage.MessageId);
+            }
+
+            return rawMessage;
+        }
+
         protected T Deserialize<T>(string text) where T : SimpleMessage
         {
             var serializer = new XmlSerializer(typeof(T));
@@ -33,26 +52,27 @@
             }
         }
 
-        private string TranslateMessage(string rawMessage)
-        {
-            var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
-
-            if (simpleMessage != null)
-            {
-                return GetMainMessage(Error.ResourceManager, simpleMessage);
-            }
-
-            return rawMessage;
-        }
-
         protected string GetMainMessage(
-            ResourceManager resouceManager, SimpleMessage simpleMessage, string messagePrefix = "Msg")
+            ResourceManager resouceManager, 
+            int messsageId)
         {
-            var key = string.Format("{0}_{1}", messagePrefix, simpleMessage.MessageId);
+            var key = string.Format("Msg_{0}", messsageId);
             var message = resouceManager.GetString(key);
             return !string.IsNullOrEmpty(message)
                 ? message
-                : string.Format("Undefined error message {0}", simpleMessage.MessageId);
+                : string.Format("Undefined error message {0}", messsageId);
+        }
+
+        protected MessageContent TranslateDefaultViolationMessage(
+            ResourceManager resouceManager,
+            string rawMessage,
+            byte settingLevel,
+            string language)
+        {
+            var messageRoot = Deserialize<MessageRoot<DefaultMessageRow>>(rawMessage);
+            var subMessages = messageRoot.ToSubMessage(ResourceService, language, settingLevel);
+            var mainMessage = GetMainMessage(resouceManager, messageRoot.MessageId);
+            return new MessageContent(mainMessage, subMessages);
         }
     }
 }

@@ -24,12 +24,12 @@
 
             if (Downline == null)
             {
-                return new Result(SettingType4ErrorCodes.DownlineProductStatusIsNull);
+                return new Result(SettingType4Constants.DownlineProductStatusIsNullErrorCode);
             }
 
             if (IsDisabled && !Downline.IsDisabled)
             {
-                return new Result(SettingType4ErrorCodes.DownlineIsEnabledWhenUplineIsDisabled);
+                return new Result(SettingType4Constants.DownlineIsEnabledWhenUplineIsDisabledErrorCode);
             }
 
             return Result.Success;

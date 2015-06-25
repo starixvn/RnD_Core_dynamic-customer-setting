@@ -63,9 +63,9 @@ namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Invalid commission rate.
         /// </summary>
-        internal static string Commission_1 {
+        internal static string Msg_1 {
             get {
-                return ResourceManager.GetString("Commission_1", resourceCulture);
+                return ResourceManager.GetString("Msg_1", resourceCulture);
             }
         }
     }

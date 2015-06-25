@@ -117,55 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PositionTaking_20001" xml:space="preserve">
+  <data name="Msg_20001" xml:space="preserve">
     <value>Wrong position taking</value>
   </data>
-  <data name="PositionTaking_20019" xml:space="preserve">
+  <data name="Msg_20019" xml:space="preserve">
     <value>Existing masters exceeded new Super Max PT</value>
   </data>
-  <data name="PositionTaking_20020" xml:space="preserve">
+  <data name="Msg_20020" xml:space="preserve">
     <value>Existing members exceeded new Super Max PT</value>
   </data>
-  <data name="PositionTaking_20021" xml:space="preserve">
+  <data name="Msg_20021" xml:space="preserve">
     <value>Existing masters exceeded new Master Max PT</value>
   </data>
-  <data name="PositionTaking_20022" xml:space="preserve">
+  <data name="Msg_20022" xml:space="preserve">
     <value>Existing members exceeded new Master Max PT</value>
   </data>
-  <data name="PositionTaking_20023" xml:space="preserve">
+  <data name="Msg_20023" xml:space="preserve">
     <value>Existing agents exceeded new Agent Max PT</value>
   </data>
-  <data name="PositionTaking_20024" xml:space="preserve">
+  <data name="Msg_20024" xml:space="preserve">
     <value>Existing members exceeded new Agent Max PT</value>
   </data>
-  <data name="PositionTaking_20025" xml:space="preserve">
+  <data name="Msg_20025" xml:space="preserve">
     <value>The position taking violates Upline Min/Max PT</value>
   </data>
-  <data name="PositionTaking_20026" xml:space="preserve">
+  <data name="Msg_20026" xml:space="preserve">
     <value>Existing agents exceeded new Master Max PT</value>
   </data>
-  <data name="PositionTaking_20027" xml:space="preserve">
+  <data name="Msg_20027" xml:space="preserve">
     <value>The position taking violates Master Max PT set by company</value>
   </data>
-  <data name="PositionTaking_20028" xml:space="preserve">
+  <data name="Msg_20028" xml:space="preserve">
     <value>The position taking violates Super Max PT</value>
   </data>
-  <data name="PositionTaking_20029" xml:space="preserve">
+  <data name="Msg_20029" xml:space="preserve">
     <value>The position taking violates Super Min PT</value>
   </data>
-  <data name="PositionTaking_20030" xml:space="preserve">
+  <data name="Msg_20030" xml:space="preserve">
     <value>The Agent Min PT violates Master Max PT</value>
   </data>
-  <data name="PositionTaking_20031" xml:space="preserve">
+  <data name="Msg_20031" xml:space="preserve">
     <value>The position taking violates Master Max PT</value>
   </data>
-  <data name="PositionTaking_20032" xml:space="preserve">
+  <data name="Msg_20032" xml:space="preserve">
     <value>The position taking violates Master Min PT</value>
   </data>
-  <data name="PositionTaking_20033" xml:space="preserve">
+  <data name="Msg_20033" xml:space="preserve">
     <value>The position taking violates Agent Min/Max PT</value>
   </data>
-  <data name="PositionTaking_20034" xml:space="preserve">
+  <data name="Msg_20034" xml:space="preserve">
     <value>The position taking violates Agent Max PT</value>
   </data>
 </root>

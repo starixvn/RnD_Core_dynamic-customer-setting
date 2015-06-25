@@ -54,12 +54,12 @@
             //// Will code more business here
             if (!IM1 && UM1 > 0)
             {
-                return new Result(SettingType1ErrorCodes.MasterAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet);
+                return new Result(SettingType1Constants.MasterAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
             }
 
             if (IM1 && M1 > 0)
             {
-                return new Result(SettingType1ErrorCodes.MasterPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet);
+                return new Result(SettingType1Constants.MasterPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
             }
 
             return Result.Success;
