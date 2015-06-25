@@ -1,9 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Dtos.Results;
 
+    [Serializable]
     public class SettingType
     {
         private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";

@@ -59,5 +59,14 @@ namespace Fanex.CustomerSetting.Resource.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update process is unsuccessful !.
+        /// </summary>
+        public static string Msg_90001 {
+            get {
+                return ResourceManager.GetString("Msg_90001", resourceCulture);
+            }
+        }
     }
 }

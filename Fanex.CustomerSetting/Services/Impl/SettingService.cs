@@ -305,7 +305,7 @@
 
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
             //// because we already updated setting for them, so we need to remove them out of customer list.
-            var customersNeedForUpdating = GetCustomersNeedForUpdating(preTasksResult.CustomersNeedForUpdating, customers);
+            var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
 
@@ -324,7 +324,7 @@
         /// <param name="customersReturnFromPreTask">Customer list return from pre task, may be different with original customer list.</param>
         /// <param name="originalCustomers">Original customer list.</param>
         /// <returns>List customer will be update one by one.</returns>
-        private IEnumerable<Customer> GetCustomersNeedForUpdating(
+        private IEnumerable<Customer> GetCustomersNeedForSingleUpdating(
             IEnumerable<Customer> customersReturnFromPreTask,
             IEnumerable<Customer> originalCustomers)
         {

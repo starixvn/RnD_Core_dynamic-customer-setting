@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Dtos.Results;
 
+    [Serializable]
     public class Setting : ISetting
     {
         public Customer Customer { get; set; }

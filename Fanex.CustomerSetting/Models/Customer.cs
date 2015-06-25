@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using System;
     using Fanex.CustomerSetting.Enumerations;
 
+    [Serializable]
     public class Customer
     {
         public int Id { get; set; }

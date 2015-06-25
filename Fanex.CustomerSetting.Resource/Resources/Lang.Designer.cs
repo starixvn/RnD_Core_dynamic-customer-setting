@@ -70,11 +70,128 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent Max PT.
+        /// </summary>
+        public static string AgentMaxPT {
+            get {
+                return ResourceManager.GetString("AgentMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Min PT.
+        /// </summary>
+        public static string AgentMinPT {
+            get {
+                return ResourceManager.GetString("AgentMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent PT.
+        /// </summary>
+        public static string AgentPT {
+            get {
+                return ResourceManager.GetString("AgentPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agents.
+        /// </summary>
+        public static string Agents {
+            get {
+                return ResourceManager.GetString("Agents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Setting.
+        /// </summary>
+        public static string BetSetting {
+            get {
+                return ResourceManager.GetString("BetSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string Commission {
+            get {
+                return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Comm.
+        /// </summary>
+        public static string CommissionForAgent {
+            get {
+                return ResourceManager.GetString("CommissionForAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Comm.
+        /// </summary>
+        public static string CommissionForMaster {
+            get {
+                return ResourceManager.GetString("CommissionForMaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member Comm.
+        /// </summary>
+        public static string CommissionForMember {
+            get {
+                return ResourceManager.GetString("CommissionForMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to duplicate the values.
+        /// </summary>
+        public static string CopyTooltip {
+            get {
+                return ResourceManager.GetString("CopyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is not valid..
         /// </summary>
         public static string DataIsNotValid {
             get {
                 return ResourceManager.GetString("DataIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of range for highlighted values..
+        /// </summary>
+        public static string DuplicateValuesAlertMsg {
+            get {
+                return ResourceManager.GetString("DuplicateValuesAlertMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        public static string Enable {
+            get {
+                return ResourceManager.GetString("Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Downline.
+        /// </summary>
+        public static string EnableDownline {
+            get {
+                return ResourceManager.GetString("EnableDownline", resourceCulture);
             }
         }
         
@@ -106,11 +223,200 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Auto.
+        /// </summary>
+        public static string IsAuto {
+            get {
+                return ResourceManager.GetString("IsAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Max PT.
+        /// </summary>
+        public static string MasterMaxPT {
+            get {
+                return ResourceManager.GetString("MasterMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Min PT.
+        /// </summary>
+        public static string MasterMinPT {
+            get {
+                return ResourceManager.GetString("MasterMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master PT.
+        /// </summary>
+        public static string MasterPT {
+            get {
+                return ResourceManager.GetString("MasterPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masters.
+        /// </summary>
+        public static string Masters {
+            get {
+                return ResourceManager.GetString("Masters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet.
+        /// </summary>
+        public static string MaxBet {
+            get {
+                return ResourceManager.GetString("MaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet must be less than or equal to Max Per Match.
+        /// </summary>
+        public static string MaxBetLessThanOrEqualMaxPerMatch {
+            get {
+                return ResourceManager.GetString("MaxBetLessThanOrEqualMaxPerMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet must be less than or equal to {0}.
+        /// </summary>
+        public static string MaxBetLessThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("MaxBetLessThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet must be greater than or equal to Min Bet.
+        /// </summary>
+        public static string MaxBetMoreThanOrEqualMinBet {
+            get {
+                return ResourceManager.GetString("MaxBetMoreThanOrEqualMinBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Live.
+        /// </summary>
+        public static string MaxLive {
+            get {
+                return ResourceManager.GetString("MaxLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match.
+        /// </summary>
+        public static string MaxPerMatch {
+            get {
+                return ResourceManager.GetString("MaxPerMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match must be less than or equal to {0}.
+        /// </summary>
+        public static string MaxPerMatchLessThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("MaxPerMatchLessThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match must be greater than or equal to Max Bet.
+        /// </summary>
+        public static string MaxPerMatchMoreThanOrEqualMaxBet {
+            get {
+                return ResourceManager.GetString("MaxPerMatchMoreThanOrEqualMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Members.
+        /// </summary>
+        public static string Members {
+            get {
+                return ResourceManager.GetString("Members", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        public static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet.
+        /// </summary>
+        public static string MinBet {
+            get {
+                return ResourceManager.GetString("MinBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet must be less than or equal to Max Bet.
+        /// </summary>
+        public static string MinBetLessThanOrEqualMaxBet {
+            get {
+                return ResourceManager.GetString("MinBetLessThanOrEqualMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet must be greater than or equal to {0}.
+        /// </summary>
+        public static string MinBetMoreThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("MinBetMoreThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Live.
+        /// </summary>
+        public static string MinLive {
+            get {
+                return ResourceManager.GetString("MinLive", resourceCulture);
             }
         }
         
@@ -151,11 +457,128 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Position Taking.
+        /// </summary>
+        public static string PositionTaking {
+            get {
+                return ResourceManager.GetString("PositionTaking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Status.
+        /// </summary>
+        public static string ProductStatus {
+            get {
+                return ResourceManager.GetString("ProductStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Max PT.
+        /// </summary>
+        public static string SuperMaxPT {
+            get {
+                return ResourceManager.GetString("SuperMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Min PT.
+        /// </summary>
+        public static string SuperMinPT {
+            get {
+                return ResourceManager.GetString("SuperMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super PT.
+        /// </summary>
+        public static string SuperPT {
+            get {
+                return ResourceManager.GetString("SuperPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops... you are here because of a system error, please notify your administrator..
         /// </summary>
         public static string SystemError {
             get {
                 return ResourceManager.GetString("SystemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated bet setting successfully..
+        /// </summary>
+        public static string UpdateBetSettingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateBetSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated commission setting successfully..
+        /// </summary>
+        public static string UpdateCommissionSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateCommissionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have changed your position taking.
+        /// </summary>
+        public static string UpdateMemberPtInfo {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to update all member&apos;s position taking to:.
+        /// </summary>
+        public static string UpdateMemberPtQuestion {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Update Members&apos;s PT.
+        /// </summary>
+        public static string UpdateMemberPtTitle {
+            get {
+                return ResourceManager.GetString("UpdateMemberPtTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated position taking successfully..
+        /// </summary>
+        public static string UpdatePositionTakingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatePositionTakingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated product status successfully..
+        /// </summary>
+        public static string UpdateProductStatusSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateProductStatusSuccessfully", resourceCulture);
             }
         }
         

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services
+﻿namespace Fanex.CustomerSetting.Resource.Services.Impl
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -43,7 +43,7 @@
             return string.Format(ProductDefaultFormat, productId);
         }
 
-        private string GetProductNameWithLanguage(ProductNameResource productName, string language)
+        private string GetProductNameWithLanguage(ProductNameDto productName, string language)
         {
             var propertyName = string.Format("ProductName{0}", GetRefLanguage(language).ToUpper());
             var property = productName.GetType().GetProperty(propertyName);
@@ -91,15 +91,15 @@
             }
         }
 
-        private IEnumerable<ProductNameResource> GetProductResources()
+        private IEnumerable<ProductNameDto> GetProductResources()
         {
             using (var cacheService = CacheService.CreateInstance(CacheType.MemoryCache))
             {
-                var productNames = cacheService.Get<IEnumerable<ProductNameResource>>(ProductNamesCacheKey);
+                var productNames = cacheService.Get<IEnumerable<ProductNameDto>>(ProductNamesCacheKey);
                 if (productNames == null)
                 {
-                    productNames = _resourceRepository.Fetch<ProductNameResource>(new ProductNamesQueryCriteria());
-                    cacheService.Set<IEnumerable<ProductNameResource>>(ProductNamesCacheKey, productNames, ProductNamesCacheTimeout);
+                    productNames = _resourceRepository.Fetch<ProductNameDto>(new ProductNamesQueryCriteria());
+                    cacheService.Set<IEnumerable<ProductNameDto>>(ProductNamesCacheKey, productNames, ProductNamesCacheTimeout);
                 }
 
                 return productNames;

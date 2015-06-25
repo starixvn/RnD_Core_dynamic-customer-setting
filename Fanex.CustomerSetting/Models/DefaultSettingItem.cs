@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using System;
     using Fanex.CustomerSetting.Dtos.Results;
 
+    [Serializable]
     public class DefaultSettingItem : ISettingItem
     {
         private const string SportTypeBetTypeXmlFormat = "SportType=\"{0}\" BetType=\"{1}\"";

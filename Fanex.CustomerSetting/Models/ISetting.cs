@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Dtos.Results;
 
     public interface ISetting
     {

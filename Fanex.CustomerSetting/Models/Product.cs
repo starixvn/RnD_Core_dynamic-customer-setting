@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
+    using System;
     using System.Collections.Generic;
 
+    [Serializable]
     public class Product
     {
         public byte Id { get; set; }

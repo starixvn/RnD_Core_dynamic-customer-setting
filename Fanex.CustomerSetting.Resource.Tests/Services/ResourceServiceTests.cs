@@ -2,14 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Dtos;
-    using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource.Criteria;
     using Fanex.CustomerSetting.Resource.Dtos;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.Resource.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
@@ -148,7 +144,7 @@
             _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            _dymanicRepository.Received().Fetch<ProductNameResource>(Arg.Any<ProductNamesQueryCriteria>());
+            _dymanicRepository.Received().Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>());
         }
 
         [Test]
@@ -156,7 +152,7 @@
         {
             //// Arrange
             byte productId = 1;
-            _dymanicRepository.Fetch<ProductNameResource>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameResource>());
+            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto>());
 
             //// Act
             var actualProductName = _resourceService.GetProductName(productId, _language);

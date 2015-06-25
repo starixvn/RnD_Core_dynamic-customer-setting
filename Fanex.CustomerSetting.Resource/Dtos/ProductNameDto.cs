@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Resource.Dtos
 {
-    public class ProductNameResource
+    public class ProductNameDto
     {
         public int ProductId { get; set; }
 
