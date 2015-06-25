@@ -1,28 +1,53 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Handlers
 {
+    using System.Linq;
+    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Resource.Services.Impl;
+    using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
 
     public class SettingType1PostTasks : SettingPostTasks
     {
         private readonly IMessageService _messageService;
+        private readonly IResourceService _resourceService;
 
         public SettingType1PostTasks() :
-            this(null, null)
+            this(null, null, null)
         {
         }
 
         public SettingType1PostTasks(
             ISettingContext settingContext,
-            IMessageService messageService)
+            IMessageService messageService,
+            IResourceService resourceService)
             : base(settingContext)
         {
             _messageService = messageService ?? new PositionTakingMessageService();
+            _resourceService = resourceService ?? new ResourceService();
+        }
+
+        public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
+        {
+            if (settingType != null && settingType.SettingItems.Any())
+            {
+                foreach (ISettingItem settingItem in settingType.SettingItems)
+                {
+                    if (settingItem is BasePositionTakingItem)
+                    {
+                        var concreteSettingItem = settingItem as BasePositionTakingItem;
+                        concreteSettingItem.BetTypeName = _resourceService.GetBetTypeName(concreteSettingItem.BetTypeId, SettingContext.Language);
+                        concreteSettingItem.SportTypeName = _resourceService.GetSportTypeName(concreteSettingItem.SportTypeId, SettingContext.Language);
+                    }
+                }
+            }
+
+            return settingType;
         }
 
         public override IResult PostUpdateCustomerSettingType(

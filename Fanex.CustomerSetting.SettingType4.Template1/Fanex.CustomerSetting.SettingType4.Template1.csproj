@@ -69,8 +69,15 @@
     <Compile Include="Constants\SettingType4ErrorCodes.cs" />
     <Compile Include="DataAccesses\SettingType4DataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
+    <Compile Include="Handlers\SettingType4PostTasks.cs" />
     <Compile Include="Models\ProductStatusItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ProductStatusError.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductStatusError.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ProductStatusMessageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -84,6 +91,12 @@
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ProductStatusError.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductStatusError.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
