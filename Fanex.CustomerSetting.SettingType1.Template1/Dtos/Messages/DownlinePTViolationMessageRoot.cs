@@ -1,16 +1,15 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
 {
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Xml.Serialization;
     using Fanex.CustomerSetting.Resource.Dtos.Messages;
 
+    [XmlRoot("Root")]
     public class DownlinePTViolationMessageRoot : MessageRoot<DownlinePTViolationMessageRow>
     {
         public void GroupUsernameBySportTypeBetType()
         {
-            var usernameGrouped = new List<DownlinePTViolationMessageRow>();
-
-            var groups = MessageRows.GroupBy(row => new
+            MessageRows = MessageRows.GroupBy(row => new
             {
                 row.SportType,
                 row.BetType,
@@ -21,7 +20,7 @@
                 BetType = group.Key.BetType,
                 IsLive = group.Key.IsLive,
                 UserName = string.Join(", ", group.ToList().Select(row => row.UserName))
-            });
+            }).ToArray();
         }
     }
 }

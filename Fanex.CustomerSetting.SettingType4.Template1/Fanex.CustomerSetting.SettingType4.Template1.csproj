@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +69,7 @@
     <Compile Include="Constants\SettingType4Constants.cs" />
     <Compile Include="DataAccesses\SettingType4DataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Handlers\SettingType4PostTasks.cs" />
     <Compile Include="Models\ProductStatusItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ProductStatusError.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductStatusError.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

@@ -14,13 +14,13 @@
         private readonly ISettingContext _settingContext;
         private readonly ResourceManager _resourceManager = PositionTakingError.ResourceManager;
 
-        public PositionTakingMessageService() : 
+        public PositionTakingMessageService() :
             this(null, null)
         {
         }
 
         public PositionTakingMessageService(
-            ISettingContext settingContext, 
+            ISettingContext settingContext,
             IResourceService resourceService)
             : base(resourceService)
         {
@@ -39,17 +39,14 @@
         }
 
         private MessageContent TranslatePositionTakingViolationMessage(
-            int msgType, 
-            string rawMessage, 
+            int msgType,
+            string rawMessage,
             byte settingLevel)
         {
             switch ((PositionTakingMessageType)msgType)
             {
                 case PositionTakingMessageType.WrongPositionTaking:
                     return TranslateWrongPositionTakingMessage(rawMessage, settingLevel);
-
-                case PositionTakingMessageType.DownlinePTViolation:
-                    return TranslateDownlinePTViolationMessage(rawMessage, settingLevel);
 
                 case PositionTakingMessageType.MinPTViolation:
                     return TranslateMinPTViolationMessage(rawMessage, settingLevel);
@@ -59,6 +56,9 @@
 
                 case PositionTakingMessageType.MinMaxPTViolation:
                     return TranslateMinMaxPTViolationMessage(rawMessage, settingLevel);
+
+                case PositionTakingMessageType.DownlinePTViolation:
+                    return TranslateDownlinePTViolationMessage(rawMessage, settingLevel);
             }
 
             return new MessageContent(rawMessage);
@@ -68,13 +68,6 @@
         {
             var positionTakingRoot = Deserialize<MessageRoot<WrongPTMessageRow>>(rawMessage);
             return GetMessageContent<WrongPTMessageRow>(positionTakingRoot, settingLevel);
-        }
-
-        private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel)
-        {
-            var positionTakingRoot = Deserialize<DownlinePTViolationMessageRoot>(rawMessage);
-            positionTakingRoot.GroupUsernameBySportTypeBetType();
-            return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
         private MessageContent TranslateMinPTViolationMessage(string rawMessage, byte settingLevel)
@@ -93,6 +86,13 @@
         {
             var positionTakingRoot = Deserialize<MessageRoot<MinMaxPTViolationMessageRow>>(rawMessage);
             return GetMessageContent<MinMaxPTViolationMessageRow>(positionTakingRoot, settingLevel);
+        }
+
+        private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel)
+        {
+            var positionTakingRoot = Deserialize<DownlinePTViolationMessageRoot>(rawMessage);
+            positionTakingRoot.GroupUsernameBySportTypeBetType();
+            return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot, settingLevel);
         }
 
         private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot, byte settingLevel) where T : IMessageRow

@@ -41,6 +41,7 @@
         public IResult UpdateGroupedMembersSetting(IEnumerable<Customer> groupedMembers, CustomerLevel uplineLevel, SettingType settingType)
         {
             Check.Argument.IsNotNull(groupedMembers, "groupedMembers");
+            Check.Argument.IsNotNull(settingType, "settingType");
             Check.Argument.IsNotNegativeOrZero(groupedMembers.Count(), "groupedMembers.Count");
 
             var updateParams = new UpdateMultipleMemberPositionTakingParams

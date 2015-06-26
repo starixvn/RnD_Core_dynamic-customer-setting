@@ -58,11 +58,16 @@
     <Compile Include="Models\SuperPositionTakingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MemberGroupServiceTests.cs" />
+    <Compile Include="Services\PositionTakingMessageServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
+      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
+      <Name>Fanex.CustomerSetting.Resource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj">
       <Project>{acbfcea2-a3f7-4527-98fa-abd1e7f451c3}</Project>
       <Name>Fanex.CustomerSetting.Tests</Name>

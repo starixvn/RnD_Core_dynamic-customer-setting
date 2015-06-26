@@ -1,10 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Xml.Serialization;
+    using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.Resource.Services;
 
     public class DownlinePTViolationMessageRow : WrongPTMessageRow
@@ -17,6 +14,7 @@
             return string.Format(
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
+                Lang.Usernames,
                 UserName);
         }
     }

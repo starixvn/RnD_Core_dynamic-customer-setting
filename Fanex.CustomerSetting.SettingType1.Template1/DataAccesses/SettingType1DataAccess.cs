@@ -43,7 +43,7 @@
                     return "Acc_CustSetting_MemberPTSelect";
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -75,11 +75,11 @@
                             return objectDb.Query<AgentOnMemberPositionTakingItem>(storedProcedureParams);
 
                         default:
-                            throw new ArgumentOutOfRangeException("This customer level is not supported");
+                            throw new InvalidOperationException("This customer level is not supported");
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -107,7 +107,7 @@
                     };
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -168,11 +168,11 @@
                             return "Acc_CustSetting_AgentPTOnMemberUpd";
 
                         default:
-                            throw new ArgumentOutOfRangeException("This customer level is not supported");
+                            throw new InvalidOperationException("This customer level is not supported");
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
     }

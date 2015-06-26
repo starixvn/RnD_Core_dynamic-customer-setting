@@ -9,6 +9,8 @@
 
     public class BaseMessageService
     {
+        private const string NotFoundMessageFormat = "Undefined error message {0}";
+        private const string MessageFormat = "Msg_{0}";
         protected readonly IResourceService ResourceService;
 
         public BaseMessageService(IResourceService resourceService)
@@ -56,11 +58,11 @@
             ResourceManager resouceManager, 
             int messsageId)
         {
-            var key = string.Format("Msg_{0}", messsageId);
+            var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);
             return !string.IsNullOrEmpty(message)
                 ? message
-                : string.Format("Undefined error message {0}", messsageId);
+                : string.Format(NotFoundMessageFormat, messsageId);
         }
 
         protected MessageContent TranslateDefaultViolationMessage(

@@ -1,0 +1,108 @@
+﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Tests.Services
+{
+    using System.Linq;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Enumerations;
+    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.SettingType3.Template1.Resources;
+    using Fanex.CustomerSetting.SettingType3.Template1.Services;
+    using Fanex.CustomerSetting.Tests.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+
+    [TestFixture]
+    public class CommissionMessageServiceTests
+    {
+        private ISettingContext _settingContext;
+        private IResourceService _resourceService;
+        private IMessageService _commissionMessageService;
+
+        [SetUp]
+        public void Setup()
+        {
+            _settingContext = new SettingContextStub();
+            _resourceService = Substitute.For<IResourceService>();
+            _commissionMessageService = new CommissionMessageService(_settingContext, _resourceService);
+        }
+
+        #region Simple Message
+
+        [Test]
+        public void TranslateMessage_MessageTypeIsSimpleMessage_ReturnMatchedMessageContent()
+        {
+            //// Arrange
+            int msgType = (int)MessageType.Simple;
+            string rawMessage = "<Root MsgID=\"90001\" Msg=\"Update process is unsuccessful!\"/>";
+            byte settingLevel = 1;
+
+            //// Act
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+
+            //// Assert
+            Assert.AreEqual(Error.Msg_90001, actualMessageContent.MainMessage);
+        }
+
+        [Test]
+        public void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
+        {
+            //// Arrange
+            int msgType = (int)MessageType.Simple;
+            string rawMessage = "<Root MsgID=\"121212\"/>";
+            byte settingLevel = 1;
+
+            //// Act
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+
+            //// Assert
+            Assert.AreEqual("Undefined error message 121212", actualMessageContent.MainMessage);
+        }
+
+        #endregion Simple Message
+
+        #region Other Message
+
+        [Test]
+        public void TranslateMessage_MessageIdIsOther_ReturnRawMessage()
+        {
+            //// Arrange
+            int msgType = (int)MessageType.Other;
+            string rawMessage = "Raw Message";
+            byte settingLevel = 1;
+
+            //// Act
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+
+            //// Assert
+            Assert.AreEqual(rawMessage, actualMessageContent.MainMessage);
+        }
+
+        #endregion Other Message
+
+        [TestCase(1, "", "", "")]
+        [TestCase(2, "SportType1", "", "SportType1")]
+        [TestCase(3, "", "BetType1", "BetType1")]
+        [TestCase(4, "SportType1", "BetType1", "SportType1 - BetType1")]
+        public void TranslateMessage_MessageTypeIsWrongCommission_ReturnMatchedMessageContent(
+            byte settingLevel,
+            string sportTypeName,
+            string betTypeName,
+            string expectedSubMessage)
+        {
+            /// Arrange
+            int msgType = 51; //// Wrong Commission Rate
+            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
+                                + "<Row SportType=\"1\" BetType=\"1\" />"
+                                + "</Root>";
+            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+
+            //// Act
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+
+            //// Assert
+            Assert.AreEqual(CommissionError.Msg_1, actualMessageContent.MainMessage);
+            Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
+        }
+    }
+}

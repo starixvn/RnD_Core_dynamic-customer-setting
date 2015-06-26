@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net40\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -46,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Models\BetLimitItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BetLimitMessageServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
@@ -55,6 +59,10 @@
     <ProjectReference Include="..\Fanex.CustomerSetting.SettingType2.Template1\Fanex.CustomerSetting.SettingType2.Template1.csproj">
       <Project>{b4e5a53b-efbc-4d30-8b59-ed41236d3816}</Project>
       <Name>Fanex.CustomerSetting.SettingType2.Template1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj">
+      <Project>{acbfcea2-a3f7-4527-98fa-abd1e7f451c3}</Project>
+      <Name>Fanex.CustomerSetting.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>

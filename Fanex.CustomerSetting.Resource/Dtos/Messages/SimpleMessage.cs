@@ -2,6 +2,7 @@
 {
     using System.Xml.Serialization;
 
+    [XmlRoot("Root")]
     public class SimpleMessage
     {
         [XmlAttribute("MsgID")]

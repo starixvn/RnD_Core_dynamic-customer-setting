@@ -294,4 +294,7 @@
   <data name="UserName" xml:space="preserve">
     <value>UserName</value>
   </data>
+  <data name="Usernames" xml:space="preserve">
+    <value>Usernames</value>
+  </data>
 </root>

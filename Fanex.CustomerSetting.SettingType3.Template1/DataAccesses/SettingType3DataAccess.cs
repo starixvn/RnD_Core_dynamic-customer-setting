@@ -71,7 +71,7 @@
                     return "Acc_CustSetting_MemberCommissionSelect";
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 

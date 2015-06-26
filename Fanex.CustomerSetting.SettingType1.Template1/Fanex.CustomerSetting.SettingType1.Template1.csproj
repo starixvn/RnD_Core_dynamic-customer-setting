@@ -123,7 +123,7 @@
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\PositionTakingError.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PositionTakingError.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

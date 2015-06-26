@@ -72,7 +72,7 @@
                     return "Acc_CustSetting_MemberProductStatusSelect";
 
                 default:
-                    throw new ArgumentOutOfRangeException("This customer level is not supported");
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 

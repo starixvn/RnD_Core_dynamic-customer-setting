@@ -90,6 +90,18 @@
         }
 
         [Test]
+        public void UpdateGroupedMembersSetting_SettingTypeIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            IEnumerable<Customer> members = new List<Customer>();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => _memberGroupService.UpdateGroupedMembersSetting(members, 0, null)));
+        }
+
+        [Test]
         public void UpdateGroupedMembersSetting_MembersIsEmpty_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
@@ -98,7 +110,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersSetting(members, 0, null)));
+                    () => _memberGroupService.UpdateGroupedMembersSetting(members, 0, new SettingType())));
         }
 
         [Test]

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Handlers
 {
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -32,7 +33,7 @@
 
         public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
         {
-            return MapSportTypeBetTypeName(settingType);
+            return SetSportTypeBetTypeName(settingType);
         }
 
         public override IResult PostUpdateCustomerSettingType(
@@ -41,6 +42,8 @@
             CustomerLevel? uplineLevel,
             IResult result)
         {
+            Check.Argument.IsNotNull(result, "result");
+
             if (result.IsSuccessful)
             {
                 return new Result(Result.SuccessValue, Lang.UpdatePositionTakingSuccessfully);

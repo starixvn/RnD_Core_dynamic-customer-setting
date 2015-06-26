@@ -44,7 +44,7 @@
                     return "Acc_CustSetting_AgentPTOnMemberMultiUpd";
 
                 default:
-                    throw new ArgumentOutOfRangeException("Not implemented for this customer level yet");
+                    throw new InvalidOperationException("Not implemented for this customer level yet");
             }
         }
 

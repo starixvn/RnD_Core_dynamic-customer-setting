@@ -32,7 +32,7 @@
 
         public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
         {
-            return MapSportTypeBetTypeName(settingType);
+            return SetSportTypeBetTypeName(settingType);
         }
 
         public override IResult PostUpdateCustomerSettingType(

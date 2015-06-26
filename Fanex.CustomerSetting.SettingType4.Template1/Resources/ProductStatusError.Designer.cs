@@ -22,7 +22,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ProductStatusError {
+    public class ProductStatusError {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType4.Template1.Resources.ProductStatusError", typeof(ProductStatusError).Assembly);
@@ -51,7 +51,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
         /// </summary>
-        internal static string Msg_60031 {
+        public static string Msg_60031 {
             get {
                 return ResourceManager.GetString("Msg_60031", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
         /// </summary>
-        internal static string Msg_60032 {
+        public static string Msg_60032 {
             get {
                 return ResourceManager.GetString("Msg_60032", resourceCulture);
             }

@@ -29,7 +29,13 @@
             throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
         }
 
-        protected SettingType MapSportTypeBetTypeName(SettingType settingType)
+        /// <summary>
+        /// Sets the name of the sport type bet type for setting item using sport type bet type for indentity.
+        /// This function will use by post get setting task of setting type.
+        /// </summary>
+        /// <param name="settingType">Type of the setting, includes list of setting items.</param>
+        /// <returns>Setting type with setting item have sport, bet type name.</returns>
+        protected SettingType SetSportTypeBetTypeName(SettingType settingType)
         {
             if (settingType != null && settingType.SettingItems.Any())
             {

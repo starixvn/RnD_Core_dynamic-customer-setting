@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +69,7 @@
     <Compile Include="Constants\SettingType2Constants.cs" />
     <Compile Include="DataAccesses\SettingType2DataAccess.cs" />
     <Compile Include="Dtos\BetLimitItemDto.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Handlers\SettingType2PostTasks.cs" />
     <Compile Include="Models\BetLimitItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
