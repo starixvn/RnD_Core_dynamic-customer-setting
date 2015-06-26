@@ -22,17 +22,6 @@
         /// </summary>
         public byte N2 { get; set; }
 
-        public override IResult Validate()
-        {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
-            return Result.Success;
-        }
-
         public override string ToXml()
         {
             return string.Format(

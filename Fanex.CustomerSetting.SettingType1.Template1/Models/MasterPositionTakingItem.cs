@@ -53,12 +53,6 @@
 
         public override IResult Validate()
         {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
             //// Will code more business here
             if (IS3 && S3 > 0)
             {
@@ -75,7 +69,7 @@
                 return new Result(SettingType1Constants.MasterMinPTIsGreaterThanMasterMaxPTErrorCode);
             }
 
-            return Result.Success;
+            return base.Validate();
         }
 
         public override string ToXml()

@@ -45,12 +45,6 @@
 
         public override IResult Validate()
         {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
             //// Will code more business here
             if (!IM1 && UM1 > 0)
             {
@@ -62,7 +56,7 @@
                 return new Result(SettingType1Constants.MasterPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
             }
 
-            return Result.Success;
+            return base.Validate();
         }
 
         public override string ToXml()

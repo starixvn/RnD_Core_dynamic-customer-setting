@@ -13,7 +13,7 @@
     {
         public IEnumerable<Customer> GetGroupedMembers(string memberIds)
         {
-            using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_CustomerSettingModeSelect"))
+            using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_CustomerSettingModeSelect_1_1"))
             {
                 return objectDb.Query<Customer>(new
                 {
@@ -35,13 +35,13 @@
             switch (uplineLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperPTOnMemberMultiUpd";
+                    return "Acc_CustSetting_SuperPTOnMemberMultiUpd_1_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterPTOnMemberMultiUpd";
+                    return "Acc_CustSetting_MasterPTOnMemberMultiUpd_1_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentPTOnMemberMultiUpd";
+                    return "Acc_CustSetting_AgentPTOnMemberMultiUpd_1_1";
 
                 default:
                     throw new InvalidOperationException("Not implemented for this customer level yet");

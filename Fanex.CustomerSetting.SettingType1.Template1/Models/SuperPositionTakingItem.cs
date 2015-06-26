@@ -32,12 +32,6 @@
 
         public override IResult Validate()
         {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
             if (M4 > S4)
             {
                 return new Result(SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode);
@@ -53,7 +47,7 @@
                 return new Result(SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode);
             }
 
-            return Result.Success;
+            return base.Validate();
         }
 
         public override string ToXml()

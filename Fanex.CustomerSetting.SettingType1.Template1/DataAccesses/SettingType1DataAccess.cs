@@ -31,16 +31,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperPTSelect";
+                    return "Acc_CustSetting_SuperPTSelect_1_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterPTSelect";
+                    return "Acc_CustSetting_MasterPTSelect_1_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentPTSelect";
+                    return "Acc_CustSetting_AgentPTSelect_1_1";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberPTSelect";
+                    return "Acc_CustSetting_MemberPTSelect_1_1";
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
@@ -147,25 +147,25 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperPTUpd";
+                    return "Acc_CustSetting_SuperPTUpd_1_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterPTUpd";
+                    return "Acc_CustSetting_MasterPTUpd_1_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentPTUpd";
+                    return "Acc_CustSetting_AgentPTUpd_1_1";
 
                 case CustomerLevel.Member:
                     switch (uplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            return "Acc_CustSetting_SuperPTOnMemberUpd";
+                            return "Acc_CustSetting_SuperPTOnMemberUpd_1_1";
 
                         case CustomerLevel.Master:
-                            return "Acc_CustSetting_MasterPTOnMemberUpd";
+                            return "Acc_CustSetting_MasterPTOnMemberUpd_1_1";
 
                         case CustomerLevel.Agent:
-                            return "Acc_CustSetting_AgentPTOnMemberUpd";
+                            return "Acc_CustSetting_AgentPTOnMemberUpd_1_1";
 
                         default:
                             throw new InvalidOperationException("This customer level is not supported");
