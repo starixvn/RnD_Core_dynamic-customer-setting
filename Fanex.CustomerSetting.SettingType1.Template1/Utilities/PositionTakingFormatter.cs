@@ -2,7 +2,7 @@
 {
     using System.Globalization;
 
-    public static class PositionTakingFormatter
+    internal static class PositionTakingFormatter
     {
         private const byte PositionTakingDivider = 100;
         private static readonly CultureInfo EnglishCultureInfo = CultureInfo.GetCultureInfo("en-US");

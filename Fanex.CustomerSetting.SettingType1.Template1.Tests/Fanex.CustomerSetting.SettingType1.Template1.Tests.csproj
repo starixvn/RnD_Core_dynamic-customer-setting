@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\SettingType1PostTasksTests.cs" />
     <Compile Include="Handlers\SettingType1PreTasksTests.cs" />
     <Compile Include="Models\AgentOnMemberPositionTakingItemTests.cs" />
     <Compile Include="Models\AgentPositionTakingItemTests.cs" />

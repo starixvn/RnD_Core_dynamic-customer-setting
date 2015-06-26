@@ -1,0 +1,113 @@
+﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Handlers
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Dtos.Messages;
+    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.SettingType1.Template1.Handlers;
+    using Fanex.CustomerSetting.SettingType1.Template1.Models;
+    using Fanex.CustomerSetting.Tests.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+
+    [TestFixture]
+    public class SettingType1PostTasksTests
+    {
+        private ISettingContext _settingContext;
+        private IMessageService _messageService;
+        private IResourceService _resourceService;
+        private SettingType1PostTasks _settingType1PostTasks;
+
+        [SetUp]
+        public void Setup()
+        {
+            _settingContext = new SettingContextStub();
+            _resourceService = Substitute.For<IResourceService>();
+            _messageService = Substitute.For<IMessageService>();
+            _settingType1PostTasks = new SettingType1PostTasks(_settingContext, _messageService, _resourceService);
+        }
+
+        #region Post Get Customer Setting Type
+
+        [Test]
+        public void PostGetCustomerSettingType_SetSportTypeBetTypeNameForSettingItems()
+        {
+            //// Arrange
+            SettingType settingType = new SettingType
+                {
+                    SettingItems = new List<ISettingItem>
+                    {
+                        new AgentOnMemberPositionTakingItem
+                        {
+                            BetTypeId = 1,
+                            SportTypeId = 1
+                        }
+                    }
+                };
+            var sportTypeName = "SportTypeName";
+            var betTypeName = "BetTypeName";
+            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+
+            //// Act
+
+            var actualSettingType = _settingType1PostTasks.PostGetCustomerSettingType(
+                null,
+                settingType);
+
+            //// Assert
+            AgentOnMemberPositionTakingItem settingItem = actualSettingType.SettingItems.First() as AgentOnMemberPositionTakingItem;
+            Assert.AreEqual(sportTypeName, settingItem.SportTypeName);
+            Assert.AreEqual(betTypeName, settingItem.BetTypeName);
+        }
+
+        #endregion Post Get Customer Setting Type
+
+        #region Post Update Customer Setting Type
+
+        [Test]
+        public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
+        {
+            //// Arrange
+            var successResult = Result.Success;
+
+            //// Act
+            var actualResult = _settingType1PostTasks.PostUpdateCustomerSettingType(
+                null,
+                null,
+                null,
+                successResult);
+
+            //// Assert
+            Assert.AreEqual(Lang.UpdatePositionTakingSuccessfully, actualResult.Message);
+        }
+
+        [Test]
+        public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
+        {
+            //// Arrange
+            var successResult = Result.DataError;
+            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>())
+                .Returns(new MessageContent());
+            byte settingLevel = 1;
+
+            //// Act
+            _settingType1PostTasks.PostUpdateCustomerSettingType(
+                null,
+                new SettingType
+                {
+                    SettingLevel = settingLevel
+                },
+                null,
+                successResult);
+
+            //// Assert
+            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel);
+        }
+
+        #endregion Post Update Customer Setting Type
+    }
+}
