@@ -59,16 +59,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperCommissionSelect";
+                    return "Acc_CustSetting_SuperCommissionSelect_3_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterCommissionSelect";
+                    return "Acc_CustSetting_MasterCommissionSelect_3_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentCommissionSelect";
+                    return "Acc_CustSetting_AgentCommissionSelect_3_1";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberCommissionSelect";
+                    return "Acc_CustSetting_MemberCommissionSelect_3_1";
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
@@ -93,7 +93,7 @@
                 Discount = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_DiscountUpd", storedProcedureParams);
+            return ExecuteNonQuery("Acc_CustSetting_DiscountUpd_3_1", storedProcedureParams);
         }
     }
 }

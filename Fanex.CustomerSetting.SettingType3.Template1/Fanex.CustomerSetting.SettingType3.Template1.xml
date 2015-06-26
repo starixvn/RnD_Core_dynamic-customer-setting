@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Customer_Setting_Type_3_Template_1">
+    <Setting Key="Acc_CustSetting_SuperCommissionSelect_3_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_MasterCommissionSelect_3_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_AgentCommissionSelect_3_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_MemberCommissionSelect_3_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+
+    <Setting Key="Acc_CustSetting_DiscountUpd_3_1" SpName="Acc_CustSetting_DiscountUpd" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
+</Functions>

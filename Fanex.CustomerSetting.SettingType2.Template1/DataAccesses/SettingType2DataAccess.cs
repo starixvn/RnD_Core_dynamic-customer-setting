@@ -56,16 +56,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperBetLimitSelect";
+                    return "Acc_CustSetting_SuperBetLimitSelect_2_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterBetLimitSelect";
+                    return "Acc_CustSetting_MasterBetLimitSelect_2_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentBetLimitSelect";
+                    return "Acc_CustSetting_AgentBetLimitSelect_2_1";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberBetLimitSelect";
+                    return "Acc_CustSetting_MemberBetLimitSelect_2_1";
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
@@ -90,7 +90,7 @@
                 BetLimit = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_BetLimitUpd", storedProcedureParams);
+            return ExecuteNonQuery("Acc_CustSetting_BetLimitUpd_2_1", storedProcedureParams);
         }
     }
 }

@@ -16,12 +16,6 @@
 
         public override IResult Validate()
         {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
             if (Downline == null)
             {
                 return new Result(SettingType4Constants.DownlineProductStatusIsNullErrorCode);
@@ -32,7 +26,7 @@
                 return new Result(SettingType4Constants.DownlineIsEnabledWhenUplineIsDisabledErrorCode);
             }
 
-            return Result.Success;
+            return base.Validate();
         }
 
         public override string ToXml()

@@ -60,16 +60,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperProductStatusSelect";
+                    return "Acc_CustSetting_SuperProductStatusSelect_4_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterProductStatusSelect";
+                    return "Acc_CustSetting_MasterProductStatusSelect_4_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentProductStatusSelect";
+                    return "Acc_CustSetting_AgentProductStatusSelect_4_1";
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberProductStatusSelect";
+                    return "Acc_CustSetting_MemberProductStatusSelect_4_1";
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
@@ -94,7 +94,7 @@
                 IsDisabled = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_DisableStatUpd", storedProcedureParams);
+            return ExecuteNonQuery("Acc_CustSetting_DisableStatUpd_4_1", storedProcedureParams);
         }
     }
 }

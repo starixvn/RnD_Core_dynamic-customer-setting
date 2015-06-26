@@ -18,7 +18,7 @@
             ResourceService = resourceService ?? new ResourceService();
         }
 
-        protected string TranslateSimpleMessage(int msgType, string rawMessage)
+        protected string TranslateGeneralMessage(int msgType, string rawMessage)
         {
             switch ((MessageType)msgType)
             {

@@ -18,12 +18,6 @@
 
         public override IResult Validate()
         {
-            var baseResult = base.Validate();
-            if (!baseResult.IsSuccessful)
-            {
-                return baseResult;
-            }
-
             if (MinBet == 0
                 && MaxBet == 0
                 && MaxPerMatch == 0)
@@ -56,7 +50,7 @@
                 return new Result(SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode);
             }
 
-            return Result.Success;
+            return base.Validate();
         }
 
         public override string ToXml()

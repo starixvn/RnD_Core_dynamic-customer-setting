@@ -93,7 +93,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Fanex.CustomerSetting.SettingType2.Template1.xml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BetLimitError.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

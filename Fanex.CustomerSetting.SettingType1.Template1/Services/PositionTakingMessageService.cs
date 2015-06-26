@@ -29,13 +29,13 @@
 
         public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel)
         {
-            var baseMessage = TranslateSimpleMessage(msgType, rawMessage);
-            if (string.IsNullOrEmpty(baseMessage))
+            var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
+            if (string.IsNullOrEmpty(generalMessage))
             {
                 return TranslatePositionTakingViolationMessage(msgType, rawMessage, settingLevel);
             }
 
-            return new MessageContent(baseMessage);
+            return new MessageContent(generalMessage);
         }
 
         private MessageContent TranslatePositionTakingViolationMessage(
