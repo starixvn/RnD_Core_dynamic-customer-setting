@@ -10,6 +10,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -25,19 +26,22 @@
         private readonly IProductService _productService;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
+        private readonly ILogger _logger;
 
         public SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
             ISettingResolver settingResolver = null,
-            IDynamicRepository dynamicRepository = null)
+            IDynamicRepository dynamicRepository = null,
+            ILogger logger = null)
         {
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _logger = logger ?? Logger.Log;
         }
 
         public ISetting GetCustomerSetting(QuerySettingParams queryParams)
@@ -100,7 +104,7 @@
 
             return customer;
         }
-        
+
         /// <summary>
         /// Get {Customer}{SettingType} => means Get SuperPositionTaking, MasterCommission ....
         /// </summary>
@@ -112,10 +116,17 @@
             var customerSettingTypes = new List<SettingType>();
             foreach (var productSettingType in productSettingTypes)
             {
-                RunPreGetCustomerSettingTypeTasks(queryParams, productSettingType);
-                var customerSettingType = GetCustomerSettingType(queryParams, productSettingType);
-                customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParams, customerSettingType);
-                customerSettingTypes.Add(customerSettingType);
+                try
+                {
+                    RunPreGetCustomerSettingTypeTasks(queryParams, productSettingType);
+                    var customerSettingType = GetCustomerSettingType(queryParams, productSettingType);
+                    customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParams, customerSettingType);
+                    customerSettingTypes.Add(customerSettingType);
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
 
             return customerSettingTypes;
@@ -153,7 +164,7 @@
 
             return customerSettingType;
         }
-        
+
         /// <summary>
         /// Updates the customer setting, includes list of setting types.
         /// </summary>
@@ -195,8 +206,15 @@
 
             foreach (var settingType in settingTypes)
             {
-                var result = UpdateCustomerSettingType(customer, settingType, uplineLevel);
-                results.Add(result);
+                try
+                {
+                    results.Add(UpdateCustomerSettingType(customer, settingType, uplineLevel));
+                }
+                catch (Exception ex)
+                {
+                    results.Add(new Result(settingType.Id, settingType.Name, Result.SystemError));
+                    LogError(ex);
+                }
             }
 
             return new Result(results);
@@ -290,8 +308,16 @@
 
             foreach (var settingType in settingTypes)
             {
-                var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
-                results.AddRange(result.SubResults);
+                try
+                {
+                    var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
+                    results.AddRange(result.SubResults);
+                }
+                catch (Exception ex)
+                {
+                    results.Add(new Result(settingType.Id, settingType.Name, Result.SystemError));
+                    LogError(ex);
+                }
             }
 
             return results;
@@ -330,7 +356,7 @@
             IEnumerable<Customer> customersReturnFromPreTask,
             IEnumerable<Customer> originalCustomers)
         {
-            if (customersReturnFromPreTask != null 
+            if (customersReturnFromPreTask != null
                 && customersReturnFromPreTask.Any())
             {
                 return customersReturnFromPreTask;
@@ -407,6 +433,11 @@
             }
 
             return settingTypeMultipleResult;
+        }
+
+        private void LogError(Exception ex)
+        {
+            _logger.Error(ex.Message, ex);
         }
     }
 }

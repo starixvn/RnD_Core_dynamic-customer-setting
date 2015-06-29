@@ -11,6 +11,7 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.Logging;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -20,6 +21,7 @@
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
+        private ILogger _logger;
         private IProductService _productService;
 
         [SetUp]
@@ -28,7 +30,9 @@
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _settingContext = new SettingContextStub();
             _productService = Substitute.For<IProductService>();
-            _validationService = new ValidationService(_settingContext, _validationDataAccess, _productService);
+            _logger = Substitute.For<ILogger>();
+
+            _validationService = new ValidationService(_settingContext, _validationDataAccess, _productService, _logger);
         }
 
         #region Validatie Setting Query Tests
@@ -226,28 +230,30 @@
         #region validate Setting Command Tests
 
         [Test]
-        public void ValidateSettingCommand_UpdatingSettingParamsIsNull_ThrowArgumentNullException()
+        public void ValidateSettingCommand_UpdatingSettingParamsIsNull_ReturnValidationError()
         {
             //// Arrange
-            UpdatingSettingParams settingCommand = null;
+            UpdatingSettingParams updatingParams = null;
 
             //// Act
-            Assert.Throws<ArgumentNullException>(
-                new TestDelegate(
-                    () => _validationService.ValidateUpdatingSetting(settingCommand)));
+            var actualValidationResult = _validationService.ValidateUpdatingSetting(updatingParams);
+
+            //// Assert
+            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidateSettingCommand_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        public void ValidateSettingCommand_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
         {
             //// Arrange
             UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams(customerId);
 
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _validationService.ValidateUpdatingSetting(updatingParams)));
+            var actualValidationResult = _validationService.ValidateUpdatingSetting(updatingParams);
+
+            //// Assert
+            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
         [Test]
@@ -475,28 +481,30 @@
         #region Validate Multiple Setting Command Tests
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_updatingMultipleSettingParamsIsNull_ThrowArgumentNullException()
+        public void ValidateupdatingMultipleSettingParams_updatingMultipleSettingParamsIsNull_ReturnValidationError()
         {
             //// Arrange
             UpdatingMultipleSettingParams updatingMultipleSettingParams = null;
 
             //// Act
-            Assert.Throws<ArgumentNullException>(
-                new TestDelegate(
-                    () => _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams)));
+            var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams);
+
+            //// Assert
+            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_CustomersIsNull_ThrowArgumentNullException()
+        public void ValidateupdatingMultipleSettingParams_CustomersIsNull_ReturnValidationError()
         {
             //// Arrange
-            UpdatingMultipleSettingParams settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            settingCommand.Customers = null;
+            UpdatingMultipleSettingParams updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            updatingMultipleParams.Customers = null;
 
             //// Act
-            Assert.Throws<ArgumentNullException>(
-                new TestDelegate(
-                    () => _validationService.ValidateUpdatingMultipleSetting(settingCommand)));
+            var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
+
+            //// Assert
+            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
         [Test]

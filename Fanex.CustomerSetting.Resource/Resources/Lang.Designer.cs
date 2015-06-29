@@ -592,11 +592,11 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usernames.
+        ///   Looks up a localized string similar to UserNames.
         /// </summary>
-        public static string Usernames {
+        public static string UserNames {
             get {
-                return ResourceManager.GetString("Usernames", resourceCulture);
+                return ResourceManager.GetString("UserNames", resourceCulture);
             }
         }
     }

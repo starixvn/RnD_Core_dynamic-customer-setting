@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Resource.Enumerations
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
     public enum MessageType : int
     {
         /// <summary>

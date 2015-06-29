@@ -4,29 +4,31 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.Logging;
 
     public class ValidationService : IValidationService
     {
         private readonly ISettingContext _settingContext;
         private readonly IValidationDataAccess _validationDataAccess;
         private readonly IProductService _productService;
+        private readonly ILogger _logger;
 
         public ValidationService(
             ISettingContext settingContext,
             IValidationDataAccess validationDataAccess = null,
-            IProductService productService = null)
+            IProductService productService = null,
+            ILogger logger = null)
         {
             _settingContext = settingContext;
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
             _productService = productService ?? new ProductService();
+            _logger = logger ?? Logger.Log;
         }
 
         public IResult ValidateQuerySetting(QuerySettingParams queryParams)
@@ -111,8 +113,30 @@
 
         public IResult ValidateUpdatingSetting(UpdatingSettingParams updatingParams)
         {
-            CheckUpdatingSettingArguments(updatingParams);
+            try
+            {
+                CheckUpdatingSettingArguments(updatingParams);
 
+                return ValidateUpdateSettingParts(updatingParams);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                return Result.SystemError;
+            }
+        }
+
+        private void CheckUpdatingSettingArguments(UpdatingSettingParams updatingParams)
+        {
+            Check.Argument.IsNotNull(updatingParams, "updatingParams");
+            Check.Argument.IsNotNull(updatingParams.Setting, "updatingParams.Setting");
+            Check.Argument.IsNotNull(updatingParams.Setting.Customer, "updatingParams.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Customer.Id, "updatingParams.Setting.Customer.Id");
+            Check.Argument.IsNotNull(updatingParams.Setting.SettingTypes, "updatingParams.Setting.SettingTypes");
+        }
+
+        private IResult ValidateUpdateSettingParts(UpdatingSettingParams updatingParams)
+        {
             var setting = updatingParams.Setting;
             var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
             if (!viewingPermissionValidationResult.IsSuccessful)
@@ -133,15 +157,6 @@
             }
 
             return Result.Success;
-        }
-
-        private void CheckUpdatingSettingArguments(UpdatingSettingParams updatingParams)
-        {
-            Check.Argument.IsNotNull(updatingParams, "updatingParams");
-            Check.Argument.IsNotNull(updatingParams.Setting, "updatingParams.Setting");
-            Check.Argument.IsNotNull(updatingParams.Setting.Customer, "updatingParams.Setting.Customer");
-            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Customer.Id, "updatingParams.Setting.Customer.Id");
-            Check.Argument.IsNotNull(updatingParams.Setting.SettingTypes, "updatingParams.Setting.SettingTypes");
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
@@ -174,8 +189,28 @@
 
         public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParams updatingMultipleParams)
         {
-            CheckUpdatingMultipleSettingArguments(updatingMultipleParams);
+            try
+            {
+                CheckUpdatingMultipleSettingArguments(updatingMultipleParams);
 
+                return ValidateUpdatingMultipleSettingParts(updatingMultipleParams);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                return Result.SystemError;
+            }
+        }
+
+        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParams updatingMultipleParams)
+        {
+            Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
+            Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");
+            Check.Argument.IsNotNull(updatingMultipleParams.Customers, "updatingMultipleParams.Customers");
+        }
+
+        private IResult ValidateUpdatingMultipleSettingParts(UpdatingMultipleSettingParams updatingMultipleParams)
+        {
             var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParams);
             if (!updatingSettingValidationResult.IsSuccessful)
             {
@@ -193,25 +228,23 @@
             return Result.Success;
         }
 
-        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParams updatingMultipleParams)
-        {
-            Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
-            Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParams.Customers, "updatingMultipleParams.Customers");
-        }
-
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<Customer> customers, CustomerLevel customerLevel)
         {
             if (customerLevel == CustomerLevel.Member)
             {
                 IEnumerable<int> memberIds = customers.Select(cust => cust.Id);
 
-                var permissionValidationResult = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
+                var validationResult = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
-                return permissionValidationResult;
+                return validationResult;
             }
 
             return Result.Success;
+        }
+
+        private void LogError(Exception ex)
+        {
+            _logger.Error(ex.Message, ex);
         }
     }
 }

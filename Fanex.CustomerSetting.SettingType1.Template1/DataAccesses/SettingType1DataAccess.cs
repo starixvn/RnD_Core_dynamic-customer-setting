@@ -101,7 +101,7 @@
             SettingType settingType, 
             CustomerLevel? uplineLevel)
         {
-            var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType, uplineLevel);
+            var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType);
             var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
@@ -110,8 +110,7 @@
         private dynamic GetSPParamsForUpdatingPositionTaking(
             ISettingContext settingContext,
             Customer customer,
-            SettingType settingType,
-            CustomerLevel? uplineLevel)
+            SettingType settingType)
         {
             return new
             {

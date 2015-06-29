@@ -11,12 +11,13 @@
     {
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
-        protected readonly IResourceService ResourceService;
 
         public BaseMessageService(IResourceService resourceService)
         {
             ResourceService = resourceService ?? new ResourceService();
         }
+
+        protected IResourceService ResourceService { get; set; }
 
         protected string TranslateGeneralMessage(int msgType, string rawMessage)
         {
@@ -54,9 +55,7 @@
             }
         }
 
-        protected string GetMainMessage(
-            ResourceManager resouceManager, 
-            int messsageId)
+        protected string GetMainMessage(ResourceManager resouceManager, int messsageId)
         {
             var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);

@@ -14,7 +14,7 @@
             return string.Format(
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
-                Lang.Usernames,
+                Lang.UserNames,
                 UserName);
         }
     }
