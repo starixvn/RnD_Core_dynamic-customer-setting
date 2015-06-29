@@ -32,6 +32,14 @@
 
         public override IResult Validate()
         {
+            if (S4 > SettingType1Constants.MaxPositionTakingValue
+                || M4 > SettingType1Constants.MaxPositionTakingValue
+                || A4 > SettingType1Constants.MaxPositionTakingValue
+                || N4 > SettingType1Constants.MaxPositionTakingValue)
+            {
+                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+            }
+
             if (M4 > S4)
             {
                 return new Result(SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode);

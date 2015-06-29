@@ -3,26 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Resource.Services.Impl;
 
     public class SettingPostTasks
     {
-        protected readonly ISettingContext SettingContext;
         protected readonly IResourceService ResourceService;
 
-        public SettingPostTasks(
-            ISettingContext settingContext,
-            IResourceService resourceService)
+        public SettingPostTasks(IResourceService resourceService = null)
         {
-            SettingContext = settingContext;
-            ResourceService = resourceService;
+            ResourceService = resourceService ?? new ResourceService();
         }
 
+        protected IMessageService MessageService { get; set; }
+
         public virtual SettingType PostGetCustomerSettingType(
+            ISettingContext settingContext,
             QuerySettingParams queryParams,
             SettingType settingType)
         {
@@ -35,7 +36,7 @@
         /// </summary>
         /// <param name="settingType">Type of the setting, includes list of setting items.</param>
         /// <returns>Setting type with setting item have sport, bet type name.</returns>
-        protected SettingType SetSportTypeBetTypeName(SettingType settingType)
+        protected SettingType SetSportTypeBetTypeName(SettingType settingType, string language)
         {
             if (settingType != null && settingType.SettingItems.Any())
             {
@@ -44,8 +45,8 @@
                     if (settingItem is DefaultSettingItem)
                     {
                         var concreteSettingItem = settingItem as DefaultSettingItem;
-                        concreteSettingItem.BetTypeName = ResourceService.GetBetTypeName(concreteSettingItem.BetTypeId, SettingContext.Language);
-                        concreteSettingItem.SportTypeName = ResourceService.GetSportTypeName(concreteSettingItem.SportTypeId, SettingContext.Language);
+                        concreteSettingItem.BetTypeName = ResourceService.GetBetTypeName(concreteSettingItem.BetTypeId, language);
+                        concreteSettingItem.SportTypeName = ResourceService.GetSportTypeName(concreteSettingItem.SportTypeId, language);
                     }
                 }
             }
@@ -54,6 +55,7 @@
         }
 
         public virtual IResult PostUpdateCustomerSettingType(
+            ISettingContext settingContext, 
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
@@ -62,7 +64,27 @@
             throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
         }
 
+        protected IResult ReadUpdateingCustomerSettingTypeMessage(
+            IResult result, 
+            string updateSuccessfulMessage,
+            byte settingLevel,
+            string language)
+        {
+            Check.Argument.IsNotNull(result, "result");
+
+            if (result.IsSuccessful)
+            {
+                return new Result(Result.SuccessValue, updateSuccessfulMessage);
+            }
+            else
+            {
+                var messageContent = MessageService.TranslateMessage(result.MsgType, result.Message, settingLevel, language);
+                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
+            }
+        }
+
         public virtual IResult PostUpdateMultipleCustomersSettingType(
+            ISettingContext settingContext, 
             IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,

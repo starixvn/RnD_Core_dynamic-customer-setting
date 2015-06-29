@@ -12,6 +12,12 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Service class for get single customer setting/ update single/multiple setting
+    /// Setting includes list of setting types (pt, bet limit, commission ....)
+    /// Customer can be super, master, agent, member
+    /// So we call {Customer}{SettingType} => means SuperPositionTaking, MasterCommission ...
+    /// </summary>
     public class SettingService : ISettingService
     {
         private readonly ISettingContext _settingContext;
@@ -20,22 +26,17 @@
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
 
-        public SettingService()
-            : this(null, null, null, null, null)
-        {
-        }
-
         public SettingService(
             ISettingContext settingContext,
-            IValidationService validationService,
-            IProductService productService,
-            ISettingResolver settingResolver,
-            IDynamicRepository dynamicRepository)
+            IValidationService validationService = null,
+            IProductService productService = null,
+            ISettingResolver settingResolver = null,
+            IDynamicRepository dynamicRepository = null)
         {
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
-            _validationService = validationService ?? new ValidationService();
-            _settingResolver = settingResolver ?? new SettingResolver(_settingContext);
+            _validationService = validationService ?? new ValidationService(_settingContext);
+            _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
@@ -68,6 +69,11 @@
             }
         }
 
+        /// <summary>
+        /// Gets product information, includes list of product setting types.
+        /// </summary>
+        /// <param name="productId">The product identifier.</param>
+        /// <returns></returns>
         private Product GetProduct(byte productId)
         {
             IEnumerable<SettingType> productSettingTypes = _productService.GetProductSettingTypes(productId);
@@ -94,7 +100,13 @@
 
             return customer;
         }
-
+        
+        /// <summary>
+        /// Get {Customer}{SettingType} => means Get SuperPositionTaking, MasterCommission ....
+        /// </summary>
+        /// <param name="queryParams">The query setting parameters.</param>
+        /// <param name="productSettingTypes">The product setting types.</param>
+        /// <returns>Customer setting on each setting type.</returns>
         private IList<SettingType> GetCustomerSettingTypes(QuerySettingParams queryParams, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
@@ -115,7 +127,7 @@
             if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreGetCustomerSettingType").IsVirtual)
             {
-                preTasks.PreGetCustomerSettingType(queryParams);
+                preTasks.PreGetCustomerSettingType(_settingContext, queryParams);
             }
         }
 
@@ -136,12 +148,17 @@
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostGetCustomerSettingType").IsVirtual)
             {
-                customerSettingType = postTasks.PostGetCustomerSettingType(queryParams, customerSettingType);
+                customerSettingType = postTasks.PostGetCustomerSettingType(_settingContext, queryParams, customerSettingType);
             }
 
             return customerSettingType;
         }
-
+        
+        /// <summary>
+        /// Updates the customer setting, includes list of setting types.
+        /// </summary>
+        /// <param name="updatingParams">The updating parameters.</param>
+        /// <returns>Result after updating customer setting.</returns>
         public IResult UpdateCustomerSetting(UpdatingSettingParams updatingParams)
         {
             CheckUpdatingSettingArguments(updatingParams);
@@ -194,10 +211,7 @@
             }
 
             var updatingResult = RunUpdateCustomerSettingType(customer, settingType, uplineLevel);
-            if (updatingResult.IsSuccessful)
-            {
-                updatingResult = RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, updatingResult);
-            }
+            updatingResult = RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, updatingResult);
 
             return updatingResult;
         }
@@ -208,8 +222,7 @@
             if (preTasks != null
                 && !preTasks.GetType().GetMethod("PreUpdateCustomerSettingType").IsVirtual)
             {
-                var preTaskResult = preTasks.PreUpdateCustomerSettingType(customer, settingType, uplineLevel);
-                return preTaskResult;
+                return preTasks.PreUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
             }
 
             return Result.Success;
@@ -233,7 +246,7 @@
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateCustomerSettingType").IsVirtual)
             {
-                updatingResult = postTasks.PostUpdateCustomerSettingType(customer, settingType, uplineLevel, updatingResult);
+                updatingResult = postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, updatingResult);
             }
 
             return updatingResult;
@@ -248,11 +261,7 @@
                 return validationResult;
             }
 
-            var customerLevel = updatingMultipleParams.Setting.Customer.Level;
-            var uplineLevel = updatingMultipleParams.UplineLevel;
-            var customers = updatingMultipleParams.Customers;
-            var settingTypes = updatingMultipleParams.Setting.SettingTypes;
-            var results = UpdateSettingTypesForMultipleCustomers(settingTypes, customers, customerLevel, uplineLevel);
+            var results = UpdateSettingTypesForMultipleCustomers(updatingMultipleParams);
 
             return new Result(results);
         }
@@ -271,12 +280,12 @@
             return _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
         }
 
-        private List<IResult> UpdateSettingTypesForMultipleCustomers(
-            IEnumerable<SettingType> settingTypes,
-            IEnumerable<Customer> customers,
-            CustomerLevel customerLevel,
-            CustomerLevel? uplineLevel)
+        private List<IResult> UpdateSettingTypesForMultipleCustomers(UpdatingMultipleSettingParams updatingMultipleParams)
         {
+            var customerLevel = updatingMultipleParams.Setting.Customer.Level;
+            var uplineLevel = updatingMultipleParams.UplineLevel;
+            var customers = updatingMultipleParams.Customers;
+            var settingTypes = updatingMultipleParams.Setting.SettingTypes;
             var results = new List<IResult>();
 
             foreach (var settingType in settingTypes)
@@ -295,12 +304,9 @@
             SettingType settingType)
         {
             var preTasksResult = RunPreUpdateMultipleCustomersSettingTypeTasks(customers, customerLevel, settingType, uplineLevel);
-            if (!preTasksResult.Result.IsSuccessful)
+            if (!preTasksResult.Result.IsSuccessful && preTasksResult.IsStopUpdating)
             {
-                if (preTasksResult.IsStopUpdating)
-                {
-                    return preTasksResult.Result;
-                }
+                return preTasksResult.Result;
             }
 
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
@@ -308,11 +314,7 @@
             var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
-
-            if (updatedResult.IsSuccessful)
-            {
-                updatedResult = RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, updatedResult);
-            }
+            updatedResult = RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, updatedResult);
 
             return updatedResult;
         }
@@ -328,7 +330,8 @@
             IEnumerable<Customer> customersReturnFromPreTask,
             IEnumerable<Customer> originalCustomers)
         {
-            if (customersReturnFromPreTask != null && customersReturnFromPreTask.Any())
+            if (customersReturnFromPreTask != null 
+                && customersReturnFromPreTask.Any())
             {
                 return customersReturnFromPreTask;
             }
@@ -345,8 +348,7 @@
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null && !preTasks.GetType().GetMethod("PreUpdateMultipleCustomersSettingType").IsVirtual)
             {
-                var preTaskResult = preTasks.PreUpdateMultipleCustomersSettingType(customers, customerLevel, settingType, uplineLevel);
-                return preTaskResult;
+                return preTasks.PreUpdateMultipleCustomersSettingType(_settingContext, customers, customerLevel, settingType, uplineLevel);
             }
 
             return new PreUpdateMultipleCustomersSettingTypeResult
@@ -401,7 +403,7 @@
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateMultipleCustomersSettingType").IsVirtual)
             {
-                settingTypeMultipleResult = postTasks.PostUpdateMultipleCustomersSettingType(customers, settingType, uplineLevel, settingTypeMultipleResult);
+                return postTasks.PostUpdateMultipleCustomersSettingType(_settingContext, customers, settingType, uplineLevel, settingTypeMultipleResult);
             }
 
             return settingTypeMultipleResult;

@@ -23,7 +23,7 @@
             switch ((MessageType)msgType)
             {
                 case MessageType.Simple:
-                    return TranslateMessage(rawMessage);
+                    return TranslateSimpleMessage(rawMessage);
 
                 case MessageType.Other:
                     return rawMessage;
@@ -33,7 +33,7 @@
             }
         }
 
-        private string TranslateMessage(string rawMessage)
+        private string TranslateSimpleMessage(string rawMessage)
         {
             var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
 

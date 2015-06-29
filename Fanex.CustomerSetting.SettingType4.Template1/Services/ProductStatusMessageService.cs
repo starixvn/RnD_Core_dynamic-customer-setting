@@ -9,28 +9,19 @@
 
     public class ProductStatusMessageService : BaseMessageService, IMessageService
     {
-        private readonly ISettingContext _settingContext;
         private readonly ResourceManager _resourceManager = ProductStatusError.ResourceManager;
 
-        public ProductStatusMessageService() :
-            this(null, null)
-        {
-        }
-
-        public ProductStatusMessageService(
-            ISettingContext settingContext,
-            IResourceService resourceService)
+        public ProductStatusMessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
-            _settingContext = settingContext;
         }
 
-        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel)
+        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
             var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
             if (string.IsNullOrEmpty(generalMessage))
             {
-                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, _settingContext.Language);
+                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, language);
             }
 
             return new MessageContent(generalMessage);

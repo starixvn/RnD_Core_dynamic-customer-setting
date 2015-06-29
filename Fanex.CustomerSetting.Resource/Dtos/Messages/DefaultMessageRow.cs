@@ -32,7 +32,7 @@
                         resourceService.GetBetTypeName(BetType, language));
 
                 default:
-                    throw new NotImplementedException("Not implemented To String yet");
+                    throw new InvalidOperationException("Not implement setting level");
             }
         }
     }

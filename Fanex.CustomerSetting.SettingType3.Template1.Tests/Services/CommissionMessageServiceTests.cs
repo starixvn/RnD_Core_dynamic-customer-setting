@@ -23,7 +23,7 @@
         {
             _settingContext = new SettingContextStub();
             _resourceService = Substitute.For<IResourceService>();
-            _commissionMessageService = new CommissionMessageService(_settingContext, _resourceService);
+            _commissionMessageService = new CommissionMessageService(_resourceService);
         }
 
         #region Simple Message
@@ -37,7 +37,7 @@
             byte settingLevel = 1;
 
             //// Act
-            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
             Assert.AreEqual(Error.Msg_90001, actualMessageContent.MainMessage);
@@ -52,7 +52,7 @@
             byte settingLevel = 1;
 
             //// Act
-            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
             Assert.AreEqual("Undefined error message 121212", actualMessageContent.MainMessage);
@@ -71,7 +71,7 @@
             byte settingLevel = 1;
 
             //// Act
-            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
             Assert.AreEqual(rawMessage, actualMessageContent.MainMessage);
@@ -98,7 +98,7 @@
             _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel);
+            var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
             Assert.AreEqual(CommissionError.Msg_1, actualMessageContent.MainMessage);

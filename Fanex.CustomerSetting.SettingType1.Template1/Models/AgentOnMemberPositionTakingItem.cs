@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models
 {
     using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
 
     public class AgentOnMemberPositionTakingItem : BasePositionTakingItem
     {
@@ -21,6 +21,16 @@
         /// Agent Min PT
         /// </summary>
         public byte N2 { get; set; }
+
+        public override IResult Validate()
+        {
+            if (A1 > SettingType1Constants.MaxPositionTakingValue)
+            {
+                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+            }
+
+            return base.Validate();
+        }
 
         public override string ToXml()
         {

@@ -16,13 +16,15 @@
 
     public class SettingType2DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private const string SettingKeySuffix = "_2_1";
+
         public SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingBetLimit(settingQuery.CustomerLevel);
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             IEnumerable<BetLimitItemDto> betLimitItemDtoList = null;
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingTypeSetting(settingQuery, SettingType2Constants.SettingType);
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType2Constants.SettingType);
                 betLimitItemDtoList = objectDb.Query<BetLimitItemDto>(parameterValues);
             }
 
@@ -49,27 +51,6 @@
                         MaxPerMatch = betLimitDto.MaxPerMatchMax
                     }
                 });
-        }
-
-        private string GetSettingKeyForGettingBetLimit(CustomerLevel customerLevel)
-        {
-            switch (customerLevel)
-            {
-                case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperBetLimitSelect_2_1";
-
-                case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterBetLimitSelect_2_1";
-
-                case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentBetLimitSelect_2_1";
-
-                case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberBetLimitSelect_2_1";
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
         }
 
         public IResult UpdateCustomerSettingType(

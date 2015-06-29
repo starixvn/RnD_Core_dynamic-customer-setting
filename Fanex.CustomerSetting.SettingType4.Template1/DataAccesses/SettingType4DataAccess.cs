@@ -16,15 +16,17 @@
 
     public class SettingType4DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private const string SettingKeySuffix = "_4_1";
+
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingProductStatus(settingQuery.CustomerLevel);
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             IEnumerable<ProductStatusItemDto> productStatusItemDtoList = null;
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingTypeSetting(settingQuery, SettingType4Constants.SettingType);
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType4Constants.SettingType);
                 productStatusItemDtoList = objectDb.Query<ProductStatusItemDto>(parameterValues);
             }
 
@@ -53,27 +55,6 @@
                     }
                     : null
                 });
-        }
-
-        private string GetSettingKeyForGettingProductStatus(CustomerLevel customerLevel)
-        {
-            switch (customerLevel)
-            {
-                case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperProductStatusSelect_4_1";
-
-                case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterProductStatusSelect_4_1";
-
-                case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentProductStatusSelect_4_1";
-
-                case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberProductStatusSelect_4_1";
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
         }
 
         public IResult UpdateCustomerSettingType(

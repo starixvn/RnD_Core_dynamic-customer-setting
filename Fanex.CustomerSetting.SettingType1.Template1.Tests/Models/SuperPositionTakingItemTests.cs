@@ -21,6 +21,11 @@
         [TestCase(2, 4, 1, 1, 1001)]
         [TestCase(4, 3, 4, 1, 1002)]
         [TestCase(4, 3, 2, 10, 1003)]
+        [TestCase(100, 3, 2, 10, 1014)]
+        [TestCase(4, 100, 2, 10, 1014)]
+        [TestCase(4, 3, 100, 10, 1014)]
+        [TestCase(4, 3, 2, 100, 1014)]
+        [TestCase(2, 1, 1, 1, 0)]
         public void Validate_InvalidPositionTaking_ReturnErrorCode(
             byte s4,
             byte m4,

@@ -25,7 +25,7 @@
             _settingContext = new SettingContextStub();
             _memberGroupService = Substitute.For<IMemberGroupService>();
 
-            _settingType1PreTasks = new SettingType1PreTasks(_settingContext, _memberGroupService);
+            _settingType1PreTasks = new SettingType1PreTasks(_memberGroupService);
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -34,7 +34,7 @@
         public void PreUpdateMultipleSetting_CustomerIsNotMember_ReturnSuccessResult(CustomerLevel customerLevel)
         {
             //// Act
-            var result = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(null, customerLevel, null, null);
+            var result = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, null, customerLevel, null, null);
 
             //// Assert
             Assert.IsTrue(result.Result.IsSuccessful);
@@ -54,7 +54,7 @@
             };
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             _memberGroupService.Received().GetGroupedMembers(members);
@@ -76,10 +76,11 @@
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             _memberGroupService.Received().UpdateGroupedMembersSetting(
+                _settingContext,
                 Arg.Any<IEnumerable<Customer>>(),
                 uplineLevel,
                 settingType);
@@ -99,10 +100,10 @@
             };
             IEnumerable<Customer> groupedMembers = new List<Customer> { new Customer { Id = 1 } };
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
-            _memberGroupService.UpdateGroupedMembersSetting(Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType).Returns(Result.Success);
+            _memberGroupService.UpdateGroupedMembersSetting(_settingContext, Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType).Returns(Result.Success);
 
             //// Act
-            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(members, customerLevel, settingType, uplineLevel);
+            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
 
             //// Assert
             Assert.AreEqual(1, actualPreTaskResult.CustomersNeedForSingleUpdating.Count());

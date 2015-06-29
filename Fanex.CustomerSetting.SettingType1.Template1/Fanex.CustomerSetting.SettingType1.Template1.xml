@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
   <Function Name="Customer_Setting_Type_1_Template_1">
-    <Setting Key="Acc_CustSetting_SuperPTSelect_1_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_MasterPTSelect_1_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_AgentPTSelect_1_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_MemberPTSelect_1_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_SuperSettingSelect_1_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_MasterSettingSelect_1_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_AgentSettingSelect_1_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_MemberSettingSelect_1_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     
     <Setting Key="Acc_CustSetting_CustomerSettingModeSelect_1_1" SpName="Acc_CustSetting_CustomerSettingModeSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_SuperPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />

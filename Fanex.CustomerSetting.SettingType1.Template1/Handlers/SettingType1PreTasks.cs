@@ -12,20 +12,18 @@
     {
         private readonly IMemberGroupService _memberGroupService;
 
-        public SettingType1PreTasks() :
-            this(null, null)
+        public SettingType1PreTasks()
+            : this(null)
         {
         }
 
-        public SettingType1PreTasks(
-            ISettingContext settingContext,
-            IMemberGroupService memberGroupService)
-            : base(settingContext)
+        public SettingType1PreTasks(IMemberGroupService memberGroupService)
         {
             _memberGroupService = memberGroupService ?? new MemberGroupService();
         }
 
         public override PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
+            ISettingContext settingContext,
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
@@ -38,7 +36,7 @@
                 return new PreUpdateMultipleCustomersSettingTypeResult
                     {
                         CustomersNeedForSingleUpdating = ungroupedMembers,
-                        Result = UpdateGroupedMembers(customers, uplineLevel.Value, settingType)
+                        Result = UpdateGroupedMembers(settingContext, customers, uplineLevel.Value, settingType)
                     };
             }
             else
@@ -51,11 +49,12 @@
         }
 
         private IResult UpdateGroupedMembers(
+            ISettingContext settingContext,
             IEnumerable<Customer> members,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
-            var result = _memberGroupService.UpdateGroupedMembersSetting(members, uplineLevel, settingType);
+            var result = _memberGroupService.UpdateGroupedMembersSetting(settingContext, members, uplineLevel, settingType);
 
             return result;
         }

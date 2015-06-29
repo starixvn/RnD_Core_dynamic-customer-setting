@@ -21,6 +21,10 @@
         [TestCase(10, true, 3, 4, 1, 1004)]
         [TestCase(10, false, 3, 4, 1, 1005)]
         [TestCase(0, true, 3, 4, 10, 1006)]
+        [TestCase(0, true, 120, 4, 10, 1014)]
+        [TestCase(0, true, 3, 100, 10, 1014)]
+        [TestCase(0, true, 3, 4, 100, 1014)]
+        [TestCase(0, true, 3, 4, 1, 0)]
         public void Validate_InvalidPositionTaking_ReturnErrorCode(
             byte s3,
             bool is3,

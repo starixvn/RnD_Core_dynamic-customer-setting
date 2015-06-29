@@ -14,42 +14,35 @@
 
     public class SettingType4PostTasks : SettingPostTasks
     {
-        private readonly IMessageService _messageService;
-
-        public SettingType4PostTasks() :
-            this(null, null, null)
+        public SettingType4PostTasks()
+            : this(null, null)
         {
         }
 
         public SettingType4PostTasks(
-            ISettingContext settingContext,
             IMessageService messageService,
             IResourceService resourceService)
-            : base(settingContext, resourceService)
+            : base(resourceService)
         {
-            _messageService = messageService ?? new ProductStatusMessageService();
+            MessageService = messageService ?? new ProductStatusMessageService(ResourceService);
         }
 
-        public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
+        public override SettingType PostGetCustomerSettingType(
+            ISettingContext settingContext,
+            QuerySettingParams queryParams, 
+            SettingType settingType)
         {
-            return SetSportTypeBetTypeName(settingType);
+            return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
         public override IResult PostUpdateCustomerSettingType(
+            ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            if (result.IsSuccessful)
-            {
-                return new Result(Result.SuccessValue, Lang.UpdateProductStatusSuccessfully);
-            }
-            else
-            {
-                var messageContent = _messageService.TranslateMessage(result.MsgType, result.Message, settingType.SettingLevel);
-                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
-            }
+            return ReadUpdateingCustomerSettingTypeMessage(result, Lang.UpdateProductStatusSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

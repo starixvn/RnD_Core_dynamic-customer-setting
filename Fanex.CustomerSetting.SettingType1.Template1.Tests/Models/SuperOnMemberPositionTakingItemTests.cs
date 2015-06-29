@@ -20,6 +20,9 @@
 
         [TestCase(2, true, 1, 1010)]
         [TestCase(4, false, 4, 1011)]
+        [TestCase(114, false, 4, 1014)]
+        [TestCase(4, false, 114, 1014)]
+        [TestCase(0, true, 1, 0)]
         public void Validate_InvalidPositionTaking_ReturnErrorCode(
             byte s1,
             bool is1,

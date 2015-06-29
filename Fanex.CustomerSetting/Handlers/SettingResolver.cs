@@ -17,12 +17,6 @@
         private static Dictionary<string, ISettingTypeDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingTypeDataAccess>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksCached = new Dictionary<string, SettingPostTasks>();
-        private readonly ISettingContext _settingContext;
-
-        public SettingResolver(ISettingContext settingContext)
-        {
-            _settingContext = settingContext;
-        }
 
         public ISettingTypeDataAccess ResolveSettingDataAccess(SettingType settingType)
         {
@@ -99,7 +93,7 @@
 
             if (preTasksType != null)
             {
-                settingPreTasks = Activator.CreateInstance(preTasksType, _settingContext) as SettingPreTasks;
+                settingPreTasks = Activator.CreateInstance(preTasksType) as SettingPreTasks;
                 SettingResolver._settingPreTasksCached.Add(cacheKey, settingPreTasks);
             }
 
@@ -142,7 +136,7 @@
 
             if (postTasksType != null)
             {
-                settingPostTasks = Activator.CreateInstance(postTasksType, _settingContext) as SettingPostTasks;
+                settingPostTasks = Activator.CreateInstance(postTasksType) as SettingPostTasks;
                 SettingResolver._settingPostTasksCached.Add(cacheKey, settingPostTasks);
             }
 

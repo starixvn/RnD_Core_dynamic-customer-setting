@@ -27,10 +27,14 @@
         [TestCase(-1, 2, 3, 7003)]
         [TestCase(1, -2, 3, 7004)]
         [TestCase(1, 2, -3, 7005)]
+        [TestCase(1, 2, 100000000000, 7006)]
+        [TestCase(1, 100000000000, 2, 7006)]
+        [TestCase(100000000000, 2, 1, 7006)]
+        [TestCase(1, 2, 3, 0)]
         public void Validate_InvalidBetLimit_ReturnErrorCode(
-            decimal minBet,
-            decimal maxBet,
-            decimal maxPerMatch,
+            long minBet,
+            long maxBet,
+            long maxPerMatch,
             int errorCode)
         {
             //// Arrange

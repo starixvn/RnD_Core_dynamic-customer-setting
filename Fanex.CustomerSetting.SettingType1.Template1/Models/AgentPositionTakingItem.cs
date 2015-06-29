@@ -53,7 +53,14 @@
 
         public override IResult Validate()
         {
-            //// Will code more business here
+            if (M2 > SettingType1Constants.MaxPositionTakingValue
+                || UM2 > SettingType1Constants.MaxPositionTakingValue
+                || A2 > SettingType1Constants.MaxPositionTakingValue
+                || N2 > SettingType1Constants.MaxPositionTakingValue)
+            {
+                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+            }
+
             if (IM2 && M2 > 0)
             {
                 return new Result(SettingType1Constants.MasterPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode);

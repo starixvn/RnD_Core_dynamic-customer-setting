@@ -12,19 +12,10 @@
 
     public class MemberGroupService : IMemberGroupService
     {
-        private readonly ISettingContext _settingContext;
         private readonly IMemberGroupDataAccess _memberGroupDataAccess;
 
-        public MemberGroupService() :
-            this(null, null)
+        public MemberGroupService(IMemberGroupDataAccess memberGroupDataAccess = null)
         {
-        }
-
-        public MemberGroupService(
-            ISettingContext settingContext,
-            IMemberGroupDataAccess memberGroupDataAccess)
-        {
-            _settingContext = settingContext;
             _memberGroupDataAccess = memberGroupDataAccess ?? new MemberGroupDataAccess();
         }
 
@@ -38,8 +29,13 @@
             return _memberGroupDataAccess.GetGroupedMembers(memberIds);
         }
 
-        public IResult UpdateGroupedMembersSetting(IEnumerable<Customer> groupedMembers, CustomerLevel uplineLevel, SettingType settingType)
+        public IResult UpdateGroupedMembersSetting(
+            ISettingContext settingContext, 
+            IEnumerable<Customer> groupedMembers, 
+            CustomerLevel uplineLevel, 
+            SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(groupedMembers, "groupedMembers");
             Check.Argument.IsNotNull(settingType, "settingType");
             Check.Argument.IsNotNegativeOrZero(groupedMembers.Count(), "groupedMembers.Count");
@@ -47,9 +43,9 @@
             var updateParams = new UpdateMultipleMemberPositionTakingParams
             {
                 CustIds = GetMemberIds(groupedMembers),
-                IP = _settingContext.IP,
-                UserId = _settingContext.Actor.Id,
-                SubAccId = _settingContext.Actor.SubAccountId,
+                IP = settingContext.IP,
+                UserId = settingContext.Actor.Id,
+                SubAccId = settingContext.Actor.SubAccountId,
                 UplineLevel = uplineLevel,
                 PositionTakingXml = settingType.ToXml()
             };

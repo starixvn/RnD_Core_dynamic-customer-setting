@@ -10,12 +10,7 @@
     {
         private readonly IDynamicRepository _productRepository;
 
-        public ProductService()
-            : this(null)
-        {
-        }
-
-        public ProductService(IDynamicRepository productRepository)
+        public ProductService(IDynamicRepository productRepository = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
         }

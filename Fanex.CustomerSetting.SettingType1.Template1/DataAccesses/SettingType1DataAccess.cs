@@ -14,9 +14,11 @@
 
     public class SettingType1DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private const string SettingKeySuffix = "_1_1";
+
         public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingPositionTaking(settingQuery.CustomerLevel);
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 return new SettingType
@@ -26,30 +28,9 @@
             }
         }
 
-        private string GetSettingKeyForGettingPositionTaking(CustomerLevel customerLevel)
-        {
-            switch (customerLevel)
-            {
-                case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperPTSelect_1_1";
-
-                case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterPTSelect_1_1";
-
-                case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentPTSelect_1_1";
-
-                case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberPTSelect_1_1";
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
-        }
-
         private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParams settingQuery)
         {
-            var storedProcedureParams = GetSPParamsForGettingPositionTaking(settingQuery);
+            var storedProcedureParams = GetSPParamsForGettingSettingType(settingQuery, SettingType1Constants.SettingType);
 
             switch (settingQuery.CustomerLevel)
             {
@@ -77,34 +58,6 @@
                         default:
                             throw new InvalidOperationException("This customer level is not supported");
                     }
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
-        }
-
-        private dynamic GetSPParamsForGettingPositionTaking(QuerySettingParams settingQuery)
-        {
-            switch (settingQuery.CustomerLevel)
-            {
-                case CustomerLevel.Super:
-                case CustomerLevel.Master:
-                case CustomerLevel.Agent:
-                    return new
-                    {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
-                        SettingType = SettingType1Constants.SettingType
-                    };
-
-                case CustomerLevel.Member:
-                    return new
-                    {
-                        CustId = settingQuery.CustomerId,
-                        ProductId = settingQuery.ProductId,
-                        RoleId = settingQuery.UplineLevel.Value,
-                        SettingType = SettingType1Constants.SettingType
-                    };
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");

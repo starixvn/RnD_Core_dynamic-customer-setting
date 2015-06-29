@@ -20,6 +20,8 @@
 
         [TestCase(-1, 5101)]
         [TestCase(-10, 5101)]
+        [TestCase(1.1, 5102)]
+        [TestCase(0.9, 0)]
         public void Validate_InvalidCommission_ReturnErrorCode(
             decimal commissionRate,
             int errorCode)

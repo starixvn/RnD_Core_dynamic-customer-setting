@@ -4,6 +4,6 @@
 
     public interface IMessageService
     {
-        MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel);
+        MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language);
     }
 }

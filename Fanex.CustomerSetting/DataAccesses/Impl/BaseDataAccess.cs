@@ -43,7 +43,7 @@
                     Convert.ToInt32(outputParams["msgtype"]));
         }
 
-        protected dynamic GetSPParamsForGettingSettingTypeSetting(QuerySettingParams querySettingParams, byte settingType)
+        protected dynamic GetSPParamsForGettingSettingType(QuerySettingParams querySettingParams, byte settingType)
         {
             switch (querySettingParams.CustomerLevel)
             {
@@ -68,6 +68,29 @@
 
                 default:
                     throw new ArgumentOutOfRangeException("This customer level is not supported");
+            }
+        }
+
+        protected string GetSettingKeyForGettingSettingType(
+            CustomerLevel customerLevel,
+            string keySuffix)
+        {
+            switch (customerLevel)
+            {
+                case CustomerLevel.Super:
+                    return "Acc_CustSetting_SuperSettingSelect" + keySuffix;
+
+                case CustomerLevel.Master:
+                    return "Acc_CustSetting_MasterSettingSelect" + keySuffix;
+
+                case CustomerLevel.Agent:
+                    return "Acc_CustSetting_AgentSettingSelect" + keySuffix;
+
+                case CustomerLevel.Member:
+                    return "Acc_CustSetting_MemberSettingSelect" + keySuffix;
+
+                default:
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
     }

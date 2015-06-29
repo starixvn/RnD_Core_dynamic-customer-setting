@@ -9,19 +9,13 @@
 
     public class SettingPreTasks
     {
-        public SettingPreTasks(ISettingContext settingContext)
-        {
-            SettingContext = settingContext;
-        }
-
-        protected ISettingContext SettingContext { get; set; }
-
-        public virtual void PreGetCustomerSettingType(QuerySettingParams queryParams)
+        public virtual void PreGetCustomerSettingType(ISettingContext settingContext, QuerySettingParams queryParams)
         {
             throw new NotImplementedException("Pre-Get Customer Setting Type is not implemented");
         }
 
         public virtual IResult PreUpdateCustomerSettingType(
+            ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel)
@@ -30,6 +24,7 @@
         }
 
         public virtual PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
+            ISettingContext settingContext, 
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,

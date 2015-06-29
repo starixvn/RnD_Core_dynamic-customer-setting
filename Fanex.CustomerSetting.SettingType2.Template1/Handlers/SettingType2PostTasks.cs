@@ -17,42 +17,35 @@
 
     public class SettingType2PostTasks : SettingPostTasks
     {
-        private readonly IMessageService _messageService;
-
-        public SettingType2PostTasks() :
-            this(null, null, null)
+        public SettingType2PostTasks() 
+            : this(null, null)
         {
         }
 
         public SettingType2PostTasks(
-            ISettingContext settingContext,
             IMessageService messageService,
             IResourceService resourceService)
-            : base(settingContext, resourceService)
+            : base(resourceService)
         {
-            _messageService = messageService ?? new BetLimitMessageService();
+            MessageService = messageService ?? new BetLimitMessageService(ResourceService);
         }
 
-        public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
+        public override SettingType PostGetCustomerSettingType(
+            ISettingContext settingContext,
+            QuerySettingParams queryParams, 
+            SettingType settingType)
         {
-            return SetSportTypeBetTypeName(settingType);
+            return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
         public override IResult PostUpdateCustomerSettingType(
+            ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            if (result.IsSuccessful)
-            {
-                return new Result(Result.SuccessValue, Lang.UpdateBetSettingSuccessfully);
-            }
-            else
-            {
-                var messageContent = _messageService.TranslateMessage(result.MsgType, result.Message, settingType.SettingLevel);
-                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
-            }
+            return ReadUpdateingCustomerSettingTypeMessage(result, Lang.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

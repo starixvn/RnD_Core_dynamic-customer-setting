@@ -9,28 +9,19 @@
 
     public class BetLimitMessageService : BaseMessageService, IMessageService
     {
-        private readonly ISettingContext _settingContext;
         private readonly ResourceManager _resourceManager = BetLimitError.ResourceManager;
 
-        public BetLimitMessageService() : 
-            this(null, null)
-        {
-        }
-
-        public BetLimitMessageService(
-            ISettingContext settingContext, 
-            IResourceService resourceService)
+        public BetLimitMessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
-            _settingContext = settingContext;
         }
 
-        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel)
+        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
             var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
             if (string.IsNullOrEmpty(generalMessage))
             {
-                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, _settingContext.Language);
+                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, language);
             }
 
             return new MessageContent(generalMessage);

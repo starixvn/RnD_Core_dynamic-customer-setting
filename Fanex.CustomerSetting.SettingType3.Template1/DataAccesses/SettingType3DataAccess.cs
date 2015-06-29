@@ -16,15 +16,17 @@
 
     public class SettingType3DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private const string SettingKeySuffix = "_3_1";
+
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingCommission(settingQuery.CustomerLevel);
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             IEnumerable<CommissionItemDto> commissionItemDtoList = null;
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingTypeSetting(settingQuery, SettingType3Constants.SettingType);
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType3Constants.SettingType);
                 commissionItemDtoList = objectDb.Query<CommissionItemDto>(parameterValues);
             }
 
@@ -52,27 +54,6 @@
                         : null
                     }
                 });
-        }
-
-        private string GetSettingKeyForGettingCommission(CustomerLevel customerLevel)
-        {
-            switch (customerLevel)
-            {
-                case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperCommissionSelect_3_1";
-
-                case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterCommissionSelect_3_1";
-
-                case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentCommissionSelect_3_1";
-
-                case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberCommissionSelect_3_1";
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
         }
 
         public IResult UpdateCustomerSettingType(

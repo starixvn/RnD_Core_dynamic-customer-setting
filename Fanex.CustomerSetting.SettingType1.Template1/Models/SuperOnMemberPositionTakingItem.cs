@@ -55,7 +55,12 @@
 
         public override IResult Validate()
         {
-            //// Will code more business here
+            if (S1 > SettingType1Constants.MaxPositionTakingValue
+                || US1 > SettingType1Constants.MaxPositionTakingValue)
+            {
+                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+            }
+
             if (!IS1 && US1 > 0)
             {
                 return new Result(SettingType1Constants.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);

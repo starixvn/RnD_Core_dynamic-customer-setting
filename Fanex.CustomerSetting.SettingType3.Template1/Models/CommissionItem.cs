@@ -14,6 +14,11 @@
 
         public override IResult Validate()
         {
+            if (CommRate > SettingType3Constants.MaxCommissionRateValue)
+            {
+                return new Result(SettingType3Constants.CommissionRateExceedMaxValueErrorCode);
+            }
+
             if (CommRate < 0)
             {
                 return new Result(SettingType3Constants.CommRateIsNegativeErrorCode);

@@ -26,7 +26,7 @@
             _settingContext = new SettingContextStub();
             _resourceService = Substitute.For<IResourceService>();
             _messageService = Substitute.For<IMessageService>();
-            _settingType2PostTasks = new SettingType2PostTasks(_settingContext, _messageService, _resourceService);
+            _settingType2PostTasks = new SettingType2PostTasks(_messageService, _resourceService);
         }
 
         #region Post Get Customer Setting Type
@@ -54,6 +54,7 @@
             //// Act
 
             var actualSettingType = _settingType2PostTasks.PostGetCustomerSettingType(
+                _settingContext,
                 null,
                 settingType);
 
@@ -75,8 +76,9 @@
 
             //// Act
             var actualResult = _settingType2PostTasks.PostUpdateCustomerSettingType(
+                _settingContext,
                 null,
-                null,
+                new SettingType { SettingLevel = 1 },
                 null,
                 successResult);
 
@@ -89,12 +91,13 @@
         {
             //// Arrange
             var successResult = Result.DataError;
-            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>())
-                .Returns(new MessageContent());
+            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
+                .Returns(new MessageContent(string.Empty));
             byte settingLevel = 1;
 
             //// Act
             _settingType2PostTasks.PostUpdateCustomerSettingType(
+                _settingContext,
                 null,
                 new SettingType
                 {
@@ -104,7 +107,7 @@
                 successResult);
 
             //// Assert
-            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel);
+            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel, _settingContext.Language);
         }
 
         #endregion Post Update Customer Setting Type

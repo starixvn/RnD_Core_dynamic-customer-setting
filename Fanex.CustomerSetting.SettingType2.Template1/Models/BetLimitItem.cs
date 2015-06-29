@@ -25,6 +25,13 @@
                 return Result.Success;
             }
 
+            if (MinBet > SettingType2Constants.MaxBetLimitValue
+                || MaxBet > SettingType2Constants.MaxBetLimitValue
+                || MaxPerMatch > SettingType2Constants.MaxBetLimitValue)
+            {
+                return new Result(SettingType2Constants.BetLimitExceedMaxValueErrorCode);
+            }
+
             if (MinBet < 0)
             {
                 return new Result(SettingType2Constants.MinBetIsNegativeErrorCode);

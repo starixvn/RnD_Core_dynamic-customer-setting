@@ -21,6 +21,8 @@
         [TestCase(10, true, 3, 4, 1, 1007)]
         [TestCase(10, false, 3, 4, 1, 1008)]
         [TestCase(0, true, 3, 4, 10, 1009)]
+        [TestCase(0, true, 200, 4, 10, 1014)]
+        [TestCase(0, true, 3, 4, 1, 0)]
         public void Validate_InvalidPositionTaking_ReturnErrorCode(
             byte m2,
             bool im2,
@@ -43,21 +45,29 @@
             Assert.AreEqual(errorCode, actualResult.Code);
         }
 
-        [Test]
-        public void ToXml_ReturnFormattedXml()
+        [TestCase(0, true, 1, true, true, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" AgentMinPT=\"4\" UpdAllMems=\"1\" NewMasterPT=\"10\"/>")]
+        [TestCase(0, true, 1, false, false, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"0\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" AgentMinPT=\"4\" UpdAllMems=\"0\" NewMasterPT=\"10\"/>")]
+        [TestCase(1, false, 0, true, true, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" MasterPT=\"1\" IsAutoMasterPT=\"0\" AutoMasterPT=\"0\" AgentPT=\"10\" AgentMinPT=\"4\" UpdAllMems=\"1\" NewMasterPT=\"10\"/>")]
+        public void ToXml_ReturnFormattedXml(
+            byte m2,
+            bool im2,
+            byte um2,
+            bool isLive,
+            bool isUpdateMasterPTOnMember,
+            string expectedXmlFormatted)
         {
             //// Arrange
             _agentPositionTakingItem = new AgentPositionTakingItem
             {
-                M2 = 0,
-                IM2 = true,
-                UM2 = 10,
+                M2 = m2,
+                IM2 = im2,
+                UM2 = um2,
                 A2 = 10,
                 N2 = 4,
-                IsLive = true,
+                IsLive = isLive,
                 SportTypeId = 1,
                 BetTypeId = 1,
-                IsUpdateMasterPTOnMembers = true,
+                IsUpdateMasterPTOnMembers = isUpdateMasterPTOnMember,
                 MasterPTOnMembers = 10
             };
 
@@ -65,7 +75,6 @@
             var actualXmlFormatted = _agentPositionTakingItem.ToXml();
 
             //// Assert
-            var expectedXmlFormatted = "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"10\" AgentPT=\"10\" AgentMinPT=\"4\" UpdAllMems=\"1\" NewMasterPT=\"10\"/>";
             Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
         }
     }

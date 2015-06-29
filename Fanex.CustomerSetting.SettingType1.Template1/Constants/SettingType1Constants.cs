@@ -3,7 +3,9 @@
     internal static class SettingType1Constants
     {
         public const byte SettingType = 1;
-        public const int MaxPositionTaking = 100;
+        public const int MaxPositionTakingValue = 90;
+
+        public const int PositionTakingExceedMaxValueErrorCode = 1014;
 
         //////// Edit Super
         public const int MasterMaxPTIsGreaterThanSuperMaxPTErrorCode = 1001;

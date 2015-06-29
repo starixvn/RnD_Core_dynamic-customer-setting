@@ -15,44 +15,35 @@
 
     public class SettingType1PostTasks : SettingPostTasks
     {
-        private readonly IMessageService _messageService;
-
-        public SettingType1PostTasks() :
-            this(null, null, null)
+        public SettingType1PostTasks()
+            : this(null, null)
         {
         }
 
         public SettingType1PostTasks(
-            ISettingContext settingContext,
             IMessageService messageService,
             IResourceService resourceService)
-            : base(settingContext, resourceService)
+            : base(resourceService)
         {
-            _messageService = messageService ?? new PositionTakingMessageService();
+            MessageService = messageService ?? new PositionTakingMessageService(ResourceService);
         }
 
-        public override SettingType PostGetCustomerSettingType(QuerySettingParams queryParams, SettingType settingType)
+        public override SettingType PostGetCustomerSettingType(
+            ISettingContext settingContext,
+            QuerySettingParams queryParams, 
+            SettingType settingType)
         {
-            return SetSportTypeBetTypeName(settingType);
+            return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
         public override IResult PostUpdateCustomerSettingType(
+            ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            Check.Argument.IsNotNull(result, "result");
-
-            if (result.IsSuccessful)
-            {
-                return new Result(Result.SuccessValue, Lang.UpdatePositionTakingSuccessfully);
-            }
-            else
-            {
-                var messageContent = _messageService.TranslateMessage(result.MsgType, result.Message, settingType.SettingLevel);
-                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
-            }
+            return ReadUpdateingCustomerSettingTypeMessage(result, Lang.UpdatePositionTakingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

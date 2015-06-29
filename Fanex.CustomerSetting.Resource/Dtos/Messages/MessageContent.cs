@@ -4,10 +4,6 @@
 
     public class MessageContent
     {
-        public MessageContent()
-        {
-        }
-
         public MessageContent(string mainMessage)
         {
             MainMessage = mainMessage;

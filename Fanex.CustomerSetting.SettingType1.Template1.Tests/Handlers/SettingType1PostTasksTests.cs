@@ -27,7 +27,7 @@
             _settingContext = new SettingContextStub();
             _resourceService = Substitute.For<IResourceService>();
             _messageService = Substitute.For<IMessageService>();
-            _settingType1PostTasks = new SettingType1PostTasks(_settingContext, _messageService, _resourceService);
+            _settingType1PostTasks = new SettingType1PostTasks(_messageService, _resourceService);
         }
 
         #region Post Get Customer Setting Type
@@ -55,6 +55,7 @@
             //// Act
 
             var actualSettingType = _settingType1PostTasks.PostGetCustomerSettingType(
+                _settingContext, 
                 null,
                 settingType);
 
@@ -76,8 +77,9 @@
 
             //// Act
             var actualResult = _settingType1PostTasks.PostUpdateCustomerSettingType(
+                _settingContext,
                 null,
-                null,
+                new SettingType { SettingLevel = 1 },
                 null,
                 successResult);
 
@@ -90,22 +92,20 @@
         {
             //// Arrange
             var successResult = Result.DataError;
-            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>())
-                .Returns(new MessageContent());
+            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
+                .Returns(new MessageContent(string.Empty));
             byte settingLevel = 1;
 
             //// Act
             _settingType1PostTasks.PostUpdateCustomerSettingType(
+                _settingContext,
                 null,
-                new SettingType
-                {
-                    SettingLevel = settingLevel
-                },
+                new SettingType { SettingLevel = settingLevel },
                 null,
                 successResult);
 
             //// Assert
-            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel);
+            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel, _settingContext.Language);
         }
 
         #endregion Post Update Customer Setting Type

@@ -19,15 +19,10 @@
         private readonly IValidationDataAccess _validationDataAccess;
         private readonly IProductService _productService;
 
-        public ValidationService()
-            : this(null, null, null)
-        {
-        }
-
         public ValidationService(
             ISettingContext settingContext,
-            IValidationDataAccess validationDataAccess,
-            IProductService productService)
+            IValidationDataAccess validationDataAccess = null,
+            IProductService productService = null)
         {
             _settingContext = settingContext;
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
