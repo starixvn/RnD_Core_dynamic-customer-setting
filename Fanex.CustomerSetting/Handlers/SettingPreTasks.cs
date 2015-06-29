@@ -9,7 +9,7 @@
 
     public class SettingPreTasks
     {
-        public virtual void PreGetCustomerSettingType(ISettingContext settingContext, QuerySettingParams queryParams)
+        public virtual void PreGetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam)
         {
             throw new NotImplementedException("Pre-Get Customer Setting Type is not implemented");
         }

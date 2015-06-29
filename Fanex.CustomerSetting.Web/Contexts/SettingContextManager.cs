@@ -1,8 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Web.Contexts
 {
+    using System;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Configurations;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Resources;
 
     /// <summary>
     /// Setting context manager for providing
@@ -23,46 +26,36 @@
 
         public static ISettingContext SettingContext { get; private set; }
 
-        // should be removed, outside code does not need to know what is User
-        public static void SetActor(User actor)
-        {
-            Check.Argument.IsNotNull(actor, "actor");
-            Check.Argument.IsNotNegativeOrZero(actor.Id, "actor.Id");
-            Check.Argument.IsNotNegativeOrZero((byte)actor.Level, "actor.Level");
-
-            SettingContext.Actor = actor;
-        }
-
         /// <summary>
-        /// add some line to make developer clear how this function work
+        /// Add some line to make developer clear how this function work.
         /// </summary>
         /// <param name="loginUserId"></param>
         /// <param name="loginUserName"></param>
         /// <param name="loginUserLevel"></param>
         /// <param name="subAccountId"></param>
-        public static void Init(int loginUserId, int loginUserName, byte loginUserLevel, int subAccountId = 0)
+        public static void Init(int loginUserId, string loginUserName, UserLevel loginUserLevel, int subAccountId = 0)
         {
+            Check.Argument.IsNotNegativeOrZero(loginUserId, "loginUserId");
+            Check.Argument.IsNotEmpty(loginUserName, "loginUserName");
+            Check.Argument.IsNotNegativeOrZero((byte)loginUserLevel, "loginUserLevel");
 
-            if (subAccountId > 0 && CustomerSettings.Settings.SystemId != AgentSystem)
-                throw new System.ArgumentException("Ricky pls select approriated exception messsage");
+            ValidateSubAccountWithAgencySystem(subAccountId);
 
-            // check validation of paramaters
-
-            var actor = new User { 
-                Id = loginUserId, 
-                Name = loginUserName, 
-                Level = loginUserLevel, 
-                SubAccountId = subAccountId };
-
-            // set actor to setting context
+            SettingContext.Actor = new User
+            {
+                Id = loginUserId,
+                Name = loginUserName,
+                Level = loginUserLevel,
+                SubAccountId = subAccountId
+            };
         }
 
-        // TODO: consider removing it, pass language via action paramater
-        public static void SetLanguage(string language)
+        private static void ValidateSubAccountWithAgencySystem(int subAccountId)
         {
-            Check.Argument.IsNotEmpty(language, "language");
-
-            SettingContext.Language = language;
+            if (subAccountId > 0 && CustomerSettings.Settings.SystemId != AgentSystem)
+            {
+                throw new InvalidOperationException(Lang.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
+            }
         }
     }
 }

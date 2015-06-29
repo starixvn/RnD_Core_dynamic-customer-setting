@@ -31,13 +31,13 @@
             _logger = logger ?? Logger.Log;
         }
 
-        public IResult ValidateQuerySetting(QuerySettingParams queryParams)
+        public IResult ValidateQuerySetting(QuerySettingParam queryParam)
         {
-            Check.Argument.IsNotNull(queryParams, "queryParams");
-            Check.Argument.IsNotNegativeOrZero(queryParams.CustomerId, "queryParams.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)queryParams.CustomerLevel, "queryParams.CustomerLevel");
+            Check.Argument.IsNotNull(queryParam, "queryParam");
+            Check.Argument.IsNotNegativeOrZero(queryParam.CustomerId, "queryParam.CustomerId");
+            Check.Argument.IsNotNegativeOrZero((byte)queryParam.CustomerLevel, "queryParam.CustomerLevel");
 
-            return ValidateViewingPermission(queryParams.CustomerId, queryParams.CustomerLevel);
+            return ValidateViewingPermission(queryParam.CustomerId, queryParam.CustomerLevel);
         }
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel)
@@ -111,13 +111,13 @@
             return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
-        public IResult ValidateUpdatingSetting(UpdatingSettingParams updatingParams)
+        public IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
         {
             try
             {
-                CheckUpdatingSettingArguments(updatingParams);
+                CheckUpdatingSettingArguments(updatingParam);
 
-                return ValidateUpdateSettingParts(updatingParams);
+                return ValidateUpdateSettingParts(updatingParam);
             }
             catch (Exception ex)
             {
@@ -126,18 +126,18 @@
             }
         }
 
-        private void CheckUpdatingSettingArguments(UpdatingSettingParams updatingParams)
+        private void CheckUpdatingSettingArguments(UpdatingSettingParam updatingParam)
         {
-            Check.Argument.IsNotNull(updatingParams, "updatingParams");
-            Check.Argument.IsNotNull(updatingParams.Setting, "updatingParams.Setting");
-            Check.Argument.IsNotNull(updatingParams.Setting.Customer, "updatingParams.Setting.Customer");
-            Check.Argument.IsNotNegativeOrZero(updatingParams.Setting.Customer.Id, "updatingParams.Setting.Customer.Id");
-            Check.Argument.IsNotNull(updatingParams.Setting.SettingTypes, "updatingParams.Setting.SettingTypes");
+            Check.Argument.IsNotNull(updatingParam, "updatingParam");
+            Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
+            Check.Argument.IsNotNull(updatingParam.Setting.Customer, "updatingParam.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.Customer.Id, "updatingParam.Setting.Customer.Id");
+            Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }
 
-        private IResult ValidateUpdateSettingParts(UpdatingSettingParams updatingParams)
+        private IResult ValidateUpdateSettingParts(UpdatingSettingParam updatingParam)
         {
-            var setting = updatingParams.Setting;
+            var setting = updatingParam.Setting;
             var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
             if (!viewingPermissionValidationResult.IsSuccessful)
             {
@@ -187,13 +187,13 @@
             return Result.Success;
         }
 
-        public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParams updatingMultipleParams)
+        public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             try
             {
-                CheckUpdatingMultipleSettingArguments(updatingMultipleParams);
+                CheckUpdatingMultipleSettingArguments(updatingMultipleParam);
 
-                return ValidateUpdatingMultipleSettingParts(updatingMultipleParams);
+                return ValidateUpdatingMultipleSettingParts(updatingMultipleParam);
             }
             catch (Exception ex)
             {
@@ -202,24 +202,24 @@
             }
         }
 
-        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParams updatingMultipleParams)
+        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParam updatingMultipleParam)
         {
-            Check.Argument.IsNotNull(updatingMultipleParams, "updatingMultipleParams");
-            Check.Argument.IsNotNull(updatingMultipleParams.Setting, "updatingMultipleParams.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParams.Customers, "updatingMultipleParams.Customers");
+            Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
+            Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
+            Check.Argument.IsNotNull(updatingMultipleParam.Customers, "updatingMultipleParam.Customers");
         }
 
-        private IResult ValidateUpdatingMultipleSettingParts(UpdatingMultipleSettingParams updatingMultipleParams)
+        private IResult ValidateUpdatingMultipleSettingParts(UpdatingMultipleSettingParam updatingMultipleParam)
         {
-            var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParams);
+            var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParam);
             if (!updatingSettingValidationResult.IsSuccessful)
             {
                 return updatingSettingValidationResult;
             }
 
             var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
-                updatingMultipleParams.Customers,
-                updatingMultipleParams.Setting.Customer.Level);
+                updatingMultipleParam.Customers,
+                updatingMultipleParam.Setting.Customer.Level);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;

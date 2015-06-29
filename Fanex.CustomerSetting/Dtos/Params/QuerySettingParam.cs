@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    public class QuerySettingParams
+    public class QuerySettingParam
     {
         public int CustomerId { get; set; }
 

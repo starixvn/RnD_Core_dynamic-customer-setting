@@ -11,13 +11,13 @@
 
     public static class FakeObjectManager
     {
-        public static UpdatingSettingParams CreateUpdatingSettingParams(
+        public static UpdatingSettingParam CreateUpdatingSettingParam(
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
-            return new UpdatingSettingParams
+            return new UpdatingSettingParam
             {
                 Setting = new Setting
                 {
@@ -59,13 +59,13 @@
             };
         }
 
-        public static UpdatingMultipleSettingParams CreateUpdatingMultipleSettingParams(
+        public static UpdatingMultipleSettingParam CreateUpdatingMultipleSettingParam(
             int customerId = 1,
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Super)
         {
-            return new UpdatingMultipleSettingParams
+            return new UpdatingMultipleSettingParam
             {
                 Customers = new List<Customer>
                 {
@@ -101,13 +101,13 @@
             };
         }
 
-        public static QuerySettingParams CreateQuerySettingParams(
+        public static QuerySettingParam CreateQuerySettingParam(
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Member,
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Master)
         {
-            return new QuerySettingParams
+            return new QuerySettingParam
             {
                 CustomerId = customerId,
                 CustomerLevel = customerLevel,

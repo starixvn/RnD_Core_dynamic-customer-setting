@@ -17,7 +17,7 @@
     {
         private const string SettingKeySuffix = "_1_1";
 
-        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
+        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam settingQuery)
         {
             var settingType = new SettingType
             {
@@ -29,7 +29,7 @@
             return settingType;
         }
 
-        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParams settingQuery, SettingType settingType)
+        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParam settingQuery, SettingType settingType)
         {
             if (settingQuery.CustomerLevel == CustomerLevel.Agent)
             {
@@ -50,7 +50,7 @@
             return settingType;
         }
 
-        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParams settingQuery)
+        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam settingQuery)
         {
             var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
@@ -59,7 +59,7 @@
             }
         }
 
-        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParams settingQuery)
+        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParam settingQuery)
         {
             var storedProcedureParams = GetSPParamsForGettingSettingType(settingQuery, SettingType1Constants.SettingType);
 

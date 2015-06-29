@@ -24,7 +24,7 @@
 
         public virtual SettingType PostGetCustomerSettingType(
             ISettingContext settingContext,
-            QuerySettingParams queryParams,
+            QuerySettingParam queryParam,
             SettingType settingType)
         {
             throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");

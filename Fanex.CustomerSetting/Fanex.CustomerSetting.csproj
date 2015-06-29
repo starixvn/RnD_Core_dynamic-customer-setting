@@ -111,9 +111,9 @@
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
-    <Compile Include="Dtos\Params\UpdatingMultipleSettingParams.cs" />
-    <Compile Include="Dtos\Params\UpdatingSettingParams.cs" />
-    <Compile Include="Dtos\Params\QuerySettingParams.cs" />
+    <Compile Include="Dtos\Params\UpdatingMultipleSettingParam.cs" />
+    <Compile Include="Dtos\Params\UpdatingSettingParam.cs" />
+    <Compile Include="Dtos\Params\QuerySettingParam.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SettingType.cs" />

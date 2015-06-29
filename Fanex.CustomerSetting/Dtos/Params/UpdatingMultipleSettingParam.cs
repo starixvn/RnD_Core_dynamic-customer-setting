@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models;
 
-    public class UpdatingMultipleSettingParams : UpdatingSettingParams
+    public class UpdatingMultipleSettingParam : UpdatingSettingParam
     {
         public IEnumerable<Customer> Customers { get; set; }
     }

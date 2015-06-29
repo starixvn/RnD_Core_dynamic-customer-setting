@@ -475,6 +475,15 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sub Account Id Should Be Zero When System Is Not Agency.
+        /// </summary>
+        public static string SubAccountIdShouldBeZeroWhenSystemIsNotAgency {
+            get {
+                return ResourceManager.GetString("SubAccountIdShouldBeZeroWhenSystemIsNotAgency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super Max PT.
         /// </summary>
         public static string SuperMaxPT {

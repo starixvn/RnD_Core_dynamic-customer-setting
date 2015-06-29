@@ -11,19 +11,19 @@
     public class BaseDataAccess
     {
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
-        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParams, bool isReadMessageType = true)
+        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParam, bool isReadMessageType = true)
         {
             using (var objectDb = new ObjectDb(settingKey))
             {
-                objectDb.ExecuteNonQuery(storedProcedureParams);
-                var outputParams = objectDb.GetOuputParams();
+                objectDb.ExecuteNonQuery(storedProcedureParam);
+                var outputParam = objectDb.GetOuputParams();
                 if (isReadMessageType)
                 {
-                    return ReadOutputWithMessageType(outputParams);
+                    return ReadOutputWithMessageType(outputParam);
                 }
                 else
                 {
-                    return ReadOutputWithoutMessageType(outputParams);
+                    return ReadOutputWithoutMessageType(outputParam);
                 }
             }
         }
@@ -43,26 +43,26 @@
                     Convert.ToInt32(outputParams["msgtype"]));
         }
 
-        protected dynamic GetSPParamsForGettingSettingType(QuerySettingParams querySettingParams, byte settingType)
+        protected dynamic GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)
         {
-            switch (querySettingParams.CustomerLevel)
+            switch (querySettingParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
                 case CustomerLevel.Master:
                 case CustomerLevel.Agent:
                     return new
                     {
-                        CustId = querySettingParams.CustomerId,
-                        ProductId = querySettingParams.ProductId,
+                        CustId = querySettingParam.CustomerId,
+                        ProductId = querySettingParam.ProductId,
                         SettingType = settingType
                     };
 
                 case CustomerLevel.Member:
                     return new
                     {
-                        CustId = querySettingParams.CustomerId,
-                        ProductId = querySettingParams.ProductId,
-                        RoleId = querySettingParams.UplineLevel.Value,
+                        CustId = querySettingParam.CustomerId,
+                        ProductId = querySettingParam.ProductId,
+                        RoleId = querySettingParam.UplineLevel.Value,
                         SettingType = settingType
                     };
 

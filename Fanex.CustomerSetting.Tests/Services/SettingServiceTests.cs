@@ -56,15 +56,15 @@ using NUnit.Framework;
         #region Get Customer Setting Tests
 
         [Test]
-        public void GetCustomerSetting_QuerySettingParamsIsNull_ThrowArgumentNullException()
+        public void GetCustomerSetting_QuerySettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = null;
+            QuerySettingParam querySettingParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParams)));
+                    () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
         [TestCase(0)]
@@ -72,7 +72,7 @@ using NUnit.Framework;
         public void GetCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
         {
             //// Arrange
-            QuerySettingParams querySettingParams = new QuerySettingParams
+            QuerySettingParam querySettingParam = new QuerySettingParam
             {
                 CustomerId = customerId
             };
@@ -80,117 +80,117 @@ using NUnit.Framework;
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParams)));
+                    () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
         [Test]
         public void GetCustomerSetting_ProductIdIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            querySettingParams.ProductId = 0;
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            querySettingParam.ProductId = 0;
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParams)));
+                    () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
         [Test]
         public void GetCustomerSetting_CustomerLevelValueIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            querySettingParams.CustomerLevel = (CustomerLevel)0;
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            querySettingParam.CustomerLevel = (CustomerLevel)0;
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParams)));
+                    () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
         [Test]
         public void GetCustomerSetting_ExecuteValidateQuerySettingMethodOnValidationService()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParams>()).Returns(Result.Success);
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _validationService.Received().ValidateQuerySetting(Arg.Is<QuerySettingParams>(
-                actualQuerySettingParams => actualQuerySettingParams.CustomerId == querySettingParams.CustomerId
-                    && actualQuerySettingParams.CustomerLevel == querySettingParams.CustomerLevel
-                    && actualQuerySettingParams.ProductId == querySettingParams.ProductId
-                    && actualQuerySettingParams.UplineLevel == querySettingParams.UplineLevel));
+            _validationService.Received().ValidateQuerySetting(Arg.Is<QuerySettingParam>(
+                actualQuerySettingParam => actualQuerySettingParam.CustomerId == querySettingParam.CustomerId
+                    && actualQuerySettingParam.CustomerLevel == querySettingParam.CustomerLevel
+                    && actualQuerySettingParam.ProductId == querySettingParam.ProductId
+                    && actualQuerySettingParam.UplineLevel == querySettingParam.UplineLevel));
         }
 
         [Test]
         public void GetCustomerSetting_QuerySettingIsNotValid_ThrowInvalidOperationException()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParams>()).Returns(Result.AccessDenied);
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.AccessDenied);
 
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParams)));
+                    () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
         [Test]
         public void GetCustomerSetting_ExecuteGetCustomerMethodOnDynamicRepository()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParams>()).Returns(Result.Success);
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _dymanicRepository.Received().Get<Customer>(Arg.Is<CustomerQueryCriteria>(
-                    criteria => criteria.CustId == querySettingParams.CustomerId));
+                    criteria => criteria.CustId == querySettingParam.CustomerId));
         }
 
         [Test]
         public void GetCustomerSetting_ExecuteGetProductSettingTypesMethodOnProductService()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParams>()).Returns(Result.Success);
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                    productId => productId == querySettingParams.ProductId));
+                    productId => productId == querySettingParam.ProductId));
         }
 
         [Test]
         public void GetCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
             var productSettingTypes = FakeObjectManager.CreateProduct().SettingTypes;
-            _validationService.ValidateQuerySetting(querySettingParams).Returns(Result.Success);
-            _productService.GetProductSettingTypes(querySettingParams.ProductId).Returns(productSettingTypes);
-            SetupSettingTypeDataAccessStubForQuery(querySettingParams);
+            _validationService.ValidateQuerySetting(querySettingParam).Returns(Result.Success);
+            _productService.GetProductSettingTypes(querySettingParam.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(querySettingParam);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
 
-        private void SetupSettingTypeDataAccessStubForQuery(QuerySettingParams querySettingParams)
+        private void SetupSettingTypeDataAccessStubForQuery(QuerySettingParam querySettingParam)
         {
             var customerSettingType = FakeObjectManager.CreateSettingType(1);
-            _settingDataAccess.GetCustomerSettingType(Arg.Any<User>(), querySettingParams).Returns(customerSettingType);
+            _settingDataAccess.GetCustomerSettingType(Arg.Any<User>(), querySettingParam).Returns(customerSettingType);
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
@@ -198,14 +198,14 @@ using NUnit.Framework;
         public void GetCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
             var productSettingTypes = FakeObjectManager.CreateProduct().SettingTypes;
-            _validationService.ValidateQuerySetting(querySettingParams).Returns(Result.Success);
-            _productService.GetProductSettingTypes(querySettingParams.ProductId).Returns(productSettingTypes);
-            SetupSettingTypeDataAccessStubForQuery(querySettingParams);
+            _validationService.ValidateQuerySetting(querySettingParam).Returns(Result.Success);
+            _productService.GetProductSettingTypes(querySettingParam.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(querySettingParam);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
@@ -215,17 +215,17 @@ using NUnit.Framework;
         public void GetCustomerSetting_ExecuteGetCustomerSettingTypeMethodOnSettingDataAccess()
         {
             //// Arrange
-            QuerySettingParams querySettingParams = FakeObjectManager.CreateQuerySettingParams();
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
             var productSettingTypes = FakeObjectManager.CreateProduct().SettingTypes;
-            _validationService.ValidateQuerySetting(querySettingParams).Returns(Result.Success);
-            _productService.GetProductSettingTypes(querySettingParams.ProductId).Returns(productSettingTypes);
-            SetupSettingTypeDataAccessStubForQuery(querySettingParams);
+            _validationService.ValidateQuerySetting(querySettingParam).Returns(Result.Success);
+            _productService.GetProductSettingTypes(querySettingParam.ProductId).Returns(productSettingTypes);
+            SetupSettingTypeDataAccessStubForQuery(querySettingParam);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParams);
+            _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), querySettingParams);
+            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), querySettingParam);
         }
 
         #endregion Get Customer Setting Tests
@@ -233,28 +233,28 @@ using NUnit.Framework;
         #region Update Customer Setting Tests
 
         [Test]
-        public void UpdateCustomerSetting_UpdatingSettingParamsIsNull_ThrowArgumentNullException()
+        public void UpdateCustomerSetting_UpdatingSettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = null;
+            UpdatingSettingParam updatingParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParams)));
+                    () => _settingService.UpdateCustomerSetting(updatingParam)));
         }
 
         [Test]
         public void UpdateCustomerSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            updatingParams.Setting = null;
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            updatingParam.Setting = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParams)));
+                    () => _settingService.UpdateCustomerSetting(updatingParam)));
         }
 
         [TestCase(0)]
@@ -262,58 +262,58 @@ using NUnit.Framework;
         public void UpdateCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            updatingParams.Setting.Customer.Id = customerId;
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            updatingParam.Setting.Customer.Id = customerId;
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParams)));
+                    () => _settingService.UpdateCustomerSetting(updatingParam)));
         }
 
         [Test]
         public void UpdateCustomerSetting_SettingTypesIsEmpty_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            updatingParams.Setting.SettingTypes = new List<SettingType>();
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            updatingParam.Setting.SettingTypes = new List<SettingType>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParams)));
+                    () => _settingService.UpdateCustomerSetting(updatingParam)));
         }
 
         [Test]
         public void UpdateCustomerSetting_ExecuteValidateUpdatingSettingMethodOnValidationService()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updatingParams);
+            _settingService.UpdateCustomerSetting(updatingParam);
 
             //// Assert
-            _validationService.Received().ValidateUpdatingSetting(Arg.Is<UpdatingSettingParams>(
-                actualSettingCommand => actualSettingCommand == updatingParams));
+            _validationService.Received().ValidateUpdatingSetting(Arg.Is<UpdatingSettingParam>(
+                actualSettingCommand => actualSettingCommand == updatingParam));
         }
 
         [Test]
         public void UpdateCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            _validationService.ValidateUpdatingSetting(updatingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingParams);
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingParam);
 
             //// Act
-            _settingService.UpdateCustomerSetting(updatingParams);
+            _settingService.UpdateCustomerSetting(updatingParam);
 
             //// Assert
-            _settingResolver.Received(updatingParams.Setting.SettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
+            _settingResolver.Received(updatingParam.Setting.SettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
 
-        private void SetupSettingTypeDataAccessStubForCommand(UpdatingSettingParams updatingParams)
+        private void SetupSettingTypeDataAccessStubForCommand(UpdatingSettingParam updatingParam)
         {
             var customerSettingType = FakeObjectManager.CreateSettingType(1);
             _settingDataAccess.UpdateCustomerSettingType(
@@ -328,30 +328,30 @@ using NUnit.Framework;
         public void UpdateCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            _validationService.ValidateUpdatingSetting(updatingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingParams);
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingParam);
 
             //// Act
-            _settingService.UpdateCustomerSetting(updatingParams);
+            _settingService.UpdateCustomerSetting(updatingParam);
 
             //// Assert
-            _settingResolver.Received(updatingParams.Setting.SettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
+            _settingResolver.Received(updatingParam.Setting.SettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
         }
 
         [Test]
         public void UpdateCustomerSetting_ExecuteUpdateCustomerSettingTypeOnSettingDataAccess()
         {
             //// Arrange
-            UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
-            _validationService.ValidateUpdatingSetting(updatingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingParams);
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingParam);
 
             //// Act
-            _settingService.UpdateCustomerSetting(updatingParams);
+            _settingService.UpdateCustomerSetting(updatingParam);
 
             //// Assert
-            _settingDataAccess.Received(updatingParams.Setting.SettingTypes.Count()).UpdateCustomerSettingType(
+            _settingDataAccess.Received(updatingParam.Setting.SettingTypes.Count()).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
@@ -363,83 +363,83 @@ using NUnit.Framework;
         #region Update Multiple Customer Setting Tests
 
         [Test]
-        public void UpdateMultipleCustomerSetting_UpdateMultipleSettingParamsIsNull_ThrowArgumentNullException()
+        public void UpdateMultipleCustomerSetting_UpdateMultipleSettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = null;
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams)));
+                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            updatingMultipleSettingParams.Setting = null;
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            updatingMultipleSettingParam.Setting = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams)));
+                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_NumberOfCustomerIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            updatingMultipleSettingParams.Customers = new List<Customer>();
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            updatingMultipleSettingParam.Customers = new List<Customer>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams)));
+                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_NumberOfSettingTypesIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            updatingMultipleSettingParams.Setting.SettingTypes = new List<SettingType>();
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            updatingMultipleSettingParam.Setting.SettingTypes = new List<SettingType>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams)));
+                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_ExecuteValidateUpdatingMultipleSettingMethodOnValidationService()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams);
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            _validationService.Received().ValidateUpdatingMultipleSetting(updatingMultipleSettingParams);
+            _validationService.Received().ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParam);
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams);
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            var numOfSettingTypes = updatingMultipleSettingParams.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParams.Customers.Count();
+            var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
             var numOfResolveSettingPreTasksMethodExecution = numOfSettingTypes + numOfSettingTypesEachCustomer;
             _settingResolver.Received(numOfResolveSettingPreTasksMethodExecution).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
@@ -448,16 +448,16 @@ using NUnit.Framework;
         public void UpdateMultipleCustomerSetting_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParam);
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams);
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            var numOfSettingTypes = updatingMultipleSettingParams.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParams.Customers.Count();
+            var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
             var numOfExecuteResultSettingPostTasksMethod = numOfSettingTypes + numOfSettingTypesEachCustomer;
             _settingResolver.Received(numOfExecuteResultSettingPostTasksMethod).ResolveSettingPostTasks(Arg.Any<SettingType>());
         }
@@ -466,16 +466,16 @@ using NUnit.Framework;
         public void UpdateMultipleCustomerSetting_ExecuteUpdateCustomerSettingTypeOnSettingDataAccess()
         {
             //// Arrange
-            UpdatingMultipleSettingParams updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParams).Returns(Result.Success);
-            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParams);
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
+            SetupSettingTypeDataAccessStubForCommand(updatingMultipleSettingParam);
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParams);
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            var numOfSettingTypes = updatingMultipleSettingParams.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParams.Customers.Count();
+            var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
             _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),

@@ -5,10 +5,10 @@
 
     public interface IValidationService
     {
-        IResult ValidateQuerySetting(QuerySettingParams queryParams);
+        IResult ValidateQuerySetting(QuerySettingParam queryParam);
 
-        IResult ValidateUpdatingSetting(UpdatingSettingParams updatingParams);
+        IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam);
 
-        IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParams updatingMultipleParams);
+        IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParam updatingMultipleParam);
     }
 }

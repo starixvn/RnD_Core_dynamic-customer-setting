@@ -21,7 +21,7 @@
 
         public SettingType GetCustomerSettingType(
             User actor,
-            QuerySettingParams settingQuery)
+            QuerySettingParam settingQuery)
         {
             var commissionItemDtoList = ReadCommissionItemsRawData(settingQuery);
 
@@ -32,7 +32,7 @@
             };
         }
 
-        private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParams settingQuery)
+        private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParam settingQuery)
         {
             var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             using (ObjectDb objectDb = new ObjectDb(settingKey))

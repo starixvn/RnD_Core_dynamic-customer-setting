@@ -18,7 +18,7 @@
     {
         private const string SettingKeySuffix = "_2_1";
 
-        public SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
+        public SettingType GetCustomerSettingType(User actor, QuerySettingParam settingQuery)
         {
             var betLimitItemDtoList = ReadBetLimitItemsRawData(settingQuery);
 
@@ -29,7 +29,7 @@
             };
         }
 
-        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParams settingQuery)
+        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam settingQuery)
         {
             var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             using (ObjectDb objectDb = new ObjectDb(settingKey))

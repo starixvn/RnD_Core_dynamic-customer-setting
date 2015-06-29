@@ -255,6 +255,9 @@
   <data name="ProductStatus" xml:space="preserve">
     <value>Product Status</value>
   </data>
+  <data name="SubAccountIdShouldBeZeroWhenSystemIsNotAgency" xml:space="preserve">
+    <value>Sub Account Id Should Be Zero When System Is Not Agency</value>
+  </data>
   <data name="SuperMaxPT" xml:space="preserve">
     <value>Super Max PT</value>
   </data>
