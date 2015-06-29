@@ -85,6 +85,17 @@
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is a utlity function, not a property")]
         private string GetClientIp()
         {
+            var forwardHeader = GetForwardHeader();
+            if (!string.IsNullOrEmpty(forwardHeader))
+            {
+                return forwardHeader;
+            }
+
+            return GetInternalAddress();
+        }
+
+        private string GetForwardHeader()
+        {
             var httpRequest = HttpContext.Current.Request;
             var forwardHeader = httpRequest.ServerVariables["HTTP_X_FORWARDED_FOR"];
             if (forwardHeader != null)
@@ -92,20 +103,21 @@
                 return forwardHeader.Split(',').First().Trim();
             }
 
-            return GetInternalAddress(httpRequest);
+            return string.Empty;
         }
 
-        private string GetInternalAddress(HttpRequest httpRequest)
+        private string GetInternalAddress()
         {
+            var httpRequest = HttpContext.Current.Request;
             string userHostAddress = httpRequest.UserHostAddress;
-            var internalAddress = GetInternalIPAddress(userHostAddress);
-            if (internalAddress == null)
+            var internalIPAddress = GetInternalIPAddress(userHostAddress);
+            if (internalIPAddress == null)
             {
                 var hostName = Dns.GetHostName();
-                internalAddress = GetInternalIPAddress(hostName);
+                internalIPAddress = GetInternalIPAddress(hostName);
             }
 
-            return internalAddress != null ? internalAddress.ToString() : string.Empty;
+            return internalIPAddress != null ? internalIPAddress.ToString() : string.Empty;
         }
 
         private IPAddress GetInternalIPAddress(string hostAddress)
