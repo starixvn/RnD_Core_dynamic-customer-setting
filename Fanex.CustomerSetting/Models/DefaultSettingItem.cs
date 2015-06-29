@@ -2,6 +2,7 @@
 {
     using System;
     using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Resource.Resources;
 
     [Serializable]
     public class DefaultSettingItem : ISettingItem
@@ -20,7 +21,7 @@
         {
             if (SportTypeId <= 0 || BetTypeId <= 0)
             {
-                return Result.DataError;
+                return new Result(Result.DataIsNotValid, Error.SportTypeOrBetTypeIsInvalid);
             }
 
             return Result.Success;

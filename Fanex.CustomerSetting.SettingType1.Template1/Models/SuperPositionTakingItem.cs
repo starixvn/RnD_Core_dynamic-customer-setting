@@ -3,6 +3,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class SuperPositionTakingItem : BasePositionTakingItem
     {
@@ -37,22 +38,30 @@
                 || A4 > SettingType1Constants.MaxPositionTakingValue
                 || N4 > SettingType1Constants.MaxPositionTakingValue)
             {
-                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (M4 > S4)
             {
-                return new Result(SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode);
+                return new Result(
+                    SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode,
+                    PositionTakingError.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
             }
 
             if (A4 > M4)
             {
-                return new Result(SettingType1Constants.AgentMaxPTIsGreaterThanMasterMaxPTErrorCode);
+                return new Result(
+                    SettingType1Constants.AgentMaxPTIsGreaterThanMasterMaxPTErrorCode,
+                    PositionTakingError.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
             }
 
             if (N4 > S4)
             {
-                return new Result(SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode);
+                return new Result(
+                    SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
+                    PositionTakingError.SuperMinPTCannotBeGreaterThanSuperMaxPT);
             }
 
             return base.Validate();

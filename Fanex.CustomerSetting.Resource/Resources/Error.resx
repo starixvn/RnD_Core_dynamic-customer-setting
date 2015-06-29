@@ -120,4 +120,7 @@
   <data name="Msg_90001" xml:space="preserve">
     <value>Update process is unsuccessful !</value>
   </data>
+  <data name="SportTypeOrBetTypeIsInvalid" xml:space="preserve">
+    <value>Sport Type or Bet Type is invalid!</value>
+  </data>
 </root>

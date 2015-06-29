@@ -165,7 +165,7 @@
                 var validationResult = settingType.Validate();
                 if (!validationResult.IsSuccessful)
                 {
-                    return validationResult;
+                    return new Result(settingType.Id, settingType.Name, validationResult);
                 }
             }
 

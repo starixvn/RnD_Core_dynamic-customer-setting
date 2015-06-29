@@ -68,5 +68,14 @@ namespace Fanex.CustomerSetting.Resource.Resources {
                 return ResourceManager.GetString("Msg_90001", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Type or Bet Type is invalid!.
+        /// </summary>
+        public static string SportTypeOrBetTypeIsInvalid {
+            get {
+                return ResourceManager.GetString("SportTypeOrBetTypeIsInvalid", resourceCulture);
+            }
+        }
     }
 }

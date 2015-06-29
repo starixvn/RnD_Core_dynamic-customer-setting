@@ -3,6 +3,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType3.Template1.Resources;
 
     public class CommissionItem : DefaultSettingItem
     {
@@ -16,12 +17,16 @@
         {
             if (CommRate > SettingType3Constants.MaxCommissionRateValue)
             {
-                return new Result(SettingType3Constants.CommissionRateExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType3Constants.CommissionRateExceedMaxValueErrorCode,
+                    CommissionError.CommRateCannotBeExceedMaxValue);
             }
 
             if (CommRate < 0)
             {
-                return new Result(SettingType3Constants.CommRateIsNegativeErrorCode);
+                return new Result(
+                    SettingType3Constants.CommRateIsNegativeErrorCode,
+                    CommissionError.CommRateCannotBeNegative);
             }
 
             return base.Validate();

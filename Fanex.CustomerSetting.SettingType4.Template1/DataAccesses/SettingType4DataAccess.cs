@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType4.Template1.Models;
@@ -32,6 +33,7 @@
 
             return new SettingType
             {
+                Name = Lang.ProductStatus,
                 SettingItems = ConvertToProductStatusItems(productStatusItemDtoList)
             };
         }

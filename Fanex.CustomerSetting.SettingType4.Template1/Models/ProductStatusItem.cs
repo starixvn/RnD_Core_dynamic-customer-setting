@@ -3,6 +3,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType4.Template1.Resources;
 
     public class ProductStatusItem : DefaultSettingItem
     {
@@ -18,12 +19,16 @@
         {
             if (Downline == null)
             {
-                return new Result(SettingType4Constants.DownlineProductStatusIsNullErrorCode);
+                return new Result(
+                    SettingType4Constants.DownlineProductStatusIsNullErrorCode,
+                    ProductStatusError.DownlineProductStatusCannotBeNull);
             }
 
             if (IsDisabled && !Downline.IsDisabled)
             {
-                return new Result(SettingType4Constants.DownlineIsEnabledWhenUplineIsDisabledErrorCode);
+                return new Result(
+                    SettingType4Constants.DownlineIsEnabledWhenUplineIsDisabledErrorCode,
+                    ProductStatusError.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 
             return base.Validate();

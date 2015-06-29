@@ -2,6 +2,7 @@
 {
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class MasterPositionTakingItem : BasePositionTakingItem
     {
@@ -58,22 +59,30 @@
                 || N3 > SettingType1Constants.MaxPositionTakingValue
                 || M3 > SettingType1Constants.MaxPositionTakingValue)
             {
-                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (IS3 && S3 > 0)
             {
-                return new Result(SettingType1Constants.SuperPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
+                return new Result(
+                    SettingType1Constants.SuperPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode,
+                    PositionTakingError.SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             if (!IS3 && US3 > 0)
             {
-                return new Result(SettingType1Constants.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
+                return new Result(
+                    SettingType1Constants.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode,
+                    PositionTakingError.SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (N3 > M3)
             {
-                return new Result(SettingType1Constants.MasterMinPTIsGreaterThanMasterMaxPTErrorCode);
+                return new Result(
+                    SettingType1Constants.MasterMinPTIsGreaterThanMasterMaxPTErrorCode,
+                    PositionTakingError.MasterMinPTCannotBeGreaterThanMasterMaxPT);
             }
 
             return base.Validate();

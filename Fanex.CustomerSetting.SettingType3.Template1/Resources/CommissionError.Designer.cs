@@ -61,6 +61,24 @@ namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commission Rate cannot be exceed Max Value.
+        /// </summary>
+        public static string CommRateCannotBeExceedMaxValue {
+            get {
+                return ResourceManager.GetString("CommRateCannotBeExceedMaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission Rate cannot be negative.
+        /// </summary>
+        public static string CommRateCannotBeNegative {
+            get {
+                return ResourceManager.GetString("CommRateCannotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid commission rate.
         /// </summary>
         public static string Msg_1 {

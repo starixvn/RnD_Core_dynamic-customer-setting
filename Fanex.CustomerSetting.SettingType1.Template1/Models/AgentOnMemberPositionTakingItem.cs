@@ -2,6 +2,7 @@
 {
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class AgentOnMemberPositionTakingItem : BasePositionTakingItem
     {
@@ -26,7 +27,9 @@
         {
             if (A1 > SettingType1Constants.MaxPositionTakingValue)
             {
-                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
             }
 
             return base.Validate();

@@ -61,6 +61,78 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent Max PT cannot be greater than Master Max PT.
+        /// </summary>
+        public static string AgentMaxPTCannotBeGreaterThanMasterMaxPT {
+            get {
+                return ResourceManager.GetString("AgentMaxPTCannotBeGreaterThanMasterMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Min PT cannot be greater than Agent Max PT.
+        /// </summary>
+        public static string AgentMinPTCannotBeGreaterThanAgentMaxPT {
+            get {
+                return ResourceManager.GetString("AgentMinPTCannotBeGreaterThanAgentMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Auto PT cannot be greater than zero when IsAuto is not set.
+        /// </summary>
+        public static string MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+            get {
+                return ResourceManager.GetString("MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Auto PT On Member cannot be greater than zero when IsAuto is not set.
+        /// </summary>
+        public static string MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+            get {
+                return ResourceManager.GetString("MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Max PT cannot be greater than Super Max PT.
+        /// </summary>
+        public static string MasterMaxPTCannotBeGreaterThanSuperMaxPT {
+            get {
+                return ResourceManager.GetString("MasterMaxPTCannotBeGreaterThanSuperMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Min PT cannot be greater than Master Max PT.
+        /// </summary>
+        public static string MasterMinPTCannotBeGreaterThanMasterMaxPT {
+            get {
+                return ResourceManager.GetString("MasterMinPTCannotBeGreaterThanMasterMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master PT cannot be greater than zero when IsAuto is set.
+        /// </summary>
+        public static string MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
+            get {
+                return ResourceManager.GetString("MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master PT On Member cannot be greater than zero when IsAuto is set.
+        /// </summary>
+        public static string MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
+            get {
+                return ResourceManager.GetString("MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong position taking.
         /// </summary>
         public static string Msg_20001 {
@@ -210,6 +282,60 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         public static string Msg_20034 {
             get {
                 return ResourceManager.GetString("Msg_20034", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Taking cannot be exceed Max Value.
+        /// </summary>
+        public static string PositionTakingCannotBeExceedMaxValue {
+            get {
+                return ResourceManager.GetString("PositionTakingCannotBeExceedMaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Auto PT cannot be greater than zero when IsAuto is not set.
+        /// </summary>
+        public static string SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+            get {
+                return ResourceManager.GetString("SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Auto PT On Member cannot be greater than zero when IsAuto is not set.
+        /// </summary>
+        public static string SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+            get {
+                return ResourceManager.GetString("SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Min PT cannot be greater than Super Max PT.
+        /// </summary>
+        public static string SuperMinPTCannotBeGreaterThanSuperMaxPT {
+            get {
+                return ResourceManager.GetString("SuperMinPTCannotBeGreaterThanSuperMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super PT cannot be greater than zero when IsAuto is set.
+        /// </summary>
+        public static string SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
+            get {
+                return ResourceManager.GetString("SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super PT On Member cannot be greater than zero when IsAuto is set.
+        /// </summary>
+        public static string SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
+            get {
+                return ResourceManager.GetString("SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
             }
         }
     }

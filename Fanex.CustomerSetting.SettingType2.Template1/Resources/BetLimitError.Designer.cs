@@ -61,6 +61,60 @@ namespace Fanex.CustomerSetting.SettingType2.Template1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BetLimit cannot be greater than Max Value.
+        /// </summary>
+        public static string BetLimitCannotBeGreaterThanMaxValue {
+            get {
+                return ResourceManager.GetString("BetLimitCannotBeGreaterThanMaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet cannot be greater than Max Per Match.
+        /// </summary>
+        public static string MaxBetCannotBeGreaterThanMaxPerMatch {
+            get {
+                return ResourceManager.GetString("MaxBetCannotBeGreaterThanMaxPerMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet cannot be negative.
+        /// </summary>
+        public static string MaxBetCannotBeNegative {
+            get {
+                return ResourceManager.GetString("MaxBetCannotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match cannot be negative.
+        /// </summary>
+        public static string MaxPerMatchCannotBeNegative {
+            get {
+                return ResourceManager.GetString("MaxPerMatchCannotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet cannot be greater than Max Bet.
+        /// </summary>
+        public static string MinBetCannotBeGreaterThanMaxBet {
+            get {
+                return ResourceManager.GetString("MinBetCannotBeGreaterThanMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet cannot be negative.
+        /// </summary>
+        public static string MinBetCannotBeNegative {
+            get {
+                return ResourceManager.GetString("MinBetCannotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong Min bet/ Max bet/ Max per match.
         /// </summary>
         public static string Msg_10003 {

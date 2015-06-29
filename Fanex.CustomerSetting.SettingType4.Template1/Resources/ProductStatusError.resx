@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DownlineCannotBeEnabledWhenUplineIsDisabled" xml:space="preserve">
+    <value>Downline cannnot be enabled when Upline is disabled</value>
+  </data>
+  <data name="DownlineProductStatusCannotBeNull" xml:space="preserve">
+    <value>Downline Product Status cannot be null</value>
+  </data>
   <data name="Msg_60031" xml:space="preserve">
     <value>Account disabled for this product. Unable to edit downlines</value>
   </data>

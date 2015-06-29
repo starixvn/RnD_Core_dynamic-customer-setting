@@ -3,6 +3,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class SuperOnMemberPositionTakingItem : BasePositionTakingItem
     {
@@ -58,17 +59,23 @@
             if (S1 > SettingType1Constants.MaxPositionTakingValue
                 || US1 > SettingType1Constants.MaxPositionTakingValue)
             {
-                return new Result(SettingType1Constants.PositionTakingExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (!IS1 && US1 > 0)
             {
-                return new Result(SettingType1Constants.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode);
+                return new Result(
+                    SettingType1Constants.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode,
+                    PositionTakingError.SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (IS1 && S1 > 0)
             {
-                return new Result(SettingType1Constants.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode);
+                return new Result(
+                    SettingType1Constants.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode,
+                    PositionTakingError.SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             return base.Validate();

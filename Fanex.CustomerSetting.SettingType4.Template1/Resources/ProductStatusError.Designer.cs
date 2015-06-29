@@ -61,6 +61,24 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled.
+        /// </summary>
+        public static string DownlineCannotBeEnabledWhenUplineIsDisabled {
+            get {
+                return ResourceManager.GetString("DownlineCannotBeEnabledWhenUplineIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downline Product Status cannot be null.
+        /// </summary>
+        public static string DownlineProductStatusCannotBeNull {
+            get {
+                return ResourceManager.GetString("DownlineProductStatusCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
         /// </summary>
         public static string Msg_60031 {

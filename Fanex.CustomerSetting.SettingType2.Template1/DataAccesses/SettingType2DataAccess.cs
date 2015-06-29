@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.DataAccesses
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.DataAccesses;
@@ -9,6 +8,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType2.Template1.Models;
@@ -30,6 +30,7 @@
 
             return new SettingType
             {
+                Name = Lang.BetSetting,
                 SettingItems = ConvertToBetLimitItemList(betLimitItemDtoList)
             };
         }

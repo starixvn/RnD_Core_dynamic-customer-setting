@@ -3,6 +3,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
     public class BetLimitItem : DefaultSettingItem
     {
@@ -29,32 +30,44 @@
                 || MaxBet > SettingType2Constants.MaxBetLimitValue
                 || MaxPerMatch > SettingType2Constants.MaxBetLimitValue)
             {
-                return new Result(SettingType2Constants.BetLimitExceedMaxValueErrorCode);
+                return new Result(
+                    SettingType2Constants.BetLimitExceedMaxValueErrorCode,
+                    BetLimitError.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
-                return new Result(SettingType2Constants.MinBetIsNegativeErrorCode);
+                return new Result(
+                    SettingType2Constants.MinBetIsNegativeErrorCode,
+                    BetLimitError.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
-                return new Result(SettingType2Constants.MaxBetIsNegativeErrorCode);
+                return new Result(
+                    SettingType2Constants.MaxBetIsNegativeErrorCode,
+                    BetLimitError.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
-                return new Result(SettingType2Constants.MaxPerMatchIsNegativeErrorCode);
+                return new Result(
+                    SettingType2Constants.MaxPerMatchIsNegativeErrorCode,
+                    BetLimitError.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
-                return new Result(SettingType2Constants.MinBetIsGreaterThanMaxBetErrorCode);
+                return new Result(
+                    SettingType2Constants.MinBetIsGreaterThanMaxBetErrorCode,
+                    BetLimitError.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
-                return new Result(SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode);
+                return new Result(
+                    SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode,
+                    BetLimitError.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 
             return base.Validate();
