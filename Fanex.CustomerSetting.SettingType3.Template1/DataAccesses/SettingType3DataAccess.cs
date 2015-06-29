@@ -23,39 +23,23 @@
             User actor,
             QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
-            IEnumerable<CommissionItemDto> commissionItemDtoList = null;
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
-            {
-                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType3Constants.SettingType);
-                commissionItemDtoList = objectDb.Query<CommissionItemDto>(parameterValues);
-            }
+            var commissionItemDtoList = ReadCommissionItemsRawData(settingQuery);
 
             return new SettingType
             {
                 Name = Lang.Commission,
-                SettingItems = ConvertToCommissionItems(commissionItemDtoList)
+                SettingItems = commissionItemDtoList.Select<CommissionItemDto, CommissionItem>(commItemDto => new CommissionItem(commItemDto))
             };
         }
 
-        private IEnumerable<CommissionItem> ConvertToCommissionItems(IEnumerable<CommissionItemDto> commissionItemDtoList)
+        private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParams settingQuery)
         {
-            return commissionItemDtoList.Select<CommissionItemDto, CommissionItem>(
-                commItemDto => new CommissionItem
-                {
-                    SportTypeId = commItemDto.SportTypeId,
-                    BetTypeId = commItemDto.BetTypeId,
-                    CommRate = commItemDto.CommRate,
-                    Upline = new CommissionItem
-                    {
-                        CommRate = commItemDto.UplineCommRate,
-                        Upline = commItemDto.UplineOfUplineCommRate.HasValue ? new CommissionItem
-                        {
-                            CommRate = commItemDto.UplineOfUplineCommRate.Value
-                        } 
-                        : null
-                    }
-                });
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            {
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType3Constants.SettingType);
+                return objectDb.Query<CommissionItemDto>(parameterValues);
+            }
         }
 
         public IResult UpdateCustomerSettingType(

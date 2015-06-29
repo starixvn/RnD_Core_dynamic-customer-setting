@@ -3,11 +3,31 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
     public class BetLimitItem : DefaultSettingItem
     {
         private const string BetLimitXmlFormat = "<BetLimit {0} MinBet=\"{1}\" MaxBet=\"{2}\" MaxPerMatch=\"{3}\"/>";
+
+        public BetLimitItem()
+        {
+        }
+
+        internal BetLimitItem(BetLimitItemDto betLimitItemDto)
+        {
+            SportTypeId = betLimitItemDto.SportTypeId;
+            BetTypeId = betLimitItemDto.BetTypeId;
+            MaxBet = betLimitItemDto.MaxBet;
+            MinBet = betLimitItemDto.MinBet;
+            MaxPerMatch = betLimitItemDto.MaxBetMax;
+            Constraint = new BetLimitItem
+            {
+                MinBet = betLimitItemDto.MinBetMin,
+                MaxBet = betLimitItemDto.MaxBetMax,
+                MaxPerMatch = betLimitItemDto.MaxPerMatchMax
+            };
+        }
 
         public decimal MinBet { get; set; }
 

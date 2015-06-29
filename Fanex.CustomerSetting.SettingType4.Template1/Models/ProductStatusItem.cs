@@ -3,11 +3,33 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType4.Template1.Resources;
 
     public class ProductStatusItem : DefaultSettingItem
     {
         private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
+
+        public ProductStatusItem()
+        {
+        }
+
+        internal ProductStatusItem(ProductStatusItemDto productStatusItemDto)
+        {
+            SportTypeId = productStatusItemDto.SportTypeId;
+            BetTypeId = productStatusItemDto.BetTypeId;
+            IsDisabled = productStatusItemDto.IsDisabled;
+            Downline = productStatusItemDto.IsDownlineDisabled.HasValue ? new ProductStatusItem
+            {
+                IsDisabled = productStatusItemDto.IsDownlineDisabled.Value
+            }
+            : null;
+            Upline = productStatusItemDto.IsUplineDisabled.HasValue ? new ProductStatusItem
+            {
+                IsDisabled = productStatusItemDto.IsUplineDisabled.Value
+            }
+            : null;
+        }
 
         public bool IsDisabled { get; set; }
 

@@ -3,11 +3,32 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
+    using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Resources;
 
     public class CommissionItem : DefaultSettingItem
     {
         private const string CommissionXmlFormat = "<Discount {0} Discount=\"{1}\"/>";
+
+        public CommissionItem()
+        {
+        }
+
+        internal CommissionItem(CommissionItemDto commItemDto)
+        {
+            SportTypeId = commItemDto.SportTypeId;
+            BetTypeId = commItemDto.BetTypeId;
+            CommRate = commItemDto.CommRate;
+            Upline = new CommissionItem
+            {
+                CommRate = commItemDto.UplineCommRate,
+                Upline = commItemDto.UplineOfUplineCommRate.HasValue ? new CommissionItem
+                {
+                    CommRate = commItemDto.UplineOfUplineCommRate.Value
+                }
+                : null
+            };
+        }
 
         public decimal CommRate { get; set; }
 

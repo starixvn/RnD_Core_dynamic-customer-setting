@@ -20,38 +20,23 @@
 
         public SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
-            IEnumerable<BetLimitItemDto> betLimitItemDtoList = null;
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
-            {
-                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType2Constants.SettingType);
-                betLimitItemDtoList = objectDb.Query<BetLimitItemDto>(parameterValues);
-            }
+            var betLimitItemDtoList = ReadBetLimitItemsRawData(settingQuery);
 
             return new SettingType
             {
                 Name = Lang.BetSetting,
-                SettingItems = ConvertToBetLimitItemList(betLimitItemDtoList)
+                SettingItems = betLimitItemDtoList.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
             };
         }
 
-        private IEnumerable<BetLimitItem> ConvertToBetLimitItemList(IEnumerable<BetLimitItemDto> betLimitItemDtoList)
+        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParams settingQuery)
         {
-            return betLimitItemDtoList.Select<BetLimitItemDto, BetLimitItem>(
-                betLimitDto => new BetLimitItem
-                {
-                    SportTypeId = betLimitDto.SportTypeId,
-                    BetTypeId = betLimitDto.BetTypeId,
-                    MaxBet = betLimitDto.MaxBet,
-                    MinBet = betLimitDto.MinBet,
-                    MaxPerMatch = betLimitDto.MaxBetMax,
-                    Constraint = new BetLimitItem
-                    {
-                        MinBet = betLimitDto.MinBetMin,
-                        MaxBet = betLimitDto.MaxBetMax,
-                        MaxPerMatch = betLimitDto.MaxPerMatchMax
-                    }
-                });
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            {
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType2Constants.SettingType);
+                return objectDb.Query<BetLimitItemDto>(parameterValues);
+            }
         }
 
         public IResult UpdateCustomerSettingType(

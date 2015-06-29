@@ -23,40 +23,23 @@
             User actor,
             QuerySettingParams settingQuery)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
-            IEnumerable<ProductStatusItemDto> productStatusItemDtoList = null;
-            using (ObjectDb objectDb = new ObjectDb(settingKey))
-            {
-                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType4Constants.SettingType);
-                productStatusItemDtoList = objectDb.Query<ProductStatusItemDto>(parameterValues);
-            }
+            var productStatusItemDtoList = ReadProductStatusItemsRawData(settingQuery);
 
             return new SettingType
             {
                 Name = Lang.ProductStatus,
-                SettingItems = ConvertToProductStatusItems(productStatusItemDtoList)
+                SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
             };
         }
 
-        private IEnumerable<ProductStatusItem> ConvertToProductStatusItems(IEnumerable<ProductStatusItemDto> productStatusItemDtoList)
+        private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParams settingQuery)
         {
-            return productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(
-                productStatusItemDto => new ProductStatusItem
-                {
-                    SportTypeId = productStatusItemDto.SportTypeId,
-                    BetTypeId = productStatusItemDto.BetTypeId,
-                    IsDisabled = productStatusItemDto.IsDisabled,
-                    Downline = productStatusItemDto.IsDownlineDisabled.HasValue ? new ProductStatusItem
-                    {
-                        IsDisabled = productStatusItemDto.IsDownlineDisabled.Value
-                    }
-                    : null,
-                    Upline = productStatusItemDto.IsUplineDisabled.HasValue ? new ProductStatusItem
-                    {
-                        IsDisabled = productStatusItemDto.IsUplineDisabled.Value
-                    }
-                    : null
-                });
+            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            using (ObjectDb objectDb = new ObjectDb(settingKey))
+            {
+                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType4Constants.SettingType);
+                return objectDb.Query<ProductStatusItemDto>(parameterValues);
+            }
         }
 
         public IResult UpdateCustomerSettingType(
