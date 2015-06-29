@@ -36,19 +36,6 @@
             }
         }
 
-        public User SubAccount
-        {
-            get
-            {
-                return (User)HttpContext.Current.Session[SubAccountSessionKey];
-            }
-
-            set
-            {
-                HttpContext.Current.Session[SubAccountSessionKey] = value;
-            }
-        }
-
         public string Language
         {
             get
@@ -83,7 +70,7 @@
         {
             get
             {
-                return CustomerSettings.Settings.Domain;
+                return GetDomain();
             }
         }
 
@@ -105,18 +92,23 @@
                 return forwardHeader.Split(',').First().Trim();
             }
 
+            return GetInternalAddress(httpRequest);
+        }
+
+        private string GetInternalAddress(HttpRequest httpRequest)
+        {
             string userHostAddress = httpRequest.UserHostAddress;
-            var internalAddress = GetInternalAddress(userHostAddress);
+            var internalAddress = GetInternalIPAddress(userHostAddress);
             if (internalAddress == null)
             {
                 var hostName = Dns.GetHostName();
-                internalAddress = GetInternalAddress(hostName);
+                internalAddress = GetInternalIPAddress(hostName);
             }
 
             return internalAddress != null ? internalAddress.ToString() : string.Empty;
         }
 
-        private IPAddress GetInternalAddress(string hostAddress)
+        private IPAddress GetInternalIPAddress(string hostAddress)
         {
             foreach (var itemIPA in Dns.GetHostAddresses(hostAddress))
             {
@@ -127,6 +119,11 @@
             }
 
             return null;
+        }
+
+        private string GetDomain()
+        {
+            return HttpContext.Current.Request.Url.Host;
         }
     }
 }

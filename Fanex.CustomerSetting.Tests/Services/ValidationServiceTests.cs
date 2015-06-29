@@ -38,23 +38,23 @@
         #region Validatie Setting Query Tests
 
         [Test]
-        public void ValidateSettingQuery_SettingQueryIsNull_ThrowArgumentNullException()
+        public void ValidateQuerySetting_QuerySettingParamsIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            QuerySettingParams settingQuery = null;
+            QuerySettingParams queryParams = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _validationService.ValidateQuerySetting(settingQuery)));
+                    () => _validationService.ValidateQuerySetting(queryParams)));
         }
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidateSettingQuery_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        public void ValidateQuerySetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = customerId
             };
@@ -62,17 +62,17 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _validationService.ValidateQuerySetting(settingQuery)));
+                    () => _validationService.ValidateQuerySetting(queryParams)));
         }
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingQuery_ActorIsCompany_CanViewAllCustomerSetting(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_ActorIsCompany_CanViewAllCustomerSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = customerLevel
@@ -82,7 +82,7 @@
                 .Returns(Result.Success);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -90,10 +90,10 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateSettingQuery_ActorIsSuper_CannotViewOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_ActorIsSuper_CannotViewOtherSuperAndAgentSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = customerLevel
@@ -101,7 +101,7 @@
             _settingContext.Actor.Level = UserLevel.Super;
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -109,10 +109,10 @@
 
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingQuery_ActorIsSuper_CanViewDownlineSettingExceptAgent(CustomerLevel downlineLevel)
+        public void ValidateQuerySetting_ActorIsSuper_CanViewDownlineSettingExceptAgent(CustomerLevel downlineLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = downlineLevel
@@ -122,7 +122,7 @@
                 .Returns(Result.Success);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -130,10 +130,10 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
-        public void ValidateSettingQuery_ActorIsMaster_CannotViewOtherMasterAndSuperSetting(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_ActorIsMaster_CannotViewOtherMasterAndSuperSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = customerLevel
@@ -141,7 +141,7 @@
             _settingContext.Actor.Level = UserLevel.Master;
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -149,10 +149,10 @@
 
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingQuery_ActorIsMaster_CanViewDownlineSetting(CustomerLevel downlineLevel)
+        public void ValidateQuerySetting_ActorIsMaster_CanViewDownlineSetting(CustomerLevel downlineLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = downlineLevel
@@ -162,7 +162,7 @@
                 .Returns(Result.Success);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -171,10 +171,10 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateSettingQuery_ActorIsAgent_CannotViewOtherAgentAndUplineSetting(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_ActorIsAgent_CannotViewOtherAgentAndUplineSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = customerLevel
@@ -182,17 +182,17 @@
             _settingContext.Actor.Level = UserLevel.Agent;
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateSettingQuery_ActorIsAgent_CanViewMemberSetting()
+        public void ValidateQuerySetting_ActorIsAgent_CanViewMemberSetting()
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = CustomerLevel.Member
@@ -201,17 +201,17 @@
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(settingQuery);
+            var actualResult = _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateSettingQuery_ExecuteValidatePerrmissionMethod()
+        public void ValidateQuerySetting_ExecuteValidatePerrmissionMethod()
         {
             //// Arrange
-            QuerySettingParams settingQuery = new QuerySettingParams
+            QuerySettingParams queryParams = new QuerySettingParams
             {
                 CustomerId = 1,
                 CustomerLevel = CustomerLevel.Member
@@ -219,10 +219,10 @@
             _settingContext.Actor.Level = UserLevel.Agent;
 
             //// Act
-            _validationService.ValidateQuerySetting(settingQuery);
+            _validationService.ValidateQuerySetting(queryParams);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(_settingContext.Actor.Id, settingQuery.CustomerId, (byte)settingQuery.CustomerLevel);
+            _validationDataAccess.Received().ValidatePermission(_settingContext.Actor.Id, queryParams.CustomerId, (byte)queryParams.CustomerLevel);
         }
 
         #endregion Validatie Setting Query Tests
@@ -230,7 +230,7 @@
         #region validate Setting Command Tests
 
         [Test]
-        public void ValidateSettingCommand_UpdatingSettingParamsIsNull_ReturnValidationError()
+        public void ValidateUpdatingSetting_UpdatingSettingParamsIsNull_ReturnValidationError()
         {
             //// Arrange
             UpdatingSettingParams updatingParams = null;
@@ -244,7 +244,7 @@
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidateSettingCommand_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
+        public void ValidateUpdatingSetting_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
         {
             //// Arrange
             UpdatingSettingParams updatingParams = FakeObjectManager.CreateUpdatingSettingParams(customerId);
@@ -257,7 +257,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_ExecuteValidatePermissionOnDataAccess()
+        public void ValidateUpdatingSetting_ExecuteValidatePermissionOnDataAccess()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -273,7 +273,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_ExecuteGetProductSettingTypesOnProductService()
+        public void ValidateUpdatingSetting_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -291,7 +291,7 @@
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingCommand_ActorIsCompany_CanUpdateAllCustomerSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingSetting_ActorIsCompany_CanUpdateAllCustomerSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, customerLevel);
@@ -308,7 +308,7 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateSettingCommand_ActorIsSuper_CannotUpdateOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingSetting_ActorIsSuper_CannotUpdateOtherSuperAndAgentSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, customerLevel);
@@ -323,7 +323,7 @@
 
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingCommand_ActorIsSuper_CanUpdateDownlineSettingExceptAgent(CustomerLevel downlineLevel)
+        public void ValidateUpdatingSetting_ActorIsSuper_CanUpdateDownlineSettingExceptAgent(CustomerLevel downlineLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, downlineLevel);
@@ -340,7 +340,7 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
-        public void ValidateSettingCommand_ActorIsMaster_CannotUpdateOtherMasterAndSuperSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingSetting_ActorIsMaster_CannotUpdateOtherMasterAndSuperSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, customerLevel);
@@ -355,7 +355,7 @@
 
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateSettingCommand_ActorIsMaster_CanUpdateDownlineSetting(CustomerLevel downlineLevel)
+        public void ValidateUpdatingSetting_ActorIsMaster_CanUpdateDownlineSetting(CustomerLevel downlineLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, downlineLevel);
@@ -373,7 +373,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateSettingCommand_ActorIsAgent_CannotUpdateOtherAgentAndUplineSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingSetting_ActorIsAgent_CannotUpdateOtherAgentAndUplineSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, customerLevel);
@@ -387,7 +387,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_ActorIsAgent_CanUpdateMemberSetting()
+        public void ValidateUpdatingSetting_ActorIsAgent_CanUpdateMemberSetting()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams(1, CustomerLevel.Member);
@@ -403,7 +403,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
+        public void ValidateUpdatingSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -426,7 +426,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
+        public void ValidateUpdatingSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -449,7 +449,7 @@
         }
 
         [Test]
-        public void ValidateSettingCommand_ExecuteValidateMethodOnEachSettingItem()
+        public void ValidateUpdatingSetting_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
             var updatingParams = FakeObjectManager.CreateUpdatingSettingParams();
@@ -481,7 +481,7 @@
         #region Validate Multiple Setting Command Tests
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_updatingMultipleSettingParamsIsNull_ReturnValidationError()
+        public void ValidateUpdatingMultipleSetting_UpdatingMultipleSettingParamsIsNull_ReturnValidationError()
         {
             //// Arrange
             UpdatingMultipleSettingParams updatingMultipleSettingParams = null;
@@ -494,7 +494,7 @@
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_CustomersIsNull_ReturnValidationError()
+        public void ValidateUpdatingMultipleSetting_CustomersIsNull_ReturnValidationError()
         {
             //// Arrange
             UpdatingMultipleSettingParams updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
@@ -508,58 +508,59 @@
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_ExecuteValidatePermissionOnDataAccess()
+        public void ValidateUpdatingMultipleSetting_ExecuteValidatePermissionOnDataAccess()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             _validationDataAccess.Received().ValidatePermission(
                 _settingContext.Actor.Id,
-                settingCommand.Setting.Customer.Id,
-                (byte)settingCommand.Setting.Customer.Level);
+                updatingMultipleParams.Setting.Customer.Id,
+                (byte)updatingMultipleParams.Setting.Customer.Level);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_ExecuteGetProductSettingTypesOnProductService()
+        public void ValidateUpdatingMultipleSetting_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == settingCommand.Setting.Product.Id));
+                productId => productId == updatingMultipleParams.Setting.Product.Id));
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
+        public void ValidateUpdatingMultipleSetting_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, CustomerLevel.Member);
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, CustomerLevel.Member);
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id)
+                .Returns(updatingMultipleParams.Setting.SettingTypes);
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(
                 Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", settingCommand.Customers.Select(cust => cust.Id))));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParams.Customers.Select(cust => cust.Id))));
         }
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsCompany_CanUpdateAllMultipleCustomerSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsCompany_CanUpdateAllMultipleCustomerSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
@@ -577,7 +578,7 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsSuper_CannotUpdateMultipleOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsSuper_CannotUpdateMultipleOtherSuperAndAgentSetting(CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
@@ -592,7 +593,7 @@
 
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsSuper_CanUpdateMultipleDownlineSettingExceptAgent(CustomerLevel downlineLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsSuper_CanUpdateMultipleDownlineSettingExceptAgent(CustomerLevel downlineLevel)
         {
             //// Arrange
             var updatingMultipleSettingParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, downlineLevel);
@@ -610,14 +611,14 @@
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsMaster_CannotUpdateMultipleOtherMasterAndSuperSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsMaster_CannotUpdateMultipleOtherMasterAndSuperSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Master;
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -625,17 +626,17 @@
 
         [TestCase(CustomerLevel.Agent)]
         [TestCase(CustomerLevel.Member)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsMaster_CanUpdateMultipleDownlineSetting(CustomerLevel downlineLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsMaster_CanUpdateMultipleDownlineSetting(CustomerLevel downlineLevel)
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, downlineLevel);
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id).Returns(updatingMultipleParams.Setting.SettingTypes);
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -644,91 +645,91 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateupdatingMultipleSettingParams_ActorIsAgent_CannotUpdateMultipleOtherAgentAndUplineSetting(CustomerLevel customerLevel)
+        public void ValidateUpdatingMultipleSetting_ActorIsAgent_CannotUpdateMultipleOtherAgentAndUplineSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Agent;
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_ActorIsAgent_CanUpdateMemberSetting()
+        public void ValidateUpdatingMultipleSetting_ActorIsAgent_CanUpdateMemberSetting()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, CustomerLevel.Member);
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams(1, CustomerLevel.Member);
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id).Returns(updatingMultipleParams.Setting.SettingTypes);
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
+        public void ValidateUpdatingMultipleSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            settingCommand.Setting.SettingTypes = new List<SettingType>
+            updatingMultipleParams.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(2)
                 });
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
+        public void ValidateUpdatingMultipleSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            settingCommand.Setting.SettingTypes = new List<SettingType>
+            updatingMultipleParams.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(1)
                 });
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateupdatingMultipleSettingParams_ExecuteValidateMethodOnEachSettingItem()
+        public void ValidateUpdatingMultipleSetting_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
-            var settingCommand = FakeObjectManager.CreateUpdatingMultipleSettingParams();
+            var updatingMultipleParams = FakeObjectManager.CreateUpdatingMultipleSettingParams();
             var settingItemMock = Substitute.For<ISettingItem>();
-            settingCommand.Setting.SettingTypes = new List<SettingType>
+            updatingMultipleParams.Setting.SettingTypes = new List<SettingType>
             {
                 new SettingType
                 {
@@ -742,10 +743,10 @@
             };
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(settingCommand.Setting.Product.Id).Returns(settingCommand.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParams.Setting.Product.Id).Returns(updatingMultipleParams.Setting.SettingTypes);
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(settingCommand);
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParams);
 
             //// Assert
             settingItemMock.Received().Validate();
