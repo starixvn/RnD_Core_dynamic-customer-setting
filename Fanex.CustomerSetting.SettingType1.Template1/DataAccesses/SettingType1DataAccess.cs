@@ -19,14 +19,43 @@
 
         public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParams settingQuery)
         {
+            var settingType = new SettingType
+            {
+                Name = Lang.PositionTaking
+            };
+
+            settingType.SettingItems = ReadSettingItems(settingQuery);
+            settingType = ReadIsMasterAutoPTWhenEditAgentPT(settingQuery, settingType);
+            return settingType;
+        }
+
+        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParams settingQuery, SettingType settingType)
+        {
+            if (settingQuery.CustomerLevel == CustomerLevel.Agent)
+            {
+                bool isAllowMasterPT;
+                using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_AllowMasterPTSelect"))
+                {
+                    isAllowMasterPT = objectDb.QueryEntity<bool>(new { CustID = settingQuery.CustomerId });
+                }
+
+                return new MasterPositionTaking
+                {
+                    Name = settingType.Name,
+                    IsDisableMasterAutoPT = !isAllowMasterPT,
+                    SettingItems = settingType.SettingItems
+                };
+            }
+
+            return settingType;
+        }
+
+        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParams settingQuery)
+        {
             var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                return new SettingType
-                {
-                    Name = Lang.PositionTaking,
-                    SettingItems = QueryPositionTakingItems(objectDb, settingQuery)
-                };
+                return QueryPositionTakingItems(objectDb, settingQuery);
             }
         }
 

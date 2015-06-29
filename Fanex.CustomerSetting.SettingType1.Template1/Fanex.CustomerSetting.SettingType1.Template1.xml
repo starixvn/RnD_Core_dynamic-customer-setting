@@ -5,7 +5,9 @@
     <Setting Key="Acc_CustSetting_MasterSettingSelect_1_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_AgentSettingSelect_1_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_MemberSettingSelect_1_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     
+
     <Setting Key="Acc_CustSetting_CustomerSettingModeSelect_1_1" SpName="Acc_CustSetting_CustomerSettingModeSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_SuperPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustSetting_MasterPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_MasterPTOnMemberMultiUpd" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
