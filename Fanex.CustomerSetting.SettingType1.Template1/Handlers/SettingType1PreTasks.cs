@@ -43,9 +43,9 @@
         }
 
         private PreUpdateMultipleCustomersSettingTypeResult UpdatePositionTakingForGroupedMembers(
-            ISettingContext settingContext, 
-            IEnumerable<Customer> customers, 
-            SettingType settingType, 
+            ISettingContext settingContext,
+            IEnumerable<Customer> customers,
+            SettingType settingType,
             CustomerLevel? uplineLevel)
         {
             var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
@@ -53,6 +53,7 @@
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
                 CustomersNeedForSingleUpdating = ungroupedMembers,
+                IsReturnResultToUser = true,
                 Result = UpdateGroupedMembers(settingContext, customers, uplineLevel.Value, settingType)
             };
         }

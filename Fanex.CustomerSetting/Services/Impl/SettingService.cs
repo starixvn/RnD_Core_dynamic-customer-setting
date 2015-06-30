@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Threading;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -339,8 +337,12 @@
             //// because we already updated setting for them, so we need to remove them out of customer list.
             var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
-            IResult updatedResult = new Result(results);
-            return RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, updatedResult);
+            if (preTasksResult.IsReturnResultToUser)
+            {
+                results.AddRange(preTasksResult.Result.SubResults);
+            }
+
+            return RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, new Result(results));
         }
 
         /// <summary>

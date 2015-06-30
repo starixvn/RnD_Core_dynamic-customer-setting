@@ -50,12 +50,25 @@
                 PositionTakingXml = settingType.ToXml()
             };
 
-            return _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParam);
+            var updatedResult = _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParam);
+
+            return SeparateResultForEachCustomer(updatedResult, groupedMembers);
         }
 
         private string GetMemberIds(IEnumerable<Customer> members)
         {
             return string.Join(",", members.Select(member => member.Id));
+        }
+
+        private IResult SeparateResultForEachCustomer(IResult result, IEnumerable<Customer> groupedMembers)
+        {
+            var subResults = new List<Result>();
+            foreach (Customer member in groupedMembers)
+            {
+                subResults.Add(new Result(member.Id, member.UserName, result));
+            }
+
+            return new Result(subResults);
         }
     }
 }

@@ -9,6 +9,8 @@
 
         public bool IsStopUpdating { get; set; }
 
+        public bool IsReturnResultToUser { get; set; }
+
         public IResult Result { get; set; }
     }
 }
