@@ -11,36 +11,32 @@
     public class BaseDataAccess
     {
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
-        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParam, bool isReadMessageType = true)
+        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParam)
         {
             using (var objectDb = new ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParam);
-                var outputParam = objectDb.GetOuputParams();
-                if (isReadMessageType)
-                {
-                    return ReadOutputWithMessageType(outputParam);
-                }
-                else
-                {
-                    return ReadOutputWithoutMessageType(outputParam);
-                }
+                return ReadOutputWithMessageType(objectDb.GetOuputParams());
             }
-        }
-
-        protected IResult ReadOutputWithoutMessageType(Hashtable outputParams)
-        {
-            return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    Convert.ToString(outputParams["errmsg"]));
         }
 
         protected IResult ReadOutputWithMessageType(Hashtable outputParams)
         {
+            if (!outputParams.ContainsKey("errcode"))
+            {
+                return Result.SystemError;
+            }
+
+            int msgType = 0;
+            if (outputParams.ContainsKey("msgtype"))
+            {
+                msgType = Convert.ToInt32(outputParams["msgtype"]);
+            }
+
             return new Result(
                     Convert.ToInt32(outputParams["errcode"]),
                     Convert.ToString(outputParams["errmsg"]),
-                    Convert.ToInt32(outputParams["msgtype"]));
+                    msgType);
         }
 
         protected dynamic GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)

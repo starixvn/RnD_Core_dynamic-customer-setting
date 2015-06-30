@@ -15,8 +15,7 @@
                     TargetRoleId = customerLevelId,
                     ErrCode = 1,
                     ErrMsg = string.Empty
-                },
-                false);
+                });
         }
 
         public IResult ValidatePermissionMultiple(int actorId, string memberIds)
@@ -29,8 +28,7 @@
                     TargetCustIDLst = memberIds,
                     ErrCode = 1,
                     ErrMsg = string.Empty
-                },
-                false);
+                });
         }
     }
 }
