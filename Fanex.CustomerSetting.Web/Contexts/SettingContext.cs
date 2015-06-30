@@ -70,7 +70,7 @@
         {
             get
             {
-                return GetDomain();
+               return HttpContext.Current.Request.Url.Host;
             }
         }
 
@@ -131,11 +131,6 @@
             }
 
             return null;
-        }
-
-        private string GetDomain()
-        {
-            return HttpContext.Current.Request.Url.Host;
         }
     }
 }

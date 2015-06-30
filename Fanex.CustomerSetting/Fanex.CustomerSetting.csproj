@@ -95,7 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettings.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="Constants\Level.cs" />
+    <Compile Include="Constants\ResultValue.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />

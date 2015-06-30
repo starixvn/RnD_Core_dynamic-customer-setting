@@ -17,7 +17,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private ISettingContext _settingContext;
-        private IRemotingRefApi _remotingRefApi;
+        private IRemotingRef _remotingRefApi;
         private string _language;
 
         [SetUp]
@@ -25,7 +25,7 @@
         {
             _settingContext = new SettingContextStub();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
-            _remotingRefApi = Substitute.For<IRemotingRefApi>();
+            _remotingRefApi = Substitute.For<IRemotingRef>();
             _language = "en-US";
             _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi);
         }

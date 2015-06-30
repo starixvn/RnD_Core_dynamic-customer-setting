@@ -10,23 +10,25 @@
 
     public class ResourceService : IResourceService
     {
-        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey";
+        
         private const int ProductNamesCacheTimeout = 12 * 60 * 60; // 1 day
+        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey";
         private const string SportTypeDefaultFormat = "Sport Type {0}";
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
+
         private readonly IDynamicRepository _resourceRepository;
-        private readonly IRemotingRefApi _remotingRefApi;
+        private readonly IRemotingRef _remotingRef;
 
         public ResourceService()
             : this(null, null)
         {
         }
 
-        public ResourceService(IDynamicRepository resourceRepository, IRemotingRefApi remotingRefApi)
+        public ResourceService(IDynamicRepository resourceRepository, IRemotingRef remotingRef)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
-            _remotingRefApi = remotingRefApi ?? new RemotingRefApi();
+            _remotingRef = remotingRef ?? new RemotingRefService();
         }
 
         public string GetProductName(byte productId, string language)
@@ -56,7 +58,7 @@
         {
             Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
 
-            var sportTypeName = _remotingRefApi.GetSportTypeName(sportTypeId.ToString(), GetRefLanguage(language));
+            var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), GetRefLanguage(language));
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
                 : sportTypeName;
@@ -66,7 +68,7 @@
         {
             Check.Argument.IsNotNegativeOrZero(betTypeId, "betTypeId");
 
-            var betTypeName = _remotingRefApi.GetBetTypeName(betTypeId.ToString(), GetRefLanguage(language));
+            var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), GetRefLanguage(language));
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
                 : betTypeName;

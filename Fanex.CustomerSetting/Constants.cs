@@ -2,10 +2,15 @@
 {
     public static class Constants
     {
-        internal const byte MemberLevel = 1;
-        internal const byte AgentLevel = 2;
-        internal const byte MasterLevel = 3;
-        internal const byte SuperLevel = 4;
-        internal const byte CompanyLevel = 5;   
+        public static class Level
+        {
+            internal const byte Member = 1;
+            internal const byte Agent = 2;
+            internal const byte Master = 3;
+            internal const byte Super = 4;
+            internal const byte Company = 5;
+        }
+
+      
     }
 }

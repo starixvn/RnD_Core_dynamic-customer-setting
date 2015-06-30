@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using NSubstitute;
@@ -41,7 +42,7 @@
             var actualResult = settingType.Validate();
 
             //// Assert
-            Assert.AreEqual(Result.NoChangeValue, actualResult.Code);
+            Assert.AreEqual(ResultValue.NoChange, actualResult.Code);
         }
 
         [Test]

@@ -16,31 +16,42 @@
             using (var objectDb = new ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParam);
-                return ReadOutputWithMessageType(objectDb.GetOuputParams());
+                var param = objectDb.GetOuputParams();
+
+                return GetResult(param);
             }
         }
 
-        protected IResult ReadOutputWithMessageType(Hashtable outputParams)
+        protected IResult GetResult(Hashtable param)
         {
-            if (!outputParams.ContainsKey("errcode"))
+            if (param != null
+                && param.ContainsKey("errcode")
+                && param.ContainsKey("errmsg"))
             {
-                return Result.SystemError;
+                if (param.ContainsKey("msgtype"))
+                {
+                    return new Result(
+                             Convert.ToInt32(param["errcode"]),
+                             Convert.ToString(param["errmsg"]),
+                             Convert.ToInt32(param["msgtype"]));
+                }
+                else
+                {
+                    return new Result(
+                             Convert.ToInt32(param["errcode"]),
+                             Convert.ToString(param["errmsg"]));
+                }
             }
 
-            int msgType = 0;
-            if (outputParams.ContainsKey("msgtype"))
-            {
-                msgType = Convert.ToInt32(outputParams["msgtype"]);
-            }
-
-            return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    Convert.ToString(outputParams["errmsg"]),
-                    msgType);
+            throw new ArgumentException("result output param is nulll or does not contain neither errcode nor errmsg.");
         }
+
 
         protected dynamic GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)
         {
+            if (querySettingParam == null)
+                throw new ArgumentNullException("querySettingParam", "querySettingParam cannot be null.");
+
             switch (querySettingParam.CustomerLevel)
             {
                 case CustomerLevel.Super:

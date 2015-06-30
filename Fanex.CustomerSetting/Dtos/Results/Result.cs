@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Resource.Resources;
 
     public class Result : IResult
     {
-        public const int SuccessValue = 0;
-        public const int ErrorValue = -1;
-        public const int NoChangeValue = -2;
-        public const int AccessDeniedValue = -3;
-        public const int DataIsNotValid = -4;
+        public static readonly Result Success = new Result(ResultValue.Success);
+        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Lang.AccessDeniedMsg);
+        public static readonly Result NoChange = new Result(ResultValue.NoChange, Lang.NoChangeToUpdate);
+        public static readonly Result SystemError = new Result(ResultValue.Error, Lang.SystemError);
+        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Lang.DataIsNotValid); 
 
         public Result(int code)
             : this(code, string.Empty)
@@ -56,9 +57,6 @@
 
         public Result(int id, string name, IResult result)
         {
-            Id = id;
-            Name = name;
-
             if (result != null)
             {
                 Code = result.Code;
@@ -70,51 +68,15 @@
             {
                 throw new ArgumentNullException("result");
             }
+            
+            Id = id;
+            Name = name;
+
         }
 
         public Result(IEnumerable<IResult> subResults)
         {
             SubResults = subResults;
-        }
-
-        public static Result Success
-        {
-            get
-            {
-                return new Result(SuccessValue, string.Empty);
-            }
-        }
-
-        public static Result AccessDenied
-        {
-            get
-            {
-                return new Result(AccessDeniedValue, Lang.AccessDeniedMsg);
-            }
-        }
-
-        public static Result NoChange
-        {
-            get
-            {
-                return new Result(NoChangeValue, Lang.NoChangeToUpdate);
-            }
-        }
-
-        public static Result SystemError
-        {
-            get
-            {
-                return new Result(ErrorValue, Lang.SystemError);
-            }
-        }
-
-        public static Result DataError
-        {
-            get
-            {
-                return new Result(DataIsNotValid, Lang.DataIsNotValid);
-            }
         }
 
         public int Code { get; private set; }
@@ -140,7 +102,7 @@
                     return SubResults.Where(x => !x.IsSuccessful).FirstOrDefault() == null;
                 }
 
-                return Code == SuccessValue;
+                return Code == ResultValue.Success;
             }
         }
     }

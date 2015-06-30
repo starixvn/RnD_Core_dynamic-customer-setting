@@ -109,9 +109,9 @@
     </Compile>
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Impl\BaseMessageService.cs" />
-    <Compile Include="Services\IRemotingRefApi.cs" />
+    <Compile Include="Services\IRemotingRef.cs" />
     <Compile Include="Services\IResourceService.cs" />
-    <Compile Include="Services\Impl\RemotingRefApi.cs" />
+    <Compile Include="Services\Impl\RemotingRef.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
   </ItemGroup>
   <ItemGroup>

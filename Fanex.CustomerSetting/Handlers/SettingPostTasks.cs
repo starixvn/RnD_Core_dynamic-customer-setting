@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -70,7 +71,7 @@
 
             if (result.IsSuccessful)
             {
-                return new Result(Result.SuccessValue, updateSuccessfulMessage);
+                return new Result(ResultValue.Success, updateSuccessfulMessage);
             }
             else
             {

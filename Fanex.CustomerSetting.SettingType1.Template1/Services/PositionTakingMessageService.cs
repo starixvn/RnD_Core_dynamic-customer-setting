@@ -23,13 +23,13 @@
             var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
             if (string.IsNullOrEmpty(generalMessage))
             {
-                return TranslatePTViolationMessage(msgType, rawMessage, settingLevel, language);
+                return TranslateViolationPTMessage(msgType, rawMessage, settingLevel, language);
             }
 
             return new MessageContent(generalMessage);
         }
 
-        private MessageContent TranslatePTViolationMessage(
+        private MessageContent TranslateViolationPTMessage(
             int msgType,
             string rawMessage,
             byte settingLevel,
@@ -38,16 +38,23 @@
             switch ((PositionTakingMessageType)msgType)
             {
                 case PositionTakingMessageType.WrongPositionTaking:
-                    return TranslateWrongPTViolationMessage<WrongPTMessageRow>(rawMessage, settingLevel, language);
+
+                    return TranslateMessage<WrongPTMessageRow>(rawMessage, settingLevel, language);
+
+                    //return TranslateWrongPositionTakingMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MinPTViolation:
-                    return TranslateWrongPTViolationMessage<MinPTViolationMessageRow>(rawMessage, settingLevel, language);
+
+                    return TranslateMessage<MinPTViolationMessageRow>(rawMessage, settingLevel, language);
+                    // return TranslateMinPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MaxPTViolation:
-                    return TranslateWrongPTViolationMessage<MaxPTViolationMessageRow>(rawMessage, settingLevel, language);
+                     return TranslateMessage<MaxPTViolationMessageRow>(rawMessage, settingLevel, language);
+                    //return TranslateMaxPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MinMaxPTViolation:
-                    return TranslateWrongPTViolationMessage<MinMaxPTViolationMessageRow>(rawMessage, settingLevel, language);
+                    return TranslateMessage<MinMaxPTViolationMessageRow>(rawMessage, settingLevel, language);
+                    //return TranslateMinMaxPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.DownlinePTViolation:
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
@@ -56,11 +63,17 @@
             return new MessageContent(rawMessage);
         }
 
-        private MessageContent TranslateWrongPTViolationMessage<T>(string rawMessage, byte settingLevel, string language)
-            where T : IMessageRow
+        private MessageContent TranslateMessage<T>(string rawMessage, byte settingLevel, string language) where T : IMessageRow
         {
-            var positionTakingRoot = Deserialize<MessageRoot<T>>(rawMessage);
-            return GetMessageContent<T>(positionTakingRoot, settingLevel, language);
+            var message = Deserialize<MessageRoot<T>>(rawMessage);
+            return GetMessageContent<T>(message, settingLevel, language);
+        }
+
+        private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot, byte settingLevel, string language) where T : IMessageRow
+        {
+            var subMessages = positionTakingRoot.ToSubMessage(ResourceService, language, settingLevel);
+            var mainMessage = GetMainMessage(_resourceManager, positionTakingRoot.MessageId);
+            return new MessageContent(mainMessage, subMessages);
         }
 
         private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel, string language)
@@ -70,12 +83,7 @@
             return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot, settingLevel, language);
         }
 
-        private MessageContent GetMessageContent<T>(MessageRoot<T> positionTakingRoot, byte settingLevel, string language) 
+      
             where T : IMessageRow
-        {
-            var subMessages = positionTakingRoot.ToSubMessage(ResourceService, language, settingLevel);
-            var mainMessage = GetMainMessage(_resourceManager, positionTakingRoot.MessageId);
-            return new MessageContent(mainMessage, subMessages);
-        }
     }
 }

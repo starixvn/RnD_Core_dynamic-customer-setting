@@ -1,16 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Enumerations
 {
     using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Constants;
 
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
     public enum UserLevel : int
     {
-        Agent = Constants.AgentLevel,
+        Agent = Level.Agent,
 
-        Master = Constants.MasterLevel,
+        Master = Level.Master,
 
-        Super = Constants.SuperLevel,
+        Super = Level.Super,
 
-        Company = Constants.CompanyLevel
+        Company = Level.Company
     }
 }

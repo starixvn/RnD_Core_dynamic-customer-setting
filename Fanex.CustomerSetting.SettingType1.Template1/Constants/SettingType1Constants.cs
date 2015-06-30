@@ -3,6 +3,10 @@
     internal static class SettingType1Constants
     {
         public const byte SettingType = 1;
+
+        /// <summary>
+        /// default value is 90
+        /// </summary>
         public const int MaxPositionTakingValue = 90;
 
         public const int PositionTakingExceedMaxValueErrorCode = 1014;
