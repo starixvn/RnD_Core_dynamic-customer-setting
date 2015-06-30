@@ -31,13 +31,7 @@
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
-                var ungroupedMembers = GetUnGroupedMembers(customers, groupedMembers);
-                return new PreUpdateMultipleCustomersSettingTypeResult
-                    {
-                        CustomersNeedForSingleUpdating = ungroupedMembers,
-                        Result = UpdateGroupedMembers(settingContext, customers, uplineLevel.Value, settingType)
-                    };
+                return UpdatePositionTakingForGroupedMembers(settingContext, customers, settingType, uplineLevel);
             }
             else
             {
@@ -46,6 +40,21 @@
                     Result = Result.Success
                 };
             }
+        }
+
+        private PreUpdateMultipleCustomersSettingTypeResult UpdatePositionTakingForGroupedMembers(
+            ISettingContext settingContext, 
+            IEnumerable<Customer> customers, 
+            SettingType settingType, 
+            CustomerLevel? uplineLevel)
+        {
+            var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
+            var ungroupedMembers = GetUnGroupedMembers(customers, groupedMembers);
+            return new PreUpdateMultipleCustomersSettingTypeResult
+            {
+                CustomersNeedForSingleUpdating = ungroupedMembers,
+                Result = UpdateGroupedMembers(settingContext, customers, uplineLevel.Value, settingType)
+            };
         }
 
         private IResult UpdateGroupedMembers(

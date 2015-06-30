@@ -30,6 +30,55 @@
             throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
         }
 
+        public virtual IResult PostUpdateCustomerSettingType(
+                    ISettingContext settingContext,
+                    Customer customer,
+                    SettingType settingType,
+                    CustomerLevel? uplineLevel,
+                    IResult result)
+        {
+            throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
+        }
+
+        public virtual IResult PostUpdateMultipleCustomersSettingType(
+                    ISettingContext settingContext,
+                    IEnumerable<Customer> customers,
+                    SettingType settingType,
+                    CustomerLevel? uplineLevel,
+                    IResult result)
+        {
+            throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");
+        }
+
+        /// <summary>
+        /// Reads the updating customer setting type message,
+        /// after updated customer setting type.
+        /// </summary>
+        /// <param name="result">The result return from data access.</param>
+        /// <param name="updateSuccessfulMessage">The update successful message for each setting type updated
+        /// May be Position Taking, bet limit ... successful message.</param>
+        /// <param name="settingLevel">The setting level for displaying message.</param>
+        /// <param name="language">The language for globalization.</param>
+        /// <returns>Result is processed.</returns>
+        protected IResult ReadUpdatingCustomerSettingTypeMessage(
+                    IResult result,
+                    string updateSuccessfulMessage,
+                    byte settingLevel,
+                    string language)
+        {
+            Check.Argument.IsNotNull(result, "result");
+
+            if (result.IsSuccessful)
+            {
+                return new Result(Result.SuccessValue, updateSuccessfulMessage);
+            }
+            else
+            {
+                var messageContent = MessageService.TranslateMessage(result.MsgType, result.Message, settingLevel, language);
+                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
+            }
+        }
+
         /// <summary>
         /// Sets the name of the sport type bet type for setting item using sport type bet type for indentity.
         /// This function will use by post get setting task of setting type.
@@ -52,45 +101,6 @@
             }
 
             return settingType;
-        }
-
-        public virtual IResult PostUpdateCustomerSettingType(
-            ISettingContext settingContext, 
-            Customer customer,
-            SettingType settingType,
-            CustomerLevel? uplineLevel,
-            IResult result)
-        {
-            throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
-        }
-
-        protected IResult ReadUpdateingCustomerSettingTypeMessage(
-            IResult result, 
-            string updateSuccessfulMessage,
-            byte settingLevel,
-            string language)
-        {
-            Check.Argument.IsNotNull(result, "result");
-
-            if (result.IsSuccessful)
-            {
-                return new Result(Result.SuccessValue, updateSuccessfulMessage);
-            }
-            else
-            {
-                var messageContent = MessageService.TranslateMessage(result.MsgType, result.Message, settingLevel, language);
-                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
-            }
-        }
-
-        public virtual IResult PostUpdateMultipleCustomersSettingType(
-            ISettingContext settingContext, 
-            IEnumerable<Customer> customers,
-            SettingType settingType,
-            CustomerLevel? uplineLevel,
-            IResult result)
-        {
-            throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");
         }
     }
 }

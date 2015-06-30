@@ -33,11 +33,7 @@
         {
             if (settingQuery.CustomerLevel == CustomerLevel.Agent)
             {
-                bool isAllowMasterPT;
-                using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_AllowMasterPTSelect"))
-                {
-                    isAllowMasterPT = objectDb.QueryEntity<bool>(new { CustID = settingQuery.CustomerId });
-                }
+                bool isAllowMasterPT = ReadIsAllowMasterPT(settingQuery.CustomerId);
 
                 return new MasterPositionTaking
                 {
@@ -48,6 +44,14 @@
             }
 
             return settingType;
+        }
+
+        private bool ReadIsAllowMasterPT(int customerId)
+        {
+            using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_AllowMasterPTSelect"))
+            {
+                return objectDb.QueryEntity<bool>(new { CustID = customerId });
+            }
         }
 
         private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam settingQuery)

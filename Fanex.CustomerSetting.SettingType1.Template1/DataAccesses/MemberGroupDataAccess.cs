@@ -22,7 +22,7 @@
             }
         }
 
-        public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParam updateParam)
+        public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)
         {
             var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParam.UplineLevel);
             var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParam);
@@ -48,7 +48,7 @@
             }
         }
 
-        private dynamic GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParam updateParam)
+        private dynamic GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)
         {
             return new
             {
