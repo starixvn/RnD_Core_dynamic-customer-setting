@@ -1,11 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Enumerations;
     using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.Resource.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
@@ -31,10 +27,10 @@
         #region Simple Message
 
         [Test]
-        public void TranslateMessage_MessageTypeIsSimpleMessage_ReturnMatchedMessageContent()
+        public void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
         {
             //// Arrange
-            int msgType = (int)MessageType.Simple;
+            int msgType = 100; ////Exception
             string rawMessage = "<Root MsgID=\"90001\" Msg=\"Update process is unsuccessful!\"/>";
             byte settingLevel = 1;
 
@@ -49,7 +45,7 @@
         public void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
         {
             //// Arrange
-            int msgType = (int)MessageType.Simple;
+            int msgType = 100; ////Exception
             string rawMessage = "<Root MsgID=\"121212\"/>";
             byte settingLevel = 1;
 
@@ -65,10 +61,10 @@
         #region Other Message
 
         [Test]
-        public void TranslateMessage_MessageIdIsOther_ReturnRawMessage()
+        public void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
         {
             //// Arrange
-            int msgType = (int)MessageType.Other;
+            int msgType = 100; ////Exception
             string rawMessage = "Raw Message";
             byte settingLevel = 1;
 

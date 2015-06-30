@@ -4,7 +4,6 @@
     using System.Resources;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Resource.Dtos.Messages;
-    using Fanex.CustomerSetting.Resource.Enumerations;
     using Fanex.CustomerSetting.Resource.Resources;
 
     public class BaseMessageService
@@ -21,15 +20,16 @@
 
         protected string TranslateGeneralMessage(int msgType, string rawMessage)
         {
-            switch ((MessageType)msgType)
+            switch (msgType)
             {
-                case MessageType.Simple:
+                case Constants.ExceptionMessageType:
                     return TranslateSimpleMessage(rawMessage);
 
-                case MessageType.Other:
+                case Constants.OtherMessageType:
                     return rawMessage;
 
                 default:
+                    //// Message type from setting type, each setting type will handle by themself.
                     return string.Empty;
             }
         }

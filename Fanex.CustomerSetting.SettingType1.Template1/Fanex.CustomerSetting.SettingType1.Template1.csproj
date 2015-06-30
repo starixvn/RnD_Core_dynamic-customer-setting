@@ -80,7 +80,7 @@
     <Compile Include="Dtos\Messages\MinMaxPTViolationMessageRow.cs" />
     <Compile Include="Dtos\Messages\MinPTViolationMessageRow.cs" />
     <Compile Include="Dtos\Messages\WrongPTMessageRow.cs" />
-    <Compile Include="Dtos\UpdateMultipleMemberPositionTakingParam.cs" />
+    <Compile Include="Dtos\UpdateMultipleMemberPTParam.cs" />
     <Compile Include="Enumerations\PositionTakingMessageType.cs" />
     <Compile Include="Handlers\SettingType1PostTasks.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
