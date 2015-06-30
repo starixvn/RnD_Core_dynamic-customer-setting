@@ -64,7 +64,7 @@
         public void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
         {
             //// Arrange
-            int msgType = 100; ////Exception
+            int msgType = 101; ////Other
             string rawMessage = "Raw Message";
             byte settingLevel = 1;
 
