@@ -84,6 +84,6 @@
         }
 
       
-            where T : IMessageRow
+           
     }
 }
