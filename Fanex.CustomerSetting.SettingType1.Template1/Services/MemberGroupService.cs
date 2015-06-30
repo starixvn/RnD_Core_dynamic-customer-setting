@@ -40,7 +40,7 @@
             Check.Argument.IsNotNull(settingType, "settingType");
             Check.Argument.IsNotNegativeOrZero(groupedMembers.Count(), "groupedMembers.Count");
 
-            var updateParams = new UpdateMultipleMemberPositionTakingParams
+            var updateParam = new UpdateMultipleMemberPositionTakingParam
             {
                 CustIds = GetMemberIds(groupedMembers),
                 IP = settingContext.IP,
@@ -50,7 +50,7 @@
                 PositionTakingXml = settingType.ToXml()
             };
 
-            return _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParams);
+            return _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParam);
         }
 
         private string GetMemberIds(IEnumerable<Customer> members)

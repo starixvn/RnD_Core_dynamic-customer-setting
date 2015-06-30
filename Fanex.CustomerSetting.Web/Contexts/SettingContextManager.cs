@@ -17,8 +17,6 @@
     /// </summary>
     public static class SettingContextManager
     {
-        private const int AgentSystem = 1;
-
         static SettingContextManager()
         {
             SettingContext = new SettingContext();
@@ -27,13 +25,18 @@
         public static ISettingContext SettingContext { get; private set; }
 
         /// <summary>
-        /// Add some line to make developer clear how this function work.
+        /// Call this function after user login to system, 
+        /// to store current user information for viewing/updating setting.
         /// </summary>
-        /// <param name="loginUserId"></param>
-        /// <param name="loginUserName"></param>
-        /// <param name="loginUserLevel"></param>
-        /// <param name="subAccountId"></param>
-        public static void Init(int loginUserId, string loginUserName, UserLevel loginUserLevel, int subAccountId = 0)
+        /// <param name="loginUserId">Identifier of user login</param>
+        /// <param name="loginUserName">User Name of user login</param>
+        /// <param name="loginUserLevel">Level of user login to system, can be Admin, Super, Master or Agent.</param>
+        /// <param name="subAccountId">For agency system, Identifier of sub-account log in</param>
+        public static void Init(
+            int loginUserId, 
+            string loginUserName, 
+            UserLevel loginUserLevel, 
+            int subAccountId = 0)
         {
             Check.Argument.IsNotNegativeOrZero(loginUserId, "loginUserId");
             Check.Argument.IsNotEmpty(loginUserName, "loginUserName");
@@ -52,10 +55,18 @@
 
         private static void ValidateSubAccountWithAgencySystem(int subAccountId)
         {
-            if (subAccountId > 0 && CustomerSettings.Settings.SystemId != AgentSystem)
+            if (subAccountId > 0 
+                && CustomerSettings.Settings.SystemId != (byte)SystemType.Agency)
             {
                 throw new InvalidOperationException(Lang.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
             }
+        }
+
+        public static void SetLanguage(string language)
+        {
+            Check.Argument.IsNotEmpty(language, "language");
+
+            SettingContext.Language = language;
         }
     }
 }

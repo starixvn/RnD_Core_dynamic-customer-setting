@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    public class UpdateMultipleMemberPositionTakingParams
+    public class UpdateMultipleMemberPositionTakingParam
     {
         public string CustIds { get; set; }
 

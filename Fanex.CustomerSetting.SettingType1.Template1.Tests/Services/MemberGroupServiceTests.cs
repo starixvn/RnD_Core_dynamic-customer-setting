@@ -130,7 +130,7 @@
 
             //// Assert
             _memberGroupDataAccess.Received().UpdateGroupedMembersSetting(
-                Arg.Is<UpdateMultipleMemberPositionTakingParams>(
+                Arg.Is<UpdateMultipleMemberPositionTakingParam>(
                     parameters => parameters.CustIds == string.Join(",", members.Select(member => member.Id))
                         && parameters.UserId == _settingContext.Actor.Id
                         && parameters.UplineLevel == uplineLevel

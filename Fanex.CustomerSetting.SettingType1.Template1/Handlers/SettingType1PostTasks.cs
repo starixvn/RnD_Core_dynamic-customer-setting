@@ -30,7 +30,7 @@
 
         public override SettingType PostGetCustomerSettingType(
             ISettingContext settingContext,
-            QuerySettingParam queryParams, 
+            QuerySettingParam queryParam, 
             SettingType settingType)
         {
             return SetSportTypeBetTypeName(settingType, settingContext.Language);

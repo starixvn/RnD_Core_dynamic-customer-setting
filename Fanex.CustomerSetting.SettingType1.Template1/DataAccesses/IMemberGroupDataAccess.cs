@@ -9,6 +9,6 @@
     {
         IEnumerable<Customer> GetGroupedMembers(string memberIds);
 
-        IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParams updateParams);
+        IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParam updateParam);
     }
 }

@@ -22,10 +22,10 @@
             }
         }
 
-        public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParams updateParams)
+        public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParam updateParam)
         {
-            var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParams.UplineLevel);
-            var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParams);
+            var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParam.UplineLevel);
+            var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParam);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
@@ -48,18 +48,18 @@
             }
         }
 
-        private dynamic GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParams updateParams)
+        private dynamic GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPositionTakingParam updateParam)
         {
             return new
             {
-                UserId = updateParams.UserId,
-                SubAccId = updateParams.SubAccId,
-                CustIDList = updateParams.CustIds,
-                Ip = updateParams.IP,
+                UserId = updateParam.UserId,
+                SubAccId = updateParam.SubAccId,
+                CustIDList = updateParam.CustIds,
+                Ip = updateParam.IP,
                 ErrCode = 0,
                 ErrMsg = string.Empty,
                 MsgType = 0,
-                PT = updateParams.PositionTakingXml
+                PT = updateParam.PositionTakingXml
             };
         }
     }

@@ -97,6 +97,7 @@
     <Compile Include="Configurations\CustomerSettings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
+    <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
     <Compile Include="Criteria\CustomerQueryCriteria.cs" />

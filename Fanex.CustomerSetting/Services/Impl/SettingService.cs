@@ -249,9 +249,7 @@
         private IResult RunUpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
-            var result = settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
-
-            return result;
+            return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
         }
 
         private IResult RunPostUpdateCustomerSettingTypeTasks(
@@ -264,7 +262,7 @@
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateCustomerSettingType").IsVirtual)
             {
-                updatingResult = postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, updatingResult);
+                return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, updatingResult);
             }
 
             return updatingResult;
@@ -340,9 +338,7 @@
             var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
             IResult updatedResult = new Result(results);
-            updatedResult = RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, updatedResult);
-
-            return updatedResult;
+            return RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, updatedResult);
         }
 
         /// <summary>
