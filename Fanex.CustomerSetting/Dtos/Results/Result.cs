@@ -12,7 +12,7 @@
         public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Lang.AccessDeniedMsg);
         public static readonly Result NoChange = new Result(ResultValue.NoChange, Lang.NoChangeToUpdate);
         public static readonly Result SystemError = new Result(ResultValue.Error, Lang.SystemError);
-        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Lang.DataIsNotValid); 
+        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Lang.DataIsNotValid);
 
         public Result(int code)
             : this(code, string.Empty)
@@ -68,10 +68,9 @@
             {
                 throw new ArgumentNullException("result");
             }
-            
+
             Id = id;
             Name = name;
-
         }
 
         public Result(IEnumerable<IResult> subResults)

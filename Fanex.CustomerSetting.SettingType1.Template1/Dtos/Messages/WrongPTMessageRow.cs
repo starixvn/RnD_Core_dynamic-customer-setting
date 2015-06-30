@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
 {
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource.Dtos.Messages;
+    using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource.Resources;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Services;
 
     public class WrongPTMessageRow : DefaultMessageRow, IMessageRow
     {

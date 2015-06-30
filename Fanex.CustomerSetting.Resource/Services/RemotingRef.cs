@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services.Impl
+﻿namespace Fanex.CustomerSetting.Resource.Services
 {
     using RemotingRef;
 

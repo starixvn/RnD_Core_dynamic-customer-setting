@@ -46,11 +46,12 @@
             throw new ArgumentException("result output param is nulll or does not contain neither errcode nor errmsg.");
         }
 
-
         protected dynamic GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)
         {
             if (querySettingParam == null)
+            {
                 throw new ArgumentNullException("querySettingParam", "querySettingParam cannot be null.");
+            }
 
             switch (querySettingParam.CustomerLevel)
             {

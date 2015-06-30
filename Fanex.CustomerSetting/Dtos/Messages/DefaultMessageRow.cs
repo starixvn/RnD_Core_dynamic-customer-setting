@@ -1,8 +1,9 @@
-﻿namespace Fanex.CustomerSetting.Resource.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.Dtos.Messages
 {
     using System;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Services;
 
     public class DefaultMessageRow : IMessageRow
     {
@@ -16,16 +17,16 @@
         {
             switch (settingLevel)
             {
-                case Constants.ProductLevel:
+                case SettingLevel.Product:
                     return string.Empty;
 
-                case Constants.SportTypeLevel:
+                case SettingLevel.SportType:
                     return resourceService.GetSportTypeName(SportType, language);
 
-                case Constants.BetTypeLevel:
+                case SettingLevel.BetType:
                     return resourceService.GetBetTypeName(BetType, language);
 
-                case Constants.SportTypeBetTypeLevel:
+                case SettingLevel.SportTypeBetType:
                     return string.Format(
                         "{0} - {1}",
                         resourceService.GetSportTypeName(SportType, language),

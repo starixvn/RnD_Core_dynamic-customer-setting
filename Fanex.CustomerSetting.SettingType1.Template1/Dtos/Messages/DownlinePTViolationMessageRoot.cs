@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource.Dtos.Messages;
+    using Fanex.CustomerSetting.Dtos.Messages;
 
     [XmlRoot("Root")]
     public class DownlinePTViolationMessageRoot : MessageRoot<DownlinePTViolationMessageRow>

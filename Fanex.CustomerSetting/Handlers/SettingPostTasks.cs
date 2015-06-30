@@ -9,8 +9,8 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Services;
-    using Fanex.CustomerSetting.Resource.Services.Impl;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
 
     public class SettingPostTasks
     {

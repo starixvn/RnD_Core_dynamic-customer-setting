@@ -1,9 +1,10 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services.Impl
+﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.IO;
     using System.Resources;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource.Dtos.Messages;
+    using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource.Resources;
 
     public class BaseMessageService
@@ -22,10 +23,10 @@
         {
             switch (msgType)
             {
-                case Constants.ExceptionMessageType:
+                case MessageType.Exception:
                     return TranslateSimpleMessage(rawMessage);
 
-                case Constants.OtherMessageType:
+                case MessageType.Other:
                     return rawMessage;
 
                 default:

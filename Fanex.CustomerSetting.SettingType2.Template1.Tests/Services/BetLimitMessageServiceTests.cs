@@ -4,6 +4,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
     using Fanex.CustomerSetting.SettingType2.Template1.Services;
     using Fanex.CustomerSetting.Tests.Models;

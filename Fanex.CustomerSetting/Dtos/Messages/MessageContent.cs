@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.Dtos.Messages
 {
     using System.Collections.Generic;
 

@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Criteria;
+    using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Criteria;
-    using Fanex.CustomerSetting.Resource.Dtos;
-    using Fanex.CustomerSetting.Resource.Services.Impl;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;

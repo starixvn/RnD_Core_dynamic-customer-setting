@@ -2,7 +2,7 @@
 {
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Resource.Resources;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.Utilities;
 
     public class MinPTViolationMessageRow : WrongPTMessageRow

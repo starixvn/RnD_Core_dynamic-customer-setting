@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Dtos
+﻿namespace Fanex.CustomerSetting.Dtos
 {
     public class ProductNameDto
     {

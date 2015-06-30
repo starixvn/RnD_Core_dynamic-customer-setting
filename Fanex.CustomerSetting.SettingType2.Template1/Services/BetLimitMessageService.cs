@@ -1,10 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Services
 {
     using System.Resources;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Dtos.Messages;
-    using Fanex.CustomerSetting.Resource.Services;
-    using Fanex.CustomerSetting.Resource.Services.Impl;
+    using Fanex.CustomerSetting.Dtos.Messages;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
     public class BetLimitMessageService : BaseMessageService, IMessageService

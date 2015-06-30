@@ -1,16 +1,16 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services.Impl
+﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Caching;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Resource.Criteria;
-    using Fanex.CustomerSetting.Resource.Dtos;
+    using Fanex.CustomerSetting.Criteria;
+    using Fanex.CustomerSetting.Dtos;
+    using Fanex.CustomerSetting.Resource.Services;
     using Fanex.NAP.Framework.Data;
 
     public class ResourceService : IResourceService
     {
-        
         private const int ProductNamesCacheTimeout = 12 * 60 * 60; // 1 day
         private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey";
         private const string SportTypeDefaultFormat = "Sport Type {0}";

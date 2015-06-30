@@ -1,10 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Services
 {
     using System.Resources;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Dtos.Messages;
-    using Fanex.CustomerSetting.Resource.Services;
-    using Fanex.CustomerSetting.Resource.Services.Impl;
+    using Fanex.CustomerSetting.Dtos.Messages;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages;
     using Fanex.CustomerSetting.SettingType1.Template1.Enumerations;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
@@ -41,20 +40,20 @@
 
                     return TranslateMessage<WrongPTMessageRow>(rawMessage, settingLevel, language);
 
-                    //return TranslateWrongPositionTakingMessage(rawMessage, settingLevel, language);
+                ////return TranslateWrongPositionTakingMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MinPTViolation:
 
                     return TranslateMessage<MinPTViolationMessageRow>(rawMessage, settingLevel, language);
-                    // return TranslateMinPTViolationMessage(rawMessage, settingLevel, language);
+                //// return TranslateMinPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MaxPTViolation:
-                     return TranslateMessage<MaxPTViolationMessageRow>(rawMessage, settingLevel, language);
-                    //return TranslateMaxPTViolationMessage(rawMessage, settingLevel, language);
+                    return TranslateMessage<MaxPTViolationMessageRow>(rawMessage, settingLevel, language);
+                ////return TranslateMaxPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.MinMaxPTViolation:
                     return TranslateMessage<MinMaxPTViolationMessageRow>(rawMessage, settingLevel, language);
-                    //return TranslateMinMaxPTViolationMessage(rawMessage, settingLevel, language);
+                ////return TranslateMinMaxPTViolationMessage(rawMessage, settingLevel, language);
 
                 case PositionTakingMessageType.DownlinePTViolation:
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
@@ -82,8 +81,5 @@
             positionTakingRoot.GroupUsernameBySportTypeBetType();
             return GetMessageContent<DownlinePTViolationMessageRow>(positionTakingRoot, settingLevel, language);
         }
-
-      
-           
     }
 }

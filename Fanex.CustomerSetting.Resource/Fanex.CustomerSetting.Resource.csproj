@@ -87,14 +87,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
-    <Compile Include="Dtos\Messages\IMessageRow.cs" />
-    <Compile Include="Dtos\Messages\MessageContent.cs" />
-    <Compile Include="Dtos\Messages\DefaultMessageRow.cs" />
-    <Compile Include="Dtos\Messages\MessageRoot.cs" />
-    <Compile Include="Dtos\Messages\SimpleMessage.cs" />
-    <Compile Include="Dtos\ProductNameDto.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Error.Designer.cs">
@@ -107,12 +99,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Services\IMessageService.cs" />
-    <Compile Include="Services\Impl\BaseMessageService.cs" />
     <Compile Include="Services\IRemotingRef.cs" />
-    <Compile Include="Services\IResourceService.cs" />
-    <Compile Include="Services\Impl\RemotingRef.cs" />
-    <Compile Include="Services\Impl\ResourceService.cs" />
+    <Compile Include="Services\RemotingRef.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

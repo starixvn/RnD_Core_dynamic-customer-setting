@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.Resource.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.Dtos.Messages
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Services;
 
     [XmlRoot("Root")]
     public class MessageRoot<T> : SimpleMessage

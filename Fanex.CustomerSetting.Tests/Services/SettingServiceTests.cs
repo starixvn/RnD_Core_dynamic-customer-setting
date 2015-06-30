@@ -1,22 +1,21 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using Fanex.CustomerSetting.Criteria;
-using Fanex.CustomerSetting.DataAccesses;
-using Fanex.CustomerSetting.Dtos.Params;
-using Fanex.CustomerSetting.Dtos.Results;
-using Fanex.CustomerSetting.Enumerations;
-using Fanex.CustomerSetting.Handlers;
-using Fanex.CustomerSetting.Models;
-using Fanex.CustomerSetting.Services;
-using Fanex.CustomerSetting.Services.Impl;
-using Fanex.CustomerSetting.Tests.Models;
-using Fanex.NAP.Framework.Data;
-using NSubstitute;
-using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.CustomerSetting.Criteria;
+    using Fanex.CustomerSetting.DataAccesses;
+    using Fanex.CustomerSetting.Dtos.Params;
+    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.NAP.Framework.Data;
+    using NSubstitute;
+    using NUnit.Framework;
 
     [TestFixture]
     public class SettingServiceTests

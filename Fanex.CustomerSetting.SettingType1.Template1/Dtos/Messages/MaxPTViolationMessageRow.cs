@@ -1,12 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Resource.Resources;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.Utilities;
 
     public class MaxPTViolationMessageRow : WrongPTMessageRow

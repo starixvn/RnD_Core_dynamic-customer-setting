@@ -1,16 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Handlers
 {
-    using System.Linq;
-    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource.Resources;
-    using Fanex.CustomerSetting.Resource.Services;
-    using Fanex.CustomerSetting.Resource.Services.Impl;
-    using Fanex.CustomerSetting.SettingType1.Template1.Models;
+    using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
 
     public class SettingType1PostTasks : SettingPostTasks
@@ -30,7 +26,7 @@
 
         public override SettingType PostGetCustomerSettingType(
             ISettingContext settingContext,
-            QuerySettingParam queryParam, 
+            QuerySettingParam queryParam,
             SettingType settingType)
         {
             return SetSportTypeBetTypeName(settingType, settingContext.Language);
