@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="FakeObjectManager.cs" />
     <Compile Include="Dtos\Results\ResultTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Models\DefaultSettingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
+    <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingServiceTests.cs" />
     <Compile Include="Services\ValidationServiceTests.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
@@ -107,6 +109,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
+      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
+      <Name>Fanex.CustomerSetting.Resource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>

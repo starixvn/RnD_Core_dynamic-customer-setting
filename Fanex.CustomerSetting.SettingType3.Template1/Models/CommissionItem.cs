@@ -40,14 +40,14 @@
             {
                 return new Result(
                     SettingType3Constants.CommissionRateExceedMaxValueErrorCode,
-                    CommissionError.CommRateCannotBeExceedMaxValue);
+                    CommissionMessage.CommRateCannotBeExceedMaxValue);
             }
 
             if (CommRate < 0)
             {
                 return new Result(
                     SettingType3Constants.CommRateIsNegativeErrorCode,
-                    CommissionError.CommRateCannotBeNegative);
+                    CommissionMessage.CommRateCannotBeNegative);
             }
 
             return base.Validate();

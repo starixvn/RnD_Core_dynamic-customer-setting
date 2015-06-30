@@ -41,7 +41,7 @@
 
             if (simpleMessage != null)
             {
-                return GetMainMessage(Error.ResourceManager, simpleMessage.MessageId);
+                return GetMessage(Message.ResourceManager, simpleMessage.MessageId);
             }
 
             return rawMessage;
@@ -56,7 +56,7 @@
             }
         }
 
-        protected string GetMainMessage(ResourceManager resouceManager, int messsageId)
+        protected string GetMessage(ResourceManager resouceManager, int messsageId)
         {
             var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);
@@ -71,10 +71,10 @@
             byte settingLevel,
             string language)
         {
-            var messageRoot = Deserialize<MessageRoot<DefaultMessageRow>>(rawMessage);
-            var subMessages = messageRoot.ToSubMessage(ResourceService, language, settingLevel);
-            var mainMessage = GetMainMessage(resouceManager, messageRoot.MessageId);
-            return new MessageContent(mainMessage, subMessages);
+            var mainMessage = Deserialize<MainMessage<DefaultSubMessage>>(rawMessage);
+            var subMessages = mainMessage.GetSubMessages(ResourceService, language, settingLevel);
+            var message = GetMessage(resouceManager, mainMessage.MessageId);
+            return new MessageContent(message, subMessages);
         }
     }
 }

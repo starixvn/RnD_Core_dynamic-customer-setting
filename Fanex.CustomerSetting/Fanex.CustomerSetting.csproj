@@ -100,10 +100,10 @@
     <Compile Include="Constants\ResultValue.cs" />
     <Compile Include="Constants\SettingLevel.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
-    <Compile Include="Dtos\Messages\DefaultMessageRow.cs" />
-    <Compile Include="Dtos\Messages\IMessageRow.cs" />
+    <Compile Include="Dtos\Messages\DefaultSubMessage.cs" />
+    <Compile Include="Dtos\Messages\ISubMessage.cs" />
     <Compile Include="Dtos\Messages\MessageContent.cs" />
-    <Compile Include="Dtos\Messages\MessageRoot.cs" />
+    <Compile Include="Dtos\Messages\MainMessage.cs" />
     <Compile Include="Dtos\Messages\SimpleMessage.cs" />
     <Compile Include="Dtos\ProductNameDto.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />

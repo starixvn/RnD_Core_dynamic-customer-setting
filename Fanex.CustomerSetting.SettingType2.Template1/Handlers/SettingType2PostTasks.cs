@@ -39,7 +39,7 @@
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            return ReadUpdatingCustomerSettingTypeMessage(result, Lang.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return ReadUpdatingCustomerSettingTypeMessage(result, Message.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

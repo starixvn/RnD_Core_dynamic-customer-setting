@@ -29,7 +29,7 @@
             {
                 return new Result(
                     SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
-                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
+                    PositionTakingMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             return base.Validate();

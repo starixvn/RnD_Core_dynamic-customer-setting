@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
+namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProductStatusError {
+    public class CommissionMessage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ProductStatusError() {
+        internal CommissionMessage() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType4.Template1.Resources.ProductStatusError", typeof(ProductStatusError).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType3.Template1.Resources.CommissionMessage", typeof(CommissionMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,29 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled.
+        ///   Looks up a localized string similar to Commission Rate cannot be exceed Max Value.
         /// </summary>
-        public static string DownlineCannotBeEnabledWhenUplineIsDisabled {
+        public static string CommRateCannotBeExceedMaxValue {
             get {
-                return ResourceManager.GetString("DownlineCannotBeEnabledWhenUplineIsDisabled", resourceCulture);
+                return ResourceManager.GetString("CommRateCannotBeExceedMaxValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline Product Status cannot be null.
+        ///   Looks up a localized string similar to Commission Rate cannot be negative.
         /// </summary>
-        public static string DownlineProductStatusCannotBeNull {
+        public static string CommRateCannotBeNegative {
             get {
-                return ResourceManager.GetString("DownlineProductStatusCannotBeNull", resourceCulture);
+                return ResourceManager.GetString("CommRateCannotBeNegative", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
+        ///   Looks up a localized string similar to Invalid commission rate.
         /// </summary>
-        public static string Msg_60031 {
+        public static string Msg_1 {
             get {
-                return ResourceManager.GetString("Msg_60031", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
-        /// </summary>
-        public static string Msg_60032 {
-            get {
-                return ResourceManager.GetString("Msg_60032", resourceCulture);
+                return ResourceManager.GetString("Msg_1", resourceCulture);
             }
         }
     }

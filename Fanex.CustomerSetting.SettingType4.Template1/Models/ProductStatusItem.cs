@@ -43,14 +43,14 @@
             {
                 return new Result(
                     SettingType4Constants.DownlineProductStatusIsNullErrorCode,
-                    ProductStatusError.DownlineProductStatusCannotBeNull);
+                    ProductStatusMessage.DownlineProductStatusCannotBeNull);
             }
 
             if (IsDisabled && !Downline.IsDisabled)
             {
                 return new Result(
                     SettingType4Constants.DownlineIsEnabledWhenUplineIsDisabledErrorCode,
-                    ProductStatusError.DownlineCannotBeEnabledWhenUplineIsDisabled);
+                    ProductStatusMessage.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 
             return base.Validate();

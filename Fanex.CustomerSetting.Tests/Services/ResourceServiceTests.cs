@@ -1,10 +1,11 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services
+﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Services;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -18,7 +19,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private ISettingContext _settingContext;
-        private IRemotingRef _remotingRefApi;
+        private IRemotingRefService _remotingRefApi;
         private string _language;
 
         [SetUp]
@@ -26,7 +27,7 @@
         {
             _settingContext = new SettingContextStub();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
-            _remotingRefApi = Substitute.For<IRemotingRef>();
+            _remotingRefApi = Substitute.For<IRemotingRefService>();
             _language = "en-US";
             _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi);
         }

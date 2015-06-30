@@ -39,7 +39,7 @@
             var actualMessageContent = _betLimitMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(Error.Msg_90001, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_90001, actualMessageContent.MainMessage);
         }
 
         [Test]
@@ -100,7 +100,7 @@
             var actualMessageContent = _betLimitMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(BetLimitError.Msg_10003, actualMessageContent.MainMessage);
+            Assert.AreEqual(BetLimitMessage.Msg_10003, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
     }

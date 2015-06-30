@@ -5,18 +5,18 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.Utilities;
 
-    public class MaxPTViolationMessageRow : WrongPTMessageRow
+    public class MinPTViolationSubMessage : WrongPTSubMessage
     {
         [XmlAttribute]
-        public byte MaxPT { get; set; }
+        public byte MinPT { get; set; }
 
         public override string ToString(IResourceService resourceService, string language, byte settingLevel)
         {
             return string.Format(
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
-                IsLive ? Lang.MaxLive : Lang.Max,
-                PositionTakingFormatter.FormatPositionTaking(MaxPT));
+                IsLive ? Label.MinLive : Label.Min,
+                PositionTakingFormatter.FormatPositionTaking(MinPT));
         }
     }
 }

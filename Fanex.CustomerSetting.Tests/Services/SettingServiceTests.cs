@@ -13,6 +13,7 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -28,8 +29,7 @@
         private ISettingResolver _settingResolver;
         private ISettingTypeDataAccess _settingDataAccess;
         private IResourceService _resourceService;
-        ////private SettingPreTasks _settingPreTasksHandler;
-        ////private SettingPostTasks _settingPostTasksHandler;
+        private ILogger _logger;
 
         [SetUp]
         public void Setup()
@@ -41,15 +41,15 @@
             _settingResolver = Substitute.For<ISettingResolver>();
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
             _resourceService = Substitute.For<IResourceService>();
-            //////_settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>(_settingContext);
-            //////_settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_settingContext, _resourceService);
+            _logger = Substitute.For<ILogger>();
 
             _settingService = new SettingService(
                 _settingContext,
                 _validationService,
                 _productService,
                 _settingResolver,
-                _dymanicRepository);
+                _dymanicRepository,
+                _logger);
         }
 
         #region Get Customer Setting Tests
@@ -225,6 +225,23 @@
 
             //// Assert
             _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), querySettingParam);
+        }
+
+        [Test]
+        public void GetCustomerSetting_GotExceptionWhenResolveSettingDataAccess_ExecuteErrorOnLogger()
+        {
+            //// Arrange
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            var productSettingTypes = FakeObjectManager.CreateProduct().SettingTypes;
+            _validationService.ValidateQuerySetting(querySettingParam).Returns(Result.Success);
+            _productService.GetProductSettingTypes(querySettingParam.ProductId).Returns(productSettingTypes);
+            _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
+
+            //// Act
+            _settingService.GetCustomerSetting(querySettingParam);
+
+            //// Assert
+            _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
         }
 
         #endregion Get Customer Setting Tests

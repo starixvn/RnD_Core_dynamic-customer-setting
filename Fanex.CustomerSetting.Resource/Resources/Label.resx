@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessDeniedMsg" xml:space="preserve">
-    <value>You do not have permission to access this page.</value>
-  </data>
   <data name="AgentMaxPT" xml:space="preserve">
     <value>Agent Max PT</value>
   </data>
@@ -149,12 +146,6 @@
   </data>
   <data name="CopyTooltip" xml:space="preserve">
     <value>Click to duplicate the values</value>
-  </data>
-  <data name="DataIsNotValid" xml:space="preserve">
-    <value>Data is not valid.</value>
-  </data>
-  <data name="DuplicateValuesAlertMsg" xml:space="preserve">
-    <value>Out of range for highlighted values.</value>
   </data>
   <data name="Enable" xml:space="preserve">
     <value>Enable</value>
@@ -198,26 +189,11 @@
   <data name="MaxBet" xml:space="preserve">
     <value>Max Bet</value>
   </data>
-  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
-    <value>Max Bet must be less than or equal to Max Per Match</value>
-  </data>
-  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
-    <value>Max Bet must be less than or equal to {0}</value>
-  </data>
-  <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
-    <value>Max Bet must be greater than or equal to Min Bet</value>
-  </data>
   <data name="MaxLive" xml:space="preserve">
     <value>Max Live</value>
   </data>
   <data name="MaxPerMatch" xml:space="preserve">
     <value>Max Per Match</value>
-  </data>
-  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
-    <value>Max Per Match must be less than or equal to {0}</value>
-  </data>
-  <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
-    <value>Max Per Match must be greater than or equal to Max Bet</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>
@@ -228,12 +204,6 @@
   <data name="MinBet" xml:space="preserve">
     <value>Min Bet</value>
   </data>
-  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
-    <value>Min Bet must be less than or equal to Max Bet</value>
-  </data>
-  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
-    <value>Min Bet must be greater than or equal to {0}</value>
-  </data>
   <data name="MinLive" xml:space="preserve">
     <value>Min Live</value>
   </data>
@@ -242,9 +212,6 @@
   </data>
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
-  </data>
-  <data name="NoChangeToUpdate" xml:space="preserve">
-    <value>There is no change to update!</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
@@ -255,9 +222,6 @@
   <data name="ProductStatus" xml:space="preserve">
     <value>Product Status</value>
   </data>
-  <data name="SubAccountIdShouldBeZeroWhenSystemIsNotAgency" xml:space="preserve">
-    <value>Sub Account Id Should Be Zero When System Is Not Agency</value>
-  </data>
   <data name="SuperMaxPT" xml:space="preserve">
     <value>Super Max PT</value>
   </data>
@@ -267,32 +231,8 @@
   <data name="SuperPT" xml:space="preserve">
     <value>Super PT</value>
   </data>
-  <data name="SystemError" xml:space="preserve">
-    <value>Oops... you are here because of a system error, please notify your administrator.</value>
-  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
-  </data>
-  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
-    <value>Updated bet setting successfully.</value>
-  </data>
-  <data name="UpdateCommissionSuccessfully" xml:space="preserve">
-    <value>Updated commission setting successfully.</value>
-  </data>
-  <data name="UpdateMemberPtInfo" xml:space="preserve">
-    <value>You have changed your position taking</value>
-  </data>
-  <data name="UpdateMemberPtQuestion" xml:space="preserve">
-    <value>Do you want to update all member's position taking to:</value>
-  </data>
-  <data name="UpdateMemberPtTitle" xml:space="preserve">
-    <value>Confirm Update Members's PT</value>
-  </data>
-  <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
-    <value>Updated position taking successfully.</value>
-  </data>
-  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
-    <value>Updated product status successfully.</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>UserName</value>

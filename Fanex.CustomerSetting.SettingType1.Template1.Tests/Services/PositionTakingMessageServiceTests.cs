@@ -39,7 +39,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(Error.Msg_90001, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_90001, actualMessageContent.MainMessage);
         }
 
         [Test]
@@ -109,7 +109,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PositionTakingError.Msg_20001, actualMessageContent.MainMessage);
+            Assert.AreEqual(PositionTakingMessage.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -142,7 +142,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PositionTakingError.Msg_20029, actualMessageContent.MainMessage);
+            Assert.AreEqual(PositionTakingMessage.Msg_20029, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -175,7 +175,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PositionTakingError.Msg_20028, actualMessageContent.MainMessage);
+            Assert.AreEqual(PositionTakingMessage.Msg_20028, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -208,7 +208,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PositionTakingError.Msg_20033, actualMessageContent.MainMessage);
+            Assert.AreEqual(PositionTakingMessage.Msg_20033, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -244,7 +244,7 @@
             var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PositionTakingError.Msg_20001, actualMessageContent.MainMessage);
+            Assert.AreEqual(PositionTakingMessage.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 

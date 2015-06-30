@@ -73,10 +73,10 @@
     <Compile Include="Handlers\SettingType3PostTasks.cs" />
     <Compile Include="Models\CommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\CommissionError.Designer.cs">
+    <Compile Include="Resources\CommissionMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CommissionError.resx</DependentUpon>
+      <DependentUpon>CommissionMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CommissionMessageService.cs" />
   </ItemGroup>
@@ -94,9 +94,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CommissionError.resx">
+    <EmbeddedResource Include="Resources\CommissionMessage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommissionError.Designer.cs</LastGenOutput>
+      <LastGenOutput>CommissionMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -83,7 +83,7 @@
                 successResult);
 
             //// Assert
-            Assert.AreEqual(Lang.UpdateProductStatusSuccessfully, actualResult.Message);
+            Assert.AreEqual(Message.UpdateProductStatusSuccessfully, actualResult.Message);
         }
 
         [Test]

@@ -8,7 +8,7 @@
 
     public class BetLimitMessageService : BaseMessageService, IMessageService
     {
-        private readonly ResourceManager _resourceManager = BetLimitError.ResourceManager;
+        private readonly ResourceManager _resourceManager = BetLimitMessage.ResourceManager;
 
         public BetLimitMessageService(IResourceService resourceService = null)
             : base(resourceService)

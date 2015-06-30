@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Tests.Critera
+﻿namespace Fanex.CustomerSetting.Tests.Criteria
 {
     using Fanex.CustomerSetting.Criteria;
     using NUnit.Framework;

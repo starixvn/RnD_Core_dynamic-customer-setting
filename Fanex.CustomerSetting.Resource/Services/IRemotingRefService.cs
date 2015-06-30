@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Resource.Services
 {
-    public interface IRemotingRef
+    public interface IRemotingRefService
     {
         string GetSportTypeName(string sportTypeId, string language);
 

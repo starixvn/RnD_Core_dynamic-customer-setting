@@ -39,7 +39,7 @@
             CustomerLevel? uplineLevel,
             IResult result)
         {
-            return ReadUpdatingCustomerSettingTypeMessage(result, Lang.UpdateCommissionSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return ReadUpdatingCustomerSettingTypeMessage(result, Message.UpdateCommissionSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

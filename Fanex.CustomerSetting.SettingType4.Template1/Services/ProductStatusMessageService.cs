@@ -8,7 +8,7 @@
 
     public class ProductStatusMessageService : BaseMessageService, IMessageService
     {
-        private readonly ResourceManager _resourceManager = ProductStatusError.ResourceManager;
+        private readonly ResourceManager _resourceManager = ProductStatusMessage.ResourceManager;
 
         public ProductStatusMessageService(IResourceService resourceService = null)
             : base(resourceService)

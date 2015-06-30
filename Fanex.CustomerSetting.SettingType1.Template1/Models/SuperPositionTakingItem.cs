@@ -40,28 +40,28 @@
             {
                 return new Result(
                     SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
-                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
+                    PositionTakingMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (M4 > S4)
             {
                 return new Result(
                     SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode,
-                    PositionTakingError.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
+                    PositionTakingMessage.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
             }
 
             if (A4 > M4)
             {
                 return new Result(
                     SettingType1Constants.AgentMaxPTIsGreaterThanMasterMaxPTErrorCode,
-                    PositionTakingError.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
+                    PositionTakingMessage.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
             }
 
             if (N4 > S4)
             {
                 return new Result(
                     SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
-                    PositionTakingError.SuperMinPTCannotBeGreaterThanSuperMaxPT);
+                    PositionTakingMessage.SuperMinPTCannotBeGreaterThanSuperMaxPT);
             }
 
             return base.Validate();

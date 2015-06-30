@@ -39,7 +39,7 @@
             var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(Error.Msg_90001, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_90001, actualMessageContent.MainMessage);
         }
 
         [Test]
@@ -100,7 +100,7 @@
             var actualMessageContent = _commissionMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
 
             //// Assert
-            Assert.AreEqual(CommissionError.Msg_1, actualMessageContent.MainMessage);
+            Assert.AreEqual(CommissionMessage.Msg_1, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
     }

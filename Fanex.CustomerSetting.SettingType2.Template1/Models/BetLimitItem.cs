@@ -52,42 +52,42 @@
             {
                 return new Result(
                     SettingType2Constants.BetLimitExceedMaxValueErrorCode,
-                    BetLimitError.BetLimitCannotBeGreaterThanMaxValue);
+                    BetLimitMessage.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
                 return new Result(
                     SettingType2Constants.MinBetIsNegativeErrorCode,
-                    BetLimitError.MinBetCannotBeNegative);
+                    BetLimitMessage.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
                 return new Result(
                     SettingType2Constants.MaxBetIsNegativeErrorCode,
-                    BetLimitError.MaxBetCannotBeNegative);
+                    BetLimitMessage.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
                 return new Result(
                     SettingType2Constants.MaxPerMatchIsNegativeErrorCode,
-                    BetLimitError.MaxPerMatchCannotBeNegative);
+                    BetLimitMessage.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
                 return new Result(
                     SettingType2Constants.MinBetIsGreaterThanMaxBetErrorCode,
-                    BetLimitError.MinBetCannotBeGreaterThanMaxBet);
+                    BetLimitMessage.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
                 return new Result(
                     SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode,
-                    BetLimitError.MaxBetCannotBeGreaterThanMaxPerMatch);
+                    BetLimitMessage.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 
             return base.Validate();

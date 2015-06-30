@@ -24,7 +24,7 @@
 
             return new SettingType
             {
-                Name = Lang.BetSetting,
+                Name = Label.BetSetting,
                 SettingItems = betLimitItemDtoList.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
             };
         }

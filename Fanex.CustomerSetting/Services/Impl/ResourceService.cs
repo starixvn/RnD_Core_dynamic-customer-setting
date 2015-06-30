@@ -18,14 +18,14 @@
         private const string ProductDefaultFormat = "Product {0}";
 
         private readonly IDynamicRepository _resourceRepository;
-        private readonly IRemotingRef _remotingRef;
+        private readonly IRemotingRefService _remotingRef;
 
         public ResourceService()
             : this(null, null)
         {
         }
 
-        public ResourceService(IDynamicRepository resourceRepository, IRemotingRef remotingRef)
+        public ResourceService(IDynamicRepository resourceRepository, IRemotingRefService remotingRef)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();

@@ -83,7 +83,7 @@
                 successResult);
 
             //// Assert
-            Assert.AreEqual(Lang.UpdateBetSettingSuccessfully, actualResult.Message);
+            Assert.AreEqual(Message.UpdateBetSettingSuccessfully, actualResult.Message);
         }
 
         [Test]

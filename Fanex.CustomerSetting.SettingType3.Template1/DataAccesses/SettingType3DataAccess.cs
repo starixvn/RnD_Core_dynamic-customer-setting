@@ -27,7 +27,7 @@
 
             return new SettingType
             {
-                Name = Lang.Commission,
+                Name = Label.Commission,
                 SettingItems = commissionItemDtoList.Select<CommissionItemDto, CommissionItem>(commItemDto => new CommissionItem(commItemDto))
             };
         }

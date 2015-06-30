@@ -22,14 +22,14 @@ namespace Fanex.CustomerSetting.Resource.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Lang {
+    public class Label {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Lang() {
+        internal Label() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.Resource.Resources.Lang", typeof(Lang).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.Resource.Resources.Label", typeof(Label).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,15 +57,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You do not have permission to access this page..
-        /// </summary>
-        public static string AccessDeniedMsg {
-            get {
-                return ResourceManager.GetString("AccessDeniedMsg", resourceCulture);
             }
         }
         
@@ -156,24 +147,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         public static string CopyTooltip {
             get {
                 return ResourceManager.GetString("CopyTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data is not valid..
-        /// </summary>
-        public static string DataIsNotValid {
-            get {
-                return ResourceManager.GetString("DataIsNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Out of range for highlighted values..
-        /// </summary>
-        public static string DuplicateValuesAlertMsg {
-            get {
-                return ResourceManager.GetString("DuplicateValuesAlertMsg", resourceCulture);
             }
         }
         
@@ -304,33 +277,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Bet must be less than or equal to Max Per Match.
-        /// </summary>
-        public static string MaxBetLessThanOrEqualMaxPerMatch {
-            get {
-                return ResourceManager.GetString("MaxBetLessThanOrEqualMaxPerMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Bet must be less than or equal to {0}.
-        /// </summary>
-        public static string MaxBetLessThanOrEqualTo {
-            get {
-                return ResourceManager.GetString("MaxBetLessThanOrEqualTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Bet must be greater than or equal to Min Bet.
-        /// </summary>
-        public static string MaxBetMoreThanOrEqualMinBet {
-            get {
-                return ResourceManager.GetString("MaxBetMoreThanOrEqualMinBet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Max Live.
         /// </summary>
         public static string MaxLive {
@@ -345,24 +291,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         public static string MaxPerMatch {
             get {
                 return ResourceManager.GetString("MaxPerMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Per Match must be less than or equal to {0}.
-        /// </summary>
-        public static string MaxPerMatchLessThanOrEqualTo {
-            get {
-                return ResourceManager.GetString("MaxPerMatchLessThanOrEqualTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Per Match must be greater than or equal to Max Bet.
-        /// </summary>
-        public static string MaxPerMatchMoreThanOrEqualMaxBet {
-            get {
-                return ResourceManager.GetString("MaxPerMatchMoreThanOrEqualMaxBet", resourceCulture);
             }
         }
         
@@ -394,24 +322,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Min Bet must be less than or equal to Max Bet.
-        /// </summary>
-        public static string MinBetLessThanOrEqualMaxBet {
-            get {
-                return ResourceManager.GetString("MinBetLessThanOrEqualMaxBet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Min Bet must be greater than or equal to {0}.
-        /// </summary>
-        public static string MinBetMoreThanOrEqualTo {
-            get {
-                return ResourceManager.GetString("MinBetMoreThanOrEqualTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Min Live.
         /// </summary>
         public static string MinLive {
@@ -435,15 +345,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         public static string Nickname {
             get {
                 return ResourceManager.GetString("Nickname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is no change to update!.
-        /// </summary>
-        public static string NoChangeToUpdate {
-            get {
-                return ResourceManager.GetString("NoChangeToUpdate", resourceCulture);
             }
         }
         
@@ -475,15 +376,6 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sub Account Id Should Be Zero When System Is Not Agency.
-        /// </summary>
-        public static string SubAccountIdShouldBeZeroWhenSystemIsNotAgency {
-            get {
-                return ResourceManager.GetString("SubAccountIdShouldBeZeroWhenSystemIsNotAgency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Super Max PT.
         /// </summary>
         public static string SuperMaxPT {
@@ -511,83 +403,11 @@ namespace Fanex.CustomerSetting.Resource.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops... you are here because of a system error, please notify your administrator..
-        /// </summary>
-        public static string SystemError {
-            get {
-                return ResourceManager.GetString("SystemError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated bet setting successfully..
-        /// </summary>
-        public static string UpdateBetSettingSuccessfully {
-            get {
-                return ResourceManager.GetString("UpdateBetSettingSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated commission setting successfully..
-        /// </summary>
-        public static string UpdateCommissionSuccessfully {
-            get {
-                return ResourceManager.GetString("UpdateCommissionSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have changed your position taking.
-        /// </summary>
-        public static string UpdateMemberPtInfo {
-            get {
-                return ResourceManager.GetString("UpdateMemberPtInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to update all member&apos;s position taking to:.
-        /// </summary>
-        public static string UpdateMemberPtQuestion {
-            get {
-                return ResourceManager.GetString("UpdateMemberPtQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirm Update Members&apos;s PT.
-        /// </summary>
-        public static string UpdateMemberPtTitle {
-            get {
-                return ResourceManager.GetString("UpdateMemberPtTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated position taking successfully..
-        /// </summary>
-        public static string UpdatePositionTakingSuccessfully {
-            get {
-                return ResourceManager.GetString("UpdatePositionTakingSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated product status successfully..
-        /// </summary>
-        public static string UpdateProductStatusSuccessfully {
-            get {
-                return ResourceManager.GetString("UpdateProductStatusSuccessfully", resourceCulture);
             }
         }
         

@@ -21,7 +21,7 @@
         {
             if (SportTypeId <= 0 || BetTypeId <= 0)
             {
-                return new Result(Constants.ResultValue.DataIsNotValid, Error.SportTypeOrBetTypeIsInvalid);
+                return new Result(Constants.ResultValue.DataIsNotValid, Message.SportTypeOrBetTypeIsInvalid);
             }
 
             return Result.Success;

@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Resource.Resources;
     using Fanex.CustomerSetting.Services;
 
-    public class WrongPTMessageRow : DefaultMessageRow, IMessageRow
+    public class WrongPTSubMessage : DefaultSubMessage, ISubMessage
     {
         [XmlAttribute]
         public bool IsLive { get; set; }
@@ -15,7 +15,7 @@
             var message = base.ToString(resourceService, language, settingLevel);
             if (IsLive)
             {
-                message += string.Format(" ({0})", Lang.Live);
+                message += string.Format(" ({0})", Label.Live);
             }
 
             return message;

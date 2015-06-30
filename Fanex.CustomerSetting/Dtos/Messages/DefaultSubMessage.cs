@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Services;
 
-    public class DefaultMessageRow : IMessageRow
+    public class DefaultSubMessage : ISubMessage
     {
         [XmlAttribute]
         public short SportType { get; set; }

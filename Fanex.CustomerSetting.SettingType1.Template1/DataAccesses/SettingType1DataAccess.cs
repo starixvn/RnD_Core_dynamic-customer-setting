@@ -21,7 +21,7 @@
         {
             var settingType = new SettingType
             {
-                Name = Lang.PositionTaking
+                Name = Label.PositionTaking
             };
 
             settingType.SettingItems = ReadSettingItems(settingQuery);

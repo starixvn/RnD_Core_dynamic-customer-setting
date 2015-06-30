@@ -58,7 +58,7 @@
             if (subAccountId > 0 
                 && CustomerSettings.Settings.SystemId != (byte)SystemType.Agency)
             {
-                throw new InvalidOperationException(Lang.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
+                throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
             }
         }
 

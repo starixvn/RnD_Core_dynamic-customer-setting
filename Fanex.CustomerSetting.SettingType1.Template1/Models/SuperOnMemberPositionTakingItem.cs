@@ -61,21 +61,21 @@
             {
                 return new Result(
                     SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
-                    PositionTakingError.PositionTakingCannotBeExceedMaxValue);
+                    PositionTakingMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (!IS1 && US1 > 0)
             {
                 return new Result(
                     SettingType1Constants.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode,
-                    PositionTakingError.SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
+                    PositionTakingMessage.SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (IS1 && S1 > 0)
             {
                 return new Result(
                     SettingType1Constants.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSetErrorCode,
-                    PositionTakingError.SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
+                    PositionTakingMessage.SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             return base.Validate();

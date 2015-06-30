@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Services;
 
-    public interface IMessageRow
+    public interface ISubMessage
     {
         string ToString(IResourceService resourceService, string language, byte settingLevel);
     }

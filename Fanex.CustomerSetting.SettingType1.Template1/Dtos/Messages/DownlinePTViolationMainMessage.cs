@@ -5,16 +5,16 @@
     using Fanex.CustomerSetting.Dtos.Messages;
 
     [XmlRoot("Root")]
-    public class DownlinePTViolationMessageRoot : MessageRoot<DownlinePTViolationMessageRow>
+    public class DownlinePTViolationMainMessage : MainMessage<DownlinePTViolationSubMessage>
     {
         public void GroupUsernameBySportTypeBetType()
         {
-            MessageRows = MessageRows.GroupBy(row => new
+            SubMessages = SubMessages.GroupBy(row => new
             {
                 row.SportType,
                 row.BetType,
                 row.IsLive
-            }).Select(group => new DownlinePTViolationMessageRow
+            }).Select(group => new DownlinePTViolationSubMessage
             {
                 SportType = group.Key.SportType,
                 BetType = group.Key.BetType,

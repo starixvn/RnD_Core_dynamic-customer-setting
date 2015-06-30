@@ -4,15 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using ResourceMessage = Fanex.CustomerSetting.Resource.Resources;
 
     public class Result : IResult
     {
         public static readonly Result Success = new Result(ResultValue.Success);
-        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Lang.AccessDeniedMsg);
-        public static readonly Result NoChange = new Result(ResultValue.NoChange, Lang.NoChangeToUpdate);
-        public static readonly Result SystemError = new Result(ResultValue.Error, Lang.SystemError);
-        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Lang.DataIsNotValid);
+        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, ResourceMessage.Message.AccessDeniedMsg);
+        public static readonly Result NoChange = new Result(ResultValue.NoChange, ResourceMessage.Message.NoChangeToUpdate);
+        public static readonly Result SystemError = new Result(ResultValue.Error, ResourceMessage.Message.SystemError);
+        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, ResourceMessage.Message.DataIsNotValid);
 
         public Result(int code)
             : this(code, string.Empty)

@@ -27,7 +27,7 @@
 
             return new SettingType
             {
-                Name = Lang.ProductStatus,
+                Name = Label.ProductStatus,
                 SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
             };
         }

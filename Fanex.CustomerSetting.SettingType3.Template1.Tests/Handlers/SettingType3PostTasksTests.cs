@@ -83,7 +83,7 @@
                 successResult);
 
             //// Assert
-            Assert.AreEqual(Lang.UpdateCommissionSuccessfully, actualResult.Message);
+            Assert.AreEqual(Message.UpdateCommissionSuccessfully, actualResult.Message);
         }
 
         [Test]

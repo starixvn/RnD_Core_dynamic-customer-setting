@@ -8,7 +8,7 @@
 
     public class CommissionMessageService : BaseMessageService, IMessageService
     {
-        private readonly ResourceManager _resourceManager = CommissionError.ResourceManager;
+        private readonly ResourceManager _resourceManager = CommissionMessage.ResourceManager;
 
         public CommissionMessageService(IResourceService resourceService = null)
             : base(resourceService)

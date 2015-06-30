@@ -84,7 +84,7 @@
                 successResult);
 
             //// Assert
-            Assert.AreEqual(Lang.UpdatePositionTakingSuccessfully, actualResult.Message);
+            Assert.AreEqual(Message.UpdatePositionTakingSuccessfully, actualResult.Message);
         }
 
         [Test]
