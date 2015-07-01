@@ -4,6 +4,7 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.SettingType2.Template1.Constants;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
     public class BetLimitMessageService : BaseMessageService, IMessageService
@@ -17,13 +18,14 @@
 
         public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
-            var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
-            if (string.IsNullOrEmpty(generalMessage))
+            switch (msgType)
             {
-                return TranslateDefaultViolationMessage(_resourceManager, rawMessage, settingLevel, language);
-            }
+                case SettingType2Constants.BetLimitViolationMessageType:
+                    return TranslateDefaultSettingTypeViolationMessage(_resourceManager, rawMessage, settingLevel, language);
 
-            return new MessageContent(generalMessage);
+                default:
+                    return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource.Resources;
 
-    public class BaseMessageService
+    public class BaseMessageService : IMessageService
     {
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
@@ -19,32 +19,28 @@
 
         protected IResourceService ResourceService { get; set; }
 
-        protected string TranslateGeneralMessage(int msgType, string rawMessage)
+        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
             switch (msgType)
             {
                 case MessageType.Exception:
                     return TranslateSimpleMessage(rawMessage);
 
-                case MessageType.Other:
-                    return rawMessage;
-
                 default:
-                    //// Message type from setting type, each setting type will handle by themself.
-                    return string.Empty;
+                    return new MessageContent(rawMessage);
             }
         }
 
-        private string TranslateSimpleMessage(string rawMessage)
+        private MessageContent TranslateSimpleMessage(string rawMessage)
         {
+            var message = rawMessage;
             var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
-
             if (simpleMessage != null)
             {
-                return GetMessage(Message.ResourceManager, simpleMessage.MessageId);
+                message = GetMessage(Message.ResourceManager, simpleMessage.MessageId);
             }
 
-            return rawMessage;
+            return new MessageContent(message);
         }
 
         protected T Deserialize<T>(string text) where T : SimpleMessage
@@ -65,7 +61,7 @@
                 : string.Format(NotFoundMessageFormat, messsageId);
         }
 
-        protected MessageContent TranslateDefaultViolationMessage(
+        protected MessageContent TranslateDefaultSettingTypeViolationMessage(
             ResourceManager resouceManager,
             string rawMessage,
             byte settingLevel,

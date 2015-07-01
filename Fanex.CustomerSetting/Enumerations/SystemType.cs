@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Enumerations
 {
-    public enum SystemType : byte
+    public enum SystemType : int
     {
         Accounting = 1,
 

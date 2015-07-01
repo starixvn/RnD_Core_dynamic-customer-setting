@@ -7,5 +7,7 @@
 
         public const int CommRateIsNegativeErrorCode = 5101;
         public const int CommissionRateExceedMaxValueErrorCode = 5102;
+
+        public const int CommissionViolationMessageType = 51;
     }
 }

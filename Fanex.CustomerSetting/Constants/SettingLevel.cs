@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Constants
 {
-    internal class SettingLevel
+    internal static class SettingLevel
     {
         public const byte Product = 1;
         public const byte SportType = 2;

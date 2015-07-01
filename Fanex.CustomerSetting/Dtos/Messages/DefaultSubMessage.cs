@@ -15,6 +15,11 @@
 
         public virtual string ToString(IResourceService resourceService, string language, byte settingLevel)
         {
+            if (resourceService == null)
+            {
+                throw new ArgumentNullException("resourceService");
+            }
+
             switch (settingLevel)
             {
                 case SettingLevel.Product:

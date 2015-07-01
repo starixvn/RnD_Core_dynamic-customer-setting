@@ -11,5 +11,7 @@
         public const int MaxBetIsNegativeErrorCode = 7004;
         public const int MaxPerMatchIsNegativeErrorCode = 7005;
         public const int BetLimitExceedMaxValueErrorCode = 7006;
+
+        public const int BetLimitViolationMessageType = 71;
     }
 }

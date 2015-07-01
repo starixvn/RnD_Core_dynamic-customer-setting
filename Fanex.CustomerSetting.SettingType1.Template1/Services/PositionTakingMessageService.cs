@@ -19,21 +19,6 @@
 
         public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
-            var generalMessage = TranslateGeneralMessage(msgType, rawMessage);
-            if (string.IsNullOrEmpty(generalMessage))
-            {
-                return TranslatePTViolationMessage(msgType, rawMessage, settingLevel, language);
-            }
-
-            return new MessageContent(generalMessage);
-        }
-
-        private MessageContent TranslatePTViolationMessage(
-            int msgType,
-            string rawMessage,
-            byte settingLevel,
-            string language)
-        {
             switch ((PositionTakingMessageType)msgType)
             {
                 case PositionTakingMessageType.WrongPositionTaking:
@@ -50,9 +35,10 @@
 
                 case PositionTakingMessageType.DownlinePTViolation:
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
-            }
 
-            return new MessageContent(rawMessage);
+                default:
+                    return base.TranslateMessage(msgType, rawMessage, settingLevel, language);
+            }
         }
 
         private MessageContent TranslateMessage<T>(string rawMessage, byte settingLevel, string language) where T : ISubMessage
