@@ -64,7 +64,7 @@
 
         private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<Customer> groupedMembers)
         {
-            var subResults = new List<Result>();
+            var subResults = new List<SettingResult>();
             foreach (Customer member in groupedMembers)
             {
                 var settingResult = new SettingResult(result.Code, result.Message, member.Id, member.UserName, SettingType1Constants.SettingType, Label.PositionTaking);

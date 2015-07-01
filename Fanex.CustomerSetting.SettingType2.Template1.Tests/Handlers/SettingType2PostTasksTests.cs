@@ -72,7 +72,7 @@
         public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
         {
             //// Arrange
-            var successResult = Result.Success;
+            var successResult = SettingResult.SuccessSettingResult;
 
             //// Act
             var actualResult = _settingType2PostTasks.PostUpdateCustomerSettingType(
@@ -90,7 +90,7 @@
         public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
         {
             //// Arrange
-            var errorResult = Result.DataError;
+            var errorResult = SettingResult.ErrorSettingResult;
             _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
                 .Returns(new MessageContent(string.Empty));
             byte settingLevel = 1;

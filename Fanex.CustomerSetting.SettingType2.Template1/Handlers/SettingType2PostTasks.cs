@@ -32,15 +32,14 @@
             return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
-        public override IResult PostUpdateCustomerSettingType(
+        public override SettingResult PostUpdateCustomerSettingType(
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult result)
+            SettingResult result)
         {
-            var settingResult = new SettingResult(result.Code, result.Message, customer.Id, customer.FirstName, settingType.Id, settingType.Name);
-            return ReadUpdatingCustomerSettingTypeMessage(settingResult, Message.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return ReadUpdatingCustomerSettingTypeMessage(result, Message.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }
 }

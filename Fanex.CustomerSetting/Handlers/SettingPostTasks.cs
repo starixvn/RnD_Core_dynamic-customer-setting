@@ -31,12 +31,12 @@
             throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PostUpdateCustomerSettingType(
+        public virtual SettingResult PostUpdateCustomerSettingType(
                     ISettingContext settingContext,
                     Customer customer,
                     SettingType settingType,
                     CustomerLevel? uplineLevel,
-                    IResult result)
+                    SettingResult result)
         {
             throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
         }
@@ -46,7 +46,7 @@
                     IEnumerable<Customer> customers,
                     SettingType settingType,
                     CustomerLevel? uplineLevel,
-                    IResult result)
+                    UpdatingSettingResult updatintSettingResult)
         {
             throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");
         }
@@ -61,7 +61,7 @@
         /// <param name="settingLevel">The setting level for displaying message.</param>
         /// <param name="language">The language for globalization.</param>
         /// <returns>Result is processed.</returns>
-        protected IResult ReadUpdatingCustomerSettingTypeMessage(
+        protected SettingResult ReadUpdatingCustomerSettingTypeMessage(
                     SettingResult result,
                     string updateSuccessfulMessage,
                     byte settingLevel,

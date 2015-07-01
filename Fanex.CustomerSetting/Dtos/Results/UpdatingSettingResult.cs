@@ -8,13 +8,13 @@
     {
         public static readonly UpdatingSettingResult SuccessUpdatingSettingResult = new UpdatingSettingResult(null, ResultValue.Success);
 
-        public UpdatingSettingResult(IEnumerable<IResult> subResults, int code = 0)
+        public UpdatingSettingResult(IEnumerable<SettingResult> subResults, int code = 0)
             : base(code)
         {
             SubResults = subResults;
         }
 
-        public IEnumerable<IResult> SubResults { get; private set; }
+        public IEnumerable<SettingResult> SubResults { get; private set; }
 
         public override bool IsSuccessful
         {

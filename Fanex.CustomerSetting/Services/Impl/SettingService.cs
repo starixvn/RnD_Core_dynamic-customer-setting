@@ -202,26 +202,28 @@
             var settingTypes = updatingParam.Setting.SettingTypes;
             var customer = updatingParam.Setting.Customer;
             var uplineLevel = updatingParam.UplineLevel;
-            var results = new List<IResult>();
+            var settingTypeResults = new List<SettingResult>();
+            SettingResult updatingSettingTypeResult = null;
 
             foreach (var settingType in settingTypes)
             {
                 try
                 {
-                    results.Add(UpdateCustomerSettingType(customer, settingType, uplineLevel));
+                    updatingSettingTypeResult = UpdateCustomerSettingType(customer, settingType, uplineLevel);
                 }
                 catch (Exception ex)
                 {
-                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, customer.Id, customer.UserName, settingType.Id, settingType.Name);
-                    results.Add(errorResult);
+                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, customer.Id, customer.UserName, settingType.Id, settingType.Name);
                     LogError(ex);
                 }
+
+                settingTypeResults.Add(updatingSettingTypeResult);
             }
 
-            return new UpdatingSettingResult(results);
+            return new UpdatingSettingResult(settingTypeResults);
         }
 
-        private IResult UpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
+        private SettingResult UpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             var preTaskResult = RunPreUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel);
             if (!preTaskResult.IsSuccessful)
@@ -230,12 +232,11 @@
             }
 
             var updatingResult = RunUpdateCustomerSettingType(customer, settingType, uplineLevel);
-            updatingResult = RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, updatingResult);
 
-            return updatingResult;
+            return RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, updatingResult);;
         }
 
-        private IResult RunPreUpdateCustomerSettingTypeTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
+        private SettingResult RunPreUpdateCustomerSettingTypeTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
@@ -244,7 +245,7 @@
                 return preTasks.PreUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
             }
 
-            return Result.Success;
+            return SettingResult.SuccessSettingResult;
         }
 
         private IResult RunUpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
@@ -253,20 +254,22 @@
             return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
         }
 
-        private IResult RunPostUpdateCustomerSettingTypeTasks(
+        private SettingResult RunPostUpdateCustomerSettingTypeTasks(
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult updatingResult)
+            IResult result)
         {
+            var settingResult = new SettingResult(result.Code, result.Message, customer.Id, customer.FirstName, settingType.Id, settingType.Name);
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateCustomerSettingType").IsVirtual)
             {
-                return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, updatingResult);
+
+                return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, settingResult);
             }
 
-            return updatingResult;
+            return settingResult;
         }
 
         public IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -297,13 +300,13 @@
             return _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
         }
 
-        private List<IResult> UpdateSettingTypesForMultipleCustomers(UpdatingMultipleSettingParam updatingMultipleParam)
+        private List<SettingResult> UpdateSettingTypesForMultipleCustomers(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             var customerLevel = updatingMultipleParam.Setting.Customer.Level;
             var uplineLevel = updatingMultipleParam.UplineLevel;
             var customers = updatingMultipleParam.Customers;
             var settingTypes = updatingMultipleParam.Setting.SettingTypes;
-            var results = new List<IResult>();
+            var results = new List<SettingResult>();
 
             foreach (var settingType in settingTypes)
             {
@@ -385,13 +388,13 @@
             };
         }
 
-        private List<IResult> UpdateSettingTypeOfEachCustomer(
+        private List<SettingResult> UpdateSettingTypeOfEachCustomer(
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            var settingTypeResults = new List<IResult>();
+            var settingTypeResults = new List<SettingResult>();
             foreach (var customer in customers)
             {
                 var updatingParam = CreateUpdatingSettingParamForSingleCustomer(customer.Id, customerLevel, settingType, uplineLevel);

@@ -91,7 +91,6 @@
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="FakeObjectManager.cs" />
-    <Compile Include="Dtos\Results\ResultTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
     <Compile Include="Models\SettingTypeTests.cs" />

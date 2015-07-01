@@ -73,7 +73,7 @@
         public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
         {
             //// Arrange
-            var successResult = Result.Success;
+            var successResult = SettingResult.SuccessSettingResult;
 
             //// Act
             var actualResult = _settingType1PostTasks.PostUpdateCustomerSettingType(
@@ -91,7 +91,7 @@
         public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
         {
             //// Arrange
-            var successResult = Result.DataError;
+            var errorResult = SettingResult.ErrorSettingResult;
             _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
                 .Returns(new MessageContent(string.Empty));
             byte settingLevel = 1;
@@ -102,10 +102,10 @@
                 new Customer(),
                 new SettingType { SettingLevel = settingLevel },
                 null,
-                successResult);
+                errorResult);
 
             //// Assert
-            _messageService.Received().TranslateMessage(successResult.MsgType, successResult.Message, settingLevel, _settingContext.Language);
+            _messageService.Received().TranslateMessage(errorResult.MsgType, errorResult.Message, settingLevel, _settingContext.Language);
         }
 
         #endregion Post Update Customer Setting Type

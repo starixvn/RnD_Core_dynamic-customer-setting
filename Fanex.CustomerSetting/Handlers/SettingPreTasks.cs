@@ -14,7 +14,7 @@
             throw new NotImplementedException("Pre-Get Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PreUpdateCustomerSettingType(
+        public virtual SettingResult PreUpdateCustomerSettingType(
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType,

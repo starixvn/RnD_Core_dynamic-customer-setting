@@ -6,6 +6,7 @@
     public class SettingResult : Result
     {
         public static readonly SettingResult SuccessSettingResult = new SettingResult(ResultValue.Success, string.Empty, 0, string.Empty, 0, string.Empty);
+        public static readonly SettingResult ErrorSettingResult = new SettingResult(ResultValue.Error, string.Empty, 0, string.Empty, 0, string.Empty);
 
         public SettingResult(
             int code,
