@@ -197,7 +197,7 @@
             return _validationService.ValidateUpdatingSetting(updatingParam);
         }
 
-        private IResult UpdateSingleCustomerSetting(UpdatingSettingParam updatingParam)
+        private UpdatingSettingResult UpdateSingleCustomerSetting(UpdatingSettingParam updatingParam)
         {
             var settingTypes = updatingParam.Setting.SettingTypes;
             var customer = updatingParam.Setting.Customer;
@@ -212,12 +212,13 @@
                 }
                 catch (Exception ex)
                 {
-                    results.Add(new Result(settingType.Id, settingType.Name, Result.SystemError));
+                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, customer.Id, customer.UserName, settingType.Id, settingType.Name);
+                    results.Add(errorResult);
                     LogError(ex);
                 }
             }
 
-            return new Result(results);
+            return new UpdatingSettingResult(results);
         }
 
         private IResult UpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
@@ -279,7 +280,7 @@
 
             var results = UpdateSettingTypesForMultipleCustomers(updatingMultipleParam);
 
-            return new Result(results);
+            return new UpdatingSettingResult(results);
         }
 
         private void CheckUpdatingMultipleCustomerSettingAgruments(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -313,7 +314,8 @@
                 }
                 catch (Exception ex)
                 {
-                    results.Add(new Result(settingType.Id, settingType.Name, Result.SystemError));
+                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, string.Empty, settingType.Id, settingType.Name);
+                    results.Add(errorResult);
                     LogError(ex);
                 }
             }
@@ -321,7 +323,7 @@
             return results;
         }
 
-        private IResult UpdateSetingTypeForMultipleCustomers(
+        private UpdatingSettingResult UpdateSetingTypeForMultipleCustomers(
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
@@ -342,7 +344,7 @@
                 results.AddRange(preTasksResult.Result.SubResults);
             }
 
-            return RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, new Result(results));
+            return RunPostUpdateMultipleCustomersSettingTypeTasks(customers, settingType, uplineLevel, new UpdatingSettingResult(results));
         }
 
         /// <summary>
@@ -379,7 +381,7 @@
 
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
-                Result = Result.Success
+                Result = UpdatingSettingResult.SuccessUpdatingSettingResult
             };
         }
 
@@ -394,7 +396,7 @@
             {
                 var updatingParam = CreateUpdatingSettingParamForSingleCustomer(customer.Id, customerLevel, settingType, uplineLevel);
                 var updateResult = UpdateSingleCustomerSetting(updatingParam);
-                settingTypeResults.Add(new Result(customer.Id, customer.UserName, updateResult));
+                settingTypeResults.AddRange(updateResult.SubResults);
             }
 
             return settingTypeResults;
@@ -419,11 +421,11 @@
             return updateParam;
         }
 
-        private IResult RunPostUpdateMultipleCustomersSettingTypeTasks(
+        private UpdatingSettingResult RunPostUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<Customer> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult settingTypeMultipleResult)
+            UpdatingSettingResult settingTypeMultipleResult)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null

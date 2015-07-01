@@ -11,6 +11,6 @@
 
         public bool IsReturnResultToUser { get; set; }
 
-        public IResult Result { get; set; }
+        public UpdatingSettingResult Result { get; set; }
     }
 }

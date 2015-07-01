@@ -9,6 +9,6 @@
     {
         IEnumerable<Customer> GetGroupedMembers(IEnumerable<Customer> members);
 
-        IResult UpdateGroupedMembersSetting(ISettingContext settingContext, IEnumerable<Customer> groupedMembers, CustomerLevel uplineLevel, SettingType settingType);
+        UpdatingSettingResult UpdateGroupedMembersSetting(ISettingContext settingContext, IEnumerable<Customer> groupedMembers, CustomerLevel uplineLevel, SettingType settingType);
     }
 }

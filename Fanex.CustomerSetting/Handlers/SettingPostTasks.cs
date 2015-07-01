@@ -14,12 +14,12 @@
 
     public class SettingPostTasks
     {
-        protected readonly IResourceService ResourceService;
-
         public SettingPostTasks(IResourceService resourceService = null)
         {
             ResourceService = resourceService ?? new ResourceService();
         }
+
+        protected IResourceService ResourceService { get; set; }
 
         protected IMessageService MessageService { get; set; }
 
@@ -41,7 +41,7 @@
             throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
         }
 
-        public virtual IResult PostUpdateMultipleCustomersSettingType(
+        public virtual UpdatingSettingResult PostUpdateMultipleCustomersSettingType(
                     ISettingContext settingContext,
                     IEnumerable<Customer> customers,
                     SettingType settingType,
@@ -62,7 +62,7 @@
         /// <param name="language">The language for globalization.</param>
         /// <returns>Result is processed.</returns>
         protected IResult ReadUpdatingCustomerSettingTypeMessage(
-                    IResult result,
+                    SettingResult result,
                     string updateSuccessfulMessage,
                     byte settingLevel,
                     string language)
@@ -71,12 +71,12 @@
 
             if (result.IsSuccessful)
             {
-                return new Result(ResultValue.Success, updateSuccessfulMessage);
+                return new SettingResult(ResultValue.Success, updateSuccessfulMessage, result);
             }
             else
             {
                 var messageContent = MessageService.TranslateMessage(result.MsgType, result.Message, settingLevel, language);
-                return new Result(result.Code, messageContent.MainMessage, messageContent.SubMessages);
+                return new SettingResult(result, messageContent.MainMessage, messageContent.SubMessages);
             }
         }
 

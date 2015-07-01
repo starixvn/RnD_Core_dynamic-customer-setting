@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Tests.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using NUnit.Framework;
 
@@ -61,7 +57,7 @@
                 MaxBet = 11,
                 MaxPerMatch = 12
             };
-            
+
             //// Act
             var actualXmlFormatted = _betLimitItem.ToXml();
 

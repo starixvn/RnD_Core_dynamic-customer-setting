@@ -16,7 +16,7 @@
         {
         }
 
-        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
+        public override MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
             switch (msgType)
             {

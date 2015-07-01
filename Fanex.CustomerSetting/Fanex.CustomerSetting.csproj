@@ -107,6 +107,8 @@
     <Compile Include="Dtos\Messages\SimpleMessage.cs" />
     <Compile Include="Dtos\ProductNameDto.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
+    <Compile Include="Dtos\Results\SettingResult.cs" />
+    <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />

@@ -47,7 +47,8 @@
                 return Result.Success;
             }
 
-            return new Result(failedValidationResults);
+            var subMessage = failedValidationResults.Select(result => result.Message);
+            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, string.Empty, Id, Name, subMessage);
         }
     }
 }

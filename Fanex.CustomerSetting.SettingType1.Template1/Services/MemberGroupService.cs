@@ -7,6 +7,8 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
 
@@ -29,7 +31,7 @@
             return _memberGroupDataAccess.GetGroupedMembers(memberIds);
         }
 
-        public IResult UpdateGroupedMembersSetting(
+        public UpdatingSettingResult UpdateGroupedMembersSetting(
             ISettingContext settingContext, 
             IEnumerable<Customer> groupedMembers, 
             CustomerLevel uplineLevel, 
@@ -60,15 +62,16 @@
             return string.Join(",", members.Select(member => member.Id));
         }
 
-        private IResult SeparateResultForEachCustomer(IResult result, IEnumerable<Customer> groupedMembers)
+        private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<Customer> groupedMembers)
         {
             var subResults = new List<Result>();
             foreach (Customer member in groupedMembers)
             {
-                subResults.Add(new Result(member.Id, member.UserName, result));
+                var settingResult = new SettingResult(result.Code, result.Message, member.Id, member.UserName, SettingType1Constants.SettingType, Label.PositionTaking);
+                subResults.Add(settingResult);
             }
 
-            return new Result(subResults);
+            return new UpdatingSettingResult(subResults);
         }
     }
 }

@@ -3,6 +3,7 @@
     using System.IO;
     using System.Resources;
     using System.Xml.Serialization;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource.Resources;
@@ -19,7 +20,7 @@
 
         protected IResourceService ResourceService { get; set; }
 
-        public MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
+        public virtual MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
             switch (msgType)
             {
@@ -54,6 +55,8 @@
 
         protected string GetMessage(ResourceManager resouceManager, int messsageId)
         {
+            Check.Argument.IsNotNull(resouceManager, "resouceManager");
+
             var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);
             return !string.IsNullOrEmpty(message)

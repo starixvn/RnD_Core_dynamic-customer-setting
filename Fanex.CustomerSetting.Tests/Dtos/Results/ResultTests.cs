@@ -13,7 +13,7 @@
         {
             //// Arrange
             IResult subResult = Substitute.For<IResult>();
-            var result = new Result(new List<IResult>
+            var result = new UpdatingSettingResult(new List<IResult>
             {
                 subResult
             });

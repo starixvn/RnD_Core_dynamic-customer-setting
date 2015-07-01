@@ -180,7 +180,7 @@
                 var validationResult = settingType.Validate();
                 if (!validationResult.IsSuccessful)
                 {
-                    return new Result(settingType.Id, settingType.Name, validationResult);
+                    return validationResult;
                 }
             }
 

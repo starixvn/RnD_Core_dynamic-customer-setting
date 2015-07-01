@@ -37,7 +37,7 @@
             {
                 return new PreUpdateMultipleCustomersSettingTypeResult
                 {
-                    Result = Result.Success
+                    Result = UpdatingSettingResult.SuccessUpdatingSettingResult
                 };
             }
         }
@@ -58,7 +58,7 @@
             };
         }
 
-        private IResult UpdateGroupedMembers(
+        private UpdatingSettingResult UpdateGroupedMembers(
             ISettingContext settingContext,
             IEnumerable<Customer> members,
             CustomerLevel uplineLevel,

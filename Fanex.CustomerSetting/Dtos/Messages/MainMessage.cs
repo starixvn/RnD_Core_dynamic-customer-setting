@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Dtos.Messages
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Services;
@@ -15,17 +16,17 @@
     public class MainMessage<T> : SimpleMessage
         where T : ISubMessage
     {
-        [XmlElement("Row")]
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Reviewed !"), XmlElement("Row")]
         public T[] SubMessages { get; set; }
 
         public IEnumerable<string> GetSubMessages(IResourceService resourceService, string language, byte settingLevel)
         {
             if (SubMessages != null && SubMessages.Any())
             {
-                IList<string> subMessages = new List<string>();
-                foreach (ISubMessage messageRow in SubMessages)
+                var subMessages = new List<string>();
+                foreach (ISubMessage subMessage in SubMessages)
                 {
-                    subMessages.Add(messageRow.ToString(resourceService, language, settingLevel));
+                    subMessages.Add(subMessage.ToString(resourceService, language, settingLevel));
                 }
 
                 return subMessages;
