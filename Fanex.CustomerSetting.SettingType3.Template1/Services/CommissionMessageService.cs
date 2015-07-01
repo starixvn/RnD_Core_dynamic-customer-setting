@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Services
 {
-    using System.Resources;
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -9,8 +8,6 @@
 
     public class CommissionMessageService : BaseMessageService, IMessageService
     {
-        private readonly ResourceManager _resourceManager = CommissionMessage.ResourceManager;
-
         public CommissionMessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
@@ -21,7 +18,7 @@
             switch (msgType)
             {
                 case SettingType3MessageType.CommissionViolation:
-                    return TranslateDefaultSettingTypeViolationMessage(_resourceManager, rawMessage, settingLevel, language);
+                    return TranslateDefaultSettingTypeViolationMessage(CommissionMessage.ResourceManager, rawMessage, settingLevel, language);
 
                 default:
                     return base.TranslateMessage(msgType, rawMessage, settingLevel, language);

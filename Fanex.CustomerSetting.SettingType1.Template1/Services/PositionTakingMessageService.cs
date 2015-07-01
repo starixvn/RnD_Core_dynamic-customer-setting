@@ -10,8 +10,6 @@
 
     public class PositionTakingMessageService : BaseMessageService, IMessageService
     {
-        private readonly ResourceManager _resourceManager = PositionTakingMessage.ResourceManager;
-
         public PositionTakingMessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
@@ -50,7 +48,7 @@
         private MessageContent GetMessageContent<T>(MainMessage<T> positionTakingMainMessage, byte settingLevel, string language) where T : ISubMessage
         {
             var subMessages = positionTakingMainMessage.GetSubMessages(ResourceService, language, settingLevel);
-            var message = GetMessage(_resourceManager, positionTakingMainMessage.MessageId);
+            var message = GetMessage(PositionTakingMessage.ResourceManager, positionTakingMainMessage.MessageId);
             return new MessageContent(message, subMessages);
         }
 
