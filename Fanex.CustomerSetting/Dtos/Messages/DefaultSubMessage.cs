@@ -3,6 +3,7 @@
     using System;
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Services;
 
     public class DefaultSubMessage : ISubMessage
@@ -20,7 +21,7 @@
                 throw new ArgumentNullException("resourceService");
             }
 
-            switch (settingLevel)
+            switch ((SettingLevel)settingLevel)
             {
                 case SettingLevel.Product:
                     return string.Empty;

@@ -4,9 +4,5 @@
     {
         public const byte SettingType = 2;
         public const decimal MaxBetLimitValue = 99999999999;
-
-        
-
-        
     }
 }

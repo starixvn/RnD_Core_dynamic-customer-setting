@@ -98,7 +98,6 @@
     <Compile Include="Constants\Level.cs" />
     <Compile Include="Constants\MessageType.cs" />
     <Compile Include="Constants\ResultValue.cs" />
-    <Compile Include="Constants\SettingLevel.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
     <Compile Include="Dtos\Messages\DefaultSubMessage.cs" />
     <Compile Include="Dtos\Messages\ISubMessage.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
     <Compile Include="Dtos\Results\SettingResult.cs" />
     <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
+    <Compile Include="Enumerations\SettingLevel.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
