@@ -5,17 +5,18 @@
 
     public class SettingResult : Result
     {
-        public static readonly SettingResult SuccessSettingResult = new SettingResult(ResultValue.Success, string.Empty, 0, string.Empty, 0, string.Empty);
-        public static readonly SettingResult ErrorSettingResult = new SettingResult(ResultValue.Error, string.Empty, 0, string.Empty, 0, string.Empty);
+        public static readonly SettingResult SuccessSettingResult = new SettingResult(ResultValue.Success, string.Empty, 0, 0, string.Empty, 0, string.Empty);
+        public static readonly SettingResult ErrorSettingResult = new SettingResult(ResultValue.Error, string.Empty, 0, 0, string.Empty, 0, string.Empty);
 
         public SettingResult(
             int code,
             string message,
+            int msgType,
             int customerId,
             string customerName,
             int settingTypeId,
             string settingTypeName)
-            : base(code, message)
+            : base(code, message, msgType)
         {
             CustomerId = customerId;
             CustomerName = customerName;
@@ -26,6 +27,7 @@
         public SettingResult(
             int code,
             string message,
+            int msgType,
             int customerId,
             string customerName,
             int settingTypeId,
@@ -34,6 +36,7 @@
             : this(
             code,
             message,
+            msgType,
             customerId,
             customerName,
             settingTypeId,
@@ -49,6 +52,7 @@
             : this(
             code, 
             message,
+            settingResult.MsgType,
             settingResult.CustomerId,
             settingResult.CustomerName,
             settingResult.SettingTypeId,
@@ -64,6 +68,7 @@
             : this(
             settingResult.Code,
             mainMessage,
+            settingResult.MsgType,
             settingResult.CustomerId,
             settingResult.CustomerName,
             settingResult.SettingTypeId,

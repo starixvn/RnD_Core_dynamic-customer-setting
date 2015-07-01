@@ -47,8 +47,8 @@
                 return Result.Success;
             }
 
-            var subMessage = failedValidationResults.Select(result => result.Message);
-            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, string.Empty, Id, Name, subMessage);
+            var subMessages = failedValidationResults.Select(result => result.Message);
+            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, string.Empty, Id, Name, subMessages);
         }
     }
 }

@@ -213,7 +213,7 @@
                 }
                 catch (Exception ex)
                 {
-                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, customer.Id, customer.UserName, settingType.Id, settingType.Name);
+                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customer.Id, customer.UserName, settingType.Id, settingType.Name);
                     LogError(ex);
                 }
 
@@ -231,9 +231,10 @@
                 return preTaskResult;
             }
 
-            var updatingResult = RunUpdateCustomerSettingType(customer, settingType, uplineLevel);
+            var result = RunUpdateCustomerSettingType(customer, settingType, uplineLevel);
+            var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, customer.Id, customer.FirstName, settingType.Id, settingType.Name);
 
-            return RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, updatingResult);;
+            return RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, settingResult);
         }
 
         private SettingResult RunPreUpdateCustomerSettingTypeTasks(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
@@ -258,18 +259,16 @@
             Customer customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
-            IResult result)
+            SettingResult result)
         {
-            var settingResult = new SettingResult(result.Code, result.Message, customer.Id, customer.FirstName, settingType.Id, settingType.Name);
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
                 && !postTasks.GetType().GetMethod("PostUpdateCustomerSettingType").IsVirtual)
             {
-
-                return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, settingResult);
+                return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, result);
             }
 
-            return settingResult;
+            return result;
         }
 
         public IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -317,7 +316,7 @@
                 }
                 catch (Exception ex)
                 {
-                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, string.Empty, settingType.Id, settingType.Name);
+                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, 0, string.Empty, settingType.Id, settingType.Name);
                     results.Add(errorResult);
                     LogError(ex);
                 }
