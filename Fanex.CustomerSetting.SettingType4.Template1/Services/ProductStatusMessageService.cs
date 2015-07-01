@@ -20,7 +20,7 @@
         {
             switch (msgType)
             {
-                case SettingType4Constants.ProductStatusViolationMessageType:
+                case SettingType4MessageType.ProductStatusViolation:
                     return TranslateDefaultSettingTypeViolationMessage(_resourceManager, rawMessage, settingLevel, language);
 
                 default:

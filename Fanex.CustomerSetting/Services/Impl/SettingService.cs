@@ -50,8 +50,10 @@
             ValidateQuerySetting(queryParam);
             ISetting setting = new Setting();
             setting.Customer = GetCustomer(queryParam.CustomerId, queryParam.CustomerLevel);
-            setting.Product = GetProduct(queryParam.ProductId);
-            setting.SettingTypes = GetCustomerSettingTypes(queryParam, setting.Product.SettingTypes);
+            var product = GetProduct(queryParam.ProductId);
+            setting.ProductId = product.Id;
+            setting.ProductName = product.Name;
+            setting.SettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
 
             return setting;
         }
@@ -187,8 +189,8 @@
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
             Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.Customer.Id, "updatingParam.Setting.Customer.Id");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.Product.Id, "updatingParam.CustomerLevel");
-            Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting");
+            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.ProductId, "updatingParam.Setting.ProductId");
+            Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
         }
 
@@ -289,7 +291,7 @@
         {
             Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
             Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.Product.Id, "updatingMultipleParam.Setting.Product.Id");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.ProductId, "updatingMultipleParam.Setting.Product.Id");
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Customers.Count(), "updatingMultipleParam.Customers.Count");
         }

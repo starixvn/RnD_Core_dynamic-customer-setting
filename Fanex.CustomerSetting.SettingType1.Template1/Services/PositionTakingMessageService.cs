@@ -4,8 +4,8 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages;
-    using Fanex.CustomerSetting.SettingType1.Template1.Enumerations;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class PositionTakingMessageService : BaseMessageService, IMessageService
@@ -19,7 +19,7 @@
 
         public override MessageContent TranslateMessage(int msgType, string rawMessage, byte settingLevel, string language)
         {
-            switch ((PositionTakingMessageType)msgType)
+            switch (msgType)
             {
                 case PositionTakingMessageType.WrongPositionTaking:
                     return TranslateMessage<WrongPTSubMessage>(rawMessage, settingLevel, language);

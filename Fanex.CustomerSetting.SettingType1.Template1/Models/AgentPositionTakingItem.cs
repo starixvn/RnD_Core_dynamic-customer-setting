@@ -60,28 +60,28 @@
                 || N2 > SettingType1Constants.MaxPositionTakingValue)
             {
                 return new Result(
-                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    SettingType1ErrorCode.PositionTakingExceedMaxValue,
                     PositionTakingMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (IM2 && M2 > 0)
             {
                 return new Result(
-                    SettingType1Constants.MasterPTIsGreaterThanZeroWhenIsAutoIsSetErrorCode,
+                    SettingType1ErrorCode.MasterPTIsGreaterThanZeroWhenIsAutoIsSet,
                     PositionTakingMessage.MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             if (!IM2 && UM2 > 0)
             {
                 return new Result(
-                    SettingType1Constants.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSetErrorCode,
+                    SettingType1ErrorCode.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
                     PositionTakingMessage.MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (N2 > A2)
             {
                 return new Result(
-                    SettingType1Constants.AgentMinPTIsGreaterThanAgentMaxPTErrorCode,
+                    SettingType1ErrorCode.AgentMinPTIsGreaterThanAgentMaxPT,
                     PositionTakingMessage.AgentMinPTCannotBeGreaterThanAgentMaxPT);
             }
 

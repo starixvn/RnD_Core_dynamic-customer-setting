@@ -48,7 +48,7 @@
 
         private bool ReadIsAllowMasterPT(int customerId)
         {
-            using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_AllowMasterPTSelect"))
+            using (ObjectDb objectDb = new ObjectDb("CustSetting_AllowMasterPTSelect"))
             {
                 return objectDb.QueryEntity<bool>(new { CustID = customerId });
             }
@@ -134,25 +134,25 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperPTUpd_1_1";
+                    return "CustSetting_SuperPTUpd_1_1";
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterPTUpd_1_1";
+                    return "CustSetting_MasterPTUpd_1_1";
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentPTUpd_1_1";
+                    return "CustSetting_AgentPTUpd_1_1";
 
                 case CustomerLevel.Member:
                     switch (uplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            return "Acc_CustSetting_SuperPTOnMemberUpd_1_1";
+                            return "CustSetting_SuperPTOnMemberUpd_1_1";
 
                         case CustomerLevel.Master:
-                            return "Acc_CustSetting_MasterPTOnMemberUpd_1_1";
+                            return "CustSetting_MasterPTOnMemberUpd_1_1";
 
                         case CustomerLevel.Agent:
-                            return "Acc_CustSetting_AgentPTOnMemberUpd_1_1";
+                            return "CustSetting_AgentPTOnMemberUpd_1_1";
 
                         default:
                             throw new InvalidOperationException("This customer level is not supported");

@@ -144,7 +144,7 @@
                 return viewingPermissionValidationResult;
             }
 
-            var productProfileValidationResult = ValidateProductProfile(setting.Product.Id, setting.SettingTypes);
+            var productProfileValidationResult = ValidateProductProfile(setting.ProductId, setting.SettingTypes);
             if (!productProfileValidationResult.IsSuccessful)
             {
                 return productProfileValidationResult;

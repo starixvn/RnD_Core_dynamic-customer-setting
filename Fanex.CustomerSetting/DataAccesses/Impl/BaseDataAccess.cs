@@ -86,16 +86,16 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "Acc_CustSetting_SuperSettingSelect" + keySuffix;
+                    return "CustSetting_SuperSettingSelect" + keySuffix;
 
                 case CustomerLevel.Master:
-                    return "Acc_CustSetting_MasterSettingSelect" + keySuffix;
+                    return "CustSetting_MasterSettingSelect" + keySuffix;
 
                 case CustomerLevel.Agent:
-                    return "Acc_CustSetting_AgentSettingSelect" + keySuffix;
+                    return "CustSetting_AgentSettingSelect" + keySuffix;
 
                 case CustomerLevel.Member:
-                    return "Acc_CustSetting_MemberSettingSelect" + keySuffix;
+                    return "CustSetting_MemberSettingSelect" + keySuffix;
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");

@@ -21,10 +21,7 @@
             {
                 Setting = new Setting
                 {
-                    Product = new Product
-                    {
-                        Id = productId
-                    },
+                    ProductId = productId,
                     Customer = new Customer
                     {
                         Id = customerId,
@@ -80,10 +77,7 @@
                 },
                 Setting = new Setting
                 {
-                    Product = new Product
-                    {
-                        Id = productId
-                    },
+                    ProductId = productId,
                     Customer = new Customer
                     {
                         Id = customerId,

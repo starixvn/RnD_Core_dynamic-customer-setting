@@ -8,7 +8,9 @@
     {
         public Customer Customer { get; set; }
 
-        public Product Product { get; set; }
+        public byte ProductId { get; set; }
+
+        public string ProductName { get; set; }
 
         public IEnumerable<SettingType> SettingTypes { get; set; }
     }

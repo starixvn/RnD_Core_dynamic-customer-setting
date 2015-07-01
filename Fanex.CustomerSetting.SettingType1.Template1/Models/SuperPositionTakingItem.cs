@@ -39,28 +39,28 @@
                 || N4 > SettingType1Constants.MaxPositionTakingValue)
             {
                 return new Result(
-                    SettingType1Constants.PositionTakingExceedMaxValueErrorCode,
+                    SettingType1ErrorCode.PositionTakingExceedMaxValue,
                     PositionTakingMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (M4 > S4)
             {
                 return new Result(
-                    SettingType1Constants.MasterMaxPTIsGreaterThanSuperMaxPTErrorCode,
+                    SettingType1ErrorCode.MasterMaxPTIsGreaterThanSuperMaxPT,
                     PositionTakingMessage.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
             }
 
             if (A4 > M4)
             {
                 return new Result(
-                    SettingType1Constants.AgentMaxPTIsGreaterThanMasterMaxPTErrorCode,
+                    SettingType1ErrorCode.AgentMaxPTIsGreaterThanMasterMaxPT,
                     PositionTakingMessage.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
             }
 
             if (N4 > S4)
             {
                 return new Result(
-                    SettingType1Constants.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
+                    SettingType1ErrorCode.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
                     PositionTakingMessage.SuperMinPTCannotBeGreaterThanSuperMaxPT);
             }
 

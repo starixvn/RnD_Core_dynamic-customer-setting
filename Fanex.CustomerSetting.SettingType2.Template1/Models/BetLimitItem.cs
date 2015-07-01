@@ -51,42 +51,42 @@
                 || MaxPerMatch > SettingType2Constants.MaxBetLimitValue)
             {
                 return new Result(
-                    SettingType2Constants.BetLimitExceedMaxValueErrorCode,
+                    SettingType2ErrorCode.BetLimitExceedMaxValue,
                     BetLimitMessage.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
                 return new Result(
-                    SettingType2Constants.MinBetIsNegativeErrorCode,
+                    SettingType2ErrorCode.MinBetIsNegative,
                     BetLimitMessage.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
                 return new Result(
-                    SettingType2Constants.MaxBetIsNegativeErrorCode,
+                    SettingType2ErrorCode.MaxBetIsNegative,
                     BetLimitMessage.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
                 return new Result(
-                    SettingType2Constants.MaxPerMatchIsNegativeErrorCode,
+                    SettingType2ErrorCode.MaxPerMatchIsNegative,
                     BetLimitMessage.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
                 return new Result(
-                    SettingType2Constants.MinBetIsGreaterThanMaxBetErrorCode,
+                    SettingType2ErrorCode.MinBetIsGreaterThanMaxBet,
                     BetLimitMessage.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
                 return new Result(
-                    SettingType2Constants.MaxBetIsGreaterThanMaxPerMatchErrorCode,
+                    SettingType2ErrorCode.MaxBetIsGreaterThanMaxPerMatch,
                     BetLimitMessage.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 

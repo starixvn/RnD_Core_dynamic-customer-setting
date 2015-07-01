@@ -20,7 +20,7 @@
         {
             switch (msgType)
             {
-                case SettingType3Constants.CommissionViolationMessageType:
+                case SettingType3MessageType.CommissionViolation:
                     return TranslateDefaultSettingTypeViolationMessage(_resourceManager, rawMessage, settingLevel, language);
 
                 default:

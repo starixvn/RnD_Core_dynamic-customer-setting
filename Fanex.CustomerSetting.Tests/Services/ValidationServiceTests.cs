@@ -284,7 +284,7 @@
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == updatingParam.Setting.Product.Id));
+                productId => productId == updatingParam.Setting.ProductId));
         }
 
         [TestCase(CustomerLevel.Super)]
@@ -297,7 +297,7 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -329,7 +329,7 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -361,7 +361,7 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -393,7 +393,7 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -412,7 +412,7 @@
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(2)
@@ -435,7 +435,7 @@
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(1)
@@ -467,7 +467,7 @@
                 }
             };
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.Product.Id).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -535,7 +535,7 @@
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == updatingMultipleParam.Setting.Product.Id));
+                productId => productId == updatingMultipleParam.Setting.ProductId));
         }
 
         [Test]
@@ -544,7 +544,7 @@
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(updatingMultipleParam.Setting.SettingTypes);
 
             //// Act
@@ -567,7 +567,7 @@
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.Product.Id).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
@@ -600,7 +600,7 @@
             _settingContext.Actor.Level = UserLevel.Super;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.Product.Id).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
@@ -633,7 +633,7 @@
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id).Returns(updatingMultipleParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
@@ -666,7 +666,7 @@
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id).Returns(updatingMultipleParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
@@ -686,7 +686,7 @@
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(2)
@@ -710,7 +710,7 @@
             {
                 FakeObjectManager.CreateSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id)
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     FakeObjectManager.CreateSettingType(1)
@@ -743,7 +743,7 @@
             };
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.Product.Id).Returns(updatingMultipleParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);

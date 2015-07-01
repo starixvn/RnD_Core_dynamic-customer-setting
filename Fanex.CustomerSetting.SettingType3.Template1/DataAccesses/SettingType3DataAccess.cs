@@ -60,7 +60,7 @@
                 Discount = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_DiscountUpd_3_1", storedProcedureParams);
+            return ExecuteNonQuery("CustSetting_DiscountUpd_3_1", storedProcedureParams);
         }
     }
 }

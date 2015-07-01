@@ -70,7 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\PositionTakingMessageType.cs" />
     <Compile Include="Constants\SettingType1Constants.cs" />
+    <Compile Include="Constants\SettingType1ErrorCode.cs" />
     <Compile Include="DataAccesses\SettingType1DataAccess.cs" />
     <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
     <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="Dtos\Messages\MinPTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\WrongPTSubMessage.cs" />
     <Compile Include="Dtos\UpdateMultipleMemberPTParam.cs" />
-    <Compile Include="Enumerations\PositionTakingMessageType.cs" />
     <Compile Include="Handlers\SettingType1PostTasks.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
     <Compile Include="Models\MasterPositionTaking.cs" />

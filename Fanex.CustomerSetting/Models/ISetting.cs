@@ -6,7 +6,9 @@
     {
         Customer Customer { get; set; }
 
-        Product Product { get; set; }
+        byte ProductId { get; set; }
+
+        string ProductName { get; set; }
 
         IEnumerable<SettingType> SettingTypes { get; set; }
     }

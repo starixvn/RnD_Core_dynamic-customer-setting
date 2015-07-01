@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\SettingType4Constants.cs" />
+    <Compile Include="Constants\SettingType4ErrorCode.cs" />
+    <Compile Include="Constants\SettingType4MessageType.cs" />
     <Compile Include="DataAccesses\SettingType4DataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />

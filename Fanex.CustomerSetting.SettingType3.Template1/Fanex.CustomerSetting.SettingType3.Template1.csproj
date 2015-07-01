@@ -66,7 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\SettingType3ErrorCode.cs" />
     <Compile Include="Constants\SettingType3Constants.cs" />
+    <Compile Include="Constants\SettingType3MessageType.cs" />
     <Compile Include="DataAccesses\SettingType3DataAccess.cs" />
     <Compile Include="Dtos\CommissionDto.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />

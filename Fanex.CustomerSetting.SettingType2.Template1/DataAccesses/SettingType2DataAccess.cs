@@ -57,7 +57,7 @@
                 BetLimit = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_BetLimitUpd_2_1", storedProcedureParams);
+            return ExecuteNonQuery("CustSetting_BetLimitUpd_2_1", storedProcedureParams);
         }
     }
 }

@@ -60,7 +60,7 @@
                 IsDisabled = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("Acc_CustSetting_DisableStatUpd_4_1", storedProcedureParams);
+            return ExecuteNonQuery("CustSetting_DisableStatUpd_4_1", storedProcedureParams);
         }
     }
 }
