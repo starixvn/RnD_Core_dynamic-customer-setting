@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Dtos.Results
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Constants;
 
     public class SettingResult : Result
@@ -20,7 +21,7 @@
         {
             CustomerId = customerId;
             CustomerName = customerName;
-            SettingTypeId = SettingTypeId;
+            SettingTypeId = settingTypeId;
             SettingTypeName = settingTypeName;
         }
 
@@ -45,12 +46,13 @@
             SubMessages = subMessages;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "Reviewed !")]
         public SettingResult(
             int code,
             string message,
             SettingResult settingResult)
             : this(
-            code, 
+            code,
             message,
             settingResult.MsgType,
             settingResult.CustomerId,

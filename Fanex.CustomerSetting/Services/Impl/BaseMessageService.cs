@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
+    using System;
     using System.IO;
     using System.Resources;
     using System.Xml.Serialization;
@@ -55,7 +56,10 @@
 
         protected string GetMessage(ResourceManager resouceManager, int messsageId)
         {
-            Check.Argument.IsNotNull(resouceManager, "resouceManager");
+            if (resouceManager == null) 
+            { 
+                throw new ArgumentNullException("resouceManager"); 
+            }
 
             var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);

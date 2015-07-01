@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Constants;
@@ -86,6 +87,7 @@
         /// </summary>
         /// <param name="settingType">Type of the setting, includes list of setting items.</param>
         /// <returns>Setting type with setting item have sport, bet type name.</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed !")]
         protected SettingType SetSportTypeBetTypeName(SettingType settingType, string language)
         {
             if (settingType != null && settingType.SettingItems.Any())
