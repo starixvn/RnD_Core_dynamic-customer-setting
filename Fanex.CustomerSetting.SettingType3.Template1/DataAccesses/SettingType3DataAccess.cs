@@ -9,7 +9,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Models;

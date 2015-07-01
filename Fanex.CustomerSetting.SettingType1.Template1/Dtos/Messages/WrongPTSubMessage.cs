@@ -2,7 +2,7 @@
 {
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Dtos.Messages;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
 
     public class WrongPTSubMessage : DefaultSubMessage, ISubMessage

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Constants;
-    using Resource = Fanex.CustomerSetting.Resource.Resources;
+    using Resource = Fanex.CustomerSetting.Resource;
 
     public class Result : IResult
     {

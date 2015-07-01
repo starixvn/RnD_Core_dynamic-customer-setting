@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Services;
+    using Fanex.CustomerSetting.RemotingRefApi;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -150,11 +150,14 @@
         }
 
         [Test]
-        public void GetProductName_ProductNameListHasNoItem_ReturnDefaultProductName()
+        public void GetProductName_ProductNameListDoesNotContainProductName_ReturnDefaultProductName()
         {
             //// Arrange
             byte productId = 1;
-            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto>());
+            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto> 
+            {
+                new ProductNameDto { ProductId = 2, ProductName = "Sample Product Name", ProductNameEN = "Sample Product Name" }
+            });
 
             //// Act
             var actualProductName = _resourceService.GetProductName(productId, _language);

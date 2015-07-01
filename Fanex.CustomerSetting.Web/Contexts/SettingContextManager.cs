@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
 
     /// <summary>
     /// Setting context manager for providing

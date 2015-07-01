@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.Services;
 

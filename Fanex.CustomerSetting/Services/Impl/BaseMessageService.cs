@@ -6,7 +6,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Messages;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
 
     public class BaseMessageService : IMessageService
     {

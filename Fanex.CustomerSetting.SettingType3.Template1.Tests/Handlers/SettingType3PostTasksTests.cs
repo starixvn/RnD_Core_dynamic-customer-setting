@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource.Resources;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType3.Template1.Handlers;
     using Fanex.CustomerSetting.SettingType3.Template1.Models;

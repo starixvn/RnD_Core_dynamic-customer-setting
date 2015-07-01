@@ -35,6 +35,19 @@
             Assert.IsTrue(actualResult);
         }
 
+        [Test]
+        public void GetSettingKey_ReturnSettingKey()
+        {
+            //// Arrange
+            var criteria = CreateProductSettingTypesQueryCriteriaFakeObject();
+
+            //// Act
+            var actualSettingKey = criteria.GetSettingKey();
+
+            //// Arrange
+            Assert.AreEqual("Acc_CustSetting_ProductProfileSelect", actualSettingKey);
+        }
+
         private ProductSettingTypesQueryCriteria CreateProductSettingTypesQueryCriteriaFakeObject()
         {
             return new ProductSettingTypesQueryCriteria

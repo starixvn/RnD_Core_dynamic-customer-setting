@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Resource.Services
+﻿namespace Fanex.CustomerSetting.RemotingRefApi
 {
     public interface IRemotingRefService
     {

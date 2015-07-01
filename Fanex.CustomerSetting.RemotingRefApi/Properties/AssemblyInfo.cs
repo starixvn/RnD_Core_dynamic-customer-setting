@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.CustomerSetting.Resource.Tests")]
+[assembly: AssemblyTitle("Fanex.CustomerSetting.RemotingRefApi")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.CustomerSetting.Resource.Tests")]
+[assembly: AssemblyProduct("Fanex.CustomerSetting.RemotingRefApi")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b50d4e74-0f48-41d7-a56e-0fa5c6878204")]
+[assembly: Guid("51311c99-c9b8-4c6e-92d4-72ccf6622148")]
 
 // Version information for an assembly consists of the following four values:
 //
