@@ -1,0 +1,517 @@
+﻿@import "../Libraries/Compass/_compass.scss";
+
+body {
+    font: {
+        family: Tahoma, Arial, helvetica, sans-serif;
+        size: 11px;
+    }
+}
+
+input,
+button,
+select,
+textarea {
+    @include transition(border linear 0.2s, box-shadow linear 0.2s);
+    background-color: #fff;
+    border: 1px solid #aeaeae;
+
+    font: {
+        family: Tahoma, Arial, helvetica, sans-serif;
+        size: 11px;
+    }
+
+    &:focus {
+        border-color: #66afe9;
+    }
+
+    &.invalid {
+        border: 1px solid #e9322d;
+
+        &:focus {
+            border: 1px solid #e9322d;
+        }
+    }
+}
+
+select {
+    min-width: 60px;
+    height: 19px;
+}
+
+.checkbox {
+    cursor: pointer;
+
+    & > input {
+        cursor: pointer;
+        height: 13px;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        top: 2px;
+        width: 13px;
+    }
+}
+
+.update {
+    @include box-sizing(border-box);
+    background-color: #7c98a4;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 16px;
+    margin-bottom: 10px;
+    min-width: 70px;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+.icon {
+    background: {
+        image: url("Images/sprite.png");
+        position: 0 0;
+        repeat: no-repeat;
+    }
+
+    display: inline-block;
+    line-height: 23px;
+    height: 16px;
+    margin-top: 1px;
+    vertical-align: text-top;
+    width: 16px;
+
+    &.icon-update {
+        background-position: 0 0;
+    }
+
+    &.icon-copy {
+        background-position: -16px 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    &.icon-close {
+        background-position: -36px 0;
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.pull-left {
+    float: left;
+}
+
+.message-container {
+    @include box-sizing(border-box);
+    border: solid 1px #7c98a4;
+    background-color: #f6f5f2;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+    &.name {
+        padding: 3px 5px;
+    }
+
+    &.message {
+        padding: 3px 5px;
+
+        &.success {
+            color: #618e11;
+
+            .icon {
+                background-position: -65px 0;
+            }
+        }
+
+        &.warning {
+            color: #c28f06;
+
+            .icon {
+                background-position: -51px 0;
+            }
+        }
+
+        &.error {
+            color: #f40000;
+
+            .icon {
+                background-position: -51px 0;
+            }
+        }
+
+        .content {
+            line-height: 15px;
+            padding-left: 20px;
+
+            .rows {
+                padding-left: 15px;
+            }
+        }
+
+        .icon {
+            float: left;
+            width: 14px;
+            height: 13px;
+        }
+    }
+}
+
+.dialog-container {
+    .dialog-overlay {
+        @include opacity(0.5);
+        background-color: #fff;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 10008;
+    }
+
+    .dialog-scrollable {
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 10009;
+
+        .dialog-content {
+            @include box-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+            margin: 100px auto auto;
+            width: 450px;
+
+            .dialog-header {
+                padding: 1px;
+
+                .dialog-title {
+                    background-color: #3c3c3c;
+                    color: #fff;
+                    font-weight: bold;
+                    padding: 5px;
+                }
+
+                .dialog-close {
+                    cursor: pointer;
+                    float: right;
+
+                    margin: {
+                        right: 5px;
+                        top: 3px;
+                    }
+                }
+            }
+
+            .dialog-body {
+                background-color: #ececec;
+                line-height: 20px;
+                padding: 5px 10px;
+                text-align: left;
+            }
+
+            .dialog-footer {
+                background-color: #ececec;
+                border-top: 1px solid #3c3c3c;
+                padding: 5px;
+                text-align: right;
+
+                button {
+                    cursor: pointer;
+                    min-width: 80px;
+                    padding: 1px 6px;
+                }
+            }
+        }
+    }
+}
+
+.loading-container {
+    .block-overlay {
+        @include opacity(0.5);
+        background: #fff;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 10008;
+    }
+
+    .block-loading {
+        background: url(images/loading.gif) no-repeat center center;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 10009;
+    }
+}
+
+.tooltip-container {
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1070;
+
+    .tooltip-inner {
+        background-color: #000;
+        color: #fff;
+        max-width: 300px;
+        padding: 4px 8px;
+        text-align: center;
+        text-decoration: none;
+    }
+}
+
+/*********************************************************/
+/*           Customer Info & Shared Styles               */
+/*********************************************************/
+.customer-setting {
+    float: left;
+    width: 860px;
+}
+
+.product-container {
+    .container {
+        background-color: #fff;
+
+        border: {
+            bottom: 1px solid #7c98a4;
+            right: 1px solid #7c98a4;
+        }
+
+        float: left;
+        margin-bottom: 10px;
+        width: 100%;
+
+        .header {
+            @include box-sizing(border-box);
+            background-color: #b5c4d0;
+
+            border: {
+                left: 1px solid #7c98a4;
+                top: 1px solid #7c98a4;
+            }
+
+            font-weight: bold;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+
+            .update {
+                border-left: 1px solid #7c98a4;
+                cursor: pointer;
+                float: right;
+                height: 100%;
+                line-height: 20px;
+                width: 42px;
+            }
+        }
+
+        .body {
+            .row-title {
+                float: left;
+                width: 100%;
+
+                div {
+                    @include box-sizing(border-box);
+                    background-color: #b5c4d0;
+
+                    border: {
+                        left: 1px solid #7c98a4;
+                        top: 1px solid #7c98a4;
+                    }
+
+                    float: left;
+                    font-weight: bold;
+                    height: 25px;
+                    line-height: 25px;
+                    text-align: center;
+                }
+            }
+
+            .col-name {
+                @include box-sizing(border-box);
+                @include clearfix();
+                @include ellipsis(true);
+                background-color: #b5c4d0;
+
+                border: {
+                    left: 1px solid #7c98a4;
+                    top: 1px solid #7c98a4;
+                }
+
+                float: left;
+                height: 23px;
+                line-height: 23px;
+                padding: 0 3px;
+                width: 140px;
+
+                .copy-item {
+                    cursor: pointer;
+                    float: right;
+                    line-height: 0;
+                }
+            }
+
+            .col-value {
+                @include box-sizing(border-box);
+                @include clearfix();
+
+                border: {
+                    left: 1px solid #7c98a4;
+                    top: 1px solid #7c98a4;
+                }
+
+                height: 23px;
+                line-height: 23px;
+                margin-left: 140px;
+                padding: 0 3px;
+            }
+        }
+    }
+}
+
+.information-block > .row {
+    float: left;
+    width: 100%;
+
+    div {
+        @include box-sizing(border-box);
+        @include clearfix();
+
+        border: {
+            left: 1px solid #7c98a4;
+            top: 1px solid #7c98a4;
+        }
+
+        float: left;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 3px;
+    }
+
+    col-1,
+    col-3 {
+        width: 20%;
+    }
+
+    .col-2,
+    .col-4 {
+        width: 30%;
+    }
+}
+
+/*********************************************************/
+/*                    Setting Type 1                     */
+/*********************************************************/
+.dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
+    margin-left: 20px;
+}
+
+.position-taking-block .position-taking-item {
+    float: left;
+    width: 100%;
+
+    div {
+        @include box-sizing(border-box);
+        @include clearfix();
+
+        border: {
+            left: 1px solid #7c98a4;
+            top: 1px solid #7c98a4;
+        }
+
+        float: left;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 3px;
+        text-align: center;
+
+        &.col-name {
+            text-align: left;
+        }
+    }
+}
+
+/*********************************************************/
+/*                    Setting Type 2                     */
+/*********************************************************/
+.bet-limit-block {
+    .bet-limit-item {
+        float: left;
+        width: 100%;
+
+        .min-bet,
+        .max-bet,
+        .max-per-match {
+            @include box-sizing(border-box);
+            @include clearfix();
+
+            border: {
+                left: 1px solid #7c98a4;
+                top: 1px solid #7c98a4;
+            }
+
+            float: left;
+            height: 23px;
+            line-height: 23px;
+            padding: 0 3px;
+            width: 240px;
+
+            input {
+                text-align: right;
+                width: 50%;
+
+                &.full-width {
+                    @include box-sizing(border-box);
+                    width: 100%;
+                }
+            }
+
+            .read-only {
+                background-color: #b5c4d0;
+                text-align: center;
+            }
+        }
+    }
+}
+
+/*********************************************************/
+/*                    Setting Type 3                     */
+/*********************************************************/
+.discount-block .discount-item {
+    float: left;
+    width: 50%;
+
+    &.full-width {
+        width: 100%;
+    }
+}
+
+/*********************************************************/
+/*                    Setting Type 4                     */
+/*********************************************************/
+.status-block .status-item {
+    float: left;
+    width: 50%;
+
+    &.full-width {
+        width: 100%;
+    }
+
+    .col-value .downline {
+        margin-left: 10px;
+    }
+}

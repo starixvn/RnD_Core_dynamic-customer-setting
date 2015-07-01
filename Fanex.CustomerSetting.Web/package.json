@@ -1,0 +1,25 @@
+﻿{
+    "name": "fanex-customer-setting",
+    "version": "0.0.1",
+    "author": "jason.ly",
+    "license": "Nexcel Solution Ltd.",
+    "devDependencies": {
+        "fs": "^0.0.2",
+        "gulp": "^3.9.0",
+        "bower": "^1.4.1",
+        "tsd": "^0.6.3",
+        "gulp-if": "^1.2.5",
+        "gulp-concat": "^2.6.0",
+        "gulp-angular-templatecache": "^1.7.0",
+        "gulp-tsd": "^0.0.4",
+        "gulp-typescript": "^2.7.8",
+        "typescript": "^1.5.0-beta",
+        "gulp-uglify": "^1.2.0",
+        "rimraf": "^2.4.0",
+        "karma": "^0.12.37",
+        "karma-jasmine": "^0.3.5",
+        "karma-junit-reporter": "^0.2.2",
+        "karma-chrome-launcher": "^0.2.0",
+        "gulp-karma-runner": "^1.1.1"
+    }
+}

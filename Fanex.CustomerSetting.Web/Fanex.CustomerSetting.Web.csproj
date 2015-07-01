@@ -36,19 +36,45 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\SettingContext.cs" />
     <Compile Include="Contexts\SettingContextManager.cs" />
+    <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +88,54 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Libraries\AngularJs\angular.js" />
+    <Content Include="Assets\Libraries\AngularJs\angular.min.js" />
+    <Content Include="Assets\Libraries\JQuery\jquery.js" />
+    <Content Include="Assets\Libraries\JQuery\jquery.min.js" />
+    <Content Include="Assets\Scripts\App\Core\Templates\customer-info.htm" />
+    <Content Include="Assets\Styles\customer-setting.css">
+      <DependentUpon>customer-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting.min.css">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\Images\loading.gif" />
+    <Content Include="Assets\Styles\Images\sprite.png" />
+    <Content Include="Assets\Typings\tsd.d.ts" />
+    <Content Include="bower.json" />
+    <Content Include="Gulpfile.js" />
+    <None Include="app.config" />
+    <None Include="Assets\Libraries\AngularJs\angular.min.js.map" />
+    <None Include="Assets\Libraries\JQuery\jquery.min.map" />
+    <None Include="Assets\Styles\customer-setting.css.map">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </None>
+    <None Include="Assets\Styles\customer-setting.scss" />
+    <None Include="package.json" />
     <None Include="packages.config" />
+    <None Include="tsd.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\App\Core\Controllers\" />
+    <Folder Include="Assets\Scripts\App\Core\Directives\" />
+    <Folder Include="Assets\Scripts\App\SettingType1.Template1\Directives\" />
+    <Folder Include="Assets\Scripts\App\SettingType1.Template1\Templates\" />
+    <Folder Include="Assets\Scripts\App\SettingType2.Template1\Directives\" />
+    <Folder Include="Assets\Scripts\App\SettingType2.Template1\Templates\" />
+    <Folder Include="Assets\Scripts\App\SettingType3.Template1\Directives\" />
+    <Folder Include="Assets\Scripts\App\SettingType3.Template1\Templates\" />
+    <Folder Include="Assets\Scripts\App\SettingType4.Template1\Directives\" />
+    <Folder Include="Assets\Scripts\App\SettingType4.Template1\Templates\" />
+    <Folder Include="Assets\Scripts\Specs\Core\Controllers\" />
+    <Folder Include="Assets\Scripts\Specs\Core\Directives\" />
+    <Folder Include="Assets\Scripts\Specs\Core\Services\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType1.Template1\Services\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType2.Template1\Services\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType3.Template1\Services\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType4.Template1\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\Services\app-setting.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -72,10 +145,17 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Target Name="BeforeBuild">
+    <Exec Command="npm install" />
+    <Exec Command="node_modules\.bin\bower install" />
+  </Target>
+  <ItemGroup>
+    <Content Include="Assets\Publish\Scripts\**" />
+    <Content Include="Assets\Publish\Styles\**" />
+    <Content Include="Assets\Libraries\**" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->

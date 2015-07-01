@@ -88,3 +88,4 @@ UpgradeLog*.XML
 node_modules
 bower_components
 **/Typings/**/
+**/Libraries/**/
