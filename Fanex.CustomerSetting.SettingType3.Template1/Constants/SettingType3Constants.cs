@@ -2,7 +2,8 @@
 {
     internal static class SettingType3Constants
     {
-        public const byte SettingType = 3;
+        public const byte SettingTypeId = 3;
+        public const byte SettingTempateId = 1;
         public const decimal MaxCommissionRateValue = 1m;
     }
 }

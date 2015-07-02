@@ -2,6 +2,7 @@
 {
     internal static class SettingType4Constants
     {
-        public const byte SettingType = 4;
+        public const byte SettingTypeId = 4;
+        public const byte SettingTempateId = 1;
     }
 }

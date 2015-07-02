@@ -68,7 +68,10 @@
                     byte settingLevel,
                     string language)
         {
-            Check.Argument.IsNotNull(result, "result");
+            if (result == null)
+            {
+                throw new ArgumentNullException("result");
+            }
 
             if (result.IsSuccessful)
             {

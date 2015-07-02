@@ -56,7 +56,7 @@
         private static void ValidateSubAccountWithAgencySystem(int subAccountId)
         {
             if (subAccountId > 0 
-                && CustomerSettings.Settings.SystemId != (byte)SystemType.Agency)
+                && CustomerSettingSection.Settings.SystemId != (byte)SystemType.Agency)
             {
                 throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
             }

@@ -24,6 +24,11 @@
 
         public IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)
         {
+            if (updateParam == null)
+            {
+                throw new ArgumentNullException("updateParam");
+            }
+
             var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParam.UplineLevel);
             var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParam);
 

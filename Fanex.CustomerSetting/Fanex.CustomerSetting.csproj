@@ -94,7 +94,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\CustomerSettings.cs" />
+    <Compile Include="Configurations\CustomerSettingSection.cs" />
+    <Compile Include="Configurations\SettingTypeCollection.cs" />
+    <Compile Include="Configurations\SettingTypeElement.cs" />
     <Compile Include="Constants\Level.cs" />
     <Compile Include="Constants\MessageType.cs" />
     <Compile Include="Constants\ResultValue.cs" />

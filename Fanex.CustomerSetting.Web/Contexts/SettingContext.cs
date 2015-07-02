@@ -62,7 +62,7 @@
         {
             get
             {
-                return CustomerSettings.Settings.SystemId;
+                return CustomerSettingSection.Settings.SystemId;
             }
         }
 

@@ -2,7 +2,8 @@
 {
     internal static class SettingType2Constants
     {
-        public const byte SettingType = 2;
+        public const byte SettingTypeId = 2;
+        public const byte SettingTempateId = 1;
         public const decimal MaxBetLimitValue = 99999999999;
     }
 }

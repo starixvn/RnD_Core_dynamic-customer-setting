@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -21,9 +22,9 @@
 
         public SettingType GetCustomerSettingType(
             User actor,
-            QuerySettingParam settingQuery)
+            QuerySettingParam queryParam)
         {
-            var productStatusItemDtoList = ReadProductStatusItemsRawData(settingQuery);
+            var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
 
             return new SettingType
             {
@@ -32,12 +33,12 @@
             };
         }
 
-        private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam settingQuery)
+        private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            var settingKey = GetSettingKeyForGettingSettingType(queryParam, SettingType4Constants.SettingTypeId, SettingType4Constants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType4Constants.SettingType);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, SettingType4Constants.SettingTypeId);
                 return objectDb.Query<ProductStatusItemDto>(parameterValues);
             }
         }
@@ -46,6 +47,7 @@
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
+            byte productId, 
             CustomerLevel? uplineLevel)
         {
             var storedProcedureParams = new
@@ -60,7 +62,13 @@
                 IsDisabled = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("CustSetting_DisableStatUpd_4_1", storedProcedureParams);
+            var updateSettingKey = "CustSetting_DisableStatUpd_4_1";
+            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
+            {
+                updateSettingKey += string.Format("_{0}", productId);
+            }
+
+            return ExecuteNonQuery(updateSettingKey, storedProcedureParams);
         }
     }
 }

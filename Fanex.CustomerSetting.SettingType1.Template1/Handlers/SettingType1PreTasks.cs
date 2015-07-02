@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Handlers
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -78,11 +79,14 @@
 
         private class CustomerComparer : IEqualityComparer<Customer>
         {
+            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !"), 
+            SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Reviewed !")]
             public bool Equals(Customer firstCustomer, Customer secondCustomer)
             {
                 return firstCustomer.Id == secondCustomer.Id;
             }
 
+            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !")]
             public int GetHashCode(Customer hashCode)
             {
                 return hashCode.Id.GetHashCode();

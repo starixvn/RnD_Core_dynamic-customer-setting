@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -18,9 +19,9 @@
     {
         private const string SettingKeySuffix = "_2_1";
 
-        public SettingType GetCustomerSettingType(User actor, QuerySettingParam settingQuery)
+        public SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
         {
-            var betLimitItemDtoList = ReadBetLimitItemsRawData(settingQuery);
+            var betLimitItemDtoList = ReadBetLimitItemsRawData(queryParam);
 
             return new SettingType
             {
@@ -29,12 +30,12 @@
             };
         }
 
-        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam settingQuery)
+        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            var settingKey = GetSettingKeyForGettingSettingType(queryParam, SettingType2Constants.SettingTypeId, SettingType2Constants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(settingQuery, SettingType2Constants.SettingType);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, SettingType2Constants.SettingTypeId);
                 return objectDb.Query<BetLimitItemDto>(parameterValues);
             }
         }
@@ -43,6 +44,7 @@
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
+            byte productId, 
             CustomerLevel? uplineLevel)
         {
             var storedProcedureParams = new
@@ -57,7 +59,13 @@
                 BetLimit = settingType.ToXml()
             };
 
-            return ExecuteNonQuery("CustSetting_BetLimitUpd_2_1", storedProcedureParams);
+            var updateSettingKey = "CustSetting_BetLimitUpd_2_1";
+            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
+            {
+                updateSettingKey += string.Format("_{0}", productId);
+            }
+
+            return ExecuteNonQuery(updateSettingKey, storedProcedureParams);
         }
     }
 }

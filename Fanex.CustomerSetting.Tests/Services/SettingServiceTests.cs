@@ -352,6 +352,7 @@
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
+                Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>()).Returns(Result.Success);
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
@@ -387,6 +388,7 @@
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
+                Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>());
         }
 
@@ -527,6 +529,7 @@
                 Arg.Any<ISettingContext>(),
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
+                Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>());
         }
 

@@ -67,7 +67,7 @@
             var subResults = new List<SettingResult>();
             foreach (Customer member in groupedMembers)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.Id, member.UserName, SettingType1Constants.SettingType, Label.PositionTaking);
+                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.Id, member.UserName, SettingType1Constants.SettingTypeId, Label.PositionTaking);
                 subResults.Add(settingResult);
             }
 

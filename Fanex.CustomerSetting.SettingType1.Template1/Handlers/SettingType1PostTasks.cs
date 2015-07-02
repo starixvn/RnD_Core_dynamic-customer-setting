@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Handlers
 {
+    using System;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -29,6 +30,11 @@
             QuerySettingParam queryParam,
             SettingType settingType)
         {
+            if (settingContext == null)
+            {
+                throw new ArgumentNullException("settingContext");
+            }
+
             return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
@@ -39,6 +45,16 @@
             CustomerLevel? uplineLevel,
             SettingResult result)
         {
+            if (settingType == null)
+            {
+                throw new ArgumentNullException("settingType");
+            }
+
+            if (settingContext == null)
+            {
+                throw new ArgumentNullException("settingContext");
+            }
+
             return ReadUpdatingCustomerSettingTypeMessage(result, Message.UpdatePositionTakingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
     }

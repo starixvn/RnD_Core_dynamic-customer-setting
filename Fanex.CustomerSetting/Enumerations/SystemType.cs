@@ -1,5 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Enumerations
 {
+    using System.Diagnostics.CodeAnalysis;
+
+    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed !")]
     public enum SystemType : int
     {
         Accounting = 1,

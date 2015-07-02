@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -10,6 +11,8 @@
 
     public class BaseDataAccess
     {
+        private const string SettingKeySuffixFormat = "_{0}_{1}";
+
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
         protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParam)
         {
@@ -79,11 +82,20 @@
             }
         }
 
-        protected string GetSettingKeyForGettingSettingType(
-            CustomerLevel customerLevel,
-            string keySuffix)
+        protected string GetSettingKeyForGettingSettingType(QuerySettingParam queryParam, byte settingTypeId, byte settingTemplateId)
         {
-            switch (customerLevel)
+            if (queryParam == null)
+            {
+                throw new ArgumentNullException("queryParam");
+            }
+
+            var keySuffix = string.Format(SettingKeySuffixFormat, settingTypeId, settingTemplateId);
+            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, queryParam.ProductId))
+            {
+                keySuffix += string.Format("_{0}", queryParam.ProductId);
+            }
+
+            switch (queryParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
                     return "CustSetting_SuperSettingSelect" + keySuffix;

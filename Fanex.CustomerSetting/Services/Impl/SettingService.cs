@@ -60,7 +60,7 @@
 
         private void CheckQuerySettingArguments(QuerySettingParam queryParam)
         {
-            Check.Argument.IsNotNull(queryParam, "settingQuery");
+            Check.Argument.IsNotNull(queryParam, "queryParam");
             Check.Argument.IsNotNegativeOrZero(queryParam.CustomerId, "queryParam.CustomerId");
             Check.Argument.IsNotNegativeOrZero((byte)queryParam.CustomerLevel, "queryParam.CustomerLevel");
             Check.Argument.IsNotNegativeOrZero(queryParam.ProductId, "queryParam.ProductId");
@@ -204,6 +204,7 @@
             var settingTypes = updatingParam.Setting.SettingTypes;
             var customer = updatingParam.Setting.Customer;
             var uplineLevel = updatingParam.UplineLevel;
+            var productId = updatingParam.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
             SettingResult updatingSettingTypeResult = null;
 
@@ -211,7 +212,7 @@
             {
                 try
                 {
-                    updatingSettingTypeResult = UpdateCustomerSettingType(customer, settingType, uplineLevel);
+                    updatingSettingTypeResult = UpdateCustomerSettingType(customer, settingType, productId, uplineLevel);
                 }
                 catch (Exception ex)
                 {
@@ -225,7 +226,7 @@
             return new UpdatingSettingResult(settingTypeResults);
         }
 
-        private SettingResult UpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
+        private SettingResult UpdateCustomerSettingType(Customer customer, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
             var preTaskResult = RunPreUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel);
             if (!preTaskResult.IsSuccessful)
@@ -233,7 +234,7 @@
                 return preTaskResult;
             }
 
-            var result = RunUpdateCustomerSettingType(customer, settingType, uplineLevel);
+            var result = RunUpdateCustomerSettingType(customer, settingType, productId, uplineLevel);
             var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, customer.Id, customer.FirstName, settingType.Id, settingType.Name);
 
             return RunPostUpdateCustomerSettingTypeTasks(customer, settingType, uplineLevel, settingResult);
@@ -251,10 +252,10 @@
             return SettingResult.SuccessSettingResult;
         }
 
-        private IResult RunUpdateCustomerSettingType(Customer customer, SettingType settingType, CustomerLevel? uplineLevel)
+        private IResult RunUpdateCustomerSettingType(Customer customer, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
             var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
-            return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
+            return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customer, settingType, productId, uplineLevel);
         }
 
         private SettingResult RunPostUpdateCustomerSettingTypeTasks(
@@ -307,13 +308,14 @@
             var uplineLevel = updatingMultipleParam.UplineLevel;
             var customers = updatingMultipleParam.Customers;
             var settingTypes = updatingMultipleParam.Setting.SettingTypes;
+            var productId = updatingMultipleParam.Setting.ProductId;
             var results = new List<SettingResult>();
 
             foreach (var settingType in settingTypes)
             {
                 try
                 {
-                    var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType);
+                    var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType, productId);
                     results.AddRange(result.SubResults);
                 }
                 catch (Exception ex)
@@ -331,7 +333,8 @@
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
-            SettingType settingType)
+            SettingType settingType,
+            byte productId)
         {
             var preTasksResult = RunPreUpdateMultipleCustomersSettingTypeTasks(customers, customerLevel, settingType, uplineLevel);
             if (!preTasksResult.Result.IsSuccessful && preTasksResult.IsStopUpdating)
@@ -342,7 +345,7 @@
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
             //// because we already updated setting for them, so we need to remove them out of customer list.
             var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
-            var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, uplineLevel);
+            var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, productId, uplineLevel);
             if (preTasksResult.IsReturnResultToUser)
             {
                 results.AddRange(preTasksResult.Result.SubResults);
@@ -393,12 +396,13 @@
             IEnumerable<Customer> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
+            byte productId,
             CustomerLevel? uplineLevel)
         {
             var settingTypeResults = new List<SettingResult>();
             foreach (var customer in customers)
             {
-                var updatingParam = CreateUpdatingSettingParamForSingleCustomer(customer.Id, customerLevel, settingType, uplineLevel);
+                var updatingParam = CreateUpdatingSettingParamForSingleCustomer(customer.Id, customerLevel, settingType, productId, uplineLevel);
                 var updateResult = UpdateSingleCustomerSetting(updatingParam);
                 settingTypeResults.AddRange(updateResult.SubResults);
             }
@@ -410,6 +414,7 @@
             int customerId,
             CustomerLevel customerLevel,
             SettingType settingType,
+            byte productId,
             CustomerLevel? uplineLevel)
         {
             var updateParam = new UpdatingSettingParam
@@ -417,6 +422,7 @@
                 Setting = new Setting
                 {
                     Customer = new Customer { Id = customerId, Level = customerLevel },
+                    ProductId = productId,
                     SettingTypes = new List<SettingType> { settingType }
                 },
                 UplineLevel = uplineLevel

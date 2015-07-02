@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -15,25 +16,23 @@
 
     public class SettingType1DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        private const string SettingKeySuffix = "_1_1";
-
-        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam settingQuery)
+        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
         {
             var settingType = new SettingType
             {
                 Name = Label.PositionTaking
             };
 
-            settingType.SettingItems = ReadSettingItems(settingQuery);
-            settingType = ReadIsMasterAutoPTWhenEditAgentPT(settingQuery, settingType);
+            settingType.SettingItems = ReadSettingItems(queryParam);
+            settingType = ReadIsMasterAutoPTWhenEditAgentPT(queryParam, settingType);
             return settingType;
         }
 
-        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParam settingQuery, SettingType settingType)
+        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParam queryParam, SettingType settingType)
         {
-            if (settingQuery.CustomerLevel == CustomerLevel.Agent)
+            if (queryParam.CustomerLevel == CustomerLevel.Agent)
             {
-                bool isAllowMasterPT = ReadIsAllowMasterPT(settingQuery.CustomerId);
+                bool isAllowMasterPT = ReadIsAllowMasterPT(queryParam.CustomerId);
 
                 return new MasterPositionTaking
                 {
@@ -54,20 +53,20 @@
             }
         }
 
-        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam settingQuery)
+        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(settingQuery.CustomerLevel, SettingKeySuffix);
+            var settingKey = GetSettingKeyForGettingSettingType(queryParam, SettingType1Constants.SettingTypeId, SettingType1Constants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                return QueryPositionTakingItems(objectDb, settingQuery);
+                return QueryPositionTakingItems(objectDb, queryParam);
             }
         }
 
-        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParam settingQuery)
+        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParam queryParam)
         {
-            var storedProcedureParams = GetSPParamsForGettingSettingType(settingQuery, SettingType1Constants.SettingType);
+            var storedProcedureParams = GetSPParamsForGettingSettingType(queryParam, SettingType1Constants.SettingTypeId);
 
-            switch (settingQuery.CustomerLevel)
+            switch (queryParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
                     return objectDb.Query<SuperPositionTakingItem>(storedProcedureParams);
@@ -79,7 +78,7 @@
                     return objectDb.Query<AgentPositionTakingItem>(storedProcedureParams);
 
                 case CustomerLevel.Member:
-                    switch (settingQuery.UplineLevel.Value)
+                    switch (queryParam.UplineLevel.Value)
                     {
                         case CustomerLevel.Super:
                             return objectDb.Query<SuperOnMemberPositionTakingItem>(storedProcedureParams);
@@ -100,13 +99,19 @@
         }
 
         public virtual IResult UpdateCustomerSettingType(
-            ISettingContext settingContext, 
-            Customer customer, 
-            SettingType settingType, 
+            ISettingContext settingContext,
+            Customer customer,
+            SettingType settingType,
+            byte productId,
             CustomerLevel? uplineLevel)
         {
+            if (customer == null)
+            {
+                throw new ArgumentNullException("customer");
+            }
+
             var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType);
-            var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel);
+            var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
@@ -129,38 +134,59 @@
             };
         }
 
-        private string GetSettingKeyForUpdatingPositionTaking(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private string GetSettingKeyForUpdatingPositionTaking(
+            CustomerLevel customerLevel,
+            CustomerLevel? uplineLevel,
+            byte settingTypeId,
+            byte settingTemplateId,
+            byte productId)
         {
+            var updateSettingKey = string.Empty;
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    return "CustSetting_SuperPTUpd_1_1";
+                    updateSettingKey = "CustSetting_SuperPTUpd_1_1";
+                    break;
 
                 case CustomerLevel.Master:
-                    return "CustSetting_MasterPTUpd_1_1";
+                    updateSettingKey = "CustSetting_MasterPTUpd_1_1";
+                    break;
 
                 case CustomerLevel.Agent:
-                    return "CustSetting_AgentPTUpd_1_1";
+                    updateSettingKey = "CustSetting_AgentPTUpd_1_1";
+                    break;
 
                 case CustomerLevel.Member:
                     switch (uplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            return "CustSetting_SuperPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_SuperPTOnMemberUpd_1_1";
+                            break;
 
                         case CustomerLevel.Master:
-                            return "CustSetting_MasterPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_MasterPTOnMemberUpd_1_1";
+                            break;
 
                         case CustomerLevel.Agent:
-                            return "CustSetting_AgentPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_AgentPTOnMemberUpd_1_1";
+                            break;
 
                         default:
                             throw new InvalidOperationException("This customer level is not supported");
                     }
 
+                    break;
+
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
             }
+
+            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, productId))
+            {
+                updateSettingKey += string.Format("_{0}", productId);
+            }
+
+            return updateSettingKey;
         }
     }
 }
