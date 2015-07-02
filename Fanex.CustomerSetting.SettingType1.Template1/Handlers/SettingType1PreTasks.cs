@@ -65,7 +65,7 @@
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
-            var result = _memberGroupService.UpdateGroupedMembersSetting(settingContext, members, uplineLevel, settingType);
+            var result = _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);
 
             return result;
         }

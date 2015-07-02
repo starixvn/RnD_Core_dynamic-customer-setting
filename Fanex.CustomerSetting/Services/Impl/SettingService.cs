@@ -51,12 +51,15 @@
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
             CheckQuerySettingArguments(queryParam);
+
             ValidateQuerySetting(queryParam);
-            ISetting setting = new Setting();
-            setting.Customer = GetCustomer(queryParam.CustomerId, queryParam.CustomerLevel);
+
             var product = GetProduct(queryParam.ProductId);
+
+            ISetting setting = new Setting();
             setting.ProductId = product.Id;
             setting.ProductName = product.Name;
+            setting.Customer = GetCustomer(queryParam.CustomerId, queryParam.CustomerLevel);
             setting.SettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
 
             return setting;

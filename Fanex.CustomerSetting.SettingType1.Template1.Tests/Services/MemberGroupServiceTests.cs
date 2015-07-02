@@ -86,7 +86,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersSetting(_settingContext, members, 0, null)));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, members, 0, null)));
         }
 
         [Test]
@@ -98,7 +98,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersSetting(_settingContext, members, 0, null)));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, members, 0, null)));
         }
 
         [Test]
@@ -110,7 +110,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersSetting(_settingContext, members, 0, new SettingType())));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, members, 0, new SettingType())));
         }
 
         [Test]
@@ -126,7 +126,7 @@
             var settingType = FakeObjectManager.CreateSettingType(1);
 
             //// Act
-            _memberGroupService.UpdateGroupedMembersSetting(_settingContext, members, CustomerLevel.Master, settingType);
+            _memberGroupService.UpdateGroupedMembersPT(_settingContext, members, CustomerLevel.Master, settingType);
 
             //// Assert
             _memberGroupDataAccess.Received().UpdateGroupedMembersSetting(

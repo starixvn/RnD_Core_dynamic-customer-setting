@@ -79,7 +79,7 @@
             _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
 
             //// Assert
-            _memberGroupService.Received().UpdateGroupedMembersSetting(
+            _memberGroupService.Received().UpdateGroupedMembersPT(
                 _settingContext,
                 Arg.Any<IEnumerable<Customer>>(),
                 uplineLevel,
@@ -100,7 +100,7 @@
             };
             IEnumerable<Customer> groupedMembers = new List<Customer> { new Customer { Id = 1 } };
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
-            _memberGroupService.UpdateGroupedMembersSetting(_settingContext, Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType)
+            _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType)
                 .Returns(UpdatingSettingResult.SuccessUpdatingSettingResult);
 
             //// Act

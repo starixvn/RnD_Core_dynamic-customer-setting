@@ -5,7 +5,6 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
@@ -31,10 +30,10 @@
             return _memberGroupDataAccess.GetGroupedMembers(memberIds);
         }
 
-        public UpdatingSettingResult UpdateGroupedMembersSetting(
-            ISettingContext settingContext, 
-            IEnumerable<Customer> groupedMembers, 
-            CustomerLevel uplineLevel, 
+        public UpdatingSettingResult UpdateGroupedMembersPT(
+            ISettingContext settingContext,
+            IEnumerable<Customer> groupedMembers,
+            CustomerLevel uplineLevel,
             SettingType settingType)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
