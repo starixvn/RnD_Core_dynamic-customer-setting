@@ -155,6 +155,22 @@
         }
 
         [Test]
+        public void GetCustomerSetting_CustomerIsValid_ReturnSettingContainsCustomerInformation()
+        {
+            //// Arrange
+            QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
+            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _dymanicRepository.Get<Customer>(Arg.Any<CustomerQueryCriteria>())
+                .Returns(new Customer { Id = querySettingParam.CustomerId, Level = querySettingParam.CustomerLevel });
+            //// Act
+            var setting = _settingService.GetCustomerSetting(querySettingParam);
+
+            //// Assert
+            Assert.AreEqual(querySettingParam.CustomerId, setting.Customer.Id);
+            Assert.AreEqual(querySettingParam.CustomerLevel, setting.Customer.Level);
+        }
+
+        [Test]
         public void GetCustomerSetting_ExecuteGetProductSettingTypesMethodOnProductService()
         {
             //// Arrange
@@ -374,6 +390,21 @@
                 Arg.Any<CustomerLevel?>());
         }
 
+        [Test]
+        public void UpdateCustomerSetting_GotExceptionWhenResolveSettingDataAccess_ExecuteErrorOnLogger()
+        {
+            //// Arrange
+            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
+            _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
+
+            //// Act
+            _settingService.UpdateCustomerSetting(updatingParam);
+
+            //// Assert
+            _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
+        }
+
         #endregion Update Customer Setting Tests
 
         #region Update Multiple Customer Setting Tests
@@ -497,6 +528,21 @@
                 Arg.Any<Customer>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>());
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_GotExceptionWhenResolveSettingPreTasks_ExecuteErrorOnLogger()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
+            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
         }
 
         #endregion Update Multiple Customer Setting Tests

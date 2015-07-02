@@ -86,7 +86,7 @@
     <Compile Include="Handlers\SettingType1PostTasks.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
     <Compile Include="Models\MasterPositionTaking.cs" />
-    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentOnMemberPositionTakingItem.cs" />
     <Compile Include="Models\BasePositionTakingItem.cs" />
     <Compile Include="Models\SuperPositionTakingItem.cs" />

@@ -71,7 +71,7 @@
     <Compile Include="Constants\SettingType3MessageType.cs" />
     <Compile Include="DataAccesses\SettingType3DataAccess.cs" />
     <Compile Include="Dtos\CommissionDto.cs" />
-    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Handlers\SettingType3PostTasks.cs" />
     <Compile Include="Models\CommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

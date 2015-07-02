@@ -110,7 +110,7 @@
     <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
     <Compile Include="Enumerations\SettingLevel.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
-    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
     <Compile Include="Criteria\CustomerQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />

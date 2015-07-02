@@ -71,7 +71,7 @@
     <Compile Include="Constants\SettingType4MessageType.cs" />
     <Compile Include="DataAccesses\SettingType4DataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
-    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Handlers\SettingType4PostTasks.cs" />
     <Compile Include="Models\ProductStatusItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

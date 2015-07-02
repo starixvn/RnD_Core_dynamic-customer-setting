@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.Caching;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
@@ -156,8 +157,10 @@
             byte productId = 1;
             _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto> 
             {
+                new ProductNameDto { ProductId = 3, ProductName = "Name 1", ProductNameEN = "Name en 1" },
                 new ProductNameDto { ProductId = 2, ProductName = "Sample Product Name", ProductNameEN = "Sample Product Name" }
             });
+            CacheService.CreateInstance(CacheType.MemoryCache).Remove("Fanex.CustomerSetting.ProductResourceCacheKey");
 
             //// Act
             var actualProductName = _resourceService.GetProductName(productId, _language);
@@ -166,6 +169,45 @@
             Assert.AreEqual("Product 1", actualProductName);
         }
 
+        [Test]
+        public void GetProductName_ProductNameListContainsProductName_ReturnProductName()
+        {
+            //// Arrange
+            byte productId = 2;
+            string sampleProductName = "Sample Product Name";
+            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto> 
+            {
+                new ProductNameDto { ProductId = 1, ProductName = "Name 1", ProductNameEN = "Name en 1" },
+                new ProductNameDto { ProductId = 2, ProductName = sampleProductName, ProductNameEN = sampleProductName }
+            });
+            CacheService.CreateInstance(CacheType.MemoryCache).Remove("Fanex.CustomerSetting.ProductResourceCacheKey");
+
+            //// Act
+            var actualProductName = _resourceService.GetProductName(productId, _language);
+
+            //// Assert
+            Assert.AreEqual(sampleProductName, actualProductName);
+        }
+
+        [Test]
+        public void GetProductName_ProductNameListContainsProductName_ReturnProductNameWithLanguage()
+        {
+            //// Arrange
+            byte productId = 2;
+            _language = "zh-TW";
+            _dymanicRepository.Fetch<ProductNameDto>(Arg.Any<ProductNamesQueryCriteria>()).Returns(new List<ProductNameDto> 
+            {
+                new ProductNameDto { ProductId = 1, ProductName = "Name 1", ProductNameEN = "Name en 1" },
+                new ProductNameDto { ProductId = 2, ProductName = "Sample Product Name", ProductNameCH = "Sample Product Name - CH",  }
+            });
+            CacheService.CreateInstance(CacheType.MemoryCache).Remove("Fanex.CustomerSetting.ProductResourceCacheKey");
+
+            //// Act
+            var actualProductName = _resourceService.GetProductName(productId, _language);
+
+            //// Assert
+            Assert.AreEqual("Sample Product Name - CH", actualProductName);
+        }
         #endregion Get Product Name
     }
 }
