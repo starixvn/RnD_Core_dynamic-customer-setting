@@ -2,7 +2,7 @@
 {
     public class ProductNameDto
     {
-        public int ProductId { get; set; }
+        public byte ProductId { get; set; }
 
         public string ProductName { get; set; }
 

@@ -42,14 +42,14 @@
             if (Downline == null)
             {
                 return new Result(
-                    SettingType4ErrorCode.DownlineProductStatusIsNull,
+                    ProductStatusErrorCode.DownlineProductStatusIsNull,
                     ProductStatusMessage.DownlineProductStatusCannotBeNull);
             }
 
             if (IsDisabled && !Downline.IsDisabled)
             {
                 return new Result(
-                    SettingType4ErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
+                    ProductStatusErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
                     ProductStatusMessage.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 

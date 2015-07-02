@@ -14,14 +14,13 @@
         private const string SettingKeySuffixFormat = "_{0}_{1}";
 
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
-        protected IResult ExecuteNonQuery(string settingKey, dynamic storedProcedureParam)
+        protected IResult ExecuteNonQuery(string settingKey, Hashtable storedProcedureParam)
         {
             using (var objectDb = new ObjectDb(settingKey))
             {
                 objectDb.ExecuteNonQuery(storedProcedureParam);
-                var param = objectDb.GetOuputParams();
 
-                return GetResult(param);
+                return GetResult(storedProcedureParam);
             }
         }
 
@@ -86,11 +85,11 @@
         {
             if (queryParam == null)
             {
-                throw new ArgumentNullException("queryParam");
+                throw new ArgumentNullException("queryParam", "queryParam cannot be null");
             }
 
             var keySuffix = string.Format(SettingKeySuffixFormat, settingTypeId, settingTemplateId);
-            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, queryParam.ProductId))
+            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, queryParam.ProductId))
             {
                 keySuffix += string.Format("_{0}", queryParam.ProductId);
             }

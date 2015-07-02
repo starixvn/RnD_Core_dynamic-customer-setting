@@ -10,7 +10,7 @@
     {
         private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
 
-        public byte Id { get; set; }
+        public short Id { get; set; }
 
         public string Name { get; set; }
 

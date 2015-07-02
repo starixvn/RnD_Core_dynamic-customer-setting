@@ -19,9 +19,9 @@
                 "{0} - {1}: {2} - {3}: {4}",
                 base.ToString(resourceService, language, settingLevel),
                 IsLive ? Label.MinLive : Label.Min,
-                PositionTakingFormatter.FormatPositionTaking(MinPT),
+                PTFormatter.FormatPT(MinPT),
                 IsLive ? Label.MaxLive : Label.Max,
-                PositionTakingFormatter.FormatPositionTaking(MaxPT));
+                PTFormatter.FormatPT(MaxPT));
         }
     }
 }

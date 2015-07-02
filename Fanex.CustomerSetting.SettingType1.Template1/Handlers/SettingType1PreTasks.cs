@@ -32,7 +32,7 @@
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                return UpdatePositionTakingForGroupedMembers(settingContext, customers, settingType, uplineLevel);
+                return UpdatePTForGroupedMembers(settingContext, customers, settingType, uplineLevel);
             }
             else
             {
@@ -43,7 +43,7 @@
             }
         }
 
-        private PreUpdateMultipleCustomersSettingTypeResult UpdatePositionTakingForGroupedMembers(
+        private PreUpdateMultipleCustomersSettingTypeResult UpdatePTForGroupedMembers(
             ISettingContext settingContext,
             IEnumerable<Customer> customers,
             SettingType settingType,

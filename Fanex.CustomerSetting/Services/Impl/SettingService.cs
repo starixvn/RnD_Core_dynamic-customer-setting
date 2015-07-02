@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -26,6 +27,7 @@
         private readonly IProductService _productService;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
+        private readonly IResourceService _resourceService;
         private readonly ILogger _logger;
 
         public SettingService(
@@ -34,6 +36,7 @@
             IProductService productService = null,
             ISettingResolver settingResolver = null,
             IDynamicRepository dynamicRepository = null,
+            IResourceService resourceService = null,
             ILogger logger = null)
         {
             _settingContext = settingContext;
@@ -41,6 +44,7 @@
             _validationService = validationService ?? new ValidationService(_settingContext);
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _resourceService = resourceService ?? new ResourceService();
             _logger = logger ?? Logger.Log;
         }
 
@@ -83,10 +87,12 @@
         private Product GetProduct(byte productId)
         {
             IEnumerable<SettingType> productSettingTypes = _productService.GetProductSettingTypes(productId);
+            string productName = _resourceService.GetProductName(productId, _settingContext.Language);
 
             return new Product
             {
                 Id = productId,
+                Name = productName,
                 SettingTypes = productSettingTypes
             };
         }
@@ -138,7 +144,7 @@
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
             if (preTasks != null
-                && !preTasks.GetType().GetMethod("PreGetCustomerSettingType").IsVirtual)
+                && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
             {
                 preTasks.PreGetCustomerSettingType(_settingContext, queryParam);
             }
@@ -150,6 +156,7 @@
             var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParam);
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
+            customerSettingType.SettingLevel = productSettingType.SettingLevel;
             return customerSettingType;
         }
 
@@ -159,7 +166,7 @@
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
             if (postTasks != null
-                && !postTasks.GetType().GetMethod("PostGetCustomerSettingType").IsVirtual)
+                && IsOverride(postTasks.GetType().GetMethod("PostGetCustomerSettingType")))
             {
                 customerSettingType = postTasks.PostGetCustomerSettingType(_settingContext, queryParam, customerSettingType);
             }
@@ -244,7 +251,7 @@
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
-                && !preTasks.GetType().GetMethod("PreUpdateCustomerSettingType").IsVirtual)
+                && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
                 return preTasks.PreUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
             }
@@ -266,7 +273,7 @@
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
-                && !postTasks.GetType().GetMethod("PostUpdateCustomerSettingType").IsVirtual)
+                && IsOverride(postTasks.GetType().GetMethod("PostUpdateCustomerSettingType")))
             {
                 return postTasks.PostUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel, result);
             }
@@ -381,7 +388,7 @@
             CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
-            if (preTasks != null && !preTasks.GetType().GetMethod("PreUpdateMultipleCustomersSettingType").IsVirtual)
+            if (preTasks != null && IsOverride(preTasks.GetType().GetMethod("PreUpdateMultipleCustomersSettingType")))
             {
                 return preTasks.PreUpdateMultipleCustomersSettingType(_settingContext, customers, customerLevel, settingType, uplineLevel);
             }
@@ -439,7 +446,7 @@
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
             if (postTasks != null
-                && !postTasks.GetType().GetMethod("PostUpdateMultipleCustomersSettingType").IsVirtual)
+                && IsOverride(postTasks.GetType().GetMethod("PostUpdateMultipleCustomersSettingType")))
             {
                 return postTasks.PostUpdateMultipleCustomersSettingType(_settingContext, customers, settingType, uplineLevel, settingTypeMultipleResult);
             }
@@ -450,6 +457,11 @@
         private void LogError(Exception ex)
         {
             _logger.Error(ex.Message, ex);
+        }
+
+        public bool IsOverride(MethodInfo methodInfo)
+        {
+            return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
         }
     }
 }

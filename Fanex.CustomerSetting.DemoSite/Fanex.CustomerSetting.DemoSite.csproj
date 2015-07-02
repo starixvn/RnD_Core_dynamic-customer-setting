@@ -67,6 +67,10 @@
       <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
@@ -87,6 +91,10 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EnterpriseLibrary.Logging.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -191,6 +199,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BackendTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,6 +207,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.Template1.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.Template1.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.Template1.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
     </Content>
@@ -220,7 +234,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -235,10 +248,15 @@
     <Content Include="bower.json" />
     <Content Include="package.json" />
     <Content Include="tsd.json" />
+    <Content Include="Views\BackendTest\Index.cshtml" />
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj">
+      <Project>{2747b4d9-3cb5-44ba-aeb1-b210e92d8617}</Project>
+      <Name>Fanex.CustomerSetting.RemotingRefApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>
@@ -254,6 +272,10 @@
     <ProjectReference Include="..\Fanex.CustomerSetting.SettingType3.Template1\Fanex.CustomerSetting.SettingType3.Template1.csproj">
       <Project>{a41ab0a9-82a9-45a8-90f1-3bd30c1a3f93}</Project>
       <Name>Fanex.CustomerSetting.SettingType3.Template1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType4.Template1\Fanex.CustomerSetting.SettingType4.Template1.csproj">
+      <Project>{17008f66-76c2-482c-b8e0-e838f809ee53}</Project>
+      <Name>Fanex.CustomerSetting.SettingType4.Template1</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Web\Fanex.CustomerSetting.Web.csproj">
       <Project>{f1196671-434d-4883-8fff-b53a1d526f3b}</Project>

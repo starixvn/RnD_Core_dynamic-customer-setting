@@ -50,13 +50,13 @@
   <ItemGroup>
     <Compile Include="Handlers\SettingType1PostTasksTests.cs" />
     <Compile Include="Handlers\SettingType1PreTasksTests.cs" />
-    <Compile Include="Models\AgentOnMemberPositionTakingItemTests.cs" />
-    <Compile Include="Models\AgentPositionTakingItemTests.cs" />
-    <Compile Include="Models\BasePositionTakingItemTests.cs" />
-    <Compile Include="Models\MasterOnMemberPositionTakingItemTests.cs" />
-    <Compile Include="Models\MasterPositionTakingItemTests.cs" />
-    <Compile Include="Models\SuperOnMemberPositionTakingItemTests.cs" />
-    <Compile Include="Models\SuperPositionTakingItemTests.cs" />
+    <Compile Include="Models\AgentPTOnMemberItemTests.cs" />
+    <Compile Include="Models\AgentPTItemTests.cs" />
+    <Compile Include="Models\BasePTItemTests.cs" />
+    <Compile Include="Models\MasterPTOnMemberItemTests.cs" />
+    <Compile Include="Models\MasterPTItemTests.cs" />
+    <Compile Include="Models\SuperPTOnMemberItemTests.cs" />
+    <Compile Include="Models\SuperPTItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MemberGroupServiceTests.cs" />
     <Compile Include="Services\PositionTakingMessageServiceTests.cs" />

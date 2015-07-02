@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Functions>
+  <Function Name="Customer_Setting_Type_1_Template_1">
+    <Setting Key="CustSetting_SuperSettingSelect_1_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_MasterSettingSelect_1_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_AgentSettingSelect_1_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_MemberSettingSelect_1_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_CustomerSettingModeSelect_1_1" SpName="Acc_CustSetting_CustomerSettingModeSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
+    
+    <Setting Key="CustSetting_SuperPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_MasterPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_MasterPTOnMemberMultiUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_AgentPTOnMemberMultiUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_SuperPTUpd_1_1" SpName="Acc_CustSetting_SuperPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_MasterPTUpd_1_1" SpName="Acc_CustSetting_MasterPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTUpd_1_1" SpName="Acc_CustSetting_AgentPTUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_SuperPTOnMemberUpd_1_1" SpName="Acc_CustSetting_SuperPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_MasterPTOnMemberUpd_1_1" SpName="Acc_CustSetting_MasterPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTOnMemberUpd_1_1" SpName="Acc_CustSetting_AgentPTOnMemberUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />
+  </Function>
+</Functions>

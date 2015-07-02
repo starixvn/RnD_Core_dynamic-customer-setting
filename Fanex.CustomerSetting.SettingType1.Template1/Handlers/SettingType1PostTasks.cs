@@ -22,7 +22,7 @@
             IResourceService resourceService)
             : base(resourceService)
         {
-            MessageService = messageService ?? new PositionTakingMessageService(ResourceService);
+            MessageService = messageService ?? new PTMessageService(ResourceService);
         }
 
         public override SettingType PostGetCustomerSettingType(

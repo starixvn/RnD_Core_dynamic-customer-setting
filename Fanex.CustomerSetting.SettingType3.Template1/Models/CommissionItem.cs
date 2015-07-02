@@ -36,17 +36,17 @@
 
         public override IResult Validate()
         {
-            if (CommRate > SettingType3Constants.MaxCommissionRateValue)
+            if (CommRate > CommissionConstants.MaxCommissionRateValue)
             {
                 return new Result(
-                    SettingType3ErrorCode.CommissionRateExceedMaxValue,
+                    CommissionErrorCode.CommissionRateExceedMaxValue,
                     CommissionMessage.CommRateCannotBeExceedMaxValue);
             }
 
             if (CommRate < 0)
             {
                 return new Result(
-                    SettingType3ErrorCode.CommRateIsNegative,
+                    CommissionErrorCode.CommRateIsNegative,
                     CommissionMessage.CommRateCannotBeNegative);
             }
 

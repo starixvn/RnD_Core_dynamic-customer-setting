@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.DataAccesses
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Configurations;
@@ -35,10 +36,10 @@
 
         private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, SettingType4Constants.SettingTypeId, SettingType4Constants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId, ProductStatusConstants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, SettingType4Constants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId);
                 return objectDb.Query<ProductStatusItemDto>(parameterValues);
             }
         }
@@ -50,25 +51,23 @@
             byte productId, 
             CustomerLevel? uplineLevel)
         {
-            var storedProcedureParams = new
-            {
-                UserId = settingContext.Actor.Id,
-                SubAccId = settingContext.Actor.SubAccountId,
-                CustId = customer.Id,
-                Ip = settingContext.IP,
-                ErrCode = 0,
-                ErrMsg = string.Empty,
-                MsgType = 0,
-                IsDisabled = settingType.ToXml()
-            };
+            var param = new Hashtable();
+            param.Add("userid", settingContext.Actor.Id);
+            param.Add("subaccid", settingContext.Actor.SubAccountId);
+            param.Add("custid", customer.Id);
+            param.Add("ip", settingContext.IP);
+            param.Add("isdisabled", settingType.ToXml());
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("msgtype", 0);
 
             var updateSettingKey = "CustSetting_DisableStatUpd_4_1";
-            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
+            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
             {
                 updateSettingKey += string.Format("_{0}", productId);
             }
 
-            return ExecuteNonQuery(updateSettingKey, storedProcedureParams);
+            return ExecuteNonQuery(updateSettingKey, param);
         }
     }
 }

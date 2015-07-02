@@ -46,47 +46,47 @@
                 return Result.Success;
             }
 
-            if (MinBet > SettingType2Constants.MaxBetLimitValue
-                || MaxBet > SettingType2Constants.MaxBetLimitValue
-                || MaxPerMatch > SettingType2Constants.MaxBetLimitValue)
+            if (MinBet > BetLimitConstants.MaxBetLimitValue
+                || MaxBet > BetLimitConstants.MaxBetLimitValue
+                || MaxPerMatch > BetLimitConstants.MaxBetLimitValue)
             {
                 return new Result(
-                    SettingType2ErrorCode.BetLimitExceedMaxValue,
+                    BetLimitErrorCode.BetLimitExceedMaxValue,
                     BetLimitMessage.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
                 return new Result(
-                    SettingType2ErrorCode.MinBetIsNegative,
+                    BetLimitErrorCode.MinBetIsNegative,
                     BetLimitMessage.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
                 return new Result(
-                    SettingType2ErrorCode.MaxBetIsNegative,
+                    BetLimitErrorCode.MaxBetIsNegative,
                     BetLimitMessage.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
                 return new Result(
-                    SettingType2ErrorCode.MaxPerMatchIsNegative,
+                    BetLimitErrorCode.MaxPerMatchIsNegative,
                     BetLimitMessage.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
                 return new Result(
-                    SettingType2ErrorCode.MinBetIsGreaterThanMaxBet,
+                    BetLimitErrorCode.MinBetIsGreaterThanMaxBet,
                     BetLimitMessage.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
                 return new Result(
-                    SettingType2ErrorCode.MaxBetIsGreaterThanMaxPerMatch,
+                    BetLimitErrorCode.MaxBetIsGreaterThanMaxPerMatch,
                     BetLimitMessage.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 

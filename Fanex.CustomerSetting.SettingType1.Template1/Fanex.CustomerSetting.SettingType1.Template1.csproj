@@ -71,9 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\PositionTakingMessageType.cs" />
-    <Compile Include="Constants\SettingType1Constants.cs" />
-    <Compile Include="Constants\SettingType1ErrorCode.cs" />
+    <Compile Include="Constants\PTMessageType.cs" />
+    <Compile Include="Constants\PTConstants.cs" />
+    <Compile Include="Constants\PTErrorCode.cs" />
     <Compile Include="DataAccesses\SettingType1DataAccess.cs" />
     <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
     <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />
@@ -86,25 +86,25 @@
     <Compile Include="Dtos\UpdateMultipleMemberPTParam.cs" />
     <Compile Include="Handlers\SettingType1PostTasks.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
-    <Compile Include="Models\MasterPositionTaking.cs" />
+    <Compile Include="Models\MasterPT.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\AgentOnMemberPositionTakingItem.cs" />
-    <Compile Include="Models\BasePositionTakingItem.cs" />
-    <Compile Include="Models\SuperPositionTakingItem.cs" />
-    <Compile Include="Models\AgentPositionTakingItem.cs" />
-    <Compile Include="Models\MasterOnMemberPositionTakingItem.cs" />
-    <Compile Include="Models\MasterPositionTakingItem.cs" />
-    <Compile Include="Models\SuperOnMemberPositionTakingItem.cs" />
+    <Compile Include="Models\AgentPTOnMemberItem.cs" />
+    <Compile Include="Models\BasePTItem.cs" />
+    <Compile Include="Models\SuperPTItem.cs" />
+    <Compile Include="Models\AgentPTItem.cs" />
+    <Compile Include="Models\MasterPTOnMemberItem.cs" />
+    <Compile Include="Models\MasterPTItem.cs" />
+    <Compile Include="Models\SuperPTOnMemberItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\PositionTakingMessage.Designer.cs">
+    <Compile Include="Resources\PTMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PositionTakingMessage.resx</DependentUpon>
+      <DependentUpon>PTMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\IMemberGroupService.cs" />
     <Compile Include="Services\MemberGroupService.cs" />
-    <Compile Include="Services\PositionTakingMessageService.cs" />
-    <Compile Include="Utilities\PositionTakingFormatter.cs" />
+    <Compile Include="Services\PTMessageService.cs" />
+    <Compile Include="Utilities\PTFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
@@ -124,9 +124,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Resources\PositionTakingMessage.resx">
+    <EmbeddedResource Include="Resources\PTMessage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PositionTakingMessage.Designer.cs</LastGenOutput>
+      <LastGenOutput>PTMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -49,7 +49,7 @@
                 UserId = settingContext.Actor.Id,
                 SubAccId = settingContext.Actor.SubAccountId,
                 UplineLevel = uplineLevel,
-                PositionTakingXml = settingType.ToXml()
+                PTXml = settingType.ToXml()
             };
 
             var updatedResult = _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParam);
@@ -67,7 +67,7 @@
             var subResults = new List<SettingResult>();
             foreach (Customer member in groupedMembers)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.Id, member.UserName, SettingType1Constants.SettingTypeId, Label.PositionTaking);
+                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.Id, member.UserName, PTConstants.SettingTypeId, Label.PositionTaking);
                 subResults.Add(settingResult);
             }
 

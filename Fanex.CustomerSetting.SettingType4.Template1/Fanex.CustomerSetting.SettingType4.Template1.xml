@@ -6,6 +6,6 @@
     <Setting Key="CustSetting_AgentSettingSelect_4_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="CustSetting_MemberSettingSelect_4_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
 
-    <Setting Key="CustSetting_DisableStatUpd_4_1" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_DisableStatUpd_4_1" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>

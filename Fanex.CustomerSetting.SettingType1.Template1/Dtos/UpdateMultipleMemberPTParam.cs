@@ -12,7 +12,7 @@
 
         public string IP { get; set; }
 
-        public string PositionTakingXml { get; set; }
+        public string PTXml { get; set; }
 
         public CustomerLevel UplineLevel { get; set; }
     }

@@ -64,7 +64,7 @@
                 ErrCode = 0,
                 ErrMsg = string.Empty,
                 MsgType = 0,
-                PT = updateParam.PositionTakingXml
+                PT = updateParam.PTXml
             };
         }
     }

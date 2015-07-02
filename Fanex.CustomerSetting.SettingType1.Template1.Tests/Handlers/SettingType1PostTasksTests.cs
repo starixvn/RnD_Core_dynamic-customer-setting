@@ -40,7 +40,7 @@
                 {
                     SettingItems = new List<ISettingItem>
                     {
-                        new AgentOnMemberPositionTakingItem
+                        new AgentPTOnMemberItem
                         {
                             BetTypeId = 1,
                             SportTypeId = 1
@@ -60,7 +60,7 @@
                 settingType);
 
             //// Assert
-            AgentOnMemberPositionTakingItem settingItem = actualSettingType.SettingItems.First() as AgentOnMemberPositionTakingItem;
+            AgentPTOnMemberItem settingItem = actualSettingType.SettingItems.First() as AgentPTOnMemberItem;
             Assert.AreEqual(sportTypeName, settingItem.SportTypeName);
             Assert.AreEqual(betTypeName, settingItem.BetTypeName);
         }

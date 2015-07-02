@@ -16,7 +16,7 @@
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
                 IsLive ? Label.MaxLive : Label.Max,
-                PositionTakingFormatter.FormatPositionTaking(MaxPT));
+                PTFormatter.FormatPT(MaxPT));
         }
     }
 }

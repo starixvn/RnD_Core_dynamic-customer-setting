@@ -136,7 +136,7 @@
                         && parameters.UplineLevel == uplineLevel
                         && parameters.SubAccId == _settingContext.Actor.SubAccountId
                         && parameters.IP == _settingContext.IP
-                        && parameters.PositionTakingXml == settingType.ToXml()));
+                        && parameters.PTXml == settingType.ToXml()));
         }
 
         #endregion Update Grouped Members Setting

@@ -46,7 +46,7 @@
             var actualSettingKey = criteria.GetSettingKey();
 
             //// Arrange
-            Assert.AreEqual("Acc_CustSetting_SettingDetailSelect", actualSettingKey);
+            Assert.AreEqual("Acc_CustSetting_UserInfoSelect", actualSettingKey);
         }
 
         private CustomerQueryCriteria CreateCustomerQueryCriteriaFakeObject()

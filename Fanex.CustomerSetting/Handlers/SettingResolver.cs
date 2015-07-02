@@ -56,7 +56,7 @@
 
         private string GetFullTypeName(
             string typeNameFormat,
-            byte settingTypeId,
+            short settingTypeId,
             byte settingTemplate)
         {
             string assemblyName = string.Format(AssemblyFormat, settingTypeId, settingTemplate);

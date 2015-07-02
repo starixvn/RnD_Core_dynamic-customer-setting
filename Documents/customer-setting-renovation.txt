@@ -18,4 +18,11 @@ exec [dbo].[changeSettingLevel]
  @SettingLevel =4
 
 Company select super:
-exec Acc_CustSetting_SuperSettingSelect @CustID=1177375, @ProductID=255
+exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=1
+
+exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=2
+
+exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=3
+
+exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=4
+

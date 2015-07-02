@@ -10,9 +10,9 @@
         private const string SystemIdName = "SystemId";
         private const string CustomValidationServiceTypeName = "CustomValidationServiceType";
         private const string SettingTypeCollectionName = "SettingTypes";
-        private const string ProductNotUsesDefaultSPCacheKeyFormat = "{0}_{1}_{2}";
+        private const string ProductDoesNotUsesDefaultSPCacheKeyFormat = "{0}_{1}_{2}";
         private static CustomerSettingSection _settings = ConfigurationManager.GetSection(CustomerSettingsName) as CustomerSettingSection;
-        private List<string> _productNotUsesDefaultSPCached = new List<string>();
+        private List<string> _productsDontUseDefaultSPsCached = new List<string>();
 
         public static CustomerSettingSection Settings
         {
@@ -49,34 +49,34 @@
             }
         }
 
-        public bool IsProductDoesNotUseDefaultStoredProcedures(byte settingTypeId, byte settingTemplateId, byte productId)
+        public bool IsProductNotUseDefaultStoredProcedures(short settingTypeId, byte settingTemplateId, byte productId)
         {
             if (SettingTypes == null || SettingTypes.Count == 0)
             {
-                return true;
+                return false;
             }
 
-            if (!_productNotUsesDefaultSPCached.Any())
+            if (!_productsDontUseDefaultSPsCached.Any())
             {
-                CachedProductNotUseStoredProceduresDefault();
+                CachedProductNotUseDefaultStoredProcedures();
             }
 
-            var cacheKeyFormatted = string.Format(ProductNotUsesDefaultSPCacheKeyFormat, settingTypeId, settingTemplateId, productId);
-            return _productNotUsesDefaultSPCached.Contains(cacheKeyFormatted);
+            var cacheKeyFormatted = string.Format(ProductDoesNotUsesDefaultSPCacheKeyFormat, settingTypeId, settingTemplateId, productId);
+            return _productsDontUseDefaultSPsCached.Contains(cacheKeyFormatted);
         }
 
-        private void CachedProductNotUseStoredProceduresDefault()
+        private void CachedProductNotUseDefaultStoredProcedures()
         {
             foreach (SettingTypeElement settingType in SettingTypes)
             {
-                if (!string.IsNullOrEmpty(settingType.ProductIds))
+                if (!string.IsNullOrEmpty(settingType.ProductIdsNotUseDefaultStoreProcedures))
                 {
-                    string[] productIds = settingType.ProductIds.Split(',');
+                    string[] productIds = settingType.ProductIdsNotUseDefaultStoreProcedures.Split(',');
                     foreach (string productId in productIds)
                     {
-                        _productNotUsesDefaultSPCached.Add(
+                        _productsDontUseDefaultSPsCached.Add(
                             string.Format(
-                                ProductNotUsesDefaultSPCacheKeyFormat,
+                                ProductDoesNotUsesDefaultSPCacheKeyFormat,
                                 settingType.SettingTypeId,
                                 settingType.TemplateId,
                                 productId));

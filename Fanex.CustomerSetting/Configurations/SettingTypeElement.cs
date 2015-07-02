@@ -6,7 +6,7 @@
     {
         private const string SettingTypeIdAttName = "id";
         private const string SettingTemplateIdAttName = "template";
-        private const string ProductIdsAttName = "productIds";
+        private const string ProductIdsNotUseDefaultStoreProceduresAttName = "productIdsNotUseDefaultStoreProcedures";
 
         [ConfigurationProperty(SettingTypeIdAttName, IsRequired = true, IsKey = true)]
         public int SettingTypeId
@@ -36,17 +36,17 @@
             }
         }
 
-        [ConfigurationProperty(ProductIdsAttName, IsRequired = false, IsKey = true)]
-        public string ProductIds
+        [ConfigurationProperty(ProductIdsNotUseDefaultStoreProceduresAttName, IsRequired = false, IsKey = true)]
+        public string ProductIdsNotUseDefaultStoreProcedures
         {
             get
             {
-                return (string)this[ProductIdsAttName];
+                return (string)this[ProductIdsNotUseDefaultStoreProceduresAttName];
             }
 
             set
             {
-                this[ProductIdsAttName] = value;
+                this[ProductIdsNotUseDefaultStoreProceduresAttName] = value;
             }
         }
     }

@@ -16,7 +16,7 @@
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
                 IsLive ? Label.MinLive : Label.Min,
-                PositionTakingFormatter.FormatPositionTaking(MinPT));
+                PTFormatter.FormatPT(MinPT));
         }
     }
 }

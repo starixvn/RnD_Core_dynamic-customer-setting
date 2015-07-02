@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.DataAccesses
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
@@ -34,7 +35,7 @@
             {
                 bool isAllowMasterPT = ReadIsAllowMasterPT(queryParam.CustomerId);
 
-                return new MasterPositionTaking
+                return new MasterPT
                 {
                     Name = settingType.Name,
                     IsDisableMasterAutoPT = !isAllowMasterPT,
@@ -55,39 +56,39 @@
 
         private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, SettingType1Constants.SettingTypeId, SettingType1Constants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(queryParam, PTConstants.SettingTypeId, PTConstants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                return QueryPositionTakingItems(objectDb, queryParam);
+                return QueryPTItems(objectDb, queryParam);
             }
         }
 
-        private IEnumerable<BasePositionTakingItem> QueryPositionTakingItems(ObjectDb objectDb, QuerySettingParam queryParam)
+        private IEnumerable<BasePTItem> QueryPTItems(ObjectDb objectDb, QuerySettingParam queryParam)
         {
-            var storedProcedureParams = GetSPParamsForGettingSettingType(queryParam, SettingType1Constants.SettingTypeId);
+            var storedProcedureParams = GetSPParamsForGettingSettingType(queryParam, PTConstants.SettingTypeId);
 
             switch (queryParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
-                    return objectDb.Query<SuperPositionTakingItem>(storedProcedureParams);
+                    return objectDb.Query<SuperPTItem>(storedProcedureParams);
 
                 case CustomerLevel.Master:
-                    return objectDb.Query<MasterPositionTakingItem>(storedProcedureParams);
+                    return objectDb.Query<MasterPTItem>(storedProcedureParams);
 
                 case CustomerLevel.Agent:
-                    return objectDb.Query<AgentPositionTakingItem>(storedProcedureParams);
+                    return objectDb.Query<AgentPTItem>(storedProcedureParams);
 
                 case CustomerLevel.Member:
                     switch (queryParam.UplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            return objectDb.Query<SuperOnMemberPositionTakingItem>(storedProcedureParams);
+                            return objectDb.Query<SuperPTOnMemberItem>(storedProcedureParams);
 
                         case CustomerLevel.Master:
-                            return objectDb.Query<MasterOnMemberPositionTakingItem>(storedProcedureParams);
+                            return objectDb.Query<MasterPTOnMemberItem>(storedProcedureParams);
 
                         case CustomerLevel.Agent:
-                            return objectDb.Query<AgentOnMemberPositionTakingItem>(storedProcedureParams);
+                            return objectDb.Query<AgentPTOnMemberItem>(storedProcedureParams);
 
                         default:
                             throw new InvalidOperationException("This customer level is not supported");
@@ -110,34 +111,34 @@
                 throw new ArgumentNullException("customer");
             }
 
-            var storedProcedureParams = GetSPParamsForUpdatingPositionTaking(settingContext, customer, settingType);
-            var settingKey = GetSettingKeyForUpdatingPositionTaking(customer.Level, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
+            var storedProcedureParams = GetSPParamsForUpdatingPT(settingContext, customer, settingType);
+            var settingKey = GetSettingKeyForUpdatingPT(customer.Level, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
 
-        private dynamic GetSPParamsForUpdatingPositionTaking(
+        private Hashtable GetSPParamsForUpdatingPT(
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType)
         {
-            return new
-            {
-                UserId = settingContext.Actor.Id,
-                SubAccId = settingContext.Actor.SubAccountId,
-                CustId = customer.Id,
-                Ip = settingContext.IP,
-                ErrCode = 0,
-                ErrMsg = string.Empty,
-                MsgType = 0,
-                PT = settingType.ToXml()
-            };
+            var param = new Hashtable();
+            param.Add("userid", settingContext.Actor.Id);
+            param.Add("subaccid", settingContext.Actor.SubAccountId);
+            param.Add("custid", customer.Id);
+            param.Add("ip", settingContext.IP);
+            param.Add("pt", settingType.ToXml());
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("msgtype", 0);
+
+            return param;
         }
 
-        private string GetSettingKeyForUpdatingPositionTaking(
+        private string GetSettingKeyForUpdatingPT(
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
-            byte settingTypeId,
+            short settingTypeId,
             byte settingTemplateId,
             byte productId)
         {
@@ -181,7 +182,7 @@
                     throw new InvalidOperationException("This customer level is not supported");
             }
 
-            if (CustomerSettingSection.Settings.IsProductDoesNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, productId))
+            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, productId))
             {
                 updateSettingKey += string.Format("_{0}", productId);
             }

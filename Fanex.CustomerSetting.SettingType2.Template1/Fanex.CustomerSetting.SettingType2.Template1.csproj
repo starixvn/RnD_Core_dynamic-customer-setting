@@ -67,9 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\SettingType2Constants.cs" />
-    <Compile Include="Constants\SettingType2ErrorCode.cs" />
-    <Compile Include="Constants\SettingType2MessageType.cs" />
+    <Compile Include="Constants\BetLimitConstants.cs" />
+    <Compile Include="Constants\BetLimitErrorCode.cs" />
+    <Compile Include="Constants\BetLimitMessageType.cs" />
     <Compile Include="DataAccesses\SettingType2DataAccess.cs" />
     <Compile Include="Dtos\BetLimitItemDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
