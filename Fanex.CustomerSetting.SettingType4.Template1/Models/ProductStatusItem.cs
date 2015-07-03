@@ -39,14 +39,7 @@
 
         public override IResult Validate()
         {
-            if (Downline == null)
-            {
-                return new Result(
-                    ProductStatusErrorCode.DownlineProductStatusIsNull,
-                    ProductStatusMessage.DownlineProductStatusCannotBeNull);
-            }
-
-            if (IsDisabled && !Downline.IsDisabled)
+            if (Downline != null && IsDisabled && !Downline.IsDisabled)
             {
                 return new Result(
                     ProductStatusErrorCode.DownlineIsEnabledWhenUplineIsDisabled,

@@ -110,6 +110,7 @@
 
             if (customer != null)
             {
+                customer.Id = customerId;
                 customer.Level = customerLevel;
             }
 

@@ -117,7 +117,7 @@
             {
                 CheckUpdatingSettingArguments(updatingParam);
 
-                return ValidateUpdateSettingParts(updatingParam);
+                return ValidateUpdateSettingSteps(updatingParam);
             }
             catch (Exception ex)
             {
@@ -135,7 +135,7 @@
             Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }
 
-        private IResult ValidateUpdateSettingParts(UpdatingSettingParam updatingParam)
+        private IResult ValidateUpdateSettingSteps(UpdatingSettingParam updatingParam)
         {
             var setting = updatingParam.Setting;
             var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
@@ -193,7 +193,7 @@
             {
                 CheckUpdatingMultipleSettingArguments(updatingMultipleParam);
 
-                return ValidateUpdatingMultipleSettingParts(updatingMultipleParam);
+                return ValidateUpdatingMultipleSettingSteps(updatingMultipleParam);
             }
             catch (Exception ex)
             {
@@ -209,7 +209,7 @@
             Check.Argument.IsNotNull(updatingMultipleParam.Customers, "updatingMultipleParam.Customers");
         }
 
-        private IResult ValidateUpdatingMultipleSettingParts(UpdatingMultipleSettingParam updatingMultipleParam)
+        private IResult ValidateUpdatingMultipleSettingSteps(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParam);
             if (!updatingSettingValidationResult.IsSuccessful)

@@ -9,6 +9,11 @@
 
         public byte SettingLevel { get; set; }
 
+        public string TypeName
+        {
+            get { return "SettingItemStub"; }
+        }
+
         public IResult Validate()
         {
             return Result.Success;

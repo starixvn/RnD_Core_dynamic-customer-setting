@@ -18,6 +18,17 @@ using Fanex.CustomerSetting.Services;
 
         public string BetTypeName { get; set; }
 
+        /// <summary>
+        /// For Controller create exactly concrete class when get json from client.
+        /// </summary>
+        public string TypeName
+        {
+            get
+            {
+                return this.GetType().AssemblyQualifiedName;
+            }
+        }
+
         public virtual IResult Validate()
         {
             if (SportTypeId <= 0 || BetTypeId <= 0)

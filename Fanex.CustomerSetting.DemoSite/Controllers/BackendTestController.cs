@@ -1,11 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Web.Contexts;
+using Fanex.CustomerSetting.Dtos.Params;
+using Fanex.CustomerSetting.Enumerations;
+using Fanex.CustomerSetting.Models;
+using Fanex.CustomerSetting.Services;
+using Fanex.CustomerSetting.Services.Impl;
+using Fanex.CustomerSetting.Web.Contexts;
 
     public class BackendTestController : Controller
     {
@@ -30,7 +31,19 @@
                 ProductId = producId,
                 UplineLevel = uplineLevel
             });
+
+            UpdateSetting(setting, uplineLevel);
+
             return View();
+        }
+
+        private void UpdateSetting(ISetting setting, CustomerLevel? uplineLevel)
+        {
+            var result = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
+                {
+                    Setting = setting,
+                    UplineLevel = uplineLevel
+                });
         }
 
         public ActionResult Login(

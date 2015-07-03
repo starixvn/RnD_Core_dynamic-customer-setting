@@ -20,7 +20,7 @@
             BetTypeId = betLimitItemDto.BetTypeId;
             MaxBet = betLimitItemDto.MaxBet;
             MinBet = betLimitItemDto.MinBet;
-            MaxPerMatch = betLimitItemDto.MaxBetMax;
+            MaxPerMatch = betLimitItemDto.MaxPerMatch;
             Constraint = new BetLimitItem
             {
                 MinBet = betLimitItemDto.MinBetMin,

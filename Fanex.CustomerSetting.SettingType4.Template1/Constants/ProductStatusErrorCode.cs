@@ -3,6 +3,5 @@
     internal static class ProductStatusErrorCode
     {
         public const int DownlineIsEnabledWhenUplineIsDisabled = 9101;
-        public const int DownlineProductStatusIsNull = 9102;
     }
 }

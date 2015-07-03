@@ -20,6 +20,17 @@
 
         public IEnumerable<ISettingItem> SettingItems { get; set; }
 
+        /// <summary>
+        /// For Controller create exactly concrete class when get json from client.
+        /// </summary>
+        public string TypeName
+        {
+            get
+            {
+                return this.GetType().AssemblyQualifiedName;
+            }
+        }
+
         public virtual string ToXml()
         {
             var settingItemsXml = string.Join(string.Empty, SettingItems.Select(settingItem => settingItem.ToXml()));

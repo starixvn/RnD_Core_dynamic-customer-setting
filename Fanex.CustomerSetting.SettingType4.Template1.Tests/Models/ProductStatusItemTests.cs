@@ -19,20 +19,6 @@
         }
 
         [Test]
-        public void Validate_DownlineProductStatusIsNull_ReturnErrorCode()
-        {
-            //// Arrange
-            _productStatusItem.IsDisabled = true;
-            _productStatusItem.Downline = null;
-
-            //// Act
-            var actualResult = _productStatusItem.Validate();
-
-            //// Assert
-            Assert.AreEqual(9102, actualResult.Code);
-        }
-
-        [Test]
         public void Validate_CurrentStatusIsDisabledAndDownlineStatusIsEnabled_ReturnErrorCode()
         {
             //// Arrange
