@@ -4,12 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.Logging;
 
     public class ValidationService : IValidationService
@@ -37,10 +39,10 @@
             Check.Argument.IsNotNegativeOrZero(queryParam.CustomerId, "queryParam.CustomerId");
             Check.Argument.IsNotNegativeOrZero((byte)queryParam.CustomerLevel, "queryParam.CustomerLevel");
 
-            return ValidateViewingPermission(queryParam.CustomerId, queryParam.CustomerLevel);
+            return ValidateViewingPermission(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
         }
 
-        private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel)
+        private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
             var levelValidationResult = ValidateActorLevel(_settingContext.Actor.Level, customerLevel);
             if (!levelValidationResult.IsSuccessful)
@@ -54,7 +56,7 @@
                 return permissionValidationResult;
             }
 
-            return Result.Success;
+            return ValidateUplineLevelIncaseOfEditingMember(customerLevel, uplineLevel);
         }
 
         private IResult ValidateActorLevel(UserLevel actorLevel, CustomerLevel customerLevel)
@@ -111,6 +113,16 @@
             return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
+        private IResult ValidateUplineLevelIncaseOfEditingMember(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        {
+            if (customerLevel == CustomerLevel.Member && uplineLevel == null)
+            {
+                return new Result(ResultValue.AccessDenied, Message.UplineLevelCannotBeNullIncaseOfEdittingMember);
+            }
+
+            return Result.Success;
+        }
+
         public IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
         {
             try
@@ -138,7 +150,7 @@
         private IResult ValidateUpdateSettingSteps(UpdatingSettingParam updatingParam)
         {
             var setting = updatingParam.Setting;
-            var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level);
+            var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level, updatingParam.UplineLevel);
             if (!viewingPermissionValidationResult.IsSuccessful)
             {
                 return viewingPermissionValidationResult;

@@ -55,7 +55,7 @@
                 ProductXmlFormat,
                 base.ToXml(),
                 IsDisabled ? 1 : 0,
-                Downline.IsDisabled ? 1 : 0);
+                (Downline != null && Downline.IsDisabled) ? 1 : 0);
         }
     }
 }

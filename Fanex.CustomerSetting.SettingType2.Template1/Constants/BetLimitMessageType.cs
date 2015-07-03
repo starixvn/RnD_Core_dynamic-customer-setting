@@ -2,6 +2,6 @@
 {
     internal static class BetLimitMessageType
     {
-        public const int BetLimitViolation = 51;
+        public const int BetLimitViolation = 71;
     }
 }

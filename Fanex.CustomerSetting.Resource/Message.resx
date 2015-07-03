@@ -183,4 +183,7 @@
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
     <value>Updated product status successfully.</value>
   </data>
+  <data name="UplineLevelCannotBeNullIncaseOfEdittingMember" xml:space="preserve">
+    <value>Upline Level cannot be null incase of editting member</value>
+  </data>
 </root>

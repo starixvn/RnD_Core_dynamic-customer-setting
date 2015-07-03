@@ -88,7 +88,7 @@
             string expectedSubMessage)
         {
             /// Arrange
-            int msgType = 51; //// Wrong Bet Limit
+            int msgType = 71; //// Wrong Bet Limit
             var rawMessage = "<Root MsgID=\"10003\" Msg=\"\">"
                                 + "<Row SportType=\"1\" BetType=\"1\" />"
                                 + "</Root>";

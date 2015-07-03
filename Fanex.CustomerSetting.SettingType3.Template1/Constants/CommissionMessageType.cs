@@ -2,6 +2,6 @@
 {
     internal static class CommissionMessageType
     {
-        public const int CommissionViolation = 71;
+        public const int CommissionViolation = 51;
     }
 }

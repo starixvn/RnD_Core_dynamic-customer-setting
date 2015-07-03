@@ -75,7 +75,8 @@
             QuerySettingParam queryParam = new QuerySettingParam
             {
                 CustomerId = 1,
-                CustomerLevel = customerLevel
+                CustomerLevel = customerLevel,
+                UplineLevel = CustomerLevel.Agent
             };
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
@@ -115,7 +116,8 @@
             QuerySettingParam queryParam = new QuerySettingParam
             {
                 CustomerId = 1,
-                CustomerLevel = downlineLevel
+                CustomerLevel = downlineLevel,
+                UplineLevel = CustomerLevel.Super
             };
             _settingContext.Actor.Level = UserLevel.Super;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
@@ -155,7 +157,8 @@
             QuerySettingParam queryParam = new QuerySettingParam
             {
                 CustomerId = 1,
-                CustomerLevel = downlineLevel
+                CustomerLevel = downlineLevel,
+                UplineLevel = CustomerLevel.Master
             };
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
@@ -195,7 +198,8 @@
             QuerySettingParam queryParam = new QuerySettingParam
             {
                 CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member
+                CustomerLevel = CustomerLevel.Member,
+                UplineLevel = CustomerLevel.Agent
             };
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);

@@ -89,7 +89,7 @@
             string expectedSubMessage)
         {
             /// Arrange
-            int msgType = 71; //// Wrong Commission Rate
+            int msgType = 51; //// Wrong Commission Rate
             var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
                                 + "<Row SportType=\"1\" BetType=\"1\" />"
                                 + "</Root>";
