@@ -132,7 +132,10 @@
                     RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
                     var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
                     customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
-                    customerSettingTypes.Add(customerSettingType);
+                    if (customerSettingType.SettingItems.Any())
+                    {
+                        customerSettingTypes.Add(customerSettingType);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -464,6 +467,11 @@
 
         public bool IsOverride(MethodInfo methodInfo)
         {
+            if (methodInfo == null)
+            {
+                throw new ArgumentNullException("methodInfo", "methodInfo cannot be null");
+            }
+
             return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
         }
     }

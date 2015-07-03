@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    public class MasterPT : SettingType
+    public class MasterPTOnMember : SettingType
     {
         public bool IsDisableMasterAutoPT { get; set; }
     }

@@ -1,4 +1,4 @@
-Mockup:
+﻿Mockup:
 https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/New_product_template
 https://redmine.nexcel.vn/projects/cust-setting-renovation/wiki/User_interface_template
 
@@ -11,13 +11,37 @@ Web:
 https://docs.google.com/a/nexcel.vn/document/d/1v4jpkD6YG5QSM-gNFwD43ITtUgY62r8FsvRQXlgLt54/edit
 https://docs.google.com/a/nexcel.vn/spreadsheets/d/1oEN51Xw_Ie6gHBfWATV9CBl-1GSXO9HvaE5osJo2Rvs/edit#gid=757109529
 
+productId = 255;
+companyId = 8;
+superId = 2;
+superIds = '2,3,4';
+superNames = 'SA-RM,SA-US$,SA-TB';
+masterId = 4174;
+masterIds = '4174,4300,4356';
+masterNames = 'mrm,mbrm,MYRM';
+agentId = 1262;
+agentIds = '1262,1653,2400';
+agentNames = 'wsrm,SKRM,216COM';
+memberId = 1277;
+memberIds = '1277,1284,1290';
+memberNames = '428RM,305RM,302RM';
+languages = [
+    { name: "English (en-US)", value: "en-US" },
+    { name: "繁體中文 (zh-TW)", value: "zh-TW" },
+    { name: "简体中文 (zh-CN)", value: "zh-CN" },
+    { name: "日本語 (ja-JP)", value: "ja-JP" },
+    { name: "ภาษาไทย (th-TH)", value: "th-TH" },
+    { name: "한국어 (ko-KR)", value: "ko-KR" },
+    { name: "Tiếng Việt (vi-VN)", value: "vi-VN" }
+];
+
 Change setting level on DB230/CustDB:
 exec [dbo].[changeSettingLevel]
  @Product = 255,
  @SettingType =1,
  @SettingLevel =4
 
-Company select super:
+Select super:
 exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=1
 
 exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=2
@@ -26,3 +50,18 @@ exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=3
 
 exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=4
 
+Select Master:
+
+
+
+http://localhost:56271/BackendTest?customerId=1277&customerLevel=1
+
+http://localhost:56271/BackendTest?customerId=1262&customerLevel=2
+
+http://localhost:56271/BackendTest?customerId=4174&customerLevel=3
+
+http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=2
+
+http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=3
+
+http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=4

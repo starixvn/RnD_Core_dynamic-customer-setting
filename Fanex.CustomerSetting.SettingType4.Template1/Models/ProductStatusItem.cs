@@ -19,14 +19,14 @@
             SportTypeId = productStatusItemDto.SportTypeId;
             BetTypeId = productStatusItemDto.BetTypeId;
             IsDisabled = productStatusItemDto.IsDisabled;
-            Downline = productStatusItemDto.IsDownlineDisabled.HasValue ? new ProductStatusItem
+            Downline = productStatusItemDto.IsDisabledDownline.HasValue ? new ProductStatusItem
             {
-                IsDisabled = productStatusItemDto.IsDownlineDisabled.Value
+                IsDisabled = productStatusItemDto.IsDisabledDownline.Value
             }
             : null;
-            Upline = productStatusItemDto.IsUplineDisabled.HasValue ? new ProductStatusItem
+            Upline = productStatusItemDto.IsDisabledUpline.HasValue ? new ProductStatusItem
             {
-                IsDisabled = productStatusItemDto.IsUplineDisabled.Value
+                IsDisabled = productStatusItemDto.IsDisabledUpline.Value
             }
             : null;
         }

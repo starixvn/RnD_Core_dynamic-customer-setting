@@ -20,8 +20,7 @@
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
-    
-    <Setting Key="CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
+
     <Setting Key="CustSetting_CustomerSettingModeSelect_1_1" SpName="Acc_CustSetting_CustomerSettingModeSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600" />
     
     <Setting Key="CustSetting_SuperPTOnMemberMultiUpd_1_1" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600" />

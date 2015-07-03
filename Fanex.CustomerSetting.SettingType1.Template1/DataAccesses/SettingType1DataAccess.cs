@@ -24,71 +24,43 @@
                 Name = Label.PositionTaking
             };
 
-            settingType.SettingItems = ReadSettingItems(queryParam);
-            settingType = ReadIsMasterAutoPTWhenEditAgentPT(queryParam, settingType);
-            return settingType;
-        }
-
-        private SettingType ReadIsMasterAutoPTWhenEditAgentPT(QuerySettingParam queryParam, SettingType settingType)
-        {
-            if (queryParam.CustomerLevel == CustomerLevel.Agent)
-            {
-                bool isAllowMasterPT = ReadIsAllowMasterPT(queryParam.CustomerId);
-
-                return new MasterPT
-                {
-                    Name = settingType.Name,
-                    IsDisableMasterAutoPT = !isAllowMasterPT,
-                    SettingItems = settingType.SettingItems
-                };
-            }
-
-            return settingType;
-        }
-
-        private bool ReadIsAllowMasterPT(int customerId)
-        {
-            using (ObjectDb objectDb = new ObjectDb("CustSetting_AllowMasterPTSelect"))
-            {
-                return objectDb.QueryEntity<bool>(new { CustID = customerId });
-            }
-        }
-
-        private IEnumerable<ISettingItem> ReadSettingItems(QuerySettingParam queryParam)
-        {
             var settingKey = GetSettingKeyForGettingSettingType(queryParam, PTConstants.SettingTypeId, PTConstants.SettingTempateId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                return QueryPTItems(objectDb, queryParam);
+                return QueryCustomerPT(objectDb, queryParam, settingType);
             }
         }
 
-        private IEnumerable<BasePTItem> QueryPTItems(ObjectDb objectDb, QuerySettingParam queryParam)
+        private SettingType QueryCustomerPT(ObjectDb objectDb, QuerySettingParam queryParam, SettingType settingType)
         {
             var storedProcedureParams = GetSPParamsForGettingSettingType(queryParam, PTConstants.SettingTypeId);
 
             switch (queryParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
-                    return objectDb.Query<SuperPTItem>(storedProcedureParams);
+                    settingType.SettingItems = objectDb.Query<SuperPTItem>(storedProcedureParams);
+                    return settingType;
 
                 case CustomerLevel.Master:
-                    return objectDb.Query<MasterPTItem>(storedProcedureParams);
+                    settingType.SettingItems = objectDb.Query<MasterPTItem>(storedProcedureParams);
+                    return settingType;
 
                 case CustomerLevel.Agent:
-                    return objectDb.Query<AgentPTItem>(storedProcedureParams);
+                    return QueryAgentPT(objectDb, settingType, storedProcedureParams);
 
                 case CustomerLevel.Member:
                     switch (queryParam.UplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            return objectDb.Query<SuperPTOnMemberItem>(storedProcedureParams);
+                            settingType.SettingItems = objectDb.Query<SuperPTOnMemberItem>(storedProcedureParams);
+                            return settingType;
 
                         case CustomerLevel.Master:
-                            return objectDb.Query<MasterPTOnMemberItem>(storedProcedureParams);
+                            return QueryMasterPTOnMember(objectDb, settingType, storedProcedureParams);
 
                         case CustomerLevel.Agent:
-                            return objectDb.Query<AgentPTOnMemberItem>(storedProcedureParams);
+                            settingType.SettingItems = objectDb.Query<AgentPTOnMemberItem>(storedProcedureParams);
+                            return settingType;
 
                         default:
                             throw new InvalidOperationException("This customer level is not supported");
@@ -97,6 +69,40 @@
                 default:
                     throw new InvalidOperationException("This customer level is not supported");
             }
+        }
+
+        private SettingType QueryAgentPT(ObjectDb objectDb, SettingType settingType, Hashtable storedProcedureParams)
+        {
+            storedProcedureParams.Add("disableautompt", null);
+            settingType.SettingItems = objectDb.Query<AgentPTItem>(storedProcedureParams);
+            AgentPT agentPT = new AgentPT
+            {
+                Id = settingType.Id,
+                Name = settingType.Name,
+                SettingLevel = settingType.SettingLevel,
+                SettingTemplate = settingType.SettingTemplate,
+                IsDisableMasterAutoPT = Convert.ToBoolean(storedProcedureParams["disableautompt"]),
+                SettingItems = settingType.SettingItems
+            };
+
+            return agentPT;
+        }
+
+        private MasterPTOnMember QueryMasterPTOnMember(ObjectDb objectDb, SettingType settingType, Hashtable storedProcedureParams)
+        {
+            storedProcedureParams.Add("disableautompt", null);
+            settingType.SettingItems = objectDb.Query<MasterPTOnMemberItem>(storedProcedureParams);
+            MasterPTOnMember masterPTOnMember = new MasterPTOnMember
+            {
+                Id = settingType.Id,
+                Name = settingType.Name,
+                SettingLevel = settingType.SettingLevel,
+                SettingTemplate = settingType.SettingTemplate,
+                IsDisableMasterAutoPT = Convert.ToBoolean(storedProcedureParams["disableautompt"]),
+                SettingItems = settingType.SettingItems
+            };
+
+            return masterPTOnMember;
         }
 
         public virtual IResult UpdateCustomerSettingType(

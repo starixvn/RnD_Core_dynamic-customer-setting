@@ -19,14 +19,16 @@
         public ActionResult Index(
             int customerId = 2,
             CustomerLevel customerLevel = CustomerLevel.Super,
-            byte producId = 255)
+            byte producId = 255,
+            CustomerLevel uplineLevel = CustomerLevel.Super)
         {
             var setting = _settingService.GetCustomerSetting(
                 new QuerySettingParam
             {
                 CustomerId = customerId,
                 CustomerLevel = customerLevel,
-                ProductId = producId
+                ProductId = producId,
+                UplineLevel = uplineLevel
             });
             return View();
         }

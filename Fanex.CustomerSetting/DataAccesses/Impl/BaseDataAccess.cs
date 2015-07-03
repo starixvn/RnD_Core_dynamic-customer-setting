@@ -48,33 +48,28 @@
             throw new ArgumentException("result output param is nulll or does not contain neither errcode nor errmsg.");
         }
 
-        protected dynamic GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)
+        protected Hashtable GetSPParamsForGettingSettingType(QuerySettingParam querySettingParam, byte settingType)
         {
             if (querySettingParam == null)
             {
                 throw new ArgumentNullException("querySettingParam", "querySettingParam cannot be null.");
             }
 
+            Hashtable param = new Hashtable();
+            param.Add("custid", querySettingParam.CustomerId);
+            param.Add("productid", querySettingParam.ProductId);
+            param.Add("settingtype", settingType);
+
             switch (querySettingParam.CustomerLevel)
             {
                 case CustomerLevel.Super:
                 case CustomerLevel.Master:
                 case CustomerLevel.Agent:
-                    return new
-                    {
-                        CustId = querySettingParam.CustomerId,
-                        ProductId = querySettingParam.ProductId,
-                        SettingType = settingType
-                    };
+                    return param;
 
                 case CustomerLevel.Member:
-                    return new
-                    {
-                        CustId = querySettingParam.CustomerId,
-                        ProductId = querySettingParam.ProductId,
-                        RoleId = querySettingParam.UplineLevel.Value,
-                        SettingType = settingType
-                    };
+                    param.Add("roleid", querySettingParam.UplineLevel.Value);
+                    return param;
 
                 default:
                     throw new InvalidOperationException("This customer level is not supported");

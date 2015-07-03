@@ -95,15 +95,23 @@
         {
             if (settingType != null && settingType.SettingItems.Any())
             {
+                List<DefaultSettingItem> defaultSettingItems = new List<DefaultSettingItem>();
                 foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
                     if (settingItem is DefaultSettingItem)
                     {
-                        var concreteSettingItem = settingItem as DefaultSettingItem;
-                        concreteSettingItem.BetTypeName = ResourceService.GetBetTypeName(concreteSettingItem.BetTypeId, language);
-                        concreteSettingItem.SportTypeName = ResourceService.GetSportTypeName(concreteSettingItem.SportTypeId, language);
+                        var defaultSettingItem = settingItem as DefaultSettingItem;
+                        defaultSettingItem.BetTypeName = ResourceService.GetBetTypeName(defaultSettingItem.BetTypeId, language);
+                        defaultSettingItem.SportTypeName = ResourceService.GetSportTypeName(defaultSettingItem.SportTypeId, language);
+                        defaultSettingItems.Add(defaultSettingItem);
+                    }
+                    else
+                    {
+                        throw new InvalidCastException("Invalid cast default setting item.");
                     }
                 }
+
+                settingType.SettingItems = defaultSettingItems;
             }
 
             return settingType;

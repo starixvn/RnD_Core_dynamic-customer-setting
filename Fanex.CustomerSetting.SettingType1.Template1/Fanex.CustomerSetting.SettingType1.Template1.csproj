@@ -86,10 +86,11 @@
     <Compile Include="Dtos\UpdateMultipleMemberPTParam.cs" />
     <Compile Include="Handlers\SettingType1PostTasks.cs" />
     <Compile Include="Handlers\SettingType1PreTasks.cs" />
-    <Compile Include="Models\MasterPT.cs" />
+    <Compile Include="Models\AgentPT.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentPTOnMemberItem.cs" />
     <Compile Include="Models\BasePTItem.cs" />
+    <Compile Include="Models\MasterPTOnMember.cs" />
     <Compile Include="Models\SuperPTItem.cs" />
     <Compile Include="Models\AgentPTItem.cs" />
     <Compile Include="Models\MasterPTOnMemberItem.cs" />

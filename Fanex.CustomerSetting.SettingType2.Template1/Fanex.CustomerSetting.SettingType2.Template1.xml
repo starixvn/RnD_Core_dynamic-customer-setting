@@ -1,10 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
   <Function Name="Customer_Setting_Type_2_Template_1">
-    <Setting Key="CustSetting_SuperSettingSelect_2_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="CustSetting_MasterSettingSelect_2_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="CustSetting_AgentSettingSelect_2_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="CustSetting_MemberSettingSelect_2_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_SuperSettingSelect_2_1" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_MasterSettingSelect_2_1" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_AgentSettingSelect_2_1" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
+    
+    <Setting Key="CustSetting_MemberSettingSelect_2_1" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+    </Setting>
     
     <Setting Key="CustSetting_BetLimitUpd_2_1" SpName="Acc_CustSetting_BetLimitUpd" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>

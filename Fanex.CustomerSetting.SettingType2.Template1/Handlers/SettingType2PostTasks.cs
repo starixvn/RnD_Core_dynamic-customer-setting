@@ -1,6 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Handlers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -8,6 +10,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Services;
 
     public class SettingType2PostTasks : SettingPostTasks
