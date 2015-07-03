@@ -2,12 +2,11 @@
     ViewBag.Title = "Index";
 }
 <div class="container">
-    <h3>Customer Setting Renovation Demo Site</h3>
     <div class="form-area">
         <div class="form-tab">
-            <h5></h5>
+            <label class="tab-label">Customer Setting</label>
         </div>
-        <form class="form-inline">
+        <form class="form form-35per-width">
             <div class="form-group">
                 <label class="control-label">Role Type</label>
                 <select class="form-control"
@@ -17,15 +16,46 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Actor ID</label>
-                <input type="number" maxlength="15" data-ng-model="actorInfo.actorId" />
+                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.actorId" />
             </div>
             <div class="form-group">
                 <label class="control-label">Sub-account ID</label>
-                <input type="number" maxlength="15" data-ng-model="actorInfo.subAccId" />
+                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.subAccId" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Language</label>
+                <select class="form-control"
+                        data-ng-options="item.value as item.name for item in languages"
+                        data-ng-model="actorInfo.selectedLanguage"
+                        data-ng-change="changeLanguage()"></select>
+            </div>
+            <div class="form-group submit">
+                <button>Save</button>
+            </div>
+        </form>
+        <form class="form form-35per-width last hide">
+            <div class="form-group">
+                <label class="control-label large-label">Product ID</label>
+                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.productId" />
+            </div>
+            <div class="form-group">
+                <label class="control-label large-label">Customer ID</label>
+                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.customerID" />
+            </div>
+            <div class="form-group hide">
+                <label class="control-label large-label">Customer IDs</label>
+                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.customerIDs" />
+            </div>
+            <div class="form-group hide">
+                <label class="control-label large-label">Customer Names</label>
+                <input type="text" class="form-control" maxlength="15" data-ng-model="actorInfo.customerNames" />
+            </div>
+            <div class="form-group submit large-group">
+                <button>Show</button>
             </div>
         </form>
     </div>
     <div class="content">
-        <iframe id="setting-content" />
+        <iframe id="setting-content" class="main-content-frame" />
     </div>
 </div>
