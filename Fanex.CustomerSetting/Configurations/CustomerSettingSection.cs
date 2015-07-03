@@ -8,7 +8,6 @@
     {
         private const string CustomerSettingsName = "Fanex.CustomerSetting";
         private const string SystemIdName = "SystemId";
-        private const string CustomValidationServiceTypeName = "CustomValidationServiceType";
         private const string SettingTypeCollectionName = "SettingTypes";
         private const string ProductDoesNotUsesDefaultSPCacheKeyFormat = "{0}_{1}_{2}";
         private static CustomerSettingSection _settings = ConfigurationManager.GetSection(CustomerSettingsName) as CustomerSettingSection;
@@ -27,13 +26,6 @@
         {
             get { return (byte)this[SystemIdName]; }
             set { this[SystemIdName] = value; }
-        }
-
-        [ConfigurationProperty(CustomValidationServiceTypeName, IsRequired = false)]
-        public string CustomValidationServiceType
-        {
-            get { return (string)this[CustomValidationServiceType]; }
-            set { this[CustomValidationServiceType] = value; }
         }
 
         [ConfigurationProperty(SettingTypeCollectionName, IsDefaultCollection = false, IsRequired = false)]
