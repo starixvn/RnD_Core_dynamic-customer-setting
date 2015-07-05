@@ -29,7 +29,12 @@
             QuerySettingParam queryParam,
             SettingType settingType)
         {
-            throw new NotImplementedException("Post-Get Customer Setting Type is not implemented");
+            if (settingContext == null)
+            {
+                throw new ArgumentNullException("settingContext");
+            }
+
+            return SetSportTypeBetTypeName(settingType, settingContext.Language);
         }
 
         public virtual SettingResult PostUpdateCustomerSettingType(

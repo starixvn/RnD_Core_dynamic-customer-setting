@@ -33,12 +33,7 @@
             QuerySettingParam queryParam,
             SettingType settingType)
         {
-            if (settingContext == null)
-            {
-                throw new ArgumentNullException("settingContext");
-            }
-
-            return SetSportTypeBetTypeName(settingType, settingContext.Language);
+            return base.PostGetCustomerSettingType(settingContext, queryParam, settingType);
         }
 
         public override SettingResult PostUpdateCustomerSettingType(
