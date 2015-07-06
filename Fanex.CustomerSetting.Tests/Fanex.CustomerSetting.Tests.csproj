@@ -107,11 +107,13 @@
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="FakeObjectManager.cs" />
+    <Compile Include="Handlers\SettingPostTasksTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
     <Compile Include="Models\SettingTypeTests.cs" />
     <Compile Include="Models\DefaultSettingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BaseMessageServiceTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingServiceTests.cs" />

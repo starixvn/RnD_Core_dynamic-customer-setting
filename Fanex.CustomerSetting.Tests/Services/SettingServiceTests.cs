@@ -424,7 +424,7 @@
             _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingParam);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.SuccessSettingResult);
+                .Returns(new SettingResult(Result.Success));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
 
             //// Act
@@ -442,7 +442,7 @@
             _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingParam);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.SuccessSettingResult);
+                .Returns(new SettingResult(Result.Success));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
 
             //// Act
@@ -578,7 +578,7 @@
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
                 {
-                    Result = UpdatingSettingResult.SuccessUpdatingSettingResult
+                    Result = new UpdatingSettingResult(Result.Success)
                 });
 
             //// Act
@@ -600,7 +600,7 @@
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.Success);
+                .Returns(new SettingResult(Result.Success));
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
                 updatingMultipleSettingParam.Customers,
@@ -609,7 +609,7 @@
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
                 {
-                    Result = UpdatingSettingResult.SuccessUpdatingSettingResult
+                    Result = new UpdatingSettingResult(Result.Success)
                 });
 
             //// Act
@@ -631,7 +631,7 @@
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.Success);
+                .Returns(new SettingResult(Result.Success));
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
                 updatingMultipleSettingParam.Customers,
@@ -640,7 +640,7 @@
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
                 {
-                    Result = UpdatingSettingResult.SuccessUpdatingSettingResult
+                    Result = new UpdatingSettingResult(Result.Success)
                 });
 
             //// Act

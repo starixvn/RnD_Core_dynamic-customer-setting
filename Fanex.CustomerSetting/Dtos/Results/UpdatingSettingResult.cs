@@ -6,12 +6,15 @@
 
     public class UpdatingSettingResult : Result
     {
-        public static readonly UpdatingSettingResult SuccessUpdatingSettingResult = new UpdatingSettingResult(null, ResultValue.Success);
-
-        public UpdatingSettingResult(IEnumerable<SettingResult> subResults, int code = 0)
-            : base(code)
+        public UpdatingSettingResult(IEnumerable<SettingResult> subResults)
+            : base(0)
         {
             SubResults = subResults;
+        }
+
+        public UpdatingSettingResult(IResult result)
+            : base(result.Code, result.Message)
+        {
         }
 
         public IEnumerable<SettingResult> SubResults { get; private set; }

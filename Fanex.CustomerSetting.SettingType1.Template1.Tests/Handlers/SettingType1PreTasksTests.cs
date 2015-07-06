@@ -103,7 +103,7 @@
             IEnumerable<Customer> groupedMembers = new List<Customer> { new Customer { Id = 1 } };
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
             _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType)
-                .Returns(UpdatingSettingResult.SuccessUpdatingSettingResult);
+                .Returns(new UpdatingSettingResult(Result.Success));
 
             //// Act
             var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);

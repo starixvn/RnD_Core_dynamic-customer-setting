@@ -7,76 +7,20 @@
     using Fanex.CustomerSetting.SettingType4.Template1.Resources;
     using Fanex.CustomerSetting.SettingType4.Template1.Services;
     using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.CustomerSetting.Tests.Services;
     using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]
-    public class ProductStatusMessageServiceTests
+    public class ProductStatusMessageServiceTests : BaseMessageServiceTests
     {
-        private ISettingContext _settingContext;
-        private IResourceService _resourceService;
-        private IMessageService _productStatusMessageService;
-
         [SetUp]
         public void Setup()
         {
-            _settingContext = new SettingContextStub();
-            _resourceService = Substitute.For<IResourceService>();
-            _productStatusMessageService = new ProductStatusMessageService(_resourceService);
+            SettingContext = new SettingContextStub();
+            ResourceService = Substitute.For<IResourceService>();
+            MessageService = new ProductStatusMessageService(ResourceService);
         }
-
-        #region Simple Message
-
-        [Test]
-        public void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
-        {
-            //// Arrange
-            int msgType = 100; ////Exception
-            string rawMessage = "<Root MsgID=\"90001\" Msg=\"Update process is unsuccessful!\"/>";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _productStatusMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual(Message.Msg_90001, actualMessageContent.MainMessage);
-        }
-
-        [Test]
-        public void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
-        {
-            //// Arrange
-            int msgType = 100; ////Exception
-            string rawMessage = "<Root MsgID=\"121212\"/>";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _productStatusMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual("Undefined error message 121212", actualMessageContent.MainMessage);
-        }
-
-        #endregion Simple Message
-
-        #region Other Message
-
-        [Test]
-        public void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
-        {
-            //// Arrange
-            int msgType = 101; ////Exception
-            string rawMessage = "Raw Message";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _productStatusMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual(rawMessage, actualMessageContent.MainMessage);
-        }
-
-        #endregion Other Message
 
         [TestCase(1, "", "", "")]
         [TestCase(2, "SportType1", "", "SportType1")]
@@ -93,11 +37,11 @@
             var rawMessage = "<Root MsgID=\"60031\" Msg=\"\">"
                                 + "<Row SportType=\"1\" BetType=\"1\" />"
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _productStatusMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(ProductStatusMessage.Msg_60031, actualMessageContent.MainMessage);

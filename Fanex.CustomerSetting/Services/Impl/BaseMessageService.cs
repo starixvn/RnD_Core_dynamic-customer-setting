@@ -9,7 +9,7 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource;
 
-    public class BaseMessageService : IMessageService
+    public abstract class BaseMessageService : IMessageService
     {
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
@@ -58,7 +58,7 @@
         {
             if (resouceManager == null) 
             { 
-                throw new ArgumentNullException("resouceManager"); 
+                throw new ArgumentNullException("resouceManager", "Resource Mananger cannot be null"); 
             }
 
             var key = string.Format(MessageFormat, messsageId);

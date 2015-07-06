@@ -2,13 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Constants;
 
     public class SettingResult : Result
     {
-        public static readonly SettingResult SuccessSettingResult = new SettingResult(ResultValue.Success, string.Empty, 0, 0, string.Empty, 0, string.Empty);
-        public static readonly SettingResult ErrorSettingResult = new SettingResult(ResultValue.Error, string.Empty, 0, 0, string.Empty, 0, string.Empty);
-
         public SettingResult(
             int code,
             string message,
@@ -76,6 +72,11 @@
             settingResult.SettingTypeId,
             settingResult.SettingTypeName,
             subMessages)
+        {
+        }
+
+        public SettingResult(IResult result)
+            : base(result.Code, result.Message)
         {
         }
 

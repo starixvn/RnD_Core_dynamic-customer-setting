@@ -268,7 +268,7 @@
                 return preTasks.PreUpdateCustomerSettingType(_settingContext, customer, settingType, uplineLevel);
             }
 
-            return SettingResult.SuccessSettingResult;
+            return new SettingResult(Result.Success);
         }
 
         private IResult RunUpdateCustomerSettingType(Customer customer, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
@@ -409,7 +409,7 @@
 
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
-                Result = UpdatingSettingResult.SuccessUpdatingSettingResult
+                Result = new UpdatingSettingResult(Result.Success)
             };
         }
 

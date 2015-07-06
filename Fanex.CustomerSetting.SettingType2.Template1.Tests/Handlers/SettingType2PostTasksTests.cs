@@ -1,82 +1,39 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Tests.Handlers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.Handlers;
-    using Fanex.CustomerSetting.SettingType2.Template1.Models;
+    using Fanex.CustomerSetting.Tests.Handlers;
     using Fanex.CustomerSetting.Tests.Models;
     using NSubstitute;
     using NUnit.Framework;
 
-    public class SettingType2PostTasksTests
+    [TestFixture]
+    public class SettingType2PostTasksTests : SettingPostTasksTests
     {
-        private ISettingContext _settingContext;
         private IMessageService _messageService;
-        private IResourceService _resourceService;
-        private SettingType2PostTasks _settingType2PostTasks;
 
         [SetUp]
         public void Setup()
         {
-            _settingContext = new SettingContextStub();
-            _resourceService = Substitute.For<IResourceService>();
+            SettingContext = new SettingContextStub();
+            ResourceService = Substitute.For<IResourceService>();
             _messageService = Substitute.For<IMessageService>();
-            _settingType2PostTasks = new SettingType2PostTasks(_messageService, _resourceService);
+            SettingPostTasks = new SettingType2PostTasks(_messageService, ResourceService);
         }
-
-        #region Post Get Customer Setting Type
-
-        [Test]
-        public void PostGetCustomerSettingType_SetSportTypeBetTypeNameForSettingItems()
-        {
-            //// Arrange
-            SettingType settingType = new SettingType
-            {
-                SettingItems = new List<ISettingItem>
-                    {
-                        new BetLimitItem
-                        {
-                            BetTypeId = 1,
-                            SportTypeId = 1
-                        }
-                    }
-            };
-            var sportTypeName = "SportTypeName";
-            var betTypeName = "BetTypeName";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
-
-            //// Act
-
-            var actualSettingType = _settingType2PostTasks.PostGetCustomerSettingType(
-                _settingContext,
-                null,
-                settingType);
-
-            //// Assert
-            BetLimitItem settingItem = actualSettingType.SettingItems.First() as BetLimitItem;
-            Assert.AreEqual(sportTypeName, settingItem.SportTypeName);
-            Assert.AreEqual(betTypeName, settingItem.BetTypeName);
-        }
-
-        #endregion Post Get Customer Setting Type
-
-        #region Post Update Customer Setting Type
 
         [Test]
         public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
         {
             //// Arrange
-            var successResult = SettingResult.SuccessSettingResult;
+            var successResult = new SettingResult(Result.Success);
 
             //// Act
-            var actualResult = _settingType2PostTasks.PostUpdateCustomerSettingType(
-                _settingContext,
+            var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
+                SettingContext,
                 new Customer(),
                 new SettingType { SettingLevel = 1 },
                 null,
@@ -90,14 +47,14 @@
         public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
         {
             //// Arrange
-            var errorResult = SettingResult.ErrorSettingResult;
+            var errorResult = new SettingResult(Result.DataError);
             _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
                 .Returns(new MessageContent(string.Empty));
             byte settingLevel = 1;
 
             //// Act
-            _settingType2PostTasks.PostUpdateCustomerSettingType(
-                _settingContext,
+            SettingPostTasks.PostUpdateCustomerSettingType(
+                SettingContext,
                 new Customer(),
                 new SettingType
                 {
@@ -107,9 +64,7 @@
                 errorResult);
 
             //// Assert
-            _messageService.Received().TranslateMessage(errorResult.MsgType, errorResult.Message, settingLevel, _settingContext.Language);
+            _messageService.Received().TranslateMessage(errorResult.MsgType, errorResult.Message, settingLevel, SettingContext.Language);
         }
-
-        #endregion Post Update Customer Setting Type
     }
 }

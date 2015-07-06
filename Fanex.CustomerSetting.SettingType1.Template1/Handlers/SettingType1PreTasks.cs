@@ -38,7 +38,7 @@
             {
                 return new PreUpdateMultipleCustomersSettingTypeResult
                 {
-                    Result = UpdatingSettingResult.SuccessUpdatingSettingResult
+                    Result = new UpdatingSettingResult(Result.Success)
                 };
             }
         }
@@ -67,7 +67,7 @@
         {
             if (!members.Any())
             {
-                return UpdatingSettingResult.SuccessUpdatingSettingResult;
+                return new UpdatingSettingResult(Result.Success);
             }
 
             return _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);

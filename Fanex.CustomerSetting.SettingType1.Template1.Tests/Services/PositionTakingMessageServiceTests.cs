@@ -1,84 +1,24 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
     using Fanex.CustomerSetting.SettingType1.Template1.Services;
     using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.CustomerSetting.Tests.Services;
     using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]
-    public class PositionTakingMessageServiceTests
+    public class PositionTakingMessageServiceTests : BaseMessageServiceTests
     {
-        private ISettingContext _settingContext;
-        private IResourceService _resourceService;
-        private IMessageService _positionTakingMessageService;
-
         [SetUp]
         public void Setup()
         {
-            _settingContext = new SettingContextStub();
-            _resourceService = Substitute.For<IResourceService>();
-            _positionTakingMessageService = new PTMessageService(_resourceService);
+            SettingContext = new SettingContextStub();
+            ResourceService = Substitute.For<IResourceService>();
+            MessageService = new PTMessageService(ResourceService);
         }
-
-        #region Simple Message
-
-        [Test]
-        public void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
-        {
-            //// Arrange
-            int msgType = 100; ////Exception
-            string rawMessage = "<Root MsgID=\"90001\" Msg=\"Update process is unsuccessful!\"/>";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual(Message.Msg_90001, actualMessageContent.MainMessage);
-        }
-
-        [Test]
-        public void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
-        {
-            //// Arrange
-            int msgType = 100; ////Exception
-            string rawMessage = "<Root MsgID=\"121212\"/>";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual("Undefined error message 121212", actualMessageContent.MainMessage);
-        }
-
-        #endregion Simple Message
-
-        #region Other Message
-
-        [Test]
-        public void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
-        {
-            //// Arrange
-            int msgType = 101; ////Exception
-            string rawMessage = "Raw Message";
-            byte settingLevel = 1;
-
-            //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
-
-            //// Assert
-            Assert.AreEqual(rawMessage, actualMessageContent.MainMessage);
-        }
-
-        #endregion Other Message
-
-        #region Position Taking Message
 
         [TestCase(1, false, "", "", "")]
         [TestCase(1, true, "", "", " (Live)")]
@@ -102,11 +42,11 @@
                                 + (isLive ? "1" : "0")
                                 + "\"/>"
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(PTMessage.Msg_20001, actualMessageContent.MainMessage);
@@ -135,11 +75,11 @@
                                 + (isLive ? "1" : "0")
                                 + "\" MinPT=\"12\"/>"
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(PTMessage.Msg_20029, actualMessageContent.MainMessage);
@@ -168,11 +108,11 @@
                                 + (isLive ? "1" : "0")
                                 + "\" MaxPT=\"12\"/>"
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(PTMessage.Msg_20028, actualMessageContent.MainMessage);
@@ -201,11 +141,11 @@
                                 + (isLive ? "1" : "0")
                                 + "\" MinPT=\"11\" MaxPT=\"13\"/>"
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(PTMessage.Msg_20033, actualMessageContent.MainMessage);
@@ -237,17 +177,15 @@
                                 + (isLive ? "1" : "0")
                                 + "\" UserName=\"username2\"/> "
                                 + "</Root>";
-            _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
-            _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
+            ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);
+            ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualMessageContent = _positionTakingMessageService.TranslateMessage(msgType, rawMessage, settingLevel, _settingContext.Language);
+            var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
             Assert.AreEqual(PTMessage.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
-
-        #endregion Position Taking Message
     }
 }
