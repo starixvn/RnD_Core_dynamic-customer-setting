@@ -56,7 +56,7 @@
                 return permissionValidationResult;
             }
 
-            return ValidateUplineLevelIncaseOfEditingMember(customerLevel, uplineLevel);
+            return ValidateUplineLevel(customerLevel, uplineLevel);
         }
 
         private IResult ValidateActorLevel(UserLevel actorLevel, CustomerLevel customerLevel)
@@ -113,11 +113,33 @@
             return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
+        private IResult ValidateUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        {
+            if (customerLevel == CustomerLevel.Member)
+            {
+                return ValidateUplineLevelIncaseOfEditingMember(customerLevel, uplineLevel);
+            }
+            else
+            {
+                if (uplineLevel.HasValue)
+                {
+                    return new Result(ResultValue.AccessDenied, Message.UplineLevelShouldBeNull);
+                }
+
+                return Result.Success;
+            }
+        }
+
         private IResult ValidateUplineLevelIncaseOfEditingMember(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
-            if (customerLevel == CustomerLevel.Member && uplineLevel == null)
+            if (uplineLevel == null)
             {
                 return new Result(ResultValue.AccessDenied, Message.UplineLevelCannotBeNullIncaseOfEdittingMember);
+            }
+
+            if (_settingContext.Actor.Level != UserLevel.Company && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
+            {
+                return new Result(ResultValue.AccessDenied, Message.UplineLevelIsNotValid);
             }
 
             return Result.Success;

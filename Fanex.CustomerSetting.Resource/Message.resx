@@ -186,4 +186,10 @@
   <data name="UplineLevelCannotBeNullIncaseOfEdittingMember" xml:space="preserve">
     <value>Upline Level cannot be null incase of editting member</value>
   </data>
+  <data name="UplineLevelIsNotValid" xml:space="preserve">
+    <value>Upline Level is not valid</value>
+  </data>
+  <data name="UplineLevelShouldBeNull" xml:space="preserve">
+    <value>Upline Level should be null</value>
+  </data>
 </root>

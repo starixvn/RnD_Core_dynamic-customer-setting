@@ -15,7 +15,7 @@
             int customerId = 1, 
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
-            CustomerLevel? uplineLevel = CustomerLevel.Super)
+            CustomerLevel? uplineLevel = null)
         {
             return new UpdatingSettingParam
             {
@@ -60,7 +60,7 @@
             int customerId = 1,
             CustomerLevel customerLevel = CustomerLevel.Master,
             byte productId = 1,
-            CustomerLevel? uplineLevel = CustomerLevel.Super)
+            CustomerLevel? uplineLevel = null)
         {
             return new UpdatingMultipleSettingParam
             {

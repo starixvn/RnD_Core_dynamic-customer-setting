@@ -266,5 +266,23 @@ namespace Fanex.CustomerSetting.Resource {
                 return ResourceManager.GetString("UplineLevelCannotBeNullIncaseOfEdittingMember", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upline Level is not valid.
+        /// </summary>
+        public static string UplineLevelIsNotValid {
+            get {
+                return ResourceManager.GetString("UplineLevelIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upline Level should be null.
+        /// </summary>
+        public static string UplineLevelShouldBeNull {
+            get {
+                return ResourceManager.GetString("UplineLevelShouldBeNull", resourceCulture);
+            }
+        }
     }
 }
