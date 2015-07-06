@@ -1,9 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
     using Fanex.Caching;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.RemotingRefApi;
@@ -36,6 +34,7 @@
         }
 
         #region Get Product Name
+
         [Test]
         public void GetProductName_ProductIdIsZero_ThrowArgumentOutOfRangeException()
         {
@@ -53,7 +52,7 @@
         {
             //// Arrange
             byte productId = 1;
-            var productName = new ProductName {ProductId = productId, ProductNameEN = "product name EN" };
+            var productName = new ProductName { ProductId = productId, ProductNameEN = "product name EN" };
             _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(productName);
 
             //// Act
@@ -65,7 +64,7 @@
 
         [Test]
         public void GetProductName_NoDataInCache_ReturnsDefaultProductName()
-        { 
+        {
             //// Arrange
             byte productId = 1;
             ProductName nullProductName = null;
@@ -100,7 +99,7 @@
         {
             //// Arrange
             byte productId = 1;
-            ProductName productName = new ProductName { ProductNameEN = "Prod EN" , ProductNameTH = "Prod TH"};
+            ProductName productName = new ProductName { ProductNameEN = "Prod EN", ProductNameTH = "Prod TH" };
             _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(productName);
 
             //// Act
@@ -216,7 +215,5 @@
         }
 
         #endregion Get Bet Type Name
-
-
     }
 }
