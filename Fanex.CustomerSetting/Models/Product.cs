@@ -3,11 +3,8 @@
     using System;
     using System.Collections.Generic;
 
-    [Serializable]
-    public class Product
+    public class Product : Entity<byte>
     {
-        public byte Id { get; set; }
-
         public string Name { get; set; }
 
         public bool IsDisabled { get; set; }

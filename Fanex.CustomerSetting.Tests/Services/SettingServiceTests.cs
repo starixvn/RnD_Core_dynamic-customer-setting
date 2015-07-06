@@ -600,7 +600,7 @@
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.SuccessSettingResult);
+                .Returns(SettingResult.Success);
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
                 updatingMultipleSettingParam.Customers,
@@ -631,7 +631,7 @@
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
             _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
-                .Returns(SettingResult.SuccessSettingResult);
+                .Returns(SettingResult.Success);
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
                 updatingMultipleSettingParam.Customers,

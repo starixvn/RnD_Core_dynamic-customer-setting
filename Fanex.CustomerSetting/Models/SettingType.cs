@@ -45,21 +45,25 @@
                 return Result.NoChange;
             }
 
-            return GetValidationResult();
+            var failedResult = GetFailedResult();
+
+            return (failedResult == null) ? Result.Success : failedResult;
         }
 
-        private IResult GetValidationResult()
+        private SettingResult GetFailedResult()
         {
-            var failedValidationResults = SettingItems
+            var failedResults = SettingItems
                 .Select(item => item.Validate())
                 .Where(result => !result.IsSuccessful);
-            if (!failedValidationResults.Any())
+
+            if (!failedResults.Any())
             {
-                return Result.Success;
+                return null;
             }
 
-            var subMessages = failedValidationResults.Select(result => result.Message);
-            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, string.Empty, Id, Name, subMessages);
+            var failedMessages = failedResults.Select(result => result.Message);
+
+            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, string.Empty, Id, Name, failedMessages);
         }
     }
 }

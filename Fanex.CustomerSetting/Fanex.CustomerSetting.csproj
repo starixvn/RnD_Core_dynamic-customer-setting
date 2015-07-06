@@ -106,7 +106,7 @@
     <Compile Include="Dtos\Messages\MessageContent.cs" />
     <Compile Include="Dtos\Messages\MainMessage.cs" />
     <Compile Include="Dtos\Messages\SimpleMessage.cs" />
-    <Compile Include="Dtos\ProductNameDto.cs" />
+    <Compile Include="Dtos\ProductName.cs" />
     <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
     <Compile Include="Dtos\Results\SettingResult.cs" />
     <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
@@ -123,6 +123,7 @@
     <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Services\IValidationService.cs" />
     <Compile Include="Handlers\SettingPostTasks.cs" />
     <Compile Include="Handlers\SettingPreTasks.cs" />
+    <Compile Include="Utilz\LanguageNameConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

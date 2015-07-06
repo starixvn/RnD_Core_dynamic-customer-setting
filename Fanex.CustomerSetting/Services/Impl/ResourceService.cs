@@ -8,50 +8,54 @@
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.RemotingRefApi;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Utilz;
     using Fanex.NAP.Framework.Data;
 
     public class ResourceService : IResourceService
     {
         private const int ProductNamesCacheTimeout = 12 * 60 * 60; // 1 day
-        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey";
+        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey_{0}";
         private const string SportTypeDefaultFormat = "Sport Type {0}";
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
+        private const string DefaultRefDataLanguage = "en";
 
         private readonly IDynamicRepository _resourceRepository;
         private readonly IRemotingRefService _remotingRef;
+        private readonly ICache _cacheManager;
 
         public ResourceService()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
-        public ResourceService(IDynamicRepository resourceRepository, IRemotingRefService remotingRef)
+        public ResourceService(IDynamicRepository resourceRepository, IRemotingRefService remotingRef, ICache cacheManager)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();
+            _cacheManager = cacheManager ?? CacheService.CreateInstance();
         }
 
         public string GetProductName(byte productId, string language)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var productResources = GetProductResources();
-            var productResource = productResources.Where(x => x.ProductId == productId).FirstOrDefault();
-            if (productResource != null)
+            var productName = GetProductNameFromCache(productId);
+
+            if (productName != null)
             {
-                return GetProductNameWithLanguage(productResource, language);
+                return GetProductNameWithLanguage(productName, language);
             }
 
             return string.Format(ProductDefaultFormat, productId);
         }
 
-        private string GetProductNameWithLanguage(ProductNameDto productName, string language)
+        private string GetProductNameWithLanguage(ProductName productName, string language)
         {
-            var propertyName = string.Format("ProductName{0}", GetRefLanguage(language).ToUpper());
+            var propertyName = string.Format("ProductName{0}", LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             var property = productName.GetType().GetProperty(propertyName);
             return property == null
-                ? productName.ProductName
+                ? productName.ProductNameEN
                 : property.GetValue(productName, null).ToString();
         }
 
@@ -59,7 +63,7 @@
         {
             Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
 
-            var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), GetRefLanguage(language));
+            var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
                 : sportTypeName;
@@ -69,44 +73,29 @@
         {
             Check.Argument.IsNotNegativeOrZero(betTypeId, "betTypeId");
 
-            var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), GetRefLanguage(language));
+            var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
                 : betTypeName;
         }
 
-        private string GetRefLanguage(string language)
+        private ProductName GetProductNameFromCache(byte productId)
         {
-            var defaultRefLanguage = "en";
-            if (string.IsNullOrEmpty(language))
-            {
-                return defaultRefLanguage;
-            }
+            var cacheKey = string.Format(ProductNamesCacheKey, productId);
 
-            switch (language.ToLower())
-            {
-                case "en-us": return "en"; // English
-                case "zh-tw": return "ch"; // Traditional
-                case "zh-cn": return "cs"; // Simplified
-                case "ja-jp": return "jp"; // Japanese
-                case "th-th": return "th"; // Thai
-                default: return defaultRefLanguage;
-            }
-        }
+            var productName = _cacheManager.Get<ProductName>(cacheKey);
 
-        private IEnumerable<ProductNameDto> GetProductResources()
-        {
-            using (var cacheService = CacheService.CreateInstance(CacheType.MemoryCache))
+            if (ReferenceEquals(null, productName))
             {
-                var productNames = cacheService.Get<IEnumerable<ProductNameDto>>(ProductNamesCacheKey);
-                if (productNames == null)
+                productName = _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
+
+                if (!ReferenceEquals(null, productName))
                 {
-                    productNames = _resourceRepository.Fetch<ProductNameDto>(new ProductNamesQueryCriteria());
-                    cacheService.Set<IEnumerable<ProductNameDto>>(ProductNamesCacheKey, productNames, ProductNamesCacheTimeout);
+                    _cacheManager.Set<ProductName>(cacheKey, productName, ProductNamesCacheTimeout);
                 }
-
-                return productNames;
             }
+
+            return productName;
         }
     }
 }

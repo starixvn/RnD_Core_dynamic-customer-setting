@@ -1,10 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Dtos
 {
-    public class ProductNameDto
+    public class ProductName
     {
         public byte ProductId { get; set; }
-
-        public string ProductName { get; set; }
 
         public string ProductNameCH { get; set; }
 
@@ -25,7 +23,5 @@
         public string ProductNameEN { get; set; }
 
         public string ProductNameRU { get; set; }
-
-        public string ProductNameId { get; set; }
     }
 }
