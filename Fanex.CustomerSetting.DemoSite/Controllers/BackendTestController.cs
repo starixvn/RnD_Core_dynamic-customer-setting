@@ -1,5 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
@@ -23,21 +26,22 @@
         }
 
         public ActionResult Edit(
-            int customerId = 2,
-            CustomerLevel customerLevel = CustomerLevel.Super,
-            byte producId = 255,
-            CustomerLevel? uplineLevel = null)
+            int customerId = 1277,
+            CustomerLevel customerLevel = CustomerLevel.Member,
+            byte productId = 255,
+            CustomerLevel uplineLevel = CustomerLevel.Agent)
         {
+            var actualUplineLevel = customerLevel == CustomerLevel.Member ? (CustomerLevel?)uplineLevel : null;
             var setting = _settingService.GetCustomerSetting(
                 new QuerySettingParam
             {
                 CustomerId = customerId,
                 CustomerLevel = customerLevel,
-                ProductId = producId,
-                UplineLevel = uplineLevel
+                ProductId = productId,
+                UplineLevel = actualUplineLevel
             });
 
-            UpdateSetting(setting, uplineLevel);
+            UpdateSetting(setting, actualUplineLevel);
 
             return new EmptyResult();
         }
@@ -46,15 +50,39 @@
             string customerIds = "1277,1284,1290",
             CustomerLevel customerLevel = CustomerLevel.Member,
             byte productId = 255,
-            CustomerLevel? uplineLevel = CustomerLevel.Agent)
+            CustomerLevel uplineLevel = CustomerLevel.Agent)
         {
+            var actualUplineLevel = customerLevel == CustomerLevel.Member ? (CustomerLevel?)uplineLevel : null;
+            IEnumerable<Customer> customers = customerIds.Split(',')
+                .Select(customerId => new Customer
+                {
+                    Id = Convert.ToInt32(customerId),
+                    Level = customerLevel
+                });
+
+            var setting = _settingService.GetCustomerSetting(
+                new QuerySettingParam
+                {
+                    CustomerId = customers.FirstOrDefault().Id,
+                    CustomerLevel = customerLevel,
+                    ProductId = productId,
+                    UplineLevel = actualUplineLevel
+                });
+
+            UpdateMultipleSetting(new UpdatingMultipleSettingParam 
+            {
+                Customers = customers,
+                Setting = setting,
+                UplineLevel = actualUplineLevel
+            });
+
             return new EmptyResult();
         }
 
-        ////private void UpdateMultipleSetting(ISetting setting, CustomerLevel? uplineLevel)
-        ////{
-        ////    var updateMulti
-        ////}
+        private void UpdateMultipleSetting(UpdatingMultipleSettingParam updateMultipleParam)
+        {
+            var updatedResult = _settingService.UpdateMultipleCustomerSetting(updateMultipleParam);
+        }
 
         private void UpdateSetting(ISetting setting, CustomerLevel? uplineLevel)
         {
@@ -63,16 +91,6 @@
                     Setting = setting,
                     UplineLevel = uplineLevel
                 });
-        }
-
-        public ActionResult Login(
-            int userLoginId = 8,
-            string userLoginName = "LoginName",
-            UserLevel userLevel = UserLevel.Company,
-            int subAccountId = 0)
-        {
-            SettingContextManager.Init(userLoginId, userLoginName, userLevel, subAccountId);
-            return RedirectToAction("Index");
         }
     }
 }

@@ -39,6 +39,11 @@
             IResourceService resourceService = null,
             ILogger logger = null)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.Actor.Id");
+            Check.Argument.IsNotNegativeOrZero((byte)settingContext.Actor.Level, "settingContext.Actor.Level");
+
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
@@ -360,7 +365,9 @@
             //// because we already updated setting for them, so we need to remove them out of customer list.
             var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customers);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, productId, uplineLevel);
-            if (preTasksResult.IsReturnResultToUser)
+            if (preTasksResult.IsReturnResultToUser
+                && preTasksResult.Result.SubResults != null
+                && preTasksResult.Result.SubResults.Any())
             {
                 results.AddRange(preTasksResult.Result.SubResults);
             }

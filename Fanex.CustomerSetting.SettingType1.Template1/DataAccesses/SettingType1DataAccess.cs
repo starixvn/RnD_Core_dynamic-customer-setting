@@ -24,10 +24,41 @@
                 Name = Label.PositionTaking
             };
 
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, PTConstants.SettingTypeId, PTConstants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(
+                queryParam.CustomerLevel,
+                PTConstants.SettingTypeId,
+                PTConstants.SettingTempateId,
+                queryParam.ProductId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 return QueryCustomerPT(objectDb, queryParam, settingType);
+            }
+        }
+
+        private string GetSettingKeyForGettingSettingType(
+            CustomerLevel customerLevel, 
+            byte settingTypeId, 
+            byte settingTemplateId, 
+            byte productId)
+        {
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+
+            switch (customerLevel)
+            {
+                case CustomerLevel.Super:
+                    return "CustSetting_SuperPTSelect" + keySuffix;
+
+                case CustomerLevel.Master:
+                    return "CustSetting_MasterPTSelect" + keySuffix;
+
+                case CustomerLevel.Agent:
+                    return "CustSetting_AgentPTSelect" + keySuffix;
+
+                case CustomerLevel.Member:
+                    return "CustSetting_MemberPTSelect" + keySuffix;
+
+                default:
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -152,30 +183,30 @@
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
-                    updateSettingKey = "CustSetting_SuperPTUpd_1_1";
+                    updateSettingKey = "CustSetting_SuperPTUpd";
                     break;
 
                 case CustomerLevel.Master:
-                    updateSettingKey = "CustSetting_MasterPTUpd_1_1";
+                    updateSettingKey = "CustSetting_MasterPTUpd";
                     break;
 
                 case CustomerLevel.Agent:
-                    updateSettingKey = "CustSetting_AgentPTUpd_1_1";
+                    updateSettingKey = "CustSetting_AgentPTUpd";
                     break;
 
                 case CustomerLevel.Member:
                     switch (uplineLevel.Value)
                     {
                         case CustomerLevel.Super:
-                            updateSettingKey = "CustSetting_SuperPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_SuperPTOnMemberUpd";
                             break;
 
                         case CustomerLevel.Master:
-                            updateSettingKey = "CustSetting_MasterPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_MasterPTOnMemberUpd";
                             break;
 
                         case CustomerLevel.Agent:
-                            updateSettingKey = "CustSetting_AgentPTOnMemberUpd_1_1";
+                            updateSettingKey = "CustSetting_AgentPTOnMemberUpd";
                             break;
 
                         default:
@@ -188,12 +219,12 @@
                     throw new InvalidOperationException("This customer level is not supported");
             }
 
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, productId))
-            {
-                updateSettingKey += string.Format("_{0}", productId);
-            }
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+                PTConstants.SettingTypeId,
+                PTConstants.SettingTempateId,
+                productId);
 
-            return updateSettingKey;
+            return updateSettingKey + keySuffix;
         }
     }
 }

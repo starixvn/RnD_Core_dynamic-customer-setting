@@ -19,8 +19,6 @@
 
     public class SettingType4DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        private const string SettingKeySuffix = "_4_1";
-
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParam queryParam)
@@ -36,11 +34,42 @@
 
         private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId, ProductStatusConstants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(
+                queryParam.CustomerLevel, 
+                ProductStatusConstants.SettingTypeId, 
+                ProductStatusConstants.SettingTempateId,
+                queryParam.ProductId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId);
                 return objectDb.Query<ProductStatusItemDto>(parameterValues);
+            }
+        }
+
+        private string GetSettingKeyForGettingSettingType(
+            CustomerLevel customerLevel, 
+            byte settingTypeId, 
+            byte settingTemplateId, 
+            byte productId)
+        {
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+
+            switch (customerLevel)
+            {
+                case CustomerLevel.Super:
+                    return "CustSetting_SuperProductStatusSelect" + keySuffix;
+
+                case CustomerLevel.Master:
+                    return "CustSetting_MasterProductStatusSelect" + keySuffix;
+
+                case CustomerLevel.Agent:
+                    return "CustSetting_AgentProductStatusSelect" + keySuffix;
+
+                case CustomerLevel.Member:
+                    return "CustSetting_MemberProductStatusSelect" + keySuffix;
+
+                default:
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -61,13 +90,13 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_DisableStatUpd_4_1";
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
-            {
-                updateSettingKey += string.Format("_{0}", productId);
-            }
+            var updateSettingKey = "CustSetting_DisableStatUpd";
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+                ProductStatusConstants.SettingTypeId,
+                ProductStatusConstants.SettingTempateId,
+                productId);
 
-            return ExecuteNonQuery(updateSettingKey, param);
+            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
         }
     }
 }

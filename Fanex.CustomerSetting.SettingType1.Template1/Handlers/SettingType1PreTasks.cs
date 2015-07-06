@@ -55,7 +55,7 @@
             {
                 CustomersNeedForSingleUpdating = ungroupedMembers,
                 IsReturnResultToUser = true,
-                Result = UpdateGroupedMembers(settingContext, customers, uplineLevel.Value, settingType)
+                Result = UpdateGroupedMembers(settingContext, groupedMembers, uplineLevel.Value, settingType)
             };
         }
 
@@ -65,9 +65,12 @@
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
-            var result = _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);
+            if (!members.Any())
+            {
+                return UpdatingSettingResult.SuccessUpdatingSettingResult;
+            }
 
-            return result;
+            return _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);
         }
 
         private IEnumerable<Customer> GetUnGroupedMembers(
@@ -79,7 +82,7 @@
 
         private class CustomerComparer : IEqualityComparer<Customer>
         {
-            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !"), 
+            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !"),
             SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Reviewed !")]
             public bool Equals(Customer firstCustomer, Customer secondCustomer)
             {

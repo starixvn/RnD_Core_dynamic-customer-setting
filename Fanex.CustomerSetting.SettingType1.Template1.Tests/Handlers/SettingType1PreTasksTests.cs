@@ -81,7 +81,9 @@
             //// Assert
             _memberGroupService.Received().UpdateGroupedMembersPT(
                 _settingContext,
-                Arg.Any<IEnumerable<Customer>>(),
+                Arg.Is<IEnumerable<Customer>>(
+                    membersReceived => membersReceived.Count() == 1
+                        && membersReceived.FirstOrDefault().Id == 1),
                 uplineLevel,
                 settingType);
         }

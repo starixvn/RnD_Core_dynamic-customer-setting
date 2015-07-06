@@ -19,8 +19,6 @@
 
     public class SettingType3DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        private const string SettingKeySuffix = "_3_1";
-
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParam queryParam)
@@ -36,11 +34,42 @@
 
         private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, CommissionConstants.SettingTypeId, CommissionConstants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(
+                queryParam.CustomerLevel,
+                CommissionConstants.SettingTypeId,
+                CommissionConstants.SettingTempateId,
+                queryParam.ProductId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, CommissionConstants.SettingTypeId);
                 return objectDb.Query<CommissionItemDto>(parameterValues);
+            }
+        }
+
+        private string GetSettingKeyForGettingSettingType(
+            CustomerLevel customerLevel, 
+            byte settingTypeId, 
+            byte settingTemplateId, 
+            byte productId)
+        {
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+
+            switch (customerLevel)
+            {
+                case CustomerLevel.Super:
+                    return "CustSetting_SuperCommissionSelect" + keySuffix;
+
+                case CustomerLevel.Master:
+                    return "CustSetting_MasterCommissionSelect" + keySuffix;
+
+                case CustomerLevel.Agent:
+                    return "CustSetting_AgentCommissionSelect" + keySuffix;
+
+                case CustomerLevel.Member:
+                    return "CustSetting_MemberCommissionSelect" + keySuffix;
+
+                default:
+                    throw new InvalidOperationException("This customer level is not supported");
             }
         }
 
@@ -61,13 +90,13 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_DiscountUpd_3_1";
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
-            {
-                updateSettingKey += string.Format("_{0}", productId);
-            }
+            var updateSettingKey = "CustSetting_DiscountUpd";
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+                CommissionConstants.SettingTypeId,
+                CommissionConstants.SettingTempateId,
+                productId);
 
-            return ExecuteNonQuery(updateSettingKey, param);
+            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
         }
     }
 }

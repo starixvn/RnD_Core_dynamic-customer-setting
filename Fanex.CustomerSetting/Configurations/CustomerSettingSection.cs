@@ -41,7 +41,7 @@
             }
         }
 
-        public bool IsProductNotUseDefaultStoredProcedures(short settingTypeId, byte settingTemplateId, byte productId)
+        public bool IsProductNotUseDefaultSettingTypeStoredProcedures(short settingTypeId, byte settingTemplateId, byte productId)
         {
             if (SettingTypes == null || SettingTypes.Count == 0)
             {

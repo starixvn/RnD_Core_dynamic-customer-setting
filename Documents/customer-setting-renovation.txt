@@ -50,18 +50,22 @@ exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=3
 
 exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=4
 
-Select Master:
+Edit Single
 
+http://localhost:56271/BackendTest/Edit?customerId=2&customerLevel=4
 
+http://localhost:56271/BackendTest/Edit?customerId=1277&customerLevel=1
 
-http://localhost:56271/BackendTest?customerId=1277&customerLevel=1
+http://localhost:56271/BackendTest/Edit?customerId=1262&customerLevel=2
 
-http://localhost:56271/BackendTest?customerId=1262&customerLevel=2
+http://localhost:56271/BackendTest/Edit?customerId=4174&customerLevel=3
 
-http://localhost:56271/BackendTest?customerId=4174&customerLevel=3
+http://localhost:56271/BackendTest/Edit?customerId=1277&customerLevel=1&uplineLevel=2
 
-http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=2
+http://localhost:56271/BackendTest/Edit?customerId=1277&customerLevel=1&uplineLevel=3
 
-http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=3
+http://localhost:56271/BackendTest/Edit?customerId=1277&customerLevel=1&uplineLevel=4
 
-http://localhost:56271/BackendTest?customerId=1277&customerLevel=1&uplineLevel=4
+Edit Multiple
+
+http://localhost:56271/BackendTest/EditMultiple?customerIds=1277,1284,1290&customerLevel=1&uplineLevel=2

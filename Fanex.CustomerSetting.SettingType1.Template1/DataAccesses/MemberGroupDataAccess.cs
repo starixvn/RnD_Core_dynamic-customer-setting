@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.DataAccesses
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -13,7 +14,7 @@
     {
         public IEnumerable<Customer> GetGroupedMembers(string memberIds)
         {
-            using (ObjectDb objectDb = new ObjectDb("CustSetting_CustomerSettingModeSelect_1_1"))
+            using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
             {
                 return objectDb.Query<Customer>(new
                 {
@@ -40,32 +41,32 @@
             switch (uplineLevel)
             {
                 case CustomerLevel.Super:
-                    return "CustSetting_SuperPTOnMemberMultiUpd_1_1";
+                    return "CustSetting_SuperPTOnMemberMultiUpd";
 
                 case CustomerLevel.Master:
-                    return "CustSetting_MasterPTOnMemberMultiUpd_1_1";
+                    return "CustSetting_MasterPTOnMemberMultiUpd";
 
                 case CustomerLevel.Agent:
-                    return "CustSetting_AgentPTOnMemberMultiUpd_1_1";
+                    return "CustSetting_AgentPTOnMemberMultiUpd";
 
                 default:
                     throw new InvalidOperationException("Not implemented for this customer level yet");
             }
         }
 
-        private dynamic GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)
+        private Hashtable GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)
         {
-            return new
-            {
-                UserId = updateParam.UserId,
-                SubAccId = updateParam.SubAccId,
-                CustIDList = updateParam.CustIds,
-                Ip = updateParam.IP,
-                ErrCode = 0,
-                ErrMsg = string.Empty,
-                MsgType = 0,
-                PT = updateParam.PTXml
-            };
+            Hashtable param = new Hashtable();
+            param.Add("userid", updateParam.UserId);
+            param.Add("subaccid", updateParam.SubAccId);
+            param.Add("custidlist", updateParam.CustIds);
+            param.Add("pt", updateParam.PTXml);
+            param.Add("ip", updateParam.IP);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("msgtype", 0);
+
+            return param;
         }
     }
 }

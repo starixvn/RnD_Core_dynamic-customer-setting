@@ -76,36 +76,14 @@
             }
         }
 
-        protected string GetSettingKeyForGettingSettingType(QuerySettingParam queryParam, byte settingTypeId, byte settingTemplateId)
+        protected string GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(byte settingTypeId, byte settingTemplateId, byte productId)
         {
-            if (queryParam == null)
+            if (CustomerSettingSection.Settings.IsProductNotUseDefaultSettingTypeStoredProcedures(settingTypeId, settingTemplateId, productId))
             {
-                throw new ArgumentNullException("queryParam", "queryParam cannot be null");
+                return string.Format("_{0}", productId);
             }
 
-            var keySuffix = string.Format(SettingKeySuffixFormat, settingTypeId, settingTemplateId);
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingTypeId, settingTemplateId, queryParam.ProductId))
-            {
-                keySuffix += string.Format("_{0}", queryParam.ProductId);
-            }
-
-            switch (queryParam.CustomerLevel)
-            {
-                case CustomerLevel.Super:
-                    return "CustSetting_SuperSettingSelect" + keySuffix;
-
-                case CustomerLevel.Master:
-                    return "CustSetting_MasterSettingSelect" + keySuffix;
-
-                case CustomerLevel.Agent:
-                    return "CustSetting_AgentSettingSelect" + keySuffix;
-
-                case CustomerLevel.Member:
-                    return "CustSetting_MemberSettingSelect" + keySuffix;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
+            return string.Empty;
         }
     }
 }

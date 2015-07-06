@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.DataAccesses
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,8 +19,6 @@
 
     public class SettingType2DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        private const string SettingKeySuffix = "_2_1";
-
         public SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
         {
             var betLimitItemDtoList = ReadBetLimitItemsRawData(queryParam);
@@ -33,7 +32,11 @@
 
         private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(queryParam, BetLimitConstants.SettingTypeId, BetLimitConstants.SettingTempateId);
+            var settingKey = GetSettingKeyForGettingSettingType(
+                queryParam.CustomerLevel,
+                BetLimitConstants.SettingTypeId,
+                BetLimitConstants.SettingTempateId,
+                queryParam.ProductId);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, BetLimitConstants.SettingTypeId);
@@ -41,11 +44,38 @@
             }
         }
 
+        private string GetSettingKeyForGettingSettingType(
+            CustomerLevel customerLevel,
+            byte settingTypeId,
+            byte settingTemplateId,
+            byte productId)
+        {
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+
+            switch (customerLevel)
+            {
+                case CustomerLevel.Super:
+                    return "CustSetting_SuperBetLimitSelect" + keySuffix;
+
+                case CustomerLevel.Master:
+                    return "CustSetting_MasterBetLimitSelect" + keySuffix;
+
+                case CustomerLevel.Agent:
+                    return "CustSetting_AgentBetLimitSelect" + keySuffix;
+
+                case CustomerLevel.Member:
+                    return "CustSetting_MemberBetLimitSelect" + keySuffix;
+
+                default:
+                    throw new InvalidOperationException("This customer level is not supported");
+            }
+        }
+
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             Customer customer,
             SettingType settingType,
-            byte productId, 
+            byte productId,
             CustomerLevel? uplineLevel)
         {
             var param = new Hashtable();
@@ -58,13 +88,13 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_BetLimitUpd_2_1";
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultStoredProcedures(settingType.Id, settingType.SettingTemplate, productId))
-            {
-                updateSettingKey += string.Format("_{0}", productId);
-            }
+            var updateSettingKey = "CustSetting_BetLimitUpd";
+            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+                BetLimitConstants.SettingTypeId, 
+                BetLimitConstants.SettingTempateId, 
+                productId);
 
-            return ExecuteNonQuery(updateSettingKey, param);
+            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
         }
     }
 }
