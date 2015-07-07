@@ -79,8 +79,9 @@
                 UplineLevel = uplineLevel
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
-                .Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -120,8 +121,9 @@
                 UplineLevel = uplineLevel
             };
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
-                .Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -161,8 +163,9 @@
                 UplineLevel = uplineLevel
             };
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>())
-                .Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -202,7 +205,9 @@
                 UplineLevel = CustomerLevel.Agent
             };
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -212,7 +217,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_ExecuteValidatePerrmissionMethod()
+        public void ValidateQuerySetting_ExecuteValidateActorEnabledMethod()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -226,7 +231,46 @@
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(_settingContext.Actor.Id, queryParam.CustomerId, (byte)queryParam.CustomerLevel);
+            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
+        }
+
+        [Test]
+        public void ValidateQuerySetting_ExecuteValidateLevelMethod()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam
+            {
+                CustomerId = 1,
+                CustomerLevel = CustomerLevel.Member
+            };
+            _settingContext.Actor.Level = UserLevel.Agent;
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+
+            //// Act
+            _validationService.ValidateQuerySetting(queryParam);
+
+            //// Assert
+            _validationDataAccess.Received().ValidateLevel(_settingContext.Actor.Id, queryParam.CustomerId, (byte)queryParam.CustomerLevel);
+        }
+
+        [Test]
+        public void ValidateQuerySetting_ExecuteValidateBelongInMethod()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam
+            {
+                CustomerId = 1,
+                CustomerLevel = CustomerLevel.Member
+            };
+            _settingContext.Actor.Level = UserLevel.Agent;
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+
+            //// Act
+            _validationService.ValidateQuerySetting(queryParam);
+
+            //// Assert
+            _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
         [Test]
@@ -240,7 +284,9 @@
                 UplineLevel = null
             };
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -260,7 +306,9 @@
                 UplineLevel = CustomerLevel.Master
             };
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -282,7 +330,9 @@
                 UplineLevel = uplineLevel
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -304,7 +354,9 @@
                 UplineLevel = customerLevel
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -326,7 +378,9 @@
                 UplineLevel = null
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -337,7 +391,7 @@
 
         #endregion Validatie Setting Query Tests
 
-        #region validate Setting Command Tests
+        #region validate Updating Setting Tests
 
         [Test]
         public void ValidateUpdatingSetting_UpdatingSettingParamIsNull_ReturnValidationError()
@@ -367,7 +421,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_ExecuteValidatePermissionOnDataAccess()
+        public void ValidateUpdatingSetting_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
@@ -376,8 +430,7 @@
             _validationService.ValidateUpdatingSetting(updatingParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(
-                _settingContext.Actor.Id,
+            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
                 updatingParam.Setting.CustomerInfo.CustomerId,
                 (byte)updatingParam.Setting.CustomerInfo.Level);
         }
@@ -387,7 +440,9 @@
         {
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -406,7 +461,9 @@
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -438,7 +495,9 @@
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -470,7 +529,9 @@
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -503,7 +564,9 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = CustomerLevel.Agent;
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -518,7 +581,9 @@
         {
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingType(1)
@@ -541,7 +606,9 @@
         {
             //// Arrange
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 FakeObjectManager.CreateSettingType(1)
@@ -577,7 +644,9 @@
                     }
                 }
             };
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -594,7 +663,9 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = null;
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -613,7 +684,9 @@
             var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = uplineLevel;
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -625,7 +698,7 @@
 
         #endregion validate Setting Command Tests
 
-        #region Validate Multiple Setting Command Tests
+        #region Validate Updating Multiple Setting Tests
 
         [Test]
         public void ValidateUpdatingMultipleSetting_UpdatingMultipleSettingParamIsNull_ReturnValidationError()
@@ -655,7 +728,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_ExecuteValidatePermissionOnDataAccess()
+        public void ValidateUpdatingMultipleSetting_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
@@ -664,8 +737,7 @@
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidatePermission(
-                _settingContext.Actor.Id,
+            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
                 updatingMultipleParam.Setting.CustomerInfo.CustomerId,
                 (byte)updatingMultipleParam.Setting.CustomerInfo.Level);
         }
@@ -675,7 +747,9 @@
         {
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
@@ -690,7 +764,9 @@
         {
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -712,7 +788,9 @@
             //// Arrange
             var updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
 
@@ -745,7 +823,9 @@
             //// Arrange
             var updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
 
@@ -778,7 +858,9 @@
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -812,7 +894,9 @@
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = CustomerLevel.Agent;
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -830,7 +914,9 @@
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = null;
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -850,7 +936,9 @@
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = uplineLevel;
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -866,7 +954,9 @@
         {
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
             {
@@ -890,7 +980,9 @@
         {
             //// Arrange
             var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
             {
@@ -927,7 +1019,9 @@
                     }
                 }
             };
-            _validationDataAccess.ValidatePermission(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
 

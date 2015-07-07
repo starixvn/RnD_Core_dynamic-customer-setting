@@ -44,23 +44,36 @@
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
-            var levelValidationResult = ValidateActorLevel(_settingContext.Actor.Level, customerLevel);
-            if (!levelValidationResult.IsSuccessful)
+            IResult result = ValidateActorLevel(customerLevel);
+            if (!result.IsSuccessful)
             {
-                return levelValidationResult;
+                return result;
             }
 
-            var permissionValidationResult = ValidateActorPermission(customerId, customerLevel);
-            if (!permissionValidationResult.IsSuccessful)
+            result = ValidateActorEnabled();
+            if (!result.IsSuccessful)
             {
-                return permissionValidationResult;
+                return result;
+            }
+
+            result = ValidateLevelValidWithRealLevelStoreInDatabase(customerId, customerLevel);
+            if (!result.IsSuccessful)
+            {
+                return result;
+            }
+
+            result = ValidateBelongIn(customerId);
+            if (!result.IsSuccessful)
+            {
+                return result;
             }
 
             return ValidateUplineLevel(customerLevel, uplineLevel);
         }
 
-        private IResult ValidateActorLevel(UserLevel actorLevel, CustomerLevel customerLevel)
+        private IResult ValidateActorLevel(CustomerLevel customerLevel)
         {
+            UserLevel actorLevel = _settingContext.Actor.Level;
             switch (customerLevel)
             {
                 case CustomerLevel.Super:
@@ -108,9 +121,26 @@
             return Result.Success;
         }
 
-        private IResult ValidateActorPermission(int customerId, CustomerLevel customerLevel)
+        private IResult ValidateActorEnabled()
         {
-            return _validationDataAccess.ValidatePermission(_settingContext.Actor.Id, customerId, (byte)customerLevel);
+            return _validationDataAccess.ValidateActorEnabled(_settingContext.Actor.Id);
+        }
+
+        private IResult ValidateBelongIn(int customerId)
+        {
+            if (_settingContext.Actor.Level == UserLevel.Company)
+            {
+                return Result.Success;
+            }
+            else
+            {
+                return _validationDataAccess.ValidateBelongIn(_settingContext.Actor.Id, customerId);
+            }
+        }
+
+        private IResult ValidateLevelValidWithRealLevelStoreInDatabase(int customerId, CustomerLevel customerLevel)
+        {
+            return _validationDataAccess.ValidateLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
         private IResult ValidateUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)

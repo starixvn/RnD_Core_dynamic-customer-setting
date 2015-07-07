@@ -4,7 +4,11 @@
 
     public interface IValidationDataAccess
     {
-        IResult ValidatePermission(int actorId, int customerId, byte customerLevelId);
+        IResult ValidateActorEnabled(int actorId);
+
+        IResult ValidateBelongIn(int actorId, int customerId);
+
+        IResult ValidateLevel(int actorId, int customerId, byte customerLevelId);
 
         IResult ValidatePermissionMultiple(int actorId, string memberIds);
     }
