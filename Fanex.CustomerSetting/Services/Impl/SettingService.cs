@@ -346,7 +346,7 @@
             {
                 try
                 {
-                    var result = UpdateSetingTypeForMultipleCustomers(customers, (CustomerLevel)customerLevel, uplineLevel, settingType, productId);
+                    var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType, productId);
                     results.AddRange(result.SubResults);
                 }
                 catch (Exception ex)

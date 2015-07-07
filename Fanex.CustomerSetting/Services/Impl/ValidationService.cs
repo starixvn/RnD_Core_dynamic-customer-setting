@@ -167,7 +167,8 @@
                 return new Result(ResultValue.AccessDenied, Message.UplineLevelCannotBeNullIncaseOfEdittingMember);
             }
 
-            if (_settingContext.Actor.Level != UserLevel.Company && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
+            if (_settingContext.Actor.Level != UserLevel.Company 
+                && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
             {
                 return new Result(ResultValue.AccessDenied, Message.UplineLevelIsNotValid);
             }
@@ -282,7 +283,7 @@
 
             var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
                 updatingMultipleParam.CustomerIds,
-                (CustomerLevel)updatingMultipleParam.Setting.CustomerLevel);
+                updatingMultipleParam.Setting.CustomerLevel);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;

@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Constants;
 
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
-    public enum UserLevel : int
+    public enum UserLevel
     {
         Agent = Level.Agent,
 

@@ -5,7 +5,7 @@
 
     [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "Reviewed"), 
     SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
-    public enum CustomerLevel : byte
+    public enum CustomerLevel
     {
         Member = Level.Member,
 
