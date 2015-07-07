@@ -25,7 +25,7 @@
 
         public override PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             ISettingContext settingContext,
-            IEnumerable<Customer> customers,
+            IEnumerable<CustomerInfo> customers,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
@@ -45,7 +45,7 @@
 
         private PreUpdateMultipleCustomersSettingTypeResult UpdatePTForGroupedMembers(
             ISettingContext settingContext,
-            IEnumerable<Customer> customers,
+            IEnumerable<CustomerInfo> customers,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
@@ -61,7 +61,7 @@
 
         private UpdatingSettingResult UpdateGroupedMembers(
             ISettingContext settingContext,
-            IEnumerable<Customer> members,
+            IEnumerable<CustomerInfo> members,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
@@ -73,26 +73,26 @@
             return _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);
         }
 
-        private IEnumerable<Customer> GetUnGroupedMembers(
-            IEnumerable<Customer> originalMembers,
-            IEnumerable<Customer> groupedMembers)
+        private IEnumerable<CustomerInfo> GetUnGroupedMembers(
+            IEnumerable<CustomerInfo> originalMembers,
+            IEnumerable<CustomerInfo> groupedMembers)
         {
             return originalMembers.Except(groupedMembers, new CustomerComparer());
         }
 
-        private class CustomerComparer : IEqualityComparer<Customer>
+        private class CustomerComparer : IEqualityComparer<CustomerInfo>
         {
             [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !"),
             SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Reviewed !")]
-            public bool Equals(Customer firstCustomer, Customer secondCustomer)
+            public bool Equals(CustomerInfo firstCustomer, CustomerInfo secondCustomer)
             {
-                return firstCustomer.Id == secondCustomer.Id;
+                return firstCustomer.CustomerId == secondCustomer.CustomerId;
             }
 
             [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !")]
-            public int GetHashCode(Customer hashCode)
+            public int GetHashCode(CustomerInfo hashCode)
             {
-                return hashCode.Id.GetHashCode();
+                return hashCode.CustomerId.GetHashCode();
             }
         }
     }

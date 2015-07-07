@@ -164,15 +164,15 @@
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
             Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNull(updatingParam.Setting.Customer, "updatingParam.Setting.Customer");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.Customer.Id, "updatingParam.Setting.Customer.Id");
+            Check.Argument.IsNotNull(updatingParam.Setting.CustomerInfo, "updatingParam.Setting.Customer");
+            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.CustomerId, "updatingParam.Setting.CustomerId");
             Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }
 
         private IResult ValidateUpdateSettingSteps(UpdatingSettingParam updatingParam)
         {
             var setting = updatingParam.Setting;
-            var viewingPermissionValidationResult = ValidateViewingPermission(setting.Customer.Id, setting.Customer.Level, updatingParam.UplineLevel);
+            var viewingPermissionValidationResult = ValidateViewingPermission(setting.CustomerId, setting.CustomerLevel, updatingParam.UplineLevel);
             if (!viewingPermissionValidationResult.IsSuccessful)
             {
                 return viewingPermissionValidationResult;
@@ -240,7 +240,7 @@
         {
             Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
             Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParam.Customers, "updatingMultipleParam.Customers");
+            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.Customers");
         }
 
         private IResult ValidateUpdatingMultipleSettingSteps(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -252,8 +252,8 @@
             }
 
             var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
-                updatingMultipleParam.Customers,
-                updatingMultipleParam.Setting.Customer.Level);
+                updatingMultipleParam.CustomerIds,
+                (CustomerLevel)updatingMultipleParam.Setting.CustomerLevel);
             if (!permissionValidationResult.IsSuccessful)
             {
                 return permissionValidationResult;
@@ -262,12 +262,10 @@
             return Result.Success;
         }
 
-        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<Customer> customers, CustomerLevel customerLevel)
+        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, CustomerLevel customerLevel)
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                IEnumerable<int> memberIds = customers.Select(cust => cust.Id);
-
                 var validationResult = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
                 return validationResult;

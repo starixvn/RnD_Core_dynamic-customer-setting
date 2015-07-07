@@ -38,7 +38,7 @@
 
         public override SettingResult PostUpdateCustomerSettingType(
             ISettingContext settingContext,
-            Customer customer,
+            CustomerInfo customer,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             SettingResult result)

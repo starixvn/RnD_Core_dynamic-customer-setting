@@ -3,9 +3,9 @@
     using System;
     using Fanex.CustomerSetting.Enumerations;
 
-    public class Customer
+    public class CustomerInfo
     {
-        public int Id { get; set; }
+        //public int CustomerId { get; set; }
 
         public string UserName { get; set; }
 
@@ -26,6 +26,6 @@
 
         public string Email { get; set; }
 
-        public CustomerLevel Level { get; set; }
+        //public CustomerLevel Level { get; set; }
     }
 }

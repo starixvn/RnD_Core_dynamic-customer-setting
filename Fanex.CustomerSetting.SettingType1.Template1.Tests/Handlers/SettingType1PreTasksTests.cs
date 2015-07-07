@@ -47,10 +47,10 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<Customer> members = new List<Customer>
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
             {
-                new Customer { Id = 1 },
-                new Customer { Id = 2 }
+                new CustomerInfo { CustomerId = 1 },
+                new CustomerInfo { CustomerId = 2 }
             };
 
             //// Act
@@ -67,12 +67,12 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<Customer> members = new List<Customer>
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
             {
-                new Customer { Id = 1 },
-                new Customer { Id = 2 }
+                new CustomerInfo { CustomerId = 1 },
+                new CustomerInfo { CustomerId = 2 }
             };
-            IEnumerable<Customer> groupedMembers = new List<Customer> { new Customer { Id = 1 } };
+            IEnumerable<CustomerInfo> groupedMembers = new List<CustomerInfo> { new CustomerInfo { CustomerId = 1 } };
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
 
             //// Act
@@ -81,9 +81,9 @@
             //// Assert
             _memberGroupService.Received().UpdateGroupedMembersPT(
                 _settingContext,
-                Arg.Is<IEnumerable<Customer>>(
+                Arg.Is<IEnumerable<CustomerInfo>>(
                     membersReceived => membersReceived.Count() == 1
-                        && membersReceived.FirstOrDefault().Id == 1),
+                        && membersReceived.FirstOrDefault().CustomerId == 1),
                 uplineLevel,
                 settingType);
         }
@@ -95,14 +95,14 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<Customer> members = new List<Customer>
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
             {
-                new Customer { Id = 1 },
-                new Customer { Id = 2 }
+                new CustomerInfo { CustomerId = 1 },
+                new CustomerInfo { CustomerId = 2 }
             };
-            IEnumerable<Customer> groupedMembers = new List<Customer> { new Customer { Id = 1 } };
+            IEnumerable<CustomerInfo> groupedMembers = new List<CustomerInfo> { new CustomerInfo { CustomerId = 1 } };
             _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
-            _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<Customer>>(), uplineLevel, settingType)
+            _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<CustomerInfo>>(), uplineLevel, settingType)
                 .Returns(new UpdatingSettingResult(Result.Success));
 
             //// Act
@@ -110,7 +110,7 @@
 
             //// Assert
             Assert.AreEqual(1, actualPreTaskResult.CustomersNeedForSingleUpdating.Count());
-            Assert.AreEqual(2, actualPreTaskResult.CustomersNeedForSingleUpdating.ElementAt(0).Id);
+            Assert.AreEqual(2, actualPreTaskResult.CustomersNeedForSingleUpdating.ElementAt(0).CustomerId);
         }
     }
 }

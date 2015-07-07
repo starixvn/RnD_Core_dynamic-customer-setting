@@ -20,7 +20,7 @@
             _memberGroupDataAccess = memberGroupDataAccess ?? new MemberGroupDataAccess();
         }
 
-        public IEnumerable<Customer> GetGroupedMembers(IEnumerable<Customer> members)
+        public IEnumerable<CustomerInfo> GetGroupedMembers(IEnumerable<CustomerInfo> members)
         {
             Check.Argument.IsNotNull(members, "members");
             Check.Argument.IsNotNegativeOrZero(members.Count(), "members.Count");
@@ -32,7 +32,7 @@
 
         public UpdatingSettingResult UpdateGroupedMembersPT(
             ISettingContext settingContext,
-            IEnumerable<Customer> groupedMembers,
+            IEnumerable<CustomerInfo> groupedMembers,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
@@ -56,17 +56,17 @@
             return SeparateResultForEachCustomer(updatedResult, groupedMembers);
         }
 
-        private string GetMemberIds(IEnumerable<Customer> members)
+        private string GetMemberIds(IEnumerable<CustomerInfo> members)
         {
-            return string.Join(",", members.Select(member => member.Id));
+            return string.Join(",", members.Select(member => member.CustomerId));
         }
 
-        private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<Customer> groupedMembers)
+        private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<CustomerInfo> groupedMembers)
         {
             var subResults = new List<SettingResult>();
-            foreach (Customer member in groupedMembers)
+            foreach (CustomerInfo member in groupedMembers)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.Id, member.UserName, PTConstants.SettingTypeId, Label.PositionTaking);
+                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.CustomerId, member.UserName, PTConstants.SettingTypeId, Label.PositionTaking);
                 subResults.Add(settingResult);
             }
 

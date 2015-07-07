@@ -7,7 +7,7 @@
 
     public interface IMemberGroupDataAccess
     {
-        IEnumerable<Customer> GetGroupedMembers(string memberIds);
+        IEnumerable<CustomerInfo> GetGroupedMembers(string memberIds);
 
         IResult UpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam);
     }

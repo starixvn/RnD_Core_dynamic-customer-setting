@@ -16,7 +16,8 @@
 
         public virtual SettingResult PreUpdateCustomerSettingType(
             ISettingContext settingContext,
-            Customer customer,
+            int customerId,
+            string customerName,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
@@ -25,7 +26,7 @@
 
         public virtual PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             ISettingContext settingContext, 
-            IEnumerable<Customer> customers,
+            IEnumerable<int> customerIds,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)

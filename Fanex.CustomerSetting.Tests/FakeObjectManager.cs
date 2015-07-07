@@ -22,9 +22,9 @@
                 Setting = new Setting
                 {
                     ProductId = productId,
-                    Customer = new Customer
+                    CustomerInfo = new CustomerInfo
                     {
-                        Id = customerId,
+                        CustomerId = customerId,
                         Level = customerLevel
                     },
                     SettingTypes = new List<SettingType>
@@ -64,23 +64,23 @@
         {
             return new UpdatingMultipleSettingParam
             {
-                Customers = new List<Customer>
+                CustomerIds = new List<CustomerInfo>
                 {
-                    new Customer
+                    new CustomerInfo
                     {
-                        Id = customerId
+                        CustomerId = customerId
                     },
-                    new Customer
+                    new CustomerInfo
                     {
-                        Id = 2
+                        CustomerId = 2
                     }
                 },
                 Setting = new Setting
                 {
                     ProductId = productId,
-                    Customer = new Customer
+                    CustomerInfo = new CustomerInfo
                     {
-                        Id = customerId,
+                        CustomerId = customerId,
                         Level = customerLevel
                     },
                     SettingTypes = new List<SettingType>

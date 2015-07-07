@@ -39,7 +39,8 @@
 
         public virtual SettingResult PostUpdateCustomerSettingType(
                     ISettingContext settingContext,
-                    Customer customer,
+                    int customerId,
+                    string customerName,
                     SettingType settingType,
                     CustomerLevel? uplineLevel,
                     SettingResult result)
@@ -49,7 +50,7 @@
 
         public virtual UpdatingSettingResult PostUpdateMultipleCustomersSettingType(
                     ISettingContext settingContext,
-                    IEnumerable<Customer> customers,
+                    IEnumerable<int> customerIds,
                     SettingType settingType,
                     CustomerLevel? uplineLevel,
                     UpdatingSettingResult updatintSettingResult)

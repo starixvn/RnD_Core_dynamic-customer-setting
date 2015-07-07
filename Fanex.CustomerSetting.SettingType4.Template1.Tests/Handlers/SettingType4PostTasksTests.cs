@@ -34,7 +34,7 @@
             //// Act
             var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
-                new Customer(),
+                new CustomerInfo(),
                 new SettingType { SettingLevel = 1 },
                 null,
                 successResult);
@@ -55,7 +55,7 @@
             //// Act
             SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
-                new Customer(),
+                new CustomerInfo(),
                 new SettingType
                 {
                     SettingLevel = settingLevel

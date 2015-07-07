@@ -378,8 +378,8 @@
             //// Assert
             _validationDataAccess.Received().ValidatePermission(
                 _settingContext.Actor.Id,
-                updatingParam.Setting.Customer.Id,
-                (byte)updatingParam.Setting.Customer.Level);
+                updatingParam.Setting.CustomerInfo.CustomerId,
+                (byte)updatingParam.Setting.CustomerInfo.Level);
         }
 
         [Test]
@@ -645,7 +645,7 @@
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
-            updatingMultipleParam.Customers = null;
+            updatingMultipleParam.CustomerIds = null;
 
             //// Act
             var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
@@ -666,8 +666,8 @@
             //// Assert
             _validationDataAccess.Received().ValidatePermission(
                 _settingContext.Actor.Id,
-                updatingMultipleParam.Setting.Customer.Id,
-                (byte)updatingMultipleParam.Setting.Customer.Level);
+                updatingMultipleParam.Setting.CustomerInfo.CustomerId,
+                (byte)updatingMultipleParam.Setting.CustomerInfo.Level);
         }
 
         [Test]
@@ -700,7 +700,7 @@
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(
                 Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.Customers.Select(cust => cust.Id))));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.CustomerIds.Select(cust => cust.CustomerId))));
         }
 
         [TestCase(CustomerLevel.Super, null)]

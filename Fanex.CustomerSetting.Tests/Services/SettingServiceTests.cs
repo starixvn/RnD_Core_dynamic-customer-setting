@@ -155,7 +155,7 @@
             _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _dymanicRepository.Received().Get<Customer>(Arg.Is<CustomerQueryCriteria>(
+            _dymanicRepository.Received().Get<CustomerInfo>(Arg.Is<CustomerQueryCriteria>(
                     criteria => criteria.CustId == querySettingParam.CustomerId));
         }
 
@@ -165,14 +165,14 @@
             //// Arrange
             QuerySettingParam querySettingParam = FakeObjectManager.CreateQuerySettingParam();
             _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
-            _dymanicRepository.Get<Customer>(Arg.Any<CustomerQueryCriteria>())
-                .Returns(new Customer { Id = querySettingParam.CustomerId, Level = querySettingParam.CustomerLevel });
+            _dymanicRepository.Get<CustomerInfo>(Arg.Any<CustomerQueryCriteria>())
+                .Returns(new CustomerInfo { CustomerId = querySettingParam.CustomerId, Level = querySettingParam.CustomerLevel });
             //// Act
             var setting = _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            Assert.AreEqual(querySettingParam.CustomerId, setting.Customer.Id);
-            Assert.AreEqual(querySettingParam.CustomerLevel, setting.Customer.Level);
+            Assert.AreEqual(querySettingParam.CustomerId, setting.CustomerInfo.CustomerId);
+            Assert.AreEqual(querySettingParam.CustomerLevel, setting.CustomerInfo.Level);
         }
 
         [Test]
@@ -334,7 +334,7 @@
         {
             //// Arrange
             UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
-            updatingParam.Setting.Customer.Id = customerId;
+            updatingParam.Setting.CustomerInfo.CustomerId = customerId;
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -389,7 +389,7 @@
             var customerSettingType = FakeObjectManager.CreateSettingType(1);
             _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
-                Arg.Any<Customer>(),
+                Arg.Any<CustomerInfo>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>()).Returns(Result.Success);
@@ -411,7 +411,7 @@
             //// Assert
             _settingPreTasksHandler.Received().PreUpdateCustomerSettingType(
                 _settingContext,
-                updatingParam.Setting.Customer,
+                updatingParam.Setting.CustomerInfo,
                 Arg.Any<SettingType>(),
                 updatingParam.UplineLevel);
         }
@@ -423,7 +423,7 @@
             UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
             _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingParam);
-            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
+            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerInfo>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(Result.Success));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
 
@@ -441,7 +441,7 @@
             UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
             _validationService.ValidateUpdatingSetting(updatingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingParam);
-            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
+            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerInfo>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(Result.Success));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
 
@@ -451,7 +451,7 @@
             //// Assert
             _settingDataAccess.Received(updatingParam.Setting.SettingTypes.Count()).UpdateCustomerSettingType(
                 _settingContext,
-                updatingParam.Setting.Customer,
+                updatingParam.Setting.CustomerInfo,
                 Arg.Any<SettingType>(),
                 updatingParam.Setting.ProductId,
                 updatingParam.UplineLevel);
@@ -506,7 +506,7 @@
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
-            updatingMultipleSettingParam.Customers = new List<Customer>();
+            updatingMultipleSettingParam.CustomerIds = new List<CustomerInfo>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -556,8 +556,8 @@
             var numOfCallToPreUpdateMultipleCustomersSettingTypeTasks = updatingMultipleSettingParam.Setting.SettingTypes.Count();
             _settingPreTasksHandler.Received(numOfCallToPreUpdateMultipleCustomersSettingTypeTasks).PreUpdateMultipleCustomersSettingType(
                 _settingContext,
-                updatingMultipleSettingParam.Customers,
-                updatingMultipleSettingParam.Setting.Customer.Level,
+                updatingMultipleSettingParam.CustomerIds,
+                updatingMultipleSettingParam.Setting.CustomerInfo.Level,
                 Arg.Any<SettingType>(),
                 updatingMultipleSettingParam.UplineLevel);
         }
@@ -572,8 +572,8 @@
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
-                updatingMultipleSettingParam.Customers,
-                updatingMultipleSettingParam.Setting.Customer.Level,
+                updatingMultipleSettingParam.CustomerIds,
+                updatingMultipleSettingParam.Setting.CustomerInfo.Level,
                 Arg.Any<SettingType>(),
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
@@ -586,7 +586,7 @@
 
             //// Assert
             var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.CustomerIds.Count();
             var numOfResolveSettingPreTasksMethodExecution = numOfSettingTypes + numOfSettingTypesEachCustomer;
             _settingResolver.Received(numOfResolveSettingPreTasksMethodExecution).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
@@ -599,12 +599,12 @@
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
-            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
+            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerInfo>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(Result.Success));
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
-                updatingMultipleSettingParam.Customers,
-                updatingMultipleSettingParam.Setting.Customer.Level,
+                updatingMultipleSettingParam.CustomerIds,
+                updatingMultipleSettingParam.Setting.CustomerInfo.Level,
                 Arg.Any<SettingType>(),
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
@@ -617,7 +617,7 @@
 
             //// Assert
             var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.CustomerIds.Count();
             var numOfExecuteResultSettingPostTasksMethod = numOfSettingTypes + numOfSettingTypesEachCustomer;
             _settingResolver.Received(numOfExecuteResultSettingPostTasksMethod).ResolveSettingPostTasks(Arg.Any<SettingType>());
         }
@@ -630,12 +630,12 @@
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam).Returns(Result.Success);
             SetupSettingTypeDataAccessStubForUpdating(updatingMultipleSettingParam);
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(_settingPreTasksHandler);
-            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<Customer>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
+            _settingPreTasksHandler.PreUpdateCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerInfo>(), Arg.Any<SettingType>(), Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(Result.Success));
             _settingPreTasksHandler.PreUpdateMultipleCustomersSettingType(
                 _settingContext,
-                updatingMultipleSettingParam.Customers,
-                updatingMultipleSettingParam.Setting.Customer.Level,
+                updatingMultipleSettingParam.CustomerIds,
+                updatingMultipleSettingParam.Setting.CustomerInfo.Level,
                 Arg.Any<SettingType>(),
                 updatingMultipleSettingParam.UplineLevel)
                 .Returns(new PreUpdateMultipleCustomersSettingTypeResult
@@ -648,10 +648,10 @@
 
             //// Assert
             var numOfSettingTypes = updatingMultipleSettingParam.Setting.SettingTypes.Count();
-            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.Customers.Count();
+            var numOfSettingTypesEachCustomer = numOfSettingTypes * updatingMultipleSettingParam.CustomerIds.Count();
             _settingDataAccess.Received(numOfSettingTypesEachCustomer).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
-                Arg.Any<Customer>(),
+                Arg.Any<CustomerInfo>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>());

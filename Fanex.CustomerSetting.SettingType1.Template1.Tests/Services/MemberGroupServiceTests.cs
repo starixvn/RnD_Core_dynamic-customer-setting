@@ -35,7 +35,7 @@
         public void GetGroupedMembers_MembersIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            IEnumerable<Customer> customers = null;
+            IEnumerable<CustomerInfo> customers = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -47,7 +47,7 @@
         public void GetGroupedMembers_MembersIsEmpty_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            IEnumerable<Customer> members = new List<Customer>();
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -59,10 +59,10 @@
         public void GetGroupedMembers_ExecuteGetGroupedMembersOnMemberGroupDataAccess()
         {
             //// Arrange
-            IEnumerable<Customer> members = new List<Customer>
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
             {
-                new Customer { Id = 1 },
-                new Customer { Id = 2 }
+                new CustomerInfo { CustomerId = 1 },
+                new CustomerInfo { CustomerId = 2 }
             };
 
             //// Act
@@ -70,7 +70,7 @@
 
             //// Assert
             _memberGroupDataAccess.Received().GetGroupedMembers(
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", members.Select(member => member.Id))));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", members.Select(member => member.CustomerId))));
         }
 
         #endregion Get Grouped Members
@@ -81,7 +81,7 @@
         public void UpdateGroupedMembersSetting_MembersIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            IEnumerable<Customer> members = null;
+            IEnumerable<CustomerInfo> members = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -93,7 +93,7 @@
         public void UpdateGroupedMembersSetting_SettingTypeIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            IEnumerable<Customer> members = new List<Customer>();
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>();
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -105,7 +105,7 @@
         public void UpdateGroupedMembersSetting_MembersIsEmpty_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            IEnumerable<Customer> members = new List<Customer>();
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -117,10 +117,10 @@
         public void UpdateGroupedMembersSetting_ExecuteUpdateGroupedMembersSettingOnMemberGroupDataAccess()
         {
             //// Arrange
-            IEnumerable<Customer> members = new List<Customer>
+            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
             {
-                new Customer { Id = 1 },
-                new Customer { Id = 2 }
+                new CustomerInfo { CustomerId = 1 },
+                new CustomerInfo { CustomerId = 2 }
             };
             var uplineLevel = CustomerLevel.Master;
             var settingType = FakeObjectManager.CreateSettingType(1);
@@ -131,7 +131,7 @@
             //// Assert
             _memberGroupDataAccess.Received().UpdateGroupedMembersSetting(
                 Arg.Is<UpdateMultipleMemberPTParam>(
-                    parameters => parameters.CustIds == string.Join(",", members.Select(member => member.Id))
+                    parameters => parameters.CustIds == string.Join(",", members.Select(member => member.CustomerId))
                         && parameters.UserId == _settingContext.Actor.Id
                         && parameters.UplineLevel == uplineLevel
                         && parameters.SubAccId == _settingContext.Actor.SubAccountId

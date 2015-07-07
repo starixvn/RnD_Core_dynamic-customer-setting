@@ -138,7 +138,7 @@
 
         public virtual IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
-            Customer customer,
+            CustomerInfo customer,
             SettingType settingType,
             byte productId,
             CustomerLevel? uplineLevel)
@@ -156,13 +156,13 @@
 
         private Hashtable GetSPParamsForUpdatingPT(
             ISettingContext settingContext,
-            Customer customer,
+            CustomerInfo customer,
             SettingType settingType)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
-            param.Add("custid", customer.Id);
+            param.Add("custid", customer.CustomerId);
             param.Add("ip", settingContext.IP);
             param.Add("pt", settingType.ToXml());
             param.Add("errcode", 0);
