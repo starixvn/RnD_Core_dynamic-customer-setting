@@ -20,30 +20,28 @@
             _memberGroupDataAccess = memberGroupDataAccess ?? new MemberGroupDataAccess();
         }
 
-        public IEnumerable<CustomerInfo> GetGroupedMembers(IEnumerable<CustomerInfo> members)
+        public IEnumerable<int> GetGroupedMembers(IEnumerable<int> memberIds)
         {
-            Check.Argument.IsNotNull(members, "members");
-            Check.Argument.IsNotNegativeOrZero(members.Count(), "members.Count");
+            Check.Argument.IsNotNull(memberIds, "members");
+            Check.Argument.IsNotNegativeOrZero(memberIds.Count(), "members.Count");
 
-            string memberIds = GetMemberIds(members);
-
-            return _memberGroupDataAccess.GetGroupedMembers(memberIds);
+            return _memberGroupDataAccess.GetGroupedMembers(string.Join(",", memberIds));
         }
 
         public UpdatingSettingResult UpdateGroupedMembersPT(
             ISettingContext settingContext,
-            IEnumerable<CustomerInfo> groupedMembers,
+            IEnumerable<int> groupedMemberIds,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(groupedMembers, "groupedMembers");
+            Check.Argument.IsNotNull(groupedMemberIds, "groupedMemberIds");
             Check.Argument.IsNotNull(settingType, "settingType");
-            Check.Argument.IsNotNegativeOrZero(groupedMembers.Count(), "groupedMembers.Count");
+            Check.Argument.IsNotNegativeOrZero(groupedMemberIds.Count(), "groupedMemberIds.Count");
 
             var updateParam = new UpdateMultipleMemberPTParam
             {
-                CustIds = GetMemberIds(groupedMembers),
+                CustIds = string.Join(",", groupedMemberIds),
                 IP = settingContext.IP,
                 UserId = settingContext.Actor.Id,
                 SubAccId = settingContext.Actor.SubAccountId,
@@ -53,20 +51,15 @@
 
             var updatedResult = _memberGroupDataAccess.UpdateGroupedMembersSetting(updateParam);
 
-            return SeparateResultForEachCustomer(updatedResult, groupedMembers);
+            return SeparateResultForEachCustomer(updatedResult, groupedMemberIds);
         }
 
-        private string GetMemberIds(IEnumerable<CustomerInfo> members)
-        {
-            return string.Join(",", members.Select(member => member.CustomerId));
-        }
-
-        private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<CustomerInfo> groupedMembers)
+        private UpdatingSettingResult SeparateResultForEachCustomer(IResult result, IEnumerable<int> groupedMemberIds)
         {
             var subResults = new List<SettingResult>();
-            foreach (CustomerInfo member in groupedMembers)
+            foreach (int memberId in groupedMemberIds)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, member.CustomerId, member.UserName, PTConstants.SettingTypeId, Label.PositionTaking);
+                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, memberId, PTConstants.SettingTypeId, Label.PositionTaking);
                 subResults.Add(settingResult);
             }
 

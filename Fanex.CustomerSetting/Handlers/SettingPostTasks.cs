@@ -40,7 +40,6 @@
         public virtual SettingResult PostUpdateCustomerSettingType(
                     ISettingContext settingContext,
                     int customerId,
-                    string customerName,
                     SettingType settingType,
                     CustomerLevel? uplineLevel,
                     SettingResult result)

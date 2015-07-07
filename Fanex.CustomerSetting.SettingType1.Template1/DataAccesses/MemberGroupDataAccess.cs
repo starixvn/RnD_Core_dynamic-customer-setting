@@ -12,11 +12,11 @@
 
     public class MemberGroupDataAccess : BaseDataAccess, IMemberGroupDataAccess
     {
-        public IEnumerable<CustomerInfo> GetGroupedMembers(string memberIds)
+        public IEnumerable<int> GetGroupedMembers(string memberIds)
         {
             using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
             {
-                return objectDb.Query<CustomerInfo>(new
+                return objectDb.Query<int>(new
                 {
                     CustIDList = memberIds
                 });

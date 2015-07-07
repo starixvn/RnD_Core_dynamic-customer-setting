@@ -53,17 +53,12 @@
             CustomerLevel uplineLevel = CustomerLevel.Agent)
         {
             var actualUplineLevel = customerLevel == CustomerLevel.Member ? (CustomerLevel?)uplineLevel : null;
-            IEnumerable<CustomerInfo> customers = customerIds.Split(',')
-                .Select(customerId => new CustomerInfo
-                {
-                    CustomerId = Convert.ToInt32(customerId),
-                    Level = customerLevel
-                });
+            IEnumerable<int> customerIdList = customerIds.Split(',').Select(customerId => Convert.ToInt32(customerId));
 
             var setting = _settingService.GetCustomerSetting(
                 new QuerySettingParam
                 {
-                    CustomerId = customers.FirstOrDefault().CustomerId,
+                    CustomerId = customerIdList.FirstOrDefault(),
                     CustomerLevel = customerLevel,
                     ProductId = productId,
                     UplineLevel = actualUplineLevel
@@ -71,7 +66,7 @@
 
             UpdateMultipleSetting(new UpdatingMultipleSettingParam 
             {
-                CustomerIds = customers,
+                CustomerIds = customerIdList,
                 Setting = setting,
                 UplineLevel = actualUplineLevel
             });

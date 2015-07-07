@@ -17,7 +17,6 @@
         public virtual SettingResult PreUpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            string customerName,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {

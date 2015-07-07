@@ -431,8 +431,6 @@
 
             //// Assert
             _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
-                updatingParam.Setting.CustomerInfo.CustomerId,
-                (byte)updatingParam.Setting.CustomerInfo.Level);
         }
 
         [Test]
@@ -738,8 +736,6 @@
 
             //// Assert
             _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
-                updatingMultipleParam.Setting.CustomerInfo.CustomerId,
-                (byte)updatingMultipleParam.Setting.CustomerInfo.Level);
         }
 
         [Test]
@@ -776,7 +772,7 @@
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(
                 Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.CustomerIds.Select(cust => cust.CustomerId))));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.CustomerIds)));
         }
 
         [TestCase(CustomerLevel.Super, null)]

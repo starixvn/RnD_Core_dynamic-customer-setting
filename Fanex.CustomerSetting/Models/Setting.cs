@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using Fanex.CustomerSetting.Enumerations;
 
     [Serializable]
@@ -13,7 +12,6 @@
 
         public Setting()
         {
-
         }
 
         public Setting(CustomerInfo customerInfo, string productName)
@@ -30,21 +28,24 @@
             {
                 return _productName;
             }
+
             set
             {
                 _productName = value;
             }
         }
+
         public int CustomerId { get; set; }
 
         public CustomerLevel CustomerLevel { get; set; }
-        
+
         public CustomerInfo CustomerInfo
         {
             get
             {
                 return _customerInfo;
             }
+
             set
             {
                 _customerInfo = value;

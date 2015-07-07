@@ -138,31 +138,27 @@
 
         public virtual IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
-            CustomerInfo customer,
+            int customerId,
+            CustomerLevel customerLevel,
             SettingType settingType,
             byte productId,
             CustomerLevel? uplineLevel)
         {
-            if (customer == null)
-            {
-                throw new ArgumentNullException("customer");
-            }
-
-            var storedProcedureParams = GetSPParamsForUpdatingPT(settingContext, customer, settingType);
-            var settingKey = GetSettingKeyForUpdatingPT(customer.Level, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
+            var storedProcedureParams = GetSPParamsForUpdatingPT(settingContext, customerId, settingType);
+            var settingKey = GetSettingKeyForUpdatingPT(customerLevel, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
 
         private Hashtable GetSPParamsForUpdatingPT(
             ISettingContext settingContext,
-            CustomerInfo customer,
+            int customerId,
             SettingType settingType)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
-            param.Add("custid", customer.CustomerId);
+            param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("pt", settingType.ToXml());
             param.Add("errcode", 0);

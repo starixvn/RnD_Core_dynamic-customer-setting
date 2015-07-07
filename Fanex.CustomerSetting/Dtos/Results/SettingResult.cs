@@ -10,13 +10,11 @@
             string message,
             int msgType,
             int customerId,
-            string customerName,
             int settingTypeId,
             string settingTypeName)
             : base(code, message, msgType)
         {
             CustomerId = customerId;
-            CustomerName = customerName;
             SettingTypeId = settingTypeId;
             SettingTypeName = settingTypeName;
         }
@@ -26,7 +24,6 @@
             string message,
             int msgType,
             int customerId,
-            string customerName,
             int settingTypeId,
             string settingTypeName,
             IEnumerable<string> subMessages)
@@ -35,7 +32,6 @@
             message,
             msgType,
             customerId,
-            customerName,
             settingTypeId,
             settingTypeName)
         {
@@ -52,7 +48,6 @@
             message,
             settingResult.MsgType,
             settingResult.CustomerId,
-            settingResult.CustomerName,
             settingResult.SettingTypeId,
             settingResult.SettingTypeName,
             settingResult.SubMessages)
@@ -68,7 +63,6 @@
             mainMessage,
             settingResult.MsgType,
             settingResult.CustomerId,
-            settingResult.CustomerName,
             settingResult.SettingTypeId,
             settingResult.SettingTypeName,
             subMessages)
@@ -82,7 +76,7 @@
 
         public int CustomerId { get; private set; }
 
-        public string CustomerName { get; private set; }
+        public string CustomerName { get; set; }
 
         public int SettingTypeId { get; private set; }
 

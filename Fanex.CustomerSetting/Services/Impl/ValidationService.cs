@@ -194,7 +194,6 @@
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
             Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNull(updatingParam.Setting.CustomerInfo, "updatingParam.Setting.Customer");
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.CustomerId, "updatingParam.Setting.CustomerId");
             Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }

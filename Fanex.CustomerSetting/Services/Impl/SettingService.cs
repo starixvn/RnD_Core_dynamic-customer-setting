@@ -215,7 +215,7 @@
         {
             var settingTypes = updatingParam.Setting.SettingTypes;
             var customerId = updatingParam.Setting.CustomerId;
-            var customerName = updatingParam.Setting.CustomerInfo.UserName;
+            var customerLevel = updatingParam.Setting.CustomerLevel;
             var uplineLevel = updatingParam.UplineLevel;
             var productId = updatingParam.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
@@ -225,11 +225,11 @@
             {
                 try
                 {
-                    updatingSettingTypeResult = UpdateCustomerSettingType(customerId, customerName, settingType, productId, uplineLevel);
+                    updatingSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
                 }
                 catch (Exception ex)
                 {
-                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, customerName, settingType.Id, settingType.Name);
+                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, settingType.Id, settingType.Name);
                     LogError(ex);
                 }
 
@@ -239,41 +239,40 @@
             return new UpdatingSettingResult(settingTypeResults);
         }
 
-        private SettingResult UpdateCustomerSettingType(int customerId, string customerName, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
+        private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
-            var preTaskResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerName, settingType, uplineLevel);
+            var preTaskResult = RunPreUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel);
             if (!preTaskResult.IsSuccessful)
             {
                 return preTaskResult;
             }
 
-            var result = RunUpdateCustomerSettingType(customerId, customerName, settingType, productId, uplineLevel);
-            var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, customerId, customerName, settingType.Id, settingType.Name);
+            var result = RunUpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
+            var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
 
-            return RunPostUpdateCustomerSettingTypeTasks(customerId, customerName, settingType, uplineLevel, settingResult);
+            return RunPostUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel, settingResult);
         }
 
-        private SettingResult RunPreUpdateCustomerSettingTypeTasks(int customerId, string customerName, SettingType settingType, CustomerLevel? uplineLevel)
+        private SettingResult RunPreUpdateCustomerSettingTypeTasks(int customerId, SettingType settingType, CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
                 && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
-                return preTasks.PreUpdateCustomerSettingType(_settingContext, customerId, customerName, settingType, uplineLevel);
+                return preTasks.PreUpdateCustomerSettingType(_settingContext, customerId, settingType, uplineLevel);
             }
 
             return new SettingResult(Result.Success);
         }
 
-        private IResult RunUpdateCustomerSettingType(int customerId, string customerName, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
+        private IResult RunUpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
             var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
-            return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customerId, customerName, settingType, productId, uplineLevel);
+            return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, settingType, productId, uplineLevel);
         }
 
         private SettingResult RunPostUpdateCustomerSettingTypeTasks(
             int customerId,
-            string customerName,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             SettingResult result)
@@ -283,7 +282,7 @@
             if (postTasks != null
                 && IsOverride(postTasks.GetType().GetMethod("PostUpdateCustomerSettingType")))
             {
-                return postTasks.PostUpdateCustomerSettingType(_settingContext, customerId, customerName, settingType, uplineLevel, result);
+                return postTasks.PostUpdateCustomerSettingType(_settingContext, customerId, settingType, uplineLevel, result);
             }
 
             return result;
@@ -336,7 +335,7 @@
                 }
                 catch (Exception ex)
                 {
-                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, 0, string.Empty, settingType.Id, settingType.Name);
+                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, 0, settingType.Id, settingType.Name);
                     results.Add(errorResult);
                     LogError(ex);
                 }

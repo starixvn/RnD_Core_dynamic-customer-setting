@@ -25,14 +25,14 @@
 
         public override PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             ISettingContext settingContext,
-            IEnumerable<CustomerInfo> customers,
+            IEnumerable<int> customerIds,
             CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                return UpdatePTForGroupedMembers(settingContext, customers, settingType, uplineLevel);
+                return UpdatePTForGroupedMembers(settingContext, customerIds, settingType, uplineLevel);
             }
             else
             {
@@ -45,12 +45,12 @@
 
         private PreUpdateMultipleCustomersSettingTypeResult UpdatePTForGroupedMembers(
             ISettingContext settingContext,
-            IEnumerable<CustomerInfo> customers,
+            IEnumerable<int> customerIds,
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            var groupedMembers = _memberGroupService.GetGroupedMembers(customers);
-            var ungroupedMembers = GetUnGroupedMembers(customers, groupedMembers);
+            var groupedMembers = _memberGroupService.GetGroupedMembers(customerIds);
+            var ungroupedMembers = GetUnGroupedMembers(customerIds, groupedMembers);
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
                 CustomersNeedForSingleUpdating = ungroupedMembers,
@@ -61,39 +61,23 @@
 
         private UpdatingSettingResult UpdateGroupedMembers(
             ISettingContext settingContext,
-            IEnumerable<CustomerInfo> members,
+            IEnumerable<int> memberIds,
             CustomerLevel uplineLevel,
             SettingType settingType)
         {
-            if (!members.Any())
+            if (!memberIds.Any())
             {
                 return new UpdatingSettingResult(Result.Success);
             }
 
-            return _memberGroupService.UpdateGroupedMembersPT(settingContext, members, uplineLevel, settingType);
+            return _memberGroupService.UpdateGroupedMembersPT(settingContext, memberIds, uplineLevel, settingType);
         }
 
-        private IEnumerable<CustomerInfo> GetUnGroupedMembers(
-            IEnumerable<CustomerInfo> originalMembers,
-            IEnumerable<CustomerInfo> groupedMembers)
+        private IEnumerable<int> GetUnGroupedMembers(
+            IEnumerable<int> originalMembers,
+            IEnumerable<int> groupedMembers)
         {
-            return originalMembers.Except(groupedMembers, new CustomerComparer());
-        }
-
-        private class CustomerComparer : IEqualityComparer<CustomerInfo>
-        {
-            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !"),
-            SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Reviewed !")]
-            public bool Equals(CustomerInfo firstCustomer, CustomerInfo secondCustomer)
-            {
-                return firstCustomer.CustomerId == secondCustomer.CustomerId;
-            }
-
-            [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed !")]
-            public int GetHashCode(CustomerInfo hashCode)
-            {
-                return hashCode.CustomerId.GetHashCode();
-            }
+            return originalMembers.Except(groupedMembers);
         }
     }
 }

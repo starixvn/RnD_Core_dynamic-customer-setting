@@ -5,8 +5,6 @@
 
     public class CustomerInfo
     {
-        //public int CustomerId { get; set; }
-
         public string UserName { get; set; }
 
         /// <summary>
@@ -25,7 +23,5 @@
         public string Fax { get; set; }
 
         public string Email { get; set; }
-
-        //public CustomerLevel Level { get; set; }
     }
 }

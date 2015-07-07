@@ -47,17 +47,13 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
-            {
-                new CustomerInfo { CustomerId = 1 },
-                new CustomerInfo { CustomerId = 2 }
-            };
+            IEnumerable<int> memberIds = new List<int> { 1, 2 };
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, memberIds, customerLevel, settingType, uplineLevel);
 
             //// Assert
-            _memberGroupService.Received().GetGroupedMembers(members);
+            _memberGroupService.Received().GetGroupedMembers(memberIds);
         }
 
         [Test]
@@ -67,23 +63,19 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
-            {
-                new CustomerInfo { CustomerId = 1 },
-                new CustomerInfo { CustomerId = 2 }
-            };
-            IEnumerable<CustomerInfo> groupedMembers = new List<CustomerInfo> { new CustomerInfo { CustomerId = 1 } };
-            _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
+            IEnumerable<int> memberIds = new List<int> { 1, 2 };
+            IEnumerable<int> groupedMemberIds = new List<int> { 1 };
+            _memberGroupService.GetGroupedMembers(memberIds).Returns(groupedMemberIds);
 
             //// Act
-            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
+            _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, memberIds, customerLevel, settingType, uplineLevel);
 
             //// Assert
             _memberGroupService.Received().UpdateGroupedMembersPT(
                 _settingContext,
-                Arg.Is<IEnumerable<CustomerInfo>>(
+                Arg.Is<IEnumerable<int>>(
                     membersReceived => membersReceived.Count() == 1
-                        && membersReceived.FirstOrDefault().CustomerId == 1),
+                        && membersReceived.FirstOrDefault() == 1),
                 uplineLevel,
                 settingType);
         }
@@ -95,22 +87,18 @@
             var customerLevel = CustomerLevel.Member;
             var settingType = FakeObjectManager.CreateSettingType(1);
             var uplineLevel = CustomerLevel.Master;
-            IEnumerable<CustomerInfo> members = new List<CustomerInfo>
-            {
-                new CustomerInfo { CustomerId = 1 },
-                new CustomerInfo { CustomerId = 2 }
-            };
-            IEnumerable<CustomerInfo> groupedMembers = new List<CustomerInfo> { new CustomerInfo { CustomerId = 1 } };
-            _memberGroupService.GetGroupedMembers(members).Returns(groupedMembers);
-            _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<CustomerInfo>>(), uplineLevel, settingType)
+            IEnumerable<int> memberIds = new List<int> { 1, 2 };
+            IEnumerable<int> groupedMemberIds = new List<int> { 1 };
+            _memberGroupService.GetGroupedMembers(memberIds).Returns(groupedMemberIds);
+            _memberGroupService.UpdateGroupedMembersPT(_settingContext, Arg.Any<IEnumerable<int>>(), uplineLevel, settingType)
                 .Returns(new UpdatingSettingResult(Result.Success));
 
             //// Act
-            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, members, customerLevel, settingType, uplineLevel);
+            var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, memberIds, customerLevel, settingType, uplineLevel);
 
             //// Assert
             Assert.AreEqual(1, actualPreTaskResult.CustomersNeedForSingleUpdating.Count());
-            Assert.AreEqual(2, actualPreTaskResult.CustomersNeedForSingleUpdating.ElementAt(0).CustomerId);
+            Assert.AreEqual(2, actualPreTaskResult.CustomersNeedForSingleUpdating.ElementAt(0));
         }
     }
 }

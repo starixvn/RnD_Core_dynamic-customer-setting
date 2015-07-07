@@ -63,7 +63,7 @@
 
             var failedMessages = failedResults.Select(result => result.Message);
 
-            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, string.Empty, Id, Name, failedMessages);
+            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, Id, Name, failedMessages);
         }
     }
 }

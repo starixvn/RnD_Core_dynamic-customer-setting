@@ -73,7 +73,8 @@
 
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
-            CustomerInfo customer,
+            int customerId,
+            CustomerLevel customerLevel,
             SettingType settingType,
             byte productId,
             CustomerLevel? uplineLevel)
@@ -81,7 +82,7 @@
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
-            param.Add("custid", customer.CustomerId);
+            param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("betlimit", settingType.ToXml());
             param.Add("errcode", 0);

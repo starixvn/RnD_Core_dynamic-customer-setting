@@ -7,8 +7,8 @@
 
     public interface IMemberGroupService
     {
-        IEnumerable<CustomerInfo> GetGroupedMembers(IEnumerable<CustomerInfo> members);
+        IEnumerable<int> GetGroupedMembers(IEnumerable<int> memberIds);
 
-        UpdatingSettingResult UpdateGroupedMembersPT(ISettingContext settingContext, IEnumerable<CustomerInfo> groupedMembers, CustomerLevel uplineLevel, SettingType settingType);
+        UpdatingSettingResult UpdateGroupedMembersPT(ISettingContext settingContext, IEnumerable<int> groupedMemberIds, CustomerLevel uplineLevel, SettingType settingType);
     }
 }

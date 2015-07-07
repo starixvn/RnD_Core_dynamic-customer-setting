@@ -22,11 +22,8 @@
                 Setting = new Setting
                 {
                     ProductId = productId,
-                    CustomerInfo = new CustomerInfo
-                    {
-                        CustomerId = customerId,
-                        Level = customerLevel
-                    },
+                    CustomerId = customerId,
+                    CustomerLevel = customerLevel,
                     SettingTypes = new List<SettingType>
                     {
                         FakeObjectManager.CreateSettingType(1, 1),
@@ -64,25 +61,16 @@
         {
             return new UpdatingMultipleSettingParam
             {
-                CustomerIds = new List<CustomerInfo>
+                CustomerIds = new List<int>
                 {
-                    new CustomerInfo
-                    {
-                        CustomerId = customerId
-                    },
-                    new CustomerInfo
-                    {
-                        CustomerId = 2
-                    }
+                    customerId,
+                    2
                 },
                 Setting = new Setting
                 {
                     ProductId = productId,
-                    CustomerInfo = new CustomerInfo
-                    {
-                        CustomerId = customerId,
-                        Level = customerLevel
-                    },
+                    CustomerId = customerId,
+                    CustomerLevel = customerLevel,
                     SettingTypes = new List<SettingType>
                     {
                         FakeObjectManager.CreateSettingType(1, 1),

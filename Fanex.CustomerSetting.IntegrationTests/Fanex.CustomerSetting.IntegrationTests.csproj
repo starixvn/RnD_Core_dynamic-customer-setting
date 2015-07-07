@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>fc5acc2b-2ee9-4c0e-94f3-03e36aaba743</ProjectGuid>
+    <ProjectGuid>{DCC102F7-7727-427D-9107-75694FEA553C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.CustomerSetting.IntegrationTests</RootNamespace>
