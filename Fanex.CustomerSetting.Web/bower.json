@@ -3,7 +3,8 @@
     "private": true,
     "dependencies": {
         "angularjs": "^1.4.1",
+        "compass-mixins": "^1.0.2",
         "jquery": "^1.11.3",
-        "compass-mixins": "^1.0.2"
+        "oclazyload": "^1.0.1"
     }
 }
