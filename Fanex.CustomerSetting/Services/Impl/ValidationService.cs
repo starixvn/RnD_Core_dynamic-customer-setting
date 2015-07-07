@@ -147,7 +147,7 @@
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                return ValidateUplineLevelIncaseOfEditingMember(customerLevel, uplineLevel);
+                return ValidateUplineLevelIncaseOfEditingMember(uplineLevel);
             }
             else
             {
@@ -160,7 +160,7 @@
             }
         }
 
-        private IResult ValidateUplineLevelIncaseOfEditingMember(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private IResult ValidateUplineLevelIncaseOfEditingMember(CustomerLevel? uplineLevel)
         {
             if (uplineLevel == null)
             {

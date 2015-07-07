@@ -14,7 +14,7 @@
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
 
-        public BaseMessageService(IResourceService resourceService)
+        protected BaseMessageService(IResourceService resourceService)
         {
             ResourceService = resourceService ?? new ResourceService();
         }

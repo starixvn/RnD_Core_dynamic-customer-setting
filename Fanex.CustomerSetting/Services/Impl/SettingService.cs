@@ -60,7 +60,7 @@
             ValidateQuerySetting(queryParam);
 
             var product = GetProduct(queryParam.ProductId);
-            var customerInfo = GetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel);
+            var customerInfo = GetCustomerInfo(queryParam.CustomerId);
             var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
 
             ISetting setting = new Setting(
@@ -109,7 +109,7 @@
             };
         }
 
-        private CustomerInfo GetCustomerInfo(int customerId, CustomerLevel customerLevel)
+        private CustomerInfo GetCustomerInfo(int customerId)
         {
             var customer = _dynamicRepository.Get<CustomerInfo>(
                 new CustomerQueryCriteria
@@ -323,7 +323,7 @@
             if (customerIdsLength != customerNamesLength)
             {
                 throw new ArgumentOutOfRangeException(
-                    "updatingMultipleParam.CustomerIds, updatingMultipleParam.CustomerNames",
+                    "customerIdsLength",
                     "CustomerIds does not match with CustomerNames");
             }
         }

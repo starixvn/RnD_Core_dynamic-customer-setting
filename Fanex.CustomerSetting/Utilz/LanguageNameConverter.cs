@@ -11,13 +11,13 @@
                 return DefaultLanguageName;
             }
 
-            switch (languageName.ToLowerInvariant())
+            switch (languageName.ToUpperInvariant())
             {
-                case "zh-tw": return "ch"; // Traditional
-                case "zh-cn": return "cs"; // Simplified
-                case "ja-jp": return "jp"; // Japanese
-                case "th-th": return "th"; // Thai
-                case "en-us":
+                case "ZH-TW": return "ch"; // Traditional
+                case "ZH-CN": return "cs"; // Simplified
+                case "JA-JP": return "jp"; // Japanese
+                case "TH-TH": return "th"; // Thai
+                case "EN-US":
                 default: return DefaultLanguageName;
             }
         }

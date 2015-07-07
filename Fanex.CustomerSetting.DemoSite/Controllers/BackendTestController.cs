@@ -48,12 +48,14 @@
 
         public ActionResult EditMultiple(
             string customerIds = "1277,1284,1290",
+            string customerNames = "1277,1284,1290",
             CustomerLevel customerLevel = CustomerLevel.Member,
             byte productId = 255,
             CustomerLevel uplineLevel = CustomerLevel.Agent)
         {
             var actualUplineLevel = customerLevel == CustomerLevel.Member ? (CustomerLevel?)uplineLevel : null;
             IEnumerable<int> customerIdList = customerIds.Split(',').Select(customerId => Convert.ToInt32(customerId));
+            IEnumerable<string> customerNameList = customerNames.Split(',').ToList();
 
             var setting = _settingService.GetCustomerSetting(
                 new QuerySettingParam
@@ -67,6 +69,7 @@
             UpdateMultipleSetting(new UpdatingMultipleSettingParam 
             {
                 CustomerIds = customerIdList,
+                CustomerNames = customerNameList,
                 Setting = setting,
                 UplineLevel = actualUplineLevel
             });
