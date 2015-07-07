@@ -6,5 +6,7 @@
     public class UpdatingMultipleSettingParam : UpdatingSettingParam
     {
         public IEnumerable<int> CustomerIds { get; set; }
+
+        public IEnumerable<string> CustomerNames { get; set; }
     }
 }

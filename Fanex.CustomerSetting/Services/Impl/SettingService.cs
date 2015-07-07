@@ -60,11 +60,16 @@
             ValidateQuerySetting(queryParam);
 
             var product = GetProduct(queryParam.ProductId);
-
             var customerInfo = GetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel);
-            ISetting setting = new Setting(customerInfo, product.Name);
-            setting.ProductId = product.Id;
-            setting.SettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
+            var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
+
+            ISetting setting = new Setting(
+                queryParam.CustomerId, 
+                queryParam.CustomerLevel, 
+                customerInfo, 
+                product.Id, 
+                product.Name, 
+                customerSettingTypes);
 
             return setting;
         }
@@ -300,16 +305,27 @@
 
             var results = UpdateSettingTypesForMultipleCustomers(updatingMultipleParam);
 
-            return new UpdatingSettingResult(results);
+            return MapUpdatingSettingResultWithCustomerName(results, updatingMultipleParam.CustomerIds, updatingMultipleParam.CustomerNames);
         }
 
         private void CheckUpdatingMultipleCustomerSettingAgruments(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
             Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.ProductId, "updatingMultipleParam.Setting.Product.Id");
+            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.CustomerIds");
+            Check.Argument.IsNotNull(updatingMultipleParam.CustomerNames, "updatingMultipleParam.CustomerNames");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.ProductId, "updatingMultipleParam.Setting.ProductId");
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
-            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.CustomerIds.Count(), "updatingMultipleParam.Customers.Count");
+            int customerIdsLength = updatingMultipleParam.CustomerIds.Count();
+            int customerNamesLength = updatingMultipleParam.CustomerNames.Count();
+            Check.Argument.IsNotNegativeOrZero(customerIdsLength, "updatingMultipleParam.CustomerIds.Count");
+            Check.Argument.IsNotNegativeOrZero(customerNamesLength, "updatingMultipleParam.CustomerNames.Count");
+            if (customerIdsLength != customerNamesLength)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "updatingMultipleParam.CustomerIds, updatingMultipleParam.CustomerNames",
+                    "CustomerIds does not match with CustomerNames");
+            }
         }
 
         private IResult ValidateUpdatingMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -471,7 +487,7 @@
             _logger.Error(ex.Message, ex);
         }
 
-        public bool IsOverride(MethodInfo methodInfo)
+        private bool IsOverride(MethodInfo methodInfo)
         {
             if (methodInfo == null)
             {
@@ -479,6 +495,45 @@
             }
 
             return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
+        }
+
+        private UpdatingSettingResult MapUpdatingSettingResultWithCustomerName(
+            IEnumerable<SettingResult> settingResults,
+            IEnumerable<int> customerIds,
+            IEnumerable<string> customerNames)
+        {
+            var customerIdNameContainer = GetCustomerIdNameContainer(customerIds, customerNames);
+
+            return MapSettingResultWithCustomerName(customerIdNameContainer, settingResults);
+        }
+
+        private UpdatingSettingResult MapSettingResultWithCustomerName(
+            Dictionary<int, string> customerIdNameContainer, 
+            IEnumerable<SettingResult> results)
+        {
+            foreach (SettingResult result in results)
+            {
+                if (customerIdNameContainer.ContainsKey(result.CustomerId))
+                {
+                    result.CustomerName = customerIdNameContainer[result.CustomerId];
+                }
+            }
+
+            return new UpdatingSettingResult(results);
+        }
+
+        private Dictionary<int, string> GetCustomerIdNameContainer(
+            IEnumerable<int> customerIds, 
+            IEnumerable<string> customerNames)
+        {
+            Dictionary<int, string> customerIdNameContainer = new Dictionary<int, string>();
+            var customerLength = customerIds.Count();
+            for (int i = 0; i < customerLength; i++)
+            {
+                customerIdNameContainer.Add(customerIds.ElementAt(i), customerNames.ElementAt(i));
+            }
+
+            return customerIdNameContainer;
         }
     }
 }

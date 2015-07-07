@@ -61,11 +61,8 @@
         {
             return new UpdatingMultipleSettingParam
             {
-                CustomerIds = new List<int>
-                {
-                    customerId,
-                    2
-                },
+                CustomerIds = new List<int> { customerId, 2 },
+                CustomerNames = new List<string> { "Username1", "Username2" },
                 Setting = new Setting
                 {
                     ProductId = productId,
