@@ -41,16 +41,43 @@ exec [dbo].[changeSettingLevel]
  @SettingType =1,
  @SettingLevel =4
 
-Select super:
-exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=1
+-- super setting
+exec Acc_CustSetting_SuperSettingSelect @CustID=14424987,@ProductID=255,@SettingType=1
+exec Acc_CustSetting_SuperSettingSelect @CustID=14424987,@ProductID=255,@SettingType=2
+exec Acc_CustSetting_SuperSettingSelect @CustID=14424987,@ProductID=255,@SettingType=3
+exec Acc_CustSetting_SuperSettingSelect @CustID=14424987,@ProductID=255,@SettingType=4
 
-exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=2
+-- master setting -- 14425209, 14763802, 14965577
+exec Acc_CustSetting_MasterSettingSelect @CustID=14425209,@ProductID=255,@SettingType=1
+exec Acc_CustSetting_MasterSettingSelect @CustID=14425209,@ProductID=255,@SettingType=2
+exec Acc_CustSetting_MasterSettingSelect @CustID=14425209,@ProductID=255,@SettingType=3
+exec Acc_CustSetting_MasterSettingSelect @CustID=14425209,@ProductID=255,@SettingType=4
 
-exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=3
+--- agent setting -- 14425546, 14898339, 14966320
+exec Acc_CustSetting_AgentSettingSelect @CustID=14425546,@ProductID=255,@SettingType=1
+exec Acc_CustSetting_AgentSettingSelect @CustID=14425546,@ProductID=255,@SettingType=2
+exec Acc_CustSetting_AgentSettingSelect @CustID=14425546,@ProductID=255,@SettingType=3
+exec Acc_CustSetting_AgentSettingSelect @CustID=14425546,@ProductID=255,@SettingType=4
 
-exec Acc_CustSetting_SuperSettingSelect @CustId=2,@ProductId=255,@SettingType=4
+-- agent edit member -- 14425599, 14569862, 17305400 
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=2,@SettingType=1
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=2,@SettingType=2
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=2,@SettingType=3
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=2,@SettingType=4
 
-Edit Single
+-- super edits member
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=4,@SettingType=1
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=4,@SettingType=2
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=4,@SettingType=3
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=4,@SettingType=4
+
+-- master edits member
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=3,@SettingType=1
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=3,@SettingType=2
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=3,@SettingType=3
+exec Acc_CustSetting_MemberSettingSelect @CustID=14425599,@ProductID=255,@RoleID=3,@SettingType=4
+
+
 
 http://localhost:56271/BackendTest/Edit?customerId=2&customerLevel=4
 
