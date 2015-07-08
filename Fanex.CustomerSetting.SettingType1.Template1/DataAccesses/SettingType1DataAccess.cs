@@ -145,7 +145,7 @@
             CustomerLevel? uplineLevel)
         {
             var storedProcedureParams = GetSPParamsForUpdatingPT(settingContext, customerId, settingType);
-            var settingKey = GetSettingKeyForUpdatingPT(customerLevel, uplineLevel, settingType.Id, settingType.SettingTemplate, productId);
+            var settingKey = GetSettingKeyForUpdatingPT(customerLevel, uplineLevel, productId);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
         }
@@ -171,8 +171,6 @@
         private string GetSettingKeyForUpdatingPT(
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel,
-            short settingTypeId,
-            byte settingTemplateId,
             byte productId)
         {
             var updateSettingKey = string.Empty;

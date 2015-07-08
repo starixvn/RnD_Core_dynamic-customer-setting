@@ -68,7 +68,7 @@
                     return param;
 
                 case CustomerLevel.Member:
-                    param.Add("roleid", querySettingParam.UplineLevel.Value);
+                    param.Add("roleid", (byte)querySettingParam.UplineLevel.Value);
                     return param;
 
                 default:

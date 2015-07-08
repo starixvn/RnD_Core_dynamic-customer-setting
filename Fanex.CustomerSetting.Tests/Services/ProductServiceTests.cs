@@ -1,6 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
+    using System.Collections.Generic;
+    using Fanex.Caching;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -14,12 +16,14 @@
     {
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
+        private ICache _cacheManager;
 
         [SetUp]
         public void Setup()
         {
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _productService = new ProductService(_dynamicRepository);
+            _cacheManager = Substitute.For<ICache>();
+            _productService = new ProductService(_dynamicRepository, _cacheManager);
         }
 
         [Test]
@@ -34,16 +38,69 @@
                     () => _productService.GetProductSettingTypes(productId)));
         }
 
-        [TestCase(1)]
-        [TestCase(100)]
-        public void GetProductSettingTypes_ProductIdIsGreaterThanZero_ExecuteFetchMethodOnDynamicRepository(byte productId)
+        [Test]
+        public void GetProductSettingTypes_WhenCalled_ReturnSettingTypesInCache()
         {
+            //// Arrange
+            byte productId = 1;
+            IEnumerable<SettingType> settingTypes = new List<SettingType> { new SettingType() };
+            _cacheManager.Get<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1").Returns(settingTypes);
+
+            //// Act
+            var actualSettingTypes = _productService.GetProductSettingTypes(productId);
+
+            //// Assert
+            Assert.AreSame(settingTypes, actualSettingTypes);
+        }
+
+        [Test]
+        public void GetProductSettingTypes_NoDataInCache_ExecuteFetchSettingTypesInDynamicRepository()
+        {
+            //// Arrange
+            byte productId = 1;
+            IEnumerable<SettingType> settingTypes = null;
+            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypes);
+
             //// Act
             _productService.GetProductSettingTypes(productId);
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
                 criteria => criteria.ProductId == productId));
+        }
+
+        [Test]
+        public void GetProductSettingTypes_NoDataInCache_ReturnSettingTypesFromDatabase()
+        {
+            //// Arrange
+            byte productId = 1;
+            IEnumerable<SettingType> settingTypesInCache = null;
+            IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
+            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypesInCache);
+            _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
+
+            //// Act
+            var actualSettingTypes = _productService.GetProductSettingTypes(productId);
+
+            //// Assert
+            Assert.AreSame(settingTypesFromDatabase, actualSettingTypes);
+        }
+
+        [Test]
+        public void GetProductSettingTypes_GotSettingTypeFromDatabase_ExecuteSetSettingTypesOnCacheManager()
+        {
+            //// Arrange
+            byte productId = 1;
+            IEnumerable<SettingType> settingTypesInCache = null;
+            IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
+            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypesInCache);
+            _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
+
+            //// Act
+            _productService.GetProductSettingTypes(productId);
+
+            //// Assert
+            _cacheManager.Received().Set<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1", settingTypesFromDatabase);
         }
     }
 }

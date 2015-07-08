@@ -38,7 +38,8 @@
                 queryParam.CustomerLevel,
                 CommissionConstants.SettingTypeId,
                 CommissionConstants.SettingTempateId,
-                queryParam.ProductId);
+                queryParam.ProductId,
+                queryParam.UplineLevel);
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, CommissionConstants.SettingTypeId);
@@ -50,7 +51,8 @@
             CustomerLevel customerLevel, 
             byte settingTypeId, 
             byte settingTemplateId, 
-            byte productId)
+            byte productId,
+            CustomerLevel? uplineLevel)
         {
             var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
@@ -66,6 +68,11 @@
                     return "CustSetting_AgentCommissionSelect" + keySuffix;
 
                 case CustomerLevel.Member:
+                    if (uplineLevel.Value == CustomerLevel.Super)
+                    {
+                        return "CustSetting_MemberCommissionSelectBySuper" + keySuffix;
+                    }
+
                     return "CustSetting_MemberCommissionSelect" + keySuffix;
 
                 default:

@@ -1,6 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Caching;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
@@ -8,24 +10,58 @@
 
     public class ProductService : IProductService
     {
-        private readonly IDynamicRepository _productRepository;
+        private const int SettingTypeCacheTimeout = 60 * 60; //// 1 hour
+        private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}";
 
-        public ProductService(IDynamicRepository productRepository = null)
+        private readonly IDynamicRepository _productRepository;
+        private readonly ICache _cacheManager;
+
+        public ProductService(
+            IDynamicRepository productRepository = null,
+            ICache cacheManager = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
+            _cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
         }
 
         public IEnumerable<SettingType> GetProductSettingTypes(byte productId)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            IEnumerable<SettingType> settingTypes = _productRepository.Fetch<SettingType>(new
+            var settingTypes = GetSettingTypesFromCache(productId);
+            if (settingTypes == null)
+            {
+                settingTypes = GetSettingTypesFromDatabase(productId);
+                SetSettingTypesToCache(productId, settingTypes);
+            }
+
+            return settingTypes;
+        }
+
+        private IEnumerable<SettingType> GetSettingTypesFromCache(byte productId)
+        {
+            var cacheKey = string.Format(SettingTypesCacheKey, productId);
+
+            return _cacheManager.Get<IEnumerable<SettingType>>(cacheKey);
+        }
+
+        private IEnumerable<SettingType> GetSettingTypesFromDatabase(byte productId)
+        {
+            return _productRepository.Fetch<SettingType>(new
                 ProductSettingTypesQueryCriteria
             {
                 ProductId = productId
             });
+        }
 
-            return settingTypes;
+        private void SetSettingTypesToCache(byte productId, IEnumerable<SettingType> settingTypes)
+        {
+            if (settingTypes != null && settingTypes.Any())
+            {
+                var cacheKey = string.Format(SettingTypesCacheKey, productId);
+
+                _cacheManager.Set<IEnumerable<SettingType>>(cacheKey, settingTypes);
+            }
         }
     }
 }
