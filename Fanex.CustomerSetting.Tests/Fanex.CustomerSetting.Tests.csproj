@@ -106,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
-    <Compile Include="FakeObjectManager.cs" />
+    <Compile Include="InstanceCreator.cs" />
     <Compile Include="Handlers\SettingPostTasksTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
@@ -117,8 +117,11 @@
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingServiceTests.cs" />
+    <Compile Include="Services\SettingServiceUpdateCustomerSettingTests.cs" />
+    <Compile Include="Services\SettingServiceUpdateMultipleCustomerSettingTests.cs" />
     <Compile Include="Services\ValidationServiceTests.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
+    <Compile Include="Services\SettingServiceGetCustomerSettingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

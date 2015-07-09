@@ -411,7 +411,7 @@
         public void ValidateUpdatingSetting_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
         {
             //// Arrange
-            UpdatingSettingParam updatingParam = FakeObjectManager.CreateUpdatingSettingParam(customerId);
+            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam(customerId);
 
             //// Act
             var actualValidationResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -424,7 +424,7 @@
         public void ValidateUpdatingSetting_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -437,7 +437,7 @@
         public void ValidateUpdatingSetting_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
@@ -457,7 +457,7 @@
         public void ValidateUpdatingSetting_ActorIsCompany_CanUpdateAllCustomerSetting(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -476,7 +476,7 @@
         public void ValidateUpdatingSetting_ActorIsSuper_CannotUpdateOtherSuperAndAgentSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Super;
 
             //// Act
@@ -491,7 +491,7 @@
         public void ValidateUpdatingSetting_ActorIsSuper_CanUpdateDownlineSettingExceptAgent(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -510,7 +510,7 @@
         public void ValidateUpdatingSetting_ActorIsMaster_CannotUpdateOtherMasterAndSuperSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Master;
 
             //// Act
@@ -525,7 +525,7 @@
         public void ValidateUpdatingSetting_ActorIsMaster_CanUpdateDownlineSetting(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -545,7 +545,7 @@
         public void ValidateUpdatingSetting_ActorIsAgent_CannotUpdateOtherAgentAndUplineSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, customerLevel);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Agent;
 
             //// Act
@@ -559,7 +559,7 @@
         public void ValidateUpdatingSetting_ActorIsAgent_CanUpdateMemberSetting()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = CustomerLevel.Agent;
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -578,18 +578,18 @@
         public void ValidateUpdatingSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
-                FakeObjectManager.CreateSettingType(1)
+                InstanceCreator.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    FakeObjectManager.CreateSettingType(2)
+                    InstanceCreator.CreateCustomerSettingType(2)
                 });
 
             //// Act
@@ -603,18 +603,18 @@
         public void ValidateUpdatingSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
-                FakeObjectManager.CreateSettingType(1)
+                InstanceCreator.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    FakeObjectManager.CreateSettingType(1)
+                    InstanceCreator.CreateCustomerSettingType(1)
                 });
 
             //// Act
@@ -628,7 +628,7 @@
         public void ValidateUpdatingSetting_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam();
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
             var settingItemMock = Substitute.For<ISettingItem>();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
@@ -658,7 +658,7 @@
         public void ValidateUpdatingSetting_CustomerIsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = null;
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -679,7 +679,7 @@
         public void ValidateUpdatingSetting_CustomerIsMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(CustomerLevel uplineLevel)
         {
             //// Arrange
-            var updatingParam = FakeObjectManager.CreateUpdatingSettingParam(1, CustomerLevel.Member);
+            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
             updatingParam.UplineLevel = uplineLevel;
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -715,7 +715,7 @@
         public void ValidateUpdatingMultipleSetting_CustomersIsNull_ReturnValidationError()
         {
             //// Arrange
-            UpdatingMultipleSettingParam updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            UpdatingMultipleSettingParam updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
             updatingMultipleParam.CustomerIds = null;
 
             //// Act
@@ -729,7 +729,7 @@
         public void ValidateUpdatingMultipleSetting_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
@@ -742,7 +742,7 @@
         public void ValidateUpdatingMultipleSetting_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
@@ -759,7 +759,7 @@
         public void ValidateUpdatingMultipleSetting_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
@@ -782,7 +782,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsCompany_CanUpdateAllMultipleCustomerSetting(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
+            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -802,7 +802,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsSuper_CannotUpdateMultipleOtherSuperAndAgentSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, customerLevel);
+            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Super;
 
             //// Act
@@ -817,7 +817,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsSuper_CanUpdateMultipleDownlineSettingExceptAgent(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
+            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Super;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -837,7 +837,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsMaster_CannotUpdateMultipleOtherMasterAndSuperSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, customerLevel);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Master;
 
             //// Act
@@ -852,7 +852,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsMaster_CanUpdateMultipleDownlineSetting(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
             _settingContext.Actor.Level = UserLevel.Master;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
@@ -873,7 +873,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsAgent_CannotUpdateMultipleOtherAgentAndUplineSetting(CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, customerLevel);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
             _settingContext.Actor.Level = UserLevel.Agent;
 
             //// Act
@@ -887,7 +887,7 @@
         public void ValidateUpdatingMultipleSetting_ActorIsAgent_CanUpdateMemberSetting()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = CustomerLevel.Agent;
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -907,7 +907,7 @@
         public void ValidateUpdatingMultipleSetting_CustomerIsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = null;
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -929,7 +929,7 @@
         public void ValidateUpdatingMultipleSetting_CustomerIsMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(CustomerLevel uplineLevel)
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
             updatingMultipleParam.UplineLevel = uplineLevel;
             _settingContext.Actor.Level = UserLevel.Company;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -949,19 +949,19 @@
         public void ValidateUpdatingMultipleSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
             {
-                FakeObjectManager.CreateSettingType(1)
+                InstanceCreator.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    FakeObjectManager.CreateSettingType(2)
+                    InstanceCreator.CreateCustomerSettingType(2)
                 });
 
             //// Act
@@ -975,19 +975,19 @@
         public void ValidateUpdatingMultipleSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
             {
-                FakeObjectManager.CreateSettingType(1)
+                InstanceCreator.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    FakeObjectManager.CreateSettingType(1)
+                    InstanceCreator.CreateCustomerSettingType(1)
                 });
 
             //// Act
@@ -1001,7 +1001,7 @@
         public void ValidateUpdatingMultipleSetting_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
-            var updatingMultipleParam = FakeObjectManager.CreateUpdatingMultipleSettingParam();
+            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
             var settingItemMock = Substitute.For<ISettingItem>();
             updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
             {

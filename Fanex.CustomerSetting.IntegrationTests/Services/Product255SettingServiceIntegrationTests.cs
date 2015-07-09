@@ -17,23 +17,17 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class Product255SettingServiceTests
+    public class Product255SettingServiceIntegrationTests
     {
         private const int CompanyId = 8;
         private const int SuperId = 14424987;
         private const string SuperUserName = "supertest90";
         private const int MasterId = 14425209;
         private const string MasterUserName = "supertest9001";
-        private IEnumerable<int> _masterIds = new List<int> { MasterId, 14763802, 14965577 };
-        private IEnumerable<string> _masterNames = new List<string> { MasterUserName, "SUPERTEST9000", "supertest9001Raf" };
         private const int AgentId = 14425546;
         private const string AgentUserName = "supertest900101";
-        private IEnumerable<int> _agentIds = new List<int> { AgentId, 14898339, 14966320 };
-        private IEnumerable<string> _agentNames = new List<string> { AgentUserName, "superrafagent", "supertest9001sunRaf" };
         private const int MemberId = 14425599;
         private const string MemberUserName = "supertest900101001";
-        private IEnumerable<int> _memberIds = new List<int> { MemberId, 14569862 };
-        private IEnumerable<string> _memberNames = new List<string> { AgentUserName, "supertest900101002" };
         private const string Language = "en-US";
         private const string IP = "192.168.1.1";
         private const int SystemId = 1;
@@ -42,6 +36,13 @@
         private const string ProductName = "Product 255";
         private const byte NumOfSettingType = 4;
         private const int NumOfSleepSecondsWaitingForReplication = 7 * 1000; //// 5 Seconds
+
+        private IEnumerable<int> _masterIds = new List<int> { MasterId, 14763802, 14965577 };
+        private IEnumerable<string> _masterNames = new List<string> { MasterUserName, "SUPERTEST9000", "supertest9001Raf" };
+        private IEnumerable<int> _agentIds = new List<int> { AgentId, 14898339, 14966320 };
+        private IEnumerable<string> _agentNames = new List<string> { AgentUserName, "superrafagent", "supertest9001sunRaf" };
+        private IEnumerable<int> _memberIds = new List<int> { MemberId, 14569862 };
+        private IEnumerable<string> _memberNames = new List<string> { AgentUserName, "supertest900101002" };
 
         private ISettingService _settingService;
         private ISettingContext _settingContext;
