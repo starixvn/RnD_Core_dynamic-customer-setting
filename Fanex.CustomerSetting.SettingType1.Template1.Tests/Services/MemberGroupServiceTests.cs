@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
@@ -55,7 +57,7 @@
         }
 
         [Test]
-        public void GetGroupedMembers_ExecuteGetGroupedMembersOnMemberGroupDataAccess()
+        public void GetGroupedMembers_MemberGroupDataAccessExecutesGetGroupedMembersMethod()
         {
             //// Arrange
             IEnumerable<int> members = new List<int> { 1, 2 };
@@ -66,6 +68,20 @@
             //// Assert
             _memberGroupDataAccess.Received().GetGroupedMembers(
                 Arg.Is<string>(memberIds => memberIds == string.Join(",", members)));
+        }
+
+        [Test]
+        public void GetGroupedMembers_ReturnGroupedMembers()
+        {
+            //// Arrange
+            IEnumerable<int> members = new List<int> { 1, 2 };
+            _memberGroupDataAccess.GetGroupedMembers(Arg.Any<string>()).Returns(new List<int> { 1 });
+
+            //// Act
+            var actualGroupedMembers = _memberGroupService.GetGroupedMembers(members);
+
+            //// Assert
+            Assert.AreEqual(1, actualGroupedMembers.First());
         }
 
         #endregion Get Grouped Members
@@ -109,7 +125,7 @@
         }
 
         [Test]
-        public void UpdateGroupedMembersSetting_ExecuteUpdateGroupedMembersSettingOnMemberGroupDataAccess()
+        public void UpdateGroupedMembersSetting_MemberGroupDataAccessExecutesUpdateGroupedMembersSetting()
         {
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
@@ -128,6 +144,39 @@
                         && parameters.SubAccId == _settingContext.Actor.SubAccountId
                         && parameters.IP == _settingContext.IP
                         && parameters.PTXml == settingType.ToXml()));
+        }
+
+        [Test]
+        public void UpdateGroupedMembersSetting_UpdatedSuccessful_ReturnSuccessResult()
+        {
+            //// Arrange
+            IEnumerable<int> memberIds = new List<int> { 1, 2 };
+            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            _memberGroupDataAccess.UpdateGroupedMembersSetting(Arg.Any<UpdateMultipleMemberPTParam>())
+                .Returns(Result.Success);
+
+            //// Act
+            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
+
+            //// Assert
+            Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateGroupedMembersSetting_UpdatedSuccessful_ReturnForEachCustomer()
+        {
+            //// Arrange
+            IEnumerable<int> memberIds = new List<int> { 1, 2 };
+            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            _memberGroupDataAccess.UpdateGroupedMembersSetting(Arg.Any<UpdateMultipleMemberPTParam>())
+                .Returns(Result.Success);
+
+            //// Act
+            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
+
+            //// Assert
+            var updatingResult = actualResult as UpdatingSettingResult;
+            Assert.AreEqual(1, updatingResult.SubResults.First().CustomerId);
         }
 
         #endregion Update Grouped Members Setting

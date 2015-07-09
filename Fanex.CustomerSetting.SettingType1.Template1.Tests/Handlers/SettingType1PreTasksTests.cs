@@ -53,7 +53,8 @@
             _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, memberIds, customerLevel, settingType, uplineLevel);
 
             //// Assert
-            _memberGroupService.Received().GetGroupedMembers(memberIds);
+            _memberGroupService.Received().GetGroupedMembers(
+                Arg.Is<IEnumerable<int>>(actualMemberIds => actualMemberIds.Count() == 2 && actualMemberIds.First() == 1));
         }
 
         [Test]

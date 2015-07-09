@@ -26,7 +26,7 @@
         }
 
         [Test]
-        public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
+        public void PostUpdateCustomerSettingType_ResultIsSuccessful_AssignPositionTakingSuccessfulMessageToResult()
         {
             //// Arrange
             var successResult = new SettingResult(Result.Success);
@@ -44,7 +44,7 @@
         }
 
         [Test]
-        public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
+        public void PostUpdateCustomerSettingType_ResultIsFailed_MessageServiceExecutesTranslateMessageMethod()
         {
             //// Arrange
             var errorResult = new SettingResult(Result.SystemError);
@@ -61,7 +61,32 @@
                 errorResult);
 
             //// Assert
-            _messageService.Received().TranslateMessage(errorResult.MsgType, errorResult.Message, settingLevel, SettingContext.Language);
+            _messageService.Received().TranslateMessage(
+                Arg.Is<int>(actualMsgType => actualMsgType == errorResult.MsgType),
+                Arg.Is<string>(actualMessage => actualMessage == errorResult.Message),
+                Arg.Is<byte>(actulaSettingLevel => actulaSettingLevel == settingLevel),
+                Arg.Is<string>(actualLanguage => actualLanguage == SettingContext.Language));
+        }
+
+        [Test]
+        public void PostUpdateCustomerSettingType_ResultIsFailed_ReturnResultContainsMessageContent()
+        {
+            //// Arrange
+            var errorResult = new SettingResult(Result.SystemError);
+            string mainMessage = "Main Message";
+            _messageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>())
+                .Returns(new MessageContent(mainMessage));
+
+            //// Act
+            var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
+                SettingContext,
+                1,
+                new SettingType { SettingLevel = 1 },
+                null,
+                errorResult);
+
+            //// Assert
+            Assert.AreEqual(mainMessage, actualResult.Message);
         }
     }
 }
