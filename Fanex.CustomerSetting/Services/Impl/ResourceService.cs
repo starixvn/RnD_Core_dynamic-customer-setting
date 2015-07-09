@@ -24,12 +24,10 @@
         private readonly IRemotingRefService _remotingRef;
         private readonly ICache _cacheManager;
 
-        public ResourceService()
-            : this(null, null, null)
-        {
-        }
-
-        public ResourceService(IDynamicRepository resourceRepository, IRemotingRefService remotingRef, ICache cacheManager)
+        public ResourceService(
+            IDynamicRepository resourceRepository = null, 
+            IRemotingRefService remotingRef = null, 
+            ICache cacheManager = null)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();

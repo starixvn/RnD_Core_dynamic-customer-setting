@@ -139,7 +139,7 @@
         }
 
         [Test]
-        public void GetSportTypeName_ExecuteGetSportTypeNameOnRemotingRefApi()
+        public void GetSportTypeName_Always_ExecuteGetSportTypeNameOnRemotingRefApi()
         {
             //// Arrange
             int sportTypeId = 1;
@@ -152,6 +152,21 @@
                 Arg.Is<string>(
                     sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
                 Arg.Any<string>());
+        }
+
+        [Test]
+        public void GetSportTypeName_Always_ReturnDataFromRemotingRefApi()
+        {
+            //// Arrange
+            int sportTypeId = 1;
+            string expectedSportName = "SportName";
+            _remotingRefApi.GetSportTypeName(Arg.Any<string>(), Arg.Any<string>()).Returns(expectedSportName);
+
+            //// Act
+            var actualSportName = _resourceService.GetSportTypeName(sportTypeId, _language);
+
+            //// Assert
+            Assert.AreEqual(expectedSportName, actualSportName);
         }
 
         [TestCase(null)]
@@ -184,7 +199,7 @@
         }
 
         [Test]
-        public void GetBetTypeName_ExecuteGetSportTypeNameOnRemotingRefApi()
+        public void GetBetTypeName_Always_ExecuteGetSportTypeNameOnRemotingRefApi()
         {
             //// Arrange
             int betTypeId = 1;
@@ -197,6 +212,21 @@
                 Arg.Is<string>(
                     betTypeIdString => betTypeIdString == betTypeId.ToString()),
                 Arg.Any<string>());
+        }
+
+        [Test]
+        public void GetBetTypeName_Always_ReturnDataFromRemotingRefApi()
+        {
+            //// Arrange
+            int betTypeId = 1;
+            string expectedBetTypeName = "SportName";
+            _remotingRefApi.GetBetTypeName(Arg.Any<string>(), Arg.Any<string>()).Returns(expectedBetTypeName);
+
+            //// Act
+            var actualBetTypeName = _resourceService.GetBetTypeName(betTypeId, _language);
+
+            //// Assert
+            Assert.AreEqual(expectedBetTypeName, actualBetTypeName);
         }
 
         [TestCase(null)]

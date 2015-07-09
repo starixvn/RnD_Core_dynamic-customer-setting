@@ -116,7 +116,6 @@
     <Compile Include="Services\BaseMessageServiceTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
-    <Compile Include="Services\SettingServiceTests.cs" />
     <Compile Include="Services\SettingServiceUpdateCustomerSettingTests.cs" />
     <Compile Include="Services\SettingServiceUpdateMultipleCustomerSettingTests.cs" />
     <Compile Include="Services\ValidationServiceTests.cs" />

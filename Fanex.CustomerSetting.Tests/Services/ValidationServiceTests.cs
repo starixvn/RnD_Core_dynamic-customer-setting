@@ -65,11 +65,26 @@
                     () => _validationService.ValidateQuerySetting(queryParam)));
         }
 
-        [TestCase(CustomerLevel.Super, null)]
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Agent)]
-        public void ValidateQuerySetting_ActorIsCompany_CanViewAllCustomerSetting(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
+        {
+            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+        }
+
+        [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Super, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
+        public void ValidateQuerySetting_ActorHasPermission_CanViewCustomerSetting(
+            UserLevel userLevel,
+            CustomerLevel customerLevel, 
+            CustomerLevel? uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -78,10 +93,8 @@
                 CustomerLevel = customerLevel,
                 UplineLevel = uplineLevel
             };
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _settingContext.Actor.Level = userLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -90,9 +103,16 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_ActorIsSuper_CannotViewOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        [TestCase(UserLevel.Super, CustomerLevel.Super)]
+        [TestCase(UserLevel.Super, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Master, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Super)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
+        public void ValidateQuerySetting_ActorDoesNotHavePermission_CannotViewCustomerSetting(
+            UserLevel userLevel,
+            CustomerLevel customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -100,92 +120,8 @@
                 CustomerId = 1,
                 CustomerLevel = customerLevel
             };
-            _settingContext.Actor.Level = UserLevel.Super;
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Super)]
-        public void ValidateQuerySetting_ActorIsSuper_CanViewDownlineSettingExceptAgent(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = downlineLevel,
-                UplineLevel = uplineLevel
-            };
-            _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        public void ValidateQuerySetting_ActorIsMaster_CannotViewOtherMasterAndSuperSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel
-            };
-            _settingContext.Actor.Level = UserLevel.Master;
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Master)]
-        public void ValidateQuerySetting_ActorIsMaster_CanViewDownlineSetting(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = downlineLevel,
-                UplineLevel = uplineLevel
-            };
-            _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_ActorIsAgent_CannotViewOtherAgentAndUplineSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel
-            };
-            _settingContext.Actor.Level = UserLevel.Agent;
+            _settingContext.Actor.Level = userLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -195,29 +131,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_ActorIsAgent_CanViewMemberSetting()
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member,
-                UplineLevel = CustomerLevel.Agent
-            };
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateQuerySetting_ExecuteValidateActorEnabledMethod()
+        public void ValidateQuerySetting_Always_ExecuteValidateActorEnabledMethod()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -226,6 +140,7 @@
                 CustomerLevel = CustomerLevel.Member
             };
             _settingContext.Actor.Level = UserLevel.Agent;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
@@ -235,7 +150,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_ExecuteValidateLevelMethod()
+        public void ValidateQuerySetting_Always_ExecuteValidateLevelMethod()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -254,7 +169,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_ExecuteValidateBelongInMethod()
+        public void ValidateQuerySetting_Always_ExecuteValidateBelongInMethod()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -274,7 +189,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_CustomerIsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
+        public void ValidateQuerySetting_ActorEditsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -284,9 +199,7 @@
                 UplineLevel = null
             };
             _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -295,32 +208,12 @@
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
         }
 
-        [Test]
-        public void ValidateQuerySetting_CustomerIsMemberAndActorIsNotCompany_ReturnAccessDeniedResultWhenActorLevelDifferenceWithUplineLevel()
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member,
-                UplineLevel = CustomerLevel.Master
-            };
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CustomerIsMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(CustomerLevel uplineLevel)
+        [TestCase(UserLevel.Super, CustomerLevel.Master)]
+        [TestCase(UserLevel.Master, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Super)]
+        public void ValidateQuerySetting_ActorEditsMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
+            UserLevel actorLevel,
+            CustomerLevel uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -329,10 +222,35 @@
                 CustomerLevel = CustomerLevel.Member,
                 UplineLevel = uplineLevel
             };
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _settingContext.Actor.Level = actorLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            //// Act
+            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+
+            //// Assert
+            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        }
+
+        [TestCase(UserLevel.Company, CustomerLevel.Super)]
+        [TestCase(UserLevel.Company, CustomerLevel.Master)]
+        [TestCase(UserLevel.Company, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Super, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
+        public void ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(
+            UserLevel actorLevel,
+            CustomerLevel uplineLevel)
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam
+            {
+                CustomerId = 1,
+                CustomerLevel = CustomerLevel.Member,
+                UplineLevel = uplineLevel
+            };
+            _settingContext.Actor.Level = actorLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -344,7 +262,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CustomerIsNotMemberAndUplineLevelHasValue_ReturnAccessDeniedResult(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelHasValue_ReturnAccessDeniedResult(CustomerLevel customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -354,9 +272,7 @@
                 UplineLevel = customerLevel
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -368,7 +284,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessValidationResult(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessValidationResult(CustomerLevel customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam
@@ -378,9 +294,7 @@
                 UplineLevel = null
             };
             _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -421,7 +335,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_ExecuteValidateActorEnabledOnDataAccess()
+        public void ValidateUpdatingSetting_Always_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
@@ -434,13 +348,11 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_ExecuteGetProductSettingTypesOnProductService()
+        public void ValidateUpdatingSetting_Always_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -450,18 +362,24 @@
                 productId => productId == updatingParam.Setting.ProductId));
         }
 
-        [TestCase(CustomerLevel.Super, null)]
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Agent)]
-        public void ValidateUpdatingSetting_ActorIsCompany_CanUpdateAllCustomerSetting(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Super, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
+        public void ValidateUpdatingSetting_ActorHasPermission_CanUpdateCustomerSetting(
+            UserLevel actorLevel,
+            CustomerLevel customerLevel, 
+            CustomerLevel? uplineLevel)
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _settingContext.Actor.Level = actorLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -471,107 +389,27 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingSetting_ActorIsSuper_CannotUpdateOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        [TestCase(UserLevel.Super, CustomerLevel.Super)]
+        [TestCase(UserLevel.Super, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Master, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Super)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
+        public void ValidateUpdatingSetting_ActorDoesNotHavePermission_CannotUpdateCustomerSetting(
+            UserLevel actorLevel,
+            CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Super;
+            _settingContext.Actor.Level = actorLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Super)]
-        public void ValidateUpdatingSetting_ActorIsSuper_CanUpdateDownlineSettingExceptAgent(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        public void ValidateUpdatingSetting_ActorIsMaster_CannotUpdateOtherMasterAndSuperSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Master;
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Master)]
-        public void ValidateUpdatingSetting_ActorIsMaster_CanUpdateDownlineSetting(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, downlineLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingSetting_ActorIsAgent_CannotUpdateOtherAgentAndUplineSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Agent;
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingSetting_ActorIsAgent_CanUpdateMemberSetting()
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
-            updatingParam.UplineLevel = CustomerLevel.Agent;
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
@@ -579,9 +417,7 @@
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceCreator.CreateCustomerSettingType(1)
@@ -604,9 +440,7 @@
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceCreator.CreateCustomerSettingType(1)
@@ -625,7 +459,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_ExecuteValidateMethodOnEachSettingItem()
+        public void ValidateUpdatingSetting_Always_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
             var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
@@ -642,9 +476,7 @@
                     }
                 }
             };
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -652,46 +484,6 @@
 
             //// Assert
             settingItemMock.Received().Validate();
-        }
-
-        [Test]
-        public void ValidateUpdatingSetting_CustomerIsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
-            updatingParam.UplineLevel = null;
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingSetting_CustomerIsMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(CustomerLevel uplineLevel)
-        {
-            //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, CustomerLevel.Member);
-            updatingParam.UplineLevel = uplineLevel;
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         #endregion validate Setting Command Tests
@@ -726,43 +518,11 @@
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_ExecuteValidateActorEnabledOnDataAccess()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-
-            //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_ExecuteGetProductSettingTypesOnProductService()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-
-            //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == updatingMultipleParam.Setting.ProductId));
-        }
-
-        [Test]
         public void ValidateUpdatingMultipleSetting_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
         {
             //// Arrange
             var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(updatingMultipleParam.Setting.SettingTypes);
 
@@ -775,18 +535,24 @@
                 Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.CustomerIds)));
         }
 
-        [TestCase(CustomerLevel.Super, null)]
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorIsCompany_CanUpdateAllMultipleCustomerSetting(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Super, CustomerLevel.Master, null)]
+        [TestCase(UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
+        [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
+        public void ValidateUpdatingMultipleSetting_ActorHasPermission_CanUpdateMultipleCustomerSetting(
+            UserLevel actorLevel,
+            CustomerLevel customerLevel, 
+            CustomerLevel? uplineLevel)
         {
             //// Arrange
             var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _settingContext.Actor.Level = actorLevel;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
             _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
 
@@ -797,235 +563,26 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorIsSuper_CannotUpdateMultipleOtherSuperAndAgentSetting(CustomerLevel customerLevel)
+        [TestCase(UserLevel.Super, CustomerLevel.Super)]
+        [TestCase(UserLevel.Super, CustomerLevel.Agent)]
+        [TestCase(UserLevel.Master, CustomerLevel.Super)]
+        [TestCase(UserLevel.Master, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Super)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Master)]
+        [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
+        public void ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_CannotUpdateMultipleCustomerSetting(
+            UserLevel actorLevel,
+            CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Super;
+            _settingContext.Actor.Level = actorLevel;
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Master, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Super)]
-        public void ValidateUpdatingMultipleSetting_ActorIsSuper_CanUpdateMultipleDownlineSettingExceptAgent(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Super;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        public void ValidateUpdatingMultipleSetting_ActorIsMaster_CannotUpdateMultipleOtherMasterAndSuperSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Master;
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Agent, null)]
-        [TestCase(CustomerLevel.Member, CustomerLevel.Master)]
-        public void ValidateUpdatingMultipleSetting_ActorIsMaster_CanUpdateMultipleDownlineSetting(CustomerLevel downlineLevel, CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, downlineLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = UserLevel.Master;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorIsAgent_CannotUpdateMultipleOtherAgentAndUplineSetting(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = UserLevel.Agent;
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_ActorIsAgent_CanUpdateMemberSetting()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
-            updatingMultipleParam.UplineLevel = CustomerLevel.Agent;
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerIsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
-            updatingMultipleParam.UplineLevel = null;
-            _settingContext.Actor.Level = UserLevel.Agent;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_CustomerIsMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(CustomerLevel uplineLevel)
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member);
-            updatingMultipleParam.UplineLevel = uplineLevel;
-            _settingContext.Actor.Level = UserLevel.Company;
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
-            {
-                InstanceCreator.CreateCustomerSettingType(1)
-            };
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
-                .Returns(new List<SettingType>
-                {
-                    InstanceCreator.CreateCustomerSettingType(2)
-                });
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
-            {
-                InstanceCreator.CreateCustomerSettingType(1)
-            };
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
-                .Returns(new List<SettingType>
-                {
-                    InstanceCreator.CreateCustomerSettingType(1)
-                });
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_ExecuteValidateMethodOnEachSettingItem()
-        {
-            //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-            var settingItemMock = Substitute.For<ISettingItem>();
-            updatingMultipleParam.Setting.SettingTypes = new List<SettingType>
-            {
-                new SettingType
-                {
-                    Id = 1,
-                    SettingTemplate = 1,
-                    SettingItems = new List<ISettingItem>
-                    {
-                        settingItemMock
-                    }
-                }
-            };
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId).Returns(updatingMultipleParam.Setting.SettingTypes);
-
-            //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            settingItemMock.Received().Validate();
         }
 
         #endregion Validate Multiple Setting Command Tests

@@ -44,7 +44,7 @@
 
         private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
-            IResult result = ValidateActorLevel(customerLevel);
+            IResult result = ValidateActorLevelForViewingCustomerSetting(customerLevel);
             if (!result.IsSuccessful)
             {
                 return result;
@@ -56,7 +56,7 @@
                 return result;
             }
 
-            result = ValidateLevelValidWithRealLevelStoreInDatabase(customerId, customerLevel);
+            result = ValidateCustomerAndActorLevel(customerId, customerLevel);
             if (!result.IsSuccessful)
             {
                 return result;
@@ -71,54 +71,41 @@
             return ValidateUplineLevel(customerLevel, uplineLevel);
         }
 
-        private IResult ValidateActorLevel(CustomerLevel customerLevel)
+        private IResult ValidateActorLevelForViewingCustomerSetting(CustomerLevel customerLevel)
         {
             UserLevel actorLevel = _settingContext.Actor.Level;
-            switch (customerLevel)
+            bool isValid = true;
+            switch (actorLevel)
             {
-                case CustomerLevel.Super:
-                    return ValidateActorLevelForViewingSuperSetting(actorLevel);
+                case UserLevel.Company:
+                    break;
+                case UserLevel.Super:
+                    if ((byte)customerLevel >= (byte)UserLevel.Super 
+                        || customerLevel == CustomerLevel.Agent)
+                    {
+                        isValid = false;
+                    }
 
-                case CustomerLevel.Master:
-                    return ValidateActorLevelForViewingMasterSetting(actorLevel);
+                    break;
 
-                case CustomerLevel.Agent:
-                    return ValidateActorLevelForViewingAgentSetting(actorLevel);
+                case UserLevel.Master:
+                    if ((byte)customerLevel >= (byte)UserLevel.Master)
+                    {
+                        isValid = false;
+                    }
+
+                    break;
+
+                case UserLevel.Agent:
+                    if ((byte)customerLevel >= (byte)UserLevel.Agent)
+                    {
+                        isValid = false;
+                    }
+
+                    break;
             }
 
-            return Result.Success;
-        }
-
-        private IResult ValidateActorLevelForViewingSuperSetting(UserLevel actorLevel)
-        {
-            if (actorLevel != UserLevel.Company)
-            {
-                return Result.AccessDenied;
-            }
-
-            return Result.Success;
-        }
-
-        private IResult ValidateActorLevelForViewingMasterSetting(UserLevel actorLevel)
-        {
-            if (actorLevel != UserLevel.Company
-                && actorLevel != UserLevel.Super)
-            {
-                return Result.AccessDenied;
-            }
-
-            return Result.Success;
-        }
-
-        private IResult ValidateActorLevelForViewingAgentSetting(UserLevel actorLevel)
-        {
-            if (actorLevel != UserLevel.Company
-                && actorLevel != UserLevel.Master)
-            {
-                return Result.AccessDenied;
-            }
-
-            return Result.Success;
+            return isValid ? Result.Success : Result.AccessDenied;
         }
 
         private IResult ValidateActorEnabled()
@@ -138,7 +125,7 @@
             }
         }
 
-        private IResult ValidateLevelValidWithRealLevelStoreInDatabase(int customerId, CustomerLevel customerLevel)
+        private IResult ValidateCustomerAndActorLevel(int customerId, CustomerLevel customerLevel)
         {
             return _validationDataAccess.ValidateLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
