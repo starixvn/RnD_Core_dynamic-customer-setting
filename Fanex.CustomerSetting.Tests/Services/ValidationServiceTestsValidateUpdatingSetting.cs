@@ -59,7 +59,7 @@
         public void ValidateUpdatingSetting_Always_ExecuteValidateActorEnabledOnDataAccess()
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -72,7 +72,7 @@
         public void ValidateUpdatingSetting_Always_ExecuteGetProductSettingTypesOnProductService()
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
@@ -98,7 +98,7 @@
             CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
@@ -122,7 +122,7 @@
             CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam(1, customerLevel);
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -137,16 +137,16 @@
         public void ValidateUpdatingSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
-                InstanceCreator.CreateCustomerSettingType(1)
+                InstanceFactory.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    InstanceCreator.CreateCustomerSettingType(2)
+                    InstanceFactory.CreateCustomerSettingType(2)
                 });
 
             //// Act
@@ -160,16 +160,16 @@
         public void ValidateUpdatingSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
-                InstanceCreator.CreateCustomerSettingType(1)
+                InstanceFactory.CreateCustomerSettingType(1)
             };
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
-                    InstanceCreator.CreateCustomerSettingType(1)
+                    InstanceFactory.CreateCustomerSettingType(1)
                 });
 
             //// Act
@@ -183,7 +183,7 @@
         public void ValidateUpdatingSetting_Always_ExecuteValidateMethodOnEachSettingItem()
         {
             //// Arrange
-            var updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             var settingItemMock = Substitute.For<ISettingItem>();
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {

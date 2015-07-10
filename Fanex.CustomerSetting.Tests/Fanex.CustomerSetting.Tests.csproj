@@ -109,10 +109,11 @@
     <Compile Include="Dtos\Params\QuerySettingParamTest.cs" />
     <Compile Include="Dtos\Params\UpdatingMultipleSettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdatingSettingParamTests.cs" />
-    <Compile Include="InstanceCreator.cs" />
+    <Compile Include="InstanceFactory.cs" />
     <Compile Include="Handlers\SettingPostTasksTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
+    <Compile Include="Models\SettingTests.cs" />
     <Compile Include="Models\SettingTypeTests.cs" />
     <Compile Include="Models\DefaultSettingItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

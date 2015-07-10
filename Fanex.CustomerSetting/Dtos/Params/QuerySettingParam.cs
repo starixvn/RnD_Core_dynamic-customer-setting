@@ -10,6 +10,18 @@
         private byte _productId;
         private CustomerLevel? _uplineLevel;
 
+        public QuerySettingParam(
+            int customerId, 
+            CustomerLevel customerLevel, 
+            byte productId, 
+            CustomerLevel? uplineLevel = null)
+        {
+            CustomerId = customerId;
+            CustomerLevel = customerLevel;
+            ProductId = productId;
+            UplineLevel = uplineLevel;
+        }
+
         public int CustomerId
         {
             get
@@ -41,12 +53,6 @@
                 if (customerLevelValue <= 0 || customerLevelValue > (byte)CustomerLevel.Super)
                 {
                     throw new ArgumentOutOfRangeException("CustomerLevel", "Invalid customer level.");
-                }
-
-                if (value != Enumerations.CustomerLevel.Member
-                    && _uplineLevel != null)
-                {
-                    throw new ArgumentOutOfRangeException("UplineLevel", "Upline should be null when get other customer setting exception member.");
                 }
 
                 _customerLevel = value;

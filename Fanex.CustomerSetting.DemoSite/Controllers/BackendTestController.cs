@@ -32,14 +32,8 @@
             CustomerLevel uplineLevel = CustomerLevel.Agent)
         {
             var actualUplineLevel = customerLevel == CustomerLevel.Member ? (CustomerLevel?)uplineLevel : null;
-            var setting = _settingService.GetCustomerSetting(
-                new QuerySettingParam
-            {
-                CustomerId = customerId,
-                CustomerLevel = customerLevel,
-                ProductId = productId,
-                UplineLevel = actualUplineLevel
-            });
+            var querySettingParam = new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
+            var setting = _settingService.GetCustomerSetting(querySettingParam);
 
             UpdateSetting(setting, actualUplineLevel);
 
@@ -57,22 +51,12 @@
             IEnumerable<int> customerIdList = customerIds.Split(',').Select(customerId => Convert.ToInt32(customerId));
             IEnumerable<string> customerNameList = customerNames.Split(',').ToList();
 
-            var setting = _settingService.GetCustomerSetting(
-                new QuerySettingParam
-                {
-                    CustomerId = customerIdList.FirstOrDefault(),
-                    CustomerLevel = customerLevel,
-                    ProductId = productId,
-                    UplineLevel = actualUplineLevel
-                });
+            var querySettingParam = new QuerySettingParam(customerIdList.FirstOrDefault(), customerLevel, productId, uplineLevel);
+            var setting = _settingService.GetCustomerSetting(querySettingParam);
 
-            UpdateMultipleSetting(new UpdatingMultipleSettingParam 
-            {
-                CustomerIds = customerIdList,
-                CustomerNames = customerNameList,
-                Setting = setting,
-                UplineLevel = actualUplineLevel
-            });
+            var updateMultipleParams = new UpdatingMultipleSettingParam(setting, customerIdList, customerNameList, actualUplineLevel);
+
+            UpdateMultipleSetting(updateMultipleParams);
 
             return new EmptyResult();
         }
@@ -84,11 +68,7 @@
 
         private void UpdateSetting(ISetting setting, CustomerLevel? uplineLevel)
         {
-            var result = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-                {
-                    Setting = setting,
-                    UplineLevel = uplineLevel
-                });
+            var result = _settingService.UpdateCustomerSetting(new UpdatingSettingParam(setting, uplineLevel));
         }
     }
 }

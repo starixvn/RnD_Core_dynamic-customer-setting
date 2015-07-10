@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Tests.Models;
 
-    public static class InstanceCreator
+    public static class InstanceFactory
     {
         public static UpdatingSettingParam CreateUpdatingSettingParam(
             int customerId = 1,
@@ -14,23 +14,23 @@
             byte productId = 1,
             CustomerLevel? uplineLevel = null)
         {
-            return new UpdatingSettingParam
-            {
-                Setting = new Setting
-                {
-                    ProductId = productId,
-                    CustomerId = customerId,
-                    CustomerLevel = customerLevel,
-                    SettingTypes = new List<SettingType>
+            var setting = CreateCustomerSetting(customerId, customerLevel, productId);
+            return new UpdatingSettingParam(setting, uplineLevel);
+        }
+
+        public static Setting CreateCustomerSetting(
+            int customerId = 1,
+            CustomerLevel customerLevel = CustomerLevel.Master,
+            byte productId = 1)
+        {
+            var settingTypes = new List<SettingType>
                     {
-                        InstanceCreator.CreateCustomerSettingType(1, 1),
-                        InstanceCreator.CreateCustomerSettingType(2, 1),
-                        InstanceCreator.CreateCustomerSettingType(3, 1),
-                        InstanceCreator.CreateCustomerSettingType(4, 1)
-                    }
-                },
-                UplineLevel = uplineLevel
-            };
+                        InstanceFactory.CreateCustomerSettingType(1, 1),
+                        InstanceFactory.CreateCustomerSettingType(2, 1),
+                        InstanceFactory.CreateCustomerSettingType(3, 1),
+                        InstanceFactory.CreateCustomerSettingType(4, 1)
+                    };
+            return new Setting(customerId, customerLevel, productId, settingTypes);
         }
 
         public static SettingType CreateCustomerSettingType(byte settingTypeId, byte settingTemplate = 1)
@@ -66,25 +66,20 @@
             byte productId = 1,
             CustomerLevel? uplineLevel = null)
         {
-            return new UpdatingMultipleSettingParam
-            {
-                CustomerIds = new List<int> { customerId, 2 },
-                CustomerNames = new List<string> { "Username1", "Username2" },
-                Setting = new Setting
-                {
-                    ProductId = productId,
-                    CustomerId = customerId,
-                    CustomerLevel = customerLevel,
-                    SettingTypes = new List<SettingType>
+            var settingTypes = new List<SettingType>
                     {
-                        InstanceCreator.CreateCustomerSettingType(1, 1),
-                        InstanceCreator.CreateCustomerSettingType(2, 1),
-                        InstanceCreator.CreateCustomerSettingType(3, 1),
-                        InstanceCreator.CreateCustomerSettingType(4, 1)
-                    }
-                },
-                UplineLevel = uplineLevel
-            };
+                        InstanceFactory.CreateCustomerSettingType(1, 1),
+                        InstanceFactory.CreateCustomerSettingType(2, 1),
+                        InstanceFactory.CreateCustomerSettingType(3, 1),
+                        InstanceFactory.CreateCustomerSettingType(4, 1)
+                    };
+            var updatingMultipleParam = new UpdatingMultipleSettingParam(
+                new Setting(customerId, customerLevel, productId, settingTypes),
+                new List<int> { customerId, 2 },
+                new List<string> { "Username1", "Username2" },
+                uplineLevel);
+
+            return updatingMultipleParam;
         }
 
         public static QuerySettingParam CreateQuerySettingParam(
@@ -93,13 +88,7 @@
             byte productId = 1,
             CustomerLevel? uplineLevel = CustomerLevel.Master)
         {
-            return new QuerySettingParam
-            {
-                CustomerId = customerId,
-                CustomerLevel = customerLevel,
-                ProductId = productId,
-                UplineLevel = uplineLevel
-            };
+            return new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
         }
 
         public static Product CreateProduct(byte productId = 1)
@@ -109,10 +98,10 @@
                 Id = 1,
                 SettingTypes = new List<SettingType>
                 {
-                    InstanceCreator.CreateProductSettingType(1, 1),
-                    InstanceCreator.CreateProductSettingType(2, 1),
-                    InstanceCreator.CreateProductSettingType(3, 1),
-                    InstanceCreator.CreateProductSettingType(4, 1)
+                    InstanceFactory.CreateProductSettingType(1, 1),
+                    InstanceFactory.CreateProductSettingType(2, 1),
+                    InstanceFactory.CreateProductSettingType(3, 1),
+                    InstanceFactory.CreateProductSettingType(4, 1)
                 }
             };
         }

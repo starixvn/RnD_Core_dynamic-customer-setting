@@ -45,7 +45,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
 
@@ -62,7 +62,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
             IEnumerable<int> groupedMemberIds = new List<int> { 1 };
@@ -86,7 +86,7 @@
         {
             //// Arrange
             var customerLevel = CustomerLevel.Member;
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
             var uplineLevel = CustomerLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
             IEnumerable<int> groupedMemberIds = new List<int> { 1 };

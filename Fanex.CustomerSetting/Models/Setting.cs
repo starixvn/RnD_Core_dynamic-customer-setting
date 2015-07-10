@@ -12,8 +12,16 @@
         private byte _productId;
         private IEnumerable<SettingType> _settingType;
 
-        public Setting()
+        public Setting(
+            int customerId,
+            CustomerLevel customerLevel,
+            byte productId,
+            IEnumerable<SettingType> settingTypes)
         {
+            CustomerId = customerId;
+            CustomerLevel = customerLevel;
+            ProductId = productId;
+            SettingTypes = settingTypes;
         }
 
         public Setting(
@@ -23,13 +31,10 @@
             byte productId,
             string productName,
             IEnumerable<SettingType> settingTypes)
+            : this(customerId, customerLevel, productId, settingTypes)
         {
-            CustomerId = customerId;
-            CustomerLevel = customerLevel;
             CustomerInfo = customerInfo;
-            ProductId = productId;
             ProductName = productName;
-            SettingTypes = settingTypes;
         }
 
         public byte ProductId
@@ -102,7 +107,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentOutOfRangeException("SettingTypes", "Setting Types cannot be null.");
+                    throw new ArgumentNullException("SettingTypes", "Setting Types cannot be null.");
                 }
 
                 _settingType = value;

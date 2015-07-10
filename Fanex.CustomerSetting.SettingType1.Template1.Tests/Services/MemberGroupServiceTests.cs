@@ -130,7 +130,7 @@
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
             var uplineLevel = CustomerLevel.Master;
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Act
             _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
@@ -151,7 +151,7 @@
         {
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
             _memberGroupDataAccess.UpdateGroupedMembersSetting(Arg.Any<UpdateMultipleMemberPTParam>())
                 .Returns(Result.Success);
 
@@ -167,7 +167,7 @@
         {
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
-            var settingType = InstanceCreator.CreateCustomerSettingType(1);
+            var settingType = InstanceFactory.CreateCustomerSettingType(1);
             _memberGroupDataAccess.UpdateGroupedMembersSetting(Arg.Any<UpdateMultipleMemberPTParam>())
                 .Returns(Result.Success);
 

@@ -2,38 +2,49 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Dtos.Params;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
     using NUnit.Framework;
 
     [TestFixture]
     public class UpdatingSettingParamTests
     {
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void UpdateCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        [TestCase(CustomerLevel.Super)]
+        [TestCase(CustomerLevel.Master)]
+        [TestCase(CustomerLevel.Agent)]
+        public void SetUplineLevel_ValueIsNotNullWhenCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
         {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            var setting = new Setting(1, customerLevel, 1, new List<SettingType>());
+            var updateSettingParam = new UpdatingSettingParam(setting);
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () =>
-                    {
-                        updatingParam.Setting.CustomerId = customerId;
-                    }));
+                    () => updateSettingParam.UplineLevel = customerLevel));
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidateUpdatingSetting_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
+        [TestCase(5)]
+        [TestCase(10)]
+        public void SetUplineLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte uplineLevelValue)
         {
-            //// Assert
+            var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
+
+            //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => InstanceCreator.CreateUpdatingSettingParam(customerId)));
+                    () => new UpdatingSettingParam(setting, (CustomerLevel)uplineLevelValue)));
+        }
+
+        [Test]
+        public void SetUplineLevel_ValueIsNullWhenCustomerIsMember_ThrowArgumentOutOfRangeException()
+        {
+            var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => new UpdatingSettingParam(setting)));
         }
     }
 }

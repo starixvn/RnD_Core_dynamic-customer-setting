@@ -430,17 +430,8 @@
             byte productId,
             CustomerLevel? uplineLevel)
         {
-            var updateParam = new UpdatingSettingParam
-            {
-                Setting = new Setting
-                {
-                    ProductId = productId,
-                    CustomerId = customerId,
-                    CustomerLevel = customerLevel,
-                    SettingTypes = new List<SettingType> { settingType }
-                },
-                UplineLevel = uplineLevel
-            };
+            var setting = new Setting(customerId, customerLevel, productId, new List<SettingType> { settingType });
+            var updateParam = new UpdatingSettingParam(setting, uplineLevel);
 
             return updateParam;
         }

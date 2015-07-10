@@ -62,13 +62,7 @@
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = SuperId,
-                CustomerLevel = CustomerLevel.Super,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
 
             //// Act
             var superSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -113,13 +107,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MasterId,
-                CustomerLevel = CustomerLevel.Master,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
 
             //// Act
             var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -164,13 +152,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = AgentId,
-                CustomerLevel = CustomerLevel.Agent,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
             //// Act
             var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -218,13 +200,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Super
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
 
             //// Act
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -269,13 +245,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Master
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
             //// Act
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -319,13 +289,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Agent
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
             //// Act
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
@@ -368,13 +332,8 @@
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = SuperId,
-                CustomerLevel = CustomerLevel.Super,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
+
             var superSetting = _settingService.GetCustomerSetting(querySettingParam);
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
             superPTITem.S4 = (byte)(superPTITem.S4 == 90 ? 89 : 90);
@@ -395,11 +354,7 @@
             superProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-                {
-                    Setting = superSetting,
-                    UplineLevel = querySettingParam.UplineLevel
-                });
+            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel));
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -443,13 +398,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MasterId,
-                CustomerLevel = CustomerLevel.Master,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
 
             var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
@@ -478,11 +427,8 @@
             masterProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-            {
-                Setting = masterSetting,
-                UplineLevel = querySettingParam.UplineLevel
-            });
+            var updateParam = new UpdatingSettingParam(masterSetting, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -528,13 +474,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = AgentId,
-                CustomerLevel = CustomerLevel.Agent,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
             var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
@@ -564,11 +504,8 @@
             agentProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-            {
-                Setting = agentSetting,
-                UplineLevel = querySettingParam.UplineLevel
-            });
+            var updateParam = new UpdatingSettingParam(agentSetting, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -613,13 +550,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Agent
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
@@ -637,11 +568,8 @@
             memberProductStatusItem.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-            {
-                Setting = memberSetting,
-                UplineLevel = querySettingParam.UplineLevel
-            });
+            var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -681,13 +609,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Master
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
@@ -704,11 +626,8 @@
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-            {
-                Setting = memberSetting,
-                UplineLevel = querySettingParam.UplineLevel
-            });
+            var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -740,13 +659,8 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Super
-            };
+
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
@@ -762,11 +676,8 @@
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam
-            {
-                Setting = memberSetting,
-                UplineLevel = querySettingParam.UplineLevel
-            });
+            var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -789,13 +700,7 @@
             var actor = new User { Id = SuperId, Level = UserLevel.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MasterId,
-                CustomerLevel = CustomerLevel.Master,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId);
 
             var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
@@ -824,14 +729,8 @@
             masterProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(
-                new UpdatingMultipleSettingParam
-                {
-                    CustomerIds = _masterIds,
-                    CustomerNames = _masterNames,
-                    Setting = masterSetting,
-                    UplineLevel = querySettingParam.UplineLevel
-                });
+            var updatingMultipleParam = new UpdatingMultipleSettingParam(masterSetting, _masterIds, _masterNames, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -870,13 +769,7 @@
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = AgentId,
-                CustomerLevel = CustomerLevel.Agent,
-                ProductId = ProductId,
-                UplineLevel = null
-            };
+            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
             var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
@@ -906,14 +799,8 @@
             agentProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(
-                new UpdatingMultipleSettingParam
-                {
-                    CustomerIds = _agentIds,
-                    CustomerNames = _agentNames,
-                    Setting = agentSetting,
-                    UplineLevel = querySettingParam.UplineLevel
-                });
+            var updatingMultipleParam = new UpdatingMultipleSettingParam(agentSetting, _agentIds, _agentNames, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -952,13 +839,8 @@
             var actor = new User { Id = AgentId, Level = UserLevel.Agent, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Agent
-            };
+
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
@@ -976,14 +858,8 @@
             memberProductStatusItem.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(
-                new UpdatingMultipleSettingParam
-                {
-                    CustomerIds = _memberIds,
-                    CustomerNames = _memberNames,
-                    Setting = memberSetting,
-                    UplineLevel = querySettingParam.UplineLevel
-                });
+            var updatingMultipleParam = new UpdatingMultipleSettingParam(memberSetting, _memberIds, _memberNames, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -1017,13 +893,7 @@
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam
-            {
-                CustomerId = MemberId,
-                CustomerLevel = CustomerLevel.Member,
-                ProductId = ProductId,
-                UplineLevel = CustomerLevel.Master
-            };
+            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
@@ -1040,14 +910,8 @@
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
 
             //// Act
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(
-                new UpdatingMultipleSettingParam
-                {
-                    CustomerIds = _memberIds,
-                    CustomerNames = _memberNames,
-                    Setting = memberSetting,
-                    UplineLevel = querySettingParam.UplineLevel
-                });
+            var updatingMultipleParam = new UpdatingMultipleSettingParam(memberSetting, _memberIds, _memberNames, querySettingParam.UplineLevel);
+            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);

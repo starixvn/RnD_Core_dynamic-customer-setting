@@ -3,11 +3,24 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
 
     public class UpdatingMultipleSettingParam : UpdatingSettingParam
     {
         private IEnumerable<int> _customerIds;
         private IEnumerable<string> _customerNames;
+
+        public UpdatingMultipleSettingParam(
+            ISetting setting,
+            IEnumerable<int> customerIds,
+            IEnumerable<string> customerNames,
+            CustomerLevel? uplineLevel)
+            : base(setting, uplineLevel)
+        {
+            CustomerIds = customerIds;
+            CustomerNames = customerNames;
+        }
 
         public IEnumerable<int> CustomerIds
         {
@@ -46,7 +59,7 @@
                 int customerIdsLength = customerIds.Count();
                 int customerNamesLength = customerNames.Count();
 
-                if (customerNamesLength <= 0)
+                if (customerIdsLength <= 0)
                 {
                     throw new ArgumentOutOfRangeException("CustomerIds", "CustomerIds should have at least one customer id.");
                 }

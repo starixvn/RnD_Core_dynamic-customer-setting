@@ -59,7 +59,7 @@
         public void ValidateUpdatingMultipleSetting_CustomersIsNull_ReturnValidationError()
         {
             //// Arrange
-            UpdatingMultipleSettingParam updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
+            UpdatingMultipleSettingParam updatingMultipleParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
             updatingMultipleParam.CustomerIds = null;
 
             //// Act
@@ -73,7 +73,7 @@
         public void ValidateUpdatingMultipleSetting_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
         {
             //// Arrange
-            var updatingMultipleParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
+            var updatingMultipleParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
                 .Returns(updatingMultipleParam.Setting.SettingTypes);
@@ -102,7 +102,7 @@
             CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
@@ -127,7 +127,7 @@
             CustomerLevel customerLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam(1, customerLevel);
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel);
             _settingContext.Actor.Level = actorLevel;
 
             //// Act

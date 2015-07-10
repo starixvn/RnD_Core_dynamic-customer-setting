@@ -10,68 +10,70 @@
     {
         [TestCase(0)]
         [TestCase(-1)]
-        public void GetCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
+        public void SetCustomerId_ValueIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
         {
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam
-                    {
-                        CustomerId = customerId
-                    }));
-        }
-
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidateQuerySetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
-        {
-            //// Assert
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => new QuerySettingParam
-                    {
-                        CustomerId = customerId
-                    }));
+                    () => new QuerySettingParam(0, CustomerLevel.Master, 0, null)));
         }
 
         [Test]
-        public void GetCustomerSetting_ProductIdIsZero_ThrowArgumentOutOfRangeException()
+        public void SetProductId_ValueIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam
-                    {
-                        ProductId = 0
-                    }));
+                    () => new QuerySettingParam(1, CustomerLevel.Master, 0, null)));
         }
 
         [Test]
-        public void GetCustomerSetting_CustomerLevelValueIsZero_ThrowArgumentOutOfRangeException()
+        public void SetCustomerLevel_ValueIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam
-                    {
-                        CustomerLevel = (CustomerLevel)0
-                    }));
+                    () => new QuerySettingParam(1, (CustomerLevel)0, 1, null)));
+        }
+
+        [TestCase(5)]
+        [TestCase(10)]
+        public void SetCustomerLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
+        {
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                     () => new QuerySettingParam(1, (CustomerLevel)customerLevelValue, 1, null)));
         }
 
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelHasValue_ReturnAccessDeniedResult(CustomerLevel customerLevel)
+        public void SetUplineLevel_ValueIsNotNullWhenCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam
-                    {
-                        CustomerId = 1,
-                        CustomerLevel = customerLevel,
-                        UplineLevel = customerLevel
-                    }));
+                    () => new QuerySettingParam(1, customerLevel, 1, customerLevel)));
+        }
+
+        [TestCase(5)]
+        [TestCase(10)]
+        public void SetUplineLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
+        {
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => new QuerySettingParam(1, CustomerLevel.Super, 1, (CustomerLevel)customerLevelValue)));
+        }
+        
+        [Test]
+        public void SetUplineLevel_ValueIsNullWhenCustomerIsMember_ThrowArgumentOutOfRangeException()
+        {
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () => new QuerySettingParam(1, CustomerLevel.Member, 1, null)));
         }
     }
 }

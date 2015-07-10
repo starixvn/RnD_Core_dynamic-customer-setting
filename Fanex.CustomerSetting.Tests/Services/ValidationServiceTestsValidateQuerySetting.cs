@@ -69,12 +69,7 @@
             CustomerLevel? uplineLevel)
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel,
-                UplineLevel = uplineLevel
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = userLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -97,11 +92,7 @@
             CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, customerLevel, 1);
             _settingContext.Actor.Level = userLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -116,11 +107,7 @@
         public void ValidateQuerySetting_Always_ExecuteValidateActorEnabledMethod()
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             _settingContext.Actor.Level = UserLevel.Agent;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -135,11 +122,7 @@
         public void ValidateQuerySetting_Always_ExecuteValidateLevelMethod()
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
 
@@ -154,11 +137,7 @@
         public void ValidateQuerySetting_Always_ExecuteValidateBelongInMethod()
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
@@ -198,12 +177,8 @@
             CustomerLevel uplineLevel)
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member,
-                UplineLevel = uplineLevel
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, uplineLevel);
+
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -225,12 +200,7 @@
             CustomerLevel uplineLevel)
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member,
-                UplineLevel = uplineLevel
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
@@ -247,12 +217,7 @@
         public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessValidationResult(CustomerLevel customerLevel)
         {
             //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel,
-                UplineLevel = null
-            };
+            QuerySettingParam queryParam = new QuerySettingParam(1, customerLevel, 1);
             _settingContext.Actor.Level = UserLevel.Company;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
