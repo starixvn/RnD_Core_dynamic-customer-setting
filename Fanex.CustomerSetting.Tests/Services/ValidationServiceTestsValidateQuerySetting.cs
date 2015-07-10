@@ -47,22 +47,6 @@
                     () => _validationService.ValidateQuerySetting(queryParam)));
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidateQuerySetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = customerId
-            };
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _validationService.ValidateQuerySetting(queryParam)));
-        }
-
         private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
         {
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
@@ -186,25 +170,25 @@
             _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
-        [Test]
-        public void ValidateQuerySetting_ActorEditsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = CustomerLevel.Member,
-                UplineLevel = null
-            };
-            _settingContext.Actor.Level = UserLevel.Agent;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+        ////[Test]
+        ////public void ValidateQuerySetting_ActorEditsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
+        ////{
+        ////    //// Arrange
+        ////    QuerySettingParam queryParam = new QuerySettingParam
+        ////    {
+        ////        CustomerId = 1,
+        ////        CustomerLevel = CustomerLevel.Member,
+        ////        UplineLevel = null
+        ////    };
+        ////    _settingContext.Actor.Level = UserLevel.Agent;
+        ////    AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+        ////    //// Act
+        ////    var actualResult = _validationService.ValidateQuerySetting(queryParam);
 
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        }
+        ////    //// Assert
+        ////    Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        ////}
 
         [TestCase(UserLevel.Super, CustomerLevel.Master)]
         [TestCase(UserLevel.Master, CustomerLevel.Agent)]
@@ -255,28 +239,6 @@
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelHasValue_ReturnAccessDeniedResult(CustomerLevel customerLevel)
-        {
-            //// Arrange
-            QuerySettingParam queryParam = new QuerySettingParam
-            {
-                CustomerId = 1,
-                CustomerLevel = customerLevel,
-                UplineLevel = customerLevel
-            };
-            _settingContext.Actor.Level = UserLevel.Company;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-
-            //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
         }
 
         [TestCase(CustomerLevel.Super)]

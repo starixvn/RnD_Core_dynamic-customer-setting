@@ -106,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
+    <Compile Include="Dtos\Params\QuerySettingParamTest.cs" />
+    <Compile Include="Dtos\Params\UpdatingMultipleSettingParamTests.cs" />
+    <Compile Include="Dtos\Params\UpdatingSettingParamTests.cs" />
     <Compile Include="InstanceCreator.cs" />
     <Compile Include="Handlers\SettingPostTasksTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />

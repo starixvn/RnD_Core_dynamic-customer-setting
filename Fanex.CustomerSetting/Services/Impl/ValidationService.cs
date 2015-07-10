@@ -36,8 +36,6 @@
         public IResult ValidateQuerySetting(QuerySettingParam queryParam)
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
-            Check.Argument.IsNotNegativeOrZero(queryParam.CustomerId, "queryParam.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)queryParam.CustomerLevel, "queryParam.CustomerLevel");
 
             return ValidateViewingPermission(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
         }
@@ -132,29 +130,9 @@
 
         private IResult ValidateUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
-            if (customerLevel == CustomerLevel.Member)
-            {
-                return ValidateUplineLevelIncaseOfEditingMember(uplineLevel);
-            }
-            else
-            {
-                if (uplineLevel.HasValue)
-                {
-                    return new Result(ResultValue.AccessDenied, Message.UplineLevelShouldBeNull);
-                }
-
-                return Result.Success;
-            }
-        }
-
-        private IResult ValidateUplineLevelIncaseOfEditingMember(CustomerLevel? uplineLevel)
-        {
-            if (uplineLevel == null)
-            {
-                return new Result(ResultValue.AccessDenied, Message.UplineLevelCannotBeNullIncaseOfEdittingMember);
-            }
-
             if (_settingContext.Actor.Level != UserLevel.Company 
+                && customerLevel == CustomerLevel.Member
+                && uplineLevel != null
                 && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
             {
                 return new Result(ResultValue.AccessDenied, Message.UplineLevelIsNotValid);
@@ -182,7 +160,6 @@
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
             Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.CustomerId, "updatingParam.Setting.CustomerId");
             Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }
 
@@ -257,7 +234,8 @@
         {
             Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
             Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.Customers");
+            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.CustomerIds");
+            Check.Argument.IsNotNull(updatingMultipleParam.CustomerNames, "updatingMultipleParam.CustomerNames");
         }
 
         private IResult ValidateUpdatingMultipleSettingSteps(UpdatingMultipleSettingParam updatingMultipleParam)

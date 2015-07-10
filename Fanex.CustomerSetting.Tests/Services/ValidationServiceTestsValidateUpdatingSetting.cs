@@ -55,20 +55,6 @@
             Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidateUpdatingSetting_CustomerIdIsNegativeOrZero_ReturnValidationError(int customerId)
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam(customerId);
-
-            //// Act
-            var actualValidationResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
-        }
-
         [Test]
         public void ValidateUpdatingSetting_Always_ExecuteValidateActorEnabledOnDataAccess()
         {

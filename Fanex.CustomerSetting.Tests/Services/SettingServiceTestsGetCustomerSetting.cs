@@ -69,48 +69,6 @@
                     () => _settingService.GetCustomerSetting(querySettingParam)));
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void GetCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
-        {
-            //// Arrange
-            QuerySettingParam querySettingParam = new QuerySettingParam
-            {
-                CustomerId = customerId
-            };
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParam)));
-        }
-
-        [Test]
-        public void GetCustomerSetting_ProductIdIsZero_ThrowArgumentOutOfRangeException()
-        {
-            //// Arrange
-            QuerySettingParam querySettingParam = InstanceCreator.CreateQuerySettingParam();
-            querySettingParam.ProductId = 0;
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParam)));
-        }
-
-        [Test]
-        public void GetCustomerSetting_CustomerLevelValueIsZero_ThrowArgumentOutOfRangeException()
-        {
-            //// Arrange
-            QuerySettingParam querySettingParam = InstanceCreator.CreateQuerySettingParam();
-            querySettingParam.CustomerLevel = (CustomerLevel)0;
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParam)));
-        }
-
         [Test]
         public void GetCustomerSetting_Always_ExecuteValidateQuerySettingMethodOnValidationService()
         {

@@ -81,33 +81,6 @@
                     () => _settingService.UpdateCustomerSetting(updatingParam)));
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void UpdateCustomerSetting_CustomerIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            updatingParam.Setting.CustomerId = customerId;
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParam)));
-        }
-
-        [Test]
-        public void UpdateCustomerSetting_SettingTypesIsEmpty_ThrowArgumentOutOfRangeException()
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            updatingParam.Setting.SettingTypes = new List<SettingType>();
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParam)));
-        }
-
         [Test]
         public void UpdateCustomerSetting_ValidationServiceExecutesValidateUpdatingSettingMethod()
         {

@@ -55,7 +55,7 @@
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
-            CheckQuerySettingArguments(queryParam);
+            Check.Argument.IsNotNull(queryParam, "queryParam");
 
             ValidateQuerySetting(queryParam);
 
@@ -64,22 +64,14 @@
             var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
 
             ISetting setting = new Setting(
-                queryParam.CustomerId, 
-                queryParam.CustomerLevel, 
-                customerInfo, 
-                product.Id, 
-                product.Name, 
+                queryParam.CustomerId,
+                queryParam.CustomerLevel,
+                customerInfo,
+                product.Id,
+                product.Name,
                 customerSettingTypes);
 
             return setting;
-        }
-
-        private void CheckQuerySettingArguments(QuerySettingParam queryParam)
-        {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
-            Check.Argument.IsNotNegativeOrZero(queryParam.CustomerId, "queryParam.CustomerId");
-            Check.Argument.IsNotNegativeOrZero((byte)queryParam.CustomerLevel, "queryParam.CustomerLevel");
-            Check.Argument.IsNotNegativeOrZero(queryParam.ProductId, "queryParam.ProductId");
         }
 
         private void ValidateQuerySetting(QuerySettingParam queryParam)
@@ -205,9 +197,6 @@
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
             Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.CustomerId, "updatingParam.Setting.Customer.Id");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.ProductId, "updatingParam.Setting.ProductId");
-            Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
         }
 
@@ -316,16 +305,6 @@
             Check.Argument.IsNotNull(updatingMultipleParam.CustomerNames, "updatingMultipleParam.CustomerNames");
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.ProductId, "updatingMultipleParam.Setting.ProductId");
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
-            int customerIdsLength = updatingMultipleParam.CustomerIds.Count();
-            int customerNamesLength = updatingMultipleParam.CustomerNames.Count();
-            Check.Argument.IsNotNegativeOrZero(customerIdsLength, "updatingMultipleParam.CustomerIds.Count");
-            Check.Argument.IsNotNegativeOrZero(customerNamesLength, "updatingMultipleParam.CustomerNames.Count");
-            if (customerIdsLength != customerNamesLength)
-            {
-                throw new ArgumentOutOfRangeException(
-                    "customerIdsLength",
-                    "CustomerIds does not match with CustomerNames");
-            }
         }
 
         private IResult ValidateUpdatingMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -503,7 +482,7 @@
         }
 
         private UpdatingSettingResult MapSettingResultWithCustomerName(
-            Dictionary<int, string> customerIdNameContainer, 
+            Dictionary<int, string> customerIdNameContainer,
             IEnumerable<SettingResult> results)
         {
             foreach (SettingResult result in results)
@@ -518,7 +497,7 @@
         }
 
         private Dictionary<int, string> GetCustomerIdNameContainer(
-            IEnumerable<int> customerIds, 
+            IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
         {
             Dictionary<int, string> customerIdNameContainer = new Dictionary<int, string>();

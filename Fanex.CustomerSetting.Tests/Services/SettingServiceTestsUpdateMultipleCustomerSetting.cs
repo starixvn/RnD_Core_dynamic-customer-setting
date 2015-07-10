@@ -82,19 +82,6 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_NumberOfCustomerIsZero_ThrowArgumentOutOfRangeException()
-        {
-            //// Arrange
-            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
-            updatingMultipleSettingParam.CustomerIds = new List<int>();
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam)));
-        }
-
-        [Test]
         public void UpdateMultipleCustomerSetting_NumberOfSettingTypesIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
