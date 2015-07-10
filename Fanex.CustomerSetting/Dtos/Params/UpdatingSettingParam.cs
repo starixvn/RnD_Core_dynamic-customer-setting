@@ -32,17 +32,17 @@
                     byte uplineLevelValue = (byte)value.Value;
                     if (uplineLevelValue <= 0 || uplineLevelValue > (byte)CustomerLevel.Super)
                     {
-                        throw new ArgumentOutOfRangeException("UplineLevel", "Upline Level is out of value range.");
+                        throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
 
                     if (Setting != null && Setting.CustomerLevel != CustomerLevel.Member)
                     {
-                        throw new ArgumentOutOfRangeException("UplineLevel", "Upline should be null when getting customer setting is not member");
+                        throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
                 else if (Setting != null && Setting.CustomerLevel == CustomerLevel.Member)
                 {
-                    throw new ArgumentOutOfRangeException("UplineLevel", "Upline cannot be null when updating member setting.");
+                    throw new ArgumentOutOfRangeException("value", "Upline cannot be null when updating member setting.");
                 }
 
                 _uplineLevel = value;

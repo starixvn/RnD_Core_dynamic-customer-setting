@@ -33,7 +33,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerId", "Customer Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException("value", "Customer Id cannot be negative or zero.");
                 }
 
                 _customerId = value;
@@ -52,7 +52,7 @@
                 var customerLevelValue = (byte)value;
                 if (customerLevelValue <= 0 || customerLevelValue > (byte)CustomerLevel.Super)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerLevel", "Invalid customer level.");
+                    throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }
 
                 _customerLevel = value;
@@ -70,7 +70,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("ProductId", "Product Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException("value", "Product Id cannot be negative or zero.");
                 }
 
                 _productId = value;
@@ -91,18 +91,18 @@
                     byte uplineLevelValue = (byte)value.Value;
                     if (uplineLevelValue <= 0 || uplineLevelValue > (byte)CustomerLevel.Super)
                     {
-                        throw new ArgumentOutOfRangeException("UplineLevel", "Upline Level is out of value range.");
+                        throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
 
                     if (_customerLevel != CustomerLevel.Member)
                     {
-                        throw new ArgumentOutOfRangeException("UplineLevel", "Upline should be null when getting customer setting is not member");
+                        throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
 
                 if (_customerLevel == CustomerLevel.Member && value == null)
                 {
-                    throw new ArgumentOutOfRangeException("UplineLevel", "Upline cannot be null when getting member setting.");
+                    throw new ArgumentOutOfRangeException("value", "Upline cannot be null when getting member setting.");
                 }
 
                 _uplineLevel = value;

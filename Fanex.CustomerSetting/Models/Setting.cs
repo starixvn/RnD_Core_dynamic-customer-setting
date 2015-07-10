@@ -48,7 +48,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("ProductId", "Product Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException("value", "Product Id cannot be negative or zero.");
                 }
 
                 _productId = value;
@@ -68,7 +68,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerId", "Customer Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException("value", "Customer Id cannot be negative or zero.");
                 }
 
                 _customerId = value;
@@ -87,7 +87,7 @@
                 var customerLevelValue = (byte)value;
                 if (customerLevelValue <= 0 || customerLevelValue > (byte)CustomerLevel.Super)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerLevel", "Invalid customer level.");
+                    throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }
 
                 _customerLevel = value;
@@ -107,7 +107,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("SettingTypes", "Setting Types cannot be null.");
+                    throw new ArgumentNullException("value", "Setting Types cannot be null.");
                 }
 
                 _settingType = value;

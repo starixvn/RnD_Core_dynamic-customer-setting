@@ -61,17 +61,17 @@
 
                 if (customerIdsLength <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerIds", "CustomerIds should have at least one customer id.");
+                    throw new ArgumentOutOfRangeException("customerIds", "CustomerIds should have at least one customer id.");
                 }
 
                 if (customerNamesLength <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerNames", "CustomerNames should have at least one customer id.");
+                    throw new ArgumentOutOfRangeException("customerNames", "CustomerNames should have at least one customer id.");
                 }
 
                 if (customerIdsLength != customerNamesLength)
                 {
-                    throw new ArgumentOutOfRangeException("CustomerIds", "CustomerIds does not match with CustomerNames");
+                    throw new ArgumentOutOfRangeException("customerIds", "CustomerIds does not match with CustomerNames");
                 }
             }
         }
