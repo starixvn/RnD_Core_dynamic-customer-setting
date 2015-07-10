@@ -5,7 +5,7 @@
 
     public class PreUpdateMultipleCustomersSettingTypeResult
     {
-        public IEnumerable<int> CustomersNeedForSingleUpdating { get; set; }
+        public IEnumerable<int> CustomerIdsNeedForSingleUpdating { get; set; }
 
         public bool IsStopUpdating { get; set; }
 

@@ -22,6 +22,24 @@
             MessageService = new ProductStatusMessageService(ResourceService);
         }
 
+        [Test]
+        public override void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
+        {
+            base.TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage();
+        }
+
+        [Test]
+        public override void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
+        {
+            base.TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent();
+        }
+
+        [Test]
+        public override void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
+        {
+            base.TranslateMessage_MessageTypeIsOther_ReturnRawMessage();
+        }
+
         [TestCase(1, "", "", "")]
         [TestCase(2, "SportType1", "", "SportType1")]
         [TestCase(3, "", "BetType1", "BetType1")]

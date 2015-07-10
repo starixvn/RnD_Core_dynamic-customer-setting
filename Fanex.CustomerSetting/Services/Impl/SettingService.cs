@@ -375,7 +375,7 @@
 
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
             //// because we already updated setting for them, so we need to remove them out of customer list.
-            var customersNeedForUpdating = GetCustomersNeedForSingleUpdating(preTasksResult.CustomersNeedForSingleUpdating, customerIds);
+            var customersNeedForUpdating = GetCustomerIdsNeedForSingleUpdating(preTasksResult.CustomerIdsNeedForSingleUpdating, customerIds);
             var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, productId, uplineLevel);
 
             if (preTasksResult.IsReturnResultToUser
@@ -392,20 +392,20 @@
         /// This is for the case we want to update multiple member has same position setting group
         /// We need to update grouped member on pre tasks and return un-grouped member to update one by one.
         /// </summary>
-        /// <param name="customersReturnFromPreTask">Customer list return from pre task, may be different with original customer list.</param>
-        /// <param name="originalCustomers">Original customer list.</param>
+        /// <param name="customerIdsReturnFromPreTask">Customer list return from pre task, may be different with original customer list.</param>
+        /// <param name="originalCustomerIds">Original customer list.</param>
         /// <returns>List customer will be update one by one.</returns>
-        private IEnumerable<int> GetCustomersNeedForSingleUpdating(
-            IEnumerable<int> customersReturnFromPreTask,
-            IEnumerable<int> originalCustomers)
+        private IEnumerable<int> GetCustomerIdsNeedForSingleUpdating(
+            IEnumerable<int> customerIdsReturnFromPreTask,
+            IEnumerable<int> originalCustomerIds)
         {
-            if (customersReturnFromPreTask != null
-                && customersReturnFromPreTask.Any())
+            if (customerIdsReturnFromPreTask != null
+                && customerIdsReturnFromPreTask.Any())
             {
-                return customersReturnFromPreTask;
+                return customerIdsReturnFromPreTask;
             }
 
-            return originalCustomers;
+            return originalCustomerIds;
         }
 
         private PreUpdateMultipleCustomersSettingTypeResult RunPreUpdateMultipleCustomersSettingTypeTasks(
@@ -489,11 +489,6 @@
 
         private bool IsOverride(MethodInfo methodInfo)
         {
-            if (methodInfo == null)
-            {
-                throw new ArgumentNullException("methodInfo", "methodInfo cannot be null");
-            }
-
             return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
         }
 

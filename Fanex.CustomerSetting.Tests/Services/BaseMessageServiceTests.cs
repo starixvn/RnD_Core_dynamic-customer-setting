@@ -18,7 +18,7 @@
         protected IMessageService MessageService { get; set; }
 
         [Test]
-        public void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
+        public virtual void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
         {
             //// Arrange
             int msgType = ExceptionMessageType;
@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
+        public virtual void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
         {
             //// Arrange
             int msgType = ExceptionMessageType;
@@ -48,7 +48,7 @@
         }
 
         [Test]
-        public void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
+        public virtual void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
         {
             //// Arrange
             int msgType = OtherMessageType;

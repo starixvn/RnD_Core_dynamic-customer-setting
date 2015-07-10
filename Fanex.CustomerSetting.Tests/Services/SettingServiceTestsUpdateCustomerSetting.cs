@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -20,7 +18,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingServiceUpdateCustomerSettingTests
+    public class SettingServiceTestsUpdateCustomerSetting
     {
         private ISettingService _settingService;
         private IValidationService _validationService;
@@ -57,8 +55,6 @@
                 _resourceService,
                 _logger);
         }
-
-        #region Update Customer Setting Tests
 
         [Test]
         public void UpdateCustomerSetting_UpdatingSettingParamIsNull_ThrowArgumentNullException()
@@ -173,7 +169,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_SettingTypeHasPreUpdateCustomerSettingTypeTasks_ExecutePreUpdateCustomerSettingTypeTasks()
+        public void UpdateCustomerSetting_SettingTypeHasPreUpdateCustomerSettingTypeTasks_ExecuteThatTasks()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
@@ -204,22 +200,6 @@
                 Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTasksStub);
-        }
-
-        [Test]
-        public void UpdateCustomerSetting_Always_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
-
-            //// Act
-            _settingService.UpdateCustomerSetting(updatingParam);
-
-            //// Assert
-            _settingResolver.Received(updatingParam.Setting.SettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
         }
 
         private void AssumePostUpdateCustomerSettingTypeTasksHadDone(bool isTaskSuccessful = true)
@@ -255,6 +235,50 @@
                 Arg.Any<SettingType>(),
                 updatingParam.Setting.ProductId,
                 updatingParam.UplineLevel);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_Always_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
+        {
+            //// Arrange
+            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            AssumeUpdatingCustomerSettingActionPassedValidation();
+            AssumePreUpdateCustomerSettingTypeTasksHadDone();
+            SetupSettingTypeDataAccessStubForReturningDummyResult();
+
+            //// Act
+            _settingService.UpdateCustomerSetting(updatingParam);
+
+            //// Assert
+            _settingResolver.Received(updatingParam.Setting.SettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_SettingTypeHasPostUpdateCustomerSettingTypeTasks_ExecuteThoseTasks()
+        {
+            //// Arrange
+            UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
+            AssumeUpdatingCustomerSettingActionPassedValidation();
+            SetupSettingTypeDataAccessStubForReturningDummyResult();
+
+            //// Setting type has no pre-task
+            SettingPreTasks settingPreTasks = null;
+            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTasks);
+
+            //// Setting type has post-tasks
+            var settingTypePostTasksMock = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
+            _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksMock);
+
+            //// Act
+            _settingService.UpdateCustomerSetting(updatingParam);
+
+            //// Assert
+            settingTypePostTasksMock.Received().PostUpdateCustomerSettingType(
+                _settingContext,
+                updatingParam.Setting.CustomerId,
+                Arg.Any<SettingType>(),
+                updatingParam.UplineLevel,
+                Arg.Any<SettingResult>());
         }
 
         [Test]
@@ -309,7 +333,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_CustomerSettingIsValid_ReturnSuccessResult()
+        public void UpdateCustomerSetting_UpdatedCustomerSetting_ReturnSuccessResult()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceCreator.CreateUpdatingSettingParam();
@@ -324,7 +348,5 @@
             //// Assert
             Assert.IsTrue(actualUpdatingResult.IsSuccessful);
         }
-
-        #endregion Update Customer Setting Tests
     }
 }

@@ -18,7 +18,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingServiceUpdateMultipleCustomerSettingTests
+    public class SettingServiceTestsUpdateMultipleCustomerSetting
     {
         private ISettingService _settingService;
         private IValidationService _validationService;
@@ -55,8 +55,6 @@
                 _resourceService,
                 _logger);
         }
-
-        #region Update Multiple Customer Setting Tests
 
         [Test]
         public void UpdateMultipleCustomerSetting_UpdatingMultipleSettingParamIsNull_ThrowArgumentNullException()
@@ -164,7 +162,11 @@
                     updatingMultipleSettingParam.UplineLevel);
         }
 
-        private void AssumePreUpdateMultipleCustomersSettingTypeTaskHadDone(bool isTaskSuccessful = true)
+        private void AssumePreUpdateMultipleCustomersSettingTypeTaskHadDone(
+            bool isTaskSuccessful = true,
+            bool isStopUpdatingWhenPreTaskFailed = false,
+            bool isReturnPreTaskResultToUser = false,
+            IEnumerable<int> customerIdsNeedForSingleUpdating = null)
         {
             var settingTypePreTasksStub = Substitute.ForPartsOf<SettingPreTasks>();
 
@@ -183,7 +185,10 @@
                     Arg.Any<CustomerLevel?>()).Returns(
                     new PreUpdateMultipleCustomersSettingTypeResult
                     {
-                        Result = new UpdatingSettingResult(isTaskSuccessful ? Result.Success : Result.DataError)
+                        Result = new UpdatingSettingResult(isTaskSuccessful ? Result.Success : Result.DataError),
+                        IsStopUpdating = isStopUpdatingWhenPreTaskFailed,
+                        IsReturnResultToUser = isReturnPreTaskResultToUser,
+                        CustomerIdsNeedForSingleUpdating = customerIdsNeedForSingleUpdating
                     });
 
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksStub);
@@ -201,7 +206,8 @@
                 Arg.Any<SettingResult>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
 
-            var dummyUpdatingResult = new UpdatingSettingResult(isTaskSuccessful ? Result.Success : Result.DataError);
+            var subResults = new List<SettingResult> { new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError) };
+            var dummyUpdatingResult = new UpdatingSettingResult(subResults);
             settingTypePostTasksStub.PostUpdateMultipleCustomersSettingType(
                     Arg.Any<ISettingContext>(),
                     Arg.Any<IEnumerable<int>>(),
@@ -277,6 +283,68 @@
         }
 
         [Test]
+        public void UpdateMultipleCustomerSetting_PreTaskFail_ReturnPreTasksResult()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
+            AssumeUpdatingMultipleCustomersSettingActionPassedValidation();
+            SetupSettingTypeDataAccessStubForReturningDummyResult();
+
+            AssumePreUpdateMultipleCustomersSettingTypeTaskHadDone(
+                isTaskSuccessful: false,
+                isStopUpdatingWhenPreTaskFailed: true,
+                isReturnPreTaskResultToUser: true,
+                customerIdsNeedForSingleUpdating: null);
+
+            //// Act
+            var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            Assert.IsFalse(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_Updated_ReturnSuccessUpdatingSettingResult()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
+            AssumeUpdatingMultipleCustomersSettingActionPassedValidation();
+            SetupSettingTypeDataAccessStubForReturningDummyResult();
+            AssumePreUpdateMultipleCustomersSettingTypeTaskHadDone();
+            AssumePostUpdateMultipleCustomersSettingTypeTaskHadDone();
+
+            //// Act
+            var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_Updated_ReturnResultWithCustomerName()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceCreator.CreateUpdatingMultipleSettingParam();
+            AssumeUpdatingMultipleCustomersSettingActionPassedValidation();
+            SetupSettingTypeDataAccessStubForReturningDummyResult();
+
+            SettingPreTasks settingPreTask = null;
+            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTask);
+
+            SettingPostTasks settingPostTask = null;
+            _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingPostTask);
+
+            //// Act
+            var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            var updatingSettingResult = actualResult as UpdatingSettingResult;
+            Assert.IsTrue(
+                updatingSettingResult.SubResults.Any(settingResult => settingResult.CustomerName == "Username1")
+                && updatingSettingResult.SubResults.Any(settingResult => settingResult.CustomerName == "Username2"));
+        }
+
+        [Test]
         public void UpdateMultipleCustomerSetting_RaisedException_ExecuteErrorOnLogger()
         {
             //// Arrange
@@ -292,7 +360,5 @@
             //// Assert
             _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
         }
-
-        #endregion Update Multiple Customer Setting Tests
     }
 }

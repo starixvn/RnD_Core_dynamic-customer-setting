@@ -116,13 +116,13 @@
     <Compile Include="Services\BaseMessageServiceTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
-    <Compile Include="Services\SettingServiceUpdateCustomerSettingTests.cs" />
-    <Compile Include="Services\SettingServiceUpdateMultipleCustomerSettingTests.cs" />
-    <Compile Include="Services\ValidationServiceValidateUpdatingMultipleSettingTests.cs" />
+    <Compile Include="Services\SettingServiceTestsUpdateCustomerSetting.cs" />
+    <Compile Include="Services\SettingServiceTestsUpdateMultipleCustomerSetting.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateUpdatingMultipleSetting.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
-    <Compile Include="Services\SettingServiceGetCustomerSettingTests.cs" />
-    <Compile Include="Services\ValidationServiceValidateQuerySettingTests.cs" />
-    <Compile Include="Services\ValidationServiceValidateUpdatingSettingTests.cs" />
+    <Compile Include="Services\SettingServiceTestsGetCustomerSetting.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateQuerySetting.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateUpdatingSetting.cs" />
     <Compile Include="Utilz\LanguageNameConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>

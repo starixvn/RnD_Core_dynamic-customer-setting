@@ -98,8 +98,8 @@
             var actualPreTaskResult = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, memberIds, customerLevel, settingType, uplineLevel);
 
             //// Assert
-            Assert.AreEqual(1, actualPreTaskResult.CustomersNeedForSingleUpdating.Count());
-            Assert.AreEqual(2, actualPreTaskResult.CustomersNeedForSingleUpdating.ElementAt(0));
+            Assert.AreEqual(1, actualPreTaskResult.CustomerIdsNeedForSingleUpdating.Count());
+            Assert.AreEqual(2, actualPreTaskResult.CustomerIdsNeedForSingleUpdating.ElementAt(0));
         }
     }
 }

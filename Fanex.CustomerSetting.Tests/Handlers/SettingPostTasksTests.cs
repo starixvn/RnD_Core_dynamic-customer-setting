@@ -19,8 +19,7 @@
 
         protected SettingPostTasks SettingPostTasks { get; set; }
 
-        [Test]
-        public void PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        public virtual void PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
         {
             //// Arrange
             SettingType settingType = new SettingType();
@@ -35,8 +34,7 @@
                 settingType)));
         }
 
-        [Test]
-        public void PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems()
+        public virtual void PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems()
         {
             //// Arrange
             SettingType settingType = new SettingType
@@ -68,8 +66,7 @@
             Assert.AreEqual(betTypeName, settingItem.BetTypeName);
         }
 
-        [Test]
-        public void PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException()
+        public virtual void PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException()
         {
             //// Arrange
             SettingType settingType = new SettingType
@@ -87,6 +84,30 @@
                 SettingContext,
                 null,
                 settingType)));
+        }
+
+        public virtual void PostUpdateCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            SettingType settingType = new SettingType();
+            SettingContext = null;
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, settingType, null, null)));
+        }
+
+        public virtual void PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            SettingType settingType = null;
+            SettingContext = new SettingContextStub();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, settingType, null, null)));
         }
     }
 }

@@ -14,7 +14,7 @@
         {
         }
 
-        internal ProductStatusItem(ProductStatusItemDto productStatusItemDto)
+        public ProductStatusItem(ProductStatusItemDto productStatusItemDto)
         {
             SportTypeId = productStatusItemDto.SportTypeId;
             BetTypeId = productStatusItemDto.BetTypeId;

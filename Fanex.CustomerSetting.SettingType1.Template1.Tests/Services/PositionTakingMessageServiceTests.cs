@@ -20,6 +20,24 @@
             MessageService = new PTMessageService(ResourceService);
         }
 
+        [Test]
+        public override void TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage()
+        {
+            base.TranslateMessage_MessageIdIsNotFound_ReturnUndefinedMessage();
+        }
+
+        [Test]
+        public override void TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent()
+        {
+            base.TranslateMessage_MessageTypeIsException_ReturnMatchedMessageContent();
+        }
+
+        [Test]
+        public override void TranslateMessage_MessageTypeIsOther_ReturnRawMessage()
+        {
+            base.TranslateMessage_MessageTypeIsOther_ReturnRawMessage();
+        }
+
         [TestCase(1, false, "", "", "")]
         [TestCase(1, true, "", "", " (Live)")]
         [TestCase(2, false, "SportType1", "", "SportType1")]

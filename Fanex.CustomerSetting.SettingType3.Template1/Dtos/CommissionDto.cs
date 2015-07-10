@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Dtos
 {
-    internal class CommissionItemDto
+    public class CommissionItemDto
     {
         public short SportTypeId { get; set; }
 

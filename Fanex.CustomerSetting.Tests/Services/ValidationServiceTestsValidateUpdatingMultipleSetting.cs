@@ -16,7 +16,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ValidationServiceValidateUpdatingMultipleSettingTests
+    public class ValidationServiceTestsValidateUpdatingMultipleSetting
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;

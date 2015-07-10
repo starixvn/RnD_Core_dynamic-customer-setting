@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Handlers
 {
+    using System;
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
@@ -23,6 +24,36 @@
             ResourceService = Substitute.For<IResourceService>();
             _messageService = Substitute.For<IMessageService>();
             SettingPostTasks = new SettingType1PostTasks(_messageService, ResourceService);
+        }
+
+        [Test]
+        public override void PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        {
+            base.PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException();
+        }
+
+        [Test]
+        public override void PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException()
+        {
+            base.PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException();
+        }
+
+        [Test]
+        public override void PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems()
+        {
+            base.PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems();
+        }
+
+        [Test]
+        public override void PostUpdateCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        {
+            base.PostUpdateCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException();
+        }
+
+        [Test]
+        public override void PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException()
+        {
+            base.PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException();
         }
 
         [Test]

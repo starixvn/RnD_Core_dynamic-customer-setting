@@ -1,58 +1,115 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Tests.Models
 {
+    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType4.Template1.Models;
     using NUnit.Framework;
 
     [TestFixture]
     public class ProductStatusItemTests
     {
-        private ProductStatusItem _productStatusItem;
-
-        [SetUp]
-        public void Setup()
-        {
-            _productStatusItem = new ProductStatusItem
-            {
-                SportTypeId = 1,
-                BetTypeId = 1
-            };
-        }
-
-        [Test]
-        public void Validate_CurrentStatusIsDisabledAndDownlineStatusIsEnabled_ReturnErrorCode()
+        [TestCase(true, false, 9101)]
+        [TestCase(true, true, 0)]
+        [TestCase(true, null, 0)]
+        [TestCase(false, true, 0)]
+        [TestCase(false, false, 0)]
+        public void Validate_CurrentStatusAndDownlineStatus_ReturnErrorCode(
+            bool isDisabled,
+            bool? isDisabledDowline,
+            int errorCode)
         {
             //// Arrange
-            _productStatusItem.IsDisabled = true;
-            _productStatusItem.Downline = new ProductStatusItem { IsDisabled = false };
-
-            //// Act
-            var actualResult = _productStatusItem.Validate();
-
-            //// Assert
-            Assert.AreEqual(9101, actualResult.Code);
-        }
-
-        [Test]
-        public void ToXml_ReturnFormattedXml()
-        {
-            //// Arrange
-            _productStatusItem = new ProductStatusItem
+            var productStatusItem = new ProductStatusItem
             {
                 SportTypeId = 1,
                 BetTypeId = 1,
-                IsDisabled = true,
-                Downline = new ProductStatusItem
-                {
-                    IsDisabled = true
-                }
+                IsDisabled = isDisabled
+            };
+
+            if (isDisabledDowline != null)
+            {
+                productStatusItem.Downline = new ProductStatusItem { IsDisabled = isDisabledDowline.Value };
+            }
+
+            //// Act
+            var actualResult = productStatusItem.Validate();
+
+            //// Assert
+            Assert.AreEqual(errorCode, actualResult.Code);
+        }
+
+        [TestCase(true, true, "<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"1\"/>")]
+        [TestCase(false, false, "<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"0\" IsDisabledDownline=\"0\"/>")]
+        [TestCase(true, false, "<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>")]
+        [TestCase(true, null, "<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>")]
+        public void ToXml_ReturnFormattedXml(
+            bool isDisabled,
+            bool? isDownlineDisbaled,
+            string expectedXmlFormatted)
+        {
+            //// Arrange
+            var productStatusItem = new ProductStatusItem
+            {
+                SportTypeId = 1,
+                BetTypeId = 1,
+                IsDisabled = isDisabled
+            };
+
+            if (isDownlineDisbaled != null)
+            {
+                productStatusItem.Downline = new ProductStatusItem { IsDisabled = isDownlineDisbaled.Value };
+            }
+
+            //// Act
+            var actualXmlFormatted = productStatusItem.ToXml();
+
+            //// Assert
+            Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
+        }
+
+        [TestCase(true, null, null)]
+        [TestCase(true, false, true)]
+        [TestCase(true, false, true)]
+        [TestCase(false, false, false)]
+        public void Constructor_PopulatesDataFromProductStatusItemDto(
+            bool isDisbaled,
+            bool? isDisabledDownline,
+            bool? isDisabledUpline)
+        {
+            //// Arrange
+            var productStatusItemDto = new ProductStatusItemDto
+            {
+                BetTypeId = 1,
+                SportTypeId = 1,
+                IsDisabled = isDisbaled,
+                IsDisabledDownline = isDisabledDownline,
+                IsDisabledUpline = isDisabledUpline
             };
 
             //// Act
-            var actualXmlFormatted = _productStatusItem.ToXml();
+            var actualProductStatusItem = new ProductStatusItem(productStatusItemDto);
 
             //// Assert
-            var expectedXmlFormatted = "<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"1\"/>";
-            Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
+            Assert.AreEqual(1, actualProductStatusItem.SportTypeId);
+            Assert.AreEqual(1, actualProductStatusItem.BetTypeId);
+            Assert.AreEqual(isDisbaled, actualProductStatusItem.IsDisabled);
+
+            if (isDisabledDownline == null)
+            {
+                Assert.IsNull(actualProductStatusItem.Downline);
+            }
+            else
+            {
+                Assert.AreEqual(isDisabledDownline.Value, actualProductStatusItem.Downline.IsDisabled);
+            }
+
+            if (isDisabledUpline == null)
+            {
+                Assert.IsNull(actualProductStatusItem.Upline);
+            }
+            else
+            {
+                Assert.AreEqual(isDisabledUpline.Value, actualProductStatusItem.Upline.IsDisabled);
+            }
         }
     }
 }

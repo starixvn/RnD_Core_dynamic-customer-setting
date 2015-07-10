@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Dtos
 {
-    internal class ProductStatusItemDto
+    public class ProductStatusItemDto
     {
         public short SportTypeId { get; set; }
 

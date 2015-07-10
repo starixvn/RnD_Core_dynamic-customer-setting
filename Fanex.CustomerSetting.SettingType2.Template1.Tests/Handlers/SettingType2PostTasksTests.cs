@@ -26,6 +26,36 @@
         }
 
         [Test]
+        public override void PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        {
+            base.PostGetCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException();
+        }
+
+        [Test]
+        public override void PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException()
+        {
+            base.PostGetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException();
+        }
+
+        [Test]
+        public override void PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems()
+        {
+            base.PostGetCustomerSettingType_WhenCalled_SetSportTypeBetTypeNameForSettingItems();
+        }
+
+        [Test]
+        public override void PostUpdateCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException()
+        {
+            base.PostUpdateCustomerSettingType_SettingContextIsNull_ThrowArgumentNullException();
+        }
+
+        [Test]
+        public override void PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException()
+        {
+            base.PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException();
+        }
+
+        [Test]
         public void PostUpdateCustomerSettingType_ResultIsSuccessful_ReturnUpdatePostionTakingSuccessfulResult()
         {
             //// Arrange

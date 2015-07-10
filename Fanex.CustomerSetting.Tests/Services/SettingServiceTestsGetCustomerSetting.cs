@@ -19,7 +19,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingServiceGetCustomerSettingTests
+    public class SettingServiceTestsGetCustomerSetting
     {
         private ISettingService _settingService;
         private IValidationService _validationService;
@@ -56,8 +56,6 @@
                 _resourceService,
                 _logger);
         }
-
-        #region Get Customer Setting Tests
 
         [Test]
         public void GetCustomerSetting_QuerySettingParamIsNull_ThrowArgumentNullException()
@@ -339,14 +337,14 @@
             SetupSettingTypeDataAccessStubForReturningDummySettingTypes();
 
             //// Mock PreTasks Handler.
-            var settingTypePreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>();
-            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksHandler);
+            var settingTypePreTasksMock = Substitute.ForPartsOf<SettingPreTasks>();
+            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksMock);
 
             //// Act
             _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            settingTypePreTasksHandler.Received().PreGetCustomerSettingType(_settingContext, querySettingParam);
+            settingTypePreTasksMock.Received().PreGetCustomerSettingType(_settingContext, querySettingParam);
         }
 
         private void SetupSettingTypeDataAccessStubForReturningDummySettingTypes(SettingType dummySettingType = null)
@@ -389,6 +387,29 @@
         }
 
         [Test]
+        public void GetCustomerSetting_SettingTypeHasPostGetCustomerSettingTypeTasks_ExecutePostGetCustomerSettingTypeTasks()
+        {
+            //// Arrange
+            QuerySettingParam querySettingParam = InstanceCreator.CreateQuerySettingParam();
+            AssumeQuerySettingActionPassedValidation();
+            SetupProductServiceStubForReturningDummySettingTypes();
+            SetupSettingTypeDataAccessStubForReturningDummySettingTypes();
+
+            //// Mock PreTasks Handler.
+            var settingTypePostTasksMock = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
+            _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksMock);
+
+            //// Act
+            _settingService.GetCustomerSetting(querySettingParam);
+
+            //// Assert
+            settingTypePostTasksMock.Received().PostGetCustomerSettingType(
+                _settingContext,
+                querySettingParam,
+                Arg.Any<SettingType>());
+        }
+
+        [Test]
         public void GetCustomerSetting_RaisedException_ExecuteErrorOnLogger()
         {
             //// Arrange
@@ -403,7 +424,5 @@
             //// Assert
             _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
         }
-
-        #endregion Get Customer Setting Tests
     }
 }

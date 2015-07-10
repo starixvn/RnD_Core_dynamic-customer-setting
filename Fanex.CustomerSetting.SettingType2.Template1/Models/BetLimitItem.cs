@@ -14,7 +14,7 @@
         {
         }
 
-        internal BetLimitItem(BetLimitItemDto betLimitItemDto)
+        public BetLimitItem(BetLimitItemDto betLimitItemDto)
         {
             SportTypeId = betLimitItemDto.SportTypeId;
             BetTypeId = betLimitItemDto.BetTypeId;

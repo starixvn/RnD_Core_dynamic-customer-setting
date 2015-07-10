@@ -14,7 +14,7 @@
         {
         }
 
-        internal CommissionItem(CommissionItemDto commItemDto)
+        public CommissionItem(CommissionItemDto commItemDto)
         {
             SportTypeId = commItemDto.SportTypeId;
             BetTypeId = commItemDto.BetTypeId;

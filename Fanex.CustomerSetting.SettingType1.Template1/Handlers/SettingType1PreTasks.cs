@@ -53,7 +53,7 @@
             var ungroupedMembers = GetUnGroupedMembers(customerIds, groupedMembers);
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
-                CustomersNeedForSingleUpdating = ungroupedMembers,
+                CustomerIdsNeedForSingleUpdating = ungroupedMembers,
                 IsReturnResultToUser = true,
                 Result = UpdateGroupedMembers(settingContext, groupedMembers, uplineLevel.Value, settingType)
             };
