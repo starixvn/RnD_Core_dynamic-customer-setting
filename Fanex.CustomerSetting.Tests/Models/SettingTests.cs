@@ -49,7 +49,7 @@
 
         [TestCase(5)]
         [TestCase(10)]
-        public void SetCustomerLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
+        public void SetCustomerLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
         {
             //// Arrange
             Setting setting = InstanceFactory.CreateCustomerSetting();

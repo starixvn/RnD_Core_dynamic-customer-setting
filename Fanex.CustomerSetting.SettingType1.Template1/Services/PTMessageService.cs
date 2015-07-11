@@ -47,9 +47,9 @@
 
         private MessageContent GetMessageContent<T>(MainMessage<T> positionTakingMainMessage, byte settingLevel, string language) where T : ISubMessage
         {
-            var subMessages = positionTakingMainMessage.GetSubMessages(ResourceService, language, settingLevel);
-            var message = GetMessage(PTMessage.ResourceManager, positionTakingMainMessage.MessageId);
-            return new MessageContent(message, subMessages);
+            var translatedSubMessages = positionTakingMainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
+            var translatedMainMessage = GetMessage(PTMessage.ResourceManager, positionTakingMainMessage.MessageId);
+            return new MessageContent(translatedMainMessage, translatedSubMessages);
         }
 
         private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel, string language)

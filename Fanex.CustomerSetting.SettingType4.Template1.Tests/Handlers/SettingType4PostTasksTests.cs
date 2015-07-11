@@ -74,7 +74,7 @@
         }
 
         [Test]
-        public void PostUpdateCustomerSettingType_ResultIsFailed_ExecuteTranslateMessageInMessageService()
+        public void PostUpdateCustomerSettingType_ResultIsFailed_AlwaysCallTranslateMessage()
         {
             //// Arrange
             var errorResult = new SettingResult(Result.DataError);

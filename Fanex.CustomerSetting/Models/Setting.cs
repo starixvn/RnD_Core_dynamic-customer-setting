@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
 
     [Serializable]
@@ -85,7 +86,7 @@
             set
             {
                 var customerLevelValue = (byte)value;
-                if (customerLevelValue <= 0 || customerLevelValue > (byte)CustomerLevel.Super)
+                if (customerLevelValue < Level.Member || customerLevelValue > Level.Super)
                 {
                     throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }

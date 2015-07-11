@@ -25,7 +25,7 @@
         [TestCase(0, true, 3, 100, 10, 1014)]
         [TestCase(0, true, 3, 4, 100, 1014)]
         [TestCase(0, true, 3, 4, 1, 0)]
-        public void Validate_InvalidPT_ReturnErrorCode(
+        public void Validate_InValidPT_ReturnErrorCode(
             byte s3,
             bool is3,
             byte us3,

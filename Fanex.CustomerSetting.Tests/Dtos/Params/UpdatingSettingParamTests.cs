@@ -13,7 +13,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void SetUplineLevel_ValueIsNotNullWhenCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
         {
             var setting = new Setting(1, customerLevel, 1, new List<SettingType>());
             var updateSettingParam = new UpdatingSettingParam(setting);
@@ -26,7 +26,7 @@
 
         [TestCase(5)]
         [TestCase(10)]
-        public void SetUplineLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte uplineLevelValue)
+        public void SetUplineLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte uplineLevelValue)
         {
             var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
 
@@ -37,7 +37,7 @@
         }
 
         [Test]
-        public void SetUplineLevel_ValueIsNullWhenCustomerIsMember_ThrowArgumentOutOfRangeException()
+        public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentOutOfRangeException()
         {
             var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
 
@@ -45,6 +45,18 @@
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
                     () => new UpdatingSettingParam(setting)));
+        }
+
+        [Test]
+        public void SetSetting_SettingIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => updatingParam.Setting = null));
         }
     }
 }

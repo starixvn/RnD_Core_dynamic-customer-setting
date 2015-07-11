@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Dtos.Params
 {
     using System;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
 
     public class QuerySettingParam
@@ -50,7 +51,7 @@
             set
             {
                 var customerLevelValue = (byte)value;
-                if (customerLevelValue <= 0 || customerLevelValue > (byte)CustomerLevel.Super)
+                if (customerLevelValue < Level.Member || customerLevelValue > Level.Super)
                 {
                     throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }
@@ -89,19 +90,20 @@
                 if (value != null)
                 {
                     byte uplineLevelValue = (byte)value.Value;
-                    if (uplineLevelValue <= 0 || uplineLevelValue > (byte)CustomerLevel.Super)
+                    if (uplineLevelValue < Level.Member || uplineLevelValue > Level.Super)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
-
+                    
+                    //// If current context is editting super/master/agent then Upline level should be null.
                     if (_customerLevel != CustomerLevel.Member)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-
-                if (_customerLevel == CustomerLevel.Member && value == null)
+                else if (_customerLevel == CustomerLevel.Member)
                 {
+                    //// When editting member, upline level should have value
                     throw new ArgumentOutOfRangeException("value", "Upline cannot be null when getting member setting.");
                 }
 

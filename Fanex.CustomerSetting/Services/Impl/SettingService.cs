@@ -90,8 +90,8 @@
         /// <returns></returns>
         private Product GetProduct(byte productId)
         {
-            IEnumerable<SettingType> productSettingTypes = _productService.GetProductSettingTypes(productId);
-            string productName = _resourceService.GetProductName(productId, _settingContext.Language);
+            var productSettingTypes = _productService.GetProductSettingTypes(productId);
+            var productName = _resourceService.GetProductName(productId, _settingContext.Language);
 
             return new Product
             {
@@ -126,8 +126,11 @@
                 try
                 {
                     RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
+
                     var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
+                    
                     customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
+                    
                     if (customerSettingType.SettingItems.Any())
                     {
                         customerSettingTypes.Add(customerSettingType);
@@ -159,6 +162,7 @@
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             customerSettingType.SettingLevel = productSettingType.SettingLevel;
+
             return customerSettingType;
         }
 
@@ -183,7 +187,9 @@
         /// <returns>Result after updating customer setting.</returns>
         public IResult UpdateCustomerSetting(UpdatingSettingParam updatingParam)
         {
-            CheckUpdatingSettingArguments(updatingParam);
+            Check.Argument.IsNotNull(updatingParam, "updatingParam");
+            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
+
             var validationResult = ValidateUpdatingSetting(updatingParam);
             if (!validationResult.IsSuccessful)
             {
@@ -191,13 +197,6 @@
             }
 
             return UpdateSingleCustomerSetting(updatingParam);
-        }
-
-        private void CheckUpdatingSettingArguments(UpdatingSettingParam updatingParam)
-        {
-            Check.Argument.IsNotNull(updatingParam, "updatingParam");
-            Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
         }
 
         private IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
@@ -219,11 +218,23 @@
             {
                 try
                 {
-                    updatingSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
+                    updatingSettingTypeResult = UpdateCustomerSettingType(
+                        customerId, 
+                        customerLevel, 
+                        settingType, 
+                        productId, 
+                        uplineLevel);
                 }
                 catch (Exception ex)
                 {
-                    updatingSettingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, settingType.Id, settingType.Name);
+                    updatingSettingTypeResult = new SettingResult(
+                        Result.SystemError.Code, 
+                        Result.SystemError.Message, 
+                        0, 
+                        customerId, 
+                        settingType.Id, 
+                        settingType.Name);
+
                     LogError(ex);
                 }
 
@@ -235,10 +246,10 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
-            var preTaskResult = RunPreUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel);
-            if (!preTaskResult.IsSuccessful)
+            var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel);
+            if (!preTasksResult.IsSuccessful)
             {
-                return preTaskResult;
+                return preTasksResult;
             }
 
             var result = RunUpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
@@ -284,9 +295,10 @@
 
         public IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
         {
-            CheckUpdatingMultipleCustomerSettingAgruments(updatingMultipleParam);
-            var validationResult = ValidateUpdatingMultipleCustomerSetting(updatingMultipleParam);
+            Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
+            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
 
+            var validationResult = ValidateUpdatingMultipleCustomerSetting(updatingMultipleParam);
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -295,16 +307,6 @@
             var results = UpdateSettingTypesForMultipleCustomers(updatingMultipleParam);
 
             return MapUpdatingSettingResultWithCustomerName(results, updatingMultipleParam.CustomerIds, updatingMultipleParam.CustomerNames);
-        }
-
-        private void CheckUpdatingMultipleCustomerSettingAgruments(UpdatingMultipleSettingParam updatingMultipleParam)
-        {
-            Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
-            Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.CustomerIds");
-            Check.Argument.IsNotNull(updatingMultipleParam.CustomerNames, "updatingMultipleParam.CustomerNames");
-            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.ProductId, "updatingMultipleParam.Setting.ProductId");
-            Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
         }
 
         private IResult ValidateUpdatingMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -332,6 +334,7 @@
                 {
                     var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, 0, settingType.Id, settingType.Name);
                     results.Add(errorResult);
+                    
                     LogError(ex);
                 }
             }
@@ -354,17 +357,17 @@
 
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
             //// because we already updated setting for them, so we need to remove them out of customer list.
-            var customersNeedForUpdating = GetCustomerIdsNeedForSingleUpdating(preTasksResult.CustomerIdsNeedForSingleUpdating, customerIds);
-            var results = UpdateSettingTypeOfEachCustomer(customersNeedForUpdating, customerLevel, settingType, productId, uplineLevel);
+            var customerIdsForSingleUpdating = GetCustomerIdsNeedForSingleUpdating(preTasksResult.CustomerIdsForSingleUpdating, customerIds);
+            var updatingResults = UpdateSettingTypeOfEachCustomer(customerIdsForSingleUpdating, customerLevel, settingType, productId, uplineLevel);
 
             if (preTasksResult.IsReturnResultToUser
                 && preTasksResult.Result.SubResults != null
                 && preTasksResult.Result.SubResults.Any())
             {
-                results.AddRange(preTasksResult.Result.SubResults);
+                updatingResults.AddRange(preTasksResult.Result.SubResults);
             }
 
-            return RunPostUpdateMultipleCustomersSettingTypeTasks(customerIds, settingType, uplineLevel, new UpdatingSettingResult(results));
+            return RunPostUpdateMultipleCustomersSettingTypeTasks(customerIds, settingType, uplineLevel, new UpdatingSettingResult(updatingResults));
         }
 
         /// <summary>
@@ -378,8 +381,7 @@
             IEnumerable<int> customerIdsReturnFromPreTask,
             IEnumerable<int> originalCustomerIds)
         {
-            if (customerIdsReturnFromPreTask != null
-                && customerIdsReturnFromPreTask.Any())
+            if (customerIdsReturnFromPreTask != null && customerIdsReturnFromPreTask.Any())
             {
                 return customerIdsReturnFromPreTask;
             }
@@ -415,25 +417,13 @@
             var settingTypeResults = new List<SettingResult>();
             foreach (var customerId in customerIds)
             {
-                var updatingParam = CreateUpdatingSettingParamForSingleCustomer(customerId, customerLevel, settingType, productId, uplineLevel);
+                var singleCustomerSetting = new Setting(customerId, customerLevel, productId, new List<SettingType> { settingType });
+                var updatingParam = new UpdatingSettingParam(singleCustomerSetting, uplineLevel);
                 var updateResult = UpdateSingleCustomerSetting(updatingParam);
                 settingTypeResults.AddRange(updateResult.SubResults);
             }
 
             return settingTypeResults;
-        }
-
-        private UpdatingSettingParam CreateUpdatingSettingParamForSingleCustomer(
-            int customerId,
-            CustomerLevel customerLevel,
-            SettingType settingType,
-            byte productId,
-            CustomerLevel? uplineLevel)
-        {
-            var setting = new Setting(customerId, customerLevel, productId, new List<SettingType> { settingType });
-            var updateParam = new UpdatingSettingParam(setting, uplineLevel);
-
-            return updateParam;
         }
 
         private UpdatingSettingResult RunPostUpdateMultipleCustomersSettingTypeTasks(

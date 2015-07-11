@@ -57,7 +57,7 @@
         }
 
         [Test]
-        public void GetGroupedMembers_MemberGroupDataAccessExecutesGetGroupedMembersMethod()
+        public void GetGroupedMembers_Always_CallGetGroupedMembersOnDataAccess()
         {
             //// Arrange
             IEnumerable<int> members = new List<int> { 1, 2 };
@@ -66,7 +66,7 @@
             _memberGroupService.GetGroupedMembers(members);
 
             //// Assert
-            _memberGroupDataAccess.Received().GetGroupedMembers(
+            _memberGroupDataAccess.Received().GetGroupedMemberIds(
                 Arg.Is<string>(memberIds => memberIds == string.Join(",", members)));
         }
 
@@ -75,7 +75,7 @@
         {
             //// Arrange
             IEnumerable<int> members = new List<int> { 1, 2 };
-            _memberGroupDataAccess.GetGroupedMembers(Arg.Any<string>()).Returns(new List<int> { 1 });
+            _memberGroupDataAccess.GetGroupedMemberIds(Arg.Any<string>()).Returns(new List<int> { 1 });
 
             //// Act
             var actualGroupedMembers = _memberGroupService.GetGroupedMembers(members);
@@ -125,7 +125,7 @@
         }
 
         [Test]
-        public void UpdateGroupedMembersSetting_MemberGroupDataAccessExecutesUpdateGroupedMembersSetting()
+        public void UpdateGroupedMembersSetting_Always_CallUpdateGroupedMembersSettingOnDataAccess()
         {
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };

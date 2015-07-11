@@ -148,9 +148,10 @@
             _resourceService.GetSportTypeName(sportTypeId, _language);
 
             //// Assert
-            _remotingRefApi.Received().GetSportTypeName(
-                Arg.Is<string>(
-                    sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
+            _remotingRefApi
+                .Received()
+                .GetSportTypeName(
+                Arg.Is<string>(sportTypeIdString => sportTypeIdString == sportTypeId.ToString()),
                 Arg.Any<string>());
         }
 
@@ -171,7 +172,7 @@
 
         [TestCase(null)]
         [TestCase("")]
-        public void GetSportTypeName_SportTypeNameReturnFromRemotingRefApiIsEmptyOrNull_ReturnDefaultSportTypeName(string sportNameFromApi)
+        public void GetSportTypeName_SportTypeNameIsNullOrEmpty_ReturnDefaultSportTypeName(string sportNameFromApi)
         {
             //// Arrange
             int sportTypeId = 1;
@@ -199,7 +200,7 @@
         }
 
         [Test]
-        public void GetBetTypeName_Always_ExecuteGetSportTypeNameOnRemotingRefApi()
+        public void GetBetTypeName_Always_ExecuteGetBetTypeNameOnRemotingRefApi()
         {
             //// Arrange
             int betTypeId = 1;
@@ -208,9 +209,10 @@
             _resourceService.GetBetTypeName(betTypeId, _language);
 
             //// Assert
-            _remotingRefApi.Received().GetBetTypeName(
-                Arg.Is<string>(
-                    betTypeIdString => betTypeIdString == betTypeId.ToString()),
+            _remotingRefApi
+                .Received()
+                .GetBetTypeName(
+                Arg.Is<string>(betTypeIdString => betTypeIdString == betTypeId.ToString()),
                 Arg.Any<string>());
         }
 
@@ -231,7 +233,7 @@
 
         [TestCase(null)]
         [TestCase("")]
-        public void GetBetTypeName_BetTypeNameReturnFromRemotingRefApiIsEmptyOrNull_ReturnDefaultSportTypeName(string betTypeNameFromApi)
+        public void GetBetTypeName_BetTypeNameIsEmptyOrNull_ReturnDefaultSportTypeName(string betTypeNameFromApi)
         {
             //// Arrange
             int betTypeId = 1;

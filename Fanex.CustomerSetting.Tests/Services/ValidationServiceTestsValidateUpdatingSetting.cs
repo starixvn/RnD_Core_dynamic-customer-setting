@@ -39,7 +39,7 @@
         {
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
         }
 
         [Test]
@@ -56,7 +56,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_ExecuteValidateActorEnabledOnDataAccess()
+        public void ValidateUpdatingSetting_Always_CallValidateActorEnabled()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
@@ -69,7 +69,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_ExecuteGetProductSettingTypesOnProductService()
+        public void ValidateUpdatingSetting_Always_CallGetProductSettingTypes()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
@@ -117,7 +117,7 @@
         [TestCase(UserLevel.Agent, CustomerLevel.Super)]
         [TestCase(UserLevel.Agent, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
-        public void ValidateUpdatingSetting_ActorDoesNotHavePermission_CannotUpdateCustomerSetting(
+        public void ValidateUpdatingSetting_ActorHasNoPermission_CannotUpdateCustomerSetting(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
         {
@@ -180,7 +180,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_ExecuteValidateMethodOnEachSettingItem()
+        public void ValidateUpdatingSetting_Always_CallValidateMethodOnEachSettingItem()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();

@@ -39,7 +39,7 @@
         }
 
         [Test]
-        public void GetProductSettingTypes_WhenCalled_ReturnSettingTypesInCache()
+        public void GetProductSettingTypes_Always_ReturnSettingTypesInCache()
         {
             //// Arrange
             byte productId = 1;
@@ -54,7 +54,7 @@
         }
 
         [Test]
-        public void GetProductSettingTypes_NoDataInCache_ExecuteFetchSettingTypesInDynamicRepository()
+        public void GetProductSettingTypes_NoDataInCache_AlwaysExecuteFetchSettingTypes()
         {
             //// Arrange
             byte productId = 1;
@@ -87,7 +87,7 @@
         }
 
         [Test]
-        public void GetProductSettingTypes_GotSettingTypeFromDatabase_ExecuteSetSettingTypesOnCacheManager()
+        public void GetProductSettingTypes_GotSettingTypeFromDatabase_AlwaysSetSettingTypesToCache()
         {
             //// Arrange
             byte productId = 1;

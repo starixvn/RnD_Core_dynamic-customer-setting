@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Models
 {
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
@@ -16,6 +17,8 @@
 
         public ProductStatusItem(ProductStatusItemDto productStatusItemDto)
         {
+            Check.Argument.IsNotNull(productStatusItemDto, "productStatusItemDto");
+
             SportTypeId = productStatusItemDto.SportTypeId;
             BetTypeId = productStatusItemDto.BetTypeId;
             IsDisabled = productStatusItemDto.IsDisabled;

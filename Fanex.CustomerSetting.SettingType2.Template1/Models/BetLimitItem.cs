@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Models
 {
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
@@ -16,6 +17,8 @@
 
         public BetLimitItem(BetLimitItemDto betLimitItemDto)
         {
+            Check.Argument.IsNotNull(betLimitItemDto, "betLimitItemDto");
+
             SportTypeId = betLimitItemDto.SportTypeId;
             BetTypeId = betLimitItemDto.BetTypeId;
             MaxBet = betLimitItemDto.MaxBet;

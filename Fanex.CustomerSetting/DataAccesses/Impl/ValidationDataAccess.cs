@@ -37,7 +37,7 @@
             return ExecuteNonQuery("Acc_CustSetting_SameLineCheck", param);
         }
 
-        public IResult ValidateLevel(int actorId, int customerId, byte customerLevelId)
+        public IResult ValidateCustomerAndActorLevel(int actorId, int customerId, byte customerLevelId)
         {
             var param = new Hashtable();
             param.Add("custid", actorId);

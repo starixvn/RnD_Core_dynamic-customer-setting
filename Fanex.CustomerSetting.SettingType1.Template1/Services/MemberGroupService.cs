@@ -25,7 +25,7 @@
             Check.Argument.IsNotNull(memberIds, "members");
             Check.Argument.IsNotNegativeOrZero(memberIds.Count(), "members.Count");
 
-            return _memberGroupDataAccess.GetGroupedMembers(string.Join(",", memberIds));
+            return _memberGroupDataAccess.GetGroupedMemberIds(string.Join(",", memberIds));
         }
 
         public UpdatingSettingResult UpdateGroupedMembersPT(

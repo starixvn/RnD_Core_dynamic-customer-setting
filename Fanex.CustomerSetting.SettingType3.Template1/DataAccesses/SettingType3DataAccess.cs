@@ -34,12 +34,13 @@
 
         private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(
+            var settingKey = GetSettingKeyForQuerying(
                 queryParam.CustomerLevel,
                 CommissionConstants.SettingTypeId,
                 CommissionConstants.SettingTempateId,
                 queryParam.ProductId,
                 queryParam.UplineLevel);
+
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, CommissionConstants.SettingTypeId);
@@ -47,14 +48,14 @@
             }
         }
 
-        private string GetSettingKeyForGettingSettingType(
+        private string GetSettingKeyForQuerying(
             CustomerLevel customerLevel, 
             byte settingTypeId, 
             byte settingTemplateId, 
             byte productId,
             CustomerLevel? uplineLevel)
         {
-            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
             switch (customerLevel)
             {
@@ -99,7 +100,7 @@
             param.Add("msgtype", 0);
 
             var updateSettingKey = "CustSetting_DiscountUpd";
-            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
                 CommissionConstants.SettingTypeId,
                 CommissionConstants.SettingTempateId,
                 productId);

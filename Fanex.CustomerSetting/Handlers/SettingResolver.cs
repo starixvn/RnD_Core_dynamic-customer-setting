@@ -14,6 +14,7 @@
         private const string SettingPreTasksTypeFormat = "{0}.Handlers.SettingType{1}PreTasks";
         private const string SettingPostTasksTypeFormat = "{0}.Handlers.SettingType{1}PostTasks";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
+
         private static Dictionary<string, ISettingTypeDataAccess> _settingDataAccessesCached = new Dictionary<string, ISettingTypeDataAccess>();
         private static Dictionary<string, SettingPreTasks> _settingPreTasksCached = new Dictionary<string, SettingPreTasks>();
         private static Dictionary<string, SettingPostTasks> _settingPostTasksCached = new Dictionary<string, SettingPostTasks>();
@@ -70,22 +71,22 @@
             var cacheKey = GenerateCacheKey(settingType);
             if (SettingResolver._settingPreTasksCached.ContainsKey(cacheKey))
             {
-                settingPreTasks = GetSettingPreTasksHandlerFromCache(cacheKey);
+                settingPreTasks = GetSettingPreTasksFromCache(cacheKey);
             }
             else
             {
-                settingPreTasks = CreateSettingPreTasksHandlerAndCache(settingType, cacheKey);
+                settingPreTasks = CreateSettingPreTasksAndCache(settingType, cacheKey);
             }
 
             return settingPreTasks;
         }
 
-        private SettingPreTasks GetSettingPreTasksHandlerFromCache(string cacheKey)
+        private SettingPreTasks GetSettingPreTasksFromCache(string cacheKey)
         {
             return SettingResolver._settingPreTasksCached[cacheKey];
         }
 
-        private SettingPreTasks CreateSettingPreTasksHandlerAndCache(SettingType settingType, string cacheKey)
+        private SettingPreTasks CreateSettingPreTasksAndCache(SettingType settingType, string cacheKey)
         {
             SettingPreTasks settingPreTasks = null;
             string fullTypeName = GetFullTypeName(SettingPreTasksTypeFormat, settingType.Id, settingType.SettingTemplate);
@@ -108,7 +109,7 @@
             var cacheKey = GenerateCacheKey(settingType);
             if (SettingResolver._settingPostTasksCached.ContainsKey(cacheKey))
             {
-                settingPostTasks = GetSettingPostTasksHandlerFromCache(cacheKey);
+                settingPostTasks = GetSettingPostTasksFromCache(cacheKey);
             }
             else
             {
@@ -123,7 +124,7 @@
             return string.Format(CacheKeyFormat, settingType.Id, settingType.SettingTemplate);
         }
 
-        private SettingPostTasks GetSettingPostTasksHandlerFromCache(string cacheKey)
+        private SettingPostTasks GetSettingPostTasksFromCache(string cacheKey)
         {
             return SettingResolver._settingPostTasksCached[cacheKey];
         }

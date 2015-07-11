@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Models
 {
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
@@ -16,6 +17,8 @@
 
         public CommissionItem(CommissionItemDto commItemDto)
         {
+            Check.Argument.IsNotNull(commItemDto, "commItemDto");
+
             SportTypeId = commItemDto.SportTypeId;
             BetTypeId = commItemDto.BetTypeId;
             CommRate = commItemDto.CommRate;

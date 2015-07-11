@@ -21,7 +21,7 @@
 
         public string ToXml()
         {
-            return string.Empty;
+            return "SettingItemStub";
         }
     }
 }

@@ -26,7 +26,7 @@
             var actualXmlFormatted = settingType.ToXml();
 
             //// Assert
-            Assert.AreEqual("<ROOT></ROOT>", actualXmlFormatted);
+            Assert.AreEqual("<ROOT>SettingItemStub</ROOT>", actualXmlFormatted);
         }
 
         [Test]
@@ -46,19 +46,19 @@
         }
 
         [Test]
-        public void Validate_SettingTypeHasSettingItemsViolationRule_ReturnErrorResult()
+        public void Validate_SettingItemIsNotValid_ReturnErrorResult()
         {
             //// Arrange
-            var violationSettingItem = Substitute.For<ISettingItem>();
-            violationSettingItem.Validate().Returns(Result.DataError);
-            var noviolationItem = Substitute.For<ISettingItem>();
-            noviolationItem.Validate().Returns(Result.Success);
+            var invalidSettingItem = Substitute.For<ISettingItem>();
+            invalidSettingItem.Validate().Returns(Result.DataError);
+            var validSettingItem = Substitute.For<ISettingItem>();
+            validSettingItem.Validate().Returns(Result.Success);
             var settingType = new SettingType
             {
                 SettingItems = new List<ISettingItem>
                 {
-                    violationSettingItem,
-                    noviolationItem
+                    invalidSettingItem,
+                    validSettingItem
                 }
             };
 
@@ -70,16 +70,16 @@
         }
 
         [Test]
-        public void Validate_SettingTypeHasNoSettingItemsViolationRule_ReturnSuccessResult()
+        public void Validate_AllSettingItemsAreValid_ReturnSuccessResult()
         {
             //// Arrange
-            var noviolationItem = Substitute.For<ISettingItem>();
-            noviolationItem.Validate().Returns(Result.Success);
+            var validSettingItem = Substitute.For<ISettingItem>();
+            validSettingItem.Validate().Returns(Result.Success);
             var settingType = new SettingType
             {
                 SettingItems = new List<ISettingItem>
                 {
-                    noviolationItem
+                    validSettingItem
                 }
             };
 

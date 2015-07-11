@@ -52,7 +52,7 @@
             byte settingTemplateId, 
             byte productId)
         {
-            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
+            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
             switch (customerLevel)
             {
@@ -92,7 +92,7 @@
             param.Add("msgtype", 0);
 
             var updateSettingKey = "CustSetting_DisableStatUpd";
-            var keySuffix = GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(
+            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
                 ProductStatusConstants.SettingTypeId,
                 ProductStatusConstants.SettingTempateId,
                 productId);

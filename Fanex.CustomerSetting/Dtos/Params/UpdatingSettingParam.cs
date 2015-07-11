@@ -1,22 +1,40 @@
 ﻿namespace Fanex.CustomerSetting.Dtos.Params
 {
     using System;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
     public class UpdatingSettingParam
     {
         private CustomerLevel? _uplineLevel;
+        private ISetting _setting;
 
         public UpdatingSettingParam(
-            ISetting setting, 
+            ISetting setting,
             CustomerLevel? uplineLevel = null)
         {
             Setting = setting;
             UplineLevel = uplineLevel;
         }
 
-        public ISetting Setting { get; set; }
+        public ISetting Setting
+        {
+            get
+            {
+                return _setting;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value", "Setting cannot be null when updating customer setting.");
+                }
+
+                _setting = value;
+            }
+        }
 
         public CustomerLevel? UplineLevel
         {
@@ -30,7 +48,7 @@
                 if (value != null)
                 {
                     byte uplineLevelValue = (byte)value.Value;
-                    if (uplineLevelValue <= 0 || uplineLevelValue > (byte)CustomerLevel.Super)
+                    if (uplineLevelValue < Level.Member || uplineLevelValue > Level.Super)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }

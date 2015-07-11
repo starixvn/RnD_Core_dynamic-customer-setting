@@ -35,14 +35,14 @@
 
         private MessageContent TranslateSimpleMessage(string rawMessage)
         {
-            var message = rawMessage;
+            var mainMessage = rawMessage;
             var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
             if (simpleMessage != null)
             {
-                message = GetMessage(Message.ResourceManager, simpleMessage.MessageId);
+                mainMessage = GetMessage(Message.ResourceManager, simpleMessage.MessageId);
             }
 
-            return new MessageContent(message);
+            return new MessageContent(mainMessage);
         }
 
         protected T Deserialize<T>(string text) where T : SimpleMessage
@@ -75,9 +75,9 @@
             string language)
         {
             var mainMessage = Deserialize<MainMessage<DefaultSubMessage>>(rawMessage);
-            var subMessages = mainMessage.GetSubMessages(ResourceService, language, settingLevel);
-            var message = GetMessage(resouceManager, mainMessage.MessageId);
-            return new MessageContent(message, subMessages);
+            var translatedSubMessages = mainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
+            var translatedMainMessage = GetMessage(resouceManager, mainMessage.MessageId);
+            return new MessageContent(translatedMainMessage, translatedSubMessages);
         }
     }
 }

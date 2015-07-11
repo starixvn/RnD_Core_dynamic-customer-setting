@@ -11,8 +11,6 @@
 
     public class BaseDataAccess
     {
-        private const string SettingKeySuffixFormat = "_{0}_{1}";
-
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
         protected IResult ExecuteNonQuery(string settingKey, Hashtable storedProcedureParam)
         {
@@ -30,18 +28,18 @@
                 && param.ContainsKey("errcode")
                 && param.ContainsKey("errmsg"))
             {
+                var errorCode = Convert.ToInt32(param["errcode"]);
+                var errMsg = Convert.ToString(param["errmsg"]);
                 if (param.ContainsKey("msgtype"))
                 {
                     return new Result(
-                             Convert.ToInt32(param["errcode"]),
-                             Convert.ToString(param["errmsg"]),
+                             errorCode,
+                             errMsg,
                              Convert.ToInt32(param["msgtype"]));
                 }
                 else
                 {
-                    return new Result(
-                             Convert.ToInt32(param["errcode"]),
-                             Convert.ToString(param["errmsg"]));
+                    return new Result(errorCode, errMsg);
                 }
             }
 
@@ -76,7 +74,7 @@
             }
         }
 
-        protected string GetProductPrefixIncaseOfProductDoesNotUseDefaultSettingTypeSps(byte settingTypeId, byte settingTemplateId, byte productId)
+        protected string GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(byte settingTypeId, byte settingTemplateId, byte productId)
         {
             if (CustomerSettingSection.Settings.IsProductNotUseDefaultSettingTypeStoredProcedures(settingTypeId, settingTemplateId, productId))
             {

@@ -19,17 +19,17 @@
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Reviewed !"), XmlElement("Row")]
         public T[] SubMessages { get; set; }
 
-        public IEnumerable<string> GetSubMessages(IResourceService resourceService, string language, byte settingLevel)
+        public IEnumerable<string> TranslateSubMessages(IResourceService resourceService, string language, byte settingLevel)
         {
             if (SubMessages != null && SubMessages.Any())
             {
-                var subMessages = new List<string>();
+                var subTranslatedMessages = new List<string>();
                 foreach (ISubMessage subMessage in SubMessages)
                 {
-                    subMessages.Add(subMessage.ToString(resourceService, language, settingLevel));
+                    subTranslatedMessages.Add(subMessage.ToString(resourceService, language, settingLevel));
                 }
 
-                return subMessages;
+                return subTranslatedMessages;
             }
 
             return Enumerable.Empty<string>();

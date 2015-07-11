@@ -69,20 +69,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_SettingIsNull_ThrowArgumentNullException()
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            updatingParam.Setting = null;
-
-            //// Act
-            Assert.Throws<ArgumentNullException>(
-                new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updatingParam)));
-        }
-
-        [Test]
-        public void UpdateCustomerSetting_ValidationServiceExecutesValidateUpdatingSettingMethod()
+        public void UpdateCustomerSetting_Always_CallValidateUpdatingSetting()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
@@ -109,18 +96,18 @@
             Assert.AreEqual(Result.AccessDenied.Code, actualUpdatingResult.Code);
         }
 
-        private void AssumeUpdatingCustomerSettingActionPassedValidation()
+        private void AssumeUpdatingCustomerSettingActionIsValid()
         {
             _validationService.ValidateUpdatingSetting(Arg.Any<UpdatingSettingParam>()).Returns(Result.Success);
         }
 
         [Test]
-        public void UpdateCustomerSetting_Always_ExecuteResolveSettingPreTasksMethodOnSettingResolver()
+        public void UpdateCustomerSetting_Always_CallResolveSettingPreTasks()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
 
             //// Act
             _settingService.UpdateCustomerSetting(updatingParam);
@@ -129,7 +116,7 @@
             _settingResolver.Received(updatingParam.Setting.SettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
         }
 
-        private void SetupSettingTypeDataAccessStubForReturningDummyResult(bool isReturnSuccessfulResult = true)
+        private void SetupSettingTypeDataAccessStub(bool isReturnSuccessfulResult = true)
         {
             _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
@@ -142,12 +129,12 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_SettingTypeHasPreUpdateCustomerSettingTypeTasks_ExecuteThatTasks()
+        public void UpdateCustomerSetting_SettingTypeHasPreUpdateCustomerSettingTypeTasks_RunTasks()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
 
             var settingTypePreTasksMock = Substitute.ForPartsOf<SettingPreTasks>();
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksMock);
@@ -163,7 +150,7 @@
                 updatingParam.UplineLevel);
         }
 
-        private void AssumePreUpdateCustomerSettingTypeTasksHadDone(bool isTaskSuccessful = true)
+        private void AssumePreUpdateCustomerSettingTypeTasksRunCompleted(bool isTaskSuccessful = true)
         {
             var settingPreTasksStub = Substitute.ForPartsOf<SettingPreTasks>();
             settingPreTasksStub.PreUpdateCustomerSettingType(
@@ -175,7 +162,7 @@
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTasksStub);
         }
 
-        private void AssumePostUpdateCustomerSettingTypeTasksHadDone(bool isTaskSuccessful = true)
+        private void AssumePostUpdateCustomerSettingTypeTasksRunCompleted(bool isTaskSuccessful = true)
         {
             var settingPostTasksStub = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
             settingPostTasksStub.PostUpdateCustomerSettingType(
@@ -189,13 +176,13 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_Always_ExecuteUpdateCustomerSettingTypeOnSettingDataAccess()
+        public void UpdateCustomerSetting_Always_CallUpdateCustomerSettingType()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+            AssumePreUpdateCustomerSettingTypeTasksRunCompleted();
 
             //// Act
             _settingService.UpdateCustomerSetting(updatingParam);
@@ -211,13 +198,13 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_Always_ExecuteResolveSettingPostTasksMethodOnSettingResolver()
+        public void UpdateCustomerSetting_Always_CallResolveSettingPostTasks()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            AssumePreUpdateCustomerSettingTypeTasksRunCompleted();
+            SetupSettingTypeDataAccessStub();
 
             //// Act
             _settingService.UpdateCustomerSetting(updatingParam);
@@ -227,12 +214,12 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_SettingTypeHasPostUpdateCustomerSettingTypeTasks_ExecuteThoseTasks()
+        public void UpdateCustomerSetting_SettingTypeHasPostUpdateCustomerSettingTypeTasks_RunTasks()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
 
             //// Setting type has no pre-task
             SettingPreTasks settingPreTasks = null;
@@ -259,7 +246,7 @@
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
+            AssumeUpdatingCustomerSettingActionIsValid();
 
             //// Simulate exception
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
@@ -276,10 +263,10 @@
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone(false);
-            AssumePostUpdateCustomerSettingTypeTasksHadDone();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+            AssumePreUpdateCustomerSettingTypeTasksRunCompleted(false);
+            AssumePostUpdateCustomerSettingTypeTasksRunCompleted();
 
             //// Act
             var actualUpdatingResult = _settingService.UpdateCustomerSetting(updatingParam);
@@ -293,10 +280,10 @@
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone();
-            AssumePostUpdateCustomerSettingTypeTasksHadDone(false);
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+            AssumePreUpdateCustomerSettingTypeTasksRunCompleted();
+            AssumePostUpdateCustomerSettingTypeTasksRunCompleted(false);
 
             //// Act
             var actualUpdatingResult = _settingService.UpdateCustomerSetting(updatingParam);
@@ -306,14 +293,14 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_UpdatedCustomerSetting_ReturnSuccessResult()
+        public void UpdateCustomerSetting_UpdatedSetting_ReturnSuccessResult()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeUpdatingCustomerSettingActionPassedValidation();
-            SetupSettingTypeDataAccessStubForReturningDummyResult();
-            AssumePreUpdateCustomerSettingTypeTasksHadDone();
-            AssumePostUpdateCustomerSettingTypeTasksHadDone();
+            AssumeUpdatingCustomerSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+            AssumePreUpdateCustomerSettingTypeTasksRunCompleted();
+            AssumePostUpdateCustomerSettingTypeTasksRunCompleted();
 
             //// Act
             var actualUpdatingResult = _settingService.UpdateCustomerSetting(updatingParam);

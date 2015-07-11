@@ -39,7 +39,7 @@
         {
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
         }
 
         [Test]
@@ -56,21 +56,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_CustomersIsNull_ReturnValidationError()
-        {
-            //// Arrange
-            UpdatingMultipleSettingParam updatingMultipleParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
-            updatingMultipleParam.CustomerIds = null;
-
-            //// Act
-            var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
-        }
-
-        [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerLevelIsMember_ExecuteValidatePermissionMultipleOnDataAccess()
+        public void ValidateUpdatingMultipleSetting_CustomerIsMember_CallValidatePermissionMultiple()
         {
             //// Arrange
             var updatingMultipleParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
@@ -122,7 +108,7 @@
         [TestCase(UserLevel.Agent, CustomerLevel.Super)]
         [TestCase(UserLevel.Agent, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_CannotUpdateMultipleCustomerSetting(
+        public void ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_CannotUpdateMultipleCustomerSetting(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
         {

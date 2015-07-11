@@ -9,7 +9,7 @@
     public class UpdatingMultipleSettingParamTests
     {
         [Test]
-        public void SetCustomerIds_NumberOfCustomerIdIsZero_ThrowArgumentOutOfRangeException()
+        public void SetCustomerIds_CustomerIdListHasNoItem_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -21,7 +21,7 @@
         }
 
         [Test]
-        public void SetCustomerNames_NumberOfCustomerNameIsZero_ThrowArgumentOutOfRangeException()
+        public void SetCustomerNames_CustomerNameListHasNoItem_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void SetCustomerNames_CustomerIdsListDoesNotMatchWithCustomerNameList_ThrowArgumentOutOfRangeException()
+        public void SetCustomerNames_CustomerIdListDoesNotMatchWithCustomerNameList_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -46,6 +46,18 @@
                         updatingMultipleSettingParam.CustomerIds = new List<int> { 1, 2 };
                         updatingMultipleSettingParam.CustomerNames = new List<string> { "Username1" };
                     }));
+        }
+
+        [Test]
+        public void SetSetting_SettingIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => updatingMultipleSettingParam.Setting = null));
         }
     }
 }

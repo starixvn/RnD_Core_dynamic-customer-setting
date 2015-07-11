@@ -15,6 +15,7 @@
         public UpdatingSettingResult(IResult result)
             : base(result.Code, result.Message)
         {
+            SubResults = new List<SettingResult> { new SettingResult(result) };
         }
 
         public IEnumerable<SettingResult> SubResults { get; private set; }

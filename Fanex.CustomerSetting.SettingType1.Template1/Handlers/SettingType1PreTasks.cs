@@ -49,13 +49,13 @@
             SettingType settingType,
             CustomerLevel? uplineLevel)
         {
-            var groupedMembers = _memberGroupService.GetGroupedMembers(customerIds);
-            var ungroupedMembers = GetUnGroupedMembers(customerIds, groupedMembers);
+            var groupedMemberIds = _memberGroupService.GetGroupedMembers(customerIds);
+            var ungroupedMemberIds = GetUnGroupedMemberIds(customerIds, groupedMemberIds);
             return new PreUpdateMultipleCustomersSettingTypeResult
             {
-                CustomerIdsNeedForSingleUpdating = ungroupedMembers,
+                CustomerIdsForSingleUpdating = ungroupedMemberIds,
                 IsReturnResultToUser = true,
-                Result = UpdateGroupedMembers(settingContext, groupedMembers, uplineLevel.Value, settingType)
+                Result = UpdateGroupedMembers(settingContext, groupedMemberIds, uplineLevel.Value, settingType)
             };
         }
 
@@ -73,11 +73,11 @@
             return _memberGroupService.UpdateGroupedMembersPT(settingContext, memberIds, uplineLevel, settingType);
         }
 
-        private IEnumerable<int> GetUnGroupedMembers(
-            IEnumerable<int> originalMembers,
-            IEnumerable<int> groupedMembers)
+        private IEnumerable<int> GetUnGroupedMemberIds(
+            IEnumerable<int> originalMemberIds,
+            IEnumerable<int> groupedMemberIds)
         {
-            return originalMembers.Except(groupedMembers);
+            return originalMemberIds.Except(groupedMemberIds);
         }
     }
 }

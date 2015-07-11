@@ -51,7 +51,7 @@
         {
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
         }
 
         [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
@@ -104,7 +104,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_Always_ExecuteValidateActorEnabledMethod()
+        public void ValidateQuerySetting_Always_CallValidateActorEnabled()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
@@ -119,7 +119,7 @@
         }
 
         [Test]
-        public void ValidateQuerySetting_Always_ExecuteValidateLevelMethod()
+        public void ValidateQuerySetting_Always_CallValidateLevel()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
@@ -130,17 +130,17 @@
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateLevel(_settingContext.Actor.Id, queryParam.CustomerId, (byte)queryParam.CustomerLevel);
+            _validationDataAccess.Received().ValidateCustomerAndActorLevel(_settingContext.Actor.Id, queryParam.CustomerId, (byte)queryParam.CustomerLevel);
         }
 
         [Test]
-        public void ValidateQuerySetting_Always_ExecuteValidateBelongInMethod()
+        public void ValidateQuerySetting_Always_CallValidateBelongIn()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             _settingContext.Actor.Level = UserLevel.Agent;
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
@@ -149,30 +149,10 @@
             _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
-        ////[Test]
-        ////public void ValidateQuerySetting_ActorEditsMemberAndUplineLevelIsNull_ReturnAccessDeniedResult()
-        ////{
-        ////    //// Arrange
-        ////    QuerySettingParam queryParam = new QuerySettingParam
-        ////    {
-        ////        CustomerId = 1,
-        ////        CustomerLevel = CustomerLevel.Member,
-        ////        UplineLevel = null
-        ////    };
-        ////    _settingContext.Actor.Level = UserLevel.Agent;
-        ////    AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-
-        ////    //// Act
-        ////    var actualResult = _validationService.ValidateQuerySetting(queryParam);
-
-        ////    //// Assert
-        ////    Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        ////}
-
         [TestCase(UserLevel.Super, CustomerLevel.Master)]
         [TestCase(UserLevel.Master, CustomerLevel.Agent)]
         [TestCase(UserLevel.Agent, CustomerLevel.Super)]
-        public void ValidateQuerySetting_ActorEditsMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
+        public void ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
             UserLevel actorLevel,
             CustomerLevel uplineLevel)
         {

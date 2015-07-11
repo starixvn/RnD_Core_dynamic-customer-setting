@@ -8,7 +8,7 @@
 
         IResult ValidateBelongIn(int actorId, int customerId);
 
-        IResult ValidateLevel(int actorId, int customerId, byte customerLevelId);
+        IResult ValidateCustomerAndActorLevel(int actorId, int customerId, byte customerLevelId);
 
         IResult ValidatePermissionMultiple(int actorId, string memberIds);
     }

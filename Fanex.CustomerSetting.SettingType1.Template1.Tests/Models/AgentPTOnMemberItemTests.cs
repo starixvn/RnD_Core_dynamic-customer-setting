@@ -20,7 +20,7 @@
 
         [TestCase(100, 1014)]
         [TestCase(10, 0)]
-        public void Validate_InvalidPT_ReturnErrorCode(
+        public void Validate_InValidPT_ReturnErrorCode(
             byte a1,
             int errorCode)
         {

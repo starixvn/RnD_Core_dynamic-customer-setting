@@ -17,7 +17,7 @@
         [TestCase(100000000000, 2, 1, 7006)]
         [TestCase(1, 2, 3, 0)]
         [TestCase(0, 0, 0, 0)]
-        public void Validate_InvalidBetLimit_ReturnErrorCode(
+        public void Validate_InValidBetLimit_ReturnErrorCode(
             long minBet,
             long maxBet,
             long maxPerMatch,

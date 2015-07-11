@@ -77,8 +77,9 @@
             {
                 case UserLevel.Company:
                     break;
+
                 case UserLevel.Super:
-                    if ((byte)customerLevel >= (byte)UserLevel.Super 
+                    if ((byte)customerLevel >= Level.Super
                         || customerLevel == CustomerLevel.Agent)
                     {
                         isValid = false;
@@ -87,7 +88,7 @@
                     break;
 
                 case UserLevel.Master:
-                    if ((byte)customerLevel >= (byte)UserLevel.Master)
+                    if ((byte)customerLevel >= Level.Master)
                     {
                         isValid = false;
                     }
@@ -95,7 +96,7 @@
                     break;
 
                 case UserLevel.Agent:
-                    if ((byte)customerLevel >= (byte)UserLevel.Agent)
+                    if ((byte)customerLevel >= Level.Agent)
                     {
                         isValid = false;
                     }
@@ -125,12 +126,13 @@
 
         private IResult ValidateCustomerAndActorLevel(int customerId, CustomerLevel customerLevel)
         {
-            return _validationDataAccess.ValidateLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
+            return _validationDataAccess.ValidateCustomerAndActorLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
         private IResult ValidateUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
-            if (_settingContext.Actor.Level != UserLevel.Company 
+            //// If actor is not company when edit member, actor level should equal with upline level.
+            if (_settingContext.Actor.Level != UserLevel.Company
                 && customerLevel == CustomerLevel.Member
                 && uplineLevel != null
                 && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
@@ -145,7 +147,7 @@
         {
             try
             {
-                CheckUpdatingSettingArguments(updatingParam);
+                Check.Argument.IsNotNull(updatingParam, "updatingParam");
 
                 return ValidateUpdateSettingSteps(updatingParam);
             }
@@ -154,13 +156,6 @@
                 LogError(ex);
                 return Result.SystemError;
             }
-        }
-
-        private void CheckUpdatingSettingArguments(UpdatingSettingParam updatingParam)
-        {
-            Check.Argument.IsNotNull(updatingParam, "updatingParam");
-            Check.Argument.IsNotNull(updatingParam.Setting, "updatingParam.Setting");
-            Check.Argument.IsNotNull(updatingParam.Setting.SettingTypes, "updatingParam.Setting.SettingTypes");
         }
 
         private IResult ValidateUpdateSettingSteps(UpdatingSettingParam updatingParam)
@@ -178,13 +173,7 @@
                 return productProfileValidationResult;
             }
 
-            var settingTypesValidationResult = ValidateSettingTypes(setting.SettingTypes);
-            if (!settingTypesValidationResult.IsSuccessful)
-            {
-                return settingTypesValidationResult;
-            }
-
-            return Result.Success;
+            return ValidateSettingTypes(setting.SettingTypes);
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
@@ -219,7 +208,7 @@
         {
             try
             {
-                CheckUpdatingMultipleSettingArguments(updatingMultipleParam);
+                Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
 
                 return ValidateUpdatingMultipleSettingSteps(updatingMultipleParam);
             }
@@ -230,14 +219,6 @@
             }
         }
 
-        private void CheckUpdatingMultipleSettingArguments(UpdatingMultipleSettingParam updatingMultipleParam)
-        {
-            Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
-            Check.Argument.IsNotNull(updatingMultipleParam.Setting, "updatingMultipleParam.Setting");
-            Check.Argument.IsNotNull(updatingMultipleParam.CustomerIds, "updatingMultipleParam.CustomerIds");
-            Check.Argument.IsNotNull(updatingMultipleParam.CustomerNames, "updatingMultipleParam.CustomerNames");
-        }
-
         private IResult ValidateUpdatingMultipleSettingSteps(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParam);
@@ -246,24 +227,16 @@
                 return updatingSettingValidationResult;
             }
 
-            var permissionValidationResult = ValidateActorPermissionOnMultipleCustomers(
+            return ValidateActorPermissionOnMultipleCustomers(
                 updatingMultipleParam.CustomerIds,
                 updatingMultipleParam.Setting.CustomerLevel);
-            if (!permissionValidationResult.IsSuccessful)
-            {
-                return permissionValidationResult;
-            }
-
-            return Result.Success;
         }
 
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, CustomerLevel customerLevel)
         {
             if (customerLevel == CustomerLevel.Member)
             {
-                var validationResult = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
-
-                return validationResult;
+                return _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
             }
 
             return Result.Success;

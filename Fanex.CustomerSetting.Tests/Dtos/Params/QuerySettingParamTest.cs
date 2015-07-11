@@ -38,7 +38,7 @@
 
         [TestCase(5)]
         [TestCase(10)]
-        public void SetCustomerLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
+        public void SetCustomerLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -49,7 +49,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void SetUplineLevel_ValueIsNotNullWhenCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -59,7 +59,7 @@
 
         [TestCase(5)]
         [TestCase(10)]
-        public void SetUplineLevel_ValueIsLargerThanSuperValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
+        public void SetUplineLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -68,7 +68,7 @@
         }
         
         [Test]
-        public void SetUplineLevel_ValueIsNullWhenCustomerIsMember_ThrowArgumentOutOfRangeException()
+        public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentOutOfRangeException()
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
