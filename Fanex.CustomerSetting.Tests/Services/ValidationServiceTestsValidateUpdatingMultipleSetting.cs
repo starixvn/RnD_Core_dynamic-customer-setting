@@ -40,16 +40,22 @@
             _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
+        }
+
+        private void AssumeCustomerSettingTypeAreValid(IEnumerable<SettingType> dummySettingTypes)
+        {
+            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(dummySettingTypes);
         }
 
         [Test]
         public void ValidateUpdatingMultipleSetting_UpdatingMultipleSettingParamIsNull_ReturnValidationError()
         {
             //// Arrange
-            UpdatingMultipleSettingParam updatingMultipleSettingParam = null;
+            UpdatingMultipleSettingParam parameter = null;
 
             //// Act
-            var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+            var actualValidationResult = _validationService.ValidateUpdatingMultipleSetting(parameter);
 
             //// Assert
             Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
@@ -59,18 +65,17 @@
         public void ValidateUpdatingMultipleSetting_CustomerIsMember_CallValidatePermissionMultiple()
         {
             //// Arrange
-            var updatingMultipleParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
+            var updatingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            _productService.GetProductSettingTypes(updatingMultipleParam.Setting.ProductId)
-                .Returns(updatingMultipleParam.Setting.SettingTypes);
+            AssumeCustomerSettingTypeAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleParam);
+            _validationService.ValidateUpdatingMultipleSetting(updatingParam);
 
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(
                 Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleParam.CustomerIds)));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingParam.CustomerIds)));
         }
 
         [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
@@ -88,14 +93,14 @@
             CustomerLevel? uplineLevel)
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
+            var updatingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
+
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
-            _productService.GetProductSettingTypes(updatingMultipleSettingParam.Setting.ProductId).Returns(updatingMultipleSettingParam.Setting.SettingTypes);
+            AssumeCustomerSettingTypeAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);

@@ -104,7 +104,7 @@
                 else if (_customerLevel == CustomerLevel.Member)
                 {
                     //// When editting member, upline level should have value
-                    throw new ArgumentOutOfRangeException("value", "Upline cannot be null when getting member setting.");
+                    throw new ArgumentNullException("value", "Upline cannot be null when getting member setting.");
                 }
 
                 _uplineLevel = value;

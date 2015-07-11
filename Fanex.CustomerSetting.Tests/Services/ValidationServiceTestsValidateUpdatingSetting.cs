@@ -83,6 +83,11 @@
                 productId => productId == updatingParam.Setting.ProductId));
         }
 
+        private void AssumeCustomerSettingTypesAreValid(IEnumerable<SettingType> dummySettingTypes)
+        {
+            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(dummySettingTypes);
+        }
+
         [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
         [TestCase(UserLevel.Company, CustomerLevel.Master, null)]
         [TestCase(UserLevel.Company, CustomerLevel.Agent, null)]
@@ -101,7 +106,7 @@
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
+            AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -134,7 +139,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CustomerSettingTypeDoesNotMatchWithProductSettingType_ReturnFailedResult()
+        public void ValidateUpdatingSetting_CustomerSettingTypesDontMatchWithProductSettingTypes_ReturnFailedResult()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
@@ -157,7 +162,7 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CustomerSettingTypeMatchWithProductSettingType_ReturnSuccessResult()
+        public void ValidateUpdatingSetting_CustomerSettingTypesMatchWithProductSettingTypes_ReturnSuccessResult()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();

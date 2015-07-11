@@ -54,7 +54,7 @@
                 return result;
             }
 
-            result = ValidateCustomerAndActorLevel(customerId, customerLevel);
+            result = ValidateCustomerLevelAndActorLevel(customerId, customerLevel);
             if (!result.IsSuccessful)
             {
                 return result;
@@ -66,7 +66,7 @@
                 return result;
             }
 
-            return ValidateUplineLevel(customerLevel, uplineLevel);
+            return ValidateActorLevelWithUplineLevel(customerLevel, uplineLevel);
         }
 
         private IResult ValidateActorLevelForViewingCustomerSetting(CustomerLevel customerLevel)
@@ -124,12 +124,12 @@
             }
         }
 
-        private IResult ValidateCustomerAndActorLevel(int customerId, CustomerLevel customerLevel)
+        private IResult ValidateCustomerLevelAndActorLevel(int customerId, CustomerLevel customerLevel)
         {
             return _validationDataAccess.ValidateCustomerAndActorLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
-        private IResult ValidateUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private IResult ValidateActorLevelWithUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
             if (_settingContext.Actor.Level != UserLevel.Company
@@ -149,31 +149,27 @@
             {
                 Check.Argument.IsNotNull(updatingParam, "updatingParam");
 
-                return ValidateUpdateSettingSteps(updatingParam);
+                var setting = updatingParam.Setting;
+                var result = ValidateViewingPermission(setting.CustomerId, setting.CustomerLevel, updatingParam.UplineLevel);
+                if (!result.IsSuccessful)
+                {
+                    return result;
+                }
+
+                result = ValidateProductProfile(setting.ProductId, setting.SettingTypes);
+                if (!result.IsSuccessful)
+                {
+                    return result;
+                }
+
+                return ValidateSettingTypes(setting.SettingTypes);
             }
             catch (Exception ex)
             {
                 LogError(ex);
+
                 return Result.SystemError;
             }
-        }
-
-        private IResult ValidateUpdateSettingSteps(UpdatingSettingParam updatingParam)
-        {
-            var setting = updatingParam.Setting;
-            var viewingPermissionValidationResult = ValidateViewingPermission(setting.CustomerId, setting.CustomerLevel, updatingParam.UplineLevel);
-            if (!viewingPermissionValidationResult.IsSuccessful)
-            {
-                return viewingPermissionValidationResult;
-            }
-
-            var productProfileValidationResult = ValidateProductProfile(setting.ProductId, setting.SettingTypes);
-            if (!productProfileValidationResult.IsSuccessful)
-            {
-                return productProfileValidationResult;
-            }
-
-            return ValidateSettingTypes(setting.SettingTypes);
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
@@ -210,26 +206,21 @@
             {
                 Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
 
-                return ValidateUpdatingMultipleSettingSteps(updatingMultipleParam);
+                var result = ValidateUpdatingSetting(updatingMultipleParam);
+                if (!result.IsSuccessful)
+                {
+                    return result;
+                }
+
+                return ValidateActorPermissionOnMultipleCustomers(
+                    updatingMultipleParam.CustomerIds,
+                    updatingMultipleParam.Setting.CustomerLevel);
             }
             catch (Exception ex)
             {
                 LogError(ex);
                 return Result.SystemError;
             }
-        }
-
-        private IResult ValidateUpdatingMultipleSettingSteps(UpdatingMultipleSettingParam updatingMultipleParam)
-        {
-            var updatingSettingValidationResult = ValidateUpdatingSetting(updatingMultipleParam);
-            if (!updatingSettingValidationResult.IsSuccessful)
-            {
-                return updatingSettingValidationResult;
-            }
-
-            return ValidateActorPermissionOnMultipleCustomers(
-                updatingMultipleParam.CustomerIds,
-                updatingMultipleParam.Setting.CustomerLevel);
         }
 
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, CustomerLevel customerLevel)

@@ -29,8 +29,6 @@
         private ISettingTypeDataAccess _settingDataAccess;
         private IResourceService _resourceService;
         private ILogger _logger;
-        private SettingPreTasks _settingPreTasksHandler;
-        private SettingPostTasks _settingPostTasksHandler;
 
         [SetUp]
         public void Setup()
@@ -42,8 +40,6 @@
             _settingResolver = Substitute.For<ISettingResolver>();
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
             _resourceService = Substitute.For<IResourceService>();
-            _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>();
-            _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
             _logger = Substitute.For<ILogger>();
 
             _settingService = new SettingService(
@@ -108,6 +104,7 @@
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
+            
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
@@ -126,8 +123,8 @@
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            var numOfCallToPreTasks = updatingMultipleSettingParam.Setting.SettingTypes.Count();
-            settingTypePreTasksMock.Received(numOfCallToPreTasks)
+            var numOfRunPreTasks = updatingMultipleSettingParam.Setting.SettingTypes.Count();
+            settingTypePreTasksMock.Received(numOfRunPreTasks)
                 .PreUpdateMultipleCustomersSettingType(
                     _settingContext,
                     updatingMultipleSettingParam.CustomerIds,
@@ -199,7 +196,7 @@
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
             AssumeUpdatingMultipleCustomersSettingActionIsValid();
             SetupSettingTypeDataAccessStub();
-            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted();
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
 
             //// Act
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
@@ -218,8 +215,8 @@
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
             AssumeUpdatingMultipleCustomersSettingActionIsValid();
             SetupSettingTypeDataAccessStub();
-            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted();
-            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted();
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
+            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
 
             //// Act
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
@@ -232,14 +229,40 @@
         }
 
         [Test]
+        public void UpdateMultipleCustomerSetting_SettingTypeHasPostUpdateMultipleCustomersSettingTypeTasks_RunTasks()
+        {
+            //// Arrange
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+            AssumeUpdatingMultipleCustomersSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
+
+            var settingTypePostTasksMock = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
+            _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksMock);
+
+            //// Act
+            _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            var numOfRunPostTasks = updatingMultipleSettingParam.Setting.SettingTypes.Count();
+            settingTypePostTasksMock.Received(numOfRunPostTasks)
+                .PostUpdateMultipleCustomersSettingType(
+                    _settingContext,
+                    updatingMultipleSettingParam.CustomerIds,
+                    Arg.Any<SettingType>(),
+                    updatingMultipleSettingParam.UplineLevel,
+                    Arg.Any<UpdatingSettingResult>());
+        }
+
+        [Test]
         public void UpdateMultipleCustomerSetting_Always_CallUpdateCustomerSettingType()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
             AssumeUpdatingMultipleCustomersSettingActionIsValid();
             SetupSettingTypeDataAccessStub();
-            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted();
-            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted();
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
+            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
 
             //// Act
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
@@ -257,7 +280,7 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_PreTaskFail_ReturnPreTasksResult()
+        public void UpdateMultipleCustomerSetting_PreTasksAreFailed_ReturnPreTasksFailedResult()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -267,8 +290,29 @@
             AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(
                 isTaskSuccessful: false,
                 isStopUpdatingWhenPreTaskFailed: true,
-                isReturnPreTaskResultToUser: true,
+                isReturnPreTaskResultToUser: false,
                 customerIdsNeedForSingleUpdating: null);
+
+            //// Act
+            var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            Assert.IsFalse(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_PreTaskAreFailed_ContinueUpdatingSettingAndReturnPreTasksFailedResult()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+            AssumeUpdatingMultipleCustomersSettingActionIsValid();
+            SetupSettingTypeDataAccessStub();
+
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(
+                isTaskSuccessful: false,
+                isStopUpdatingWhenPreTaskFailed: false,
+                isReturnPreTaskResultToUser: true,
+                customerIdsNeedForSingleUpdating: new List<int> { 2 });
 
             //// Act
             var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
@@ -284,8 +328,8 @@
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
             AssumeUpdatingMultipleCustomersSettingActionIsValid();
             SetupSettingTypeDataAccessStub();
-            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted();
-            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted();
+            AssumePreUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
+            AssumePostUpdateMultipleCustomersSettingTypeTasksRunCompleted(isTaskSuccessful: true);
 
             //// Act
             var actualResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);

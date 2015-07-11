@@ -103,11 +103,10 @@
 
         private CustomerInfo GetCustomerInfo(int customerId)
         {
-            var customer = _dynamicRepository.Get<CustomerInfo>(
-                new CustomerQueryCriteria
-                {
-                    CustId = customerId
-                });
+            var customer = _dynamicRepository.Get<CustomerInfo>(new CustomerQueryCriteria 
+            { 
+                CustId = customerId 
+            });
 
             return customer;
         }
@@ -130,7 +129,6 @@
                     var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
                     
                     customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
-                    
                     if (customerSettingType.SettingItems.Any())
                     {
                         customerSettingTypes.Add(customerSettingType);
@@ -148,7 +146,7 @@
         private void RunPreGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-            if (preTasks != null
+            if (preTasks != null 
                 && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
             {
                 preTasks.PreGetCustomerSettingType(_settingContext, queryParam);
@@ -283,7 +281,6 @@
             SettingResult result)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
-
             if (postTasks != null
                 && IsOverride(postTasks.GetType().GetMethod("PostUpdateCustomerSettingType")))
             {
@@ -318,7 +315,7 @@
         {
             var customerLevel = updatingMultipleParam.Setting.CustomerLevel;
             var uplineLevel = updatingMultipleParam.UplineLevel;
-            var customers = updatingMultipleParam.CustomerIds;
+            var customerIds = updatingMultipleParam.CustomerIds;
             var settingTypes = updatingMultipleParam.Setting.SettingTypes;
             var productId = updatingMultipleParam.Setting.ProductId;
             var results = new List<SettingResult>();
@@ -327,12 +324,18 @@
             {
                 try
                 {
-                    var result = UpdateSetingTypeForMultipleCustomers(customers, customerLevel, uplineLevel, settingType, productId);
+                    var result = UpdateSetingTypeForMultipleCustomers(customerIds, customerLevel, uplineLevel, settingType, productId);
                     results.AddRange(result.SubResults);
                 }
                 catch (Exception ex)
                 {
-                    var errorResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, 0, settingType.Id, settingType.Name);
+                    var errorResult = new SettingResult(
+                        Result.SystemError.Code, 
+                        Result.SystemError.Message, 
+                        msgType: 0, 
+                        customerId: 0, 
+                        settingTypeId: settingType.Id, 
+                        settingTypeName: settingType.Name);
                     results.Add(errorResult);
                     
                     LogError(ex);
@@ -357,7 +360,7 @@
 
             //// We need to GetCustomersNeedForUpdating here, because in RunPreUpdateMultipleSettingTasks above
             //// because we already updated setting for them, so we need to remove them out of customer list.
-            var customerIdsForSingleUpdating = GetCustomerIdsNeedForSingleUpdating(preTasksResult.CustomerIdsForSingleUpdating, customerIds);
+            var customerIdsForSingleUpdating = GetCustomerIdsForSingleUpdating(preTasksResult.CustomerIdsForSingleUpdating, customerIds);
             var updatingResults = UpdateSettingTypeOfEachCustomer(customerIdsForSingleUpdating, customerLevel, settingType, productId, uplineLevel);
 
             if (preTasksResult.IsReturnResultToUser
@@ -377,7 +380,7 @@
         /// <param name="customerIdsReturnFromPreTask">Customer list return from pre task, may be different with original customer list.</param>
         /// <param name="originalCustomerIds">Original customer list.</param>
         /// <returns>List customer will be update one by one.</returns>
-        private IEnumerable<int> GetCustomerIdsNeedForSingleUpdating(
+        private IEnumerable<int> GetCustomerIdsForSingleUpdating(
             IEnumerable<int> customerIdsReturnFromPreTask,
             IEnumerable<int> originalCustomerIds)
         {
@@ -419,8 +422,8 @@
             {
                 var singleCustomerSetting = new Setting(customerId, customerLevel, productId, new List<SettingType> { settingType });
                 var updatingParam = new UpdatingSettingParam(singleCustomerSetting, uplineLevel);
-                var updateResult = UpdateSingleCustomerSetting(updatingParam);
-                settingTypeResults.AddRange(updateResult.SubResults);
+                var updatingResult = UpdateSingleCustomerSetting(updatingParam);
+                settingTypeResults.AddRange(updatingResult.SubResults);
             }
 
             return settingTypeResults;
@@ -481,7 +484,7 @@
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
         {
-            Dictionary<int, string> customerIdNameContainer = new Dictionary<int, string>();
+            var customerIdNameContainer = new Dictionary<int, string>();
             var customerLength = customerIds.Count();
             for (int i = 0; i < customerLength; i++)
             {

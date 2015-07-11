@@ -60,7 +60,7 @@
                 }
                 else if (Setting != null && Setting.CustomerLevel == CustomerLevel.Member)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Upline cannot be null when updating member setting.");
+                    throw new ArgumentNullException("value", "Upline cannot be null when updating member setting.");
                 }
 
                 _uplineLevel = value;

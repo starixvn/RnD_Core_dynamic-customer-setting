@@ -68,10 +68,10 @@
         }
         
         [Test]
-        public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentOutOfRangeException()
+        public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentNullException()
         {
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
                     () => new QuerySettingParam(1, CustomerLevel.Member, 1, null)));
         }

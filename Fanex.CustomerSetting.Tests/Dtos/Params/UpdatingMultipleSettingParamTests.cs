@@ -9,7 +9,19 @@
     public class UpdatingMultipleSettingParamTests
     {
         [Test]
-        public void SetCustomerIds_CustomerIdListHasNoItem_ThrowArgumentOutOfRangeException()
+        public void SetCustomerIds_CustomerIdListIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => updatingMultipleSettingParam.CustomerIds = null));
+        }
+
+        [Test]
+        public void SetCustomerIds_CustomerIdListHasNoItemWhenCustomerNameListHasItem_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -21,7 +33,19 @@
         }
 
         [Test]
-        public void SetCustomerNames_CustomerNameListHasNoItem_ThrowArgumentOutOfRangeException()
+        public void SetCustomerNames_CustomerNameListIsNull_ThrowArgumentNullException()
+        {
+            //// Arrange
+            UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+
+            //// Act
+            Assert.Throws<ArgumentNullException>(
+                new TestDelegate(
+                    () => updatingMultipleSettingParam.CustomerNames = null));
+        }
+
+        [Test]
+        public void SetCustomerNames_CustomerNameListHasNoItemWhenCustomerIdListHasItems_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();

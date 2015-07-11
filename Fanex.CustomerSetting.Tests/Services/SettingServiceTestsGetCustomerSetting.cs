@@ -30,8 +30,6 @@
         private ISettingTypeDataAccess _settingDataAccess;
         private IResourceService _resourceService;
         private ILogger _logger;
-        private SettingPreTasks _settingPreTasksHandler;
-        private SettingPostTasks _settingPostTasksHandler;
 
         [SetUp]
         public void Setup()
@@ -43,8 +41,6 @@
             _settingResolver = Substitute.For<ISettingResolver>();
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
             _resourceService = Substitute.For<IResourceService>();
-            _settingPreTasksHandler = Substitute.ForPartsOf<SettingPreTasks>();
-            _settingPostTasksHandler = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
             _logger = Substitute.For<ILogger>();
 
             _settingService = new SettingService(

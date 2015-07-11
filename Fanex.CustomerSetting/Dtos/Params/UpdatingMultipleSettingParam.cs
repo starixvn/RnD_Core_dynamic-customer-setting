@@ -33,7 +33,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentOutOfRangeException("value", "CustomerIds cannot be null when updating multiple setting.");
+                    throw new ArgumentNullException("value", "CustomerIds cannot be null when updating multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(value, _customerNames);
@@ -53,7 +53,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentOutOfRangeException("value", "CustomerNames cannot be null when updating multiple setting.");
+                    throw new ArgumentNullException("value", "CustomerNames cannot be null when updating multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(_customerIds, value);

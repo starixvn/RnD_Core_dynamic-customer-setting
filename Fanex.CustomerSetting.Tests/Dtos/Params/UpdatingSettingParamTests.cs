@@ -15,7 +15,11 @@
         [TestCase(CustomerLevel.Agent)]
         public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
         {
-            var setting = new Setting(1, customerLevel, 1, new List<SettingType>());
+            var setting = new Setting(
+                customerId: 1, 
+                customerLevel: customerLevel, 
+                productId: 1, 
+                settingTypes: new List<SettingType>());
             var updateSettingParam = new UpdatingSettingParam(setting);
 
             //// Act
@@ -28,7 +32,11 @@
         [TestCase(10)]
         public void SetUplineLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte uplineLevelValue)
         {
-            var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
+            var setting = new Setting(
+                customerId: 1,
+                customerLevel: CustomerLevel.Member,
+                productId: 1,
+                settingTypes: new List<SettingType>());
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -39,10 +47,14 @@
         [Test]
         public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentOutOfRangeException()
         {
-            var setting = new Setting(1, CustomerLevel.Member, 1, new List<SettingType>());
+            var setting = new Setting(
+                customerId: 1,
+                customerLevel: CustomerLevel.Member,
+                productId: 1,
+                settingTypes: new List<SettingType>());
 
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
                     () => new UpdatingSettingParam(setting)));
         }
