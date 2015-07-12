@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -95,7 +96,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, settingType, null, null)));
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, CustomerLevel.Agent, settingType, null, null)));
         }
 
         public virtual void PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException()
@@ -107,7 +108,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, settingType, null, null)));
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, CustomerLevel.Agent, settingType, null, null)));
         }
     }
 }

@@ -141,6 +141,7 @@
             settingTypePreTasksMock.Received(updatingParam.Setting.SettingTypes.Count()).PreUpdateCustomerSettingType(
                 _settingContext,
                 updatingParam.Setting.CustomerId,
+                updatingParam.Setting.CustomerLevel,
                 Arg.Any<SettingType>(),
                 updatingParam.UplineLevel);
         }
@@ -151,6 +152,7 @@
             settingPreTasksStub.PreUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
+                Arg.Any<CustomerLevel>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
@@ -163,6 +165,7 @@
             settingPostTasksStub.PostUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
+                Arg.Any<CustomerLevel>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>(),
                 Arg.Any<SettingResult>())
@@ -231,6 +234,7 @@
             settingTypePostTasksMock.Received(updatingParam.Setting.SettingTypes.Count()).PostUpdateCustomerSettingType(
                 _settingContext,
                 updatingParam.Setting.CustomerId,
+                updatingParam.Setting.CustomerLevel,
                 Arg.Any<SettingType>(),
                 updatingParam.UplineLevel,
                 Arg.Any<SettingResult>());

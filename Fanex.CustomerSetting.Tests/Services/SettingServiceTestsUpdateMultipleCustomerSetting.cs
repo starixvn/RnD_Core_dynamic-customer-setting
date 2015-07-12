@@ -144,6 +144,7 @@
             settingTypePreTasksStub.PreUpdateCustomerSettingType(
                Arg.Any<ISettingContext>(),
                Arg.Any<int>(),
+               Arg.Any<CustomerLevel>(),
                Arg.Any<SettingType>(),
                Arg.Any<CustomerLevel?>())
                .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
@@ -172,6 +173,7 @@
             settingTypePostTasksStub.PostUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
+                Arg.Any<CustomerLevel>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<CustomerLevel?>(),
                 Arg.Any<SettingResult>())
@@ -182,6 +184,7 @@
             settingTypePostTasksStub.PostUpdateMultipleCustomersSettingType(
                     Arg.Any<ISettingContext>(),
                     Arg.Any<IEnumerable<int>>(),
+                    Arg.Any<CustomerLevel>(),
                     Arg.Any<SettingType>(),
                     Arg.Any<CustomerLevel?>(),
                     Arg.Any<UpdatingSettingResult>()).Returns(dummyUpdatingResult);
@@ -249,6 +252,7 @@
                 .PostUpdateMultipleCustomersSettingType(
                     _settingContext,
                     updatingMultipleSettingParam.CustomerIds,
+                    updatingMultipleSettingParam.Setting.CustomerLevel,
                     Arg.Any<SettingType>(),
                     updatingMultipleSettingParam.UplineLevel,
                     Arg.Any<UpdatingSettingResult>());

@@ -3,6 +3,7 @@
     using System;
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
@@ -66,6 +67,7 @@
             var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
                 1,
+                CustomerLevel.Agent,
                 new SettingType { SettingLevel = 1 },
                 null,
                 successResult);
@@ -87,6 +89,7 @@
             SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
                 1,
+                CustomerLevel.Agent,
                 new SettingType { SettingLevel = settingLevel },
                 null,
                 errorResult);
@@ -112,6 +115,7 @@
             var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
                 1,
+                CustomerLevel.Agent,
                 new SettingType { SettingLevel = 1 },
                 null,
                 errorResult);

@@ -383,16 +383,18 @@
         [Test]
         public void UpdateCustomerSetting_CompanyUpdateMasterSetting()
         {
-            UpdateCustomerSetting_UpdateMasterSetting(CompanyId, UserLevel.Company);
+            UpdateCustomerSetting_UpdateMasterSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_UpdateMasterSetting(CompanyId, UserLevel.Company, false);
         }
 
         [Test]
         public void UpdateCustomerSetting_SuperUpdateMasterSetting()
         {
-            UpdateCustomerSetting_UpdateMasterSetting(SuperId, UserLevel.Super);
+            UpdateCustomerSetting_UpdateMasterSetting(SuperId, UserLevel.Super, true);
+            UpdateCustomerSetting_UpdateMasterSetting(SuperId, UserLevel.Super, false);
         }
 
-        private void UpdateCustomerSetting_UpdateMasterSetting(int actorId, UserLevel actorLevel)
+        private void UpdateCustomerSetting_UpdateMasterSetting(int actorId, UserLevel actorLevel, bool isDisbaledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -402,13 +404,16 @@
 
             var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
+            masterPTItem.IS3 = !masterPTItem.IS3;
             if (masterPTItem.IS3)
             {
                 masterPTItem.US3 = (byte)(masterPTItem.US3 == 20 ? 21 : 20);
+                masterPTItem.S3 = 0;
             }
             else
             {
                 masterPTItem.S3 = (byte)(masterPTItem.S3 == 20 ? 21 : 20);
+                masterPTItem.US3 = 0;
             }
 
             masterPTItem.M3 = (byte)(masterPTItem.M3 == 65 ? 66 : 65);
@@ -423,8 +428,8 @@
             masterCommissionItem.CommRate = masterCommissionItem.CommRate == 0.0080m ? 0.0081m : 0.0080m;
 
             var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            masterProductStatusItem.IsDisabled = false;
-            masterProductStatusItem.Downline.IsDisabled = false;
+            masterProductStatusItem.IsDisabled = isDisbaledProductStatus;
+            masterProductStatusItem.Downline.IsDisabled = isDisbaledProductStatus;
 
             //// Act
             var updateParam = new UpdatingSettingParam(masterSetting, querySettingParam.UplineLevel);
@@ -459,16 +464,18 @@
         [Test]
         public void UpdateCustomerSetting_CompanyUpdateAgentSetting()
         {
-            UpdateCustomerSetting_UpdateAgentSetting(CompanyId, UserLevel.Company);
+            UpdateCustomerSetting_UpdateAgentSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_UpdateAgentSetting(CompanyId, UserLevel.Company, false);
         }
 
         [Test]
         public void UpdateCustomerSetting_MasterUpdateAgentSetting()
         {
-            UpdateCustomerSetting_UpdateAgentSetting(MasterId, UserLevel.Master);
+            UpdateCustomerSetting_UpdateAgentSetting(MasterId, UserLevel.Master, true);
+            UpdateCustomerSetting_UpdateAgentSetting(MasterId, UserLevel.Master, false);
         }
 
-        private void UpdateCustomerSetting_UpdateAgentSetting(int actorId, UserLevel actorLevel)
+        private void UpdateCustomerSetting_UpdateAgentSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -479,13 +486,21 @@
             var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
-            if (!agentPT.IsDisableMasterAutoPT && agentPTItem.IM2)
+
+            if (!agentPT.IsDisableMasterAutoPT)
+            {
+                agentPTItem.IM2 = !agentPTItem.IM2;
+            }
+
+            if (agentPTItem.IM2)
             {
                 agentPTItem.UM2 = (byte)(agentPTItem.UM2 == 20 ? 21 : 20);
+                agentPTItem.M2 = 0;
             }
             else
             {
                 agentPTItem.M2 = (byte)(agentPTItem.M2 == 20 ? 21 : 20);
+                agentPTItem.UM2 = 0;
             }
 
             agentPTItem.A2 = (byte)(agentPTItem.A2 == 35 ? 36 : 35);
@@ -500,8 +515,8 @@
             agentCommissionItem.CommRate = agentCommissionItem.CommRate == 0.0055m ? 0.0056m : 0.0055m;
 
             var agentProductStatusItem = agentSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            agentProductStatusItem.IsDisabled = false;
-            agentProductStatusItem.Downline.IsDisabled = false;
+            agentProductStatusItem.IsDisabled = isDisabledProductStatus;
+            agentProductStatusItem.Downline.IsDisabled = isDisabledProductStatus;
 
             //// Act
             var updateParam = new UpdatingSettingParam(agentSetting, querySettingParam.UplineLevel);
@@ -535,16 +550,18 @@
         [Test]
         public void UpdateCustomerSetting_AgentUpdateMemberSetting()
         {
-            UpdateCustomerSetting_AgentUpdateMemberSetting(AgentId, UserLevel.Agent);
+            UpdateCustomerSetting_AgentUpdateMemberSetting(AgentId, UserLevel.Agent, true);
+            UpdateCustomerSetting_AgentUpdateMemberSetting(AgentId, UserLevel.Agent, false);
         }
 
         [Test]
         public void UpdateCustomerSetting_CompanyUpdateMemberSettingByAgentView()
         {
-            UpdateCustomerSetting_AgentUpdateMemberSetting(CompanyId, UserLevel.Company);
+            UpdateCustomerSetting_AgentUpdateMemberSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_AgentUpdateMemberSetting(CompanyId, UserLevel.Company, false);
         }
 
-        private void UpdateCustomerSetting_AgentUpdateMemberSetting(int actorId, UserLevel actorLevel)
+        private void UpdateCustomerSetting_AgentUpdateMemberSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -565,7 +582,7 @@
             memberCommissionItem.CommRate = memberCommissionItem.CommRate == 0.0033m ? 0.0032m : 0.0033m;
 
             var memberProductStatusItem = memberSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            memberProductStatusItem.IsDisabled = false;
+            memberProductStatusItem.IsDisabled = isDisabledProductStatus;
 
             //// Act
             var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
@@ -595,11 +612,13 @@
         public void UpdateCustomerSetting_MasterUpdatePTOnMember()
         {
             UpdateCustomerSetting_MasterUpdatesPTOnMember(MasterId, UserLevel.Master);
+            UpdateCustomerSetting_MasterUpdatesPTOnMember(MasterId, UserLevel.Master);
         }
 
         [Test]
         public void UpdateCustomerSetting_CompanyUpdeteMasterPTOnMember()
         {
+            UpdateCustomerSetting_MasterUpdatesPTOnMember(CompanyId, UserLevel.Company);
             UpdateCustomerSetting_MasterUpdatesPTOnMember(CompanyId, UserLevel.Company);
         }
 
@@ -614,13 +633,20 @@
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
-            if (!masterPTOnMember.IsDisableMasterAutoPT && masterPTOnMemberItem.IM1)
+            if (!masterPTOnMember.IsDisableMasterAutoPT)
+            {
+                masterPTOnMemberItem.IM1 = !masterPTOnMemberItem.IM1;
+            }
+
+            if (masterPTOnMemberItem.IM1)
             {
                 masterPTOnMemberItem.UM1 = (byte)(masterPTOnMemberItem.UM1 == 14 ? 15 : 14);
+                masterPTOnMemberItem.M1 = 0;
             }
             else
             {
                 masterPTOnMemberItem.M1 = (byte)(masterPTOnMemberItem.M1 == 14 ? 15 : 14);
+                masterPTOnMemberItem.UM1 = 0;
             }
 
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);

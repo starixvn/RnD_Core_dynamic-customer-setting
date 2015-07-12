@@ -244,7 +244,7 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
-            var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel);
+            var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
             if (!preTasksResult.IsSuccessful)
             {
                 return preTasksResult;
@@ -253,16 +253,20 @@
             var result = RunUpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
             var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
 
-            return RunPostUpdateCustomerSettingTypeTasks(customerId, settingType, uplineLevel, settingResult);
+            return RunPostUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel, settingResult);
         }
 
-        private SettingResult RunPreUpdateCustomerSettingTypeTasks(int customerId, SettingType settingType, CustomerLevel? uplineLevel)
+        private SettingResult RunPreUpdateCustomerSettingTypeTasks(
+            int customerId,
+            CustomerLevel customerLevel, 
+            SettingType settingType, 
+            CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
                 && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
-                return preTasks.PreUpdateCustomerSettingType(_settingContext, customerId, settingType, uplineLevel);
+                return preTasks.PreUpdateCustomerSettingType(_settingContext, customerId, customerLevel, settingType, uplineLevel);
             }
 
             return new SettingResult(Result.Success);
@@ -276,6 +280,7 @@
 
         private SettingResult RunPostUpdateCustomerSettingTypeTasks(
             int customerId,
+            CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             SettingResult result)
@@ -284,7 +289,7 @@
             if (postTasks != null
                 && IsOverride(postTasks.GetType().GetMethod("PostUpdateCustomerSettingType")))
             {
-                return postTasks.PostUpdateCustomerSettingType(_settingContext, customerId, settingType, uplineLevel, result);
+                return postTasks.PostUpdateCustomerSettingType(_settingContext, customerId, customerLevel, settingType, uplineLevel, result);
             }
 
             return result;
@@ -370,7 +375,7 @@
                 updatingResults.AddRange(preTasksResult.Result.SubResults);
             }
 
-            return RunPostUpdateMultipleCustomersSettingTypeTasks(customerIds, settingType, uplineLevel, new UpdatingSettingResult(updatingResults));
+            return RunPostUpdateMultipleCustomersSettingTypeTasks(customerIds, customerLevel, settingType, uplineLevel, new UpdatingSettingResult(updatingResults));
         }
 
         /// <summary>
@@ -431,6 +436,7 @@
 
         private UpdatingSettingResult RunPostUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<int> customerIds,
+            CustomerLevel customerLevel,
             SettingType settingType,
             CustomerLevel? uplineLevel,
             UpdatingSettingResult settingTypeMultipleResult)
@@ -439,7 +445,7 @@
             if (postTasks != null
                 && IsOverride(postTasks.GetType().GetMethod("PostUpdateMultipleCustomersSettingType")))
             {
-                return postTasks.PostUpdateMultipleCustomersSettingType(_settingContext, customerIds, settingType, uplineLevel, settingTypeMultipleResult);
+                return postTasks.PostUpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, settingType, uplineLevel, settingTypeMultipleResult);
             }
 
             return settingTypeMultipleResult;
