@@ -87,7 +87,7 @@
         [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
         [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorHasPermission_CanUpdateMultipleCustomerSetting(
+        public void ValidateUpdatingMultipleSetting_ActorHasPermission_ReturnSuccessResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel, 
             CustomerLevel? uplineLevel)
@@ -113,7 +113,7 @@
         [TestCase(UserLevel.Agent, CustomerLevel.Super)]
         [TestCase(UserLevel.Agent, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
-        public void ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_CannotUpdateMultipleCustomerSetting(
+        public void ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_ReturnFailedResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
         {

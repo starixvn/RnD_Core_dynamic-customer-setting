@@ -305,7 +305,7 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_PreTaskAreFailed_ContinueUpdatingSettingAndReturnPreTasksFailedResult()
+        public void UpdateMultipleCustomerSetting_PreTaskAreFailedAndContinueUpdatingSetting_ReturnPreTasksFailedResult()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();

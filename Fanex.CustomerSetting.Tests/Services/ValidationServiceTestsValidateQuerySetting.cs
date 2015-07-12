@@ -63,7 +63,7 @@
         [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
         [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
-        public void ValidateQuerySetting_ActorHasPermission_CanViewCustomerSetting(
+        public void ValidateQuerySetting_ActorHasPermission_ReturnSuccessValidationResult(
             UserLevel userLevel,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel)
@@ -93,7 +93,7 @@
         [TestCase(UserLevel.Agent, CustomerLevel.Super)]
         [TestCase(UserLevel.Agent, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
-        public void ValidateQuerySetting_ActorDoesNotHavePermission_CannotViewCustomerSetting(
+        public void ValidateQuerySetting_ActorDoesNotHavePermission_ReturnFailedValidationResult(
             UserLevel userLevel,
             CustomerLevel customerLevel)
         {
@@ -206,7 +206,7 @@
         [TestCase(UserLevel.Super, CustomerLevel.Super)]
         [TestCase(UserLevel.Master, CustomerLevel.Master)]
         [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_ReturnSuccessValidationResult(
+        public void ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_ReturnSuccessResult(
             UserLevel actorLevel,
             CustomerLevel uplineLevel)
         {
@@ -230,7 +230,7 @@
         [TestCase(CustomerLevel.Super)]
         [TestCase(CustomerLevel.Master)]
         [TestCase(CustomerLevel.Agent)]
-        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessValidationResult(CustomerLevel customerLevel)
+        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(CustomerLevel customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(

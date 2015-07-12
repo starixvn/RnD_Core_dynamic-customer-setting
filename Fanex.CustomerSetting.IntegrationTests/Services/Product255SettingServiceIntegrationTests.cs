@@ -35,7 +35,7 @@
         private const byte ProductId = 255;
         private const string ProductName = "Product 255";
         private const byte NumOfSettingType = 4;
-        private const int NumOfSleepSecondsWaitingForReplication = 7 * 1000; //// 5 Seconds
+        private const int NumOfSleepSecondsWaitingForReplication = 7 * 1000; //// 7 Seconds
 
         private IEnumerable<int> _masterIds = new List<int> { MasterId, 14763802, 14965577 };
         private IEnumerable<string> _masterNames = new List<string> { MasterUserName, "SUPERTEST9000", "supertest9001Raf" };
