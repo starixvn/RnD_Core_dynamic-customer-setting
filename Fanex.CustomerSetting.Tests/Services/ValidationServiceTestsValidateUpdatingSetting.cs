@@ -211,5 +211,44 @@
             //// Assert
             settingItemMock.Received().Validate();
         }
+
+        [Test]
+        public void ValidateUpdatingSetting_CompanyPerformUpdatingActionInAgencySystem_ReturnAccessDeniedResult()
+        {
+            //// Arrange
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            _settingContext.Actor.Level = UserLevel.Company;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
+
+            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(_settingContext, _validationDataAccess, _productService, _logger);
+            validationServiceStub.GetCurrentSystemId().Returns((byte)SystemType.Agency);
+
+            //// Act
+            var actualResult = validationServiceStub.ValidateUpdatingSetting(updatingParam);
+
+            //// Assert
+            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        }
+
+        [TestCase((byte)SystemType.Accounting)]
+        [TestCase((byte)SystemType.ExternalAccounting)]
+        public void ValidateUpdatingSetting_CompanyPerformUpdatingActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
+        {
+            //// Arrange
+            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            _settingContext.Actor.Level = UserLevel.Company;
+            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
+
+            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(_settingContext, _validationDataAccess, _productService, _logger);
+            validationServiceStub.GetCurrentSystemId().Returns(systemId);
+
+            //// Act
+            var actualResult = validationServiceStub.ValidateUpdatingSetting(updatingParam);
+
+            //// Assert
+            Assert.IsTrue(actualResult.IsSuccessful);
+        }
     }
 }

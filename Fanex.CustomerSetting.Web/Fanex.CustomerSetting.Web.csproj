@@ -75,6 +75,7 @@
     <Compile Include="Contexts\SettingContext.cs" />
     <Compile Include="Contexts\SettingContextManager.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

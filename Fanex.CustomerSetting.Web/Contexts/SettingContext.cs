@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Models;
 
-    public class SettingContext : ISettingContext
+    internal class SettingContext : ISettingContext
     {
         #region Constant
 

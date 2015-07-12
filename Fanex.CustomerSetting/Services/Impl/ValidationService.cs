@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
@@ -37,12 +38,11 @@
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
-            return ValidateViewingPermission(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
-        }
+            var customerId = queryParam.CustomerId;
+            var customerLevel = queryParam.CustomerLevel;
+            var uplineLevel = queryParam.UplineLevel;
 
-        private IResult ValidateViewingPermission(int customerId, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
-        {
-            IResult result = ValidateActorLevelForViewingCustomerSetting(customerLevel);
+            IResult result = ValidateActorHasViewingPermission(customerLevel);
             if (!result.IsSuccessful)
             {
                 return result;
@@ -69,7 +69,7 @@
             return ValidateActorLevelWithUplineLevel(customerLevel, uplineLevel);
         }
 
-        private IResult ValidateActorLevelForViewingCustomerSetting(CustomerLevel customerLevel)
+        private IResult ValidateActorHasViewingPermission(CustomerLevel customerLevel)
         {
             UserLevel actorLevel = _settingContext.Actor.Level;
             bool isValid = true;
@@ -150,7 +150,15 @@
                 Check.Argument.IsNotNull(updatingParam, "updatingParam");
 
                 var setting = updatingParam.Setting;
-                var result = ValidateViewingPermission(setting.CustomerId, setting.CustomerLevel, updatingParam.UplineLevel);
+                var querySettingParam = new QuerySettingParam(setting.CustomerId, setting.CustomerLevel, setting.ProductId, updatingParam.UplineLevel);
+
+                var result = ValidateQuerySetting(querySettingParam);
+                if (!result.IsSuccessful)
+                {
+                    return result;
+                }
+
+                result = ValidateActorLevelWithCurrentSystem();
                 if (!result.IsSuccessful)
                 {
                     return result;
@@ -170,6 +178,28 @@
 
                 return Result.SystemError;
             }
+        }
+
+        private IResult ValidateActorLevelWithCurrentSystem()
+        {
+            var currentSystemId = GetCurrentSystemId();
+
+            if (_settingContext.Actor.Level == UserLevel.Company
+                && currentSystemId == (byte)SystemType.Agency)
+            {
+                return Result.AccessDenied;
+            }
+
+            return Result.Success;
+        }
+
+        /// <summary>
+        /// Gets the system identifier, declares virtual for being testable.
+        /// </summary>
+        /// <returns>Current system id which actor performs actions.</returns>
+        public virtual byte GetCurrentSystemId()
+        {
+            return CustomerSettingSection.Settings.SystemId;
         }
 
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)

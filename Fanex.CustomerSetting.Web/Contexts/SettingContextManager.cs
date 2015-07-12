@@ -38,10 +38,6 @@
             UserLevel loginUserLevel, 
             int subAccountId = 0)
         {
-            Check.Argument.IsNotNegativeOrZero(loginUserId, "loginUserId");
-            Check.Argument.IsNotEmpty(loginUserName, "loginUserName");
-            Check.Argument.IsNotNegativeOrZero((byte)loginUserLevel, "loginUserLevel");
-
             ValidateSubAccountWithAgencySystem(subAccountId);
 
             SettingContext.Actor = new User
