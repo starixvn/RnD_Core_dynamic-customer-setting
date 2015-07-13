@@ -1,0 +1,30 @@
+﻿namespace Fanex.CustomerSetting.Matrix.Dtos
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    public class CustomerDto
+    {
+        public int? CustID { get; set; }
+
+        public string UserName { get; set; }
+
+        public int? RoleID { get; set; }
+
+        public byte? Currency { get; set; }
+
+        public int? SuperID { get; set; }
+
+        public int? MasterID { get; set; }
+
+        public int? AgentID { get; set; }
+
+        public string SuperName { get; set; }
+
+        public string MasterName { get; set; }
+
+        public string AgentName { get; set; }
+    }
+}
