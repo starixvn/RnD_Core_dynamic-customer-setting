@@ -43,7 +43,7 @@
         [TestCase(0)]
         [TestCase(6)]
         [TestCase(100)]
-        public void SetLevel_ValueIsOutOfLevelRange_ThrowArgumentOutOfRangeException(byte levelValue)
+        public void SetLevel_ValueIsOutOfLevelRange_ThrowArgumentOutOfRangeException(int levelValue)
         {
             //// Arrange
             User user = InstanceFactory.CreateUser();
@@ -53,7 +53,7 @@
                 new TestDelegate(
                     () =>
                     {
-                        user.Level = (UserLevel)levelValue;
+                        user.Level = Enumeration.FromValue<UserLevel>(levelValue);
                     }));
         }
 

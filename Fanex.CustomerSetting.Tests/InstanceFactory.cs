@@ -109,14 +109,15 @@
         public static User CreateUser(
             int userId = 1,
             string userName = "Username",
-            UserLevel userLevel = UserLevel.Company,
+            UserLevel userLevel = null,
             int subAccountId = 0)
         {
+            
             return new User
             {
                 Id = userId,
                 Name = userName,
-                Level = userLevel,
+                Level = userLevel ?? UserLevel.Company,
                 SubAccountId = subAccountId
             };
         }

@@ -6,11 +6,11 @@
     [Serializable]
     public class User : Entity<int>
     {
-        private int _id;   
+        private int _id;
         private string _name;
         private int _subAccountId;
         private UserLevel _userLevel;
-     
+
 
         public new int Id
         {
@@ -75,7 +75,7 @@
 
             set
             {
-                if ((byte)value < Constants.Level.Agent || (byte)value > Constants.Level.Company)
+                if (value.Value < Constants.Level.Agent || value.Value > Constants.Level.Company)
                 {
                     throw new ArgumentOutOfRangeException("value", "User level is invalid.");
                 }
@@ -84,24 +84,11 @@
             }
         }
 
-        /// <summary>
-        /// Check whether input level is direct of the instance.
-        /// </summary>
-        /// <param name="downLineLevel"></param>
-        /// <returns>true if input level is direct downline of the instance</returns>
-        public bool IsDirectDownlineLevel(UserLevel downLineLevel)
+        public bool Is(UserLevel level)
         {
-            return (byte)Level - (byte)downLineLevel == 1;
+            return this.Level == level;
         }
 
-        //public bool Is<T>() 
-        //{
-        //    if (T is UserLevel)
-        //    {
-        //        return T == Level;
-        //    }
-
-        //    throw new InvalidOperationException();
-        //}
+       
     }
 }

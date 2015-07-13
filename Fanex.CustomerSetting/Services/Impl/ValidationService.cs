@@ -42,18 +42,16 @@
             var customerLevel = queryParam.CustomerLevel;
             var uplineLevel = queryParam.UplineLevel;
 
-            IResult result = ValidateActorHasViewingPermission(customerLevel);
+            IResult result = IsActorEnabled();
 
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
-            result = ValidateActorEnabled();
-
-            if (!result.IsSuccessful)
+            if (!IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
             {
-                return result;
+                return Result.AccessDenied;
             }
 
             result = ValidateCustomerLevelAndActorLevel(customerId, customerLevel);
@@ -70,49 +68,21 @@
                 return result;
             }
 
-            return ValidateActorLevelWithUplineLevel(customerLevel, uplineLevel);
+            return ValidateActorLevelWithUplineLevelOfCustomer(customerLevel, uplineLevel);
         }
 
-        private IResult ValidateActorHasViewingPermission(CustomerLevel customerLevel)
+        private bool IsLevelConstrainsBetweenActorAndCustomerValid(CustomerLevel customerLevel)
         {
-            UserLevel actorLevel = _settingContext.Actor.Level;
-            bool isValid = true;
+            var actorLevel = _settingContext.Actor.Level;
 
-            switch (actorLevel)
-            {
-                case UserLevel.Company:
-                    break;
+            var result = actorLevel == UserLevel.Company
+                || (byte)customerLevel == Level.Member
+                || actorLevel.IsDirectUplineLevelOf(customerLevel);
 
-                case UserLevel.Super:
-                    if ((byte)customerLevel >= Level.Super
-                        || customerLevel == CustomerLevel.Agent)
-                    {
-                        isValid = false;
-                    }
-
-                    break;
-
-                case UserLevel.Master:
-                    if ((byte)customerLevel >= Level.Master)
-                    {
-                        isValid = false;
-                    }
-
-                    break;
-
-                case UserLevel.Agent:
-                    if ((byte)customerLevel >= Level.Agent)
-                    {
-                        isValid = false;
-                    }
-
-                    break;
-            }
-
-            return isValid ? Result.Success : Result.AccessDenied;
+            return result;
         }
 
-        private IResult ValidateActorEnabled()
+        private IResult IsActorEnabled()
         {
             return _validationDataAccess.ValidateActorEnabled(_settingContext.Actor.Id);
         }
@@ -134,13 +104,13 @@
             return _validationDataAccess.ValidateCustomerAndActorLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
         }
 
-        private IResult ValidateActorLevelWithUplineLevel(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private IResult ValidateActorLevelWithUplineLevelOfCustomer(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
             if (_settingContext.Actor.Level != UserLevel.Company
                 && customerLevel == CustomerLevel.Member
                 && uplineLevel != null
-                && (int)_settingContext.Actor.Level != (int)uplineLevel.Value)
+                && _settingContext.Actor.Level.Value != (int)uplineLevel.Value)
             {
                 return new Result(ResultValue.AccessDenied, Message.UplineLevelIsNotValid);
             }
@@ -202,6 +172,7 @@
         /// Gets the system identifier, declares virtual for being testable.
         /// </summary>
         /// <returns>Current system id which actor performs actions.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public virtual byte GetCurrentSystemId()
         {
             return CustomerSettingSection.Settings.SystemId;

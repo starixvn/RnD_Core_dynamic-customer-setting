@@ -99,12 +99,12 @@
             Assert.IsNotNull(superProductStatusItem.Downline);
         }
 
-        [TestCase(CompanyId, UserLevel.Company)]
-        [TestCase(SuperId, UserLevel.Super)]
-        public void GetCustomerSetting_ViewMasterSetting(int actorId, UserLevel actorLevel)
+        [TestCase(CompanyId, 5)]
+        [TestCase(SuperId, 4)]
+        public void GetCustomerSetting_ViewMasterSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
@@ -144,12 +144,12 @@
             Assert.IsNotNull(masterProductStatusItem.Downline);
         }
 
-        [TestCase(CompanyId, UserLevel.Company)]
-        [TestCase(MasterId, UserLevel.Master)]
-        public void GetCustomerSetting_ViewAgentSetting(int actorId, UserLevel actorLevel)
+        [TestCase(CompanyId, 5)]
+        [TestCase(MasterId, 3)]
+        public void GetCustomerSetting_ViewAgentSetting(int actorId, int  actorLevelValue)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
@@ -192,12 +192,12 @@
             Assert.IsNotNull(agentProductStatusItem.Downline);
         }
 
-        [TestCase(CompanyId, UserLevel.Company)]
-        [TestCase(SuperId, UserLevel.Super)]
-        public void GetCustomerSetting_SuperViewMemberSetting(int actorId, UserLevel actorLevel)
+        [TestCase(CompanyId, 5)]
+        [TestCase(SuperId, 4)]
+        public void GetCustomerSetting_SuperViewMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
@@ -237,12 +237,12 @@
             ////Assert.LessOrEqual(memberCommissionItem.Upline.Upline.CommRate, 0.01);
         }
 
-        [TestCase(CompanyId, UserLevel.Company)]
-        [TestCase(MasterId, UserLevel.Master)]
-        public void GetCustomerSetting_MasterViewMemberSetting(int actorId, UserLevel actorLevel)
+        [TestCase(CompanyId, 5)]
+        [TestCase(MasterId, 3)]
+        public void GetCustomerSetting_MasterViewMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
@@ -281,12 +281,12 @@
             Assert.LessOrEqual(memberCommissionItem.Upline.CommRate, 0.01);
         }
 
-        [TestCase(CompanyId, UserLevel.Company)]
-        [TestCase(AgentId, UserLevel.Agent)]
-        public void GetCustomerSetting_AgentViewMemberSetting(int actorId, UserLevel actorLevel)
+        [TestCase(CompanyId, 5)]
+        [TestCase(AgentId, 2)]
+        public void GetCustomerSetting_AgentViewMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _settingService = new SettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);

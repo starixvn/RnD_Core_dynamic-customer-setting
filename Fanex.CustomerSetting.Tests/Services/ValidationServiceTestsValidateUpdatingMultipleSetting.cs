@@ -78,15 +78,7 @@
                 Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingParam.CustomerIds)));
         }
 
-        [TestCase(UserLevel.Company, CustomerLevel.Super, null)]
-        [TestCase(UserLevel.Company, CustomerLevel.Master, null)]
-        [TestCase(UserLevel.Company, CustomerLevel.Agent, null)]
-        [TestCase(UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent)]
-        [TestCase(UserLevel.Super, CustomerLevel.Master, null)]
-        [TestCase(UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super)]
-        [TestCase(UserLevel.Master, CustomerLevel.Agent, null)]
-        [TestCase(UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master)]
-        [TestCase(UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent)]
+        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorHasPermission_Cases")]
         public void ValidateUpdatingMultipleSetting_ActorHasPermission_ReturnSuccessResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel, 
@@ -106,13 +98,20 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [TestCase(UserLevel.Super, CustomerLevel.Super)]
-        [TestCase(UserLevel.Super, CustomerLevel.Agent)]
-        [TestCase(UserLevel.Master, CustomerLevel.Super)]
-        [TestCase(UserLevel.Master, CustomerLevel.Master)]
-        [TestCase(UserLevel.Agent, CustomerLevel.Super)]
-        [TestCase(UserLevel.Agent, CustomerLevel.Master)]
-        [TestCase(UserLevel.Agent, CustomerLevel.Agent)]
+        static object[] ValidateUpdatingMultipleSetting_ActorHasPermission_Cases = 
+        {
+            new object[] {UserLevel.Company, CustomerLevel.Super, null},
+            new object[] {UserLevel.Company, CustomerLevel.Master, null},
+            new object[] {UserLevel.Company, CustomerLevel.Agent, null},
+            new object[] {UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent},
+            new object[] {UserLevel.Super, CustomerLevel.Master, null},
+            new object[] {UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super},
+            new object[] {UserLevel.Master, CustomerLevel.Agent, null},
+            new object[] {UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master},
+            new object[] {UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent}
+        };
+
+        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_Cases")]
         public void ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_ReturnFailedResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
@@ -127,5 +126,16 @@
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
         }
+
+        static object[] ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_Cases = 
+        {
+            new object[] {UserLevel.Super, CustomerLevel.Super},
+            new object[] {UserLevel.Super, CustomerLevel.Agent},
+            new object[] {UserLevel.Master, CustomerLevel.Super},
+            new object[] {UserLevel.Master, CustomerLevel.Master},
+            new object[] {UserLevel.Agent, CustomerLevel.Super},
+            new object[] {UserLevel.Agent, CustomerLevel.Master},
+            new object[] {UserLevel.Agent, CustomerLevel.Agent}
+        };
     }
 }
