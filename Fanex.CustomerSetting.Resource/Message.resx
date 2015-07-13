@@ -120,6 +120,9 @@
   <data name="AccessDeniedMsg" xml:space="preserve">
     <value>You do not have permission to access this page.</value>
   </data>
+  <data name="AccountWasDisabled" xml:space="preserve">
+    <value>Account {0} was disbaled.</value>
+  </data>
   <data name="DataIsNotValid" xml:space="preserve">
     <value>Data is not valid.</value>
   </data>

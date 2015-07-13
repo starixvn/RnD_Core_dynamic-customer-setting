@@ -11,13 +11,20 @@
         public static readonly UserLevel Master = new UserLevel(Level.Master, "Master");
         public static readonly UserLevel Agent = new UserLevel(Level.Agent, "Agent");
 
-        public UserLevel() { }
-        private UserLevel(int value, string displayName) : base(value, displayName) { }
+        public UserLevel()
+        {
+        }
+
+        private UserLevel(int value, string displayName)
+            : base(value, displayName)
+        {
+        }
 
         public bool IsDirectUplineLevelOf(int downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;
         }
+
         public bool IsDirectUplineLevelOf(CustomerLevel customerLevel)
         {
             return IsDirectUplineLevelOf((int)customerLevel);

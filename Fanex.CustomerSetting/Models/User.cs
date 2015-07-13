@@ -11,7 +11,6 @@
         private int _subAccountId;
         private UserLevel _userLevel;
 
-
         public new int Id
         {
             get
@@ -88,7 +87,5 @@
         {
             return this.Level == level;
         }
-
-       
     }
 }

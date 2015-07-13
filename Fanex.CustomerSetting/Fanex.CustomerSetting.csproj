@@ -94,7 +94,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\CustomerValidationInfoQueryCriteria.cs" />
+    <Compile Include="Criteria\ActorStatusQueryCriteria.cs" />
+    <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
     <Compile Include="Enumerations\Enumeration.cs" />
     <Compile Include="Configurations\CustomerSettingSection.cs" />
     <Compile Include="Configurations\SettingTypeCollection.cs" />

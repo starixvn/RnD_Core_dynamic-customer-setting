@@ -146,7 +146,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(MasterId, 3)]
-        public void GetCustomerSetting_ViewingAgentSetting(int actorId, int  actorLevelValue)
+        public void GetCustomerSetting_ViewingAgentSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -238,7 +238,7 @@
         }
 
         [TestCase(CompanyId, 5)]
-        [TestCase(MasterId, 3)]        
+        [TestCase(MasterId, 3)]
         public void GetCustomerSetting_MasterViewsMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
