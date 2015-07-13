@@ -2,13 +2,13 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class CustomerQueryCriteria : CriteriaBase
+    public class CustomerValidationInfoQueryCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 
         public override string GetSettingKey()
         {
-            return "Acc_CustSetting_UserInfoSelect";
+            return "Acc_CustSetting_UserValidationInfoSelect";
         }
 
         public override bool IsValid()

@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Enumerations;
 
-    public class CommissionMatrixDto
+    public class CommissionItemMatrixDto
     {
         public CustomerLevel CustomerLevel { get; set; }
 

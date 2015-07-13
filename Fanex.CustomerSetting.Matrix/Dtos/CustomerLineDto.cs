@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class CustomerDto
+    public class CustomerLineDto
     {
         public int? CustID { get; set; }
 

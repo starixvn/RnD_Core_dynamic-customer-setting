@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public class CommissionMatrix : BaseMatrix
+    public class CommissionMatrix : SettingTypeMatrix
     {
-        public IEnumerable<CommissionMatrixItem> CommissionMatrixItems { get; set; }
+        public IEnumerable<CommissionItemMatrix> CommissionItemMatrices { get; set; }
     }
 }

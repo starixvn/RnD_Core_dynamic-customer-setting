@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Matrix.Models;
 
-    public interface IPTMaxtrixService
+    public interface IPTMatrixService
     {
-        IEnumerable<PTMatrix> GetPTMatrices(string customerName, byte productId);
+        PTMatrix GetPTMatrix(byte productId, string customerName);
     }
 }

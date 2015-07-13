@@ -11,7 +11,5 @@
         public byte Currency { get; set; }
 
         public CustomerLevel CustomerLevel { get; set; }
-
-        public Customer Downline { get; set; }
     }
 }

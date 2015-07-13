@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
-    public class BaseMatrix
+    public class SettingItemMatrix
     {
         public short BetTypeId { get; set; }
 
@@ -9,7 +9,5 @@
         public short SportTypeId { get; set; }
 
         public string SportTypeName { get; set; }
-
-        public byte SettingLevel { get; set; }
     }
 }

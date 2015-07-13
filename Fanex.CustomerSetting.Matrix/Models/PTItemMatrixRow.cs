@@ -4,14 +4,14 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Dtos;
 
-    public class PTMatrixItem
+    public class PTItemMatrixRow
     {
-        public PTMatrixItem()
+        public PTItemMatrixRow()
         {
         }
 
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
-        public PTMatrixItem(PTMatrixDto pTMatrixDto)
+        public PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
         {
             CustomerLevel = pTMatrixDto.CustomerLevel;
             SuperPT = pTMatrixDto.SuperPT;

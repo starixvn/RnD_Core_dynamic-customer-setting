@@ -1,8 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Criteria
 {
+    using System;
     using Fanex.NAP.Framework.Data;
 
-    public class GetPTMatrixCriteria : CriteriaBase
+    public class CommissionMatrixQueryCriteria : CriteriaBase
     {
         public byte ProductId { get; set; }
 
@@ -10,7 +11,7 @@
 
         public override string GetSettingKey()
         {
-            return "CustSetting_PTMatrix";
+            return "CustSetting_CommMatrix";
         }
 
         public override bool IsValid()

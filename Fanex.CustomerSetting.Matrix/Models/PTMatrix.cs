@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
 
-    public class PTMatrix : BaseMatrix
+    public class PTMatrix : SettingTypeMatrix
     {
-        public bool IsLive { get; set; }
+        public bool IsAllowMasterAutoPT { get; set; }
 
-        public IEnumerable<PTMatrixItem> PTMatrixItems { get; set; }
+        public IEnumerable<PTItemMatrix> PTItemMatrices { get; set; }
     }
 }

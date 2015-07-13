@@ -11,7 +11,7 @@
         public void IsValid_CustomerIdIsNegativeOrZero_ReturnFalse(int customerId)
         {
             //// Arrange
-            var criteria = CreateCustomerQueryCriteriaFakeObject();
+            var criteria = CreateCustomerQueryCriteriaInstance();
             criteria.CustId = customerId;
 
             //// Act
@@ -26,7 +26,7 @@
         public void IsValid_CustomerIdIsGreaterThanZero_ReturnTrue(int customerId)
         {
             //// Arrange
-            var criteria = CreateCustomerQueryCriteriaFakeObject();
+            var criteria = CreateCustomerQueryCriteriaInstance();
             criteria.CustId = customerId;
 
             //// Act
@@ -40,7 +40,7 @@
         public void GetSettingKey_ReturnSettingKey()
         {
             //// Arrange
-            var criteria = CreateCustomerQueryCriteriaFakeObject();
+            var criteria = CreateCustomerQueryCriteriaInstance();
 
             //// Act
             var actualSettingKey = criteria.GetSettingKey();
@@ -49,9 +49,9 @@
             Assert.AreEqual("Acc_CustSetting_UserInfoSelect", actualSettingKey);
         }
 
-        private CustomerQueryCriteria CreateCustomerQueryCriteriaFakeObject()
+        private CustomerInfoQueryCriteria CreateCustomerQueryCriteriaInstance()
         {
-            return new CustomerQueryCriteria
+            return new CustomerInfoQueryCriteria
             {
                 CustId = 1
             };

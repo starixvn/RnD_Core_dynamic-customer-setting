@@ -94,6 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\CustomerValidationInfoQueryCriteria.cs" />
     <Compile Include="Enumerations\Enumeration.cs" />
     <Compile Include="Configurations\CustomerSettingSection.cs" />
     <Compile Include="Configurations\SettingTypeCollection.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
-    <Compile Include="Criteria\CustomerQueryCriteria.cs" />
+    <Compile Include="Criteria\CustomerInfoQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
