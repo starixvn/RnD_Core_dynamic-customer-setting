@@ -38,6 +38,7 @@
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
+            _dymanicRepository = Substitute.For<IDynamicRepository>();
             _resourceService = Substitute.For<IResourceService>();
             _logger = Substitute.For<ILogger>();
 

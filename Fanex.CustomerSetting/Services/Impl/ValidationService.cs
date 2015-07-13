@@ -43,24 +43,28 @@
             var uplineLevel = queryParam.UplineLevel;
 
             IResult result = ValidateActorHasViewingPermission(customerLevel);
+
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
             result = ValidateActorEnabled();
+
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
             result = ValidateCustomerLevelAndActorLevel(customerId, customerLevel);
+
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
             result = ValidateBelongIn(customerId);
+
             if (!result.IsSuccessful)
             {
                 return result;
@@ -73,6 +77,7 @@
         {
             UserLevel actorLevel = _settingContext.Actor.Level;
             bool isValid = true;
+
             switch (actorLevel)
             {
                 case UserLevel.Company:
