@@ -90,7 +90,7 @@
                 if (value != null)
                 {
                     byte uplineLevelValue = (byte)value.Value;
-                    if (uplineLevelValue < Level.Member || uplineLevelValue > Level.Super)
+                    if (uplineLevelValue < Level.Agent || uplineLevelValue > Level.Super)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
