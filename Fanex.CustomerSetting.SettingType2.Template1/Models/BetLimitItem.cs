@@ -42,13 +42,6 @@
 
         public override IResult Validate()
         {
-            if (MinBet == 0
-                && MaxBet == 0
-                && MaxPerMatch == 0)
-            {
-                return Result.Success;
-            }
-
             if (MinBet > BetLimitConstants.MaxBetLimitValue
                 || MaxBet > BetLimitConstants.MaxBetLimitValue
                 || MaxPerMatch > BetLimitConstants.MaxBetLimitValue)

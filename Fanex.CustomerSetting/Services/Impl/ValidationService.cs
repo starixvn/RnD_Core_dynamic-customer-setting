@@ -47,21 +47,15 @@
             var customerLevel = queryParam.CustomerLevel;
             var uplineLevel = queryParam.UplineLevel;
 
-            IResult result = VerifyActorStatus();
+            IResult result = VerifyActorStatusIsEnabled();
 
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
-            result = VerifyCustomerLevel(customerId, customerLevel);
-
-            if (!result.IsSuccessful)
-            {
-                return result;
-            }
-
-            if (!IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
+            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel) 
+                || !IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
             {
                 return Result.AccessDenied;
             }
@@ -87,7 +81,7 @@
             return result;
         }
 
-        private IResult VerifyActorStatus()
+        private IResult VerifyActorStatusIsEnabled()
         {
             var isEnabled = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
                 {
@@ -114,14 +108,14 @@
             }
         }
 
-        private IResult VerifyCustomerLevel(int customerId, CustomerLevel customerLevel)
+        private bool IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(int customerId, CustomerLevel customerLevel)
         {
             var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
             {
                 CustId = customerId
             });
 
-            return (CustomerLevel)actualCustomerLevel == customerLevel ? Result.Success : Result.AccessDenied;
+            return (CustomerLevel)actualCustomerLevel == customerLevel;
         }
 
         private IResult ValidateActorLevelWithUplineLevelOfCustomer(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
