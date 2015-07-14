@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Criteria;
@@ -28,24 +29,24 @@
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
         private IDynamicRepository _dynamicRepository;
-        private ILogger _logger;
+        private ILoggingService _loggingService;
         private IProductService _productService;
 
         [SetUp]
         public void Setup()
         {
             _settingContext = new SettingContextStub();
+            _productService = Substitute.For<IProductService>();
+            _loggingService = Substitute.For<ILoggingService>();
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _productService = Substitute.For<IProductService>();
-            _logger = Substitute.For<ILogger>();
 
             _validationService = new ValidationService(
                 _settingContext,
-                _validationDataAccess,
-                _dynamicRepository,
                 _productService,
-                _logger);
+                _loggingService,
+                _validationDataAccess,
+                _dynamicRepository);
         }
 
         private void AssumeCutomerIsDownlineOfActor()
@@ -61,19 +62,6 @@
         private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(CustomerLevel customerLevel)
         {
             _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns((byte)customerLevel);
-        }
-
-        [Test]
-        public void ValidateUpdatingSetting_UpdatingSettingParamIsNull_ReturnValidationError()
-        {
-            //// Arrange
-            UpdatingSettingParam updatingParam = null;
-
-            //// Act
-            var actualValidationResult = _validationService.ValidateUpdatingSetting(updatingParam);
-
-            //// Assert
-            Assert.AreEqual(Result.SystemError.Code, actualValidationResult.Code);
         }
 
         [Test]
@@ -281,10 +269,10 @@
 
             var validationServiceStub = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
-                _validationDataAccess,
-                _dynamicRepository,
                 _productService,
-                _logger);
+                _loggingService,
+                _validationDataAccess,
+                _dynamicRepository);
             validationServiceStub.GetCurrentSystemId().Returns((byte)SystemType.Agency);
 
             //// Act
@@ -309,10 +297,10 @@
 
             var validationServiceStub = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
-                _validationDataAccess,
-                _dynamicRepository,
                 _productService,
-                _logger);
+                _loggingService,
+                _validationDataAccess,
+                _dynamicRepository);
             validationServiceStub.GetCurrentSystemId().Returns(systemId);
 
             //// Act
@@ -320,6 +308,27 @@
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_RaisedException_CallLogValidatingUpdatingError()
+        {
+            //// Arrange
+            UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+
+            //// Simulate exception
+            var expectedException = new Exception("Exception");
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            _validationService.ValidateUpdatingSetting(updatingParam);
+
+            //// Assert
+            _loggingService.Received().LogValidatingUpdatingError(
+                Arg.Is<int>(customerId => customerId == updatingParam.Setting.CustomerId),
+                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingParam.UplineLevel),
+                Arg.Is<byte>(productId => productId == updatingParam.Setting.ProductId),
+                Arg.Any<Exception>());
         }
     }
 }

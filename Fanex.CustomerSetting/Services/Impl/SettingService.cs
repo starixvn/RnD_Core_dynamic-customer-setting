@@ -25,19 +25,19 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
+        private readonly IResourceService _resourceService;
+        private readonly ILoggingService _loggingService;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
-        private readonly IResourceService _resourceService;
-        private readonly ILogger _logger;
 
         public SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
-            ISettingResolver settingResolver = null,
-            IDynamicRepository dynamicRepository = null,
             IResourceService resourceService = null,
-            ILogger logger = null)
+            ILoggingService loggingService = null,
+            ISettingResolver settingResolver = null,
+            IDynamicRepository dynamicRepository = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
@@ -47,10 +47,10 @@
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
+            _resourceService = resourceService ?? new ResourceService();
+            _loggingService = loggingService ?? new LoggingService(_settingContext);
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
-            _resourceService = resourceService ?? new ResourceService();
-            _logger = logger ?? Logger.Log;
         }
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
@@ -136,7 +136,12 @@
                 }
                 catch (Exception ex)
                 {
-                    LogError(ex);
+                    _loggingService.LogQueryCustomerSettingTypeError(
+                        queryParam.CustomerId,
+                        queryParam.UplineLevel,
+                        queryParam.ProductId,
+                        productSettingType,
+                        ex);
                 }
             }
 
@@ -233,7 +238,12 @@
                         settingType.Id, 
                         settingType.Name);
 
-                    LogError(ex);
+                    _loggingService.LogUpdatingCustomerSettingTypeError(
+                        customerId,
+                        uplineLevel,
+                        productId,
+                        settingType,
+                        ex);
                 }
 
                 settingTypeResults.Add(updatingSettingTypeResult);
@@ -342,8 +352,13 @@
                         settingTypeId: settingType.Id, 
                         settingTypeName: settingType.Name);
                     results.Add(errorResult);
-                    
-                    LogError(ex);
+
+                    _loggingService.LogUpdatingMultipleCustomersSettingTypeError(
+                        customerIds,
+                        uplineLevel,
+                        productId,
+                        settingType,
+                        ex);
                 }
             }
 
@@ -449,11 +464,6 @@
             }
 
             return settingTypeMultipleResult;
-        }
-
-        private void LogError(Exception ex)
-        {
-            _logger.Error(ex.Message, ex);
         }
 
         private bool IsOverride(MethodInfo methodInfo)

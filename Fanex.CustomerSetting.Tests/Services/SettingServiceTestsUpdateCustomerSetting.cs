@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -12,7 +11,6 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -21,35 +19,36 @@
     public class SettingServiceTestsUpdateCustomerSetting
     {
         private ISettingService _settingService;
+        private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
-        private ISettingContext _settingContext;
+        private IResourceService _resourceService;
+        private ILoggingService _loggingService;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
         private ISettingTypeDataAccess _settingDataAccess;
-        private IResourceService _resourceService;
-        private ILogger _logger;
 
         [SetUp]
         public void Setup()
         {
             _settingContext = new SettingContextStub();
+            _resourceService = Substitute.For<IResourceService>();
+            _loggingService = Substitute.For<ILoggingService>();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
-            _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
-            _resourceService = Substitute.For<IResourceService>();
-            _logger = Substitute.For<ILogger>();
+
+            _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
 
             _settingService = new SettingService(
                 _settingContext,
                 _validationService,
                 _productService,
-                _settingResolver,
-                _dymanicRepository,
                 _resourceService,
-                _logger);
+                _loggingService,
+                _settingResolver,
+                _dymanicRepository);
         }
 
         [Test]
@@ -242,7 +241,7 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_RaisedException_ExecuteErrorOnLogger()
+        public void UpdateCustomerSetting_RaisedException_CallLogUpdatingCustomerSettingTypeError()
         {
             //// Arrange
             UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
@@ -257,9 +256,12 @@
             _settingService.UpdateCustomerSetting(updatingParam);
 
             //// Assert
-            _logger.Received().Error(
-                Arg.Is<string>(expectedException.Message),
-                Arg.Is<Exception>(expectedException));
+            _loggingService.Received().LogUpdatingCustomerSettingTypeError(
+                Arg.Is<int>(customerId => customerId == updatingParam.Setting.CustomerId),
+                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingParam.UplineLevel),
+                Arg.Is<byte>(productId => productId == updatingParam.Setting.ProductId),
+                Arg.Any<SettingType>(),
+                Arg.Any<Exception>());
         }
 
         [Test]

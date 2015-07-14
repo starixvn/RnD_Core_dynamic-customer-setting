@@ -28,24 +28,24 @@
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
         private IDynamicRepository _dynamicRepository;
-        private ILogger _logger;
+        private ILoggingService _loggingService;
         private IProductService _productService;
 
         [SetUp]
         public void Setup()
         {
             _settingContext = new SettingContextStub();
+            _productService = Substitute.For<IProductService>();
+            _loggingService = Substitute.For<ILoggingService>();
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _productService = Substitute.For<IProductService>();
-            _logger = Substitute.For<ILogger>();
 
             _validationService = new ValidationService(
                 _settingContext,
-                _validationDataAccess,
-                _dynamicRepository,
                 _productService,
-                _logger);
+                _loggingService,
+                _validationDataAccess,
+                _dynamicRepository);
         }
 
         [Test]

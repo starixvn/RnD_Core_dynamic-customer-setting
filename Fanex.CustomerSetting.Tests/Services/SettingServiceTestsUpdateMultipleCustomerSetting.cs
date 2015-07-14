@@ -12,7 +12,6 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -21,35 +20,36 @@
     public class SettingServiceTestsUpdateMultipleCustomerSetting
     {
         private ISettingService _settingService;
+        private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
-        private ISettingContext _settingContext;
+        private IResourceService _resourceService;
+        private ILoggingService _loggingService;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
         private ISettingTypeDataAccess _settingDataAccess;
-        private IResourceService _resourceService;
-        private ILogger _logger;
 
         [SetUp]
         public void Setup()
         {
-            _dymanicRepository = Substitute.For<IDynamicRepository>();
             _settingContext = new SettingContextStub();
+            _resourceService = Substitute.For<IResourceService>();
+            _loggingService = Substitute.For<ILoggingService>();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
+            _dymanicRepository = Substitute.For<IDynamicRepository>();
+
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
-            _resourceService = Substitute.For<IResourceService>();
-            _logger = Substitute.For<ILogger>();
 
             _settingService = new SettingService(
                 _settingContext,
                 _validationService,
                 _productService,
-                _settingResolver,
-                _dymanicRepository,
                 _resourceService,
-                _logger);
+                _loggingService,
+                _settingResolver,
+                _dymanicRepository);
         }
 
         [Test]
@@ -104,7 +104,7 @@
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
                 Arg.Any<CustomerLevel?>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
-            
+
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
@@ -367,7 +367,7 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_RaisedException_ExecuteErrorOnLogger()
+        public void UpdateMultipleCustomerSetting_RaisedException_CallLogUpdatingMultipleCustomersSettingTypeError()
         {
             //// Arrange
             UpdatingMultipleSettingParam updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
@@ -380,7 +380,12 @@
             _settingService.UpdateMultipleCustomerSetting(updatingMultipleSettingParam);
 
             //// Assert
-            _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
+            _loggingService.Received().LogUpdatingMultipleCustomersSettingTypeError(
+                Arg.Is<IEnumerable<int>>(customerIds => string.Join(",", customerIds) == string.Join(",", updatingMultipleSettingParam.CustomerIds)),
+                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingMultipleSettingParam.UplineLevel),
+                Arg.Is<byte>(productId => productId == updatingMultipleSettingParam.Setting.ProductId),
+                Arg.Any<SettingType>(),
+                Arg.Any<Exception>());
         }
     }
 }

@@ -14,29 +14,28 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     public class ValidationService : IValidationService
     {
         private readonly ISettingContext _settingContext;
-        private readonly IValidationDataAccess _validationDataAccess;
+        private readonly ILoggingService _loggingService;
         private readonly IProductService _productService;
+        private readonly IValidationDataAccess _validationDataAccess;
         private readonly IDynamicRepository _dynamicRepository;
-        private readonly ILogger _logger;
 
         public ValidationService(
             ISettingContext settingContext,
-            IValidationDataAccess validationDataAccess = null,
-            IDynamicRepository dynamicRepository = null,
             IProductService productService = null,
-            ILogger logger = null)
+            ILoggingService loggingService = null,
+            IValidationDataAccess validationDataAccess = null,
+            IDynamicRepository dynamicRepository = null)
         {
             _settingContext = settingContext;
+            _productService = productService ?? new ProductService();
+            _loggingService = loggingService ?? new LoggingService(_settingContext);
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
-            _productService = productService ?? new ProductService();
-            _logger = logger ?? Logger.Log;
         }
 
         public IResult ValidateQuerySetting(QuerySettingParam queryParam)
@@ -54,7 +53,7 @@
                 return result;
             }
 
-            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel) 
+            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel)
                 || !IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
             {
                 return Result.AccessDenied;
@@ -134,10 +133,10 @@
 
         public IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
         {
+            Check.Argument.IsNotNull(updatingParam, "updatingParam");
+
             try
             {
-                Check.Argument.IsNotNull(updatingParam, "updatingParam");
-
                 var setting = updatingParam.Setting;
                 var querySettingParam = new QuerySettingParam(setting.CustomerId, setting.CustomerLevel, setting.ProductId, updatingParam.UplineLevel);
 
@@ -163,7 +162,11 @@
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                _loggingService.LogValidatingUpdatingError(
+                    updatingParam.Setting.CustomerId,
+                    updatingParam.UplineLevel,
+                    updatingParam.Setting.ProductId,
+                    ex);
 
                 return Result.SystemError;
             }
@@ -222,10 +225,10 @@
 
         public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParam updatingMultipleParam)
         {
+            Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
+
             try
             {
-                Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
-
                 var result = ValidateUpdatingSetting(updatingMultipleParam);
                 if (!result.IsSuccessful)
                 {
@@ -238,7 +241,12 @@
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                _loggingService.LogValidatingUpdatingMultipleError(
+                    updatingMultipleParam.CustomerIds,
+                    updatingMultipleParam.UplineLevel,
+                    updatingMultipleParam.Setting.ProductId,
+                    ex);
+
                 return Result.SystemError;
             }
         }
@@ -251,11 +259,6 @@
             }
 
             return Result.Success;
-        }
-
-        private void LogError(Exception ex)
-        {
-            _logger.Error(ex.Message, ex);
         }
     }
 }
