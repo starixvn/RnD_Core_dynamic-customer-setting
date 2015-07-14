@@ -1,9 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Enumerations
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Constants;
 
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
+    [Serializable]
     public class UserLevel : Enumeration
     {
         public static readonly UserLevel Company = new UserLevel(Level.Company, "Company");

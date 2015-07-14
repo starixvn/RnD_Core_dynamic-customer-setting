@@ -39,7 +39,7 @@
 
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentOutOfRangeException("value", "Username cannot be null or empty.");
                 }
@@ -75,20 +75,19 @@
 
             set
             {
-                if (value.Value < Constants.Level.Agent || value.Value > Constants.Level.Company)
+                if (ReferenceEquals(value, null))
                 {
-                    throw new ArgumentOutOfRangeException("value", "User level is invalid.");
+                    throw new ArgumentNullException("value");
                 }
 
                 _userLevel = value;
             }
         }
 
-        public bool Is(UserLevel level)
+        public bool Is(Enumeration level)
         {
             return this.Level == level;
         }
 
-       
     }
 }

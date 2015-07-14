@@ -71,6 +71,11 @@
 
         public override bool Equals(object obj)
         {
+            if (obj == null)
+            {
+                return false;
+            }
+
             var otherValue = obj as Enumeration;
 
             if (otherValue == null)
@@ -91,6 +96,16 @@
 
         public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
         {
+            if (firstValue == null)
+            {
+                throw new ArgumentNullException("firstValue");
+            }
+
+            if (secondValue == null)
+            {
+                throw new ArgumentNullException("secondValue");
+            }
+
             var absoluteDifference = Math.Abs(firstValue.Value - secondValue.Value);
             return absoluteDifference;
         }
@@ -120,11 +135,83 @@
             return matchingItem;
         }
 
-        public virtual int CompareTo(object other)
+        public virtual int CompareTo(object obj)
         {
-            return Value.CompareTo(((Enumeration)other).Value);
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            return Value.CompareTo(((Enumeration)obj).Value);
         }
 
+        public static bool operator ==(Enumeration left, Enumeration right)
+        {
 
+             if (ReferenceEquals(left, null))
+             {
+                 if (ReferenceEquals(right, null))
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
+             }
+             else
+             {
+                 if (ReferenceEquals(right, null))
+                 {
+                     return false;
+                 }
+                 else
+                 {
+                    return left.Value == right.Value;
+                 }
+             }
+        }
+
+        public static bool operator !=(Enumeration left, Enumeration right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator >(Enumeration left, Enumeration right)
+        {
+            ValidateInputArguments(left, right);
+            return left.Value > right.Value;
+        }
+
+        public static bool operator >=(Enumeration left, Enumeration right)
+        {
+            ValidateInputArguments(left, right);
+            return left.Value >= right.Value;
+        }
+
+        public static bool operator <(Enumeration left, Enumeration right)
+        {
+            ValidateInputArguments(left, right);
+            return left.Value < right.Value;
+        }
+
+        public static bool operator <=(Enumeration left, Enumeration right)
+        {
+            ValidateInputArguments(left, right);
+            return left.Value <= right.Value;
+        }
+
+        private static void ValidateInputArguments(Enumeration left, Enumeration right)
+        {
+            if (ReferenceEquals(left, null))
+            {
+                throw new ArgumentNullException("left");
+            }
+
+            if (ReferenceEquals(right, null))
+            {
+                throw new ArgumentNullException("right");
+            }
+        }
     }
 }
