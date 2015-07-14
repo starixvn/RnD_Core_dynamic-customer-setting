@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -12,27 +12,40 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Logging;
+    using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
 
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1013:ClosingCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
     public class ValidationServiceTestsValidateQuerySetting
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
+        private IDynamicRepository _dynamicRepository;
         private ILogger _logger;
         private IProductService _productService;
 
         [SetUp]
         public void Setup()
         {
-            _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _settingContext = new SettingContextStub();
+            _validationDataAccess = Substitute.For<IValidationDataAccess>();
+            _dynamicRepository = Substitute.For<IDynamicRepository>();
             _productService = Substitute.For<IProductService>();
             _logger = Substitute.For<ILogger>();
 
-            _validationService = new ValidationService(_settingContext, _validationDataAccess, _productService, _logger);
+            _validationService = new ValidationService(
+                _settingContext,
+                _validationDataAccess,
+                _dynamicRepository,
+                _productService,
+                _logger);
         }
 
         [Test]
@@ -47,11 +60,19 @@
                     () => _validationService.ValidateQuerySetting(queryParam)));
         }
 
-        private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
+        private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+        }
+
+        private void AssumeActorStatusIsEnabled()
+        {
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(true);
+        }
+
+        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(CustomerLevel customerLevel)
+        {
+            _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns((byte)customerLevel);
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorHasPermission_Cases")]
@@ -69,7 +90,9 @@
 
             _settingContext.Actor.Level = userLevel;
 
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeCutomerIsDownlineOfActor();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -78,7 +101,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateQuerySetting_ActorHasPermission_Cases = 
+        private static object[] ValidateQuerySetting_ActorHasPermission_Cases =
         {
             new object[] {UserLevel.Company, CustomerLevel.Super, null},
             new object[] {UserLevel.Company, CustomerLevel.Master, null},
@@ -104,7 +127,9 @@
 
             _settingContext.Actor.Level = userLevel;
 
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -113,7 +138,7 @@
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateQuerySetting_ActorDoesNotHavePermission_Cases = 
+        private static object[] ValidateQuerySetting_ActorDoesNotHavePermission_Cases =
         {
             new object[] {UserLevel.Super, CustomerLevel.Super},
             new object[] {UserLevel.Super, CustomerLevel.Agent},
@@ -125,7 +150,7 @@
         };
 
         [Test]
-        public void ValidateQuerySetting_Always_CallValidateActorEnabled()
+        public void ValidateQuerySetting_Always_CallGetActorStatus()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
@@ -135,18 +160,38 @@
                 uplineLevel: CustomerLevel.Agent);
 
             _settingContext.Actor.Level = UserLevel.Agent;
-
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
+            _dynamicRepository.Received().Get<bool>(Arg.Is<ActorStatusQueryCriteria>(criteria => criteria.ActorId == _settingContext.Actor.Id));
         }
 
         [Test]
-        public void ValidateQuerySetting_Always_CallValidateLevel()
+        public void ValidateQuerySetting_ActorIsDisabled_ReturnFailedResult()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam(
+                customerId: 1,
+                customerLevel: CustomerLevel.Member,
+                productId: 1,
+                uplineLevel: CustomerLevel.Agent);
+
+            _settingContext.Actor.Level = UserLevel.Agent;
+            _settingContext.Actor.Name = "ActorName";
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(false);
+
+            //// Act
+            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+
+            //// Assert
+            Assert.IsFalse(actualResult.IsSuccessful);
+            Assert.AreEqual("Account ActorName was disbaled.", actualResult.Message);
+        }
+
+        [Test]
+        public void ValidateQuerySetting_Always_CallGetCustomerLevel()
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
@@ -156,34 +201,64 @@
                 uplineLevel: CustomerLevel.Agent);
             _settingContext.Actor.Level = UserLevel.Agent;
 
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
+            AssumeActorStatusIsEnabled();
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateCustomerAndActorLevel(_settingContext.Actor.Id, queryParam.CustomerId, (byte)queryParam.CustomerLevel);
+            _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == queryParam.CustomerId));
         }
 
-        [Test]
-        public void ValidateQuerySetting_Always_CallValidateBelongIn()
+        private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases =
+        {
+            new object[] {UserLevel.Super, CustomerLevel.Super},
+            new object[] {UserLevel.Master, CustomerLevel.Master},
+            new object[] {UserLevel.Agent, CustomerLevel.Agent}
+        };
+
+        [Test, TestCaseSource("ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases")]
+        public void ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn(
+            UserLevel actorLevel,
+            CustomerLevel uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
                 customerLevel: CustomerLevel.Member,
                 productId: 1,
-                uplineLevel: CustomerLevel.Agent);
-            _settingContext.Actor.Level = UserLevel.Agent;
+                uplineLevel: uplineLevel);
+            _settingContext.Actor.Level = actorLevel;
 
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
             _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
+        }
+
+        [Test]
+        public void ValidateQuerySetting_ActorIsCompany_DontCallValidateBelongIn()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam(
+                customerId: 1,
+                customerLevel: CustomerLevel.Member,
+                productId: 1,
+                uplineLevel: CustomerLevel.Agent);
+            _settingContext.Actor.Level = UserLevel.Company;
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+
+            //// Act
+            _validationService.ValidateQuerySetting(queryParam);
+
+            //// Assert
+            _validationDataAccess.DidNotReceive().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]
@@ -199,7 +274,9 @@
                 uplineLevel: uplineLevel);
             _settingContext.Actor.Level = actorLevel;
 
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -208,14 +285,14 @@
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
         }
 
-        static object[] ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases = 
+        private static object[] ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
         {
             new object[] {UserLevel.Super, CustomerLevel.Master},
             new object[] {UserLevel.Master, CustomerLevel.Agent},
             new object[] {UserLevel.Agent, CustomerLevel.Super}
         };
 
-       [Test, TestCaseSource("ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases")]
+        [Test, TestCaseSource("ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases")]
         public void ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_ReturnSuccessResult(
             UserLevel actorLevel,
             CustomerLevel uplineLevel)
@@ -228,7 +305,9 @@
                 uplineLevel: uplineLevel);
             _settingContext.Actor.Level = actorLevel;
 
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -237,7 +316,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases = 
+        private static object[] ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases =
         {
             new object[] {UserLevel.Company, CustomerLevel.Super},
             new object[] {UserLevel.Company, CustomerLevel.Master},
@@ -247,7 +326,7 @@
             new object[] {UserLevel.Agent, CustomerLevel.Agent}
         };
 
-       [Test, TestCaseSource("ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases")]
+        [Test, TestCaseSource("ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases")]
         public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(CustomerLevel customerLevel)
         {
             //// Arrange
@@ -257,7 +336,9 @@
                 productId: 1);
             _settingContext.Actor.Level = UserLevel.Company;
 
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             var actualResult = _validationService.ValidateQuerySetting(queryParam);
@@ -266,7 +347,8 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        static CustomerLevel[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = new CustomerLevel[] {
+        private static CustomerLevel[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = new CustomerLevel[] 
+        {
             CustomerLevel.Super, CustomerLevel.Master, CustomerLevel.Agent
         };
     }

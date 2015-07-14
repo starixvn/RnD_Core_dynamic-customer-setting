@@ -70,6 +70,15 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account {0} was disbaled..
+        /// </summary>
+        public static string AccountWasDisabled {
+            get {
+                return ResourceManager.GetString("AccountWasDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is not valid..
         /// </summary>
         public static string DataIsNotValid {

@@ -112,7 +112,7 @@
             _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _dymanicRepository.Received().Get<CustomerInfo>(Arg.Is<CustomerQueryCriteria>(
+            _dymanicRepository.Received().Get<CustomerInfo>(Arg.Is<CustomerInfoQueryCriteria>(
                     criteria => criteria.CustId == querySettingParam.CustomerId));
         }
 
@@ -151,7 +151,7 @@
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var expectedCustomerInfo = new CustomerInfo { UserName = "CustomerUserName" };
-            _dymanicRepository.Get<CustomerInfo>(Arg.Any<CustomerQueryCriteria>()).Returns(expectedCustomerInfo);
+            _dymanicRepository.Get<CustomerInfo>(Arg.Any<CustomerInfoQueryCriteria>()).Returns(expectedCustomerInfo);
 
             //// Act
             var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);

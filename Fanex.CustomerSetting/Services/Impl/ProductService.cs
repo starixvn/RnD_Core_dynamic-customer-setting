@@ -63,5 +63,10 @@
                 _cacheManager.Set<IEnumerable<SettingType>>(cacheKey, settingTypes);
             }
         }
+
+        public SettingType GetProductSettingType(byte productId, byte settingTypeId)
+        {
+            return GetProductSettingTypes(productId).FirstOrDefault(settingType => settingType.Id == settingTypeId);
+        }
     }
 }

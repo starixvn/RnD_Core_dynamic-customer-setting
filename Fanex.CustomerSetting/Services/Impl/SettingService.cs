@@ -103,12 +103,12 @@
 
         private CustomerInfo GetCustomerInfo(int customerId)
         {
-            var customer = _dynamicRepository.Get<CustomerInfo>(new CustomerQueryCriteria 
+            var customerInfo = _dynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria 
             { 
                 CustId = customerId 
             });
 
-            return customer;
+            return customerInfo;
         }
 
         /// <summary>

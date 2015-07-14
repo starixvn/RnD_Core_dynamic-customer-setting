@@ -6,6 +6,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -14,22 +15,26 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.Logging;
+    using Fanex.NAP.Framework.Data;
 
     public class ValidationService : IValidationService
     {
         private readonly ISettingContext _settingContext;
         private readonly IValidationDataAccess _validationDataAccess;
         private readonly IProductService _productService;
+        private readonly IDynamicRepository _dynamicRepository;
         private readonly ILogger _logger;
 
         public ValidationService(
             ISettingContext settingContext,
             IValidationDataAccess validationDataAccess = null,
+            IDynamicRepository dynamicRepository = null,
             IProductService productService = null,
             ILogger logger = null)
         {
             _settingContext = settingContext;
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
             _productService = productService ?? new ProductService();
             _logger = logger ?? Logger.Log;
         }
@@ -42,33 +47,27 @@
             var customerLevel = queryParam.CustomerLevel;
             var uplineLevel = queryParam.UplineLevel;
 
-            IResult result = IsActorEnabled();
+            IResult result = VerifyActorStatusIsEnabled();
 
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
-            if (!IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
+            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel) 
+                || !IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
             {
                 return Result.AccessDenied;
             }
 
-            result = ValidateCustomerLevelAndActorLevel(customerId, customerLevel);
+            result = ValidateActorLevelWithUplineLevelOfCustomer(customerLevel, uplineLevel);
 
             if (!result.IsSuccessful)
             {
                 return result;
             }
 
-            result = ValidateBelongIn(customerId);
-
-            if (!result.IsSuccessful)
-            {
-                return result;
-            }
-
-            return ValidateActorLevelWithUplineLevelOfCustomer(customerLevel, uplineLevel);
+            return ValidateBelongIn(customerId);
         }
 
         private bool IsLevelConstrainsBetweenActorAndCustomerValid(CustomerLevel customerLevel)
@@ -82,9 +81,19 @@
             return result;
         }
 
-        private IResult IsActorEnabled()
+        private IResult VerifyActorStatusIsEnabled()
         {
-            return _validationDataAccess.ValidateActorEnabled(_settingContext.Actor.Id);
+            var isEnabled = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
+                {
+                    ActorId = _settingContext.Actor.Id
+                });
+
+            if (!isEnabled)
+            {
+                return new Result(ResultValue.AccessDenied, string.Format(Message.AccountWasDisabled, _settingContext.Actor.Name));
+            }
+
+            return Result.Success;
         }
 
         private IResult ValidateBelongIn(int customerId)
@@ -99,9 +108,14 @@
             }
         }
 
-        private IResult ValidateCustomerLevelAndActorLevel(int customerId, CustomerLevel customerLevel)
+        private bool IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(int customerId, CustomerLevel customerLevel)
         {
-            return _validationDataAccess.ValidateCustomerAndActorLevel(_settingContext.Actor.Id, customerId, (byte)customerLevel);
+            var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
+            {
+                CustId = customerId
+            });
+
+            return (CustomerLevel)actualCustomerLevel == customerLevel;
         }
 
         private IResult ValidateActorLevelWithUplineLevelOfCustomer(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
@@ -172,7 +186,7 @@
         /// Gets the system identifier, declares virtual for being testable.
         /// </summary>
         /// <returns>Current system id which actor performs actions.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
         public virtual byte GetCurrentSystemId()
         {
             return CustomerSettingSection.Settings.SystemId;

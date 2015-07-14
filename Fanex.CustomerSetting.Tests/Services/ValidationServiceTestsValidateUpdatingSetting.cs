@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -12,34 +12,55 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Logging;
+    using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
 
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1013:ClosingCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
     public class ValidationServiceTestsValidateUpdatingSetting
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
+        private IDynamicRepository _dynamicRepository;
         private ILogger _logger;
         private IProductService _productService;
 
         [SetUp]
         public void Setup()
         {
-            _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _settingContext = new SettingContextStub();
+            _validationDataAccess = Substitute.For<IValidationDataAccess>();
+            _dynamicRepository = Substitute.For<IDynamicRepository>();
             _productService = Substitute.For<IProductService>();
             _logger = Substitute.For<ILogger>();
 
-            _validationService = new ValidationService(_settingContext, _validationDataAccess, _productService, _logger);
+            _validationService = new ValidationService(
+                _settingContext,
+                _validationDataAccess,
+                _dynamicRepository,
+                _productService,
+                _logger);
         }
 
-        private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
+        private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
+        }
+
+        private void AssumeActorStatusIsEnabled()
+        {
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(true);
+        }
+
+        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(CustomerLevel customerLevel)
+        {
+            _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns((byte)customerLevel);
         }
 
         [Test]
@@ -56,16 +77,20 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_CallValidateActorEnabled()
+        public void ValidateUpdatingSetting_Always_CallValidateBelongIn()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            _settingContext.Actor.Level = UserLevel.Super;
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateActorEnabled(_settingContext.Actor.Id);
+            _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, updatingParam.Setting.CustomerId);
         }
 
         [Test]
@@ -73,7 +98,10 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -97,7 +125,10 @@
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam(1, customerLevel, 1, uplineLevel);
             _settingContext.Actor.Level = actorLevel;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
             AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -107,7 +138,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateUpdatingSetting_ActorHasPermission_Cases = 
+        private static object[] ValidateUpdatingSetting_ActorHasPermission_Cases =
         {
             new object[] {UserLevel.Company, CustomerLevel.Super, null},
             new object[] {UserLevel.Company, CustomerLevel.Master, null},
@@ -120,15 +151,18 @@
             new object[] {UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent}
         };
 
-       [Test, TestCaseSource("ValidateUpdatingSetting_ActorHasNoPermission_Cases")]
-        public void ValidateUpdatingSetting_ActorHasNoPermission_ReturnFailedResult(
+        [Test, TestCaseSource("ValidateUpdatingSetting_ActorDoesNotHavePermission_Cases")]
+        public void ValidateUpdatingSetting_ActorDoesNotHavePermission_ReturnFailedResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam(1, customerLevel);
             _settingContext.Actor.Level = actorLevel;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
 
             //// Act
             var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
@@ -137,8 +171,7 @@
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
-
-        static object[] ValidateUpdatingSetting_ActorHasNoPermission_Cases = 
+        private static object[] ValidateUpdatingSetting_ActorDoesNotHavePermission_Cases =
         {
             new object[] {UserLevel.Super, CustomerLevel.Super},
             new object[] {UserLevel.Super, CustomerLevel.Agent},
@@ -154,7 +187,11 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
+
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceFactory.CreateCustomerSettingType(1)
@@ -177,7 +214,11 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
+
             updatingParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceFactory.CreateCustomerSettingType(1)
@@ -213,7 +254,10 @@
                     }
                 }
             };
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
             _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -224,15 +268,23 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CompanyPerformUpdatingActionInAgencySystem_ReturnAccessDeniedResult()
+        public void ValidateUpdatingSetting_CompanyPerformsUpdatingActionInAgencySystem_ReturnAccessDeniedResult()
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             _settingContext.Actor.Level = UserLevel.Company;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
             AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
 
-            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(_settingContext, _validationDataAccess, _productService, _logger);
+            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(
+                _settingContext,
+                _validationDataAccess,
+                _dynamicRepository,
+                _productService,
+                _logger);
             validationServiceStub.GetCurrentSystemId().Returns((byte)SystemType.Agency);
 
             //// Act
@@ -244,15 +296,23 @@
 
         [TestCase((byte)SystemType.Accounting)]
         [TestCase((byte)SystemType.ExternalAccounting)]
-        public void ValidateUpdatingSetting_CompanyPerformUpdatingActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
+        public void ValidateUpdatingSetting_CompanyPerformsUpdatingActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
             _settingContext.Actor.Level = UserLevel.Company;
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
+            AssumeCutomerIsDownlineOfActor();
             AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
 
-            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(_settingContext, _validationDataAccess, _productService, _logger);
+            var validationServiceStub = Substitute.ForPartsOf<ValidationService>(
+                _settingContext,
+                _validationDataAccess,
+                _dynamicRepository,
+                _productService,
+                _logger);
             validationServiceStub.GetCurrentSystemId().Returns(systemId);
 
             //// Act

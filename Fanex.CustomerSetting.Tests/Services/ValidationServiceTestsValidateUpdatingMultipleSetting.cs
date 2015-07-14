@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -12,35 +14,56 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Logging;
+    using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
 
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1013:ClosingCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
     public class ValidationServiceTestsValidateUpdatingMultipleSetting
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
+        private IDynamicRepository _dynamicRepository;
         private ILogger _logger;
         private IProductService _productService;
 
         [SetUp]
         public void Setup()
         {
-            _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _settingContext = new SettingContextStub();
+            _validationDataAccess = Substitute.For<IValidationDataAccess>();
+            _dynamicRepository = Substitute.For<IDynamicRepository>();
             _productService = Substitute.For<IProductService>();
             _logger = Substitute.For<ILogger>();
 
-            _validationService = new ValidationService(_settingContext, _validationDataAccess, _productService, _logger);
+            _validationService = new ValidationService(
+                _settingContext, 
+                _validationDataAccess, 
+                _dynamicRepository,
+                _productService, 
+                _logger);
         }
 
         private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
         {
-            _validationDataAccess.ValidateActorEnabled(Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
-            _validationDataAccess.ValidateCustomerAndActorLevel(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<byte>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
+        }
+
+        private void AssumeActorStatusIsEnabled()
+        {
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(true);
+        }
+
+        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(CustomerLevel customerLevel)
+        {
+            _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns((byte)customerLevel);
         }
 
         private void AssumeCustomerSettingTypeAreValid(IEnumerable<SettingType> dummySettingTypes)
@@ -67,6 +90,8 @@
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
             AssumeCustomerSettingTypeAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -89,6 +114,8 @@
             _settingContext.Actor.Level = actorLevel;
 
             AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingParam.Setting.CustomerLevel);
             AssumeCustomerSettingTypeAreValid(updatingParam.Setting.SettingTypes);
 
             //// Act
@@ -98,7 +125,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateUpdatingMultipleSetting_ActorHasPermission_Cases = 
+        private static object[] ValidateUpdatingMultipleSetting_ActorHasPermission_Cases = 
         {
             new object[] {UserLevel.Company, CustomerLevel.Super, null},
             new object[] {UserLevel.Company, CustomerLevel.Master, null},
@@ -111,8 +138,8 @@
             new object[] {UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent}
         };
 
-        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_Cases")]
-        public void ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_ReturnFailedResult(
+        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_Cases")]
+        public void ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_ReturnFailedResult(
             UserLevel actorLevel,
             CustomerLevel customerLevel)
         {
@@ -127,7 +154,7 @@
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
-        static object[] ValidateUpdatingMultipleSetting_ActorHasNoPermissionOnCustomer_Cases = 
+        private static object[] ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_Cases = 
         {
             new object[] {UserLevel.Super, CustomerLevel.Super},
             new object[] {UserLevel.Super, CustomerLevel.Agent},

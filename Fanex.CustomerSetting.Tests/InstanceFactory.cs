@@ -112,7 +112,6 @@
             UserLevel userLevel = null,
             int subAccountId = 0)
         {
-            
             return new User
             {
                 Id = userId,

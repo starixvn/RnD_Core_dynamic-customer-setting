@@ -7,7 +7,7 @@
     {
         private User _actor = new User
         {
-            Id = 1,
+            Id = 100,
             Level = UserLevel.Company
         };
 

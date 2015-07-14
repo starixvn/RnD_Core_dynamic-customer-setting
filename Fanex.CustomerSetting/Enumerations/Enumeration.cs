@@ -5,7 +5,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Text;
 
     /// <summary>
     /// <see cref="https://github.com/HeadspringLabs/Tarantino/blob/master/src/Tarantino.Core/Commons/Model/Enumerations/Enumeration.cs"/>
@@ -13,8 +12,8 @@
     [Serializable]
     public abstract class Enumeration : IComparable
     {
-        private readonly int _value;
         private readonly string _displayName;
+        private readonly int _value;
 
         protected Enumeration()
         {
@@ -26,19 +25,32 @@
             _displayName = displayName;
         }
 
-        public int Value
-        {
-            get { return _value; }
-        }
-
         public string DisplayName
         {
             get { return _displayName; }
         }
 
-        public override string ToString()
+        public int Value
         {
-            return DisplayName;
+            get { return _value; }
+        }
+
+        public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
+        {
+            var absoluteDifference = Math.Abs(firstValue.Value - secondValue.Value);
+            return absoluteDifference;
+        }
+
+        public static T FromDisplayName<T>(string displayName) where T : Enumeration, new()
+        {
+            var matchingItem = Parse<T, string>(displayName, "display name", item => item.DisplayName == displayName);
+            return matchingItem;
+        }
+
+        public static T FromValue<T>(int value) where T : Enumeration, new()
+        {
+            var matchingItem = Parse<T, int>(value, "value", item => item.Value == value);
+            return matchingItem;
         }
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration, new()
@@ -69,6 +81,11 @@
             }
         }
 
+        public virtual int CompareTo(object other)
+        {
+            return Value.CompareTo(((Enumeration)other).Value);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -94,7 +111,7 @@
             return _value.GetHashCode();
         }
 
-        public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
+        public override string ToString()
         {
             if (firstValue == null)
             {
@@ -122,7 +139,7 @@
             return matchingItem;
         }
 
-        private static T parse<T, K>(K value, string description, Func<T, bool> predicate) where T : Enumeration, new()
+        private static T Parse<T, K>(K value, string description, Func<T, bool> predicate) where T : Enumeration, new()
         {
             var matchingItem = GetAll<T>().FirstOrDefault(predicate);
 

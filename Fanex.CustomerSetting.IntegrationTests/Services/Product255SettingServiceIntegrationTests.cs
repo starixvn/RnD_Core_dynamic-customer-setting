@@ -56,7 +56,7 @@
         #region Get Customer Setting
 
         [Test]
-        public void GetCustomerSetting_CompanyViewSuperSetting()
+        public void GetCustomerSetting_CompanyViewsSuperSetting()
         {
             //// Arrange
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
@@ -101,7 +101,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(SuperId, 4)]
-        public void GetCustomerSetting_ViewMasterSetting(int actorId, int actorLevelValue)
+        public void GetCustomerSetting_ViewingMasterSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -146,7 +146,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(MasterId, 3)]
-        public void GetCustomerSetting_ViewAgentSetting(int actorId, int  actorLevelValue)
+        public void GetCustomerSetting_ViewingAgentSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -194,7 +194,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(SuperId, 4)]
-        public void GetCustomerSetting_SuperViewMemberSetting(int actorId, int actorLevelValue)
+        public void GetCustomerSetting_SuperViewsMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -239,7 +239,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(MasterId, 3)]
-        public void GetCustomerSetting_MasterViewMemberSetting(int actorId, int actorLevelValue)
+        public void GetCustomerSetting_MasterViewsMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -283,7 +283,7 @@
 
         [TestCase(CompanyId, 5)]
         [TestCase(AgentId, 2)]
-        public void GetCustomerSetting_AgentViewMemberSetting(int actorId, int actorLevelValue)
+        public void GetCustomerSetting_AgentViewsMemberSetting(int actorId, int actorLevelValue)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
@@ -326,7 +326,7 @@
         #region Update Single Customer Setting
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdateSuperSetting()
+        public void UpdateCustomerSetting_CompanyUpdatesSuperSetting()
         {
             //// Arrange
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
@@ -381,20 +381,20 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdateMasterSetting()
+        public void UpdateCustomerSetting_CompanyUpdatesMasterSetting()
         {
-            UpdateCustomerSetting_UpdateMasterSetting(CompanyId, UserLevel.Company, true);
-            UpdateCustomerSetting_UpdateMasterSetting(CompanyId, UserLevel.Company, false);
+            UpdateCustomerSetting_UpdatingMasterSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_UpdatingMasterSetting(CompanyId, UserLevel.Company, false);
         }
 
         [Test]
-        public void UpdateCustomerSetting_SuperUpdateMasterSetting()
+        public void UpdateCustomerSetting_SuperUpdatesMasterSetting()
         {
-            UpdateCustomerSetting_UpdateMasterSetting(SuperId, UserLevel.Super, true);
-            UpdateCustomerSetting_UpdateMasterSetting(SuperId, UserLevel.Super, false);
+            UpdateCustomerSetting_UpdatingMasterSetting(SuperId, UserLevel.Super, true);
+            UpdateCustomerSetting_UpdatingMasterSetting(SuperId, UserLevel.Super, false);
         }
 
-        private void UpdateCustomerSetting_UpdateMasterSetting(int actorId, UserLevel actorLevel, bool isDisbaledProductStatus)
+        private void UpdateCustomerSetting_UpdatingMasterSetting(int actorId, UserLevel actorLevel, bool isDisbaledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -462,20 +462,20 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdateAgentSetting()
+        public void UpdateCustomerSetting_CompanyUpdatesAgentSetting()
         {
-            UpdateCustomerSetting_UpdateAgentSetting(CompanyId, UserLevel.Company, true);
-            UpdateCustomerSetting_UpdateAgentSetting(CompanyId, UserLevel.Company, false);
+            UpdateCustomerSetting_UpdatingAgentSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_UpdatingAgentSetting(CompanyId, UserLevel.Company, false);
         }
 
         [Test]
-        public void UpdateCustomerSetting_MasterUpdateAgentSetting()
+        public void UpdateCustomerSetting_MasterUpdatesAgentSetting()
         {
-            UpdateCustomerSetting_UpdateAgentSetting(MasterId, UserLevel.Master, true);
-            UpdateCustomerSetting_UpdateAgentSetting(MasterId, UserLevel.Master, false);
+            UpdateCustomerSetting_UpdatingAgentSetting(MasterId, UserLevel.Master, true);
+            UpdateCustomerSetting_UpdatingAgentSetting(MasterId, UserLevel.Master, false);
         }
 
-        private void UpdateCustomerSetting_UpdateAgentSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
+        private void UpdateCustomerSetting_UpdatingAgentSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -548,20 +548,20 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_AgentUpdateMemberSetting()
+        public void UpdateCustomerSetting_AgentUpdatesMemberSetting()
         {
-            UpdateCustomerSetting_AgentUpdateMemberSetting(AgentId, UserLevel.Agent, true);
-            UpdateCustomerSetting_AgentUpdateMemberSetting(AgentId, UserLevel.Agent, false);
+            UpdateCustomerSetting_AgentUpdatesMemberSetting(AgentId, UserLevel.Agent, true);
+            UpdateCustomerSetting_AgentUpdatesMemberSetting(AgentId, UserLevel.Agent, false);
         }
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdateMemberSettingByAgentView()
+        public void UpdateCustomerSetting_CompanyUpdatesMemberSettingByAgentView()
         {
-            UpdateCustomerSetting_AgentUpdateMemberSetting(CompanyId, UserLevel.Company, true);
-            UpdateCustomerSetting_AgentUpdateMemberSetting(CompanyId, UserLevel.Company, false);
+            UpdateCustomerSetting_AgentUpdatesMemberSetting(CompanyId, UserLevel.Company, true);
+            UpdateCustomerSetting_AgentUpdatesMemberSetting(CompanyId, UserLevel.Company, false);
         }
 
-        private void UpdateCustomerSetting_AgentUpdateMemberSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
+        private void UpdateCustomerSetting_AgentUpdatesMemberSetting(int actorId, UserLevel actorLevel, bool isDisabledProductStatus)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -609,15 +609,17 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_MasterUpdatePTOnMember()
+        public void UpdateCustomerSetting_MasterUpdatesPTOnMember()
         {
+            //// Update two time for auto pt and not auto pt
             UpdateCustomerSetting_MasterUpdatesPTOnMember(MasterId, UserLevel.Master);
             UpdateCustomerSetting_MasterUpdatesPTOnMember(MasterId, UserLevel.Master);
         }
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdeteMasterPTOnMember()
+        public void UpdateCustomerSetting_CompanyUpdatesMasterPTOnMember()
         {
+            //// Update two time for auto pt and not auto pt
             UpdateCustomerSetting_MasterUpdatesPTOnMember(CompanyId, UserLevel.Company);
             UpdateCustomerSetting_MasterUpdatesPTOnMember(CompanyId, UserLevel.Company);
         }
@@ -666,16 +668,20 @@
         }
 
         [Test]
-        public void UpdateCustomerSetting_SuperUpdatePTOnMember()
+        public void UpdateCustomerSetting_SuperUpdatesPTOnMember()
         {
-            //// Waiting for Johnson fixing bug
+            //// Waiting for anh Johnson fixes bug
+            //// Update two time for auto pt and not auto pt
+            ////UpdateCustomerSetting_SuperUpdatesPTOnMember(SuperId, UserLevel.Super);
             ////UpdateCustomerSetting_SuperUpdatesPTOnMember(SuperId, UserLevel.Super);
         }
 
         [Test]
-        public void UpdateCustomerSetting_CompanyUpdeteSuperPTOnMember()
+        public void UpdateCustomerSetting_CompanyUpdatesSuperPTOnMember()
         {
-            //// Waiting for Johnson fixing bug
+            //// Waiting for anh Johnson fixes bug
+            ///// Update two time for auto pt and not auto pt
+            ////UpdateCustomerSetting_SuperUpdatesPTOnMember(CompanyId, UserLevel.Company);
             ////UpdateCustomerSetting_SuperUpdatesPTOnMember(CompanyId, UserLevel.Company);
         }
 
@@ -690,13 +696,17 @@
 
             var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
+            superPTOnMemberItem.IS1 = !superPTOnMemberItem.IS1;
+
             if (superPTOnMemberItem.IS1)
             {
                 superPTOnMemberItem.US1 = (byte)(superPTOnMemberItem.US1 == 15 ? 16 : 15);
+                superPTOnMemberItem.S1 = 0;
             }
             else
             {
                 superPTOnMemberItem.S1 = (byte)(superPTOnMemberItem.S1 == 15 ? 16 : 15);
+                superPTOnMemberItem.US1 = 0;
             }
 
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
@@ -709,6 +719,7 @@
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
+
             var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
             var newSuperOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
             Assert.AreEqual(superPTOnMemberItem.S1, newSuperOnMemberPTItem.S1);
@@ -789,7 +800,7 @@
         }
 
         [Test]
-        public void UpdateMultipleCustomerSetting_MasterUpdateMultipleAgentsSetting()
+        public void UpdateMultipleCustomerSetting_MasterUpdatesMultipleAgentsSetting()
         {
             //// Arrange
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
