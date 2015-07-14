@@ -8,7 +8,8 @@
         private User _actor = new User
         {
             Id = 100,
-            Level = UserLevel.Company
+            Level = UserLevel.Company,
+            Name = "Admin"
         };
 
         private User _subAccount = new User

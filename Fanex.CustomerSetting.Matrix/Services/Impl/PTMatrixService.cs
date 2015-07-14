@@ -66,13 +66,13 @@
                 });
         }
 
-        private IEnumerable<PTItemMatrix> GetPTItemMatricesFromDto(IEnumerable<PTItemMatrixDto> pTMatrixDtos)
+        private IEnumerable<PTItemMatrix> GetPTItemMatricesFromDto(IEnumerable<PTItemMatrixDto> pTItemMatrixDtos)
         {
-            var pTItemMatrices = pTMatrixDtos.GroupBy(ptRow => new
+            var pTItemMatrices = pTItemMatrixDtos.GroupBy(dtoRow => new
             {
-                ptRow.SportType,
-                ptRow.BetType,
-                ptRow.IsLive
+                dtoRow.SportType,
+                dtoRow.BetType,
+                dtoRow.IsLive
             }).Select(group => new PTItemMatrix
             {
                 BetTypeId = group.Key.BetType,
@@ -80,7 +80,7 @@
                 SportTypeId = group.Key.SportType,
                 SportTypeName = _resourceService.GetSportTypeName(group.Key.BetType, DefaultLanguage),
                 IsLive = group.Key.IsLive,
-                PTItemMatrixRows = group.ToList().Select(ptItemMatrixRow => new PTItemMatrixRow(ptItemMatrixRow))
+                PTItemMatrixRows = group.ToList().Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto))
             });
 
             return pTItemMatrices;
@@ -88,14 +88,14 @@
 
         private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(string customerName, byte productId)
         {
-            var pTMatrixDtos = _dynamicRepository.Fetch<PTItemMatrixDto>(
+            var pTItemMatrixDtos = _dynamicRepository.Fetch<PTItemMatrixDto>(
                 new PTMatrixQueryCriteria
             {
                 ProductId = productId,
                 UserName = customerName
             });
 
-            return pTMatrixDtos;
+            return pTItemMatrixDtos;
         }
     }
 }

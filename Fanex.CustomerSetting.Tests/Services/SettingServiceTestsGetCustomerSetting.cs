@@ -13,7 +13,6 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -22,35 +21,36 @@
     public class SettingServiceTestsGetCustomerSetting
     {
         private ISettingService _settingService;
+        private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
-        private ISettingContext _settingContext;
+        private IResourceService _resourceService;
+        private ILoggingService _loggingService;
         private IDynamicRepository _dymanicRepository;
         private ISettingResolver _settingResolver;
         private ISettingTypeDataAccess _settingDataAccess;
-        private IResourceService _resourceService;
-        private ILogger _logger;
 
         [SetUp]
         public void Setup()
         {
-            _dymanicRepository = Substitute.For<IDynamicRepository>();
             _settingContext = new SettingContextStub();
+            _resourceService = Substitute.For<IResourceService>();
+            _loggingService = Substitute.For<ILoggingService>();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _settingResolver = Substitute.For<ISettingResolver>();
+            _dymanicRepository = Substitute.For<IDynamicRepository>();
+
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
-            _resourceService = Substitute.For<IResourceService>();
-            _logger = Substitute.For<ILogger>();
 
             _settingService = new SettingService(
                 _settingContext,
                 _validationService,
                 _productService,
-                _settingResolver,
-                _dymanicRepository,
                 _resourceService,
-                _logger);
+                _loggingService,
+                _settingResolver,
+                _dymanicRepository);
         }
 
         [Test]
@@ -349,7 +349,7 @@
         }
 
         [Test]
-        public void GetCustomerSetting_RaisedException_ExecuteErrorOnLogger()
+        public void GetCustomerSetting_RaisedException_ExecuteLogQueryCustomerSettingTypeError()
         {
             //// Arrange
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
@@ -361,7 +361,12 @@
             _settingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _logger.Received().Error(Arg.Any<string>(), Arg.Any<Exception>());
+            _loggingService.Received().LogQueryCustomerSettingTypeError(
+                Arg.Is<int>(customerId => customerId == querySettingParam.CustomerId),
+                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == querySettingParam.UplineLevel),
+                Arg.Is<byte>(productId => productId == querySettingParam.ProductId),
+                Arg.Any<SettingType>(),
+                Arg.Any<Exception>());
         }
     }
 }

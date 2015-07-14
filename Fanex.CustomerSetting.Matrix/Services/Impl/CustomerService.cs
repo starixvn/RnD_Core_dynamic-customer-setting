@@ -1,7 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
@@ -18,14 +19,27 @@
 
         public IEnumerable<Customer> GetCustomerLine(string customerName)
         {
-            var custtomerDtos = _dynamicRepository.Fetch<CustomerLineDto>(new CustomerLineQueryCriteria
+            var customerLineDto = _dynamicRepository.Get<CustomerLineDto>(new CustomerLineQueryCriteria
                 {
                     UserName = customerName
                 });
 
-            IEnumerable<Customer> customerLine = new List<Customer>();
+            switch (customerLineDto.CustomerLevel)
+            {
+                case CustomerLevel.Super:
+                    break;
 
-            return customerLine;
+                case CustomerLevel.Master:
+                    break;
+
+                case CustomerLevel.Agent:
+                    break;
+
+                case CustomerLevel.Member:
+                    break;
+            }
+
+            return Enumerable.Empty<Customer>();
         }
     }
 }

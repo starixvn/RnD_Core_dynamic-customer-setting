@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Dtos
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using Fanex.CustomerSetting.Enumerations;
 
     public class CustomerLineDto
     {
@@ -11,7 +8,7 @@
 
         public string UserName { get; set; }
 
-        public int? RoleID { get; set; }
+        public CustomerLevel CustomerLevel { get; set; }
 
         public byte? Currency { get; set; }
 

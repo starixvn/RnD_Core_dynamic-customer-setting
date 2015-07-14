@@ -56,7 +56,8 @@
             {
                 Id = settingTypeId,
                 SettingTemplate = settingTemplate,
-                SettingLevel = 1
+                SettingLevel = 1,
+                Name = "SettingTypeName"
             };
         }
 

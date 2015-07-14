@@ -25,19 +25,19 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
+        private readonly IResourceService _resourceService;
+        private readonly ILoggingService _loggingService;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
-        private readonly IResourceService _resourceService;
-        private readonly ILogger _logger;
 
         public SettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
-            ISettingResolver settingResolver = null,
-            IDynamicRepository dynamicRepository = null,
             IResourceService resourceService = null,
-            ILogger logger = null)
+            ILoggingService loggingService = null,
+            ISettingResolver settingResolver = null,
+            IDynamicRepository dynamicRepository = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
@@ -47,14 +47,16 @@
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
+            _resourceService = resourceService ?? new ResourceService();
+            _loggingService = loggingService ?? new LoggingService(_settingContext);
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
-            _resourceService = resourceService ?? new ResourceService();
-            _logger = logger ?? Logger.Log;
         }
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
+            Check.Argument.IsNotNull(queryParam, "queryParam");
+
             ValidateQuerySetting(queryParam);
 
             var product = GetProduct(queryParam.ProductId);
@@ -74,10 +76,7 @@
 
         private void ValidateQuerySetting(QuerySettingParam queryParam)
         {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
-
             var validationResult = _validationService.ValidateQuerySetting(queryParam);
-
             if (!validationResult.IsSuccessful)
             {
                 throw new InvalidOperationException(validationResult.Message);
@@ -121,39 +120,37 @@
         private IList<SettingType> GetCustomerSettingTypes(QuerySettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
-
             foreach (var productSettingType in productSettingTypes)
             {
-                GetCustomerSettingType(queryParam, customerSettingTypes, productSettingType);
+                try
+                {
+                    RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
+
+                    var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
+                    
+                    customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
+                    if (customerSettingType.SettingItems.Any())
+                    {
+                        customerSettingTypes.Add(customerSettingType);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _loggingService.LogQueryCustomerSettingTypeError(
+                        queryParam.CustomerId,
+                        queryParam.UplineLevel,
+                        queryParam.ProductId,
+                        productSettingType,
+                        ex);
+                }
             }
 
             return customerSettingTypes;
         }
 
-        private void GetCustomerSettingType(QuerySettingParam queryParam, List<SettingType> customerSettingTypes, SettingType productSettingType)
-        {
-            try
-            {
-                RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
-
-                var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-
-                customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
-                if (customerSettingType.SettingItems.Any())
-                {
-                    customerSettingTypes.Add(customerSettingType);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-            }
-        }
-
         private void RunPreGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-
             if (preTasks != null 
                 && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
             {
@@ -165,7 +162,6 @@
         {
             var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
             var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParam);
-
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             customerSettingType.SettingLevel = productSettingType.SettingLevel;
@@ -198,7 +194,6 @@
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingSetting(updatingParam);
-
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -220,7 +215,6 @@
             var uplineLevel = updatingParam.UplineLevel;
             var productId = updatingParam.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
-
             SettingResult updatingSettingTypeResult = null;
 
             foreach (var settingType in settingTypes)
@@ -244,7 +238,12 @@
                         settingType.Id, 
                         settingType.Name);
 
-                    LogError(ex);
+                    _loggingService.LogUpdatingCustomerSettingTypeError(
+                        customerId,
+                        uplineLevel,
+                        productId,
+                        settingType,
+                        ex);
                 }
 
                 settingTypeResults.Add(updatingSettingTypeResult);
@@ -256,7 +255,6 @@
         private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
             var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
-
             if (!preTasksResult.IsSuccessful)
             {
                 return preTasksResult;
@@ -275,7 +273,6 @@
             CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
-
             if (preTasks != null
                 && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
@@ -314,7 +311,6 @@
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingMultipleCustomerSetting(updatingMultipleParam);
-
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -356,8 +352,13 @@
                         settingTypeId: settingType.Id, 
                         settingTypeName: settingType.Name);
                     results.Add(errorResult);
-                    
-                    LogError(ex);
+
+                    _loggingService.LogUpdatingMultipleCustomersSettingTypeError(
+                        customerIds,
+                        uplineLevel,
+                        productId,
+                        settingType,
+                        ex);
                 }
             }
 
@@ -465,11 +466,6 @@
             return settingTypeMultipleResult;
         }
 
-        private void LogError(Exception ex)
-        {
-            _logger.Error(ex.Message, ex);
-        }
-
         private bool IsOverride(MethodInfo methodInfo)
         {
             return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
@@ -506,7 +502,6 @@
         {
             var customerIdNameContainer = new Dictionary<int, string>();
             var customerLength = customerIds.Count();
-
             for (int i = 0; i < customerLength; i++)
             {
                 customerIdNameContainer.Add(customerIds.ElementAt(i), customerNames.ElementAt(i));
