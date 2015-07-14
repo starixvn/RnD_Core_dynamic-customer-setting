@@ -54,7 +54,7 @@
                 return result;
             }
 
-            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel) 
+            if (!VerifyCustomerLevel(customerId, customerLevel) 
                 || !IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
             {
                 return Result.AccessDenied;
@@ -108,7 +108,7 @@
             }
         }
 
-        private bool IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(int customerId, CustomerLevel customerLevel)
+        private bool VerifyCustomerLevel(int customerId, CustomerLevel customerLevel)
         {
             var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
             {

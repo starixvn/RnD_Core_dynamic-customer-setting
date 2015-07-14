@@ -18,5 +18,11 @@
         int MsgType { get; }
 
         bool IsSuccessful { get; }
+
+        bool IsFailed { get; }
+
+        bool IsOK { get; }
+
+        bool IsNotOK { get; }
     }
 }

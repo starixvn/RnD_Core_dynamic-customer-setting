@@ -39,10 +39,22 @@
 
         public virtual bool IsSuccessful
         {
-            get
-            {
-                return Code == ResultValue.Success;
-            }
+            get { return Code == ResultValue.Success; }
+        }
+
+        public virtual bool IsFailed
+        {
+            get { return !IsSuccessful;  }
+        }
+
+        public bool IsOK
+        {
+            get { return IsSuccessful;  }
+        }
+
+        public bool IsNotOK
+        {
+            get { return !IsOK; }
         }
     }
 }

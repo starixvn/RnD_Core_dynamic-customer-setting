@@ -55,8 +55,6 @@
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
-
             ValidateQuerySetting(queryParam);
 
             var product = GetProduct(queryParam.ProductId);
@@ -76,7 +74,10 @@
 
         private void ValidateQuerySetting(QuerySettingParam queryParam)
         {
+            Check.Argument.IsNotNull(queryParam, "queryParam");
+
             var validationResult = _validationService.ValidateQuerySetting(queryParam);
+
             if (!validationResult.IsSuccessful)
             {
                 throw new InvalidOperationException(validationResult.Message);
@@ -120,32 +121,39 @@
         private IList<SettingType> GetCustomerSettingTypes(QuerySettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
+
             foreach (var productSettingType in productSettingTypes)
             {
-                try
-                {
-                    RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
-
-                    var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-                    
-                    customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
-                    if (customerSettingType.SettingItems.Any())
-                    {
-                        customerSettingTypes.Add(customerSettingType);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
+                GetCustomerSettingType(queryParam, customerSettingTypes, productSettingType);
             }
 
             return customerSettingTypes;
         }
 
+        private void GetCustomerSettingType(QuerySettingParam queryParam, List<SettingType> customerSettingTypes, SettingType productSettingType)
+        {
+            try
+            {
+                RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
+
+                var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
+
+                customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
+                if (customerSettingType.SettingItems.Any())
+                {
+                    customerSettingTypes.Add(customerSettingType);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+            }
+        }
+
         private void RunPreGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType productSettingType)
         {
             SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
+
             if (preTasks != null 
                 && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
             {
@@ -157,6 +165,7 @@
         {
             var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
             var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParam);
+
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             customerSettingType.SettingLevel = productSettingType.SettingLevel;
@@ -189,6 +198,7 @@
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingSetting(updatingParam);
+
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -210,6 +220,7 @@
             var uplineLevel = updatingParam.UplineLevel;
             var productId = updatingParam.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
+
             SettingResult updatingSettingTypeResult = null;
 
             foreach (var settingType in settingTypes)
@@ -245,6 +256,7 @@
         private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
         {
             var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
+
             if (!preTasksResult.IsSuccessful)
             {
                 return preTasksResult;
@@ -263,6 +275,7 @@
             CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
+
             if (preTasks != null
                 && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
@@ -301,6 +314,7 @@
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingMultipleCustomerSetting(updatingMultipleParam);
+
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -492,6 +506,7 @@
         {
             var customerIdNameContainer = new Dictionary<int, string>();
             var customerLength = customerIds.Count();
+
             for (int i = 0; i < customerLength; i++)
             {
                 customerIdNameContainer.Add(customerIds.ElementAt(i), customerNames.ElementAt(i));
