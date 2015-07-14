@@ -70,7 +70,7 @@
         {
             get
             {
-               return HttpContext.Current.Request.Url.Host;
+                return HttpContext.Current.Request.Url.Host;
             }
         }
 

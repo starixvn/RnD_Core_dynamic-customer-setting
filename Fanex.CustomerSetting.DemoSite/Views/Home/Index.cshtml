@@ -1,16 +1,16 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<div class="container">
-    <div class="form-area">
+<div class="container" data-ng-app="actor-form">
+    <div class="form-area" data-ng-controller="ActorController as ctrl">
         <div class="form-tab">
             <label class="tab-label">Customer Setting</label>
         </div>
-        <form class="form form-35per-width">
+        <form class="form form-290-width first">
             <div class="form-group">
                 <label class="control-label">Role Type</label>
                 <select class="form-control"
-                        data-ng-options="item.value as item.name for item in roles"
+                        data-ng-options="item.roleId as item.roleName for item in ctrl.roles"
                         data-ng-model="actorInfo.roleId"
                         data-ng-change="changeRole()"></select>
             </div>
@@ -33,7 +33,7 @@
                 <button>Save</button>
             </div>
         </form>
-        <form class="form form-35per-width last ">
+        <form class="form form-290-width last ">
             <div class="form-group">
                 <label class="control-label large-label">Product ID</label>
                 <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.productId" />
@@ -56,6 +56,5 @@
         </form>
     </div>
     <div class="content">
-        <iframe id="setting-content" class="main-content-frame" src="~/App/customer-setting.htm" />
     </div>
 </div>

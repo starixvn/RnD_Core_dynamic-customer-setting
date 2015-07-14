@@ -147,6 +147,9 @@
   <data name="CopyTooltip" xml:space="preserve">
     <value>Click to duplicate the values</value>
   </data>
+  <data name="CustomerSetting" xml:space="preserve">
+    <value>Customer Setting</value>
+  </data>
   <data name="Enable" xml:space="preserve">
     <value>Enable</value>
   </data>

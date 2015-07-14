@@ -25,7 +25,7 @@
         public static ISettingContext SettingContext { get; private set; }
 
         /// <summary>
-        /// Call this function after user login to system, 
+        /// Call this function after user login to system,
         /// to store current user information for viewing/updating setting.
         /// </summary>
         /// <param name="loginUserId">Identifier of user login</param>
@@ -33,9 +33,9 @@
         /// <param name="loginUserLevel">Level of user login to system, can be Admin, Super, Master or Agent.</param>
         /// <param name="subAccountId">For agency system, Identifier of sub-account log in</param>
         public static void Init(
-            int loginUserId, 
-            string loginUserName, 
-            UserLevel loginUserLevel, 
+            int loginUserId,
+            string loginUserName,
+            UserLevel loginUserLevel,
             int subAccountId = 0)
         {
             ValidateSubAccountWithAgencySystem(subAccountId);
@@ -51,7 +51,7 @@
 
         private static void ValidateSubAccountWithAgencySystem(int subAccountId)
         {
-            if (subAccountId > 0 
+            if (subAccountId > 0
                 && CustomerSettingSection.Settings.SystemId != (byte)SystemType.Agency)
             {
                 throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);

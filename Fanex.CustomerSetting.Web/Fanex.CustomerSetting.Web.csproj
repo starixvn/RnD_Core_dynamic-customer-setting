@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,21 +32,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Common">
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -55,19 +59,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -75,8 +79,19 @@
     <Compile Include="Contexts\SettingContext.cs" />
     <Compile Include="Contexts\SettingContextManager.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Helpers\SettingModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Styles\customer-setting.scss" />
+    <None Include="bower.json" />
+    <None Include="package.json" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="tsd.json" />
+    <None Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
@@ -89,54 +104,44 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Scripts\App\Core\Templates\customer-info.htm" />
+    <Folder Include="Assets\Scripts\Specs\Core\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType1.Template1\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType2.Template1\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType3.Template1\" />
+    <Folder Include="Assets\Scripts\Specs\SettingType4.Template1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Scripts\App\Core\customer-setting.htm" />
+    <Content Include="Assets\Scripts\App\Core\Utils\ocLazyLoad.js" />
     <Content Include="Assets\Scripts\App\customer-setting.htm" />
-    <Content Include="Assets\Styles\customer-setting.css">
-      <DependentUpon>customer-setting.scss</DependentUpon>
+    <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-resource.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Styles\customer-setting.min.css">
-      <DependentUpon>customer-setting.css</DependentUpon>
+    <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
     <Content Include="Assets\Styles\Images\loading.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
-    <Content Include="Assets\Typings\tsd.d.ts" />
-    <Content Include="bower.json" />
     <Content Include="Gulpfile.js" />
-    <Content Include="abc.js" />
-    <None Include="app.config" />
-    <None Include="Assets\Styles\customer-setting.css.map">
-      <DependentUpon>customer-setting.css</DependentUpon>
-    </None>
-    <None Include="Assets\Styles\customer-setting.scss" />
-    <None Include="package.json" />
-    <None Include="packages.config" />
-    <None Include="tsd.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\App\Core\Controllers\" />
-    <Folder Include="Assets\Scripts\App\Core\Directives\" />
-    <Folder Include="Assets\Scripts\App\SettingType1.Template1\Directives\" />
-    <Folder Include="Assets\Scripts\App\SettingType1.Template1\Templates\" />
-    <Folder Include="Assets\Scripts\App\SettingType2.Template1\Directives\" />
-    <Folder Include="Assets\Scripts\App\SettingType2.Template1\Templates\" />
-    <Folder Include="Assets\Scripts\App\SettingType3.Template1\Directives\" />
-    <Folder Include="Assets\Scripts\App\SettingType3.Template1\Templates\" />
-    <Folder Include="Assets\Scripts\App\SettingType4.Template1\Directives\" />
-    <Folder Include="Assets\Scripts\App\SettingType4.Template1\Templates\" />
-    <Folder Include="Assets\Scripts\Specs\Core\Controllers\" />
-    <Folder Include="Assets\Scripts\Specs\Core\Directives\" />
-    <Folder Include="Assets\Scripts\Specs\Core\Services\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType1.Template1\Services\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType2.Template1\Services\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType3.Template1\Services\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType4.Template1\Services\" />
-    <Folder Include="Publish\App\" />
-    <Folder Include="Publish\Libraries\" />
-    <Folder Include="Publish\Styles\Images\" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registration.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\core.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.ts" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\Services\app-setting.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Helpers\block-ui.ts" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -146,17 +151,14 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Target Name="BeforeBuild">
-    <Exec Command="npm install" />
-  </Target>
-  <ItemGroup>
-    <Content Include="Assets\Libraries\**" />
-    <Content Include="Assets\Publish\**" />
-    <Content Include="Assets\Styles\**" />
-  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <Exec Command="npm install" />
+  </Target>
 </Project>

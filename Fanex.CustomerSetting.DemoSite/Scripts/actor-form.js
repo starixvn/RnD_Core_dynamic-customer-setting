@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 var ActorForm;
 (function (ActorForm) {
     var Language = (function () {
@@ -15,18 +16,36 @@ var ActorForm;
         RoleType[RoleType["agent"] = 2] = "agent";
         RoleType[RoleType["member"] = 1] = "member";
     })(RoleType || (RoleType = {}));
+    var Role = (function () {
+        function Role(roleName, roleId) {
+            this.roleName = roleName;
+            this.roleId = roleId;
+        }
+        return Role;
+    })();
     var Actor = (function () {
-        function Actor() {
+        function Actor(actorId, role, subAccountId, language) {
+            this.actorId = actorId;
+            this.role = role;
+            this.subAccountId = subAccountId;
+            this.language = language;
         }
         return Actor;
     })();
     var SingleTarget = (function () {
-        function SingleTarget() {
+        function SingleTarget(customerId, role, productId) {
+            this.customerId = customerId;
+            this.role = role;
+            this.productId = productId;
         }
         return SingleTarget;
     })();
     var MultipleTargets = (function () {
-        function MultipleTargets() {
+        function MultipleTargets(customerIds, customerNames, role, productId) {
+            this.customerIds = customerIds;
+            this.customerNames = customerNames;
+            this.role = role;
+            this.productId = productId;
         }
         MultipleTargets.prototype.getFirstCustomerId = function () {
             var ids = this.customerIds.split(",");
@@ -41,83 +60,65 @@ var ActorForm;
         function SampleDataFactory() {
         }
         SampleDataFactory.getLanuages = function () {
-            if (this.languages === undefined) {
-                this.languages = new Array(new Language("English (en-US)", "en-US"), new Language("繁體中文 (zh-TW)", "zh-TW"), new Language("简体中文 (zh-CN)", "zh-CN"), new Language("日本語 (ja-JP)", "ja-JP"), new Language("ภาษาไทย (th-TH)", "ko-KR"), new Language("한국어 (ko-KR)", "zh-TW"), new Language("Tiếng Việt (vi-VN)", "vi-VN"));
+            return new Array(new Language("English (en-US)", "en-US"), new Language("繁體中文 (zh-TW)", "zh-TW"), new Language("简体中文 (zh-CN)", "zh-CN"), new Language("日本語 (ja-JP)", "ja-JP"), new Language("ภาษาไทย (th-TH)", "ko-KR"), new Language("한국어 (ko-KR)", "zh-TW"), new Language("Tiếng Việt (vi-VN)", "vi-VN"));
+        };
+        SampleDataFactory.getAvailableActorRoles = function () {
+            var roles = new Array();
+            for (var role in RoleType) {
+                roles.push(new Role(RoleType[role], role));
             }
-            return this.languages;
+            return roles;
         };
-        SampleDataFactory.getActorRoles = function () {
-        };
-        SampleDataFactory.createSingleSuperInfo = function () {
-            if (this.superInfo === undefined) {
-                this.createSingleTarget(2, this.superInfo);
+        SampleDataFactory.getSampleActor = function (selectedRole) {
+            var actorId = 0;
+            var subAccId = 0;
+            switch (selectedRole) {
+                case 5 /* company */:
+                    actorId = 8;
+                    subAccId = 111;
+                    break;
+                case 4 /* super */:
+                    actorId = 2;
+                    subAccId = 3;
+                    break;
+                case 3 /* master */:
+                    actorId = 4174;
+                    subAccId = 728497;
+                    break;
+                case 2 /* agent */:
+                    actorId = 1262;
+                    subAccId = 728498;
+                    break;
             }
-            return this.superInfo;
+            return this.createActor(actorId, selectedRole, subAccId);
         };
-        SampleDataFactory.createMultipleSupersInfo = function () {
-            if (this.supersInfo === undefined) {
-                this.createMultipleTargetInfo("2,3,4", "SA-RM,SA-US$,SA-TB", this.supersInfo);
-            }
-            return this.supersInfo;
+        SampleDataFactory.createActor = function (id, role, subAccId) {
+            return new Actor(id, role, subAccId, this.defaultLanguage);
         };
-        SampleDataFactory.createSingleMasterInfo = function () {
-            if (this.masterInfo === undefined) {
-                this.createSingleTarget(4174, this.masterInfo);
-            }
-            return this.masterInfo;
+        SampleDataFactory.createSingleTarget = function (id, role) {
+            return new SingleTarget(id, role, this.defaultProductId);
         };
-        SampleDataFactory.createMultipleMastersInfo = function () {
-            if (this.mastersInfo === undefined) {
-                this.createMultipleTargetInfo("4174,4300,4356", "mrm,mbrm,MYRM", this.mastersInfo);
-            }
-            return this.mastersInfo;
-        };
-        SampleDataFactory.createSingleAgentInfo = function () {
-            if (this.agentInfo === undefined) {
-                this.createSingleTarget(1262, this.agentInfo);
-            }
-            return SampleDataFactory.agentInfo;
-        };
-        SampleDataFactory.createMultipleAgentsInfo = function () {
-            if (this.agentsInfo === undefined) {
-                this.createMultipleTargetInfo("1262,1653,2400", "wsrm,SKRM,216COM", this.agentsInfo);
-            }
-            return this.agentsInfo;
-        };
-        SampleDataFactory.createSingleMemberInfo = function () {
-            if (this.memberInfo === undefined) {
-                this.createSingleTarget(1277, this.memberInfo);
-            }
-            return SampleDataFactory.memberInfo;
-        };
-        SampleDataFactory.createMultipleMembersInfo = function () {
-            if (this.membersInfo === undefined) {
-                this.createMultipleTargetInfo("1277,1284,1290", "428RM,305RM,302RM", this.membersInfo);
-            }
-            return this.membersInfo;
-        };
-        SampleDataFactory.createSingleTarget = function (id, target) {
-            target = target || new SingleTarget();
-            target.customerId = id;
-            target.productId = this.defaultProductId;
-        };
-        SampleDataFactory.createMultipleTargetInfo = function (ids, names, targets) {
-            targets = targets || new MultipleTargets();
-            targets.customerIds = ids;
-            this.agentsInfo.customerNames = names;
-            this.agentsInfo.productId = this.defaultProductId;
+        SampleDataFactory.createMultipleTargetInfo = function (ids, names, role) {
+            return new MultipleTargets(ids, names, role, this.defaultProductId);
         };
         SampleDataFactory.defaultProductId = 255;
+        SampleDataFactory.defaultLanguage = "en-US";
         return SampleDataFactory;
     })();
     var ActorController = (function () {
-        function ActorController($scope, $http) {
-            this.$scope = $scope;
+        function ActorController($http) {
             this.$http = $http;
-            //this.actor = SampleDataFactory.de
+            this.actor = SampleDataFactory.getSampleActor(5 /* company */);
+            this.target = null;
+            this.isMultiple = false;
+            this.languages = SampleDataFactory.getLanuages();
+            this.roles = SampleDataFactory.getAvailableActorRoles();
         }
+        ActorController.$inject = ["$http"];
         return ActorController;
     })();
     ActorForm.ActorController = ActorController;
 })(ActorForm || (ActorForm = {}));
+var app = angular.module("actor-form", []);
+app.controller("ActorController", ActorForm.ActorController);
 //# sourceMappingURL=actor-form.js.map

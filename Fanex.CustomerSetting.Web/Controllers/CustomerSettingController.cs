@@ -4,5 +4,11 @@
 
     public class CustomerSettingController : Controller
     {
+        [HttpGet]
+        [OutputCache(Duration = 14400)]
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }
