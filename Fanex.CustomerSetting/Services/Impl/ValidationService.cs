@@ -32,6 +32,8 @@
             IValidationDataAccess validationDataAccess = null,
             IDynamicRepository dynamicRepository = null)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _loggingService = loggingService ?? new LoggingService(_settingContext);
@@ -39,7 +41,13 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public IResult ValidateQuerySetting(QuerySettingParam queryParam)
+        /// <summary>
+        /// Validate Query action is valid or not, this function also using by
+        /// updating action, this function mark virtual for testable updating action validation.
+        /// </summary>
+        /// <param name="queryParam">Query information for querying customer setting.</param>
+        /// <returns>Query action is valid or not.</returns>
+        public virtual IResult ValidateQuerySetting(QuerySettingParam queryParam)
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
@@ -146,7 +154,14 @@
             }
         }
 
-        public IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
+        /// <summary>
+        /// Validating updating action, run before updating, if result is valid then run updating
+        /// customer setting to database.
+        /// This function was marked virtual in order to make it testable when test updating multiple action.
+        /// </summary>
+        /// <param name="updatingParam">Customer setting information to update to database.</param>
+        /// <returns>Customer setting is valid for updating to database or not.</returns>
+        public virtual IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
 

@@ -76,7 +76,7 @@
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorHasPermission_Cases")]
-        public void ValidateQuerySetting_ActorHasPermission_ReturnSuccessValidationResult(
+        public void ValidateQuerySetting_ActorHasPermission_ReturnSuccessResult(
             UserLevel userLevel,
             CustomerLevel customerLevel,
             CustomerLevel? uplineLevel)
@@ -115,7 +115,7 @@
         };
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorDoesNotHavePermission_Cases")]
-        public void ValidateQuerySetting_ActorDoesNotHavePermission_ReturnFailedValidationResult(
+        public void ValidateQuerySetting_ActorDoesNotHavePermission_ReturnFailedResult(
             UserLevel userLevel,
             CustomerLevel customerLevel)
         {

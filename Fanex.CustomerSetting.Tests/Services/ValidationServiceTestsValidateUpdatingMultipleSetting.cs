@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -13,7 +11,6 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -42,7 +39,7 @@
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
 
-            _validationService = new ValidationService(
+            _validationService = Substitute.ForPartsOf<ValidationService>(
                 _settingContext,
                 _productService,
                 _loggingService,
@@ -50,36 +47,41 @@
                 _dynamicRepository);
         }
 
-        private void AssumeAllValidationsExecutedOnDatabaseAreSuccessful()
+        private void AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful()
         {
-            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
         }
 
-        private void AssumeActorStatusIsEnabled()
+        private void AssumeValidateUpdatingSettingIsSuccessful()
         {
-            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(true);
-        }
-
-        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(CustomerLevel customerLevel)
-        {
-            _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns((byte)customerLevel);
-        }
-
-        private void AssumeCustomerSettingTypeAreValid(IEnumerable<SettingType> dummySettingTypes)
-        {
-            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(dummySettingTypes);
+            _validationService.ValidateUpdatingSetting(Arg.Any<UpdatingSettingParam>()).Returns(Result.Success);
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerIsMember_CallValidatePermissionMultiple()
+        public void ValidateUpdatingMultipleSetting_Always_CallValidateUpdatingSetting()
         {
             //// Arrange
             var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingMultipleSettingParam.Setting.CustomerLevel);
-            AssumeCustomerSettingTypeAreValid(updatingMultipleSettingParam.Setting.SettingTypes);
+
+            //// Act
+            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+
+            //// Assert
+            _validationService.Received().ValidateUpdatingSetting(
+                Arg.Is<UpdatingSettingParam>(updateParam =>
+                    updateParam.Setting.CustomerId == updatingMultipleSettingParam.Setting.CustomerId
+                    && updateParam.UplineLevel == updatingMultipleSettingParam.UplineLevel
+                    && updateParam.Setting.ProductId == updatingMultipleSettingParam.Setting.ProductId));
+        }
+
+        [Test]
+        public void ValidateUpdatingMultipleSetting_CustomerIsMember_AlwaysCallValidatePermissionMultiple()
+        {
+            //// Arrange
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
+
+            AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
+            AssumeValidateUpdatingSettingIsSuccessful();
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
@@ -95,10 +97,9 @@
         {
             //// Arrange
             var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingMultipleSettingParam.Setting.CustomerLevel);
-            AssumeCustomerSettingTypeAreValid(updatingMultipleSettingParam.Setting.SettingTypes);
+
+            AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
+            AssumeValidateUpdatingSettingIsSuccessful();
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
@@ -107,76 +108,12 @@
             _validationDataAccess.DidNotReceive().ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>());
         }
 
-        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorHasPermission_Cases")]
-        public void ValidateUpdatingMultipleSetting_ActorHasPermission_ReturnSuccessResult(
-            UserLevel actorLevel,
-            CustomerLevel customerLevel, 
-            CustomerLevel? uplineLevel)
-        {
-            //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel, 1, uplineLevel);
-            _settingContext.Actor.Level = actorLevel;
-
-            AssumeAllValidationsExecutedOnDatabaseAreSuccessful();
-            AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingMultipleSettingParam.Setting.CustomerLevel);
-            AssumeCustomerSettingTypeAreValid(updatingMultipleSettingParam.Setting.SettingTypes);
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
-
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
-
-        private static object[] ValidateUpdatingMultipleSetting_ActorHasPermission_Cases = 
-        {
-            new object[] {UserLevel.Company, CustomerLevel.Super, null},
-            new object[] {UserLevel.Company, CustomerLevel.Master, null},
-            new object[] {UserLevel.Company, CustomerLevel.Agent, null},
-            new object[] {UserLevel.Company, CustomerLevel.Member, CustomerLevel.Agent},
-            new object[] {UserLevel.Super, CustomerLevel.Master, null},
-            new object[] {UserLevel.Super, CustomerLevel.Member, CustomerLevel.Super},
-            new object[] {UserLevel.Master, CustomerLevel.Agent, null},
-            new object[] {UserLevel.Master, CustomerLevel.Member, CustomerLevel.Master},
-            new object[] {UserLevel.Agent, CustomerLevel.Member, CustomerLevel.Agent}
-        };
-
-        [Test, TestCaseSource("ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_Cases")]
-        public void ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_ReturnFailedResult(
-            UserLevel actorLevel,
-            CustomerLevel customerLevel)
-        {
-            //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, customerLevel);
-            _settingContext.Actor.Level = actorLevel;
-
-            //// Act
-            var actualResult = _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
-
-            //// Assert
-            Assert.IsFalse(actualResult.IsSuccessful);
-        }
-
-        private static object[] ValidateUpdatingMultipleSetting_ActorDoesNotHavePermission_Cases = 
-        {
-            new object[] {UserLevel.Super, CustomerLevel.Super},
-            new object[] {UserLevel.Super, CustomerLevel.Agent},
-            new object[] {UserLevel.Master, CustomerLevel.Super},
-            new object[] {UserLevel.Master, CustomerLevel.Master},
-            new object[] {UserLevel.Agent, CustomerLevel.Super},
-            new object[] {UserLevel.Agent, CustomerLevel.Master},
-            new object[] {UserLevel.Agent, CustomerLevel.Agent}
-        };
-
         [Test]
         public void UpdateMultipleCustomerSetting_RaisedException_CallLogUpdatingMultipleCustomersSettingTypeError()
         {
             //// Arrange
             var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
-            AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(updatingMultipleSettingParam.Setting.CustomerLevel);
-            AssumeCustomerSettingTypeAreValid(updatingMultipleSettingParam.Setting.SettingTypes);
+            AssumeValidateUpdatingSettingIsSuccessful();
 
             //// Simulate throw exception
             var expectedException = new Exception("Exception");
