@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.UnitTests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
     using Fanex.NAP.Framework.Data;
@@ -23,6 +19,5 @@
 
             _customerService = new CustomerService(_dynamicRepository);
         }
-
     }
 }

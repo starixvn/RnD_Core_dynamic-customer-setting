@@ -62,7 +62,7 @@
 
         private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
         }
 
         private void AssumeActorStatusIsEnabled()
