@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
@@ -17,26 +18,29 @@
     {
         private const string DefaultLanguage = "en-US";
         private const byte PTSettingTypeId = 1;
-        private readonly IDynamicRepository _dynamicRepository;
         private readonly IResourceService _resourceService;
         private readonly IProductService _productService;
+        private readonly IDynamicRepository _dynamicRepository;
 
         public PTMatrixService(
-            IDynamicRepository dynamicRepository = null,
             IResourceService resourceService = null,
-            IProductService productService = null)
+            IProductService productService = null,
+            IDynamicRepository dynamicRepository = null)
         {
-            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
             _resourceService = resourceService ?? new ResourceService();
             _productService = productService ?? new ProductService();
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public PTMatrix GetPTMatrix(byte productId, string customerName)
         {
-            var pTItemMatrixDtos = GetPTItemMatrixDtos(customerName, productId);
-            var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
+            Check.Argument.IsNotNegativeOrZero(productId, "productId");
+            Check.Argument.IsNotEmpty(customerName, "customerName");
+
             var settingType = GetPTSettingType(productId);
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(customerName);
+            var pTItemMatrixDtos = GetPTItemMatrixDtos(customerName, productId);
+            var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
 
             return new PTMatrix
                 {
@@ -52,7 +56,7 @@
 
             if (ptSettingType == null)
             {
-                throw new ArgumentNullException("ptSettingType", "Position Taking Setting Type information cannot be null");
+                throw new InvalidOperationException("Position Taking Setting Type information cannot be null");
             }
 
             return ptSettingType;
@@ -86,7 +90,9 @@
             return pTItemMatrices;
         }
 
-        private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(string customerName, byte productId)
+        private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(
+            string customerName, 
+            byte productId)
         {
             var pTItemMatrixDtos = _dynamicRepository.Fetch<PTItemMatrixDto>(
                 new PTMatrixQueryCriteria

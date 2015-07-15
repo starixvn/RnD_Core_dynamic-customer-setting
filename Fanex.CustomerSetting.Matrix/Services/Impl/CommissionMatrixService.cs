@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
@@ -26,6 +27,9 @@
 
         public CommissionMatrix GetCommissionMatrix(byte productId, string customerName)
         {
+            Check.Argument.IsNotNegativeOrZero(productId, "productId");
+            Check.Argument.IsNotEmpty(customerName, "customerName");
+
             var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName);
             var commissionItemMatrices = GetCommissionItemMatricesFromDto(commissionItemMaxtrixDtos);
 
@@ -35,7 +39,8 @@
             };
         }
 
-        private IEnumerable<CommissionItemMatrix> GetCommissionItemMatricesFromDto(IEnumerable<CommissionItemMatrixDto> commissionItemMaxtrixDtos)
+        private IEnumerable<CommissionItemMatrix> GetCommissionItemMatricesFromDto(
+            IEnumerable<CommissionItemMatrixDto> commissionItemMaxtrixDtos)
         {
             var commissionItemMatrices = commissionItemMaxtrixDtos.GroupBy(dto => new
             {
@@ -53,7 +58,9 @@
             return commissionItemMatrices;
         }
 
-        private IEnumerable<CommissionItemMatrixDto> GetCommissionItemMaxtrixDtos(byte productId, string customerName)
+        private IEnumerable<CommissionItemMatrixDto> GetCommissionItemMaxtrixDtos(
+            byte productId, 
+            string customerName)
         {
             var commissionItemMaxtrixDtos = _dynamicRepository.Fetch<CommissionItemMatrixDto>(
                 new CommissionMatrixQueryCriteria

@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "Acc_CustSetting_ProductNamesSelect";
+            return "CustSetting_ProductNamesSelect";
         }
 
         public override bool IsValid()
