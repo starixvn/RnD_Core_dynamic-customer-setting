@@ -148,7 +148,7 @@
                 CustId = customerId
             });
 
-            if ((CustomerLevel)actualCustomerLevel == customerLevel)
+            if ((CustomerLevel)actualCustomerLevel != customerLevel)
             {
                 throw new InvalidCustomerLevelException();
             }

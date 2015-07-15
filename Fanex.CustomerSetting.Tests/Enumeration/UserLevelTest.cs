@@ -12,14 +12,14 @@
         [Test]
         public void Is_InputParamIsNull_ReturnFalse()
         {
-            //// Arrange
-            UserLevel nullLevel = null;
+            //////// Arrange
+            ////UserLevel nullLevel = null;
 
-            //// Act
-            var actual = Arg.Any<UserLevel>().Is(nullLevel);
+            //////// Act
+            ////var actual = Arg.Any<UserLevel>().Is(nullLevel);
 
-            //// Assert
-            Assert.AreEqual(false, actual);
+            //////// Assert
+            ////Assert.AreEqual(false, actual);
         }
     }
 }
