@@ -13,11 +13,11 @@
 
     public class BackendTestController : Controller
     {
-        private readonly ISettingService _settingService;
+        private readonly IUpdateService _settingService;
 
         public BackendTestController()
         {
-            _settingService = new SettingService(SettingContextManager.SettingContext);
+            _settingService = new UpdateService(SettingContextManager.SettingContext);
         }
 
         public ActionResult Index()

@@ -4,10 +4,8 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
 
-    public interface ISettingService
+    public interface IUpdateSettingService
     {
-        ISetting GetCustomerSetting(QuerySettingParam queryParam);
-
         IResult UpdateCustomerSetting(UpdatingSettingParam updatingParam);
 
         IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam);

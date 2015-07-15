@@ -20,7 +20,7 @@
     /// Customer can be super, master, agent, member
     /// So we call {Customer}{SettingType} => means SuperPositionTaking, MasterCommission ...
     /// </summary>
-    public class SettingService : ISettingService
+    public class UpdateSettingService : IUpdateSettingService
     {
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
@@ -30,7 +30,7 @@
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
 
-        public SettingService(
+        public UpdateSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
@@ -53,135 +53,7 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public ISetting GetCustomerSetting(QuerySettingParam queryParam)
-        {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
-
-            ValidateQuerySetting(queryParam);
-
-            var product = GetProduct(queryParam.ProductId);
-            var customerInfo = GetCustomerInfo(queryParam.CustomerId);
-            var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
-
-            ISetting setting = new Setting(
-                queryParam.CustomerId,
-                queryParam.CustomerLevel,
-                customerInfo,
-                product.Id,
-                product.Name,
-                customerSettingTypes);
-
-            return setting;
-        }
-
-        private void ValidateQuerySetting(QuerySettingParam queryParam)
-        {
-            var validationResult = _validationService.ValidateQuerySetting(queryParam);
-            if (!validationResult.IsSuccessful)
-            {
-                throw new InvalidOperationException(validationResult.Message);
-            }
-        }
-
-        /// <summary>
-        /// Gets product information, includes list of product setting types.
-        /// </summary>
-        /// <param name="productId">The product identifier.</param>
-        /// <returns></returns>
-        private Product GetProduct(byte productId)
-        {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId);
-            var productName = _resourceService.GetProductName(productId, _settingContext.Language);
-
-            return new Product
-            {
-                Id = productId,
-                Name = productName,
-                SettingTypes = productSettingTypes
-            };
-        }
-
-        private CustomerInfo GetCustomerInfo(int customerId)
-        {
-            var customerInfo = _dynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria 
-            { 
-                CustId = customerId 
-            });
-
-            return customerInfo;
-        }
-
-        /// <summary>
-        /// Get {Customer}{SettingType} => means Get SuperPositionTaking, MasterCommission ....
-        /// </summary>
-        /// <param name="queryParam">The query setting parameters.</param>
-        /// <param name="productSettingTypes">The product setting types.</param>
-        /// <returns>Customer setting on each setting type.</returns>
-        private IList<SettingType> GetCustomerSettingTypes(QuerySettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
-        {
-            var customerSettingTypes = new List<SettingType>();
-            foreach (var productSettingType in productSettingTypes)
-            {
-                try
-                {
-                    RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
-
-                    var customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-                    
-                    customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
-                    if (customerSettingType.SettingItems.Any())
-                    {
-                        customerSettingTypes.Add(customerSettingType);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _loggingService.LogQueryCustomerSettingTypeError(
-                        queryParam.CustomerId,
-                        queryParam.UplineLevel,
-                        queryParam.ProductId,
-                        productSettingType,
-                        ex);
-                }
-            }
-
-            return customerSettingTypes;
-        }
-
-        private void RunPreGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType productSettingType)
-        {
-            SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-            if (preTasks != null 
-                && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
-            {
-                preTasks.PreGetCustomerSettingType(_settingContext, queryParam);
-            }
-        }
-
-        private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
-        {
-            var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
-            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParam);
-            customerSettingType.Id = productSettingType.Id;
-            customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
-            customerSettingType.SettingLevel = productSettingType.SettingLevel;
-
-            return customerSettingType;
-        }
-
-        private SettingType RunPostGetCustomerSettingTypeTasks(
-            QuerySettingParam queryParam,
-            SettingType customerSettingType)
-        {
-            var postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
-            if (postTasks != null
-                && IsOverride(postTasks.GetType().GetMethod("PostGetCustomerSettingType")))
-            {
-                customerSettingType = postTasks.PostGetCustomerSettingType(_settingContext, queryParam, customerSettingType);
-            }
-
-            return customerSettingType;
-        }
+       
 
         /// <summary>
         /// Updates the customer setting, includes list of setting types.

@@ -20,7 +20,7 @@
     [TestFixture]
     public class SettingServiceTestsGetCustomerSetting
     {
-        private ISettingService _settingService;
+        private IUpdateSettingService _settingService;
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
@@ -43,7 +43,7 @@
 
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
 
-            _settingService = new SettingService(
+            _settingService = new UpdateSettingService(
                 _settingContext,
                 _validationService,
                 _productService,

@@ -44,7 +44,8 @@
         private IEnumerable<int> _memberIds = new List<int> { MemberId, 14569862 };
         private IEnumerable<string> _memberNames = new List<string> { AgentUserName, "supertest900101002" };
 
-        private ISettingService _settingService;
+        private IUpdateSettingService _updateSettingService;
+        private IQuerySettingService _querySettingService;
         private ISettingContext _settingContext;
 
         [SetUp]
@@ -61,11 +62,12 @@
             //// Arrange
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
+            _querySettingService = new QuerySettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
 
             //// Act
-            var superSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(SuperUserName, superSetting.CustomerInfo.UserName);
@@ -106,11 +108,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
 
             //// Act
-            var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(MasterUserName, masterSetting.CustomerInfo.UserName);
@@ -151,11 +153,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
             //// Act
-            var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(AgentUserName, agentSetting.CustomerInfo.UserName);
@@ -199,11 +201,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
 
             //// Act
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
@@ -244,11 +246,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
             //// Act
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
@@ -288,11 +290,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
             //// Act
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
@@ -331,10 +333,10 @@
             //// Arrange
             var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
 
-            var superSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
             superPTITem.S4 = (byte)(superPTITem.S4 == 90 ? 89 : 90);
             superPTITem.M4 = (byte)(superPTITem.M4 == 88 ? 87 : 88);
@@ -354,13 +356,13 @@
             superProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _settingService.UpdateCustomerSetting(new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel));
+            var updateResult = _updateSettingService.UpdateCustomerSetting(new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel));
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
 
-            var newSuperSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newSuperSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newSuperPTItem = newSuperSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
             Assert.AreEqual(superPTITem.S4, newSuperPTItem.S4);
             Assert.AreEqual(superPTITem.M4, newSuperPTItem.M4);
@@ -399,10 +401,10 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
 
-            var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
             masterPTItem.IS3 = !masterPTItem.IS3;
             if (masterPTItem.IS3)
@@ -433,14 +435,14 @@
 
             //// Act
             var updateParam = new UpdatingSettingParam(masterSetting, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
 
-            var newMasterSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
             Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
             Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
@@ -480,10 +482,10 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
-            var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
 
@@ -520,13 +522,13 @@
 
             //// Act
             var updateParam = new UpdatingSettingParam(agentSetting, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-            var newAgentSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newAgentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newAgentPTItem = newAgentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
             Assert.AreEqual(agentPTItem.IM2, newAgentPTItem.IM2);
             Assert.AreEqual(agentPTItem.UM2, newAgentPTItem.UM2);
@@ -566,10 +568,10 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
             agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 14 ? 15 : 14);
 
@@ -586,13 +588,13 @@
 
             //// Act
             var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-            var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newAgentOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
             Assert.AreEqual(agentPTOnMemberItem.A1, newAgentOnMemberPTItem.A1);
 
@@ -629,10 +631,10 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
             if (!masterPTOnMember.IsDisableMasterAutoPT)
@@ -655,13 +657,13 @@
 
             //// Act
             var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-            var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newMasterOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
             Assert.AreEqual(masterPTOnMemberItem.M1, newMasterOnMemberPTItem.M1);
             Assert.AreEqual(masterPTOnMemberItem.UM1, newMasterOnMemberPTItem.UM1);
@@ -690,11 +692,11 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
 
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
 
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
             superPTOnMemberItem.IS1 = !superPTOnMemberItem.IS1;
 
@@ -713,14 +715,14 @@
 
             //// Act
             var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
             Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
 
-            var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newSuperOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
             Assert.AreEqual(superPTOnMemberItem.S1, newSuperOnMemberPTItem.S1);
             Assert.AreEqual(superPTOnMemberItem.US1, newSuperOnMemberPTItem.US1);
@@ -736,10 +738,10 @@
             //// Arrange
             var actor = new User { Id = SuperId, Level = UserLevel.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId);
 
-            var masterSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
             if (masterPTItem.IS3)
             {
@@ -767,7 +769,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdatingMultipleSettingParam(masterSetting, _masterIds, _masterNames, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -777,7 +779,7 @@
             foreach (var masterId in _masterIds)
             {
                 querySettingParam.CustomerId = masterId;
-                var newMasterSetting = _settingService.GetCustomerSetting(querySettingParam);
+                var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
                 var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
                 Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
                 Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
@@ -805,10 +807,10 @@
             //// Arrange
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
-            var agentSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
             if (!agentPT.IsDisableMasterAutoPT && agentPTItem.IM2)
@@ -837,7 +839,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdatingMultipleSettingParam(agentSetting, _agentIds, _agentNames, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -847,7 +849,7 @@
             foreach (var agentId in _agentIds)
             {
                 querySettingParam.CustomerId = agentId;
-                var newAgentSetting = _settingService.GetCustomerSetting(querySettingParam);
+                var newAgentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
                 var newAgentPTItem = newAgentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
                 Assert.AreEqual(agentPTItem.IM2, newAgentPTItem.IM2);
                 Assert.AreEqual(agentPTItem.UM2, newAgentPTItem.UM2);
@@ -875,11 +877,11 @@
             //// Arrange
             var actor = new User { Id = AgentId, Level = UserLevel.Agent, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
 
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
 
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
             agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 14 ? 15 : 14);
 
@@ -896,7 +898,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdatingMultipleSettingParam(memberSetting, _memberIds, _memberNames, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -906,7 +908,7 @@
             foreach (var memberId in _memberIds)
             {
                 querySettingParam.CustomerId = memberId;
-                var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
+                var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
                 var newAgentOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
                 Assert.AreEqual(agentPTOnMemberItem.A1, newAgentOnMemberPTItem.A1);
 
@@ -929,10 +931,10 @@
             //// Arrange
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _settingService = new SettingService(_settingContext);
+            _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
 
-            var memberSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
             if (!masterPTOnMember.IsDisableMasterAutoPT && masterPTOnMemberItem.IM1)
@@ -948,7 +950,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdatingMultipleSettingParam(memberSetting, _memberIds, _memberNames, querySettingParam.UplineLevel);
-            var updateResult = _settingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
@@ -958,7 +960,7 @@
             foreach (var memberId in _memberIds)
             {
                 querySettingParam.CustomerId = memberId;
-                var newMemberSetting = _settingService.GetCustomerSetting(querySettingParam);
+                var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
                 var newMasterOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
                 Assert.AreEqual(masterPTOnMemberItem.M1, newMasterOnMemberPTItem.M1);
                 Assert.AreEqual(masterPTOnMemberItem.UM1, newMasterOnMemberPTItem.UM1);

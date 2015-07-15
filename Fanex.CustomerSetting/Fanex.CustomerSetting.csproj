@@ -151,10 +151,12 @@
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Impl\BaseMessageService.cs" />
     <Compile Include="Services\Impl\LoggingService.cs" />
+    <Compile Include="Services\Impl\QuerySettingService.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
+    <Compile Include="Services\IQuerySettingService.cs" />
     <Compile Include="Services\IResourceService.cs" />
-    <Compile Include="Services\ISettingService.cs" />
-    <Compile Include="Services\Impl\SettingService.cs" />
+    <Compile Include="Services\IUpdateSettingService.cs" />
+    <Compile Include="Services\Impl\UpdateSettingService.cs" />
     <Compile Include="Services\Impl\ProductService.cs" />
     <Compile Include="Services\Impl\ValidationService.cs" />
     <Compile Include="Services\IProductService.cs" />
