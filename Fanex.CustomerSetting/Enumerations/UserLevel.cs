@@ -4,7 +4,6 @@
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Constants;
 
-    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed")]
     [Serializable]
     public class UserLevel : Enumeration
     {
@@ -37,9 +36,26 @@
             return GapBetweenTwoLevels(uplineLevelValue, this.Value) == 1;
         }
 
+        public bool Is(Enumeration level)
+        {
+            if (level != null)
+            {
+                return this == level;
+            }
+
+            return false;
+        }
+
+        public bool IsNot(Enumeration level)
+        {
+            return !Is(level);
+        }
+
         private static int GapBetweenTwoLevels(int uplineLevelValue, int downlineLevelValue)
         {
             return uplineLevelValue - downlineLevelValue;
         }
+
+
     }
 }

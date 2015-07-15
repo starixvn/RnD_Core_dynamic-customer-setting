@@ -26,7 +26,7 @@
             return ExecuteNonQuery("Acc_CustSetting_EnabledAccountCheck", param);
         }
 
-        public IResult ValidateBelongIn(int actorId, int customerId)
+        public bool ValidateBelonging(int actorId, int customerId)
         {
             var param = new Hashtable();
             param.Add("custid", actorId);
@@ -34,7 +34,9 @@
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
 
-            return ExecuteNonQuery("Acc_CustSetting_SameLineCheck", param);
+            IResult result = ExecuteNonQuery("Acc_CustSetting_SameLineCheck", param);
+
+            return result.IsSuccessful;
         }
 
         public IResult ValidateCustomerAndActorLevel(int actorId, int customerId, byte customerLevelId)

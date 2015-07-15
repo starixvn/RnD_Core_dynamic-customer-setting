@@ -62,7 +62,7 @@
 
         private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
         }
 
         private void AssumeActorStatusIsEnabled()
@@ -237,7 +237,7 @@
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
+            _validationDataAccess.Received().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
         [Test]
@@ -258,7 +258,7 @@
             _validationService.ValidateQuerySetting(queryParam);
 
             //// Assert
-            _validationDataAccess.DidNotReceive().ValidateBelongIn(_settingContext.Actor.Id, queryParam.CustomerId);
+            _validationDataAccess.DidNotReceive().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]

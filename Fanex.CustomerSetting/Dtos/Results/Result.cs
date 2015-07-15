@@ -47,14 +47,14 @@
             get { return !IsSuccessful;  }
         }
 
-        public bool IsOK
+        public bool IsOk
         {
             get { return IsSuccessful;  }
         }
 
-        public bool IsNotOK
+        public bool IsNotOk
         {
-            get { return !IsOK; }
+            get { return !IsOk; }
         }
     }
 }

@@ -51,7 +51,7 @@
 
         private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateBelongIn(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
+            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(Result.Success);
         }
 
         private void AssumeActorStatusIsEnabled()
@@ -78,7 +78,7 @@
             _validationService.ValidateUpdatingSetting(updatingParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateBelongIn(_settingContext.Actor.Id, updatingParam.Setting.CustomerId);
+            _validationDataAccess.Received().ValidateBelonging(_settingContext.Actor.Id, updatingParam.Setting.CustomerId);
         }
 
         [Test]

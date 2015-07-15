@@ -4,7 +4,7 @@
 
     public interface IValidationDataAccess
     {
-        IResult ValidateBelongIn(int actorId, int customerId);
+        bool ValidateBelonging(int actorId, int customerId);
 
         IResult ValidatePermissionMultiple(int actorId, string memberIds);
     }

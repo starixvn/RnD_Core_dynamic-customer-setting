@@ -21,8 +21,8 @@
 
         bool IsFailed { get; }
 
-        bool IsOK { get; }
+        bool IsOk { get; }
 
-        bool IsNotOK { get; }
+        bool IsNotOk { get; }
     }
 }

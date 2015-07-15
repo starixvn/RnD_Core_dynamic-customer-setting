@@ -12,6 +12,7 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
     using Fanex.NAP.Framework.Data;
@@ -46,89 +47,103 @@
             var customerLevel = queryParam.CustomerLevel;
             var uplineLevel = queryParam.UplineLevel;
 
-            IResult result = VerifyActorStatusIsEnabled();
-
-            if (!result.IsSuccessful)
+            try
             {
-                return result;
-            }
+                CheckActorStatus(_settingContext.Actor);
 
-            if (!IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(customerId, customerLevel)
-                || !IsLevelConstrainsBetweenActorAndCustomerValid(customerLevel))
+                CheckCustomerLevel(customerId, customerLevel);
+
+                CheckActorAndCustomerLevelsConstrain(_settingContext.Actor.Level, customerLevel);
+
+                CheckActorLevelAndCustomerUplineLevelConstrain(_settingContext.Actor.Level, customerLevel, uplineLevel);
+
+                CheckBelonging(_settingContext.Actor, customerId);
+            }
+            catch (ActorStatusDisabledException ex)
             {
-                return Result.AccessDenied;
+                return new Result(ResultValue.AccessDenied, ex.Message);
             }
-
-            result = ValidateActorLevelWithUplineLevelOfCustomer(customerLevel, uplineLevel);
-
-            if (!result.IsSuccessful)
+            catch (Exception ex)
             {
-                return result;
-            }
-
-            return ValidateBelongIn(customerId);
-        }
-
-        private bool IsLevelConstrainsBetweenActorAndCustomerValid(CustomerLevel customerLevel)
-        {
-            var actorLevel = _settingContext.Actor.Level;
-
-            var result = actorLevel == UserLevel.Company
-                || (byte)customerLevel == Level.Member
-                || actorLevel.IsDirectUplineLevelOf(customerLevel);
-
-            return result;
-        }
-
-        private IResult VerifyActorStatusIsEnabled()
-        {
-            var isEnabled = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
+                if (ex is InvalidCustomerLevelException
+                    || ex is InvalidLevelConstrainException
+                    || ex is InvalidLineException)
                 {
-                    ActorId = _settingContext.Actor.Id
-                });
+                    return Result.AccessDenied;
+                }
 
-            if (!isEnabled)
-            {
-                return new Result(ResultValue.AccessDenied, string.Format(Message.AccountWasDisabled, _settingContext.Actor.Name));
+                throw;
             }
 
             return Result.Success;
         }
 
-        private IResult ValidateBelongIn(int customerId)
+        private void CheckActorStatus(User actor)
         {
-            if (_settingContext.Actor.Level == UserLevel.Company)
+            var enabledStatus = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
+                {
+                    ActorId = actor.Id
+                });
+
+            if (!enabledStatus)
             {
-                return Result.Success;
-            }
-            else
-            {
-                return _validationDataAccess.ValidateBelongIn(_settingContext.Actor.Id, customerId);
+                throw new ActorStatusDisabledException(string.Format(Message.AccountWasDisabled, actor.Name));
             }
         }
 
-        private bool IsCustomerLevelEqualWithCustomerLevelStoredInDatabase(int customerId, CustomerLevel customerLevel)
+        private void CheckActorAndCustomerLevelsConstrain(UserLevel actorLevel, CustomerLevel customerLevel)
+        {
+            var isValidConstrain = actorLevel.Is(UserLevel.Company)
+                || customerLevel == CustomerLevel.Member
+                || actorLevel.IsDirectUplineLevelOf(customerLevel);
+
+            if (!isValidConstrain)
+            {
+                throw new InvalidLevelConstrainException();
+            }
+        }
+
+        private void CheckActorLevelAndCustomerUplineLevelConstrain(UserLevel actorLevel, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        {
+            //// If actor is not company when edit member, actor level should equal with upline level.
+            if (actorLevel.IsNot(UserLevel.Company)
+                && customerLevel == CustomerLevel.Member
+                && uplineLevel.HasValue
+                && actorLevel.Value != (int)uplineLevel.Value)
+            {
+                throw new InvalidLevelConstrainException(Message.UplineLevelIsNotValid);
+            }
+        }
+
+        private void CheckBelonging(User user, int customerId)
+        {
+            if (user.Level != UserLevel.Company)
+            {
+                var isBelonging = _validationDataAccess.ValidateBelonging(user.Id, customerId);
+
+                if (!isBelonging)
+                {
+                    throw new InvalidLineException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check whether input customer level is equal to value stored in database
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="customerLevel"></param>
+        private void CheckCustomerLevel(int customerId, CustomerLevel customerLevel)
         {
             var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
             {
                 CustId = customerId
             });
 
-            return (CustomerLevel)actualCustomerLevel == customerLevel;
-        }
-
-        private IResult ValidateActorLevelWithUplineLevelOfCustomer(CustomerLevel customerLevel, CustomerLevel? uplineLevel)
-        {
-            //// If actor is not company when edit member, actor level should equal with upline level.
-            if (_settingContext.Actor.Level != UserLevel.Company
-                && customerLevel == CustomerLevel.Member
-                && uplineLevel != null
-                && _settingContext.Actor.Level.Value != (int)uplineLevel.Value)
+            if ((CustomerLevel)actualCustomerLevel == customerLevel)
             {
-                return new Result(ResultValue.AccessDenied, Message.UplineLevelIsNotValid);
+                throw new InvalidCustomerLevelException();
             }
-
-            return Result.Success;
         }
 
         public IResult ValidateUpdatingSetting(UpdatingSettingParam updatingParam)
