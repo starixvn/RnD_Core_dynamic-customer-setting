@@ -6,11 +6,18 @@
     [Serializable]
     public class InvalidLevelConstrainException : CustomerSettingException
     {
-        public InvalidLevelConstrainException() : base()
+        public InvalidLevelConstrainException()
+            : base()
         {
         }
 
-        public InvalidLevelConstrainException(string message) : base(message)
+        public InvalidLevelConstrainException(string message)
+            : base(message)
+        {
+        }
+
+        protected InvalidLevelConstrainException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }

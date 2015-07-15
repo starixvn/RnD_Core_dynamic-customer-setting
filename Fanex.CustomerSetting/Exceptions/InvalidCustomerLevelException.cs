@@ -6,5 +6,17 @@
     [Serializable]
     public class InvalidCustomerLevelException : CustomerSettingException
     {
+        public InvalidCustomerLevelException() : base()
+        {
+        }
+
+        public InvalidCustomerLevelException(string message) : base(message) 
+        { 
+        }
+
+        protected InvalidCustomerLevelException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 }

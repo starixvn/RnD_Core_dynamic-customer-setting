@@ -8,12 +8,15 @@
     {
         public ActorStatusDisabledException() : base()
         {
-
         }
 
-        public ActorStatusDisabledException(string message) : base (message)
-        {
+        public ActorStatusDisabledException(string message) : base(message) 
+        { 
+        }
 
+        protected ActorStatusDisabledException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
         }
     }
 }
