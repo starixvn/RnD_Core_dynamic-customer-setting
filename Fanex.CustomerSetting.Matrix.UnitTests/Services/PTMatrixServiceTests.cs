@@ -16,13 +16,13 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class PTMatrixServiceUnitTests
+    public class PTMatrixServiceTests
     {
         private IResourceService _resourceService;
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
 
-        private IPTMatrixService _pTMatrixService;
+        private IPTMatrixService _positionTakingMatrixService;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +31,7 @@
             _productService = Substitute.For<IProductService>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
 
-            _pTMatrixService = new PTMatrixService(
+            _positionTakingMatrixService = new PTMatrixService(
                 _resourceService,
                 _productService,
                 _dynamicRepository);
@@ -46,7 +46,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _pTMatrixService.GetPTMatrix(productId, "CustomerName")));
+                    () => _positionTakingMatrixService.GetPTMatrix(productId, "CustomerName")));
         }
 
         [TestCase("  ")]
@@ -60,7 +60,7 @@
             //// Act
             Assert.Throws<ArgumentException>(
                 new TestDelegate(
-                    () => _pTMatrixService.GetPTMatrix(productId, customerName)));
+                    () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
         }
 
         private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
@@ -80,7 +80,7 @@
             var dummySettingType = AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            var actualPTMatrix = _pTMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             Assert.AreEqual(dummySettingType.SettingLevel, actualPTMatrix.SettingLevel);
@@ -96,7 +96,7 @@
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _pTMatrixService.GetPTMatrix(productId, customerName)));
+                    () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
         }
 
         [Test]
@@ -108,7 +108,7 @@
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            _pTMatrixService.GetPTMatrix(productId, customerName);
+            _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             _dynamicRepository.Received().Get<bool>(Arg.Is<IsAllowMasterAutoPTQueryCriteria>(
@@ -130,7 +130,7 @@
             AssumeMasterIsAllowedAutoPT();
 
             //// Act
-            var actualPTMatrix = _pTMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             Assert.IsTrue(actualPTMatrix.IsAllowMasterAutoPT);
@@ -145,7 +145,7 @@
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            _pTMatrixService.GetPTMatrix(productId, customerName);
+            _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             _dynamicRepository.Received().Fetch<PTItemMatrixDto>(
@@ -166,7 +166,7 @@
             _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
 
             //// Act
-            var actualPTMatrix = _pTMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             var numOfGrouped = 3;
@@ -192,7 +192,7 @@
             _resourceService.GetSportTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleSportName);
 
             //// Act
-            var actualResult = _pTMatrixService.GetPTMatrix(productId, customerName);
+            var actualResult = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             Assert.AreEqual(sampleSportName, actualResult.PTItemMatrices.First().SportTypeName);
@@ -213,7 +213,7 @@
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleBetTypeName);
 
             //// Act
-            var actualResult = _pTMatrixService.GetPTMatrix(productId, customerName);
+            var actualResult = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
 
             //// Assert
             Assert.AreEqual(sampleBetTypeName, actualResult.PTItemMatrices.First().BetTypeName);

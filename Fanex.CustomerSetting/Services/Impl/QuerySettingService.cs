@@ -35,8 +35,6 @@
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.Actor.Id");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Level.Value, "settingContext.Actor.Level");
 
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();

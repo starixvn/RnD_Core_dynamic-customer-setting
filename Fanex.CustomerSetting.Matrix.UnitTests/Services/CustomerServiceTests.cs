@@ -19,5 +19,10 @@
 
             _customerService = new CustomerService(_dynamicRepository);
         }
+
+        [Test]
+        public void GetCustomerLine_Always_CallGetCustomerLineDto()
+        {
+        }
     }
 }

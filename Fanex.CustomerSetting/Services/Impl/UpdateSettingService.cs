@@ -5,13 +5,11 @@
     using System.Linq;
     using System.Reflection;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -41,8 +39,6 @@
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.Actor.Id");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Level.Value, "settingContext.Actor.Level");
 
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
@@ -92,20 +88,20 @@
                 try
                 {
                     updatingSettingTypeResult = UpdateCustomerSettingType(
-                        customerId, 
-                        customerLevel, 
-                        settingType, 
-                        productId, 
+                        customerId,
+                        customerLevel,
+                        settingType,
+                        productId,
                         uplineLevel);
                 }
                 catch (Exception ex)
                 {
                     updatingSettingTypeResult = new SettingResult(
-                        Result.SystemError.Code, 
-                        Result.SystemError.Message, 
-                        0, 
-                        customerId, 
-                        settingType.Id, 
+                        Result.SystemError.Code,
+                        Result.SystemError.Message,
+                        0,
+                        customerId,
+                        settingType.Id,
                         settingType.Name);
 
                     _loggingService.LogUpdatingCustomerSettingTypeError(
@@ -138,8 +134,8 @@
 
         private SettingResult RunPreUpdateCustomerSettingTypeTasks(
             int customerId,
-            CustomerLevel customerLevel, 
-            SettingType settingType, 
+            CustomerLevel customerLevel,
+            SettingType settingType,
             CustomerLevel? uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
@@ -215,11 +211,11 @@
                 catch (Exception ex)
                 {
                     var errorResult = new SettingResult(
-                        Result.SystemError.Code, 
-                        Result.SystemError.Message, 
-                        msgType: 0, 
-                        customerId: 0, 
-                        settingTypeId: settingType.Id, 
+                        Result.SystemError.Code,
+                        Result.SystemError.Message,
+                        msgType: 0,
+                        customerId: 0,
+                        settingTypeId: settingType.Id,
                         settingTypeName: settingType.Name);
                     results.Add(errorResult);
 

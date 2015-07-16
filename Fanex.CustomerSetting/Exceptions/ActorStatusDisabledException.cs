@@ -6,12 +6,14 @@
     [Serializable]
     public class ActorStatusDisabledException : CustomerSettingException
     {
-        public ActorStatusDisabledException() : base()
+        public ActorStatusDisabledException()
+            : base()
         {
         }
 
-        public ActorStatusDisabledException(string message) : base(message) 
-        { 
+        public ActorStatusDisabledException(string message)
+            : base(message)
+        {
         }
 
         protected ActorStatusDisabledException(SerializationInfo info, StreamingContext context)

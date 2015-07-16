@@ -64,7 +64,7 @@
             _validationService.ValidateUpdatingSetting(updatingParam);
 
             //// Assert
-            
+
             _validationService.Received().ValidateQuerySetting(
                 Arg.Is<QuerySettingParam>(queryParam =>
                     queryParam.CustomerId == updatingParam.Setting.CustomerId
