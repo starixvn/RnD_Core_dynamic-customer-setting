@@ -82,10 +82,10 @@
                 _userLevel = value;
             }
         }
-
-        public bool Is(Enumeration level)
+        
+        public bool IsCompany()
         {
-            return this.Level == level;
+            return this.Level == UserLevel.Company;
         }
     }
 }

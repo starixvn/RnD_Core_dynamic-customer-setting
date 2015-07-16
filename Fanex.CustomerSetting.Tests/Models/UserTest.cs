@@ -82,19 +82,5 @@
                         user.SubAccountId = subAccountId;
                     }));
         }
-
-        [Test, TestCaseSource("isMethodAlwaysReturnRightValueCases")]
-        public void IsMethod_Always_ReturnRightValue(UserLevel userLevel, UserLevel checkedLevel, bool expected)
-        {
-            //// Arrange
-            User user = InstanceFactory.CreateUser();
-            user.Level = UserLevel.Company;
-
-            //// Act
-            var actual = user.Is(UserLevel.Company);
-
-            //// Assert
-            Assert.AreEqual(actual, true);
-        }
     }
 }

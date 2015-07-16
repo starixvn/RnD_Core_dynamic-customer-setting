@@ -44,8 +44,6 @@
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
-
             ValidateQuerySetting(queryParam);
 
             var product = GetProduct(queryParam.ProductId);
@@ -65,6 +63,8 @@
 
         private void ValidateQuerySetting(QuerySettingParam queryParam)
         {
+            Check.Argument.IsNotNull(queryParam, "queryParam");
+
             var validationResult = _validationService.ValidateQuerySetting(queryParam);
             if (!validationResult.IsSuccessful)
             {
