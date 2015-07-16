@@ -187,11 +187,11 @@
                 ex.ProductId = updatingParam.Setting.ProductId;
                 ex.CustomerId = updatingParam.Setting.CustomerId;
                 
-                // _logger.LogValidatingUpdatingError(
-                //    updatingParam.Setting.CustomerId,
-                //    updatingParam.UplineLevel,
-                //    updatingParam.Setting.ProductId,
-                //    ex);
+                //// _logger.LogValidatingUpdatingError(
+                ////    updatingParam.Setting.CustomerId,
+                ////    updatingParam.UplineLevel,
+                ////    updatingParam.Setting.ProductId,
+                ////    ex);
 
                 _logger.Error(ex.Message, ex);
 
@@ -268,11 +268,11 @@
             }
             catch (Exception ex)
             {
-                // _logger.LogValidatingUpdatingMultipleError(
-                //    updatingMultipleParam.CustomerIds,
-                //    updatingMultipleParam.UplineLevel,
-                //    updatingMultipleParam.Setting.ProductId,
-                //    ex);
+                //// _logger.LogValidatingUpdatingMultipleError(
+                ////    updatingMultipleParam.CustomerIds,
+                ////    updatingMultipleParam.UplineLevel,
+                ////    updatingMultipleParam.Setting.ProductId,
+                ////    ex);
 
                 _logger.Error(ex.Message, ex);
 

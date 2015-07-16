@@ -95,6 +95,8 @@
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Product255SettingServiceIntegrationTests.cs" />
+    <Compile Include="Services\Product255\Product255Constants.cs" />
+    <Compile Include="Services\Product255\Product255_CustomerIsMaster_IntegrationTests.cs" />
     <Compile Include="Services\Product255\Product255_CustomerIsSuper_IntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>

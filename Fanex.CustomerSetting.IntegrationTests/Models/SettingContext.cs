@@ -4,7 +4,12 @@
 
     public class SettingContext : ISettingContext
     {
-        public SettingContext(User actor, string language, string ip, byte system, string domain)
+        public SettingContext(
+            User actor, 
+            string language = "en-US", 
+            string ip = "192.168.1.1", 
+            byte system = 1, 
+            string domain = "www.domain.com")
         {
             Actor = actor;
             Language = language;

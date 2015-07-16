@@ -56,96 +56,6 @@
 
         #region Get Customer Setting
 
-        [Test]
-        public void GetCustomerSetting_CompanyViewsSuperSetting()
-        {
-            //// Arrange
-            var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
-            _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _updateSettingService = new UpdateSettingService(_settingContext);
-            _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
-
-            //// Act
-            var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-
-            //// Assert
-            Assert.AreEqual(SuperUserName, superSetting.CustomerInfo.UserName);
-            Assert.AreEqual(SuperId, superSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Super, superSetting.CustomerLevel);
-            Assert.AreEqual(ProductId, superSetting.ProductId);
-            Assert.AreEqual(ProductName, superSetting.ProductName);
-            Assert.AreEqual(NumOfSettingType, superSetting.SettingTypes.Count());
-
-            var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
-            Assert.IsNotNull(superPTITem);
-            Assert.GreaterOrEqual(superPTITem.A4, 1);
-            Assert.GreaterOrEqual(superPTITem.DefaultMaxPT, 1);
-            Assert.GreaterOrEqual(superPTITem.M4, 1);
-            Assert.GreaterOrEqual(superPTITem.S4, 1);
-            Assert.GreaterOrEqual(superPTITem.N4, 0);
-
-            var superBetLimitItem = superSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.IsNotNull(superBetLimitItem);
-            Assert.GreaterOrEqual(superBetLimitItem.MinBet, 0);
-            Assert.GreaterOrEqual(superBetLimitItem.MaxBet, 0);
-            Assert.GreaterOrEqual(superBetLimitItem.MaxPerMatch, 0);
-
-            var superCommissionItem = superSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.IsNotNull(superCommissionItem);
-            Assert.GreaterOrEqual(superCommissionItem.CommRate, 0);
-            Assert.LessOrEqual(superCommissionItem.CommRate, 0.01);
-
-            var superProductStatusItem = superSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.IsNotNull(superProductStatusItem);
-            Assert.IsNotNull(superProductStatusItem.Downline);
-        }
-
-        [TestCase(CompanyId, 5)]
-        [TestCase(SuperId, 4)]
-        public void GetCustomerSetting_ViewingMasterSetting(int actorId, int actorLevelValue)
-        {
-            //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
-            _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
-
-            //// Act
-            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-
-            //// Assert
-            Assert.AreEqual(MasterUserName, masterSetting.CustomerInfo.UserName);
-            Assert.AreEqual(MasterId, masterSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Master, masterSetting.CustomerLevel);
-            Assert.AreEqual(ProductId, masterSetting.ProductId);
-            Assert.AreEqual(ProductName, masterSetting.ProductName);
-            Assert.AreEqual(NumOfSettingType, masterSetting.SettingTypes.Count());
-
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            Assert.IsNotNull(masterPTItem);
-            Assert.GreaterOrEqual(masterPTItem.IS3 ? masterPTItem.US3 : masterPTItem.M3, 1);
-            Assert.GreaterOrEqual(masterPTItem.S3, 1);
-            Assert.GreaterOrEqual(masterPTItem.N3, 0);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.IsNotNull(masterBetLimitItem);
-            Assert.GreaterOrEqual(masterBetLimitItem.MinBet, 0);
-            Assert.GreaterOrEqual(masterBetLimitItem.MaxBet, 0);
-            Assert.GreaterOrEqual(masterBetLimitItem.MaxPerMatch, 0);
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.IsNotNull(masterCommissionItem);
-            Assert.GreaterOrEqual(masterCommissionItem.CommRate, 0);
-            Assert.LessOrEqual(masterCommissionItem.CommRate, 0.01);
-            Assert.GreaterOrEqual(masterCommissionItem.Upline.CommRate, 0);
-            Assert.LessOrEqual(masterCommissionItem.Upline.CommRate, 0.01);
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.IsNotNull(masterProductStatusItem);
-            Assert.IsNotNull(masterProductStatusItem.Downline);
-        }
-
         [TestCase(CompanyId, 5)]
         [TestCase(MasterId, 3)]
         public void GetCustomerSetting_ViewingAgentSetting(int actorId, int actorLevelValue)
@@ -153,6 +63,7 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
+            _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
 
@@ -201,6 +112,7 @@
             //// Arrange
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
+            _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
 
@@ -326,142 +238,6 @@
         #endregion Get Customer Setting
 
         #region Update Single Customer Setting
-
-        [Test]
-        public void UpdateCustomerSetting_CompanyUpdatesSuperSetting()
-        {
-            //// Arrange
-            var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
-            _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, ProductId, null);
-
-            var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
-            superPTITem.S4 = (byte)(superPTITem.S4 == 90 ? 89 : 90);
-            superPTITem.M4 = (byte)(superPTITem.M4 == 88 ? 87 : 88);
-            superPTITem.A4 = (byte)(superPTITem.A4 == 73 ? 72 : 73);
-            superPTITem.N4 = (byte)(superPTITem.N4 == 3 ? 4 : 3);
-
-            var superBetLimitItem = superSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            superBetLimitItem.MinBet = superBetLimitItem.MinBet == 45 ? 44 : 45;
-            superBetLimitItem.MaxBet = superBetLimitItem.MaxBet == 550 ? 551 : 550;
-            superBetLimitItem.MaxPerMatch = superBetLimitItem.MaxPerMatch == 550550 ? 550551 : 550550;
-
-            var superCommissionItem = superSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            superCommissionItem.CommRate = superCommissionItem.CommRate == 0.0095m ? 0.0096m : 0.0095m;
-
-            var superProductStatusItem = superSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            superProductStatusItem.IsDisabled = false;
-            superProductStatusItem.Downline.IsDisabled = false;
-
-            //// Act
-            var updateResult = _updateSettingService.UpdateCustomerSetting(new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel));
-
-            //// Assert
-            Assert.IsTrue(updateResult.IsSuccessful);
-            Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-
-            var newSuperSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var newSuperPTItem = newSuperSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
-            Assert.AreEqual(superPTITem.S4, newSuperPTItem.S4);
-            Assert.AreEqual(superPTITem.M4, newSuperPTItem.M4);
-            Assert.AreEqual(superPTITem.A4, newSuperPTItem.A4);
-            Assert.AreEqual(superPTITem.N4, newSuperPTItem.N4);
-
-            var newSuperBetLimitItem = newSuperSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.AreEqual(superBetLimitItem.MinBet, newSuperBetLimitItem.MinBet);
-            Assert.AreEqual(superBetLimitItem.MaxBet, newSuperBetLimitItem.MaxBet);
-            Assert.AreEqual(superBetLimitItem.MaxPerMatch, newSuperBetLimitItem.MaxPerMatch);
-
-            var newSuperCommissionItem = newSuperSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.AreEqual(superCommissionItem.CommRate, newSuperCommissionItem.CommRate);
-
-            var newSuperProductStatusItem = newSuperSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.AreEqual(superProductStatusItem.IsDisabled, newSuperProductStatusItem.IsDisabled);
-            Assert.AreEqual(superProductStatusItem.Downline.IsDisabled, newSuperProductStatusItem.Downline.IsDisabled);
-        }
-
-        [Test]
-        public void UpdateCustomerSetting_CompanyUpdatesMasterSetting()
-        {
-            UpdateCustomerSetting_UpdatingMasterSetting(CompanyId, UserLevel.Company, true);
-            UpdateCustomerSetting_UpdatingMasterSetting(CompanyId, UserLevel.Company, false);
-        }
-
-        [Test]
-        public void UpdateCustomerSetting_SuperUpdatesMasterSetting()
-        {
-            UpdateCustomerSetting_UpdatingMasterSetting(SuperId, UserLevel.Super, true);
-            UpdateCustomerSetting_UpdatingMasterSetting(SuperId, UserLevel.Super, false);
-        }
-
-        private void UpdateCustomerSetting_UpdatingMasterSetting(int actorId, UserLevel actorLevel, bool isDisbaledProductStatus)
-        {
-            //// Arrange
-            var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
-            _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId, null);
-
-            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            masterPTItem.IS3 = !masterPTItem.IS3;
-            if (masterPTItem.IS3)
-            {
-                masterPTItem.US3 = (byte)(masterPTItem.US3 == 20 ? 21 : 20);
-                masterPTItem.S3 = 0;
-            }
-            else
-            {
-                masterPTItem.S3 = (byte)(masterPTItem.S3 == 20 ? 21 : 20);
-                masterPTItem.US3 = 0;
-            }
-
-            masterPTItem.M3 = (byte)(masterPTItem.M3 == 65 ? 66 : 65);
-            masterPTItem.N3 = (byte)(masterPTItem.N3 == 5 ? 6 : 5);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            masterBetLimitItem.MinBet = masterBetLimitItem.MinBet == 50 ? 51 : 50;
-            masterBetLimitItem.MaxBet = masterBetLimitItem.MaxBet == 500 ? 501 : 500;
-            masterBetLimitItem.MaxPerMatch = masterBetLimitItem.MaxPerMatch == 450550 ? 450551 : 450550;
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            masterCommissionItem.CommRate = masterCommissionItem.CommRate == 0.0080m ? 0.0081m : 0.0080m;
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            masterProductStatusItem.IsDisabled = isDisbaledProductStatus;
-            masterProductStatusItem.Downline.IsDisabled = isDisbaledProductStatus;
-
-            //// Act
-            var updateParam = new UpdatingSettingParam(masterSetting, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
-
-            //// Assert
-            Assert.IsTrue(updateResult.IsSuccessful);
-
-            Thread.Sleep(NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-
-            var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
-            Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
-            Assert.AreEqual(masterPTItem.S3, newMasterPTItem.S3);
-            Assert.AreEqual(masterPTItem.M3, newMasterPTItem.M3);
-            Assert.AreEqual(masterPTItem.N3, newMasterPTItem.N3);
-
-            var newMasterBetLimitItem = newMasterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.AreEqual(masterBetLimitItem.MinBet, newMasterBetLimitItem.MinBet);
-            Assert.AreEqual(masterBetLimitItem.MaxBet, newMasterBetLimitItem.MaxBet);
-            Assert.AreEqual(masterBetLimitItem.MaxPerMatch, newMasterBetLimitItem.MaxPerMatch);
-
-            var newMasterCommissionItem = newMasterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.AreEqual(masterCommissionItem.CommRate, newMasterCommissionItem.CommRate);
-
-            var newMasterProductStatusItem = newMasterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.AreEqual(masterProductStatusItem.IsDisabled, newMasterProductStatusItem.IsDisabled);
-            Assert.AreEqual(masterProductStatusItem.Downline.IsDisabled, newMasterProductStatusItem.Downline.IsDisabled);
-        }
 
         [Test]
         public void UpdateCustomerSetting_CompanyUpdatesAgentSetting()
@@ -731,75 +507,6 @@
         #endregion Update Single Customer Setting
 
         #region Update Multiple Customes Setting
-
-        [Test]
-        public void UpdateMultipleCustomerSetting_SuperUpdatesMultipleMastersSetting()
-        {
-            //// Arrange
-            var actor = new User { Id = SuperId, Level = UserLevel.Super, Name = "ActorName" };
-            _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
-            _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, ProductId);
-
-            var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            if (masterPTItem.IS3)
-            {
-                masterPTItem.US3 = (byte)(masterPTItem.US3 == 20 ? 21 : 20);
-            }
-            else
-            {
-                masterPTItem.S3 = (byte)(masterPTItem.S3 == 20 ? 21 : 20);
-            }
-
-            masterPTItem.M3 = (byte)(masterPTItem.M3 == 65 ? 66 : 65);
-            masterPTItem.N3 = (byte)(masterPTItem.N3 == 5 ? 6 : 5);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            masterBetLimitItem.MinBet = masterBetLimitItem.MinBet == 50 ? 51 : 50;
-            masterBetLimitItem.MaxBet = masterBetLimitItem.MaxBet == 500 ? 501 : 500;
-            masterBetLimitItem.MaxPerMatch = masterBetLimitItem.MaxPerMatch == 450550 ? 450551 : 450550;
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            masterCommissionItem.CommRate = masterCommissionItem.CommRate == 0.0080m ? 0.0081m : 0.0080m;
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            masterProductStatusItem.IsDisabled = false;
-            masterProductStatusItem.Downline.IsDisabled = false;
-
-            //// Act
-            var updatingMultipleParam = new UpdatingMultipleSettingParam(masterSetting, _masterIds, _masterNames, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
-
-            //// Assert
-            Assert.IsTrue(updateResult.IsSuccessful);
-
-            Thread.Sleep(NumOfSleepSecondsWaitingForReplication * 2); //// Wait for replication data.
-
-            foreach (var masterId in _masterIds)
-            {
-                querySettingParam.CustomerId = masterId;
-                var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-                var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-                Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
-                Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
-                Assert.AreEqual(masterPTItem.S3, newMasterPTItem.S3);
-                Assert.AreEqual(masterPTItem.M3, newMasterPTItem.M3);
-                Assert.AreEqual(masterPTItem.N3, newMasterPTItem.N3);
-
-                var newMasterBetLimitItem = newMasterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-                Assert.AreEqual(masterBetLimitItem.MinBet, newMasterBetLimitItem.MinBet);
-                Assert.AreEqual(masterBetLimitItem.MaxBet, newMasterBetLimitItem.MaxBet);
-                Assert.AreEqual(masterBetLimitItem.MaxPerMatch, newMasterBetLimitItem.MaxPerMatch);
-
-                var newMasterCommissionItem = newMasterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-                Assert.AreEqual(masterCommissionItem.CommRate, newMasterCommissionItem.CommRate);
-
-                var newMasterProductStatusItem = newMasterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-                Assert.AreEqual(masterProductStatusItem.IsDisabled, newMasterProductStatusItem.IsDisabled);
-                Assert.AreEqual(masterProductStatusItem.Downline.IsDisabled, newMasterProductStatusItem.Downline.IsDisabled);
-            }
-        }
 
         [Test]
         public void UpdateMultipleCustomerSetting_MasterUpdatesMultipleAgentsSetting()
