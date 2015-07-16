@@ -50,7 +50,6 @@
 
         private void AssumeValidateQuerySettingIsSuccessful()
         {
-            
             _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
         }
 

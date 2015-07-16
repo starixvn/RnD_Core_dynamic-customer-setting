@@ -20,7 +20,8 @@
     [TestFixture]
     public class SettingServiceTestsGetCustomerSetting
     {
-        private IUpdateSettingService _settingService;
+        private IUpdateSettingService _updateSettingService;
+        private IQuerySettingService _querySettingService;
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
@@ -43,7 +44,16 @@
 
             _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
 
-            _settingService = new UpdateSettingService(
+            _updateSettingService = new UpdateSettingService(
+                _settingContext,
+                _validationService,
+                _productService,
+                _resourceService,
+                _loggingService,
+                _settingResolver,
+                _dymanicRepository);
+
+            _querySettingService = new QuerySettingService(
                 _settingContext,
                 _validationService,
                 _productService,
@@ -62,7 +72,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParam)));
+                    () => _querySettingService.GetCustomerSetting(querySettingParam)));
         }
 
         [Test]
@@ -73,7 +83,7 @@
             _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _validationService.Received().ValidateQuerySetting(Arg.Is<QuerySettingParam>(
@@ -93,7 +103,7 @@
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _settingService.GetCustomerSetting(querySettingParam)));
+                    () => _querySettingService.GetCustomerSetting(querySettingParam)));
         }
 
         private void AssumeQuerySettingActionIsValid()
@@ -109,7 +119,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _dymanicRepository.Received().Get<CustomerInfo>(Arg.Is<CustomerInfoQueryCriteria>(
@@ -124,7 +134,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(querySettingParam.CustomerId, actualCustomerSetting.CustomerId);
@@ -138,7 +148,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(querySettingParam.CustomerLevel, actualCustomerSetting.CustomerLevel);
@@ -154,7 +164,7 @@
             _dymanicRepository.Get<CustomerInfo>(Arg.Any<CustomerInfoQueryCriteria>()).Returns(expectedCustomerInfo);
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(expectedCustomerInfo.UserName, actualCustomerSetting.CustomerInfo.UserName);
@@ -168,7 +178,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _productService.Received().GetProductSettingTypes(
@@ -189,7 +199,7 @@
             SetupSettingTypeDataAccessStub(productSettingTypes.First());
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(productSettingTypes.First().Id, actualCustomerSetting.SettingTypes.First().Id);
@@ -203,7 +213,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _resourceService.Received().GetProductName(
@@ -221,7 +231,7 @@
             _resourceService.GetProductName(Arg.Any<byte>(), Arg.Any<string>()).Returns(expectedProductName);
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(expectedProductName, actualCustomerSetting.ProductName);
@@ -235,7 +245,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-            var actualCustomerSetting = _settingService.GetCustomerSetting(querySettingParam);
+            var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             Assert.AreEqual(querySettingParam.ProductId, actualCustomerSetting.ProductId);
@@ -260,7 +270,7 @@
             SetupSettingTypeDataAccessStub();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _settingResolver.Received(dummySettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
@@ -280,7 +290,7 @@
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksMock);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             settingTypePreTasksMock.Received().PreGetCustomerSettingType(_settingContext, querySettingParam);
@@ -303,7 +313,7 @@
             SetupSettingTypeDataAccessStub();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
@@ -319,7 +329,7 @@
             SetupSettingTypeDataAccessStub();
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), querySettingParam);
@@ -339,7 +349,7 @@
             _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksMock);
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             settingTypePostTasksMock.Received().PostGetCustomerSettingType(
@@ -358,7 +368,7 @@
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
 
             //// Act
-            _settingService.GetCustomerSetting(querySettingParam);
+           _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _loggingService.Received().LogQueryCustomerSettingTypeError(

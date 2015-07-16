@@ -3,8 +3,8 @@
     using System;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
-    using NUnit.Framework;
     using NSubstitute;
+    using NUnit.Framework;
 
     [TestFixture]
     public class UserLevelTest

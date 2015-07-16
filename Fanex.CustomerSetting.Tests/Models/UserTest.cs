@@ -8,6 +8,17 @@
     [TestFixture]
     public class UserTest
     {
+        private static object[] isMethodAlwaysReturnRightValueCases =  
+        {
+            new object[] { UserLevel.Company, UserLevel.Company, true },
+            new object[] { UserLevel.Company, UserLevel.Super, false },
+            new object[] { UserLevel.Super, UserLevel.Super, true },
+            new object[] { UserLevel.Super, UserLevel.Master, false },
+            new object[] { UserLevel.Master, UserLevel.Master, true },
+            new object[] { UserLevel.Master, UserLevel.Agent, false },
+            new object[] { UserLevel.Agent, UserLevel.Agent, true }
+        };
+
         [TestCase(0)]
         [TestCase(-1)]
         public void SetId_InputValueIsNegativeOrZero_ThrowArgumentOutOfRangeException(int userId)
@@ -72,7 +83,7 @@
                     }));
         }
 
-        [Test, TestCaseSource("IsMethod_Always_ReturnRightValue_Cases")]
+        [Test, TestCaseSource("isMethodAlwaysReturnRightValueCases")]
         public void IsMethod_Always_ReturnRightValue(UserLevel userLevel, UserLevel checkedLevel, bool expected)
         {
             //// Arrange
@@ -85,16 +96,5 @@
             //// Assert
             Assert.AreEqual(actual, true);
         }
-
-        static object[] IsMethod_Always_ReturnRightValue_Cases =  
-        {
-            new object[] {UserLevel.Company, UserLevel.Company, true},
-            new object[] {UserLevel.Company, UserLevel.Super, false},
-            new object[] {UserLevel.Super, UserLevel.Super, true},
-            new object[] {UserLevel.Super, UserLevel.Master, false},
-            new object[] {UserLevel.Master, UserLevel.Master, true},
-            new object[] {UserLevel.Master, UserLevel.Agent, false},
-            new object[] {UserLevel.Agent, UserLevel.Agent, true}
-        };
     }
 }

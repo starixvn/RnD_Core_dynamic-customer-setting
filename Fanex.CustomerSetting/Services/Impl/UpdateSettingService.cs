@@ -53,8 +53,6 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-       
-
         /// <summary>
         /// Updates the customer setting, includes list of setting types.
         /// </summary>

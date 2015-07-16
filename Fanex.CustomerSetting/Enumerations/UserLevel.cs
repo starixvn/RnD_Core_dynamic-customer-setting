@@ -55,7 +55,5 @@
         {
             return uplineLevelValue - downlineLevelValue;
         }
-
-
     }
 }

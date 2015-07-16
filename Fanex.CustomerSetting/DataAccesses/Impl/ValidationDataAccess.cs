@@ -25,7 +25,7 @@
             param.Add("errmsg", string.Empty);
 
             IResult result = ExecuteNonQuery("Acc_CustSetting_SameLineCheck", param);
-            //return ExecuteNonQuery("CustSetting_SameLineCheck", param);
+            //// return ExecuteNonQuery("CustSetting_SameLineCheck", param);
 
             return result.IsSuccessful;
         }
