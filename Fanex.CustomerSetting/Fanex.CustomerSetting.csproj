@@ -115,11 +115,7 @@
     <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
     <Compile Include="Enumerations\SettingLevel.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
-    <Compile Include="Exceptions\ActorStatusDisabledException.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
-    <Compile Include="Exceptions\InvalidCustomerLevelException.cs" />
-    <Compile Include="Exceptions\InvalidLineException.cs" />
-    <Compile Include="Exceptions\InvalidLevelConstrainException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\DefaultSettingItem.cs" />
     <Compile Include="Criteria\CustomerInfoQueryCriteria.cs" />

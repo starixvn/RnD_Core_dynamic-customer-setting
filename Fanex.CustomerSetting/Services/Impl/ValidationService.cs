@@ -15,30 +15,31 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     public class ValidationService : IValidationService
     {
         private readonly ISettingContext _settingContext;
-        private readonly ILoggingService _loggingService;
         private readonly IProductService _productService;
         private readonly IValidationDataAccess _validationDataAccess;
         private readonly IDynamicRepository _dynamicRepository;
+        private readonly ILogger _logger;
 
         public ValidationService(
             ISettingContext settingContext,
             IProductService productService = null,
-            ILoggingService loggingService = null,
             IValidationDataAccess validationDataAccess = null,
-            IDynamicRepository dynamicRepository = null)
+            IDynamicRepository dynamicRepository = null,
+            ILogger logger = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
 
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
-            _loggingService = loggingService ?? new LoggingService(_settingContext);
             _validationDataAccess = validationDataAccess ?? new ValidationDataAccess();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _logger = logger ?? Logger.Log;
         }
 
         /// <summary>
@@ -67,20 +68,11 @@
 
                 CheckBelonging(_settingContext.Actor, customerId);
             }
-            catch (ActorStatusDisabledException ex)
+            catch (CustomerSettingException ex)
             {
-                return new Result(ResultValue.AccessDenied, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                if (ex is InvalidCustomerLevelException
-                    || ex is InvalidLevelConstrainException
-                    || ex is InvalidLineException)
-                {
-                    return Result.AccessDenied;
-                }
+                _logger.Error(ex.Message, ex);
 
-                throw;
+                return new Result(ResultValue.AccessDenied, ex.Message);
             }
 
             return Result.Success;
@@ -95,7 +87,7 @@
 
             if (!enabledStatus)
             {
-                throw new ActorStatusDisabledException(string.Format(Message.AccountWasDisabled, actor.Name));
+                throw new CustomerSettingException(string.Format(Message.AccountWasDisabled, actor.Name));
             }
         }
 
@@ -107,7 +99,7 @@
 
             if (!isValidConstrain)
             {
-                throw new InvalidLevelConstrainException();
+                throw new CustomerSettingException();
             }
         }
 
@@ -119,7 +111,7 @@
                 && uplineLevel.HasValue
                 && actorLevel.Value != (int)uplineLevel.Value)
             {
-                throw new InvalidLevelConstrainException(Message.UplineLevelIsNotValid);
+                throw new CustomerSettingException(Message.UplineLevelIsNotValid);
             }
         }
 
@@ -131,7 +123,7 @@
 
                 if (!isBelonging)
                 {
-                    throw new InvalidLineException();
+                    throw new CustomerSettingException();
                 }
             }
         }
@@ -150,7 +142,7 @@
 
             if ((CustomerLevel)actualCustomerLevel != customerLevel)
             {
-                throw new InvalidCustomerLevelException();
+                throw new CustomerSettingException();
             }
         }
 
@@ -190,13 +182,18 @@
 
                 return ValidateSettingTypes(setting.SettingTypes);
             }
-            catch (Exception ex)
+            catch (CustomerSettingException ex)
             {
-                _loggingService.LogValidatingUpdatingError(
-                    updatingParam.Setting.CustomerId,
-                    updatingParam.UplineLevel,
-                    updatingParam.Setting.ProductId,
-                    ex);
+                ex.ProductId = updatingParam.Setting.ProductId;
+                ex.CustomerId = updatingParam.Setting.CustomerId;
+                
+                // _logger.LogValidatingUpdatingError(
+                //    updatingParam.Setting.CustomerId,
+                //    updatingParam.UplineLevel,
+                //    updatingParam.Setting.ProductId,
+                //    ex);
+
+                _logger.Error(ex.Message, ex);
 
                 return Result.SystemError;
             }
@@ -271,11 +268,13 @@
             }
             catch (Exception ex)
             {
-                _loggingService.LogValidatingUpdatingMultipleError(
-                    updatingMultipleParam.CustomerIds,
-                    updatingMultipleParam.UplineLevel,
-                    updatingMultipleParam.Setting.ProductId,
-                    ex);
+                // _logger.LogValidatingUpdatingMultipleError(
+                //    updatingMultipleParam.CustomerIds,
+                //    updatingMultipleParam.UplineLevel,
+                //    updatingMultipleParam.Setting.ProductId,
+                //    ex);
+
+                _logger.Error(ex.Message, ex);
 
                 return Result.SystemError;
             }

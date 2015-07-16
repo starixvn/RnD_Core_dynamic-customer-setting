@@ -7,11 +7,8 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
-    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     public class QuerySettingService : IQuerySettingService
@@ -135,7 +132,7 @@
                         ex);
                 }
 
-                if (customerSettingType.SettingItems.Any())
+                if (customerSettingType.SettingItems != null && customerSettingType.SettingItems.Any())
                 {
                     customerSettingTypes.Add(customerSettingType);
                 }

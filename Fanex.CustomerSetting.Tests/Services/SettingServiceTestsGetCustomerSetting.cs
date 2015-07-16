@@ -48,7 +48,6 @@
                 _settingContext,
                 _validationService,
                 _productService,
-                _resourceService,
                 _loggingService,
                 _settingResolver,
                 _dymanicRepository);

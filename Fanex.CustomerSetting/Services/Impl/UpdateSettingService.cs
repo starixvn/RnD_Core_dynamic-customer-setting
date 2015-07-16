@@ -23,7 +23,6 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
-        private readonly IResourceService _resourceService;
         private readonly ILoggingService _loggingService;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
@@ -32,7 +31,6 @@
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
-            IResourceService resourceService = null,
             ILoggingService loggingService = null,
             ISettingResolver settingResolver = null,
             IDynamicRepository dynamicRepository = null)
@@ -43,7 +41,6 @@
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
-            _resourceService = resourceService ?? new ResourceService();
             _loggingService = loggingService ?? new LoggingService(_settingContext);
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
