@@ -93,11 +93,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\SettingContext.cs" />
+    <Compile Include="ProductInfo.cs" />
+    <Compile Include="Products\Product255\Product255_MasterEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255_AgentEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255_CompanyEditsSuper_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255_MasterEditsAgent_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255_SuperEditsMaster_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255_SuperEditsMember_IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Product255SettingServiceIntegrationTests.cs" />
-    <Compile Include="Services\Product255\Product255Constants.cs" />
-    <Compile Include="Services\Product255\Product255_CustomerIsMaster_IntegrationTests.cs" />
-    <Compile Include="Services\Product255\Product255_CustomerIsSuper_IntegrationTests.cs" />
+    <Compile Include="Products\Product255\Product255Constants.cs" />
+    <Compile Include="Products\ProductBase\AgentEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\ProductBase\MasterEditsAgent_IntegrationTests.cs" />
+    <Compile Include="Products\ProductBase\SuperEditsMaster_IntegrationTests.cs" />
+    <Compile Include="Products\ProductBase\MasterEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\ProductBase\SuperEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\ProductBase\CompanyEditsSuper_IntegrationTests.cs" />
+    <Compile Include="SettingInfo.cs" />
+    <Compile Include="TestConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

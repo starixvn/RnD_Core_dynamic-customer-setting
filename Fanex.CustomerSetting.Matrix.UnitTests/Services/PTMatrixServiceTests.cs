@@ -234,7 +234,7 @@
             bool isLive = true,
             short sportType = 1,
             short betType = 1,
-            UserLevel customerLevel = UserLevel.Super,
+            UserLevel customerLevel = null,
             byte superPT = 10,
             byte autoSuperPT = 10,
             bool isAutoSuperPT = false,
@@ -244,6 +244,8 @@
             byte agentPT = 10,
             byte minPT = 2)
         {
+            customerLevel = customerLevel ?? UserLevel.Super;
+
             return new PTItemMatrixDto
             {
                 IsLive = isLive,

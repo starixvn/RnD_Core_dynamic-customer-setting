@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Configurations;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -54,18 +55,18 @@
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
-            switch (customerLevel)
+            switch (customerLevel.Value)
             {
-                case UserLevel.Super:
+                case Level.Super:
                     return "CustSetting_SuperProductStatusSelect" + keySuffix;
 
-                case UserLevel.Master:
+                case Level.Master:
                     return "CustSetting_MasterProductStatusSelect" + keySuffix;
 
-                case UserLevel.Agent:
+                case Level.Agent:
                     return "CustSetting_AgentProductStatusSelect" + keySuffix;
 
-                case UserLevel.Member:
+                case Level.Member:
                     return "CustSetting_MemberProductStatusSelect" + keySuffix;
 
                 default:

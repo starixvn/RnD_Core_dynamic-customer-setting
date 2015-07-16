@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
@@ -25,27 +26,27 @@
             var customerLineDto = GetCustomerLineDto(customerName);
             var customerLine = new List<Customer>();
 
-            switch (customerLineDto.CustomerLevel)
+            switch (customerLineDto.CustomerLevel.Value)
             {
-                case UserLevel.Super:
+                case Level.Super:
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case UserLevel.Master:
+                case Level.Master:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case UserLevel.Agent:
+                case Level.Agent:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetMaster(customerLineDto));
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case UserLevel.Member:
+                case Level.Member:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetMaster(customerLineDto));
                     customerLine.Add(GetAgent(customerLineDto));

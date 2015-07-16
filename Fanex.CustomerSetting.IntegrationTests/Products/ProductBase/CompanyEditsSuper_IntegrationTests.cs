@@ -1,10 +1,11 @@
-﻿namespace Fanex.CustomerSetting.IntegrationTests.Services.Product255
+﻿namespace Fanex.CustomerSetting.IntegrationTests.Products.ProductBase
 {
     using System.Linq;
     using System.Threading;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.IntegrationTests.Models;
+    using Fanex.CustomerSetting.IntegrationTests.Products.Product255;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -15,7 +16,7 @@
     using Fanex.Data.Configuration;
     using NUnit.Framework;
 
-    public class Product255_CustomerIsSuper_IntegrationTests
+    public class CompanyEditsSuper_IntegrationTests
     {
         private const int CompanyId = 8;
         private const int SuperId = 14424987;
@@ -31,15 +32,18 @@
             DbSettingProviderManager.Current.Start();
         }
 
-        [Test]
-        public void GetCustomerSetting_CompanyViewsSuperSetting()
+        protected void CompanyViewsSuperSetting(
+            int companyId = SettingInfo.CompanyId,
+            byte productId = Product255Constants.ProductId,
+            string productName = Product255Constants.ProductName,
+            byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
+            var actor = new User { Id = companyId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, Product255Constants.ProductId, null);
+            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, productId);
 
             //// Act
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -48,9 +52,9 @@
             Assert.AreEqual(SuperUserName, superSetting.CustomerInfo.UserName);
             Assert.AreEqual(SuperId, superSetting.CustomerId);
             Assert.AreEqual(UserLevel.Super, superSetting.CustomerLevel);
-            Assert.AreEqual(Product255Constants.ProductId, superSetting.ProductId);
-            Assert.AreEqual(Product255Constants.ProductName, superSetting.ProductName);
-            Assert.AreEqual(Product255Constants.NumOfSettingType, superSetting.SettingTypes.Count());
+            Assert.AreEqual(productId, superSetting.ProductId);
+            Assert.AreEqual(productName, superSetting.ProductName);
+            Assert.AreEqual(numOfSettingTypes, superSetting.SettingTypes.Count());
 
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
             Assert.IsNotNull(superPTITem);
@@ -76,15 +80,17 @@
             Assert.IsNotNull(superProductStatusItem.Downline);
         }
 
-        [Test]
-        public void UpdateCustomerSetting_CompanyUpdatesSuperSetting()
+        protected void CompanyUpdatesSuperSetting(
+            int companyId = SettingInfo.CompanyId,
+            byte productId = Product255Constants.ProductId)
         {
             //// Arrange
-            var actor = new User { Id = SuperId, Level = UserLevel.Company, Name = "Company Name" };
+            var actor = new User { Id = companyId, Level = UserLevel.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, Product255Constants.ProductId, null);
+
+            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, productId, null);
 
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
@@ -106,11 +112,12 @@
             superProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateResult = _updateSettingService.UpdateCustomerSetting(new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel));
+            var updateParam = new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
-            Thread.Sleep(Product255Constants.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
+            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
 
             var newSuperSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newSuperPTItem = newSuperSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
