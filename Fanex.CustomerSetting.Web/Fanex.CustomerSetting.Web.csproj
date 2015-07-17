@@ -132,6 +132,7 @@
     <Content Include="Gulpfile.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Assets\NodeModules\ts-angular-annotation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registration.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\core.ts" />

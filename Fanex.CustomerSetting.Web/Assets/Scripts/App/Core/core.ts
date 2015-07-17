@@ -1,7 +1,7 @@
 ﻿/// <reference path="module-registration.ts" />
 
 module CustomerSetting {
-    @Controller
+    @controller
     export class CustomerSettingController {
     }
-} 
+}
