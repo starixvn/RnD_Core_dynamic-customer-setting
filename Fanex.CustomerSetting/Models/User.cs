@@ -88,14 +88,20 @@
             }
         }
         
-        public bool IsCompany()
+        public bool IsCompany
         {
-            return this.Level == UserLevel.Company;
+            get
+            {
+                return this.Level == UserLevel.Company;
+            }
         }
 
-        public bool IsNotCompany()
+        public bool IsNotCompany
         {
-            return !this.IsCompany();
+            get
+            {
+                return !this.IsCompany;
+            }
         }
     }
 }

@@ -94,8 +94,8 @@
 
         private void CheckActorAndCustomerLevelsConstrain(User actor, UserLevel customerLevel)
         {
-            var isValidConstrain = actor.IsCompany()
-                || customerLevel == UserLevel.Member
+            var isValidConstrain = actor.IsCompany
+                || customerLevel.IsMemberLevel
                 || actor.Level.IsDirectUplineLevelOf(customerLevel);
 
             if (!isValidConstrain)
@@ -107,10 +107,10 @@
         private void CheckActorLevelAndCustomerUplineLevelConstrain(User actor, UserLevel customerLevel, UserLevel uplineLevel)
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
-            if (actor.IsNotCompany()
-                && customerLevel == UserLevel.Member
-                && uplineLevel != null
-                && actor.Level.Value != (int)uplineLevel.Value)
+            if (actor.IsNotCompany
+                && customerLevel.IsMemberLevel
+                && uplineLevel.IsNot(null)
+                && actor.Level.IsNot(uplineLevel))
             {
                 throw new CustomerSettingException(Message.UplineLevelIsNotValid);
             }
@@ -118,7 +118,7 @@
 
         private void CheckBelonging(User actor, int customerId)
         {
-            if (actor.IsNotCompany())
+            if (actor.IsNotCompany)
             {
                 var isBelonging = _validationDataAccess.ValidateBelonging(actor.Id, customerId);
 
@@ -206,7 +206,7 @@
         {
             var currentSystemId = GetCurrentSystemId();
 
-            if (_settingContext.Actor.IsCompany() && currentSystemId == (byte)SystemType.Agency)
+            if (_settingContext.Actor.IsCompany && currentSystemId == (byte)SystemType.Agency)
             {
                 return Result.AccessDenied;
             }
@@ -287,7 +287,7 @@
 
         private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, UserLevel customerLevel)
         {
-            if (customerLevel == UserLevel.Member)
+            if (customerLevel.IsMemberLevel)
             {
                 return _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
             }

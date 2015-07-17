@@ -57,6 +57,7 @@
             Check.Argument.IsNotNegativeOrZero(updatingParam.Setting.SettingTypes.Count(), "updatingParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingSetting(updatingParam);
+
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -118,6 +119,7 @@
         private SettingResult UpdateCustomerSettingType(int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel)
         {
             var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
+
             if (!preTasksResult.IsSuccessful)
             {
                 return preTasksResult;
@@ -136,6 +138,7 @@
             UserLevel uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
+
             if (preTasks != null
                 && IsOverride(preTasks.GetType().GetMethod("PreUpdateCustomerSettingType")))
             {
@@ -159,6 +162,7 @@
             SettingResult result)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
+
             if (postTasks != null
                 && IsOverride(postTasks.GetType().GetMethod("PostUpdateCustomerSettingType")))
             {
@@ -174,6 +178,7 @@
             Check.Argument.IsNotNegativeOrZero(updatingMultipleParam.Setting.SettingTypes.Count(), "updatingMultipleParam.Setting.SettingTypes.Count");
 
             var validationResult = ValidateUpdatingMultipleCustomerSetting(updatingMultipleParam);
+
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
@@ -236,6 +241,7 @@
             byte productId)
         {
             var preTasksResult = RunPreUpdateMultipleCustomersSettingTypeTasks(customerIds, customerLevel, settingType, uplineLevel);
+
             if (!preTasksResult.Result.IsSuccessful && preTasksResult.IsStopUpdating)
             {
                 return preTasksResult.Result;
@@ -282,6 +288,7 @@
             UserLevel uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
+
             if (preTasks != null && IsOverride(preTasks.GetType().GetMethod("PreUpdateMultipleCustomersSettingType")))
             {
                 return preTasks.PreUpdateMultipleCustomersSettingType(_settingContext, customers, customerLevel, settingType, uplineLevel);
@@ -306,6 +313,7 @@
                 var singleCustomerSetting = new Setting(customerId, customerLevel, productId, new List<SettingType> { settingType });
                 var updatingParam = new UpdatingSettingParam(singleCustomerSetting, uplineLevel);
                 var updatingResult = UpdateSingleCustomerSetting(updatingParam);
+
                 settingTypeResults.AddRange(updatingResult.SubResults);
             }
 
@@ -365,6 +373,7 @@
         {
             var customerIdNameContainer = new Dictionary<int, string>();
             var customerLength = customerIds.Count();
+
             for (int i = 0; i < customerLength; i++)
             {
                 customerIdNameContainer.Add(customerIds.ElementAt(i), customerNames.ElementAt(i));
