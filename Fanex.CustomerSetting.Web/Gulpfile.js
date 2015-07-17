@@ -85,14 +85,6 @@
         }, callback);
     });
 
-    gulp.task("install-bower2", function () {
-        var bower = require("gulp-bower");
-        var filter = require("gulp-filter");
-
-        return bower().pipe(filter(assetPaths.bower + "compass-mixins/lib/**"))
-                      .pipe(gulp.dest(assetPaths.compass));
-    });
-
     gulp.task("install-bower", function () {
         var bower = require("gulp-bower");
 
@@ -100,9 +92,8 @@
     });
 
     gulp.task("install-compass", function () {
-        console.log(assetPaths.bower + "compass-mixins/lib/**");
         return gulp.src(assetPaths.bower + "compass-mixins/lib/**")
-            .pipe(gulp.dest(assetPaths.compass));
+                   .pipe(gulp.dest(assetPaths.compass));
     });
 
     gulp.task("publish-template", function () {
@@ -167,10 +158,10 @@
                 .pipe(gulpignore.exclude(/[.]tt$/))
                 .pipe(concat(moduleName + ".js"))
                 .pipe(header(banner, { pkg: pkg }))
+                .pipe(sourcemaps.write("."))
                 .pipe(gulp.dest(publishPaths.customerSetting))
                 .pipe(uglify())
                 .pipe(rename({ suffix: ".min" }))
-                .pipe(sourcemaps.write("."))
                 .pipe(gulp.dest(publishPaths.customerSetting));
         }
 

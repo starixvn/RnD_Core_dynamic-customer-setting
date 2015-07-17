@@ -46,8 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6697D778-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09967616-74BB-44FA-918B-819B7AA63F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{2E959550-A3B1-40E8-981F-EB95D4D32EA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.RemotingRefApi", "Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj", "{2747B4D9-3CB5-44BA-AEB1-B210E92D8617}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.IntegrationTests", "Fanex.CustomerSetting.IntegrationTests\Fanex.CustomerSetting.IntegrationTests.csproj", "{DCC102F7-7727-427D-9107-75694FEA553C}"
@@ -67,6 +65,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix", "Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj", "{3E059FA6-3822-475F-9694-F3DBB15ACF98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.UnitTests", "Fanex.CustomerSetting.Matrix.UnitTests\Fanex.CustomerSetting.Matrix.UnitTests.csproj", "{8138DBD6-D5C5-4D4B-B81A-530235914D41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.DemoSite", "Fanex.CustomerSetting.DemoSite\Fanex.CustomerSetting.DemoSite.csproj", "{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,10 +126,6 @@ Global
 		{1ED50D12-862D-4FF7-BB0C-A7D37B12BFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ED50D12-862D-4FF7-BB0C-A7D37B12BFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED50D12-862D-4FF7-BB0C-A7D37B12BFFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E959550-A3B1-40E8-981F-EB95D4D32EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2747B4D9-3CB5-44BA-AEB1-B210E92D8617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2747B4D9-3CB5-44BA-AEB1-B210E92D8617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2747B4D9-3CB5-44BA-AEB1-B210E92D8617}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -146,6 +142,10 @@ Global
 		{8138DBD6-D5C5-4D4B-B81A-530235914D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8138DBD6-D5C5-4D4B-B81A-530235914D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8138DBD6-D5C5-4D4B-B81A-530235914D41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE7AEAE-7603-47B6-9097-8A24EEF93DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿/// <reference path="../typings/tsd.d.ts" />
+﻿/// <reference path="typings/tsd.d.ts" />
 module ActorForm {
     class Language {
         constructor(public name: string, public code: string) { }
