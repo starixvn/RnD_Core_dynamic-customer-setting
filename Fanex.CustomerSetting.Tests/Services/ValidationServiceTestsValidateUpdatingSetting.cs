@@ -29,7 +29,6 @@
         private ValidationService _validationService;
         private IValidationDataAccess _validationDataAccess;
         private IDynamicRepository _dynamicRepository;
-        private ILoggingService _loggingService;
         private IProductService _productService;
         private ILogger _logger;
 
@@ -38,7 +37,6 @@
         {
             _settingContext = new SettingContextStub();
             _productService = Substitute.For<IProductService>();
-            _loggingService = Substitute.For<ILoggingService>();
             _validationDataAccess = Substitute.For<IValidationDataAccess>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
             _logger = Substitute.For<ILogger>();

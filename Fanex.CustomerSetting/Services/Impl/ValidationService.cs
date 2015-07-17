@@ -69,11 +69,17 @@
 
                 CheckBelonging(actor, customerId);
             }
-            catch (CustomerSettingException ex)
+            catch (CustomerSettingException customerSettingException)
             {
-                _logger.Error(ex.Message, ex);
+                LogQuerySettingError(customerId, customerLevel, uplineLevel, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, ex.Message);
+                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
+            }
+            catch (Exception ex)
+            {
+                LogQuerySettingError(customerId, customerLevel, uplineLevel, new CustomerSettingException(ex.Message, ex));
+
+                return Result.SystemError;
             }
 
             return Result.Success;
@@ -100,7 +106,7 @@
 
             if (!isValidConstrain)
             {
-                throw new CustomerSettingException();
+                throw new CustomerSettingException(Result.AccessDenied.Message);
             }
         }
 
@@ -124,7 +130,7 @@
 
                 if (!isBelonging)
                 {
-                    throw new CustomerSettingException();
+                    throw new CustomerSettingException(Result.AccessDenied.Message);
                 }
             }
         }
@@ -143,8 +149,16 @@
 
             if (actualCustomerLevel != customerLevel.Value)
             {
-                throw new CustomerSettingException();
+                throw new CustomerSettingException(Result.AccessDenied.Message);
             }
+        }
+
+        private void LogQuerySettingError(int customerId, UserLevel customerLevel, UserLevel uplineLevel, CustomerSettingException ex)
+        {
+            ex.SetSettingContextInfo("Validate Query Setting", _settingContext);
+            ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
+
+            _logger.Error(ex.Message, ex);
         }
 
         /// <summary>
@@ -158,60 +172,57 @@
         {
             Check.Argument.IsNotNull(updatingParam, "updatingParam");
 
+            var customerId = updatingParam.Setting.CustomerId;
+            var customerLevel = updatingParam.Setting.CustomerLevel;
+            var productId = updatingParam.Setting.ProductId;
+            var uplineLevel = updatingParam.UplineLevel;
+            var settingTypes = updatingParam.Setting.SettingTypes;
+
             try
             {
-                var setting = updatingParam.Setting;
-                var querySettingParam = new QuerySettingParam(setting.CustomerId, setting.CustomerLevel, setting.ProductId, updatingParam.UplineLevel);
-                var result = ValidateQuerySetting(querySettingParam);
+                CheckQueryPermission(customerId, customerLevel, productId, uplineLevel);
 
-                if (!result.IsSuccessful)
-                {
-                    return result;
-                }
+                CheckActorLevelHasUpdatePermissionInCurrentSystem();
 
-                result = ValidateActorLevelWithCurrentSystem();
+                CheckCustomerSettingTypesIsValidWithProductProfile(productId, settingTypes);
 
-                if (!result.IsSuccessful)
-                {
-                    return result;
-                }
+                CheckSettingTypesAreValid(settingTypes);
 
-                result = ValidateProductProfile(setting.ProductId, setting.SettingTypes);
-
-                if (!result.IsSuccessful)
-                {
-                    return result;
-                }
-
-                return ValidateSettingTypes(setting.SettingTypes);
+                return Result.Success;
             }
-            catch (CustomerSettingException ex)
+            catch (CustomerSettingException customerSettingException)
             {
-                ex.ProductId = updatingParam.Setting.ProductId;
-                ex.CustomerId = updatingParam.Setting.CustomerId;
-                
-                //// _logger.LogValidatingUpdatingError(
-                ////    updatingParam.Setting.CustomerId,
-                ////    updatingParam.UplineLevel,
-                ////    updatingParam.Setting.ProductId,
-                ////    ex);
+                LogQuerySettingError(customerId, customerLevel, uplineLevel, customerSettingException);
 
-                _logger.Error(ex.Message, ex);
+                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
+            }
+            catch (Exception ex)
+            {
+                LogQuerySettingError(customerId, customerLevel, uplineLevel, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
         }
 
-        private IResult ValidateActorLevelWithCurrentSystem()
+        private void CheckQueryPermission(int customerId, UserLevel customerLevel, byte productId, UserLevel uplineLevel)
+        {
+            var querySettingParam = new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
+            var result = ValidateQuerySetting(querySettingParam);
+
+            if (!result.IsSuccessful)
+            {
+                throw new CustomerSettingException(result.Message);
+            }
+        }
+
+        private void CheckActorLevelHasUpdatePermissionInCurrentSystem()
         {
             var currentSystemId = GetCurrentSystemId();
 
             if (_settingContext.Actor.IsCompany && currentSystemId == (byte)SystemType.Agency)
             {
-                return Result.AccessDenied;
+                throw new CustomerSettingException(Result.AccessDenied.Message);
             }
-
-            return Result.Success;
         }
 
         /// <summary>
@@ -224,7 +235,7 @@
             return CustomerSettingSection.Settings.SystemId;
         }
 
-        private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
+        private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId);
 
@@ -232,26 +243,31 @@
             {
                 if (!productSettingTypes.Any(stt => stt.Id == customerSettingType.Id))
                 {
-                    return Result.AccessDenied;
+                    throw new CustomerSettingException(Result.AccessDenied.Message);
                 }
             }
-
-            return Result.Success;
         }
 
-        private IResult ValidateSettingTypes(IEnumerable<SettingType> settingTypes)
+        private void CheckSettingTypesAreValid(IEnumerable<SettingType> settingTypes)
         {
             foreach (SettingType settingType in settingTypes)
             {
-                var validationResult = settingType.Validate();
+                var result = settingType.Validate();
 
-                if (!validationResult.IsSuccessful)
+                if (!result.IsSuccessful)
                 {
-                    return validationResult;
+                    throw new CustomerSettingException(result.Message);
                 }
             }
+        }
 
-            return Result.Success;
+        private void LogUpdateSettingError(UpdatingSettingParam updatingParam, CustomerSettingException ex)
+        {
+            ex.SetSettingContextInfo("Validate Update Setting", _settingContext);
+            ex.SetCustomerInfo(updatingParam.Setting.CustomerId, updatingParam.Setting.CustomerLevel, updatingParam.UplineLevel);
+            ex.SetProductInfo(updatingParam.Setting.ProductId);
+
+            _logger.Error(ex.Message, ex);
         }
 
         public IResult ValidateUpdatingMultipleSetting(UpdatingMultipleSettingParam updatingMultipleParam)
@@ -260,39 +276,59 @@
 
             try
             {
-                var result = ValidateUpdatingSetting(updatingMultipleParam);
+                CheckUpdateSetting(updatingMultipleParam);
 
-                if (!result.IsSuccessful)
-                {
-                    return result;
-                }
+                CheckActorPermissionOnMultipleMembers(updatingMultipleParam.CustomerIds, updatingMultipleParam.Setting.CustomerLevel);
 
-                return ValidateActorPermissionOnMultipleCustomers(
-                    updatingMultipleParam.CustomerIds,
-                    updatingMultipleParam.Setting.CustomerLevel);
+                return Result.Success;
+            }
+            catch (CustomerSettingException customerSettingException)
+            {
+                LogUpdateMultipleSettingError(updatingMultipleParam, customerSettingException);
+
+                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
             }
             catch (Exception ex)
             {
-                //// _logger.LogValidatingUpdatingMultipleError(
-                ////    updatingMultipleParam.CustomerIds,
-                ////    updatingMultipleParam.UplineLevel,
-                ////    updatingMultipleParam.Setting.ProductId,
-                ////    ex);
-
-                _logger.Error(ex.Message, ex);
+                LogUpdateMultipleSettingError(updatingMultipleParam, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
         }
 
-        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, UserLevel customerLevel)
+        private void CheckUpdateSetting(UpdatingSettingParam updatingParam)
+        {
+            var result = ValidateUpdatingSetting(updatingParam);
+
+            if (!result.IsSuccessful)
+            {
+                throw new CustomerSettingException(result.Message);
+            }
+        }
+
+        private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, UserLevel customerLevel)
         {
             if (customerLevel.IsMemberLevel)
             {
-                return _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
-            }
+                var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
-            return Result.Success;
+                if (!result.IsSuccessful)
+                {
+                    throw new CustomerSettingException(result.Message);
+                }
+            }
+        }
+
+        private void LogUpdateMultipleSettingError(UpdatingMultipleSettingParam updatingParam, CustomerSettingException ex)
+        {
+            ex.SetSettingContextInfo("Validate Update Multiple Setting", _settingContext);
+            ex.SetCustomerInfo(
+                string.Join(",", updatingParam.CustomerIds),
+                updatingParam.Setting.CustomerLevel,
+                updatingParam.UplineLevel);
+            ex.SetProductInfo(updatingParam.Setting.ProductId);
+
+            _logger.Error(ex.Message, ex);
         }
     }
 }

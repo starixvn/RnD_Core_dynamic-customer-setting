@@ -142,10 +142,8 @@
     <Compile Include="Handlers\SettingResolver.cs" />
     <Compile Include="Dtos\Results\Result.cs" />
     <Compile Include="Dtos\Results\IResult.cs" />
-    <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Impl\BaseMessageService.cs" />
-    <Compile Include="Services\Impl\LoggingService.cs" />
     <Compile Include="Services\Impl\QuerySettingService.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
     <Compile Include="Services\IQuerySettingService.cs" />

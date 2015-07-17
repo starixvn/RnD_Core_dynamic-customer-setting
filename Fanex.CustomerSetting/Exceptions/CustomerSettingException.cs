@@ -2,6 +2,8 @@
 {
     using System;
     using System.Runtime.Serialization;
+    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models;
 
     [Serializable]
     public class CustomerSettingException : Exception
@@ -25,20 +27,23 @@
         {
             if (info != null)
             {
+                this.ActionName = info.GetString("ActionName");
+
                 this.SystemId = info.GetInt32("SystemId");
                 this.Language = info.GetString("Language");
                 this.IP = info.GetString("IP");
                 this.Domain = info.GetString("Domain");
 
-                this.ProductId = info.GetInt32("ProductId");
-                this.SettingTypeId = info.GetInt32("SettingTypeId");
-                this.SettingTypeName = info.GetString("SettingTypeName");
-                this.SettingTypeTemplate = info.GetInt32("SettingTypeId");
-
                 this.ActorId = info.GetInt32("ActorId");
                 this.ActorName = info.GetString("ActorName");
                 this.ActorLevel = info.GetString("ActorLevel");
                 this.SubAccountId = info.GetInt32("SubAccountId");
+
+                this.ProductId = info.GetInt32("ProductId");
+                this.SettingTypeId = info.GetInt16("SettingTypeId");
+                this.SettingTypeName = info.GetString("SettingTypeName");
+                this.SettingTypeTemplate = info.GetByte("SettingTypeId");
+                this.SettingTypeLevel = info.GetByte("SettingTypeLevel");
 
                 this.CustomerId = info.GetInt32("CustomerId");
                 this.CustomerIds = info.GetString("CustomerIds");
@@ -46,6 +51,8 @@
                 this.UplineLevel = info.GetString("UplineLevel");
             }
         }
+
+        public string ActionName { get; set; }
 
         //// System information
 
@@ -57,16 +64,6 @@
 
         public string Domain { get; set; }
 
-        //// Product information
-        
-        public int ProductId { get; set; }
-
-        public int SettingTypeId { get; set; }
-
-        public string SettingTypeName { get; set; }
-
-        public int SettingTypeTemplate { get; set; }
-
         //// Actor information
 
         public int ActorId { get; set; }
@@ -76,6 +73,18 @@
         public string ActorLevel { get; set; }
 
         public int SubAccountId { get; set; }
+
+        //// Product information
+
+        public int ProductId { get; set; }
+
+        public short SettingTypeId { get; set; }
+
+        public string SettingTypeName { get; set; }
+
+        public byte SettingTypeLevel { get; set; }
+
+        public byte SettingTypeTemplate { get; set; }
 
         //// Customer information
 
@@ -87,26 +96,81 @@
 
         public string UplineLevel { get; set; }
 
+        public void SetSettingContextInfo(string actionName, ISettingContext settingContext)
+        {
+            ActorName = actionName;
+
+            SystemId = settingContext.System;
+            Language = settingContext.Language;
+            IP = settingContext.IP;
+            Domain = settingContext.Domain;
+
+            ActorId = settingContext.Actor.Id;
+            ActorName = settingContext.Actor.Name;
+            ActorLevel = settingContext.Actor.Level.DisplayName;
+            SubAccountId = settingContext.Actor.SubAccountId;
+        }
+
+        public void SetProductInfo(byte productId, SettingType settingType = null)
+        {
+            ProductId = productId;
+
+            if (settingType != null)
+            {
+                SettingTypeId = settingType.Id;
+                SettingTypeName = settingType.Name;
+                SettingTypeTemplate = settingType.SettingTemplate;
+                SettingTypeLevel = settingType.SettingLevel;
+            }
+        }
+
+        public void SetCustomerInfo(int customerId, UserLevel customerLevel, UserLevel uplineLevel = null)
+        {
+            CustomerId = customerId;
+
+            SetCustomerLevelAndUplineLevel(customerLevel, uplineLevel);
+        }
+
+        public void SetCustomerInfo(string customerIds, UserLevel customerLevel, UserLevel uplineLevel = null)
+        {
+            CustomerIds = customerIds;
+
+            SetCustomerLevelAndUplineLevel(customerLevel, uplineLevel);
+        }
+
+        private void SetCustomerLevelAndUplineLevel(UserLevel customerLevel, UserLevel uplineLevel)
+        {
+            CustomerLevel = customerLevel.DisplayName;
+
+            if (uplineLevel != null)
+            {
+                UplineLevel = uplineLevel.DisplayName;
+            }
+        }
+
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
 
             if (info != null)
             {
+                info.AddValue("ActionName", this.ActionName);
+
                 info.AddValue("SystemId", this.SystemId);
                 info.AddValue("Language", this.Language);
                 info.AddValue("Domain", this.Domain);
                 info.AddValue("IP", this.IP);
 
-                info.AddValue("ProductId", this.ProductId);
-                info.AddValue("SettingTypeId", this.SettingTypeId);
-                info.AddValue("SettingTypeName", this.SettingTypeName);
-                info.AddValue("SettingTypeTemplate", this.SettingTypeTemplate);
-
                 info.AddValue("ActorId", this.ActorId);
                 info.AddValue("ActorName", this.ActorName);
                 info.AddValue("ActorLevel", this.ActorLevel);
                 info.AddValue("SubAccountId", this.SubAccountId);
+
+                info.AddValue("ProductId", this.ProductId);
+                info.AddValue("SettingTypeId", this.SettingTypeId);
+                info.AddValue("SettingTypeName", this.SettingTypeName);
+                info.AddValue("SettingTypeTemplate", this.SettingTypeTemplate);
+                info.AddValue("SettingTypeLevel", this.SettingTypeLevel);
 
                 info.AddValue("CustomerId", this.CustomerId);
                 info.AddValue("CustomerIds", this.CustomerIds);

@@ -7,8 +7,10 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     public class QuerySettingService : IQuerySettingService
@@ -17,7 +19,7 @@
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
         private readonly IResourceService _resourceService;
-        private readonly ILoggingService _loggingService;
+        private readonly ILogger _logger;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
 
@@ -26,7 +28,7 @@
             IValidationService validationService = null,
             IProductService productService = null,
             IResourceService resourceService = null,
-            ILoggingService loggingService = null,
+            ILogger logger = null,
             ISettingResolver settingResolver = null,
             IDynamicRepository dynamicRepository = null)
         {
@@ -37,7 +39,7 @@
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
-            _loggingService = loggingService ?? new LoggingService(_settingContext);
+            _logger = logger ?? Logger.Log;
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
@@ -125,12 +127,7 @@
                 }
                 catch (Exception ex)
                 {
-                    _loggingService.LogQueryCustomerSettingTypeError(
-                        queryParam.CustomerId,
-                        queryParam.UplineLevel,
-                        queryParam.ProductId,
-                        productSettingType,
-                        ex);
+                    LogQuerySettingTypeError(queryParam, productSettingType, ex);
                 }
 
                 if (customerSettingType.SettingItems.Any())
@@ -181,6 +178,16 @@
         private bool IsOverride(MethodInfo methodInfo)
         {
             return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
+        }
+
+        private void LogQuerySettingTypeError(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
+        {
+            var customerSettingException = new CustomerSettingException(ex.Message, ex);
+            customerSettingException.SetSettingContextInfo("Query Setting", _settingContext);
+            customerSettingException.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
+            customerSettingException.SetProductInfo(queryParam.ProductId, productSettingType);
+
+            _logger.Error(ex.Message, ex);
         }
     }
 }

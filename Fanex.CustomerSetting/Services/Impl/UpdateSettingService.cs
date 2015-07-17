@@ -8,8 +8,10 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -23,7 +25,7 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
-        private readonly ILoggingService _loggingService;
+        private readonly ILogger _logger;
         private readonly ISettingResolver _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
 
@@ -31,7 +33,7 @@
             ISettingContext settingContext,
             IValidationService validationService = null,
             IProductService productService = null,
-            ILoggingService loggingService = null,
+            ILogger logger = null,
             ISettingResolver settingResolver = null,
             IDynamicRepository dynamicRepository = null)
         {
@@ -41,7 +43,7 @@
             _settingContext = settingContext;
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
-            _loggingService = loggingService ?? new LoggingService(_settingContext);
+            _logger = logger ?? Logger.Log;
             _settingResolver = settingResolver ?? new SettingResolver();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
@@ -102,12 +104,6 @@
                         settingType.Id,
                         settingType.Name);
 
-                    _loggingService.LogUpdatingCustomerSettingTypeError(
-                        customerId,
-                        uplineLevel,
-                        productId,
-                        settingType,
-                        ex);
                 }
 
                 settingTypeResults.Add(updatingSettingTypeResult);
@@ -172,6 +168,16 @@
             return result;
         }
 
+        ////private void LogUpdateCustomerSettingTypeError(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
+        ////{
+        ////    var customerSettingException = new CustomerSettingException(ex.Message, ex);
+        ////    customerSettingException.SetSettingContextInfo("Query Setting", _settingContext);
+        ////    customerSettingException.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
+        ////    customerSettingException.SetProductInfo(queryParam.ProductId, productSettingType);
+
+        ////    _logger.Error(ex.Message, ex);
+        ////}
+
         public IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
         {
             Check.Argument.IsNotNull(updatingMultipleParam, "updatingMultipleParam");
@@ -219,14 +225,8 @@
                         customerId: 0,
                         settingTypeId: settingType.Id,
                         settingTypeName: settingType.Name);
-                    results.Add(errorResult);
 
-                    _loggingService.LogUpdatingMultipleCustomersSettingTypeError(
-                        customerIds,
-                        uplineLevel,
-                        productId,
-                        settingType,
-                        ex);
+                    results.Add(errorResult);
                 }
             }
 
@@ -381,5 +381,6 @@
 
             return customerIdNameContainer;
         }
+
     }
 }
