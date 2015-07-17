@@ -10,15 +10,15 @@
     [TestFixture]
     public class UpdatingSettingParamTests
     {
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
+        private object[] dataSourceSMALevels = { UserLevel.Super, UserLevel.Master, UserLevel.Agent };
+
+        [Test, TestCaseSource("dataSourceSMALevels")]
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(UserLevel customerLevel)
         {
             var setting = new Setting(
-                customerId: 1, 
-                customerLevel: customerLevel, 
-                productId: 1, 
+                customerId: 1,
+                customerLevel: customerLevel,
+                productId: 1,
                 settingTypes: new List<SettingType>());
             var updateSettingParam = new UpdatingSettingParam(setting);
 
@@ -28,28 +28,12 @@
                     () => updateSettingParam.UplineLevel = customerLevel));
         }
 
-        [TestCase(5)]
-        [TestCase(10)]
-        public void SetUplineLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte uplineLevelValue)
-        {
-            var setting = new Setting(
-                customerId: 1,
-                customerLevel: CustomerLevel.Member,
-                productId: 1,
-                settingTypes: new List<SettingType>());
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => new UpdatingSettingParam(setting, (CustomerLevel)uplineLevelValue)));
-        }
-
         [Test]
         public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentOutOfRangeException()
         {
             var setting = new Setting(
                 customerId: 1,
-                customerLevel: CustomerLevel.Member,
+                customerLevel: UserLevel.Member,
                 productId: 1,
                 settingTypes: new List<SettingType>());
 

@@ -25,7 +25,7 @@
 
         public void LogQueryCustomerSettingTypeError(
             int customerId,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             byte productId,
             SettingType settingType,
             Exception exception)
@@ -43,7 +43,7 @@
 
         public void LogUpdatingCustomerSettingTypeError(
             int customerId,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             byte productId,
             SettingType settingType,
             Exception exception)
@@ -61,7 +61,7 @@
 
         public void LogUpdatingMultipleCustomersSettingTypeError(
             IEnumerable<int> customerIds,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             byte productId,
             SettingType settingType,
             Exception exception)
@@ -79,7 +79,7 @@
 
         public void LogValidatingUpdatingError(
             int customerId,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             byte productId,
             Exception exception)
         {
@@ -95,7 +95,7 @@
 
         public void LogValidatingUpdatingMultipleError(
             IEnumerable<int> customerIds,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             byte productId,
             Exception exception)
         {
@@ -145,13 +145,13 @@
             return string.Format("ProductId: {0}\r\n", productId);
         }
 
-        private string GetCustomerInformation(int customerId, CustomerLevel? uplineLevel)
+        private string GetCustomerInformation(int customerId, UserLevel uplineLevel)
         {
             var customerInfo = new StringBuilder();
 
             customerInfo.AppendLine(string.Format("Customer Id: {0}", customerId));
 
-            if (uplineLevel.HasValue)
+            if (uplineLevel != null)
             {
                 customerInfo.AppendLine(GetUplineInformation(uplineLevel));
             }
@@ -159,13 +159,13 @@
             return customerInfo.ToString();
         }
 
-        private string GetCustomersInformation(IEnumerable<int> customerIds, CustomerLevel? uplineLevel)
+        private string GetCustomersInformation(IEnumerable<int> customerIds, UserLevel uplineLevel)
         {
             var customerInfo = new StringBuilder();
 
             customerInfo.AppendLine(string.Format("Customer Ids: {0}", string.Join(",", customerIds)));
 
-            if (uplineLevel.HasValue)
+            if (uplineLevel != null)
             {
                 customerInfo.AppendLine(GetUplineInformation(uplineLevel));
             }
@@ -173,9 +173,9 @@
             return customerInfo.ToString();
         }
 
-        private string GetUplineInformation(CustomerLevel? uplineLevel)
+        private string GetUplineInformation(UserLevel uplineLevel)
         {
-            return string.Format("Upline Level: {0}", Enum.GetName(typeof(CustomerLevel), uplineLevel.Value));
+            return string.Format("Upline Level: {0}", Enum.GetName(typeof(UserLevel), uplineLevel.Value));
         }
 
         private string GetExceptionMessage(Exception ex)

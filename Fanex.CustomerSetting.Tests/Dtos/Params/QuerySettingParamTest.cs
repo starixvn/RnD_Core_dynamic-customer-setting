@@ -8,6 +8,8 @@
     [TestFixture]
     public class QuerySettingParamTest
     {
+        private object[] dataSourceSMALevels = { UserLevel.Super, UserLevel.Master, UserLevel.Agent };
+
         [TestCase(0)]
         [TestCase(-1)]
         public void SetCustomerId_ValueIsNegativeOrZero_ThrowArgumentOutOfRangeException(int customerId)
@@ -15,7 +17,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(0, CustomerLevel.Master, 0, null)));
+                    () => new QuerySettingParam(0, UserLevel.Master, 0, null)));
         }
 
         [Test]
@@ -24,47 +26,16 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(1, CustomerLevel.Master, 0, null)));
+                    () => new QuerySettingParam(1, UserLevel.Master, 0, null)));
         }
 
-        [Test]
-        public void SetCustomerLevel_ValueIsZero_ThrowArgumentOutOfRangeException()
-        {
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => new QuerySettingParam(1, (CustomerLevel)0, 1, null)));
-        }
-
-        [TestCase(5)]
-        [TestCase(10)]
-        public void SetCustomerLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
-        {
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                     () => new QuerySettingParam(1, (CustomerLevel)customerLevelValue, 1, null)));
-        }
-
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(CustomerLevel customerLevel)
+        [Test, TestCaseSource("dataSourceSMALevels")]
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(UserLevel customerLevel)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
                     () => new QuerySettingParam(1, customerLevel, 1, customerLevel)));
-        }
-
-        [TestCase(5)]
-        [TestCase(10)]
-        public void SetUplineLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
-        {
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => new QuerySettingParam(1, CustomerLevel.Super, 1, (CustomerLevel)customerLevelValue)));
         }
         
         [Test]
@@ -73,7 +44,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(1, CustomerLevel.Member, 1, null)));
+                    () => new QuerySettingParam(1, UserLevel.Member, 1, null)));
         }
     }
 }

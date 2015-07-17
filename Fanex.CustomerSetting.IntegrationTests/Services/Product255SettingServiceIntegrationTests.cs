@@ -65,7 +65,7 @@
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
+            var querySettingParam = new QuerySettingParam(AgentId, UserLevel.Agent, ProductId, null);
 
             //// Act
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -73,7 +73,7 @@
             //// Assert
             Assert.AreEqual(AgentUserName, agentSetting.CustomerInfo.UserName);
             Assert.AreEqual(AgentId, agentSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Agent, agentSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Agent, agentSetting.CustomerLevel);
             Assert.AreEqual(ProductId, agentSetting.ProductId);
             Assert.AreEqual(ProductName, agentSetting.ProductName);
             Assert.AreEqual(NumOfSettingType, agentSetting.SettingTypes.Count());
@@ -114,7 +114,7 @@
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Super);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -122,7 +122,7 @@
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(MemberId, memberSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(ProductId, memberSetting.ProductId);
             Assert.AreEqual(ProductName, memberSetting.ProductName);
             Assert.AreEqual(NumOfSettingType - 1, memberSetting.SettingTypes.Count());
@@ -159,7 +159,7 @@
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Master);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -167,7 +167,7 @@
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(MemberId, memberSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(ProductId, memberSetting.ProductId);
             Assert.AreEqual(ProductName, memberSetting.ProductName);
             Assert.AreEqual(NumOfSettingType - 1, memberSetting.SettingTypes.Count());
@@ -203,7 +203,7 @@
             var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Agent);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -211,7 +211,7 @@
             //// Assert
             Assert.AreEqual(MemberUserName, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(MemberId, memberSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(ProductId, memberSetting.ProductId);
             Assert.AreEqual(ProductName, memberSetting.ProductName);
             Assert.AreEqual(NumOfSettingType, memberSetting.SettingTypes.Count());
@@ -259,7 +259,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
+            var querySettingParam = new QuerySettingParam(AgentId, UserLevel.Agent, ProductId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
@@ -345,7 +345,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
@@ -408,7 +408,7 @@
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
@@ -470,7 +470,7 @@
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Super);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Super);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
@@ -515,7 +515,7 @@
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(AgentId, CustomerLevel.Agent, ProductId, null);
+            var querySettingParam = new QuerySettingParam(AgentId, UserLevel.Agent, ProductId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
@@ -586,7 +586,7 @@
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Agent);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
@@ -639,7 +639,7 @@
             var actor = new User { Id = MasterId, Level = UserLevel.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor, Language, IP, SystemId, Domain);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MemberId, CustomerLevel.Member, ProductId, CustomerLevel.Master);
+            var querySettingParam = new QuerySettingParam(MemberId, UserLevel.Member, ProductId, UserLevel.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;

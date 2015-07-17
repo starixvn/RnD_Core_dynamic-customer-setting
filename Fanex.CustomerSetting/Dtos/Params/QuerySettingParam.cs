@@ -7,15 +7,15 @@
     public class QuerySettingParam
     {
         private int _customerId;
-        private CustomerLevel _customerLevel;
+        private UserLevel _customerLevel;
         private byte _productId;
-        private CustomerLevel? _uplineLevel;
+        private UserLevel _uplineLevel;
 
         public QuerySettingParam(
             int customerId, 
-            CustomerLevel customerLevel, 
+            UserLevel customerLevel, 
             byte productId, 
-            CustomerLevel? uplineLevel = null)
+            UserLevel uplineLevel = null)
         {
             CustomerId = customerId;
             CustomerLevel = customerLevel;
@@ -41,7 +41,7 @@
             }
         }
 
-        public CustomerLevel CustomerLevel
+        public UserLevel CustomerLevel
         {
             get
             {
@@ -50,7 +50,7 @@
 
             set
             {
-                var customerLevelValue = (byte)value;
+                var customerLevelValue = value.Value;
                 if (customerLevelValue < Level.Member || customerLevelValue > Level.Super)
                 {
                     throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
@@ -78,7 +78,7 @@
             }
         }
 
-        public CustomerLevel? UplineLevel
+        public UserLevel UplineLevel
         {
             get
             {
@@ -96,12 +96,12 @@
                     }
                     
                     //// If current context is editting super/master/agent then Upline level should be null.
-                    if (_customerLevel != CustomerLevel.Member)
+                    if (_customerLevel != UserLevel.Member)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-                else if (_customerLevel == CustomerLevel.Member)
+                else if (_customerLevel == UserLevel.Member)
                 {
                     //// When editting member, upline level should have value
                     throw new ArgumentNullException("value", "Upline cannot be null when getting member setting.");

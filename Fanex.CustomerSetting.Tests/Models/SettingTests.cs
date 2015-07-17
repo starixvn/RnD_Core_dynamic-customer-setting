@@ -34,32 +34,7 @@
                 new TestDelegate(
                     () => setting.ProductId = 0));
         }
-
-        [Test]
-        public void SetCustomerLevel_ValueIsZero_ThrowArgumentOutOfRangeException()
-        {
-            //// Arrange
-            Setting setting = InstanceFactory.CreateCustomerSetting();
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => setting.CustomerLevel = (CustomerLevel)0));
-        }
-
-        [TestCase(5)]
-        [TestCase(10)]
-        public void SetCustomerLevel_ValueIsGreaterThanSuperLevelValue_ThrowArgumentOutOfRangeException(byte customerLevelValue)
-        {
-            //// Arrange
-            Setting setting = InstanceFactory.CreateCustomerSetting();
-
-            //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                     () => setting.CustomerLevel = (CustomerLevel)customerLevelValue));
-        }
-
+      
         [Test]
         public void SetSettingTypes_ValueIsNull_ThrowArgumentNullException()
         {

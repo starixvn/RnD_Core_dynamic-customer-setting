@@ -32,7 +32,7 @@
             //// Arrange
             var customerId = 1;
             byte productId = 1;
-            var uplineLevel = CustomerLevel.Super;
+            var uplineLevel = UserLevel.Super;
             SettingType settingType = InstanceFactory.CreateProductSettingType(1, 1);
             var expectedException = new Exception("Query Exception");
 
@@ -72,7 +72,7 @@
             //// Arrange
             var customerId = 2;
             byte productId = 2;
-            CustomerLevel? uplineLevel = null;
+            UserLevel uplineLevel = null;
             SettingType settingType = InstanceFactory.CreateProductSettingType(2, 2);
             var expectedException = new Exception("Updating Exception");
 
@@ -110,7 +110,7 @@
             //// Arrange
             var customerIds = new List<int> { 1, 2, 3, 4 };
             byte productId = 1;
-            var uplineLevel = CustomerLevel.Super;
+            var uplineLevel = UserLevel.Super;
             SettingType settingType = InstanceFactory.CreateProductSettingType(1, 1);
             var expectedException = new Exception("Updating Multiple Exception");
 
@@ -149,7 +149,7 @@
             //// Arrange
             var customerId = 1;
             byte productId = 1;
-            var uplineLevel = CustomerLevel.Super;
+            var uplineLevel = UserLevel.Super;
             SettingType settingType = InstanceFactory.CreateProductSettingType(1, 1);
             var expectedException = new Exception("Validating Updating Exception");
 
@@ -184,7 +184,7 @@
             //// Arrange
             var customerIds = new List<int> { 1, 2, 3, 4 };
             byte productId = 1;
-            var uplineLevel = CustomerLevel.Super;
+            var uplineLevel = UserLevel.Super;
             SettingType settingType = InstanceFactory.CreateProductSettingType(1, 1);
             var expectedException = new Exception("Updating Multiple Exception");
 

@@ -45,7 +45,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, Product255Constants.ProductId, null);
+            var querySettingParam = new QuerySettingParam(MasterId, UserLevel.Master, Product255Constants.ProductId, null);
 
             //// Act
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -53,7 +53,7 @@
             //// Assert
             Assert.AreEqual(MasterUserName, masterSetting.CustomerInfo.UserName);
             Assert.AreEqual(MasterId, masterSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Master, masterSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Master, masterSetting.CustomerLevel);
             Assert.AreEqual(Product255Constants.ProductId, masterSetting.ProductId);
             Assert.AreEqual(Product255Constants.ProductName, masterSetting.ProductName);
             Assert.AreEqual(Product255Constants.NumOfSettingType, masterSetting.SettingTypes.Count());
@@ -103,7 +103,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, Product255Constants.ProductId, null);
+            var querySettingParam = new QuerySettingParam(MasterId, UserLevel.Master, Product255Constants.ProductId, null);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
@@ -171,7 +171,7 @@
             var actor = new User { Id = SuperId, Level = UserLevel.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(MasterId, CustomerLevel.Master, Product255Constants.ProductId);
+            var querySettingParam = new QuerySettingParam(MasterId, UserLevel.Master, Product255Constants.ProductId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;

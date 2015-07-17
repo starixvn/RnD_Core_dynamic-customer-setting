@@ -372,7 +372,7 @@
             //// Assert
             _loggingService.Received().LogQueryCustomerSettingTypeError(
                 Arg.Is<int>(customerId => customerId == querySettingParam.CustomerId),
-                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == querySettingParam.UplineLevel),
+                Arg.Is<UserLevel>(uplineLevel => uplineLevel == querySettingParam.UplineLevel),
                 Arg.Is<byte>(productId => productId == querySettingParam.ProductId),
                 Arg.Any<SettingType>(),
                 Arg.Any<Exception>());

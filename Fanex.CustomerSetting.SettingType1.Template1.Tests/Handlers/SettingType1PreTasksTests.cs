@@ -15,6 +15,7 @@
     [TestFixture]
     public class SettingType1PreTasksTests
     {
+        private static object[] dataSourceSMSLevel = { UserLevel.Super, UserLevel.Master, UserLevel.Agent };
         private IMemberGroupService _memberGroupService;
         private ISettingContext _settingContext;
         private SettingType1PreTasks _settingType1PreTasks;
@@ -24,14 +25,11 @@
         {
             _settingContext = new SettingContextStub();
             _memberGroupService = Substitute.For<IMemberGroupService>();
-
             _settingType1PreTasks = new SettingType1PreTasks(_memberGroupService);
         }
 
-        [TestCase(CustomerLevel.Super)]
-        [TestCase(CustomerLevel.Master)]
-        [TestCase(CustomerLevel.Agent)]
-        public void PreUpdateMultipleSetting_CustomerIsNotMember_ReturnSuccessResult(CustomerLevel customerLevel)
+        [Test, TestCaseSource("dataSourceSMSLevel")]
+        public void PreUpdateMultipleSetting_CustomerIsNotMember_ReturnSuccessResult(UserLevel customerLevel)
         {
             //// Act
             var result = _settingType1PreTasks.PreUpdateMultipleCustomersSettingType(_settingContext, null, customerLevel, null, null);
@@ -44,9 +42,9 @@
         public void PreUpdateMultipleSetting_CustomerIsMember_AlwaysGetGroupedMembers()
         {
             //// Arrange
-            var customerLevel = CustomerLevel.Member;
+            var customerLevel = UserLevel.Member;
             var settingType = InstanceFactory.CreateCustomerSettingType(1);
-            var uplineLevel = CustomerLevel.Master;
+            var uplineLevel = UserLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
 
             //// Act
@@ -61,9 +59,9 @@
         public void PreUpdateMultipleSetting_CustomerIsMember_AlwaysUpdateGroupedMembersSetting()
         {
             //// Arrange
-            var customerLevel = CustomerLevel.Member;
+            var customerLevel = UserLevel.Member;
             var settingType = InstanceFactory.CreateCustomerSettingType(1);
-            var uplineLevel = CustomerLevel.Master;
+            var uplineLevel = UserLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
             IEnumerable<int> groupedMemberIds = new List<int> { 1 };
             _memberGroupService.GetGroupedMembers(memberIds).Returns(groupedMemberIds);
@@ -85,9 +83,9 @@
         public void PreUpdateMultipleSetting_CustomerIsMember_ReturnResultWithUngroupedMember()
         {
             //// Arrange
-            var customerLevel = CustomerLevel.Member;
+            var customerLevel = UserLevel.Member;
             var settingType = InstanceFactory.CreateCustomerSettingType(1);
-            var uplineLevel = CustomerLevel.Master;
+            var uplineLevel = UserLevel.Master;
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
             IEnumerable<int> groupedMemberIds = new List<int> { 1 };
             _memberGroupService.GetGroupedMembers(memberIds).Returns(groupedMemberIds);

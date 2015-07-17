@@ -97,31 +97,31 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, 0, null)));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, Arg.Any<UserLevel>(), null)));
         }
 
         [Test]
         public void UpdateGroupedMembersSetting_SettingTypeIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            IEnumerable<int> memberIds = new List<int>();
+            IEnumerable<int> memberIds = Enumerable.Empty<int>();
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, 0, null)));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, Arg.Any<UserLevel>(), null)));
         }
 
         [Test]
-        public void UpdateGroupedMembersSetting_MembersIsEmpty_ThrowArgumentOutOfRangeException()
+        public void UpdateGroupedMembersSetting_MemberIdsIsEmpty_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            IEnumerable<int> memberIds = new List<int>();
+            IEnumerable<int> memberIds = Enumerable.Empty<int>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, 0, new SettingType())));
+                    () => _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, Arg.Any<UserLevel>(), new SettingType())));
         }
 
         [Test]
@@ -129,11 +129,11 @@
         {
             //// Arrange
             IEnumerable<int> memberIds = new List<int> { 1, 2 };
-            var uplineLevel = CustomerLevel.Master;
+            var uplineLevel = UserLevel.Master;
             var settingType = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Act
-            _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
+            _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, UserLevel.Master, settingType);
 
             //// Assert
             _memberGroupDataAccess.Received().UpdateGroupedMembersSetting(
@@ -156,7 +156,7 @@
                 .Returns(Result.Success);
 
             //// Act
-            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
+            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, UserLevel.Master, settingType);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -172,7 +172,7 @@
                 .Returns(Result.Success);
 
             //// Act
-            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, CustomerLevel.Master, settingType);
+            var actualResult = _memberGroupService.UpdateGroupedMembersPT(_settingContext, memberIds, UserLevel.Master, settingType);
 
             //// Assert
             var updatingResult = actualResult as UpdatingSettingResult;

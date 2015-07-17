@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -17,133 +16,107 @@
 
     public class SettingType1DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
+        private static readonly Dictionary<byte, string> UpdateSmaPTSpKeys = new Dictionary<byte, string> 
         {
-            var settingType = new SettingType
+            { UserLevel.Super.Value, "CustSetting_SuperPTUpd" },
+            { UserLevel.Master.Value, "CustSetting_MasterPTUpd" },
+            { UserLevel.Agent.Value, "CustSetting_AgentPTUpd" }
+        };
+
+        private static readonly Dictionary<byte, string> UpdateMemberPTSpKeys = new Dictionary<byte, string> 
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperPTOnMemberUpd" },
+            { UserLevel.Master.Value, "CustSetting_MasterPTOnMemberUpd" },
+            { UserLevel.Agent.Value, "CustSetting_AgentPTOnMemberUpd" }
+        };
+
+        private static readonly Dictionary<byte, string> QueryPTSpKeys = new Dictionary<byte, string> 
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperPTSelect" },
+            { UserLevel.Master.Value, "CustSetting_MasterPTSelect" },
+            { UserLevel.Agent.Value, "CustSetting_AgentPTSelect" },
+            { UserLevel.Member.Value, "CustSetting_MemberPTSelect" }
+        };
+
+        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+            {
+                { UserLevel.Super.Value, GetPTSettingItem<SuperPTItem> },
+                { UserLevel.Master.Value,  GetPTSettingItem<MasterPTItem> },
+                { UserLevel.Agent.Value,  GetPTSettingItem<AgentPTItem> }
+            };
+
+        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+            {
+                { UserLevel.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
+                { UserLevel.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },
+                { UserLevel.Agent.Value,  GetPTSettingItem<AgentPTOnMemberItem> }
+            };
+
+        private static IEnumerable<T> GetPTSettingItem<T>(ObjectDb objectDb, Hashtable parameters)
+        {
+            return objectDb.Query<T>(parameters);
+        }
+
+        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam querySettingParam)
+        {
+            var settingType = new PTSettingType
             {
                 Name = Label.PositionTaking
             };
 
-            var settingKey = GetSettingKeyForQuerying(
-                queryParam.CustomerLevel,
+            var settingKey = CreateQueryPTSPSettingKey(
+                querySettingParam.CustomerLevel, 
                 PTConstants.SettingTypeId,
-                PTConstants.SettingTempateId,
-                queryParam.ProductId);
+                PTConstants.SettingTempateId, 
+                querySettingParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                return QueryCustomerPT(objectDb, queryParam, settingType);
+                var parameters = CreateQueryPTSettingSpParam(querySettingParam);
+                var queryFunction = (querySettingParam.CustomerLevel == UserLevel.Member)
+                   ? MemberQueryPTSettingItemFuncs[querySettingParam.UplineLevel.Value]
+                   : SmaQueryPTSettingItemFuncs[querySettingParam.CustomerLevel.Value];
+                
+                settingType.SettingItems = queryFunction(objectDb, parameters);
+
+                if (parameters.ContainsKey("disableautompt"))
+                {
+                    settingType.IsDisableMasterAutoPT = Convert.ToBoolean(parameters["disableautompt"]);
+                }
             }
+
+            return settingType;
         }
 
-        private string GetSettingKeyForQuerying(
-            CustomerLevel customerLevel, 
-            byte settingTypeId, 
-            byte settingTemplateId, 
-            byte productId)
+        private string CreateQueryPTSPSettingKey(UserLevel customerLevel, byte settingTypeId, byte settingTemplateId, byte productId)
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
-            switch (customerLevel)
+            return QueryPTSpKeys[customerLevel.Value] + keySuffix;
+        }
+
+        private Hashtable CreateQueryPTSettingSpParam(QuerySettingParam querySettingParam)
+        {
+            var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, PTConstants.SettingTypeId);
+
+            if (querySettingParam.CustomerLevel == UserLevel.Agent
+                || querySettingParam.UplineLevel == UserLevel.Master)
             {
-                case CustomerLevel.Super:
-                    return "CustSetting_SuperPTSelect" + keySuffix;
-
-                case CustomerLevel.Master:
-                    return "CustSetting_MasterPTSelect" + keySuffix;
-
-                case CustomerLevel.Agent:
-                    return "CustSetting_AgentPTSelect" + keySuffix;
-
-                case CustomerLevel.Member:
-                    return "CustSetting_MemberPTSelect" + keySuffix;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
+                parameters.Add("disableautompt", null);
             }
-        }
 
-        private SettingType QueryCustomerPT(ObjectDb objectDb, QuerySettingParam queryParam, SettingType settingType)
-        {
-            var parameters = GetSPParamsForGettingSettingType(queryParam, PTConstants.SettingTypeId);
-
-            switch (queryParam.CustomerLevel)
-            {
-                case CustomerLevel.Super:
-                    settingType.SettingItems = objectDb.Query<SuperPTItem>(parameters);
-                    return settingType;
-
-                case CustomerLevel.Master:
-                    settingType.SettingItems = objectDb.Query<MasterPTItem>(parameters);
-                    return settingType;
-
-                case CustomerLevel.Agent:
-                    return QueryAgentPT(objectDb, settingType, parameters);
-
-                case CustomerLevel.Member:
-                    switch (queryParam.UplineLevel.Value)
-                    {
-                        case CustomerLevel.Super:
-                            settingType.SettingItems = objectDb.Query<SuperPTOnMemberItem>(parameters);
-                            return settingType;
-
-                        case CustomerLevel.Master:
-                            return QueryMasterPTOnMember(objectDb, settingType, parameters);
-
-                        case CustomerLevel.Agent:
-                            settingType.SettingItems = objectDb.Query<AgentPTOnMemberItem>(parameters);
-                            return settingType;
-
-                        default:
-                            throw new InvalidOperationException("This customer level is not supported");
-                    }
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
-        }
-
-        private SettingType QueryAgentPT(ObjectDb objectDb, SettingType settingType, Hashtable parameters)
-        {
-            parameters.Add("disableautompt", null);
-            settingType.SettingItems = objectDb.Query<AgentPTItem>(parameters);
-            AgentPT agentPT = new AgentPT
-            {
-                Id = settingType.Id,
-                Name = settingType.Name,
-                SettingLevel = settingType.SettingLevel,
-                SettingTemplate = settingType.SettingTemplate,
-                IsDisableMasterAutoPT = Convert.ToBoolean(parameters["disableautompt"]),
-                SettingItems = settingType.SettingItems
-            };
-
-            return agentPT;
-        }
-
-        private MasterPTOnMember QueryMasterPTOnMember(ObjectDb objectDb, SettingType settingType, Hashtable parameters)
-        {
-            parameters.Add("disableautompt", null);
-            settingType.SettingItems = objectDb.Query<MasterPTOnMemberItem>(parameters);
-            MasterPTOnMember masterPTOnMember = new MasterPTOnMember
-            {
-                Id = settingType.Id,
-                Name = settingType.Name,
-                SettingLevel = settingType.SettingLevel,
-                SettingTemplate = settingType.SettingTemplate,
-                IsDisableMasterAutoPT = Convert.ToBoolean(parameters["disableautompt"]),
-                SettingItems = settingType.SettingItems
-            };
-
-            return masterPTOnMember;
+            return parameters;
         }
 
         public virtual IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
             byte productId,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, settingType);
             var settingKey = GetSettingKeyForUpdating(customerLevel, uplineLevel, productId);
@@ -151,10 +124,7 @@
             return ExecuteNonQuery(settingKey, parameters);
         }
 
-        private Hashtable GetSPParamsForUpdatingPT(
-            ISettingContext settingContext,
-            int customerId,
-            SettingType settingType)
+        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, SettingType settingType)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
@@ -169,50 +139,11 @@
             return param;
         }
 
-        private string GetSettingKeyForUpdating(
-            CustomerLevel customerLevel,
-            CustomerLevel? uplineLevel,
-            byte productId)
+        private string GetSettingKeyForUpdating(UserLevel customerLevel, UserLevel uplineLevel, byte productId)
         {
-            var updateSettingKey = string.Empty;
-            switch (customerLevel)
-            {
-                case CustomerLevel.Super:
-                    updateSettingKey = "CustSetting_SuperPTUpd";
-                    break;
-
-                case CustomerLevel.Master:
-                    updateSettingKey = "CustSetting_MasterPTUpd";
-                    break;
-
-                case CustomerLevel.Agent:
-                    updateSettingKey = "CustSetting_AgentPTUpd";
-                    break;
-
-                case CustomerLevel.Member:
-                    switch (uplineLevel.Value)
-                    {
-                        case CustomerLevel.Super:
-                            updateSettingKey = "CustSetting_SuperPTOnMemberUpd";
-                            break;
-
-                        case CustomerLevel.Master:
-                            updateSettingKey = "CustSetting_MasterPTOnMemberUpd";
-                            break;
-
-                        case CustomerLevel.Agent:
-                            updateSettingKey = "CustSetting_AgentPTOnMemberUpd";
-                            break;
-
-                        default:
-                            throw new InvalidOperationException("This customer level is not supported");
-                    }
-
-                    break;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
+            var updateSettingKey = (customerLevel == UserLevel.Member)
+                ? UpdateMemberPTSpKeys[uplineLevel.Value]
+                : UpdateSmaPTSpKeys[customerLevel.Value];
 
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
                 PTConstants.SettingTypeId,

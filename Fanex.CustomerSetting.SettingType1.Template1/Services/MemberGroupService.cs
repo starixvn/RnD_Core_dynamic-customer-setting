@@ -28,10 +28,11 @@
             return _memberGroupDataAccess.GetGroupedMemberIds(string.Join(",", memberIds));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed")]
         public UpdatingSettingResult UpdateGroupedMembersPT(
             ISettingContext settingContext,
             IEnumerable<int> groupedMemberIds,
-            CustomerLevel uplineLevel,
+            UserLevel uplineLevel,
             SettingType settingType)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");

@@ -39,7 +39,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, Product255Constants.ProductId, null);
+            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, Product255Constants.ProductId, null);
 
             //// Act
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -47,7 +47,7 @@
             //// Assert
             Assert.AreEqual(SuperUserName, superSetting.CustomerInfo.UserName);
             Assert.AreEqual(SuperId, superSetting.CustomerId);
-            Assert.AreEqual(CustomerLevel.Super, superSetting.CustomerLevel);
+            Assert.AreEqual(UserLevel.Super, superSetting.CustomerLevel);
             Assert.AreEqual(Product255Constants.ProductId, superSetting.ProductId);
             Assert.AreEqual(Product255Constants.ProductName, superSetting.ProductName);
             Assert.AreEqual(Product255Constants.NumOfSettingType, superSetting.SettingTypes.Count());
@@ -84,7 +84,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, CustomerLevel.Super, Product255Constants.ProductId, null);
+            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, Product255Constants.ProductId, null);
 
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;

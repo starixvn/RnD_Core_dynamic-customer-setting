@@ -27,25 +27,25 @@
 
             switch (customerLineDto.CustomerLevel)
             {
-                case CustomerLevel.Super:
+                case UserLevel.Super:
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case CustomerLevel.Master:
+                case UserLevel.Master:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case CustomerLevel.Agent:
+                case UserLevel.Agent:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetMaster(customerLineDto));
                     customerLine.Add(GetCustomer(customerLineDto));
 
                     break;
 
-                case CustomerLevel.Member:
+                case UserLevel.Member:
                     customerLine.Add(GetSuper(customerLineDto));
                     customerLine.Add(GetMaster(customerLineDto));
                     customerLine.Add(GetAgent(customerLineDto));
@@ -64,7 +64,7 @@
                 Id = customerLineDto.SuperID.GetValueOrDefault(0),
                 Name = customerLineDto.SuperName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = CustomerLevel.Super
+                CustomerLevel = UserLevel.Super
             };
 
             return super;
@@ -77,7 +77,7 @@
                 Id = customerLineDto.MasterID.GetValueOrDefault(0),
                 Name = customerLineDto.MasterName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = CustomerLevel.Master
+                CustomerLevel = UserLevel.Master
             };
 
             return master;
@@ -90,7 +90,7 @@
                 Id = customerLineDto.AgentID.GetValueOrDefault(0),
                 Name = customerLineDto.AgentName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = CustomerLevel.Agent
+                CustomerLevel = UserLevel.Agent
             };
 
             return agent;

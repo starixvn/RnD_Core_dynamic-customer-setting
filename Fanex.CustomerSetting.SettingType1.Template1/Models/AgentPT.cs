@@ -1,9 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models
 {
-    using Fanex.CustomerSetting.Models;
-
-    public class AgentPT : SettingType
+    public class AgentPT : PTSettingType
     {
-        public bool IsDisableMasterAutoPT { get; set; }
     }
 }

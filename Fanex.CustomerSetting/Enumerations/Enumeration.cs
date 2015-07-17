@@ -13,13 +13,13 @@
     public abstract class Enumeration : IComparable
     {
         private readonly string _displayName;
-        private readonly int _value;
+        private readonly byte _value;
 
         protected Enumeration()
         {
         }
 
-        protected Enumeration(int value, string displayName)
+        protected Enumeration(byte value, string displayName)
         {
             _value = value;
             _displayName = displayName;
@@ -30,16 +30,16 @@
             get { return _displayName; }
         }
 
-        public int Value
+        public byte Value
         {
             get { return _value; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Reviewed"),
         System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Reviewed")]
-        public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
+        public static byte AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
         {
-            var absoluteDifference = Math.Abs(firstValue.Value - secondValue.Value);
+            var absoluteDifference = (byte)Math.Abs(firstValue.Value - secondValue.Value);
             return absoluteDifference;
         }
 
@@ -49,9 +49,9 @@
             return matchingItem;
         }
 
-        public static T FromValue<T>(int value) where T : Enumeration, new()
+        public static T FromValue<T>(byte value) where T : Enumeration, new()
         {
-            var matchingItem = Parse<T, int>(value, "value", item => item.Value == value);
+            var matchingItem = Parse<T, byte>(value, "value", item => item.Value == value);
             return matchingItem;
         }
 
@@ -157,7 +157,7 @@
 
             return typeMatches && valueMatches;
         }
-
+        
         public override int GetHashCode()
         {
             return _value.GetHashCode();

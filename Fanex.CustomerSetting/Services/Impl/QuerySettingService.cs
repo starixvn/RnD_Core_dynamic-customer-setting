@@ -66,7 +66,8 @@
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
             var validationResult = _validationService.ValidateQuerySetting(queryParam);
-            if (!validationResult.IsSuccessful)
+
+            if (validationResult.IsNotOk)
             {
                 throw new InvalidOperationException(validationResult.Message);
             }

@@ -40,9 +40,9 @@
         public virtual SettingResult PostUpdateCustomerSettingType(
                     ISettingContext settingContext,
                     int customerId,
-                    CustomerLevel customerLevel,
+                    UserLevel customerLevel,
                     SettingType settingType,
-                    CustomerLevel? uplineLevel,
+                    UserLevel uplineLevel,
                     SettingResult result)
         {
             throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
@@ -51,9 +51,9 @@
         public virtual UpdatingSettingResult PostUpdateMultipleCustomersSettingType(
                     ISettingContext settingContext,
                     IEnumerable<int> customerIds,
-                    CustomerLevel customerLevel,
+                    UserLevel customerLevel,
                     SettingType settingType,
-                    CustomerLevel? uplineLevel,
+                    UserLevel uplineLevel,
                     UpdatingSettingResult updatintSettingResult)
         {
             throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");

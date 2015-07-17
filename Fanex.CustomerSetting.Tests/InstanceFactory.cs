@@ -10,19 +10,22 @@
     {
         public static UpdatingSettingParam CreateUpdatingSettingParam(
             int customerId = 1,
-            CustomerLevel customerLevel = CustomerLevel.Master,
+            UserLevel customerLevel = null,
             byte productId = 1,
-            CustomerLevel? uplineLevel = null)
+            UserLevel uplineLevel = null)
         {
+            customerLevel = customerLevel ?? UserLevel.Master;
             var setting = CreateCustomerSetting(customerId, customerLevel, productId);
             return new UpdatingSettingParam(setting, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(
             int customerId = 1,
-            CustomerLevel customerLevel = CustomerLevel.Master,
+            UserLevel customerLevel = null,
             byte productId = 1)
         {
+            customerLevel = customerLevel ?? UserLevel.Master;
+
             var settingTypes = new List<SettingType>
                     {
                         InstanceFactory.CreateCustomerSettingType(1, 1),
@@ -63,10 +66,12 @@
 
         public static UpdatingMultipleSettingParam CreateUpdatingMultipleSettingParam(
             int customerId = 1,
-            CustomerLevel customerLevel = CustomerLevel.Master,
+            UserLevel customerLevel = null,
             byte productId = 1,
-            CustomerLevel? uplineLevel = null)
+            UserLevel uplineLevel = null)
         {
+            customerLevel = customerLevel ?? UserLevel.Master;
+
             var settingTypes = new List<SettingType>
                     {
                         InstanceFactory.CreateCustomerSettingType(1, 1),
@@ -74,6 +79,7 @@
                         InstanceFactory.CreateCustomerSettingType(3, 1),
                         InstanceFactory.CreateCustomerSettingType(4, 1)
                     };
+
             var updatingMultipleParam = new UpdatingMultipleSettingParam(
                 new Setting(customerId, customerLevel, productId, settingTypes),
                 new List<int> { customerId, 2 },
@@ -85,10 +91,12 @@
 
         public static QuerySettingParam CreateQuerySettingParam(
             int customerId = 1,
-            CustomerLevel customerLevel = CustomerLevel.Member,
+            UserLevel customerLevel = null,
             byte productId = 1,
-            CustomerLevel? uplineLevel = CustomerLevel.Master)
+            UserLevel uplineLevel = null)
         {
+            customerLevel = customerLevel ?? UserLevel.Member;
+            uplineLevel = uplineLevel ?? UserLevel.Master;
             return new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
         }
 

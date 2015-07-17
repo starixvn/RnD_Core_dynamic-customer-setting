@@ -55,18 +55,19 @@
             var customerId = queryParam.CustomerId;
             var customerLevel = queryParam.CustomerLevel;
             var uplineLevel = queryParam.UplineLevel;
+            var actor = _settingContext.Actor;
 
             try
             {
-                CheckActorStatus(_settingContext.Actor);
+                CheckActorStatus(actor);
 
                 CheckCustomerLevel(customerId, customerLevel);
 
-                CheckActorAndCustomerLevelsConstrain(_settingContext.Actor.Level, customerLevel);
+                CheckActorAndCustomerLevelsConstrain(actor, customerLevel);
 
-                CheckActorLevelAndCustomerUplineLevelConstrain(_settingContext.Actor.Level, customerLevel, uplineLevel);
+                CheckActorLevelAndCustomerUplineLevelConstrain(actor, customerLevel, uplineLevel);
 
-                CheckBelonging(_settingContext.Actor, customerId);
+                CheckBelonging(actor, customerId);
             }
             catch (CustomerSettingException ex)
             {
@@ -91,11 +92,11 @@
             }
         }
 
-        private void CheckActorAndCustomerLevelsConstrain(UserLevel actorLevel, CustomerLevel customerLevel)
+        private void CheckActorAndCustomerLevelsConstrain(User actor, UserLevel customerLevel)
         {
-            var isValidConstrain = actorLevel.Is(UserLevel.Company)
-                || customerLevel == CustomerLevel.Member
-                || actorLevel.IsDirectUplineLevelOf(customerLevel);
+            var isValidConstrain = actor.IsCompany()
+                || customerLevel == UserLevel.Member
+                || actor.Level.IsDirectUplineLevelOf(customerLevel);
 
             if (!isValidConstrain)
             {
@@ -103,23 +104,23 @@
             }
         }
 
-        private void CheckActorLevelAndCustomerUplineLevelConstrain(UserLevel actorLevel, CustomerLevel customerLevel, CustomerLevel? uplineLevel)
+        private void CheckActorLevelAndCustomerUplineLevelConstrain(User actor, UserLevel customerLevel, UserLevel uplineLevel)
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
-            if (actorLevel.IsNot(UserLevel.Company)
-                && customerLevel == CustomerLevel.Member
-                && uplineLevel.HasValue
-                && actorLevel.Value != (int)uplineLevel.Value)
+            if (actor.IsNotCompany()
+                && customerLevel == UserLevel.Member
+                && uplineLevel != null
+                && actor.Level.Value != (int)uplineLevel.Value)
             {
                 throw new CustomerSettingException(Message.UplineLevelIsNotValid);
             }
         }
 
-        private void CheckBelonging(User user, int customerId)
+        private void CheckBelonging(User actor, int customerId)
         {
-            if (user.Level != UserLevel.Company)
+            if (actor.IsNotCompany())
             {
-                var isBelonging = _validationDataAccess.ValidateBelonging(user.Id, customerId);
+                var isBelonging = _validationDataAccess.ValidateBelonging(actor.Id, customerId);
 
                 if (!isBelonging)
                 {
@@ -133,14 +134,14 @@
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="customerLevel"></param>
-        private void CheckCustomerLevel(int customerId, CustomerLevel customerLevel)
+        private void CheckCustomerLevel(int customerId, UserLevel customerLevel)
         {
             var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
             {
                 CustId = customerId
             });
 
-            if ((CustomerLevel)actualCustomerLevel != customerLevel)
+            if (actualCustomerLevel != customerLevel.Value)
             {
                 throw new CustomerSettingException();
             }
@@ -161,20 +162,22 @@
             {
                 var setting = updatingParam.Setting;
                 var querySettingParam = new QuerySettingParam(setting.CustomerId, setting.CustomerLevel, setting.ProductId, updatingParam.UplineLevel);
-
                 var result = ValidateQuerySetting(querySettingParam);
+
                 if (!result.IsSuccessful)
                 {
                     return result;
                 }
 
                 result = ValidateActorLevelWithCurrentSystem();
+
                 if (!result.IsSuccessful)
                 {
                     return result;
                 }
 
                 result = ValidateProductProfile(setting.ProductId, setting.SettingTypes);
+
                 if (!result.IsSuccessful)
                 {
                     return result;
@@ -203,8 +206,7 @@
         {
             var currentSystemId = GetCurrentSystemId();
 
-            if (_settingContext.Actor.Level == UserLevel.Company
-                && currentSystemId == (byte)SystemType.Agency)
+            if (_settingContext.Actor.IsCompany() && currentSystemId == (byte)SystemType.Agency)
             {
                 return Result.AccessDenied;
             }
@@ -225,6 +227,7 @@
         private IResult ValidateProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId);
+
             foreach (var customerSettingType in customerSettingTypes)
             {
                 if (!productSettingTypes.Any(stt => stt.Id == customerSettingType.Id))
@@ -241,6 +244,7 @@
             foreach (SettingType settingType in settingTypes)
             {
                 var validationResult = settingType.Validate();
+
                 if (!validationResult.IsSuccessful)
                 {
                     return validationResult;
@@ -257,6 +261,7 @@
             try
             {
                 var result = ValidateUpdatingSetting(updatingMultipleParam);
+
                 if (!result.IsSuccessful)
                 {
                     return result;
@@ -280,9 +285,9 @@
             }
         }
 
-        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, CustomerLevel customerLevel)
+        private IResult ValidateActorPermissionOnMultipleCustomers(IEnumerable<int> memberIds, UserLevel customerLevel)
         {
-            if (customerLevel == CustomerLevel.Member)
+            if (customerLevel == UserLevel.Member)
             {
                 return _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
             }

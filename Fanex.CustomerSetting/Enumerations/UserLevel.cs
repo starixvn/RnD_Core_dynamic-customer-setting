@@ -11,27 +11,28 @@
         public static readonly UserLevel Super = new UserLevel(Level.Super, "Super");
         public static readonly UserLevel Master = new UserLevel(Level.Master, "Master");
         public static readonly UserLevel Agent = new UserLevel(Level.Agent, "Agent");
+        public static readonly UserLevel Member = new UserLevel(Level.Member, "Member");
 
         public UserLevel()
         {
         }
 
-        private UserLevel(int value, string displayName)
+        private UserLevel(byte value, string displayName)
             : base(value, displayName)
         {
         }
 
-        public bool IsDirectUplineLevelOf(int downlineLevelValue)
+        public bool IsDirectUplineLevelOf(byte downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;
         }
 
-        public bool IsDirectUplineLevelOf(CustomerLevel customerLevel)
+        public bool IsDirectUplineLevelOf(UserLevel customerLevel)
         {
-            return IsDirectUplineLevelOf((int)customerLevel);
+            return IsDirectUplineLevelOf(customerLevel.Value);
         }
 
-        public bool IsDirectDownlineLevelOf(int uplineLevelValue)
+        public bool IsDirectDownlineLevelOf(byte uplineLevelValue)
         {
             return GapBetweenTwoLevels(uplineLevelValue, this.Value) == 1;
         }
@@ -51,7 +52,7 @@
             return !Is(level);
         }
 
-        private static int GapBetweenTwoLevels(int uplineLevelValue, int downlineLevelValue)
+        private static int GapBetweenTwoLevels(byte uplineLevelValue, byte downlineLevelValue)
         {
             return uplineLevelValue - downlineLevelValue;
         }

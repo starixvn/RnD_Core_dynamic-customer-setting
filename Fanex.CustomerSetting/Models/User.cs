@@ -79,6 +79,11 @@
                     throw new ArgumentNullException("value");
                 }
 
+                if (value == UserLevel.Member)
+                {
+                    throw new ArgumentOutOfRangeException("value", "Cannot set level Member to user");
+                }
+
                 _userLevel = value;
             }
         }
@@ -86,6 +91,11 @@
         public bool IsCompany()
         {
             return this.Level == UserLevel.Company;
+        }
+
+        public bool IsNotCompany()
+        {
+            return !this.IsCompany();
         }
     }
 }

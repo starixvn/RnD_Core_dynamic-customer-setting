@@ -46,7 +46,7 @@
         }
 
         private string GetSettingKeyForQuerying(
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             byte settingTypeId,
             byte settingTemplateId,
             byte productId)
@@ -55,16 +55,16 @@
 
             switch (customerLevel)
             {
-                case CustomerLevel.Super:
+                case UserLevel.Super:
                     return "CustSetting_SuperBetLimitSelect" + keySuffix;
 
-                case CustomerLevel.Master:
+                case UserLevel.Master:
                     return "CustSetting_MasterBetLimitSelect" + keySuffix;
 
-                case CustomerLevel.Agent:
+                case UserLevel.Agent:
                     return "CustSetting_AgentBetLimitSelect" + keySuffix;
 
-                case CustomerLevel.Member:
+                case UserLevel.Member:
                     return "CustSetting_MemberBetLimitSelect" + keySuffix;
 
                 default:
@@ -75,10 +75,10 @@
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
             byte productId,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);

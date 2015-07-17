@@ -6,12 +6,18 @@
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
     using Fanex.Data;
 
     public class MemberGroupDataAccess : BaseDataAccess, IMemberGroupDataAccess
     {
+        private static readonly Dictionary<byte, string> UpdateMultipleSPKeys = new Dictionary<byte, string>
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperPTOnMemberMultiUpd" },
+            { UserLevel.Master.Value, "CustSetting_MasterPTOnMemberMultiUpd" },
+            { UserLevel.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
+        };
+
         public IEnumerable<int> GetGroupedMemberIds(string memberIds)
         {
             using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
@@ -30,28 +36,10 @@
                 throw new ArgumentNullException("updateParam");
             }
 
-            var settingKey = GetSettingKeyOfUpdateGroupedMembersSetting(updateParam.UplineLevel);
+            var settingKey = UpdateMultipleSPKeys[updateParam.UplineLevel.Value];
             var storedProcedureParams = GetSPParamsOfUpdateGroupedMembersSetting(updateParam);
 
             return ExecuteNonQuery(settingKey, storedProcedureParams);
-        }
-
-        private string GetSettingKeyOfUpdateGroupedMembersSetting(CustomerLevel uplineLevel)
-        {
-            switch (uplineLevel)
-            {
-                case CustomerLevel.Super:
-                    return "CustSetting_SuperPTOnMemberMultiUpd";
-
-                case CustomerLevel.Master:
-                    return "CustSetting_MasterPTOnMemberMultiUpd";
-
-                case CustomerLevel.Agent:
-                    return "CustSetting_AgentPTOnMemberMultiUpd";
-
-                default:
-                    throw new InvalidOperationException("Not implemented for this customer level yet");
-            }
         }
 
         private Hashtable GetSPParamsOfUpdateGroupedMembersSetting(UpdateMultipleMemberPTParam updateParam)

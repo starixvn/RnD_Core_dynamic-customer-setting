@@ -115,7 +115,7 @@
             return new UpdatingSettingResult(settingTypeResults);
         }
 
-        private SettingResult UpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
+        private SettingResult UpdateCustomerSettingType(int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel)
         {
             var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
             if (!preTasksResult.IsSuccessful)
@@ -131,9 +131,9 @@
 
         private SettingResult RunPreUpdateCustomerSettingTypeTasks(
             int customerId,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null
@@ -145,7 +145,7 @@
             return new SettingResult(Result.Success);
         }
 
-        private IResult RunUpdateCustomerSettingType(int customerId, CustomerLevel customerLevel, SettingType settingType, byte productId, CustomerLevel? uplineLevel)
+        private IResult RunUpdateCustomerSettingType(int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel)
         {
             var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
             return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, settingType, productId, uplineLevel);
@@ -153,9 +153,9 @@
 
         private SettingResult RunPostUpdateCustomerSettingTypeTasks(
             int customerId,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             SettingResult result)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
@@ -230,8 +230,8 @@
 
         private UpdatingSettingResult UpdateSetingTypeForMultipleCustomers(
             IEnumerable<int> customerIds,
-            CustomerLevel customerLevel,
-            CustomerLevel? uplineLevel,
+            UserLevel customerLevel,
+            UserLevel uplineLevel,
             SettingType settingType,
             byte productId)
         {
@@ -277,9 +277,9 @@
 
         private PreUpdateMultipleCustomersSettingTypeResult RunPreUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<int> customers,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
             if (preTasks != null && IsOverride(preTasks.GetType().GetMethod("PreUpdateMultipleCustomersSettingType")))
@@ -295,10 +295,10 @@
 
         private List<SettingResult> UpdateSettingTypeOfEachCustomer(
             IEnumerable<int> customerIds,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
             byte productId,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var settingTypeResults = new List<SettingResult>();
             foreach (var customerId in customerIds)
@@ -314,9 +314,9 @@
 
         private UpdatingSettingResult RunPostUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<int> customerIds,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
-            CustomerLevel? uplineLevel,
+            UserLevel uplineLevel,
             UpdatingSettingResult settingTypeMultipleResult)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);

@@ -14,6 +14,6 @@
 
         public string PTXml { get; set; }
 
-        public CustomerLevel UplineLevel { get; set; }
+        public UserLevel UplineLevel { get; set; }
     }
 }

@@ -57,21 +57,13 @@
             param.Add("custid", querySettingParam.CustomerId);
             param.Add("productid", querySettingParam.ProductId);
             param.Add("settingtype", settingType);
-
-            switch (querySettingParam.CustomerLevel)
+            
+            if (querySettingParam.CustomerLevel == UserLevel.Member)
             {
-                case CustomerLevel.Super:
-                case CustomerLevel.Master:
-                case CustomerLevel.Agent:
-                    return param;
-
-                case CustomerLevel.Member:
-                    param.Add("roleid", (byte)querySettingParam.UplineLevel.Value);
-                    return param;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
+                param.Add("roleid", (byte)querySettingParam.UplineLevel.Value);
             }
+
+            return param;
         }
 
         protected string GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(byte settingTypeId, byte settingTemplateId, byte productId)

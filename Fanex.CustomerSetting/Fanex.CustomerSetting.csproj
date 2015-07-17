@@ -124,7 +124,6 @@
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingTypeDataAccess.cs" />
     <Compile Include="DataAccesses\IValidationDataAccess.cs" />
-    <Compile Include="Enumerations\CustomerLevel.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\Entity.cs" />

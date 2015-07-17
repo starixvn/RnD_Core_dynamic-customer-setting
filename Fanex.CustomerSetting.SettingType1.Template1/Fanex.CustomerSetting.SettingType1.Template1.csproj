@@ -89,6 +89,7 @@
     <Compile Include="Models\AgentPT.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentPTOnMemberItem.cs" />
+    <Compile Include="Models\PTSettingType.cs" />
     <Compile Include="Models\BasePTItem.cs" />
     <Compile Include="Models\MasterPTOnMember.cs" />
     <Compile Include="Models\SuperPTItem.cs" />

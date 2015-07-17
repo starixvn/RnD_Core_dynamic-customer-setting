@@ -7,12 +7,12 @@
 
     public class UpdatingSettingParam
     {
-        private CustomerLevel? _uplineLevel;
+        private UserLevel _uplineLevel;
         private ISetting _setting;
 
         public UpdatingSettingParam(
             ISetting setting,
-            CustomerLevel? uplineLevel = null)
+            UserLevel uplineLevel = null)
         {
             Setting = setting;
             UplineLevel = uplineLevel;
@@ -36,7 +36,7 @@
             }
         }
 
-        public CustomerLevel? UplineLevel
+        public UserLevel UplineLevel
         {
             get
             {
@@ -53,12 +53,12 @@
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
 
-                    if (Setting.CustomerLevel != CustomerLevel.Member)
+                    if (Setting.CustomerLevel != UserLevel.Member)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-                else if (Setting.CustomerLevel == CustomerLevel.Member)
+                else if (Setting.CustomerLevel == UserLevel.Member)
                 {
                     throw new ArgumentNullException("value", "Upline cannot be null when updating member setting.");
                 }

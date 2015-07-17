@@ -67,6 +67,21 @@
                     }));
         }
 
+        [Test]
+        public void SetLevel_InputValuesIsMember_ThrowArgumentOutOfRangeException()
+        {
+            //// Arrange
+            User user = InstanceFactory.CreateUser();
+
+            //// Act
+            Assert.Throws<ArgumentOutOfRangeException>(
+                new TestDelegate(
+                    () =>
+                    {
+                        user.Level = UserLevel.Member;
+                    }));
+        }
+
         [TestCase(-10)]
         [TestCase(-1)]
         public void SetSubAccountId_InputValueIsNegative_ThrowArgumentOutOfRangeException(int subAccountId)

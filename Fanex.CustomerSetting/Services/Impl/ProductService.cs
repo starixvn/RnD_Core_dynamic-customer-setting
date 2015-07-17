@@ -16,9 +16,7 @@
         private readonly IDynamicRepository _productRepository;
         private readonly ICache _cacheManager;
 
-        public ProductService(
-            IDynamicRepository productRepository = null,
-            ICache cacheManager = null)
+        public ProductService(IDynamicRepository productRepository = null, ICache cacheManager = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
             _cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
@@ -29,6 +27,7 @@
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
             var settingTypes = GetSettingTypesFromCache(productId);
+
             if (settingTypes == null)
             {
                 settingTypes = GetSettingTypesFromDatabase(productId);

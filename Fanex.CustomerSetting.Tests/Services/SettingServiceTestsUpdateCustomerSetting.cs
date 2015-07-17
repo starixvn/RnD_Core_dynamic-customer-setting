@@ -115,10 +115,10 @@
             _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<CustomerLevel>(),
+                Arg.Any<UserLevel>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
-                Arg.Any<CustomerLevel?>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
+                Arg.Any<UserLevel>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
@@ -151,9 +151,9 @@
             settingPreTasksStub.PreUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<CustomerLevel>(),
+                Arg.Any<UserLevel>(),
                 Arg.Any<SettingType>(),
-                Arg.Any<CustomerLevel?>())
+                Arg.Any<UserLevel>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTasksStub);
         }
@@ -164,9 +164,9 @@
             settingPostTasksStub.PostUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<CustomerLevel>(),
+                Arg.Any<UserLevel>(),
                 Arg.Any<SettingType>(),
-                Arg.Any<CustomerLevel?>(),
+                Arg.Any<UserLevel>(),
                 Arg.Any<SettingResult>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
             _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingPostTasksStub);
@@ -257,7 +257,7 @@
             //// Assert
             _loggingService.Received().LogUpdatingCustomerSettingTypeError(
                 Arg.Is<int>(customerId => customerId == updatingParam.Setting.CustomerId),
-                Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingParam.UplineLevel),
+                Arg.Is<UserLevel>(uplineLevel => uplineLevel == updatingParam.UplineLevel),
                 Arg.Is<byte>(productId => productId == updatingParam.Setting.ProductId),
                 Arg.Any<SettingType>(),
                 Arg.Any<Exception>());

@@ -49,27 +49,27 @@
         }
 
         private string GetSettingKeyForQuerying(
-            CustomerLevel customerLevel, 
+            UserLevel customerLevel, 
             byte settingTypeId, 
             byte settingTemplateId, 
             byte productId,
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
             switch (customerLevel)
             {
-                case CustomerLevel.Super:
+                case UserLevel.Super:
                     return "CustSetting_SuperCommissionSelect" + keySuffix;
 
-                case CustomerLevel.Master:
+                case UserLevel.Master:
                     return "CustSetting_MasterCommissionSelect" + keySuffix;
 
-                case CustomerLevel.Agent:
+                case UserLevel.Agent:
                     return "CustSetting_AgentCommissionSelect" + keySuffix;
 
-                case CustomerLevel.Member:
-                    if (uplineLevel.Value == CustomerLevel.Super)
+                case UserLevel.Member:
+                    if (uplineLevel.Value == UserLevel.Super)
                     {
                         return "CustSetting_MemberCommissionSelectBySuper" + keySuffix;
                     }
@@ -84,10 +84,10 @@
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            CustomerLevel customerLevel,
+            UserLevel customerLevel,
             SettingType settingType,
             byte productId, 
-            CustomerLevel? uplineLevel)
+            UserLevel uplineLevel)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
