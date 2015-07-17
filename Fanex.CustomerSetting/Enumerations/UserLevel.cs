@@ -22,6 +22,38 @@
         {
         }
 
+        public bool IsMemberLevel
+        {
+            get
+            {
+                return this == Member;
+            }
+        }
+
+        public bool IsNotMemberLevel
+        {
+            get
+            {
+                return !IsMemberLevel;
+            }
+        }
+
+        public bool IsCompanyLevel
+        {
+            get
+            {
+                return this == Company;
+            }
+        }
+
+        public bool IsNotCompanyLevel
+        {
+            get
+            {
+                return !IsCompanyLevel;
+            }
+        }
+
         public bool IsDirectUplineLevelOf(byte downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;
