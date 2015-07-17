@@ -103,6 +103,7 @@
             if (settingType != null && settingType.SettingItems.Any())
             {
                 List<DefaultSettingItem> defaultSettingItems = new List<DefaultSettingItem>();
+
                 foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
                     if (settingItem is DefaultSettingItem)

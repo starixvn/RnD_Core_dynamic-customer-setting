@@ -52,9 +52,17 @@
         {
             var propertyName = string.Format("ProductName{0}", LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             var property = productName.GetType().GetProperty(propertyName);
-            return property == null
-                ? productName.ProductNameEN
-                : property.GetValue(productName, null).ToString();
+
+            if (property == null)
+            {
+                return productName.ProductNameEN;
+            }
+            else if (property.GetValue(productName, null) == null)
+            {
+                return string.Format(Resource.Message.ProductNameMissing, productName.ProductId, language);
+            }
+
+            return property.GetValue(productName, null).ToString();
         }
 
         public string GetSportTypeName(int sportTypeId, string language)

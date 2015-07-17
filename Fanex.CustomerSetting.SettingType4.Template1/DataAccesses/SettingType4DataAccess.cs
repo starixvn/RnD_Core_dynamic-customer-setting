@@ -32,13 +32,20 @@
             User actor,
             QuerySettingParam queryParam)
         {
-            var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
 
-            return new SettingType
+            // Will bring this logic into service class later
+            if (queryParam.UplineLevel.IsDirectUplineLevelOf(queryParam.CustomerLevel))
             {
-                Name = Label.ProductStatus,
-                SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
-            };
+                var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
+
+                return new SettingType
+                {
+                    Name = Label.ProductStatus,
+                    SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
+                };
+            }
+
+            return new SettingType();
         }
 
         private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
@@ -48,6 +55,7 @@
                 ProductStatusConstants.SettingTypeId, 
                 ProductStatusConstants.SettingTempateId,
                 queryParam.ProductId);
+
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId);

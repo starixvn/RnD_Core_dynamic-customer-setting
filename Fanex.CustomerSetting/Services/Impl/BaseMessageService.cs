@@ -37,6 +37,7 @@
         {
             var mainMessage = rawMessage;
             var simpleMessage = Deserialize<SimpleMessage>(rawMessage);
+
             if (simpleMessage != null)
             {
                 mainMessage = GetMessage(Message.ResourceManager, simpleMessage.MessageId);
@@ -48,6 +49,7 @@
         protected T Deserialize<T>(string text) where T : SimpleMessage
         {
             var serializer = new XmlSerializer(typeof(T));
+
             using (var stringReader = new StringReader(text))
             {
                 return (T)serializer.Deserialize(stringReader);
@@ -63,6 +65,7 @@
 
             var key = string.Format(MessageFormat, messsageId);
             var message = resouceManager.GetString(key);
+
             return !string.IsNullOrEmpty(message)
                 ? message
                 : string.Format(NotFoundMessageFormat, messsageId);
@@ -77,6 +80,7 @@
             var mainMessage = Deserialize<MainMessage<DefaultSubMessage>>(rawMessage);
             var translatedSubMessages = mainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
             var translatedMainMessage = GetMessage(resouceManager, mainMessage.MessageId);
+
             return new MessageContent(translatedMainMessage, translatedSubMessages);
         }
     }

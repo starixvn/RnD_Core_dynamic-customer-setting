@@ -55,7 +55,7 @@
             Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes - 1, memberSetting.SettingTypes.Count());
 
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
+            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
             Assert.IsNotNull(masterPTOnMember);
 
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
@@ -113,7 +113,7 @@
             var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
+            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
             if (!masterPTOnMember.IsDisableMasterAutoPT)
             {
@@ -178,7 +178,7 @@
             var querySettingParam = new QuerySettingParam(memberIds.First(), UserLevel.Member, productId, UserLevel.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as MasterPTOnMember;
+            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
             var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
 
             if (!masterPTOnMember.IsDisableMasterAutoPT)

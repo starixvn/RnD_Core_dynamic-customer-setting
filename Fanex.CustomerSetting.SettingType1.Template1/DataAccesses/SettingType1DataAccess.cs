@@ -75,6 +75,7 @@
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameters = CreateQueryPTSettingSpParam(querySettingParam);
+
                 var queryFunction = (querySettingParam.CustomerLevel == UserLevel.Member)
                    ? MemberQueryPTSettingItemFuncs[querySettingParam.UplineLevel.Value]
                    : SmaQueryPTSettingItemFuncs[querySettingParam.CustomerLevel.Value];

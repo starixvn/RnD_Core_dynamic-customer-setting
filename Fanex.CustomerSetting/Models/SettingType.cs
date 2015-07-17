@@ -8,6 +8,11 @@
     [Serializable]
     public class SettingType
     {
+        public SettingType()
+        {
+            this.SettingItems = Enumerable.Empty<ISettingItem>();
+        }
+
         private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
 
         public short Id { get; set; }

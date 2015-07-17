@@ -56,7 +56,7 @@
             Assert.AreEqual(productName, agentSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, agentSetting.SettingTypes.Count());
 
-            var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
+            var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;
             Assert.IsNotNull(agentPT);
 
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
@@ -116,7 +116,7 @@
             var querySettingParam = new QuerySettingParam(agentId, UserLevel.Agent, productId);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
+            var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
 
             if (!agentPT.IsDisableMasterAutoPT)
@@ -196,7 +196,7 @@
             var querySettingParam = new QuerySettingParam(agentIds.First(), UserLevel.Agent, productId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var agentPT = agentSetting.SettingTypes.ElementAt(0) as AgentPT;
+            var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;
             var agentPTItem = agentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
             
             if (!agentPT.IsDisableMasterAutoPT)

@@ -156,6 +156,9 @@
   <data name="NoChangeToUpdate" xml:space="preserve">
     <value>There is no change to update!</value>
   </data>
+  <data name="ProductNameMissing" xml:space="preserve">
+    <value>Product Id {0} does not have name in {1}</value>
+  </data>
   <data name="SportTypeOrBetTypeIsInvalid" xml:space="preserve">
     <value>Sport Type or Bet Type is invalid!</value>
   </data>

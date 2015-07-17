@@ -133,7 +133,7 @@
                         ex);
                 }
 
-                if (customerSettingType.SettingItems != null && customerSettingType.SettingItems.Any())
+                if (customerSettingType.SettingItems.Any())
                 {
                     customerSettingTypes.Add(customerSettingType);
                 }
