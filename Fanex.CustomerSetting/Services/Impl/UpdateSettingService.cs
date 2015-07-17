@@ -103,7 +103,6 @@
                         customerId,
                         settingType.Id,
                         settingType.Name);
-
                 }
 
                 settingTypeResults.Add(updatingSettingTypeResult);
@@ -112,7 +111,7 @@
             return new UpdatingSettingResult(settingTypeResults);
         }
 
-        private SettingResult UpdateCustomerSettingType(int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel)
+        private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
             var preTasksResult = RunPreUpdateCustomerSettingTypeTasks(customerId, customerLevel, settingType, uplineLevel);
 
@@ -129,9 +128,9 @@
 
         private SettingResult RunPreUpdateCustomerSettingTypeTasks(
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
 
@@ -144,7 +143,7 @@
             return new SettingResult(Result.Success);
         }
 
-        private IResult RunUpdateCustomerSettingType(int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel)
+        private IResult RunUpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
             var settingTypeDataAccess = _settingResolver.ResolveSettingDataAccess(settingType);
             return settingTypeDataAccess.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, settingType, productId, uplineLevel);
@@ -152,9 +151,9 @@
 
         private SettingResult RunPostUpdateCustomerSettingTypeTasks(
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel,
+            Level uplineLevel,
             SettingResult result)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
@@ -235,8 +234,8 @@
 
         private UpdatingSettingResult UpdateSetingTypeForMultipleCustomers(
             IEnumerable<int> customerIds,
-            UserLevel customerLevel,
-            UserLevel uplineLevel,
+            Level customerLevel,
+            Level uplineLevel,
             SettingType settingType,
             byte productId)
         {
@@ -283,9 +282,9 @@
 
         private PreUpdateMultipleCustomersSettingTypeResult RunPreUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<int> customers,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var preTasks = _settingResolver.ResolveSettingPreTasks(settingType);
 
@@ -302,10 +301,10 @@
 
         private List<SettingResult> UpdateSettingTypeOfEachCustomer(
             IEnumerable<int> customerIds,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
             byte productId,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var settingTypeResults = new List<SettingResult>();
             foreach (var customerId in customerIds)
@@ -322,9 +321,9 @@
 
         private UpdatingSettingResult RunPostUpdateMultipleCustomersSettingTypeTasks(
             IEnumerable<int> customerIds,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel,
+            Level uplineLevel,
             UpdatingSettingResult settingTypeMultipleResult)
         {
             var postTasks = _settingResolver.ResolveSettingPostTasks(settingType);
@@ -381,6 +380,5 @@
 
             return customerIdNameContainer;
         }
-
     }
 }

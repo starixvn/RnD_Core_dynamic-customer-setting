@@ -59,7 +59,7 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            _settingContext.Actor.Level = UserLevel.Super;
+            _settingContext.Actor.Level = Level.Super;
 
             //// Act
             _validationService.ValidateUpdatingSetting(updatingParam);
@@ -179,7 +179,7 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            _settingContext.Actor.Level = UserLevel.Company;
+            _settingContext.Actor.Level = Level.Company;
 
             AssumeValidateQuerySettingIsSuccessful();
             AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
@@ -199,7 +199,7 @@
         {
             //// Arrange
             var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-            _settingContext.Actor.Level = UserLevel.Company;
+            _settingContext.Actor.Level = Level.Company;
 
             AssumeValidateQuerySettingIsSuccessful();
             AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);

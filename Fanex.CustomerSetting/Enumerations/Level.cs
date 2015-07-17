@@ -5,19 +5,19 @@
     using Fanex.CustomerSetting.Constants;
 
     [Serializable]
-    public class UserLevel : Enumeration
+    public class Level : Enumeration
     {
-        public static readonly UserLevel Company = new UserLevel(Level.Company, "Company");
-        public static readonly UserLevel Super = new UserLevel(Level.Super, "Super");
-        public static readonly UserLevel Master = new UserLevel(Level.Master, "Master");
-        public static readonly UserLevel Agent = new UserLevel(Level.Agent, "Agent");
-        public static readonly UserLevel Member = new UserLevel(Level.Member, "Member");
+        public static readonly Level Company = new Level(5, "Company");
+        public static readonly Level Super = new Level(4, "Super");
+        public static readonly Level Master = new Level(3, "Master");
+        public static readonly Level Agent = new Level(2, "Agent");
+        public static readonly Level Member = new Level(1, "Member");
 
-        public UserLevel()
+        public Level()
         {
         }
 
-        private UserLevel(byte value, string displayName)
+        private Level(byte value, string displayName)
             : base(value, displayName)
         {
         }
@@ -59,14 +59,14 @@
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;
         }
 
-        public bool IsDirectUplineLevelOf(UserLevel customerLevel)
+        public bool IsDirectUplineLevelOf(Level customerLevel)
         {
-            return IsDirectUplineLevelOf(customerLevel.Value);
+            return IsDirectUplineLevelOf(customerLevel);
         }
 
-        public bool IsDirectDownlineLevelOf(byte uplineLevelValue)
+        public bool IsDirectDownlineLevelOf(Level uplineLevel)
         {
-            return GapBetweenTwoLevels(uplineLevelValue, this.Value) == 1;
+            return GapBetweenTwoLevels(uplineLevel.Value, this.Value) == 1;
         }
 
         public bool Is(Enumeration level)

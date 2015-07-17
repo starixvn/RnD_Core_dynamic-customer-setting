@@ -100,7 +100,6 @@
     <Compile Include="Configurations\CustomerSettingSection.cs" />
     <Compile Include="Configurations\SettingTypeCollection.cs" />
     <Compile Include="Configurations\SettingTypeElement.cs" />
-    <Compile Include="Constants\Level.cs" />
     <Compile Include="Constants\MessageType.cs" />
     <Compile Include="Constants\ResultValue.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
@@ -124,7 +123,7 @@
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
     <Compile Include="DataAccesses\ISettingTypeDataAccess.cs" />
     <Compile Include="DataAccesses\IValidationDataAccess.cs" />
-    <Compile Include="Enumerations\UserLevel.cs" />
+    <Compile Include="Enumerations\Level.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\ISetting.cs" />

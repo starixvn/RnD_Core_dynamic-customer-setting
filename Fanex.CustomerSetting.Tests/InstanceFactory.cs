@@ -10,21 +10,21 @@
     {
         public static UpdatingSettingParam CreateUpdatingSettingParam(
             int customerId = 1,
-            UserLevel customerLevel = null,
+            Level customerLevel = null,
             byte productId = 1,
-            UserLevel uplineLevel = null)
+            Level uplineLevel = null)
         {
-            customerLevel = customerLevel ?? UserLevel.Master;
+            customerLevel = customerLevel ?? Level.Master;
             var setting = CreateCustomerSetting(customerId, customerLevel, productId);
             return new UpdatingSettingParam(setting, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(
             int customerId = 1,
-            UserLevel customerLevel = null,
+            Level customerLevel = null,
             byte productId = 1)
         {
-            customerLevel = customerLevel ?? UserLevel.Master;
+            customerLevel = customerLevel ?? Level.Master;
 
             var settingTypes = new List<SettingType>
                     {
@@ -66,11 +66,11 @@
 
         public static UpdatingMultipleSettingParam CreateUpdatingMultipleSettingParam(
             int customerId = 1,
-            UserLevel customerLevel = null,
+            Level customerLevel = null,
             byte productId = 1,
-            UserLevel uplineLevel = null)
+            Level uplineLevel = null)
         {
-            customerLevel = customerLevel ?? UserLevel.Master;
+            customerLevel = customerLevel ?? Level.Master;
 
             var settingTypes = new List<SettingType>
                     {
@@ -91,12 +91,12 @@
 
         public static QuerySettingParam CreateQuerySettingParam(
             int customerId = 1,
-            UserLevel customerLevel = null,
+            Level customerLevel = null,
             byte productId = 1,
-            UserLevel uplineLevel = null)
+            Level uplineLevel = null)
         {
-            customerLevel = customerLevel ?? UserLevel.Member;
-            uplineLevel = uplineLevel ?? UserLevel.Master;
+            customerLevel = customerLevel ?? Level.Member;
+            uplineLevel = uplineLevel ?? Level.Master;
             return new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
         }
 
@@ -118,14 +118,14 @@
         public static User CreateUser(
             int userId = 1,
             string userName = "Username",
-            UserLevel userLevel = null,
+            Level userLevel = null,
             int subAccountId = 0)
         {
             return new User
             {
                 Id = userId,
                 Name = userName,
-                Level = userLevel ?? UserLevel.Company,
+                Level = userLevel ?? Level.Company,
                 SubAccountId = subAccountId
             };
         }

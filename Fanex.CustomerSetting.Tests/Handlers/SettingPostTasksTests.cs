@@ -96,7 +96,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, UserLevel.Agent, settingType, null, null)));
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, Level.Agent, settingType, null, null)));
         }
 
         public virtual void PostUpdateCustomerSettingType_SettingTypeIsNull_ThrowArgumentNullException()
@@ -108,7 +108,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, UserLevel.Agent, settingType, null, null)));
+                    () => SettingPostTasks.PostUpdateCustomerSettingType(SettingContext, 1, Level.Agent, settingType, null, null)));
         }
     }
 }

@@ -18,40 +18,40 @@
     {
         private static readonly Dictionary<byte, string> UpdateSmaPTSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperPTUpd" },
-            { UserLevel.Master.Value, "CustSetting_MasterPTUpd" },
-            { UserLevel.Agent.Value, "CustSetting_AgentPTUpd" }
+            { Level.Super.Value, "CustSetting_SuperPTUpd" },
+            { Level.Master.Value, "CustSetting_MasterPTUpd" },
+            { Level.Agent.Value, "CustSetting_AgentPTUpd" }
         };
 
         private static readonly Dictionary<byte, string> UpdateMemberPTSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperPTOnMemberUpd" },
-            { UserLevel.Master.Value, "CustSetting_MasterPTOnMemberUpd" },
-            { UserLevel.Agent.Value, "CustSetting_AgentPTOnMemberUpd" }
+            { Level.Super.Value, "CustSetting_SuperPTOnMemberUpd" },
+            { Level.Master.Value, "CustSetting_MasterPTOnMemberUpd" },
+            { Level.Agent.Value, "CustSetting_AgentPTOnMemberUpd" }
         };
 
         private static readonly Dictionary<byte, string> QueryPTSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperPTSelect" },
-            { UserLevel.Master.Value, "CustSetting_MasterPTSelect" },
-            { UserLevel.Agent.Value, "CustSetting_AgentPTSelect" },
-            { UserLevel.Member.Value, "CustSetting_MemberPTSelect" }
+            { Level.Super.Value, "CustSetting_SuperPTSelect" },
+            { Level.Master.Value, "CustSetting_MasterPTSelect" },
+            { Level.Agent.Value, "CustSetting_AgentPTSelect" },
+            { Level.Member.Value, "CustSetting_MemberPTSelect" }
         };
 
         private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
             SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
             {
-                { UserLevel.Super.Value, GetPTSettingItem<SuperPTItem> },
-                { UserLevel.Master.Value,  GetPTSettingItem<MasterPTItem> },
-                { UserLevel.Agent.Value,  GetPTSettingItem<AgentPTItem> }
+                { Level.Super.Value, GetPTSettingItem<SuperPTItem> },
+                { Level.Master.Value,  GetPTSettingItem<MasterPTItem> },
+                { Level.Agent.Value,  GetPTSettingItem<AgentPTItem> }
             };
 
         private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
            MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
             {
-                { UserLevel.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
-                { UserLevel.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },
-                { UserLevel.Agent.Value,  GetPTSettingItem<AgentPTOnMemberItem> }
+                { Level.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
+                { Level.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },
+                { Level.Agent.Value,  GetPTSettingItem<AgentPTOnMemberItem> }
             };
 
         private static IEnumerable<T> GetPTSettingItem<T>(ObjectDb objectDb, Hashtable parameters)
@@ -76,7 +76,7 @@
             {
                 var parameters = CreateQueryPTSettingSpParam(querySettingParam);
 
-                var queryFunction = (querySettingParam.CustomerLevel == UserLevel.Member)
+                var queryFunction = (querySettingParam.CustomerLevel == Level.Member)
                    ? MemberQueryPTSettingItemFuncs[querySettingParam.UplineLevel.Value]
                    : SmaQueryPTSettingItemFuncs[querySettingParam.CustomerLevel.Value];
                 
@@ -91,7 +91,7 @@
             return settingType;
         }
 
-        private string CreateQueryPTSPSettingKey(UserLevel customerLevel, byte settingTypeId, byte settingTemplateId, byte productId)
+        private string CreateQueryPTSPSettingKey(Level customerLevel, byte settingTypeId, byte settingTemplateId, byte productId)
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
@@ -102,8 +102,8 @@
         {
             var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, PTConstants.SettingTypeId);
 
-            if (querySettingParam.CustomerLevel == UserLevel.Agent
-                || querySettingParam.UplineLevel == UserLevel.Master)
+            if (querySettingParam.CustomerLevel == Level.Agent
+                || querySettingParam.UplineLevel == Level.Master)
             {
                 parameters.Add("disableautompt", null);
             }
@@ -114,10 +114,10 @@
         public virtual IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
             byte productId,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, settingType);
             var settingKey = GetSettingKeyForUpdating(customerLevel, uplineLevel, productId);
@@ -140,9 +140,9 @@
             return param;
         }
 
-        private string GetSettingKeyForUpdating(UserLevel customerLevel, UserLevel uplineLevel, byte productId)
+        private string GetSettingKeyForUpdating(Level customerLevel, Level uplineLevel, byte productId)
         {
-            var updateSettingKey = (customerLevel == UserLevel.Member)
+            var updateSettingKey = (customerLevel == Level.Member)
                 ? UpdateMemberPTSpKeys[uplineLevel.Value]
                 : UpdateSmaPTSpKeys[customerLevel.Value];
 

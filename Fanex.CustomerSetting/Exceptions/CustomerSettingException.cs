@@ -124,21 +124,21 @@
             }
         }
 
-        public void SetCustomerInfo(int customerId, UserLevel customerLevel, UserLevel uplineLevel = null)
+        public void SetCustomerInfo(int customerId, Level customerLevel, Level uplineLevel = null)
         {
             CustomerId = customerId;
 
             SetCustomerLevelAndUplineLevel(customerLevel, uplineLevel);
         }
 
-        public void SetCustomerInfo(string customerIds, UserLevel customerLevel, UserLevel uplineLevel = null)
+        public void SetCustomerInfo(string customerIds, Level customerLevel, Level uplineLevel = null)
         {
             CustomerIds = customerIds;
 
             SetCustomerLevelAndUplineLevel(customerLevel, uplineLevel);
         }
 
-        private void SetCustomerLevelAndUplineLevel(UserLevel customerLevel, UserLevel uplineLevel)
+        private void SetCustomerLevelAndUplineLevel(Level customerLevel, Level uplineLevel)
         {
             CustomerLevel = customerLevel.DisplayName;
 

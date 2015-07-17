@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.IntegrationTests.Products.ProductBase;
     using NUnit.Framework;
 

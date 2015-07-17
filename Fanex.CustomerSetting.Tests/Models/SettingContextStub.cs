@@ -8,7 +8,7 @@
         private User _actor = new User
         {
             Id = 100,
-            Level = UserLevel.Company,
+            Level = Level.Company,
             Name = "Admin"
         };
 

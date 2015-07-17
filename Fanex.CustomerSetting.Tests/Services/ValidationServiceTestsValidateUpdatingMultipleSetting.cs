@@ -62,7 +62,7 @@
         public void ValidateUpdatingMultipleSetting_Always_CallValidateUpdatingSetting()
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, UserLevel.Member, 1, UserLevel.Agent);
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, Level.Member, 1, Level.Agent);
 
             //// Act
             _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
@@ -79,7 +79,7 @@
         public void ValidateUpdatingMultipleSetting_CustomerIsMember_AlwaysCallValidatePermissionMultiple()
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, UserLevel.Member, 1, UserLevel.Agent);
+            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, Level.Member, 1, Level.Agent);
 
             AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
             AssumeValidateUpdatingSettingIsSuccessful();

@@ -30,7 +30,7 @@
 
         protected void MasterViewsMemberSetting(
             int actorId,
-            byte actorLevelValue,
+            Level actorLevel,
             int memberId = SettingInfo.MemberId,
             string memberName = SettingInfo.MemberUserName,
             byte productId = Product255Constants.ProductId,
@@ -38,11 +38,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Master);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Master);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -50,7 +50,7 @@
             //// Assert
             Assert.AreEqual(memberName, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(memberId, memberSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(Level.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(productId, memberSetting.ProductId);
             Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes - 1, memberSetting.SettingTypes.Count());
@@ -84,8 +84,8 @@
             int memberId = SettingInfo.MemberId)
         {
             //// Update two time for auto pt and not auto pt
-            MasterUpdatesPTOnMember(actorId, UserLevel.Master, memberId, productId, true);
-            MasterUpdatesPTOnMember(actorId, UserLevel.Master, memberId, productId, false);
+            MasterUpdatesPTOnMember(actorId, Level.Master, memberId, productId, true);
+            MasterUpdatesPTOnMember(actorId, Level.Master, memberId, productId, false);
         }
 
         protected void CompanyUpdatesMasterPTOnMember(
@@ -94,13 +94,13 @@
             int memberId = SettingInfo.MemberId)
         {
             //// Update two time for auto pt and not auto pt
-            MasterUpdatesPTOnMember(actorId, UserLevel.Company, memberId, productId, true);
-            MasterUpdatesPTOnMember(actorId, UserLevel.Company, memberId, productId, false);
+            MasterUpdatesPTOnMember(actorId, Level.Company, memberId, productId, true);
+            MasterUpdatesPTOnMember(actorId, Level.Company, memberId, productId, false);
         }
 
         private void MasterUpdatesPTOnMember(
             int actorId,
-            UserLevel actorLevel,
+            Level actorLevel,
             int memberId,
             byte productId,
             bool isDisbaledProductStatus)
@@ -110,7 +110,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Master);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
@@ -171,11 +171,11 @@
             memberNames = memberNames ?? SettingInfo.MemberNames;
 
             //// Arrange
-            var actor = new User { Id = masterId, Level = UserLevel.Master, Name = "ActorName" };
+            var actor = new User { Id = masterId, Level = Level.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberIds.First(), UserLevel.Member, productId, UserLevel.Master);
+            var querySettingParam = new QuerySettingParam(memberIds.First(), Level.Member, productId, Level.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;

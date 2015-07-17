@@ -24,7 +24,7 @@
             MinPT = pTMatrixDto.MinPT;
         }
 
-        public UserLevel CustomerLevel { get; set; }
+        public Level CustomerLevel { get; set; }
 
         public byte? SuperPT { get; set; }
 

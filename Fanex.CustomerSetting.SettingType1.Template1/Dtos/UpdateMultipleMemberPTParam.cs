@@ -14,6 +14,6 @@
 
         public string PTXml { get; set; }
 
-        public UserLevel UplineLevel { get; set; }
+        public Level UplineLevel { get; set; }
     }
 }

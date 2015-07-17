@@ -30,7 +30,7 @@
 
         protected void SuperViewsMemberSetting(
             int actorId,
-            byte actorLevelValue,
+            Level actorLevel,
             int memberId = SettingInfo.MemberId,
             string memberName = SettingInfo.MemberUserName,
             byte productId = Product255Constants.ProductId,
@@ -38,11 +38,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Super);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Super);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -50,7 +50,7 @@
             //// Assert
             Assert.AreEqual(memberName, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(memberId, memberSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(Level.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(productId, memberSetting.ProductId);
             Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes - 1, memberSetting.SettingTypes.Count());
@@ -84,8 +84,8 @@
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            SuperUpdatesPTOnMember(actorId, UserLevel.Super, memberId, productId, true);
-            SuperUpdatesPTOnMember(actorId, UserLevel.Super, memberId, productId, false);
+            SuperUpdatesPTOnMember(actorId, Level.Super, memberId, productId, true);
+            SuperUpdatesPTOnMember(actorId, Level.Super, memberId, productId, false);
         }
 
         protected void CompanyUpdatesSuperPTOnMember(
@@ -93,13 +93,13 @@
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            SuperUpdatesPTOnMember(actorId, UserLevel.Company, memberId, productId, true);
-            SuperUpdatesPTOnMember(actorId, UserLevel.Company, memberId, productId, false);
+            SuperUpdatesPTOnMember(actorId, Level.Company, memberId, productId, true);
+            SuperUpdatesPTOnMember(actorId, Level.Company, memberId, productId, false);
         }
 
         private void SuperUpdatesPTOnMember(
             int actorId,
-            UserLevel actorLevel,
+            Level actorLevel,
             int memberId,
             byte productId,
             bool isDisabledProductStatus)
@@ -110,7 +110,7 @@
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Super);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Super);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;
@@ -168,12 +168,12 @@
             memberNames = memberNames ?? SettingInfo.MemberNames;
 
             //// Arrange
-            var actor = new User { Id = superId, Level = UserLevel.Super, Name = "ActorName" };
+            var actor = new User { Id = superId, Level = Level.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(memberIds.First(), UserLevel.Member, productId, UserLevel.Super);
+            var querySettingParam = new QuerySettingParam(memberIds.First(), Level.Member, productId, Level.Super);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTOnMemberItem;

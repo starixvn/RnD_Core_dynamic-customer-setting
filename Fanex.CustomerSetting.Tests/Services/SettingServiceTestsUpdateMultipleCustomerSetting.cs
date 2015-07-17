@@ -100,10 +100,10 @@
             _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
-                Arg.Any<UserLevel>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
+                Arg.Any<Level>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
 
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
@@ -144,17 +144,17 @@
             settingTypePreTasksStub.PreUpdateCustomerSettingType(
                Arg.Any<ISettingContext>(),
                Arg.Any<int>(),
-               Arg.Any<UserLevel>(),
+               Arg.Any<Level>(),
                Arg.Any<SettingType>(),
-               Arg.Any<UserLevel>())
+               Arg.Any<Level>())
                .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
 
             settingTypePreTasksStub.PreUpdateMultipleCustomersSettingType(
                     Arg.Any<ISettingContext>(),
                     Arg.Any<IEnumerable<int>>(),
-                    Arg.Any<UserLevel>(),
+                    Arg.Any<Level>(),
                     Arg.Any<SettingType>(),
-                    Arg.Any<UserLevel>()).Returns(
+                    Arg.Any<Level>()).Returns(
                     new PreUpdateMultipleCustomersSettingTypeResult
                     {
                         Result = new UpdatingSettingResult(isTaskSuccessful ? Result.Success : Result.DataError),
@@ -173,9 +173,9 @@
             settingTypePostTasksStub.PostUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingResult>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
 
@@ -184,9 +184,9 @@
             settingTypePostTasksStub.PostUpdateMultipleCustomersSettingType(
                     Arg.Any<ISettingContext>(),
                     Arg.Any<IEnumerable<int>>(),
-                    Arg.Any<UserLevel>(),
+                    Arg.Any<Level>(),
                     Arg.Any<SettingType>(),
-                    Arg.Any<UserLevel>(),
+                    Arg.Any<Level>(),
                     Arg.Any<UpdatingSettingResult>()).Returns(dummyUpdatingResult);
 
             _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksStub);
@@ -277,10 +277,10 @@
             _settingDataAccess.Received(numOfCallingToUpdateCustomerSettingType).UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
-                Arg.Any<UserLevel>());
+                Arg.Any<Level>());
         }
 
         [Test]

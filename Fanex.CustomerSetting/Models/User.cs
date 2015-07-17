@@ -9,7 +9,7 @@
         private int _id;
         private string _name;
         private int _subAccountId;
-        private UserLevel _userLevel;
+        private Level _userLevel;
 
         public new int Id
         {
@@ -65,7 +65,7 @@
             }
         }
 
-        public UserLevel Level
+        public Level Level
         {
             get
             {
@@ -79,7 +79,7 @@
                     throw new ArgumentNullException("value");
                 }
 
-                if (value == UserLevel.Member)
+                if (value == Level.Member)
                 {
                     throw new ArgumentOutOfRangeException("value", "Cannot set level Member to user");
                 }
@@ -92,7 +92,7 @@
         {
             get
             {
-                return this.Level == UserLevel.Company;
+                return this.Level == Level.Company;
             }
         }
 

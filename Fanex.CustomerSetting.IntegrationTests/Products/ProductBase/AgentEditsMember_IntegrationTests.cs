@@ -31,7 +31,7 @@
 
         protected void AgentViewsMemberSetting(
             int actorId,
-            byte actorLevelValue,
+            Level actorLevel,
             int memberId = SettingInfo.MemberId,
             string memberUsername = SettingInfo.MemberUserName,
             byte productId = Product255Constants.ProductId,
@@ -39,11 +39,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Agent);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Agent);
 
             //// Act
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -51,7 +51,7 @@
             //// Assert
             Assert.AreEqual(memberUsername, memberSetting.CustomerInfo.UserName);
             Assert.AreEqual(memberId, memberSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Member, memberSetting.CustomerLevel);
+            Assert.AreEqual(Level.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(productId, memberSetting.ProductId);
             Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, memberSetting.SettingTypes.Count());
@@ -80,8 +80,8 @@
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            AgentUpdatesMemberSetting(actorId, UserLevel.Agent, memberId, productId, true);
-            AgentUpdatesMemberSetting(actorId, UserLevel.Agent, memberId, productId, false);
+            AgentUpdatesMemberSetting(actorId, Level.Agent, memberId, productId, true);
+            AgentUpdatesMemberSetting(actorId, Level.Agent, memberId, productId, false);
         }
 
         protected void CompanyUpdatesMemberSettingByAgentView(
@@ -89,13 +89,13 @@
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            AgentUpdatesMemberSetting(actorId, UserLevel.Company, memberId, productId, true);
-            AgentUpdatesMemberSetting(actorId, UserLevel.Company, memberId, productId, false);
+            AgentUpdatesMemberSetting(actorId, Level.Company, memberId, productId, true);
+            AgentUpdatesMemberSetting(actorId, Level.Company, memberId, productId, false);
         }
 
         private void AgentUpdatesMemberSetting(
             int actorId,
-            UserLevel actorLevel,
+            Level actorLevel,
             int memberId,
             byte productId,
             bool isDisabledProductStatus)
@@ -105,7 +105,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(memberId, UserLevel.Member, productId, UserLevel.Agent);
+            var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
@@ -156,12 +156,12 @@
             memberNames = memberNames ?? SettingInfo.MemberNames;
 
             //// Arrange
-            var actor = new User { Id = agentId, Level = UserLevel.Agent, Name = "ActorName" };
+            var actor = new User { Id = agentId, Level = Level.Agent, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(memberIds.First(), UserLevel.Member, productId, UserLevel.Agent);
+            var querySettingParam = new QuerySettingParam(memberIds.First(), Level.Member, productId, Level.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;

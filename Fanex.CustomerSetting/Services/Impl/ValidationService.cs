@@ -98,7 +98,7 @@
             }
         }
 
-        private void CheckActorAndCustomerLevelsConstrain(User actor, UserLevel customerLevel)
+        private void CheckActorAndCustomerLevelsConstrain(User actor, Level customerLevel)
         {
             var isValidConstrain = actor.IsCompany
                 || customerLevel.IsMemberLevel
@@ -110,7 +110,7 @@
             }
         }
 
-        private void CheckActorLevelAndCustomerUplineLevelConstrain(User actor, UserLevel customerLevel, UserLevel uplineLevel)
+        private void CheckActorLevelAndCustomerUplineLevelConstrain(User actor, Level customerLevel, Level uplineLevel)
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
             if (actor.IsNotCompany
@@ -140,7 +140,7 @@
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="customerLevel"></param>
-        private void CheckCustomerLevel(int customerId, UserLevel customerLevel)
+        private void CheckCustomerLevel(int customerId, Level customerLevel)
         {
             var actualCustomerLevel = _dynamicRepository.Get<byte>(new CustomerLevelQueryCriteria
             {
@@ -153,7 +153,7 @@
             }
         }
 
-        private void LogQuerySettingError(int customerId, UserLevel customerLevel, UserLevel uplineLevel, CustomerSettingException ex)
+        private void LogQuerySettingError(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Query Setting", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
@@ -204,7 +204,7 @@
             }
         }
 
-        private void CheckQueryPermission(int customerId, UserLevel customerLevel, byte productId, UserLevel uplineLevel)
+        private void CheckQueryPermission(int customerId, Level customerLevel, byte productId, Level uplineLevel)
         {
             var querySettingParam = new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
             var result = ValidateQuerySetting(querySettingParam);
@@ -306,7 +306,7 @@
             }
         }
 
-        private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, UserLevel customerLevel)
+        private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, Level customerLevel)
         {
             if (customerLevel.IsMemberLevel)
             {

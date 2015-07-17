@@ -9,6 +9,6 @@
     {
         IEnumerable<int> GetGroupedMembers(IEnumerable<int> memberIds);
 
-        UpdatingSettingResult UpdateGroupedMembersPT(ISettingContext settingContext, IEnumerable<int> groupedMemberIds, UserLevel uplineLevel, SettingType settingType);
+        UpdatingSettingResult UpdateGroupedMembersPT(ISettingContext settingContext, IEnumerable<int> groupedMemberIds, Level uplineLevel, SettingType settingType);
     }
 }

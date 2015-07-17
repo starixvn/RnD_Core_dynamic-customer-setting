@@ -32,7 +32,7 @@
         public UpdatingSettingResult UpdateGroupedMembersPT(
             ISettingContext settingContext,
             IEnumerable<int> groupedMemberIds,
-            UserLevel uplineLevel,
+            Level uplineLevel,
             SettingType settingType)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");

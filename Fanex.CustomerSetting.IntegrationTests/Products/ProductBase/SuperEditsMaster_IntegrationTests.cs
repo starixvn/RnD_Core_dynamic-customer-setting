@@ -32,7 +32,7 @@
 
         protected void ViewingMasterSetting(
             int actorId, 
-            byte actorLevelValue,
+            Level actorLevel,
             int masterId = SettingInfo.MasterId,
             string masterUsername = SettingInfo.MasterUserName,
             byte productId = Product255Constants.ProductId,
@@ -40,11 +40,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(masterId, UserLevel.Master, productId);
+            var querySettingParam = new QuerySettingParam(masterId, Level.Master, productId);
 
             //// Act
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -52,7 +52,7 @@
             //// Assert
             Assert.AreEqual(masterUsername, masterSetting.CustomerInfo.UserName);
             Assert.AreEqual(masterId, masterSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Master, masterSetting.CustomerLevel);
+            Assert.AreEqual(Level.Master, masterSetting.CustomerLevel);
             Assert.AreEqual(productId, masterSetting.ProductId);
             Assert.AreEqual(productName, masterSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, masterSetting.SettingTypes.Count());
@@ -86,8 +86,8 @@
             byte productId = Product255Constants.ProductId,
             int masterId = SettingInfo.MasterId)
         {
-            UpdatingMasterSetting(actorId, UserLevel.Company, masterId, productId, true);
-            UpdatingMasterSetting(actorId, UserLevel.Company, masterId, productId, false);
+            UpdatingMasterSetting(actorId, Level.Company, masterId, productId, true);
+            UpdatingMasterSetting(actorId, Level.Company, masterId, productId, false);
         }
 
         protected void SuperUpdatesMasterSetting(
@@ -95,13 +95,13 @@
             byte productId = Product255Constants.ProductId,
             int masterId = SettingInfo.MasterId)
         {
-            UpdatingMasterSetting(actorId, UserLevel.Super, masterId, productId, true);
-            UpdatingMasterSetting(actorId, UserLevel.Super, masterId, productId, false);
+            UpdatingMasterSetting(actorId, Level.Super, masterId, productId, true);
+            UpdatingMasterSetting(actorId, Level.Super, masterId, productId, false);
         }
 
         private void UpdatingMasterSetting(
             int actorId, 
-            UserLevel actorLevel,
+            Level actorLevel,
             int masterId,            
             byte productId,
             bool isDisbaledProductStatus)
@@ -111,7 +111,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(masterId, UserLevel.Master, productId);
+            var querySettingParam = new QuerySettingParam(masterId, Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
@@ -182,10 +182,10 @@
             masterIds = masterIds ?? SettingInfo.MasterIds;
             masterNames = masterNames ?? SettingInfo.MasterNames;
 
-            var actor = new User { Id = superId, Level = UserLevel.Super, Name = "ActorName" };
+            var actor = new User { Id = superId, Level = Level.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(masterIds.First(), UserLevel.Master, productId);
+            var querySettingParam = new QuerySettingParam(masterIds.First(), Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;

@@ -22,10 +22,10 @@
     {
         private static readonly Dictionary<byte, string> QueryBetLimitSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperBetLimitSelect" },
-            { UserLevel.Master.Value, "CustSetting_MasterBetLimitSelect" },
-            { UserLevel.Agent.Value, "CustSetting_AgentBetLimitSelect" },
-            { UserLevel.Member.Value, "CustSetting_MemberBetLimitSelect" }
+            { Level.Super.Value, "CustSetting_SuperBetLimitSelect" },
+            { Level.Master.Value, "CustSetting_MasterBetLimitSelect" },
+            { Level.Agent.Value, "CustSetting_AgentBetLimitSelect" },
+            { Level.Member.Value, "CustSetting_MemberBetLimitSelect" }
         };
 
         public SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
@@ -55,7 +55,7 @@
         }
 
         private string CreateQueryBetLimitSPSettingKey(
-            UserLevel customerLevel,
+            Level customerLevel,
             byte settingTypeId,
             byte settingTemplateId,
             byte productId)
@@ -68,10 +68,10 @@
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
             byte productId,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);

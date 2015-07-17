@@ -36,9 +36,9 @@
         public override SettingResult PostUpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel,
+            Level uplineLevel,
             SettingResult result)
         {
             if (settingType == null)

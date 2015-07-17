@@ -116,10 +116,10 @@
             _settingDataAccess.UpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
                 Arg.Any<byte>(),
-                Arg.Any<UserLevel>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
+                Arg.Any<Level>()).Returns(isReturnSuccessfulResult ? Result.Success : Result.DataError);
             _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
         }
 
@@ -152,9 +152,9 @@
             settingPreTasksStub.PreUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
-                Arg.Any<UserLevel>())
+                Arg.Any<Level>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
             _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingPreTasksStub);
         }
@@ -165,9 +165,9 @@
             settingPostTasksStub.PostUpdateCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 Arg.Any<int>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingType>(),
-                Arg.Any<UserLevel>(),
+                Arg.Any<Level>(),
                 Arg.Any<SettingResult>())
                 .Returns(new SettingResult(isTaskSuccessful ? Result.Success : Result.DataError));
             _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingPostTasksStub);

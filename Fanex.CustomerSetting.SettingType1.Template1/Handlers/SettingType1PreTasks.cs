@@ -26,11 +26,11 @@
         public override PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             ISettingContext settingContext,
             IEnumerable<int> customerIds,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
-            if (customerLevel == UserLevel.Member)
+            if (customerLevel == Level.Member)
             {
                 return UpdatePTForGroupedMembers(settingContext, customerIds, settingType, uplineLevel);
             }
@@ -47,7 +47,7 @@
             ISettingContext settingContext,
             IEnumerable<int> customerIds,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var groupedMemberIds = _memberGroupService.GetGroupedMembers(customerIds);
             var ungroupedMemberIds = GetUnGroupedMemberIds(customerIds, groupedMemberIds);
@@ -62,7 +62,7 @@
         private UpdatingSettingResult UpdateGroupedMembers(
             ISettingContext settingContext,
             IEnumerable<int> memberIds,
-            UserLevel uplineLevel,
+            Level uplineLevel,
             SettingType settingType)
         {
             if (!memberIds.Any())

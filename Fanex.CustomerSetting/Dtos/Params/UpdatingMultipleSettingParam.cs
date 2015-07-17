@@ -15,7 +15,7 @@
             ISetting setting,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames,
-            UserLevel uplineLevel)
+            Level uplineLevel)
             : base(setting, uplineLevel)
         {
             CustomerIds = customerIds;

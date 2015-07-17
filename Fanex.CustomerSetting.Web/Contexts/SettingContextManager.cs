@@ -35,7 +35,7 @@
         public static void Init(
             int loginUserId,
             string loginUserName,
-            UserLevel loginUserLevel,
+            Level loginUserLevel,
             int subAccountId = 0)
         {
             ValidateSubAccountWithAgencySystem(subAccountId);

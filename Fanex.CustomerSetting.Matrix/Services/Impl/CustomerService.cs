@@ -65,7 +65,7 @@
                 Id = customerLineDto.SuperID.GetValueOrDefault(0),
                 Name = customerLineDto.SuperName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = UserLevel.Super
+                CustomerLevel = Level.Super
             };
 
             return super;
@@ -78,7 +78,7 @@
                 Id = customerLineDto.MasterID.GetValueOrDefault(0),
                 Name = customerLineDto.MasterName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = UserLevel.Master
+                CustomerLevel = Level.Master
             };
 
             return master;
@@ -91,7 +91,7 @@
                 Id = customerLineDto.AgentID.GetValueOrDefault(0),
                 Name = customerLineDto.AgentName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = UserLevel.Agent
+                CustomerLevel = Level.Agent
             };
 
             return agent;

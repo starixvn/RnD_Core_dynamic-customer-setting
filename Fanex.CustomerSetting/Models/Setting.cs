@@ -9,13 +9,13 @@
     public class Setting : ISetting
     {
         private int _customerId;
-        private UserLevel _customerLevel;
+        private Level _customerLevel;
         private byte _productId;
         private IEnumerable<SettingType> _settingType;
 
         public Setting(
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             byte productId,
             IEnumerable<SettingType> settingTypes)
         {
@@ -27,7 +27,7 @@
 
         public Setting(
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             CustomerInfo customerInfo,
             byte productId,
             string productName,
@@ -76,7 +76,7 @@
             }
         }
 
-        public UserLevel CustomerLevel
+        public Level CustomerLevel
         {
             get
             {
@@ -90,7 +90,7 @@
                     throw new ArgumentNullException("value");
                 }
 
-                if (value < UserLevel.Member || value > UserLevel.Super)
+                if (value < Level.Member || value > Level.Super)
                 {
                     throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }

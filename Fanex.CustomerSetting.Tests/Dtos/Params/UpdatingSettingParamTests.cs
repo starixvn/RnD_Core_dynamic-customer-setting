@@ -10,10 +10,10 @@
     [TestFixture]
     public class UpdatingSettingParamTests
     {
-        private object[] dataSourceSMALevels = { UserLevel.Super, UserLevel.Master, UserLevel.Agent };
+        private object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 
         [Test, TestCaseSource("dataSourceSMALevels")]
-        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(UserLevel customerLevel)
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)
         {
             var setting = new Setting(
                 customerId: 1,
@@ -33,7 +33,7 @@
         {
             var setting = new Setting(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
                 settingTypes: new List<SettingType>());
 

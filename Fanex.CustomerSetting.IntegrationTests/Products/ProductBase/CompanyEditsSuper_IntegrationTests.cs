@@ -39,11 +39,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = companyId, Level = UserLevel.Company, Name = "Company Name" };
+            var actor = new User { Id = companyId, Level = Level.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, productId);
+            var querySettingParam = new QuerySettingParam(SuperId, Level.Super, productId);
 
             //// Act
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -51,7 +51,7 @@
             //// Assert
             Assert.AreEqual(SuperUserName, superSetting.CustomerInfo.UserName);
             Assert.AreEqual(SuperId, superSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Super, superSetting.CustomerLevel);
+            Assert.AreEqual(Level.Super, superSetting.CustomerLevel);
             Assert.AreEqual(productId, superSetting.ProductId);
             Assert.AreEqual(productName, superSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, superSetting.SettingTypes.Count());
@@ -85,12 +85,12 @@
             byte productId = Product255Constants.ProductId)
         {
             //// Arrange
-            var actor = new User { Id = companyId, Level = UserLevel.Company, Name = "Company Name" };
+            var actor = new User { Id = companyId, Level = Level.Company, Name = "Company Name" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
 
-            var querySettingParam = new QuerySettingParam(SuperId, UserLevel.Super, productId, null);
+            var querySettingParam = new QuerySettingParam(SuperId, Level.Super, productId, null);
 
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;

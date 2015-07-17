@@ -66,7 +66,7 @@
             var actualResult = SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
                 1,
-                UserLevel.Agent,
+                Level.Agent,
                 new SettingType { SettingLevel = 1 },
                 null,
                 successResult);
@@ -88,7 +88,7 @@
             SettingPostTasks.PostUpdateCustomerSettingType(
                 SettingContext,
                 1,
-                UserLevel.Agent,
+                Level.Agent,
                 new SettingType
                 {
                     SettingLevel = settingLevel

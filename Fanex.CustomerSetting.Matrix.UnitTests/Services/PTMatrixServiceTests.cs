@@ -224,9 +224,9 @@
             return new List<PTItemMatrixDto>
             {
                 GetPTItemMatrixDtoDummy(true),
-                GetPTItemMatrixDtoDummy(true, 1, 1, UserLevel.Master, 10),
+                GetPTItemMatrixDtoDummy(true, 1, 1, Level.Master, 10),
                 GetPTItemMatrixDtoDummy(false),
-                GetPTItemMatrixDtoDummy(true, 2, 2, UserLevel.Master, 10)
+                GetPTItemMatrixDtoDummy(true, 2, 2, Level.Master, 10)
             };
         }
 
@@ -234,7 +234,7 @@
             bool isLive = true,
             short sportType = 1,
             short betType = 1,
-            UserLevel customerLevel = null,
+            Level customerLevel = null,
             byte superPT = 10,
             byte autoSuperPT = 10,
             bool isAutoSuperPT = false,
@@ -244,7 +244,7 @@
             byte agentPT = 10,
             byte minPT = 2)
         {
-            customerLevel = customerLevel ?? UserLevel.Super;
+            customerLevel = customerLevel ?? Level.Super;
 
             return new PTItemMatrixDto
             {

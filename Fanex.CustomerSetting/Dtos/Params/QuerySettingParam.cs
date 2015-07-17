@@ -7,15 +7,15 @@
     public class QuerySettingParam
     {
         private int _customerId;
-        private UserLevel _customerLevel;
+        private Level _customerLevel;
         private byte _productId;
-        private UserLevel _uplineLevel;
+        private Level _uplineLevel;
 
         public QuerySettingParam(
             int customerId, 
-            UserLevel customerLevel, 
+            Level customerLevel, 
             byte productId, 
-            UserLevel uplineLevel = null)
+            Level uplineLevel = null)
         {
             CustomerId = customerId;
             CustomerLevel = customerLevel;
@@ -41,7 +41,7 @@
             }
         }
 
-        public UserLevel CustomerLevel
+        public Level CustomerLevel
         {
             get
             {
@@ -50,8 +50,7 @@
 
             set
             {
-                var customerLevelValue = value.Value;
-                if (customerLevelValue < Level.Member || customerLevelValue > Level.Super)
+                if (value < Level.Member || value > Level.Super)
                 {
                     throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
                 }
@@ -78,7 +77,7 @@
             }
         }
 
-        public UserLevel UplineLevel
+        public Level UplineLevel
         {
             get
             {
@@ -89,21 +88,20 @@
             {
                 if (value != null)
                 {
-                    byte uplineLevelValue = (byte)value.Value;
-                    if (uplineLevelValue < Level.Agent || uplineLevelValue > Level.Super)
+                    if (value < Level.Agent || value > Level.Super)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
                     
-                    //// If current context is editting super/master/agent then Upline level should be null.
-                    if (_customerLevel != UserLevel.Member)
+                    // If current context is editting super/master/agent then Upline level should be null.
+                    if (_customerLevel.IsNotMemberLevel)
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-                else if (_customerLevel == UserLevel.Member)
+                else if (_customerLevel.IsMemberLevel)
                 {
-                    //// When editting member, upline level should have value
+                    // When editting member, upline level should have value
                     throw new ArgumentNullException("value", "Upline cannot be null when getting member setting.");
                 }
 

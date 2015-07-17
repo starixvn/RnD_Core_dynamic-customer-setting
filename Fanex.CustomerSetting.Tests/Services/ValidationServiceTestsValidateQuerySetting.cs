@@ -65,16 +65,16 @@
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(true);
         }
 
-        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(UserLevel customerLevel)
+        private void AssumeCustomerLevelIsEqualWithValueStoreInDatabase(Level customerLevel)
         {
             _dynamicRepository.Get<byte>(Arg.Any<CustomerLevelQueryCriteria>()).Returns(customerLevel.Value);
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorHasPermission_Cases")]
         public void ValidateQuerySetting_ActorHasPermission_ReturnSuccessResult(
-            UserLevel userLevel,
-            UserLevel customerLevel,
-            UserLevel uplineLevel)
+            Level userLevel,
+            Level customerLevel,
+            Level uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
@@ -98,21 +98,21 @@
 
         private static object[] ValidateQuerySetting_ActorHasPermission_Cases =
         {
-            new object[] {UserLevel.Company, UserLevel.Super, null},
-            new object[] {UserLevel.Company, UserLevel.Master, null},
-            new object[] {UserLevel.Company, UserLevel.Agent, null},
-            new object[] {UserLevel.Company, UserLevel.Member, UserLevel.Agent},
-            new object[] {UserLevel.Super, UserLevel.Master, null},
-            new object[] {UserLevel.Super, UserLevel.Member, UserLevel.Super},
-            new object[] {UserLevel.Master, UserLevel.Agent, null},
-            new object[] {UserLevel.Master, UserLevel.Member, UserLevel.Master},
-            new object[] {UserLevel.Agent, UserLevel.Member, UserLevel.Agent}
+            new object[] {Level.Company, Level.Super, null},
+            new object[] {Level.Company, Level.Master, null},
+            new object[] {Level.Company, Level.Agent, null},
+            new object[] {Level.Company, Level.Member, Level.Agent},
+            new object[] {Level.Super, Level.Master, null},
+            new object[] {Level.Super, Level.Member, Level.Super},
+            new object[] {Level.Master, Level.Agent, null},
+            new object[] {Level.Master, Level.Member, Level.Master},
+            new object[] {Level.Agent, Level.Member, Level.Agent}
         };
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorDoesNotHavePermission_Cases")]
         public void ValidateQuerySetting_ActorDoesNotHavePermission_ReturnFailedResult(
-            UserLevel userLevel,
-            UserLevel customerLevel)
+            Level userLevel,
+            Level customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
@@ -135,13 +135,13 @@
 
         private static object[] ValidateQuerySetting_ActorDoesNotHavePermission_Cases =
         {
-            new object[] {UserLevel.Super, UserLevel.Super},
-            new object[] {UserLevel.Super, UserLevel.Agent},
-            new object[] {UserLevel.Master, UserLevel.Super},
-            new object[] {UserLevel.Master, UserLevel.Master},
-            new object[] {UserLevel.Agent, UserLevel.Super},
-            new object[] {UserLevel.Agent, UserLevel.Master},
-            new object[] {UserLevel.Agent, UserLevel.Agent}
+            new object[] {Level.Super, Level.Super},
+            new object[] {Level.Super, Level.Agent},
+            new object[] {Level.Master, Level.Super},
+            new object[] {Level.Master, Level.Master},
+            new object[] {Level.Agent, Level.Super},
+            new object[] {Level.Agent, Level.Master},
+            new object[] {Level.Agent, Level.Agent}
         };
 
         [Test]
@@ -150,11 +150,11 @@
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
-                uplineLevel: UserLevel.Agent);
+                uplineLevel: Level.Agent);
 
-            _settingContext.Actor.Level = UserLevel.Agent;
+            _settingContext.Actor.Level = Level.Agent;
 
             //// Act
             _validationService.ValidateQuerySetting(queryParam);
@@ -169,11 +169,11 @@
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
-                uplineLevel: UserLevel.Agent);
+                uplineLevel: Level.Agent);
 
-            _settingContext.Actor.Level = UserLevel.Agent;
+            _settingContext.Actor.Level = Level.Agent;
             _settingContext.Actor.Name = "ActorName";
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(false);
 
@@ -191,10 +191,10 @@
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
-                uplineLevel: UserLevel.Agent);
-            _settingContext.Actor.Level = UserLevel.Agent;
+                uplineLevel: Level.Agent);
+            _settingContext.Actor.Level = Level.Agent;
 
             AssumeActorStatusIsEnabled();
 
@@ -207,20 +207,20 @@
 
         private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases =
         {
-            new object[] {UserLevel.Super, UserLevel.Super},
-            new object[] {UserLevel.Master, UserLevel.Master},
-            new object[] {UserLevel.Agent, UserLevel.Agent}
+            new object[] {Level.Super, Level.Super},
+            new object[] {Level.Master, Level.Master},
+            new object[] {Level.Agent, Level.Agent}
         };
 
         [Test, TestCaseSource("ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases")]
         public void ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn(
-            UserLevel actorLevel,
-            UserLevel uplineLevel)
+            Level actorLevel,
+            Level uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
                 uplineLevel: uplineLevel);
             _settingContext.Actor.Level = actorLevel;
@@ -241,10 +241,10 @@
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
-                uplineLevel: UserLevel.Agent);
-            _settingContext.Actor.Level = UserLevel.Company;
+                uplineLevel: Level.Agent);
+            _settingContext.Actor.Level = Level.Company;
 
             AssumeActorStatusIsEnabled();
             AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
@@ -258,13 +258,13 @@
 
         [Test, TestCaseSource("ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]
         public void ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
-            UserLevel actorLevel,
-            UserLevel uplineLevel)
+            Level actorLevel,
+            Level uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
                 uplineLevel: uplineLevel);
             _settingContext.Actor.Level = actorLevel;
@@ -282,20 +282,20 @@
 
         private static object[] ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
         {
-            new object[] {UserLevel.Super, UserLevel.Master},
-            new object[] {UserLevel.Master, UserLevel.Agent},
-            new object[] {UserLevel.Agent, UserLevel.Super}
+            new object[] {Level.Super, Level.Master},
+            new object[] {Level.Master, Level.Agent},
+            new object[] {Level.Agent, Level.Super}
         };
 
         [Test, TestCaseSource("ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases")]
         public void ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_ReturnSuccessResult(
-            UserLevel actorLevel,
-            UserLevel uplineLevel)
+            Level actorLevel,
+            Level uplineLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
-                customerLevel: UserLevel.Member,
+                customerLevel: Level.Member,
                 productId: 1,
                 uplineLevel: uplineLevel);
             _settingContext.Actor.Level = actorLevel;
@@ -313,23 +313,23 @@
 
         private static object[] ValidateQuerySetting_CompanyEditMemberAndUplineLevelHasValue_Cases =
         {
-            new object[] {UserLevel.Company, UserLevel.Super},
-            new object[] {UserLevel.Company, UserLevel.Master},
-            new object[] {UserLevel.Company, UserLevel.Agent},
-             new object[] {UserLevel.Super, UserLevel.Super},
-            new object[] {UserLevel.Master, UserLevel.Master},
-            new object[] {UserLevel.Agent, UserLevel.Agent}
+            new object[] {Level.Company, Level.Super},
+            new object[] {Level.Company, Level.Master},
+            new object[] {Level.Company, Level.Agent},
+             new object[] {Level.Super, Level.Super},
+            new object[] {Level.Master, Level.Master},
+            new object[] {Level.Agent, Level.Agent}
         };
 
         [Test, TestCaseSource("ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases")]
-        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(UserLevel customerLevel)
+        public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(Level customerLevel)
         {
             //// Arrange
             QuerySettingParam queryParam = new QuerySettingParam(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
-            _settingContext.Actor.Level = UserLevel.Company;
+            _settingContext.Actor.Level = Level.Company;
 
             AssumeActorStatusIsEnabled();
             AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
@@ -342,9 +342,9 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static UserLevel[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = new UserLevel[] 
+        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = new Level[] 
         {
-            UserLevel.Super, UserLevel.Master, UserLevel.Agent
+            Level.Super, Level.Master, Level.Agent
         };
     }
 }

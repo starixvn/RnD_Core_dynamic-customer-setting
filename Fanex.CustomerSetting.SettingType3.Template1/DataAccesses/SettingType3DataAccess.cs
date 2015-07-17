@@ -22,10 +22,10 @@
     {
         private static readonly Dictionary<byte, string> QueryCommissionSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperCommissionSelect" },
-            { UserLevel.Master.Value, "CustSetting_MasterCommissionSelect" },
-            { UserLevel.Agent.Value, "CustSetting_AgentCommissionSelect" },
-            { UserLevel.Member.Value, "CustSetting_MemberCommissionSelect" }
+            { Level.Super.Value, "CustSetting_SuperCommissionSelect" },
+            { Level.Master.Value, "CustSetting_MasterCommissionSelect" },
+            { Level.Agent.Value, "CustSetting_AgentCommissionSelect" },
+            { Level.Member.Value, "CustSetting_MemberCommissionSelect" }
         };
 
         public SettingType GetCustomerSettingType(
@@ -57,7 +57,7 @@
         }
 
         private string CreateQueryCommissionSPSettingKey(
-            UserLevel customerLevel,
+            Level customerLevel,
             byte settingTypeId,
             byte settingTemplateId,
             byte productId)
@@ -70,10 +70,10 @@
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
             byte productId, 
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);

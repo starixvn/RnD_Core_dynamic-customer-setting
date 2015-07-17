@@ -22,17 +22,16 @@
     {
         private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string> 
         {
-            { UserLevel.Super.Value, "CustSetting_SuperProductStatusSelect" },
-            { UserLevel.Master.Value, "CustSetting_MasterProductStatusSelect" },
-            { UserLevel.Agent.Value, "CustSetting_AgentProductStatusSelect" },
-            { UserLevel.Member.Value, "CustSetting_MemberProductStatusSelect" }
+            { Level.Super.Value, "CustSetting_SuperProductStatusSelect" },
+            { Level.Master.Value, "CustSetting_MasterProductStatusSelect" },
+            { Level.Agent.Value, "CustSetting_AgentProductStatusSelect" },
+            { Level.Member.Value, "CustSetting_MemberProductStatusSelect" }
         };
 
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParam queryParam)
         {
-
             // Will bring this logic into service class later
             if (queryParam.UplineLevel.IsDirectUplineLevelOf(queryParam.CustomerLevel))
             {
@@ -64,7 +63,7 @@
         }
 
         private string CreateQueryProductStatusSPSettingKey(
-            UserLevel customerLevel,
+            Level customerLevel,
             byte settingTypeId,
             byte settingTemplateId,
             byte productId)
@@ -77,10 +76,10 @@
         public IResult UpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
             byte productId, 
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);

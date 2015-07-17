@@ -17,9 +17,9 @@
         public virtual SettingResult PreUpdateCustomerSettingType(
             ISettingContext settingContext,
             int customerId,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             throw new NotImplementedException("Pre-Update Customer Setting Type is not implemented");
         }
@@ -27,9 +27,9 @@
         public virtual PreUpdateMultipleCustomersSettingTypeResult PreUpdateMultipleCustomersSettingType(
             ISettingContext settingContext, 
             IEnumerable<int> customerIds,
-            UserLevel customerLevel,
+            Level customerLevel,
             SettingType settingType,
-            UserLevel uplineLevel)
+            Level uplineLevel)
         {
             throw new NotImplementedException("Pre-Update Multiple Customer Setting Type is not implemented");
         }

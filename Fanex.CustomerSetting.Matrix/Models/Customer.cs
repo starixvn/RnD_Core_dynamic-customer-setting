@@ -10,6 +10,6 @@
 
         public byte Currency { get; set; }
 
-        public UserLevel CustomerLevel { get; set; }
+        public Level CustomerLevel { get; set; }
     }
 }

@@ -31,7 +31,7 @@
 
         protected void ViewingAgentSetting(
             int actorId,
-            byte actorLevelValue,
+            Level actorLevel,
             int agentId = SettingInfo.AgentId,
             string agentName = SettingInfo.AgentUserName,
             byte productId = Product255Constants.ProductId,
@@ -39,11 +39,11 @@
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
-            var actor = new User { Id = actorId, Level = Enumeration.FromValue<UserLevel>(actorLevelValue), Name = "Actor Name" };
+            var actor = new User { Id = actorId, Level = actorLevel, Name = "Actor Name" };
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(agentId, UserLevel.Agent, productId, null);
+            var querySettingParam = new QuerySettingParam(agentId, Level.Agent, productId, null);
 
             //// Act
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -51,7 +51,7 @@
             //// Assert
             Assert.AreEqual(agentName, agentSetting.CustomerInfo.UserName);
             Assert.AreEqual(agentId, agentSetting.CustomerId);
-            Assert.AreEqual(UserLevel.Agent, agentSetting.CustomerLevel);
+            Assert.AreEqual(Level.Agent, agentSetting.CustomerLevel);
             Assert.AreEqual(productId, agentSetting.ProductId);
             Assert.AreEqual(productName, agentSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, agentSetting.SettingTypes.Count());
@@ -88,8 +88,8 @@
             byte productId = Product255Constants.ProductId,
             int agentId = SettingInfo.AgentId)
         {
-            UpdatingAgentSetting(actorId, UserLevel.Company, agentId, productId, true);
-            UpdatingAgentSetting(actorId, UserLevel.Company, agentId, productId, false);
+            UpdatingAgentSetting(actorId, Level.Company, agentId, productId, true);
+            UpdatingAgentSetting(actorId, Level.Company, agentId, productId, false);
         }
 
         protected void MasterUpdatesAgentSetting(
@@ -97,13 +97,13 @@
             byte productId = Product255Constants.ProductId,
             int agentId = SettingInfo.AgentId)
         {
-            UpdatingAgentSetting(actorId, UserLevel.Master, agentId, productId, true);
-            UpdatingAgentSetting(actorId, UserLevel.Master, agentId, productId, false);
+            UpdatingAgentSetting(actorId, Level.Master, agentId, productId, true);
+            UpdatingAgentSetting(actorId, Level.Master, agentId, productId, false);
         }
 
         private void UpdatingAgentSetting(
             int actorId,
-            UserLevel actorLevel,
+            Level actorLevel,
             int agentId,
             byte productId,
             bool isDisabledProductStatus)
@@ -113,7 +113,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(agentId, UserLevel.Agent, productId);
+            var querySettingParam = new QuerySettingParam(agentId, Level.Agent, productId);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;
@@ -190,10 +190,10 @@
             agentNames = agentNames ?? SettingInfo.AgentNames;
 
             //// Arrange
-            var actor = new User { Id = masterId, Level = UserLevel.Master, Name = "ActorName" };
+            var actor = new User { Id = masterId, Level = Level.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(agentIds.First(), UserLevel.Agent, productId, null);
+            var querySettingParam = new QuerySettingParam(agentIds.First(), Level.Agent, productId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;

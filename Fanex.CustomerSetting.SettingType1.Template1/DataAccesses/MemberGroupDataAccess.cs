@@ -13,9 +13,9 @@
     {
         private static readonly Dictionary<byte, string> UpdateMultipleSPKeys = new Dictionary<byte, string>
         {
-            { UserLevel.Super.Value, "CustSetting_SuperPTOnMemberMultiUpd" },
-            { UserLevel.Master.Value, "CustSetting_MasterPTOnMemberMultiUpd" },
-            { UserLevel.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
+            { Level.Super.Value, "CustSetting_SuperPTOnMemberMultiUpd" },
+            { Level.Master.Value, "CustSetting_MasterPTOnMemberMultiUpd" },
+            { Level.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
         };
 
         public IEnumerable<int> GetGroupedMemberIds(string memberIds)

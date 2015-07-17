@@ -9,6 +9,6 @@
     {
         SettingType GetCustomerSettingType(User actor, QuerySettingParam querySettingParam);
 
-        IResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, UserLevel customerLevel, SettingType settingType, byte productId, UserLevel uplineLevel);
+        IResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel);
     }
 }

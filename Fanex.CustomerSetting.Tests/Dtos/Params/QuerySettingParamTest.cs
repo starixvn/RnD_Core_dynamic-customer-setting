@@ -8,7 +8,7 @@
     [TestFixture]
     public class QuerySettingParamTest
     {
-        private object[] dataSourceSMALevels = { UserLevel.Super, UserLevel.Master, UserLevel.Agent };
+        private object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 
         [TestCase(0)]
         [TestCase(-1)]
@@ -17,7 +17,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(0, UserLevel.Master, 0, null)));
+                    () => new QuerySettingParam(0, Level.Master, 0, null)));
         }
 
         [Test]
@@ -26,11 +26,11 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(1, UserLevel.Master, 0, null)));
+                    () => new QuerySettingParam(1, Level.Master, 0, null)));
         }
 
         [Test, TestCaseSource("dataSourceSMALevels")]
-        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(UserLevel customerLevel)
+        public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)
         {
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -44,7 +44,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(1, UserLevel.Member, 1, null)));
+                    () => new QuerySettingParam(1, Level.Member, 1, null)));
         }
     }
 }

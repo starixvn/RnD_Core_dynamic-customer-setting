@@ -9,7 +9,7 @@
 
         int CustomerId { get; set; }
 
-        UserLevel CustomerLevel { get; set; }
+        Level CustomerLevel { get; set; }
 
         byte ProductId { get; set; }
 

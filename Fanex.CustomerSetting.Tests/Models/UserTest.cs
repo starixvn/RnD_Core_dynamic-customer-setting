@@ -10,13 +10,13 @@
     {
         private static object[] isMethodAlwaysReturnRightValueCases =  
         {
-            new object[] { UserLevel.Company, UserLevel.Company, true },
-            new object[] { UserLevel.Company, UserLevel.Super, false },
-            new object[] { UserLevel.Super, UserLevel.Super, true },
-            new object[] { UserLevel.Super, UserLevel.Master, false },
-            new object[] { UserLevel.Master, UserLevel.Master, true },
-            new object[] { UserLevel.Master, UserLevel.Agent, false },
-            new object[] { UserLevel.Agent, UserLevel.Agent, true }
+            new object[] { Level.Company, Level.Company, true },
+            new object[] { Level.Company, Level.Super, false },
+            new object[] { Level.Super, Level.Super, true },
+            new object[] { Level.Super, Level.Master, false },
+            new object[] { Level.Master, Level.Master, true },
+            new object[] { Level.Master, Level.Agent, false },
+            new object[] { Level.Agent, Level.Agent, true }
         };
 
         [TestCase(0)]
@@ -78,7 +78,7 @@
                 new TestDelegate(
                     () =>
                     {
-                        user.Level = UserLevel.Member;
+                        user.Level = Level.Member;
                     }));
         }
 
