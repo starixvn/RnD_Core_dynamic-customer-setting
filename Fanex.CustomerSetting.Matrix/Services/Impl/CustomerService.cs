@@ -26,34 +26,34 @@
             var customerLineDto = GetCustomerLineDto(customerName);
             var customerLine = new List<Customer>();
 
-            switch (customerLineDto.CustomerLevel.Value)
-            {
-                case Level.Super:
-                    customerLine.Add(GetCustomer(customerLineDto));
+            ////switch (customerLineDto.CustomerLevel.Value)
+            ////{
+            ////    case Level.Super:
+            ////        customerLine.Add(GetCustomer(customerLineDto));
 
-                    break;
+            ////        break;
 
-                case Level.Master:
-                    customerLine.Add(GetSuper(customerLineDto));
-                    customerLine.Add(GetCustomer(customerLineDto));
+            ////    case Level.Master:
+            ////        customerLine.Add(GetSuper(customerLineDto));
+            ////        customerLine.Add(GetCustomer(customerLineDto));
 
-                    break;
+            ////        break;
 
-                case Level.Agent:
-                    customerLine.Add(GetSuper(customerLineDto));
-                    customerLine.Add(GetMaster(customerLineDto));
-                    customerLine.Add(GetCustomer(customerLineDto));
+            ////    case Level.Agent:
+            ////        customerLine.Add(GetSuper(customerLineDto));
+            ////        customerLine.Add(GetMaster(customerLineDto));
+            ////        customerLine.Add(GetCustomer(customerLineDto));
 
-                    break;
+            ////        break;
 
-                case Level.Member:
-                    customerLine.Add(GetSuper(customerLineDto));
-                    customerLine.Add(GetMaster(customerLineDto));
-                    customerLine.Add(GetAgent(customerLineDto));
-                    customerLine.Add(GetCustomer(customerLineDto));
+            ////    case Level.Member:
+            ////        customerLine.Add(GetSuper(customerLineDto));
+            ////        customerLine.Add(GetMaster(customerLineDto));
+            ////        customerLine.Add(GetAgent(customerLineDto));
+            ////        customerLine.Add(GetCustomer(customerLineDto));
 
-                    break;
-            }
+            ////        break;
+            ////}
 
             return customerLine;
         }

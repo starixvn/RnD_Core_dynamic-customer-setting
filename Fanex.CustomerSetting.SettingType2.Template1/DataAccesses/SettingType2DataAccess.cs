@@ -20,6 +20,14 @@
 
     public class SettingType2DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private static readonly Dictionary<byte, string> QueryBetLimitSpKeys = new Dictionary<byte, string> 
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperBetLimitSelect" },
+            { UserLevel.Master.Value, "CustSetting_MasterBetLimitSelect" },
+            { UserLevel.Agent.Value, "CustSetting_AgentBetLimitSelect" },
+            { UserLevel.Member.Value, "CustSetting_MemberBetLimitSelect" }
+        };
+
         public SettingType GetCustomerSettingType(User actor, QuerySettingParam queryParam)
         {
             var betLimitItemDtoList = ReadBetLimitItemsRawData(queryParam);
@@ -33,7 +41,7 @@
 
         private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForQuerying(
+            var settingKey = CreateQueryBetLimitSPSettingKey(
                 queryParam.CustomerLevel,
                 BetLimitConstants.SettingTypeId,
                 BetLimitConstants.SettingTempateId,
@@ -46,7 +54,7 @@
             }
         }
 
-        private string GetSettingKeyForQuerying(
+        private string CreateQueryBetLimitSPSettingKey(
             UserLevel customerLevel,
             byte settingTypeId,
             byte settingTemplateId,
@@ -54,23 +62,7 @@
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
-            switch (customerLevel.Value)
-            {
-                case Level.Super:
-                    return "CustSetting_SuperBetLimitSelect" + keySuffix;
-
-                case Level.Master:
-                    return "CustSetting_MasterBetLimitSelect" + keySuffix;
-
-                case Level.Agent:
-                    return "CustSetting_AgentBetLimitSelect" + keySuffix;
-
-                case Level.Member:
-                    return "CustSetting_MemberBetLimitSelect" + keySuffix;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
+            return QueryBetLimitSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerSettingType(

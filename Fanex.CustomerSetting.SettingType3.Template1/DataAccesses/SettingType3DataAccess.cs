@@ -20,6 +20,14 @@
 
     public class SettingType3DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private static readonly Dictionary<byte, string> QueryCommissionSpKeys = new Dictionary<byte, string> 
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperCommissionSelect" },
+            { UserLevel.Master.Value, "CustSetting_MasterCommissionSelect" },
+            { UserLevel.Agent.Value, "CustSetting_AgentCommissionSelect" },
+            { UserLevel.Member.Value, "CustSetting_MemberCommissionSelect" }
+        };
+
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParam queryParam)
@@ -35,12 +43,11 @@
 
         private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForQuerying(
+            var settingKey = CreateQueryCommissionSPSettingKey(
                 queryParam.CustomerLevel,
                 CommissionConstants.SettingTypeId,
                 CommissionConstants.SettingTempateId,
-                queryParam.ProductId,
-                queryParam.UplineLevel);
+                queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
@@ -49,32 +56,15 @@
             }
         }
 
-        private string GetSettingKeyForQuerying(
-            UserLevel customerLevel, 
-            byte settingTypeId, 
-            byte settingTemplateId, 
-            byte productId,
-            UserLevel uplineLevel)
+        private string CreateQueryCommissionSPSettingKey(
+            UserLevel customerLevel,
+            byte settingTypeId,
+            byte settingTemplateId,
+            byte productId)
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
-            switch (customerLevel.Value)
-            {
-                case Level.Super:
-                    return "CustSetting_SuperCommissionSelect" + keySuffix;
-
-                case Level.Master:
-                    return "CustSetting_MasterCommissionSelect" + keySuffix;
-
-                case Level.Agent:
-                    return "CustSetting_AgentCommissionSelect" + keySuffix;
-
-                case Level.Member:
-                    return "CustSetting_MemberCommissionSelect" + keySuffix;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
+            return QueryCommissionSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerSettingType(

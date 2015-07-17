@@ -20,6 +20,14 @@
 
     public class SettingType4DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
+        private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string> 
+        {
+            { UserLevel.Super.Value, "CustSetting_SuperProductStatusSelect" },
+            { UserLevel.Master.Value, "CustSetting_MasterProductStatusSelect" },
+            { UserLevel.Agent.Value, "CustSetting_AgentProductStatusSelect" },
+            { UserLevel.Member.Value, "CustSetting_MemberProductStatusSelect" }
+        };
+
         public SettingType GetCustomerSettingType(
             User actor,
             QuerySettingParam queryParam)
@@ -35,7 +43,7 @@
 
         private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = GetSettingKeyForGettingSettingType(
+            var settingKey = CreateQueryProductStatusSPSettingKey(
                 queryParam.CustomerLevel, 
                 ProductStatusConstants.SettingTypeId, 
                 ProductStatusConstants.SettingTempateId,
@@ -47,31 +55,15 @@
             }
         }
 
-        private string GetSettingKeyForGettingSettingType(
-            UserLevel customerLevel, 
-            byte settingTypeId, 
-            byte settingTemplateId, 
+        private string CreateQueryProductStatusSPSettingKey(
+            UserLevel customerLevel,
+            byte settingTypeId,
+            byte settingTemplateId,
             byte productId)
         {
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
 
-            switch (customerLevel.Value)
-            {
-                case Level.Super:
-                    return "CustSetting_SuperProductStatusSelect" + keySuffix;
-
-                case Level.Master:
-                    return "CustSetting_MasterProductStatusSelect" + keySuffix;
-
-                case Level.Agent:
-                    return "CustSetting_AgentProductStatusSelect" + keySuffix;
-
-                case Level.Member:
-                    return "CustSetting_MemberProductStatusSelect" + keySuffix;
-
-                default:
-                    throw new InvalidOperationException("This customer level is not supported");
-            }
+            return QueryProductStatusSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerSettingType(
