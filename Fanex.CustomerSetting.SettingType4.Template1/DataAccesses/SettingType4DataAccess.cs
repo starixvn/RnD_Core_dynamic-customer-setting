@@ -1,11 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.DataAccesses
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -20,7 +17,7 @@
 
     public class SettingType4DataAccess : BaseDataAccess, ISettingTypeDataAccess
     {
-        private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string> 
+        private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string>
         {
             { Level.Super.Value, "CustSetting_SuperProductStatusSelect" },
             { Level.Master.Value, "CustSetting_MasterProductStatusSelect" },
@@ -33,25 +30,26 @@
             QuerySettingParam queryParam)
         {
             // Will bring this logic into service class later
-            if (queryParam.UplineLevel.IsDirectUplineLevelOf(queryParam.CustomerLevel))
+            if (queryParam.UplineLevel != null
+                && !queryParam.UplineLevel.IsDirectUplineLevelOf(queryParam.CustomerLevel))
             {
-                var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
-
-                return new SettingType
-                {
-                    Name = Label.ProductStatus,
-                    SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
-                };
+                return new SettingType();
             }
 
-            return new SettingType();
+            var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
+
+            return new SettingType
+            {
+                Name = Label.ProductStatus,
+                SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
+            };
         }
 
         private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
         {
             var settingKey = CreateQueryProductStatusSPSettingKey(
-                queryParam.CustomerLevel, 
-                ProductStatusConstants.SettingTypeId, 
+                queryParam.CustomerLevel,
+                ProductStatusConstants.SettingTypeId,
                 ProductStatusConstants.SettingTempateId,
                 queryParam.ProductId);
 
@@ -78,7 +76,7 @@
             int customerId,
             Level customerLevel,
             SettingType settingType,
-            byte productId, 
+            byte productId,
             Level uplineLevel)
         {
             var param = new Hashtable();

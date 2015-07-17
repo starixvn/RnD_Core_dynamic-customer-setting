@@ -103,6 +103,7 @@
                         customerId,
                         settingType.Id,
                         settingType.Name);
+                    LogUpdateCustomerSettingTypeError(customerId, customerLevel, uplineLevel, productId, settingType, ex);
                 }
 
                 settingTypeResults.Add(updatingSettingTypeResult);
@@ -167,15 +168,21 @@
             return result;
         }
 
-        ////private void LogUpdateCustomerSettingTypeError(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
-        ////{
-        ////    var customerSettingException = new CustomerSettingException(ex.Message, ex);
-        ////    customerSettingException.SetSettingContextInfo("Query Setting", _settingContext);
-        ////    customerSettingException.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
-        ////    customerSettingException.SetProductInfo(queryParam.ProductId, productSettingType);
+        private void LogUpdateCustomerSettingTypeError(
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId,
+            SettingType customerSettingType, 
+            Exception ex)
+        {
+            var customerSettingException = new CustomerSettingException(ex.Message, ex);
+            customerSettingException.SetSettingContextInfo("Update Setting", _settingContext);
+            customerSettingException.SetCustomerInfo(customerId, customerLevel, uplineLevel);
+            customerSettingException.SetProductInfo(productId, customerSettingType);
 
-        ////    _logger.Error(ex.Message, ex);
-        ////}
+            _logger.Error(ex.Message, ex);
+        }
 
         public IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam)
         {
@@ -224,6 +231,8 @@
                         customerId: 0,
                         settingTypeId: settingType.Id,
                         settingTypeName: settingType.Name);
+
+                    LogUpdateMultipleCustomersSettingTypeError(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
 
                     results.Add(errorResult);
                 }
@@ -379,6 +388,21 @@
             }
 
             return customerIdNameContainer;
+        }
+        private void LogUpdateMultipleCustomersSettingTypeError(
+            IEnumerable<int> customerIds,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
+            SettingType customerSettingType,
+            Exception ex)
+        {
+            var customerSettingException = new CustomerSettingException(ex.Message, ex);
+            customerSettingException.SetSettingContextInfo("Update Setting", _settingContext);
+            customerSettingException.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
+            customerSettingException.SetProductInfo(productId, customerSettingType);
+
+            _logger.Error(ex.Message, ex);
         }
     }
 }
