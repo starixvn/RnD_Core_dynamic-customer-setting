@@ -6,12 +6,12 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class UpdatingMultipleSettingParam : UpdatingSettingParam
+    public class UpdateMultipleSettingParam : UpdateSettingParam
     {
         private IEnumerable<int> _customerIds;
         private IEnumerable<string> _customerNames;
 
-        public UpdatingMultipleSettingParam(
+        public UpdateMultipleSettingParam(
             ISetting setting,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames,
@@ -33,7 +33,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value", "CustomerIds cannot be null when updating multiple setting.");
+                    throw new ArgumentNullException("value", "CustomerIds cannot be null when update multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(value, _customerNames);
@@ -53,7 +53,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value", "CustomerNames cannot be null when updating multiple setting.");
+                    throw new ArgumentNullException("value", "CustomerNames cannot be null when update multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(_customerIds, value);

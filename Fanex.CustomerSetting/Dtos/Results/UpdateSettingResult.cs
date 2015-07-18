@@ -4,15 +4,15 @@
     using System.Linq;
     using Fanex.CustomerSetting.Constants;
 
-    public class UpdatingSettingResult : Result
+    public class UpdateSettingResult : Result
     {
-        public UpdatingSettingResult(IEnumerable<SettingResult> subResults)
+        public UpdateSettingResult(IEnumerable<SettingResult> subResults)
             : base(0)
         {
             SubResults = subResults;
         }
 
-        public UpdatingSettingResult(IResult result)
+        public UpdateSettingResult(IResult result)
             : base(result.Code, result.Message)
         {
             SubResults = new List<SettingResult> { new SettingResult(result) };

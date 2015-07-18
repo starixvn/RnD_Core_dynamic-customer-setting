@@ -1,21 +1,19 @@
-﻿namespace Fanex.CustomerSetting.Handlers
+﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.Common.Helper;
+    using System.Text;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
 
-    public class SettingPostTasks
+    public abstract class BaseSettingTypeService : ISettingTypeService
     {
-        public SettingPostTasks(IResourceService resourceService = null)
+        protected BaseSettingTypeService(IResourceService resourceService = null)
         {
             ResourceService = resourceService ?? new ResourceService();
         }
@@ -24,43 +22,8 @@
 
         protected IMessageService MessageService { get; set; }
 
-        public virtual SettingType PostGetCustomerSettingType(
-            ISettingContext settingContext,
-            QuerySettingParam queryParam,
-            SettingType settingType)
-        {
-            if (settingContext == null)
-            {
-                throw new ArgumentNullException("settingContext");
-            }
-
-            return SetSportTypeBetTypeName(settingType, settingContext.Language);
-        }
-
-        public virtual SettingResult PostUpdateCustomerSettingType(
-                    ISettingContext settingContext,
-                    int customerId,
-                    Level customerLevel,
-                    SettingType settingType,
-                    Level uplineLevel,
-                    SettingResult result)
-        {
-            throw new NotImplementedException("Post-Update Customer Setting Type is not implemented");
-        }
-
-        public virtual UpdatingSettingResult PostUpdateMultipleCustomersSettingType(
-                    ISettingContext settingContext,
-                    IEnumerable<int> customerIds,
-                    Level customerLevel,
-                    SettingType settingType,
-                    Level uplineLevel,
-                    UpdatingSettingResult updatintSettingResult)
-        {
-            throw new NotImplementedException("Post-Update Multiple Customers Setting is not implemented");
-        }
-
         /// <summary>
-        /// Reads the updating customer setting type message,
+        /// Reads the update customer setting type message,
         /// after updated customer setting type.
         /// </summary>
         /// <param name="result">The result return from data access.</param>
@@ -69,7 +32,7 @@
         /// <param name="settingLevel">The setting level for displaying message.</param>
         /// <param name="language">The language for globalization.</param>
         /// <returns>Result is processed.</returns>
-        protected SettingResult ReadUpdatingCustomerSettingTypeMessage(
+        protected SettingResult TranslateUpdateResultMessage(
                     SettingResult result,
                     string updateSuccessfulMessage,
                     byte settingLevel,
@@ -123,6 +86,29 @@
             }
 
             return settingType;
+        }
+
+        protected SettingResult CreateSettingResult(IResult result, int customerId, SettingType settingType)
+        {
+            return new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
+        }
+
+        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType);
+
+        public abstract SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Enumerations.Level uplineLevel, byte productId, SettingType settingType);
+
+        public virtual IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(ISettingContext settingContext, IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        {
+            var settingTypeResults = new List<SettingResult>();
+
+            foreach (var customerId in customerIds)
+            {
+                var updateResult = UpdateCustomerSettingType(settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+
+                settingTypeResults.Add(updateResult);
+            }
+
+            return settingTypeResults;
         }
     }
 }

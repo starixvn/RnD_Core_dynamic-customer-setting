@@ -1,8 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.Resources;
     using Fanex.CustomerSetting.SettingType4.Template1.Services;

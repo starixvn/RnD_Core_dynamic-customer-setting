@@ -5,12 +5,12 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class UpdatingSettingParam
+    public class UpdateSettingParam
     {
         private Level _uplineLevel;
         private ISetting _setting;
 
-        public UpdatingSettingParam(
+        public UpdateSettingParam(
             ISetting setting,
             Level uplineLevel = null)
         {
@@ -29,7 +29,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value", "Setting cannot be null when updating customer setting.");
+                    throw new ArgumentNullException("value", "Setting cannot be null when update customer setting.");
                 }
 
                 _setting = value;
@@ -59,7 +59,7 @@
                 }
                 else if (Setting.CustomerLevel.IsMemberLevel)
                 {
-                    throw new ArgumentNullException("value", "Upline cannot be null when updating member setting.");
+                    throw new ArgumentNullException("value", "Upline cannot be null when update member setting.");
                 }
 
                 _uplineLevel = value;

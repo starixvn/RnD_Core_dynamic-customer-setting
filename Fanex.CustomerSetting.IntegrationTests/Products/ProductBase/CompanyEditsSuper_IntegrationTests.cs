@@ -112,7 +112,7 @@
             superProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updateParam = new UpdatingSettingParam(superSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateSettingParam(superSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert

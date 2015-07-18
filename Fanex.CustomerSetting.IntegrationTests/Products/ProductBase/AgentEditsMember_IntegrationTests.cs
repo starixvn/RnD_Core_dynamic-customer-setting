@@ -123,7 +123,7 @@
             memberProductStatusItem.IsDisabled = isDisabledProductStatus;
 
             //// Act
-            var updateParam = new UpdatingSettingParam(memberSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateSettingParam(memberSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
@@ -179,7 +179,7 @@
             memberProductStatusItem.IsDisabled = false;
 
             //// Act
-            var updatingMultipleParam = new UpdatingMultipleSettingParam(memberSetting, memberIds, memberNames, querySettingParam.UplineLevel);
+            var updatingMultipleParam = new UpdateMultipleSettingParam(memberSetting, memberIds, memberNames, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert

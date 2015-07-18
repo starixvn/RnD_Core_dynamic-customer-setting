@@ -2,6 +2,6 @@
 {
     public static class TestConfig
     {
-        public const int NumOfSleepSecondsWaitingForReplication = 7 * 1000; //// 7 Seconds
+        public const int NumOfSleepSecondsWaitingForReplication = 3 * 1000; //// 7 Seconds
     }
 }

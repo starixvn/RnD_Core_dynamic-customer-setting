@@ -22,7 +22,7 @@
     [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
-    public class ValidationServiceTestsValidateQuerySetting
+    public class ValidationServiceTestsValidateQuerySettingAction
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;
@@ -52,7 +52,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _validationService.ValidateQuerySetting(queryParam)));
+                    () => _validationService.ValidateQuerySettingAction(queryParam)));
         }
 
         private void AssumeCutomerIsDownlineOfActor()
@@ -90,7 +90,7 @@
             AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -127,7 +127,7 @@
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -157,7 +157,7 @@
             _settingContext.Actor.Level = Level.Agent;
 
             //// Act
-            _validationService.ValidateQuerySetting(queryParam);
+            _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             _dynamicRepository.Received().Get<bool>(Arg.Is<ActorStatusQueryCriteria>(criteria => criteria.ActorId == _settingContext.Actor.Id));
@@ -178,7 +178,7 @@
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(false);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -199,7 +199,7 @@
             AssumeActorStatusIsEnabled();
 
             //// Act
-            _validationService.ValidateQuerySetting(queryParam);
+            _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == queryParam.CustomerId));
@@ -229,7 +229,7 @@
             AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
 
             //// Act
-            _validationService.ValidateQuerySetting(queryParam);
+            _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             _validationDataAccess.Received().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
@@ -250,7 +250,7 @@
             AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
 
             //// Act
-            _validationService.ValidateQuerySetting(queryParam);
+            _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             _validationDataAccess.DidNotReceive().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
@@ -274,7 +274,7 @@
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
@@ -305,7 +305,7 @@
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -336,7 +336,7 @@
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySetting(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);

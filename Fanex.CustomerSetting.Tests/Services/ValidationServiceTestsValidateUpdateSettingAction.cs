@@ -23,7 +23,7 @@
     [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
-    public class ValidationServiceTestsValidateUpdatingSetting
+    public class ValidationServiceTestsValidateUpdateSettingAction
     {
         private ISettingContext _settingContext;
         private ValidationService _validationService;
@@ -51,43 +51,43 @@
 
         private void AssumeValidateQuerySettingIsSuccessful()
         {
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_CallValidateQuerySetting()
+        public void ValidateUpdateSetting_Always_CallValidateQuerySetting()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
             _settingContext.Actor.Level = Level.Super;
 
             //// Act
-            _validationService.ValidateUpdatingSetting(updatingParam);
+            _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
 
-            _validationService.Received().ValidateQuerySetting(
+            _validationService.Received().ValidateQuerySettingAction(
                 Arg.Is<QuerySettingParam>(queryParam =>
-                    queryParam.CustomerId == updatingParam.Setting.CustomerId
-                    && queryParam.CustomerLevel == updatingParam.Setting.CustomerLevel
-                    && queryParam.ProductId == updatingParam.Setting.ProductId
-                    && queryParam.UplineLevel == updatingParam.UplineLevel));
+                    queryParam.CustomerId == updateParam.Setting.CustomerId
+                    && queryParam.CustomerLevel == updateParam.Setting.CustomerLevel
+                    && queryParam.ProductId == updateParam.Setting.ProductId
+                    && queryParam.UplineLevel == updateParam.UplineLevel));
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_CallGetProductSettingTypes()
+        public void ValidateUpdateSetting_Always_CallGetProductSettingTypes()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeValidateQuerySettingIsSuccessful();
 
             //// Act
-            _validationService.ValidateUpdatingSetting(updatingParam);
+            _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == updatingParam.Setting.ProductId));
+                productId => productId == updateParam.Setting.ProductId));
         }
 
         private void AssumeCustomerSettingTypesAreValid(IEnumerable<SettingType> dummySettingTypes)
@@ -96,62 +96,62 @@
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CustomerSettingTypesDontMatchWithProductSettingTypes_ReturnFailedResult()
+        public void ValidateUpdateSetting_CustomerSettingTypesDontMatchWithProductSettingTypes_ReturnFailedResult()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeValidateQuerySettingIsSuccessful();
 
-            updatingParam.Setting.SettingTypes = new List<SettingType>
+            updateParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(2)
                 });
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CustomerSettingTypesMatchWithProductSettingTypes_ReturnSuccessResult()
+        public void ValidateUpdateSetting_CustomerSettingTypesMatchWithProductSettingTypes_ReturnSuccessResult()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeValidateQuerySettingIsSuccessful();
 
-            updatingParam.Setting.SettingTypes = new List<SettingType>
+            updateParam.Setting.SettingTypes = new List<SettingType>
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(1)
                 });
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
-        public void ValidateUpdatingSetting_Always_CallValidateMethodOnEachSettingItem()
+        public void ValidateUpdateSetting_Always_CallValidateMethodOnEachSettingItem()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
             var settingItemMock = Substitute.For<ISettingItem>();
-            updatingParam.Setting.SettingTypes = new List<SettingType>
+            updateParam.Setting.SettingTypes = new List<SettingType>
             {
                 new SettingType
                 {
@@ -165,29 +165,29 @@
             };
 
             AssumeValidateQuerySettingIsSuccessful();
-            _productService.GetProductSettingTypes(updatingParam.Setting.ProductId).Returns(updatingParam.Setting.SettingTypes);
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId).Returns(updateParam.Setting.SettingTypes);
 
             //// Act
-            _validationService.ValidateUpdatingSetting(updatingParam);
+            _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             settingItemMock.Received().Validate();
         }
 
         [Test]
-        public void ValidateUpdatingSetting_CompanyPerformsUpdatingActionInAgencySystem_ReturnAccessDeniedResult()
+        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInAgencySystem_ReturnAccessDeniedResult()
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
             _settingContext.Actor.Level = Level.Company;
 
             AssumeValidateQuerySettingIsSuccessful();
-            AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
+            AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
 
             _validationService.GetCurrentSystemId().Returns((byte)SystemType.Agency);
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
@@ -195,43 +195,22 @@
 
         [TestCase((byte)SystemType.Accounting)]
         [TestCase((byte)SystemType.ExternalAccounting)]
-        public void ValidateUpdatingSetting_CompanyPerformsUpdatingActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
+        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
         {
             //// Arrange
-            var updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
             _settingContext.Actor.Level = Level.Company;
 
             AssumeValidateQuerySettingIsSuccessful();
-            AssumeCustomerSettingTypesAreValid(updatingParam.Setting.SettingTypes);
+            AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
 
             _validationService.GetCurrentSystemId().Returns(systemId);
 
             //// Act
-            var actualResult = _validationService.ValidateUpdatingSetting(updatingParam);
+            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
         }
-
-        ////[Test]
-        ////public void UpdateCustomerSetting_RaisedException_CallLogValidatingUpdatingError()
-        ////{
-        ////    //// Arrange
-        ////    UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
-
-        ////    //// Simulate exception
-        ////    var expectedException = new Exception("Exception");
-        ////    _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
-
-        ////    //// Act
-        ////    _validationService.ValidateUpdatingSetting(updatingParam);
-
-        ////    //// Assert
-        ////    _loggingService.Received().LogValidatingUpdatingError(
-        ////        Arg.Is<int>(customerId => customerId == updatingParam.Setting.CustomerId),
-        ////        Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingParam.UplineLevel),
-        ////        Arg.Is<byte>(productId => productId == updatingParam.Setting.ProductId),
-        ////        Arg.Any<Exception>());
-        ////}
     }
 }

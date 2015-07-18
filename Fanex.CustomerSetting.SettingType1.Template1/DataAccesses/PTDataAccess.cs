@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -14,23 +13,23 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
 
-    public class SettingType1DataAccess : BaseDataAccess, ISettingTypeDataAccess
+    public class PTDataAccess : BaseDataAccess, IPTDataAccess
     {
-        private static readonly Dictionary<byte, string> UpdateSmaPTSpKeys = new Dictionary<byte, string> 
+        private static readonly Dictionary<byte, string> UpdateSmaPTSpKeys = new Dictionary<byte, string>
         {
             { Level.Super.Value, "CustSetting_SuperPTUpd" },
             { Level.Master.Value, "CustSetting_MasterPTUpd" },
             { Level.Agent.Value, "CustSetting_AgentPTUpd" }
         };
 
-        private static readonly Dictionary<byte, string> UpdateMemberPTSpKeys = new Dictionary<byte, string> 
+        private static readonly Dictionary<byte, string> UpdateMemberPTSpKeys = new Dictionary<byte, string>
         {
             { Level.Super.Value, "CustSetting_SuperPTOnMemberUpd" },
             { Level.Master.Value, "CustSetting_MasterPTOnMemberUpd" },
             { Level.Agent.Value, "CustSetting_AgentPTOnMemberUpd" }
         };
 
-        private static readonly Dictionary<byte, string> QueryPTSpKeys = new Dictionary<byte, string> 
+        private static readonly Dictionary<byte, string> QueryPTSpKeys = new Dictionary<byte, string>
         {
             { Level.Super.Value, "CustSetting_SuperPTSelect" },
             { Level.Master.Value, "CustSetting_MasterPTSelect" },
@@ -54,12 +53,19 @@
                 { Level.Agent.Value,  GetPTSettingItem<AgentPTOnMemberItem> }
             };
 
+        private static readonly Dictionary<byte, string> UpdateMultiplePTOnMembersSPKeys = new Dictionary<byte, string>
+        {
+            { Level.Super.Value, "CustSetting_SuperPTOnMemberMultiUpd" },
+            { Level.Master.Value, "CustSetting_MasterPTOnMemberMultiUpd" },
+            { Level.Agent.Value, "CustSetting_AgentPTOnMemberMultiUpd" }
+        };
+
         private static IEnumerable<T> GetPTSettingItem<T>(ObjectDb objectDb, Hashtable parameters)
         {
             return objectDb.Query<T>(parameters);
         }
 
-        public virtual SettingType GetCustomerSettingType(User actor, QuerySettingParam querySettingParam)
+        public SettingType GetCustomerPT(QuerySettingParam queryParam)
         {
             var settingType = new PTSettingType
             {
@@ -67,19 +73,19 @@
             };
 
             var settingKey = CreateQueryPTSPSettingKey(
-                querySettingParam.CustomerLevel, 
+                queryParam.CustomerLevel,
                 PTConstants.SettingTypeId,
-                PTConstants.SettingTempateId, 
-                querySettingParam.ProductId);
+                PTConstants.SettingTempateId,
+                queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameters = CreateQueryPTSettingSpParam(querySettingParam);
+                var parameters = CreateQueryPTSettingSpParam(queryParam);
 
-                var queryFunction = (querySettingParam.CustomerLevel == Level.Member)
-                   ? MemberQueryPTSettingItemFuncs[querySettingParam.UplineLevel.Value]
-                   : SmaQueryPTSettingItemFuncs[querySettingParam.CustomerLevel.Value];
-                
+                var queryFunction = (queryParam.CustomerLevel == Level.Member)
+                   ? MemberQueryPTSettingItemFuncs[queryParam.UplineLevel.Value]
+                   : SmaQueryPTSettingItemFuncs[queryParam.CustomerLevel.Value];
+
                 settingType.SettingItems = queryFunction(objectDb, parameters);
 
                 if (parameters.ContainsKey("disableautompt"))
@@ -111,28 +117,28 @@
             return parameters;
         }
 
-        public virtual IResult UpdateCustomerSettingType(
+        public IResult UpdateCustomerPT(
             ISettingContext settingContext,
             int customerId,
             Level customerLevel,
-            SettingType settingType,
+            Level uplineLevel,
             byte productId,
-            Level uplineLevel)
+            string positionTakingXml)
         {
-            var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, settingType);
+            var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, positionTakingXml);
             var settingKey = GetSettingKeyForUpdating(customerLevel, uplineLevel, productId);
 
             return ExecuteNonQuery(settingKey, parameters);
         }
 
-        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, SettingType settingType)
+        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, string positionTakingXml)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
-            param.Add("pt", settingType.ToXml());
+            param.Add("pt", positionTakingXml);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
@@ -152,6 +158,40 @@
                 productId);
 
             return updateSettingKey + keySuffix;
+        }
+
+        public IEnumerable<int> GetGroupedMemberIds(string memberIds)
+        {
+            using (ObjectDb objectDb = new ObjectDb("CustSetting_GroupedPTMemberLstSelect"))
+            {
+                return objectDb.Query<int>(new
+                {
+                    CustIDList = memberIds
+                });
+            }
+        }
+
+        public IResult UpdateGroupedMembersSetting(
+            int actorId,
+            int subAccountId,
+            string groupedMemberIds,
+            Level uplineLevel,
+            string positionTakingXml,
+            string ip)
+        {
+            var settingKey = UpdateMultiplePTOnMembersSPKeys[uplineLevel.Value];
+
+            var param = new Hashtable();
+            param.Add("userid", actorId);
+            param.Add("subaccid", subAccountId);
+            param.Add("custidlist", groupedMemberIds);
+            param.Add("pt", positionTakingXml);
+            param.Add("ip", ip);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("msgtype", 0);
+
+            return ExecuteNonQuery(settingKey, param);
         }
     }
 }

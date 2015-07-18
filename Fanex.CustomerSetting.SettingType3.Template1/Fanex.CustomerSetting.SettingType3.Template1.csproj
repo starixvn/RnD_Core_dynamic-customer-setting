@@ -70,10 +70,10 @@
     <Compile Include="Constants\CommissionErrorCode.cs" />
     <Compile Include="Constants\CommissionConstants.cs" />
     <Compile Include="Constants\CommissionMessageType.cs" />
-    <Compile Include="DataAccesses\SettingType3DataAccess.cs" />
+    <Compile Include="DataAccesses\ICommissionDataAccess.cs" />
+    <Compile Include="DataAccesses\CommissionDataAccess.cs" />
     <Compile Include="Dtos\CommissionDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Handlers\SettingType3PostTasks.cs" />
     <Compile Include="Models\CommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CommissionMessage.Designer.cs">
@@ -82,6 +82,7 @@
       <DependentUpon>CommissionMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CommissionMessageService.cs" />
+    <Compile Include="Services\SettingType3Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

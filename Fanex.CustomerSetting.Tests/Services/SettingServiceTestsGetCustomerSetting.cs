@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -29,7 +27,8 @@
         private IDynamicRepository _dymanicRepository;
         private ILogger _logger;
         private ISettingResolver _settingResolver;
-        private ISettingTypeDataAccess _settingDataAccess;
+
+        private ISettingTypeService _settingTypeService;
 
         [SetUp]
         public void Setup()
@@ -42,7 +41,7 @@
             _settingResolver = Substitute.For<ISettingResolver>();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
 
-            _settingDataAccess = Substitute.For<ISettingTypeDataAccess>();
+            _settingTypeService = Substitute.For<ISettingTypeService>();
 
             _querySettingService = new QuerySettingService(
                 _settingContext,
@@ -71,13 +70,13 @@
         {
             //// Arrange
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _validationService.Received().ValidateQuerySetting(Arg.Is<QuerySettingParam>(
+            _validationService.Received().ValidateQuerySettingAction(Arg.Is<QuerySettingParam>(
                 actualQuerySettingParam => actualQuerySettingParam.CustomerId == querySettingParam.CustomerId
                     && actualQuerySettingParam.CustomerLevel == querySettingParam.CustomerLevel
                     && actualQuerySettingParam.ProductId == querySettingParam.ProductId
@@ -89,7 +88,7 @@
         {
             //// Arrange
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.AccessDenied);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.AccessDenied);
 
             //// Act
             Assert.Throws<InvalidOperationException>(
@@ -99,7 +98,7 @@
 
         private void AssumeQuerySettingActionIsValid()
         {
-            _validationService.ValidateQuerySetting(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
         }
 
         [Test]
@@ -110,7 +109,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _dymanicRepository.Received().Get<CustomerInfo>(Arg.Is<CustomerInfoQueryCriteria>(
@@ -169,7 +168,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _productService.Received().GetProductSettingTypes(
@@ -187,7 +186,7 @@
             _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(productSettingTypes);
 
             productSettingTypes.First().SettingItems = new List<SettingItemStub> { new SettingItemStub() };
-            SetupSettingTypeDataAccessStub(productSettingTypes.First());
+            SetupSettingTypeServiceStub(productSettingTypes.First());
 
             //// Act
             var actualCustomerSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -204,7 +203,7 @@
             AssumeQuerySettingActionIsValid();
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
             _resourceService.Received().GetProductName(
@@ -252,62 +251,19 @@
         }
 
         [Test]
-        public void GetCustomerSetting_Always_CallResolveSettingPreTasks()
+        public void GetCustomerSetting_Always_CallResolveSettingTypeService()
         {
             //// Arrange
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var dummySettingTypes = SetupProductSettingTypesStub();
-            SetupSettingTypeDataAccessStub();
+            SetupSettingTypeServiceStub();
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingResolver.Received(dummySettingTypes.Count()).ResolveSettingPreTasks(Arg.Any<SettingType>());
-        }
-
-        [Test]
-        public void GetCustomerSetting_SettingTypeHasPreGetCustomerSettingTypeTasks_RunTasks()
-        {
-            //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            AssumeQuerySettingActionIsValid();
-            SetupProductSettingTypesStub();
-            SetupSettingTypeDataAccessStub();
-
-            //// Mock PreTasks Handler.
-            var settingTypePreTasksMock = Substitute.ForPartsOf<SettingPreTasks>();
-            _settingResolver.ResolveSettingPreTasks(Arg.Any<SettingType>()).Returns(settingTypePreTasksMock);
-
-            //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
-
-            //// Assert
-            settingTypePreTasksMock.Received().PreGetCustomerSettingType(_settingContext, querySettingParam);
-        }
-
-        private void SetupSettingTypeDataAccessStub(SettingType dummySettingType = null)
-        {
-            var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
-            _settingDataAccess.GetCustomerSettingType(Arg.Any<User>(), Arg.Any<QuerySettingParam>()).Returns(customerSettingType);
-            _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(_settingDataAccess);
-        }
-
-        [Test]
-        public void GetCustomerSetting_Always_CallResolveSettingPostTasksMethod()
-        {
-            //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            AssumeQuerySettingActionIsValid();
-            var productSettingTypes = SetupProductSettingTypesStub();
-            SetupSettingTypeDataAccessStub();
-
-            //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
-
-            //// Assert
-            _settingResolver.Received(productSettingTypes.Count()).ResolveSettingPostTasks(Arg.Any<SettingType>());
+            _settingResolver.Received(dummySettingTypes.Count()).ResolveSettingTypeServce(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -317,36 +273,20 @@
             QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var productSettingTypes = SetupProductSettingTypesStub();
-            SetupSettingTypeDataAccessStub();
+            SetupSettingTypeServiceStub();
 
             //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
+            _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingDataAccess.Received(productSettingTypes.Count()).GetCustomerSettingType(Arg.Any<User>(), querySettingParam);
+            _settingTypeService.Received(productSettingTypes.Count()).GetCustomerSettingType(_settingContext, querySettingParam, Arg.Any<SettingType>());
         }
 
-        [Test]
-        public void GetCustomerSetting_SettingTypeHasPostGetCustomerSettingTypeTasks_RunTasks()
+        private void SetupSettingTypeServiceStub(SettingType dummySettingType = null)
         {
-            //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            AssumeQuerySettingActionIsValid();
-            SetupProductSettingTypesStub();
-            SetupSettingTypeDataAccessStub();
-
-            //// Mock PreTasks Handler.
-            var settingTypePostTasksMock = Substitute.ForPartsOf<SettingPostTasks>(_resourceService);
-            _settingResolver.ResolveSettingPostTasks(Arg.Any<SettingType>()).Returns(settingTypePostTasksMock);
-
-            //// Act
-           _querySettingService.GetCustomerSetting(querySettingParam);
-
-            //// Assert
-            settingTypePostTasksMock.Received().PostGetCustomerSettingType(
-                _settingContext,
-                querySettingParam,
-                Arg.Any<SettingType>());
+            var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
+            _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QuerySettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
+            _settingResolver.ResolveSettingTypeServce(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         ////[Test]

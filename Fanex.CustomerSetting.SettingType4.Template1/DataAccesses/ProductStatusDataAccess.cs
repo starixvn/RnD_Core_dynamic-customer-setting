@@ -3,7 +3,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -15,7 +14,7 @@
     using Fanex.CustomerSetting.SettingType4.Template1.Models;
     using Fanex.Data;
 
-    public class SettingType4DataAccess : BaseDataAccess, ISettingTypeDataAccess
+    public class ProductStatusDataAccess : BaseDataAccess, IProductStatusDataAccess
     {
         private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string>
         {
@@ -25,17 +24,8 @@
             { Level.Member.Value, "CustSetting_MemberProductStatusSelect" }
         };
 
-        public SettingType GetCustomerSettingType(
-            User actor,
-            QuerySettingParam queryParam)
+        public SettingType GetCustomerProductStatus(QuerySettingParam queryParam)
         {
-            // Will bring this logic into service class later
-            if (queryParam.UplineLevel != null
-                && !queryParam.UplineLevel.IsDirectUplineLevelOf(queryParam.CustomerLevel))
-            {
-                return new SettingType();
-            }
-
             var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
 
             return new SettingType
@@ -71,20 +61,20 @@
             return QueryProductStatusSpKeys[customerLevel.Value] + keySuffix;
         }
 
-        public IResult UpdateCustomerSettingType(
+        public IResult UpdateCustomerProductStatus(
             ISettingContext settingContext,
             int customerId,
             Level customerLevel,
-            SettingType settingType,
+            Level uplineLevel,
             byte productId,
-            Level uplineLevel)
+            string productStatusXml)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
-            param.Add("isdisabled", settingType.ToXml());
+            param.Add("isdisabled", productStatusXml);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);

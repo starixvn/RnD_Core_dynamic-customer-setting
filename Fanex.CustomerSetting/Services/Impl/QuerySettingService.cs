@@ -67,7 +67,7 @@
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
-            var validationResult = _validationService.ValidateQuerySetting(queryParam);
+            var validationResult = _validationService.ValidateQuerySettingAction(queryParam);
 
             if (validationResult.IsNotOk)
             {
@@ -119,11 +119,7 @@
 
                 try
                 {
-                    RunPreGetCustomerSettingTypeTasks(queryParam, productSettingType);
-
                     customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-
-                    customerSettingType = RunPostGetCustomerSettingTypeTasks(queryParam, customerSettingType);
                 }
                 catch (Exception ex)
                 {
@@ -139,45 +135,16 @@
             return customerSettingTypes;
         }
 
-        private void RunPreGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType productSettingType)
-        {
-            SettingPreTasks preTasks = _settingResolver.ResolveSettingPreTasks(productSettingType);
-
-            if (preTasks != null
-                && IsOverride(preTasks.GetType().GetMethod("PreGetCustomerSettingType")))
-            {
-                preTasks.PreGetCustomerSettingType(_settingContext, queryParam);
-            }
-        }
-
         private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
         {
-            var settingDataAccess = _settingResolver.ResolveSettingDataAccess(productSettingType);
-            var customerSettingType = settingDataAccess.GetCustomerSettingType(_settingContext.Actor, queryParam);
-
+            var settingTypeService = _settingResolver.ResolveSettingTypeServce(productSettingType);
+            var customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            
             customerSettingType.Id = productSettingType.Id;
             customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
             customerSettingType.SettingLevel = productSettingType.SettingLevel;
 
             return customerSettingType;
-        }
-
-        private SettingType RunPostGetCustomerSettingTypeTasks(QuerySettingParam queryParam, SettingType customerSettingType)
-        {
-            var postTasks = _settingResolver.ResolveSettingPostTasks(customerSettingType);
-
-            if (postTasks != null
-                && IsOverride(postTasks.GetType().GetMethod("PostGetCustomerSettingType")))
-            {
-                customerSettingType = postTasks.PostGetCustomerSettingType(_settingContext, queryParam, customerSettingType);
-            }
-
-            return customerSettingType;
-        }
-
-        private bool IsOverride(MethodInfo methodInfo)
-        {
-            return methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
         }
 
         private void LogQuerySettingTypeError(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)

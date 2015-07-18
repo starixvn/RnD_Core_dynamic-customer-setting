@@ -8,7 +8,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UpdatingSettingParamTests
+    public class UpdateSettingParamTests
     {
         private object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 
@@ -20,7 +20,7 @@
                 customerLevel: customerLevel,
                 productId: 1,
                 settingTypes: new List<SettingType>());
-            var updateSettingParam = new UpdatingSettingParam(setting);
+            var updateSettingParam = new UpdateSettingParam(setting);
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -40,19 +40,19 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new UpdatingSettingParam(setting)));
+                    () => new UpdateSettingParam(setting)));
         }
 
         [Test]
         public void SetSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdatingSettingParam updatingParam = InstanceFactory.CreateUpdatingSettingParam();
+            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => updatingParam.Setting = null));
+                    () => updateParam.Setting = null));
         }
     }
 }

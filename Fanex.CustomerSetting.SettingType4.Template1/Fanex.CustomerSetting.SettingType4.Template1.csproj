@@ -70,10 +70,10 @@
     <Compile Include="Constants\ProductStatusConstants.cs" />
     <Compile Include="Constants\ProductStatusErrorCode.cs" />
     <Compile Include="Constants\ProductStatusMessageType.cs" />
-    <Compile Include="DataAccesses\SettingType4DataAccess.cs" />
+    <Compile Include="DataAccesses\IProductStatusDataAccess.cs" />
+    <Compile Include="DataAccesses\ProductStatusDataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Handlers\SettingType4PostTasks.cs" />
     <Compile Include="Models\ProductStatusItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ProductStatusMessage.Designer.cs">
@@ -82,6 +82,7 @@
       <DependentUpon>ProductStatusMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ProductStatusMessageService.cs" />
+    <Compile Include="Services\SettingType4Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

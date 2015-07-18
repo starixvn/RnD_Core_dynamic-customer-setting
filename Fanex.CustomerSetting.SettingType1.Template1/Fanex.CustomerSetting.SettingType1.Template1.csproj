@@ -74,18 +74,14 @@
     <Compile Include="Constants\PTMessageType.cs" />
     <Compile Include="Constants\PTConstants.cs" />
     <Compile Include="Constants\PTErrorCode.cs" />
-    <Compile Include="DataAccesses\SettingType1DataAccess.cs" />
-    <Compile Include="DataAccesses\IMemberGroupDataAccess.cs" />
-    <Compile Include="DataAccesses\MemberGroupDataAccess.cs" />
+    <Compile Include="DataAccesses\IPTDataAccess.cs" />
+    <Compile Include="DataAccesses\PTDataAccess.cs" />
     <Compile Include="Dtos\Messages\DownlinePTViolationMainMessage.cs" />
     <Compile Include="Dtos\Messages\DownlinePTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\MaxPTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\MinMaxPTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\MinPTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\WrongPTSubMessage.cs" />
-    <Compile Include="Dtos\UpdateMultipleMemberPTParam.cs" />
-    <Compile Include="Handlers\SettingType1PostTasks.cs" />
-    <Compile Include="Handlers\SettingType1PreTasks.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentPTOnMemberItem.cs" />
     <Compile Include="Models\PTSettingType.cs" />
@@ -101,9 +97,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PTMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\IMemberGroupService.cs" />
-    <Compile Include="Services\MemberGroupService.cs" />
     <Compile Include="Services\PTMessageService.cs" />
+    <Compile Include="Services\SettingType1Service.cs" />
     <Compile Include="Utilities\PTFormatter.cs" />
   </ItemGroup>
   <ItemGroup>

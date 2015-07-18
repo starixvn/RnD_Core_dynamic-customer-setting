@@ -107,11 +107,10 @@
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="Dtos\Params\QuerySettingParamTest.cs" />
-    <Compile Include="Dtos\Params\UpdatingMultipleSettingParamTests.cs" />
-    <Compile Include="Dtos\Params\UpdatingSettingParamTests.cs" />
+    <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
+    <Compile Include="Dtos\Params\UpdateSettingParamTests.cs" />
     <Compile Include="Enumeration\UserLevelTest.cs" />
     <Compile Include="InstanceFactory.cs" />
-    <Compile Include="Handlers\SettingPostTasksTests.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
     <Compile Include="Models\SettingTests.cs" />
@@ -124,11 +123,11 @@
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingServiceTestsUpdateCustomerSetting.cs" />
     <Compile Include="Services\SettingServiceTestsUpdateMultipleCustomerSetting.cs" />
-    <Compile Include="Services\ValidationServiceTestsValidateUpdatingMultipleSetting.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateUpdateMultipleSettingAction.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
     <Compile Include="Services\SettingServiceTestsGetCustomerSetting.cs" />
-    <Compile Include="Services\ValidationServiceTestsValidateQuerySetting.cs" />
-    <Compile Include="Services\ValidationServiceTestsValidateUpdatingSetting.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateQuerySettingAction.cs" />
+    <Compile Include="Services\ValidationServiceTestsValidateUpdateSettingAction.cs" />
     <Compile Include="Utilz\LanguageNameConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>

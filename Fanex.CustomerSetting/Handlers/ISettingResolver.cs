@@ -2,13 +2,10 @@
 {
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Services;
 
     public interface ISettingResolver
     {
-        ISettingTypeDataAccess ResolveSettingDataAccess(SettingType settingType);
-
-        SettingPreTasks ResolveSettingPreTasks(SettingType settingType);
-
-        SettingPostTasks ResolveSettingPostTasks(SettingType settingType);
+        ISettingTypeService ResolveSettingTypeServce(SettingType settingType);
     }
 }

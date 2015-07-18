@@ -22,7 +22,7 @@
     [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
-    public class ValidationServiceTestsValidateUpdatingMultipleSetting
+    public class ValidationServiceTestsValidateUpdateMultipleSettingAction
     {
         private ISettingContext _settingContext;
         private IValidationService _validationService;
@@ -53,82 +53,60 @@
             _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.Success);
         }
 
-        private void AssumeValidateUpdatingSettingIsSuccessful()
+        private void AssumeValidateUpdateSettingIsSuccessful()
         {
-            _validationService.ValidateUpdatingSetting(Arg.Any<UpdatingSettingParam>()).Returns(Result.Success);
+            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateSettingParam>()).Returns(Result.Success);
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_Always_CallValidateUpdatingSetting()
+        public void ValidateUpdateMultipleSetting_Always_CallValidateUpdateSetting()
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, Level.Member, 1, Level.Agent);
+            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
 
             //// Assert
-            _validationService.Received().ValidateUpdatingSetting(
-                Arg.Is<UpdatingSettingParam>(updateParam =>
-                    updateParam.Setting.CustomerId == updatingMultipleSettingParam.Setting.CustomerId
-                    && updateParam.UplineLevel == updatingMultipleSettingParam.UplineLevel
-                    && updateParam.Setting.ProductId == updatingMultipleSettingParam.Setting.ProductId));
+            _validationService.Received().ValidateUpdateSettingAction(
+                Arg.Is<UpdateSettingParam>(updateParam =>
+                    updateParam.Setting.CustomerId == updateMultipleSettingParam.Setting.CustomerId
+                    && updateParam.UplineLevel == updateMultipleSettingParam.UplineLevel
+                    && updateParam.Setting.ProductId == updateMultipleSettingParam.Setting.ProductId));
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerIsMember_AlwaysCallValidatePermissionMultiple()
+        public void ValidateUpdateMultipleSetting_CustomerIsMember_AlwaysCallValidatePermissionMultiple()
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, Level.Member, 1, Level.Agent);
+            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
 
             AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
-            AssumeValidateUpdatingSettingIsSuccessful();
+            AssumeValidateUpdateSettingIsSuccessful();
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
 
             //// Assert
             _validationDataAccess.Received().ValidatePermissionMultiple(
                 Arg.Is<int>(actorId => actorId == _settingContext.Actor.Id),
-                Arg.Is<string>(memberIds => memberIds == string.Join(",", updatingMultipleSettingParam.CustomerIds)));
+                Arg.Is<string>(memberIds => memberIds == string.Join(",", updateMultipleSettingParam.CustomerIds)));
         }
 
         [Test]
-        public void ValidateUpdatingMultipleSetting_CustomerIsNotMember_DontCallValidatePermissionMultiple()
+        public void ValidateUpdateMultipleSetting_CustomerIsNotMember_DontCallValidatePermissionMultiple()
         {
             //// Arrange
-            var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam();
+            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
-            AssumeValidateUpdatingSettingIsSuccessful();
+            AssumeValidateUpdateSettingIsSuccessful();
 
             //// Act
-            _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
+            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
 
             //// Assert
             _validationDataAccess.DidNotReceive().ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>());
         }
-
-        ////[Test]
-        ////public void UpdateMultipleCustomerSetting_RaisedException_CallLogUpdatingMultipleCustomersSettingTypeError()
-        ////{
-        ////    //// Arrange
-        ////    var updatingMultipleSettingParam = InstanceFactory.CreateUpdatingMultipleSettingParam(1, CustomerLevel.Member, 1, CustomerLevel.Agent);
-        ////    AssumeValidateUpdatingSettingIsSuccessful();
-
-        ////    //// Simulate throw exception
-        ////    var expectedException = new Exception("Exception");
-        ////    _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(x => { throw expectedException; });
-
-        ////    //// Act
-        ////    _validationService.ValidateUpdatingMultipleSetting(updatingMultipleSettingParam);
-
-        ////    //// Assert
-        ////    _loggingService.Received().LogValidatingUpdatingMultipleError(
-        ////        Arg.Is<IEnumerable<int>>(customerIds => string.Join(",", customerIds) == string.Join(",", updatingMultipleSettingParam.CustomerIds)),
-        ////        Arg.Is<CustomerLevel?>(uplineLevel => uplineLevel == updatingMultipleSettingParam.UplineLevel),
-        ////        Arg.Is<byte>(productId => productId == updatingMultipleSettingParam.Setting.ProductId),
-        ////        Arg.Any<Exception>());
-        ////}
     }
 }

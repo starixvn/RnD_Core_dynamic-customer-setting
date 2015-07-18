@@ -143,7 +143,7 @@
             masterProductStatusItem.Downline.IsDisabled = isDisbaledProductStatus;
 
             //// Act
-            var updateParam = new UpdatingSettingParam(masterSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateSettingParam(masterSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
@@ -214,7 +214,7 @@
             masterProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updatingMultipleParam = new UpdatingMultipleSettingParam(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
+            var updatingMultipleParam = new UpdateMultipleSettingParam(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert

@@ -151,7 +151,7 @@
             agentProductStatusItem.Downline.IsDisabled = isDisabledProductStatus;
 
             //// Act
-            var updateParam = new UpdatingSettingParam(agentSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateSettingParam(agentSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
@@ -231,7 +231,7 @@
             agentProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
-            var updatingMultipleParam = new UpdatingMultipleSettingParam(agentSetting, agentIds, agentNames, querySettingParam.UplineLevel);
+            var updatingMultipleParam = new UpdateMultipleSettingParam(agentSetting, agentIds, agentNames, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
 
             //// Assert

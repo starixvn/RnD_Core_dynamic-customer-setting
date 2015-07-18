@@ -1,12 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.DataAccesses
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -18,9 +14,9 @@
     using Fanex.CustomerSetting.SettingType3.Template1.Models;
     using Fanex.Data;
 
-    public class SettingType3DataAccess : BaseDataAccess, ISettingTypeDataAccess
+    public class CommissionDataAccess : BaseDataAccess, ICommissionDataAccess
     {
-        private static readonly Dictionary<byte, string> QueryCommissionSpKeys = new Dictionary<byte, string> 
+        private static readonly Dictionary<byte, string> QueryCommissionSpKeys = new Dictionary<byte, string>
         {
             { Level.Super.Value, "CustSetting_SuperCommissionSelect" },
             { Level.Master.Value, "CustSetting_MasterCommissionSelect" },
@@ -28,9 +24,7 @@
             { Level.Member.Value, "CustSetting_MemberCommissionSelect" }
         };
 
-        public SettingType GetCustomerSettingType(
-            User actor,
-            QuerySettingParam queryParam)
+        public SettingType GetCustomerCommission(QuerySettingParam queryParam)
         {
             var commissionItemDtoList = ReadCommissionItemsRawData(queryParam);
 
@@ -67,20 +61,20 @@
             return QueryCommissionSpKeys[customerLevel.Value] + keySuffix;
         }
 
-        public IResult UpdateCustomerSettingType(
+        public IResult UpdateCustomerCommission(
             ISettingContext settingContext,
             int customerId,
             Level customerLevel,
-            SettingType settingType,
-            byte productId, 
-            Level uplineLevel)
+            Level uplineLevel,
+            byte productId,
+            string commissionXml)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
             param.Add("subaccid", settingContext.Actor.SubAccountId);
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
-            param.Add("discount", settingType.ToXml());
+            param.Add("discount", commissionXml);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);

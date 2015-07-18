@@ -8,7 +8,7 @@
 
     public static class InstanceFactory
     {
-        public static UpdatingSettingParam CreateUpdatingSettingParam(
+        public static UpdateSettingParam CreateUpdateSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
@@ -16,7 +16,7 @@
         {
             customerLevel = customerLevel ?? Level.Master;
             var setting = CreateCustomerSetting(customerId, customerLevel, productId);
-            return new UpdatingSettingParam(setting, uplineLevel);
+            return new UpdateSettingParam(setting, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(
@@ -64,7 +64,7 @@
             };
         }
 
-        public static UpdatingMultipleSettingParam CreateUpdatingMultipleSettingParam(
+        public static UpdateMultipleSettingParam CreateUpdateMultipleSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
@@ -80,13 +80,13 @@
                         InstanceFactory.CreateCustomerSettingType(4, 1)
                     };
 
-            var updatingMultipleParam = new UpdatingMultipleSettingParam(
+            var updateMultipleParam = new UpdateMultipleSettingParam(
                 new Setting(customerId, customerLevel, productId, settingTypes),
                 new List<int> { customerId, 2 },
                 new List<string> { "Username1", "Username2" },
                 uplineLevel);
 
-            return updatingMultipleParam;
+            return updateMultipleParam;
         }
 
         public static QuerySettingParam CreateQuerySettingParam(

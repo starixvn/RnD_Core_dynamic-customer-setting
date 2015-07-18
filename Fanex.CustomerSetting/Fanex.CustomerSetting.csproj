@@ -109,9 +109,8 @@
     <Compile Include="Dtos\Messages\MainMessage.cs" />
     <Compile Include="Dtos\Messages\SimpleMessage.cs" />
     <Compile Include="Dtos\ProductName.cs" />
-    <Compile Include="Dtos\Results\PreUpdateMultipleCustomersSettingTypeResult.cs" />
     <Compile Include="Dtos\Results\SettingResult.cs" />
-    <Compile Include="Dtos\Results\UpdatingSettingResult.cs" />
+    <Compile Include="Dtos\Results\UpdateSettingResult.cs" />
     <Compile Include="Enumerations\SettingLevel.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\ValidationDataAccess.cs" />
-    <Compile Include="DataAccesses\ISettingTypeDataAccess.cs" />
     <Compile Include="DataAccesses\IValidationDataAccess.cs" />
     <Compile Include="Enumerations\Level.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
@@ -129,8 +127,8 @@
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
-    <Compile Include="Dtos\Params\UpdatingMultipleSettingParam.cs" />
-    <Compile Include="Dtos\Params\UpdatingSettingParam.cs" />
+    <Compile Include="Dtos\Params\UpdateMultipleSettingParam.cs" />
+    <Compile Include="Dtos\Params\UpdateSettingParam.cs" />
     <Compile Include="Dtos\Params\QuerySettingParam.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
@@ -143,9 +141,11 @@
     <Compile Include="Dtos\Results\IResult.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Impl\BaseMessageService.cs" />
+    <Compile Include="Services\Impl\BaseSettingTypeService.cs" />
     <Compile Include="Services\Impl\QuerySettingService.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
     <Compile Include="Services\IQuerySettingService.cs" />
+    <Compile Include="Services\ISettingTypeService.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\IUpdateSettingService.cs" />
     <Compile Include="Services\Impl\UpdateSettingService.cs" />
@@ -153,8 +153,6 @@
     <Compile Include="Services\Impl\ValidationService.cs" />
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\IValidationService.cs" />
-    <Compile Include="Handlers\SettingPostTasks.cs" />
-    <Compile Include="Handlers\SettingPreTasks.cs" />
     <Compile Include="Utilz\LanguageNameConverter.cs" />
   </ItemGroup>
   <ItemGroup>

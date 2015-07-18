@@ -6,8 +6,8 @@
 
     public interface IUpdateSettingService
     {
-        IResult UpdateCustomerSetting(UpdatingSettingParam updatingParam);
+        IResult UpdateCustomerSetting(UpdateSettingParam updateParam);
 
-        IResult UpdateMultipleCustomerSetting(UpdatingMultipleSettingParam updatingMultipleParam);
+        IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParam updateMultipleParam);
     }
 }

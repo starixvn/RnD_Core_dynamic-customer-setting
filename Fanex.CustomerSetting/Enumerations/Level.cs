@@ -61,7 +61,7 @@
 
         public bool IsDirectUplineLevelOf(Level customerLevel)
         {
-            return IsDirectUplineLevelOf(customerLevel);
+            return IsDirectUplineLevelOf(customerLevel.Value);
         }
 
         public bool IsDirectDownlineLevelOf(Level uplineLevel)
