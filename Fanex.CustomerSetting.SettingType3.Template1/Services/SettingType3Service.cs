@@ -8,21 +8,23 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
+    using Fanex.Logging;
 
     public class SettingType3Service : BaseSettingTypeService, ISettingTypeService
     {
         private readonly ICommissionDataAccess _commissionDataAccess;
 
         public SettingType3Service()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SettingType3Service(
             IMessageService messageService,
             IResourceService resourceService,
+            ILogger logger,
             ICommissionDataAccess commissionDataAccess)
-            : base(resourceService)
+            : base(resourceService, logger)
         {
             MessageService = messageService ?? new CommissionMessageService(ResourceService);
             _commissionDataAccess = commissionDataAccess ?? new CommissionDataAccess();

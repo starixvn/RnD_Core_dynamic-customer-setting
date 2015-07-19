@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -12,7 +11,6 @@
     using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.Logging;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Service class for get single customer setting/ update single/multiple setting
@@ -59,7 +57,7 @@
                 return validationResult;
             }
 
-            return UpdateSingleCustomerSetting(updateParam);
+            return new UpdateSettingResult(UpdateCustomerSettingTypes(updateParam));
         }
 
         private IResult ValidateUpdateSettingAction(UpdateSettingParam updateParam)
@@ -67,7 +65,7 @@
             return _validationService.ValidateUpdateSettingAction(updateParam);
         }
 
-        private UpdateSettingResult UpdateSingleCustomerSetting(UpdateSettingParam updateParam)
+        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateSettingParam updateParam)
         {
             var settingTypes = updateParam.Setting.SettingTypes;
             var customerId = updateParam.Setting.CustomerId;
@@ -81,12 +79,7 @@
             {
                 try
                 {
-                    updateSettingTypeResult = UpdateCustomerSettingType(
-                        customerId,
-                        customerLevel,
-                        settingType,
-                        productId,
-                        uplineLevel);
+                    updateSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +97,7 @@
                 settingTypeResults.Add(updateSettingTypeResult);
             }
 
-            return new UpdateSettingResult(settingTypeResults);
+            return settingTypeResults;
         }
 
         private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
@@ -115,11 +108,11 @@
         }
 
         private void LogUpdateCustomerSettingTypeError(
-            int customerId, 
-            Level customerLevel, 
-            Level uplineLevel, 
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
             byte productId,
-            SettingType customerSettingType, 
+            SettingType customerSettingType,
             Exception ex)
         {
             var customerSettingException = new CustomerSettingException(ex.Message, ex);
@@ -165,16 +158,9 @@
             {
                 try
                 {
-                    var settingTypeService = _settingResolver.ResolveSettingTypeServce(settingType);
-                    var subResults = settingTypeService.UpdateMultipleCustomersSettingType(
-                            _settingContext,
-                            customerIds,
-                            customerLevel,
-                            uplineLevel,
-                            productId,
-                            settingType);
+                    var updateResults = UpdateMultipleCustomersSettingType(customerIds, customerLevel, uplineLevel, productId, settingType);
 
-                    results.AddRange(subResults);
+                    results.AddRange(updateResults);
                 }
                 catch (Exception ex)
                 {
@@ -193,6 +179,19 @@
             }
 
             return results;
+        }
+
+        private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        {
+            var settingTypeService = _settingResolver.ResolveSettingTypeServce(settingType);
+
+            return settingTypeService.UpdateMultipleCustomersSettingType(
+                    _settingContext,
+                    customerIds,
+                    customerLevel,
+                    uplineLevel,
+                    productId,
+                    settingType);
         }
 
         private UpdateSettingResult MapUpdateSettingResultWithCustomerName(

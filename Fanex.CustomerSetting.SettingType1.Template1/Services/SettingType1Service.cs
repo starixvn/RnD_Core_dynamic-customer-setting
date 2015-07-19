@@ -11,22 +11,23 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
-    using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
+    using Fanex.Logging;
 
     public class SettingType1Service : BaseSettingTypeService, ISettingTypeService
     {
         private readonly IPTDataAccess _positionTakingDataAccess;
 
         public SettingType1Service()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SettingType1Service(
             IMessageService messageService,
             IResourceService resourceService,
+            ILogger logger,
             IPTDataAccess positionTakingDataAccess)
-            : base(resourceService)
+            : base(resourceService, logger)
         {
             MessageService = messageService ?? new PTMessageService(ResourceService);
             _positionTakingDataAccess = positionTakingDataAccess ?? new PTDataAccess();
@@ -59,21 +60,30 @@
             byte productId,
             SettingType settingType)
         {
-            var groupedMemberIds = GetGroupedMemberIds(customerIds);
+            IEnumerable<SettingResult> results = new List<SettingResult>();
+            var ungroupedCustomerIds = customerIds;
 
-            var ungroupedMemberIds = customerIds.Except(groupedMemberIds);
+            if (customerLevel.IsMemberLevel)
+            {
+                var groupedMemberIds = GetGroupedMemberIds(customerIds);
 
-            var updateGroupedMemberResults = UpdateGroupedMembersPT(settingContext, groupedMemberIds, uplineLevel, settingType);
+                if (groupedMemberIds.Any())
+                {
+                    results = UpdateGroupedMembersPT(settingContext, groupedMemberIds, uplineLevel, settingType);
 
-            var updatedUnGroupedMemberResults = base.UpdateMultipleCustomersSettingType(
+                    ungroupedCustomerIds = customerIds.Except(groupedMemberIds);
+                }
+            }
+
+            var updateUnGroupedCustomerResults = base.UpdateMultipleCustomersSettingType(
                                                                 settingContext,
-                                                                ungroupedMemberIds,
+                                                                ungroupedCustomerIds,
                                                                 customerLevel,
                                                                 uplineLevel,
                                                                 productId,
                                                                 settingType);
 
-            return updateGroupedMemberResults.Concat(updatedUnGroupedMemberResults);
+            return results.Concat(updateUnGroupedCustomerResults);
         }
 
         private IEnumerable<int> GetGroupedMemberIds(IEnumerable<int> memberIds)
@@ -87,11 +97,6 @@
             Level uplineLevel,
             SettingType settingType)
         {
-            if (groupedMemberIds == null || !groupedMemberIds.Any())
-            {
-                return Enumerable.Empty<SettingResult>();
-            }
-
             var updatedResult = _positionTakingDataAccess.UpdateGroupedMembersSetting(
                 settingContext.Actor.Id,
                 settingContext.Actor.SubAccountId,
@@ -100,10 +105,10 @@
                 settingType.ToXml(),
                 settingContext.IP);
 
-            return SeparateResultForEachCustomer(updatedResult, groupedMemberIds);
+            return SeparateResultForEachMember(updatedResult, groupedMemberIds);
         }
 
-        private IEnumerable<SettingResult> SeparateResultForEachCustomer(IResult result, IEnumerable<int> groupedMemberIds)
+        private IEnumerable<SettingResult> SeparateResultForEachMember(IResult result, IEnumerable<int> groupedMemberIds)
         {
             var settingResults = new List<SettingResult>();
 

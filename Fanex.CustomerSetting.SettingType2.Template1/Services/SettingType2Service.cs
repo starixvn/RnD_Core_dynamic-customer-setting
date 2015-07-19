@@ -8,21 +8,23 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
+    using Fanex.Logging;
 
     public class SettingType2Service : BaseSettingTypeService, ISettingTypeService
     {
         private readonly IBetLimitDataAccess _betLimitDataAccess;
 
         public SettingType2Service()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SettingType2Service(
             IMessageService messageService,
             IResourceService resourceService,
+            ILogger logger,
             IBetLimitDataAccess betLimitDataAccess)
-            : base(resourceService)
+            : base(resourceService, logger)
         {
             MessageService = messageService ?? new BetLimitMessageService(ResourceService);
             _betLimitDataAccess = betLimitDataAccess ?? new BetLimitDataAccess();

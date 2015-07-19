@@ -9,16 +9,23 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.Logging;
 
     public abstract class BaseSettingTypeService : ISettingTypeService
     {
-        protected BaseSettingTypeService(IResourceService resourceService = null)
+        protected BaseSettingTypeService(
+            IResourceService resourceService,
+            ILogger logger)
         {
             ResourceService = resourceService ?? new ResourceService();
+            Logger = logger ?? Logging.Logger.Log;
         }
 
         protected IResourceService ResourceService { get; set; }
+
+        protected ILogger Logger { get; set; }
 
         protected IMessageService MessageService { get; set; }
 
@@ -100,15 +107,43 @@
         public virtual IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(ISettingContext settingContext, IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
             var settingTypeResults = new List<SettingResult>();
+            SettingResult settingTypeResult = null;
 
             foreach (var customerId in customerIds)
             {
-                var updateResult = UpdateCustomerSettingType(settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                try
+                {
+                    //// Faced with duplication code here, i'm trying to findout solution.
+                    settingTypeResult = UpdateCustomerSettingType(settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                }
+                catch (Exception ex)
+                {
+                    settingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, settingType.Id, settingType.Name);
 
-                settingTypeResults.Add(updateResult);
+                    LogUpdateCustomerSettingTypeError(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, ex);
+                }
+
+                settingTypeResults.Add(settingTypeResult);
             }
 
             return settingTypeResults;
+        }
+
+        private void LogUpdateCustomerSettingTypeError(
+            ISettingContext settingContext,
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
+            SettingType customerSettingType,
+            Exception ex)
+        {
+            var customerSettingException = new CustomerSettingException(ex.Message, ex);
+            customerSettingException.SetSettingContextInfo("Update Setting", settingContext);
+            customerSettingException.SetCustomerInfo(customerId, customerLevel, uplineLevel);
+            customerSettingException.SetProductInfo(productId, customerSettingType);
+
+            Logger.Error(ex.Message, ex);
         }
     }
 }

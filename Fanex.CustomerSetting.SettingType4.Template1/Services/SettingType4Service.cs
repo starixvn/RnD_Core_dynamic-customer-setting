@@ -8,21 +8,23 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
+    using Fanex.Logging;
 
     public class SettingType4Service : BaseSettingTypeService, ISettingTypeService
     {
         private readonly IProductStatusDataAccess _productStatusDataAccess;
 
         public SettingType4Service()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SettingType4Service(
             IMessageService messageService,
             IResourceService resourceService,
+            ILogger logger,
             IProductStatusDataAccess productDataAccess)
-            : base(resourceService)
+            : base(resourceService, logger)
         {
             MessageService = messageService ?? new ProductStatusMessageService(ResourceService);
             _productStatusDataAccess = productDataAccess ?? new ProductStatusDataAccess();
