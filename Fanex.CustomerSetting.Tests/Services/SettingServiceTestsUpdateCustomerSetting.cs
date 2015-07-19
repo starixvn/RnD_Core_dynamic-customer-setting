@@ -22,7 +22,7 @@
         private IValidationService _validationService;
         private IProductService _productService;
         private ILogger _logger;
-        private ISettingResolver _settingResolver;
+        private ISettingTypeServiceFactory _settingResolver;
         private ISettingTypeService _settingTypeService;
 
         [SetUp]
@@ -32,7 +32,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingResolver>();
+            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
 
@@ -99,7 +99,7 @@
             _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
-            _settingResolver.Received(updateParam.Setting.SettingTypes.Count()).ResolveSettingTypeServce(Arg.Any<SettingType>());
+            _settingResolver.Received(updateParam.Setting.SettingTypes.Count()).CreateInstance(Arg.Any<SettingType>());
         }
 
         private void SetupSettingTypeServiceStub(bool isReturnSuccessfulResult = true)
@@ -114,7 +114,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(result);
 
-            _settingResolver.ResolveSettingTypeServce(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]

@@ -13,9 +13,9 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.Logging;
 
-    public abstract class BaseSettingTypeService : ISettingTypeService
+    public abstract class SettingTypeService : ISettingTypeService
     {
-        protected BaseSettingTypeService(
+        protected SettingTypeService(
             IResourceService resourceService,
             ILogger logger)
         {

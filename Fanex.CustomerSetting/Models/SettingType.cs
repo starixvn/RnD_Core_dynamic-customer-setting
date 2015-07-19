@@ -9,11 +9,7 @@
     public class SettingType
     {
         private const string SettingTypeXmlFormat = "<ROOT>{0}</ROOT>";
-
-        public SettingType()
-        {
-            this.SettingItems = Enumerable.Empty<ISettingItem>();
-        }
+        private IEnumerable<ISettingItem> _settingItems;
 
         public short Id { get; set; }
 
@@ -23,7 +19,23 @@
 
         public byte SettingLevel { get; set; }
 
-        public IEnumerable<ISettingItem> SettingItems { get; set; }
+        public IEnumerable<ISettingItem> SettingItems
+        {
+            get
+            {
+                if (_settingItems == null)
+                {
+                    _settingItems = Enumerable.Empty<ISettingItem>();
+                }
+
+                return _settingItems;
+            }
+
+            set
+            {
+                _settingItems = value;
+            }
+        }
 
         /// <summary>
         /// For Controller create exactly concrete class when get json from client.

@@ -19,7 +19,7 @@
         private readonly IProductService _productService;
         private readonly IResourceService _resourceService;
         private readonly ILogger _logger;
-        private readonly ISettingResolver _settingResolver;
+        private readonly ISettingTypeServiceFactory _settingResolver;
         private readonly IDynamicRepository _dynamicRepository;
 
         public QuerySettingService(
@@ -28,7 +28,7 @@
             IProductService productService = null,
             IResourceService resourceService = null,
             ILogger logger = null,
-            ISettingResolver settingResolver = null,
+            ISettingTypeServiceFactory settingResolver = null,
             IDynamicRepository dynamicRepository = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -39,17 +39,16 @@
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
             _logger = logger ?? Logger.Log;
-            _settingResolver = settingResolver ?? new SettingResolver();
+            _settingResolver = settingResolver ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public ISetting GetCustomerSetting(QuerySettingParam queryParam)
         {
-            ValidateQuerySetting(queryParam);
+            Validate(queryParam);
 
-            // TODO should we use Task here
-            var product = GetProduct(queryParam.ProductId);
             var customerInfo = GetCustomerInfo(queryParam.CustomerId);
+            var product = GetProductInfo(queryParam.ProductId);
             var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
 
             ISetting setting = new Setting(
@@ -63,7 +62,7 @@
             return setting;
         }
 
-        private void ValidateQuerySetting(QuerySettingParam queryParam)
+        private void Validate(QuerySettingParam queryParam)
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
@@ -80,7 +79,7 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        private Product GetProduct(byte productId)
+        private Product GetProductInfo(byte productId)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId);
             var productName = _resourceService.GetProductName(productId, _settingContext.Language);
@@ -134,7 +133,7 @@
 
             try
             {
-                var settingTypeService = _settingResolver.ResolveSettingTypeServce(productSettingType);
+                var settingTypeService = _settingResolver.CreateInstance(productSettingType);
 
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
                 customerSettingType.Id = productSettingType.Id;

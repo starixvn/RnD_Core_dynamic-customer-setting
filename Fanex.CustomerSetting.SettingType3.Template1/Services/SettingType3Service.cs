@@ -10,7 +10,7 @@
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
     using Fanex.Logging;
 
-    public class SettingType3Service : BaseSettingTypeService, ISettingTypeService
+    public class SettingType3Service : SettingTypeService, ISettingTypeService
     {
         private readonly IDataAccess _commissionDataAccess;
 

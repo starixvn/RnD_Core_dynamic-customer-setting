@@ -2,26 +2,27 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Concurrent;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
-    public class SettingResolver : ISettingResolver
+    public class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {
         private const string CacheKeyFormat = "{0}_{1}";
         private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
         private const string SettingTypeServiceFormat = "{0}.Services.SettingType{1}Service";
         private const string TypeWithAssemblyFormat = "{0}, {1}";
 
-        private static Dictionary<string, ISettingTypeService> _settingTypeServiceCached = new Dictionary<string, ISettingTypeService>();
+        private static ConcurrentDictionary<string, ISettingTypeService> _settingTypeServiceCached = new ConcurrentDictionary<string, ISettingTypeService>();
         
-        public ISettingTypeService ResolveSettingTypeServce(SettingType settingType)
+        public ISettingTypeService CreateInstance(SettingType settingType)
         {
             ISettingTypeService settingTypeService = null;
             var cacheKey = GenerateCacheKey(settingType);
 
-            if (SettingResolver._settingTypeServiceCached.ContainsKey(cacheKey))
+            if (SettingTypeServiceFactory._settingTypeServiceCached.ContainsKey(cacheKey))
             {
                 settingTypeService = GetSettingTypeServiceFromCache(cacheKey);
             }
@@ -35,7 +36,7 @@
 
         private ISettingTypeService GetSettingTypeServiceFromCache(string cacheKey)
         {
-            return SettingResolver._settingTypeServiceCached[cacheKey];
+            return SettingTypeServiceFactory._settingTypeServiceCached[cacheKey];
         }
 
         private ISettingTypeService CreateSettingTypeServiceInstanceAndCache(SettingType settingType, string cacheKey)
@@ -47,7 +48,8 @@
             if (settingTypeServiceType != null)
             {
                 settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
-                SettingResolver._settingTypeServiceCached.Add(cacheKey, settingTypeService);
+
+                SettingTypeServiceFactory._settingTypeServiceCached.TryAdd(cacheKey, settingTypeService);
             }
 
             return settingTypeService;

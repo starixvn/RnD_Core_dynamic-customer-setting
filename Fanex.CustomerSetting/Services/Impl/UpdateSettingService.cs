@@ -23,13 +23,13 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly ILogger _logger;
-        private readonly ISettingResolver _settingResolver;
+        private readonly ISettingTypeServiceFactory _settingResolver;
 
         public UpdateSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             ILogger logger = null,
-            ISettingResolver settingResolver = null)
+            ISettingTypeServiceFactory settingResolver = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
@@ -37,7 +37,7 @@
             _settingContext = settingContext;
             _validationService = validationService ?? new ValidationService(_settingContext);
             _logger = logger ?? Logger.Log;
-            _settingResolver = settingResolver ?? new SettingResolver();
+            _settingResolver = settingResolver ?? new SettingTypeServiceFactory();
         }
 
         /// <summary>
@@ -102,7 +102,7 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
-            var settingTypeService = _settingResolver.ResolveSettingTypeServce(settingType);
+            var settingTypeService = _settingResolver.CreateInstance(settingType);
 
             return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
         }
@@ -183,7 +183,7 @@
 
         private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
-            var settingTypeService = _settingResolver.ResolveSettingTypeServce(settingType);
+            var settingTypeService = _settingResolver.CreateInstance(settingType);
 
             return settingTypeService.UpdateMultipleCustomersSettingType(
                     _settingContext,

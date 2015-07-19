@@ -4,8 +4,8 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
-    public interface ISettingResolver
+    public interface ISettingTypeServiceFactory
     {
-        ISettingTypeService ResolveSettingTypeServce(SettingType settingType);
+        ISettingTypeService CreateInstance(SettingType settingType);
     }
 }

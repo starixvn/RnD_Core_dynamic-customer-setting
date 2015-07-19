@@ -26,7 +26,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private ILogger _logger;
-        private ISettingResolver _settingResolver;
+        private ISettingTypeServiceFactory _settingResolver;
 
         private ISettingTypeService _settingTypeService;
 
@@ -38,7 +38,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingResolver>();
+            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
@@ -263,7 +263,7 @@
             _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingResolver.Received(dummySettingTypes.Count()).ResolveSettingTypeServce(Arg.Any<SettingType>());
+            _settingResolver.Received(dummySettingTypes.Count()).CreateInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -286,7 +286,7 @@
         {
             var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
             _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QuerySettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
-            _settingResolver.ResolveSettingTypeServce(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         ////[Test]

@@ -23,7 +23,7 @@
         private IValidationService _validationService;
         private IProductService _productService;
         private ILogger _logger;
-        private ISettingResolver _settingResolver;
+        private ISettingTypeServiceFactory _settingResolver;
         private ISettingTypeService _settingTypeService;
 
         [SetUp]
@@ -33,7 +33,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingResolver>();
+            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
 
@@ -99,7 +99,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.ResolveSettingTypeServce(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]
@@ -115,7 +115,7 @@
 
             //// Assert
             var numOfSettingTypes = updateMultipleSettingParam.Setting.SettingTypes.Count();
-            _settingResolver.Received(numOfSettingTypes).ResolveSettingTypeServce(Arg.Any<SettingType>());
+            _settingResolver.Received(numOfSettingTypes).CreateInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -202,7 +202,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.ResolveSettingTypeServce(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
 
             //// Act
             var actualResult = _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
 
@@ -105,6 +106,11 @@
         {
             get
             {
+                if (_settingType == null)
+                {
+                    _settingType = Enumerable.Empty<SettingType>();
+                }
+
                 return _settingType;
             }
 

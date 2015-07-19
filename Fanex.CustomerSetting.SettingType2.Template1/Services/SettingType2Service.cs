@@ -10,7 +10,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
     using Fanex.Logging;
 
-    public class SettingType2Service : BaseSettingTypeService, ISettingTypeService
+    public class SettingType2Service : SettingTypeService, ISettingTypeService
     {
         private readonly IDataAccess _betLimitDataAccess;
 

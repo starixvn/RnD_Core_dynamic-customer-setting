@@ -64,22 +64,22 @@
             return !IsDirectUplineOf(downlineLevelValue);
         }
 
-        public bool IsDirectUplineOf(Level customerLevel)
+        public bool IsDirectUplineOf(Enumeration customerLevel)
         {
             return IsDirectUplineOf(customerLevel.Value);
         }
 
-        public bool IsNotDirectUplineOf(Level customerLevel)
+        public bool IsNotDirectUplineOf(Enumeration customerLevel)
         {
             return !IsDirectUplineOf(customerLevel);
         }
 
-        public bool IsDirectDownlineOf(Level uplineLevel)
+        public bool IsDirectDownlineOf(Enumeration uplineLevel)
         {
             return GapBetweenTwoLevels(uplineLevel.Value, this.Value) == 1;
         }
 
-        public bool IsNotDirectDownlineOf(Level uplineLevel)
+        public bool IsNotDirectDownlineOf(Enumeration uplineLevel)
         {
             return !IsDirectDownlineOf(uplineLevel);
         }
