@@ -19,19 +19,19 @@
         {
             switch (msgType)
             {
-                case PTMessageType.WrongPT:
+                case MessageType.WrongPT:
                     return TranslateMessage<WrongPTSubMessage>(rawMessage, settingLevel, language);
 
-                case PTMessageType.MinPTViolation:
+                case MessageType.MinPTViolation:
                     return TranslateMessage<MinPTViolationSubMessage>(rawMessage, settingLevel, language);
 
-                case PTMessageType.MaxPTViolation:
+                case MessageType.MaxPTViolation:
                     return TranslateMessage<MaxPTViolationSubMessage>(rawMessage, settingLevel, language);
 
-                case PTMessageType.MinMaxPTViolation:
+                case MessageType.MinMaxPTViolation:
                     return TranslateMessage<MinMaxPTViolationSubMessage>(rawMessage, settingLevel, language);
 
-                case PTMessageType.DownlinePTViolation:
+                case MessageType.DownlinePTViolation:
                     return TranslateDownlinePTViolationMessage(rawMessage, settingLevel, language);
 
                 default:

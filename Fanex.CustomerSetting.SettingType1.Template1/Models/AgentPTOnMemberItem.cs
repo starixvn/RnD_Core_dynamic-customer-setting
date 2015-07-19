@@ -25,10 +25,10 @@
 
         public override IResult Validate()
         {
-            if (A1 > PTConstants.MaxPTValue)
+            if (A1 > Constants.MaxPTValue)
             {
                 return new Result(
-                    PTErrorCode.PTExceedMaxValue,
+                    ErrorCode.PTExceedMaxValue,
                     PTMessage.PositionTakingCannotBeExceedMaxValue);
             }
 

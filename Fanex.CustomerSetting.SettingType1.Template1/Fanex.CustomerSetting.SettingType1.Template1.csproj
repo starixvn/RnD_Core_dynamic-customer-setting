@@ -79,11 +79,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\PTMessageType.cs" />
-    <Compile Include="Constants\PTConstants.cs" />
-    <Compile Include="Constants\PTErrorCode.cs" />
-    <Compile Include="DataAccesses\IPTDataAccess.cs" />
-    <Compile Include="DataAccesses\PTDataAccess.cs" />
+    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Constants\ErrorCode.cs" />
+    <Compile Include="DataAccesses\IDataAccess.cs" />
+    <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="Dtos\Messages\DownlinePTViolationMainMessage.cs" />
     <Compile Include="Dtos\Messages\DownlinePTViolationSubMessage.cs" />
     <Compile Include="Dtos\Messages\MaxPTViolationSubMessage.cs" />

@@ -56,25 +56,25 @@
 
         public override IResult Validate()
         {
-            if (S1 > PTConstants.MaxPTValue
-                || US1 > PTConstants.MaxPTValue)
+            if (S1 > Constants.MaxPTValue
+                || US1 > Constants.MaxPTValue)
             {
                 return new Result(
-                    PTErrorCode.PTExceedMaxValue,
+                    ErrorCode.PTExceedMaxValue,
                     PTMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (!IS1 && US1 > 0)
             {
                 return new Result(
-                    PTErrorCode.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet,
+                    ErrorCode.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet,
                     PTMessage.SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (IS1 && S1 > 0)
             {
                 return new Result(
-                    PTErrorCode.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet,
+                    ErrorCode.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet,
                     PTMessage.SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 

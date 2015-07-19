@@ -20,6 +20,7 @@
         {
             ISettingTypeService settingTypeService = null;
             var cacheKey = GenerateCacheKey(settingType);
+
             if (SettingResolver._settingTypeServiceCached.ContainsKey(cacheKey))
             {
                 settingTypeService = GetSettingTypeServiceFromCache(cacheKey);

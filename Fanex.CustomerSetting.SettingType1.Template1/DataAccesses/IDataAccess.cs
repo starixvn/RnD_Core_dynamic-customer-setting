@@ -10,7 +10,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos;
 
-    public interface IPTDataAccess
+    public interface IDataAccess
     {
         SettingType GetCustomerPT(QuerySettingParam queryParam);
 

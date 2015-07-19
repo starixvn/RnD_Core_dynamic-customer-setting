@@ -15,7 +15,7 @@
 
     public class SettingType1Service : BaseSettingTypeService, ISettingTypeService
     {
-        private readonly IPTDataAccess _positionTakingDataAccess;
+        private readonly IDataAccess _positionTakingDataAccess;
 
         public SettingType1Service()
             : this(null, null, null, null)
@@ -26,11 +26,11 @@
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,
-            IPTDataAccess positionTakingDataAccess)
+            IDataAccess positionTakingDataAccess)
             : base(resourceService, logger)
         {
             MessageService = messageService ?? new PTMessageService(ResourceService);
-            _positionTakingDataAccess = positionTakingDataAccess ?? new PTDataAccess();
+            _positionTakingDataAccess = positionTakingDataAccess ?? new DataAccess();
         }
 
         public override SettingType GetCustomerSettingType(
@@ -114,7 +114,7 @@
 
             foreach (int memberId in groupedMemberIds)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, memberId, PTConstants.SettingTypeId, Label.PositionTaking);
+                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, memberId, Constants.SettingTypeId, Label.PositionTaking);
 
                 settingResults.Add(settingResult);
             }

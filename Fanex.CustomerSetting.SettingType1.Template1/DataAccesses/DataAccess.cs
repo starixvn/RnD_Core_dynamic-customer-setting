@@ -13,7 +13,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
 
-    public class PTDataAccess : BaseDataAccess, IPTDataAccess
+    public class DataAccess : BaseDataAccess, IDataAccess
     {
         private static readonly Dictionary<byte, string> UpdateSmaPTSpKeys = new Dictionary<byte, string>
         {
@@ -74,8 +74,8 @@
 
             var settingKey = CreateQueryPTSPSettingKey(
                 queryParam.CustomerLevel,
-                PTConstants.SettingTypeId,
-                PTConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
@@ -106,7 +106,7 @@
 
         private Hashtable CreateQueryPTSettingSpParam(QuerySettingParam querySettingParam)
         {
-            var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, PTConstants.SettingTypeId);
+            var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, Constants.SettingTypeId);
 
             if (querySettingParam.CustomerLevel == Level.Agent
                 || querySettingParam.UplineLevel == Level.Master)
@@ -153,8 +153,8 @@
                 : UpdateSmaPTSpKeys[customerLevel.Value];
 
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                PTConstants.SettingTypeId,
-                PTConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 productId);
 
             return updateSettingKey + keySuffix;

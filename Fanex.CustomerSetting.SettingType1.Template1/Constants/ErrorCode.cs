@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Constants
 {
-    internal static class PTErrorCode
+    internal static class ErrorCode
     {
         public const int PTExceedMaxValue = 1014;
 

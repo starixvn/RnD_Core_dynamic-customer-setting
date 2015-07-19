@@ -33,34 +33,34 @@
 
         public override IResult Validate()
         {
-            if (S4 > PTConstants.MaxPTValue
-                || M4 > PTConstants.MaxPTValue
-                || A4 > PTConstants.MaxPTValue
-                || N4 > PTConstants.MaxPTValue)
+            if (S4 > Constants.MaxPTValue
+                || M4 > Constants.MaxPTValue
+                || A4 > Constants.MaxPTValue
+                || N4 > Constants.MaxPTValue)
             {
                 return new Result(
-                    PTErrorCode.PTExceedMaxValue,
+                    ErrorCode.PTExceedMaxValue,
                     PTMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (M4 > S4)
             {
                 return new Result(
-                    PTErrorCode.MasterMaxPTIsGreaterThanSuperMaxPT,
+                    ErrorCode.MasterMaxPTIsGreaterThanSuperMaxPT,
                     PTMessage.MasterMaxPTCannotBeGreaterThanSuperMaxPT);
             }
 
             if (A4 > M4)
             {
                 return new Result(
-                    PTErrorCode.AgentMaxPTIsGreaterThanMasterMaxPT,
+                    ErrorCode.AgentMaxPTIsGreaterThanMasterMaxPT,
                     PTMessage.AgentMaxPTCannotBeGreaterThanMasterMaxPT);
             }
 
             if (N4 > S4)
             {
                 return new Result(
-                    PTErrorCode.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
+                    ErrorCode.SuperMinPTIsGreaterThanSuperMaxPTErrorCode,
                     PTMessage.SuperMinPTCannotBeGreaterThanSuperMaxPT);
             }
 

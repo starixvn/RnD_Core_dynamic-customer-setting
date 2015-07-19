@@ -54,34 +54,34 @@
 
         public override IResult Validate()
         {
-            if (S3 > PTConstants.MaxPTValue
-                || US3 > PTConstants.MaxPTValue
-                || N3 > PTConstants.MaxPTValue
-                || M3 > PTConstants.MaxPTValue)
+            if (S3 > Constants.MaxPTValue
+                || US3 > Constants.MaxPTValue
+                || N3 > Constants.MaxPTValue
+                || M3 > Constants.MaxPTValue)
             {
                 return new Result(
-                    PTErrorCode.PTExceedMaxValue,
+                    ErrorCode.PTExceedMaxValue,
                     PTMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (IS3 && S3 > 0)
             {
                 return new Result(
-                    PTErrorCode.SuperPTIsGreaterThanZeroWhenIsAutoIsSet,
+                    ErrorCode.SuperPTIsGreaterThanZeroWhenIsAutoIsSet,
                     PTMessage.SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             if (!IS3 && US3 > 0)
             {
                 return new Result(
-                    PTErrorCode.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
+                    ErrorCode.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
                     PTMessage.SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (N3 > M3)
             {
                 return new Result(
-                    PTErrorCode.MasterMinPTIsGreaterThanMasterMaxPT,
+                    ErrorCode.MasterMinPTIsGreaterThanMasterMaxPT,
                     PTMessage.MasterMinPTCannotBeGreaterThanMasterMaxPT);
             }
 

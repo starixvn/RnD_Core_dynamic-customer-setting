@@ -102,7 +102,7 @@
         {
             var isValidConstrain = actor.IsCompany
                 || customerLevel.IsMemberLevel
-                || actor.Level.IsDirectUplineLevelOf(customerLevel);
+                || actor.Level.IsDirectUplineOf(customerLevel);
 
             if (!isValidConstrain)
             {

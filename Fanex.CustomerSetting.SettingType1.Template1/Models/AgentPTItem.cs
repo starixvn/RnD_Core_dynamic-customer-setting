@@ -54,34 +54,34 @@
 
         public override IResult Validate()
         {
-            if (M2 > PTConstants.MaxPTValue
-                || UM2 > PTConstants.MaxPTValue
-                || A2 > PTConstants.MaxPTValue
-                || N2 > PTConstants.MaxPTValue)
+            if (M2 > Constants.MaxPTValue
+                || UM2 > Constants.MaxPTValue
+                || A2 > Constants.MaxPTValue
+                || N2 > Constants.MaxPTValue)
             {
                 return new Result(
-                    PTErrorCode.PTExceedMaxValue,
+                    ErrorCode.PTExceedMaxValue,
                     PTMessage.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (IM2 && M2 > 0)
             {
                 return new Result(
-                    PTErrorCode.MasterPTIsGreaterThanZeroWhenIsAutoIsSet,
+                    ErrorCode.MasterPTIsGreaterThanZeroWhenIsAutoIsSet,
                     PTMessage.MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             if (!IM2 && UM2 > 0)
             {
                 return new Result(
-                    PTErrorCode.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
+                    ErrorCode.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
                     PTMessage.MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (N2 > A2)
             {
                 return new Result(
-                    PTErrorCode.AgentMinPTIsGreaterThanAgentMaxPT,
+                    ErrorCode.AgentMinPTIsGreaterThanAgentMaxPT,
                     PTMessage.AgentMinPTCannotBeGreaterThanAgentMaxPT);
             }
 

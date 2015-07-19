@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
@@ -114,7 +113,8 @@
         {
             var customerSettingTypes = new List<SettingType>();
 
-            // TODO Should we user parallel here
+            // TODO Should we user parallel here.
+            // How to display setting type by order.
             foreach (var productSettingType in productSettingTypes)
             {
                 SettingType customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
@@ -135,8 +135,8 @@
             try
             {
                 var settingTypeService = _settingResolver.ResolveSettingTypeServce(productSettingType);
-                var customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
+                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
@@ -144,7 +144,7 @@
             catch (Exception ex)
             {
                 WriteLog(queryParam, productSettingType, ex);
-                // TODO Should we create ErrorSettingType here
+                //// TODO Should we create ErrorSettingType here.
             }
 
             return customerSettingType;
@@ -152,10 +152,10 @@
 
         private void WriteLog(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
         {
-            var customerSettingException = new CustomerSettingException(ex.Message, ex);
-            customerSettingException.SetSettingContextInfo("Query Setting", _settingContext);
-            customerSettingException.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
-            customerSettingException.SetProductInfo(queryParam.ProductId, productSettingType);
+            var exception = new CustomerSettingException(ex.Message, ex);
+            exception.SetSettingContextInfo("Query Setting", _settingContext);
+            exception.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
+            exception.SetProductInfo(queryParam.ProductId, productSettingType);
 
             _logger.Error(ex.Message, ex);
         }

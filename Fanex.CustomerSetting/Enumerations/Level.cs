@@ -54,19 +54,34 @@
             }
         }
 
-        public bool IsDirectUplineLevelOf(byte downlineLevelValue)
+        public bool IsDirectUplineOf(byte downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;
         }
 
-        public bool IsDirectUplineLevelOf(Level customerLevel)
+        public bool IsNotDirectUplineOf(byte downlineLevelValue)
         {
-            return IsDirectUplineLevelOf(customerLevel.Value);
+            return !IsDirectUplineOf(downlineLevelValue);
         }
 
-        public bool IsDirectDownlineLevelOf(Level uplineLevel)
+        public bool IsDirectUplineOf(Level customerLevel)
+        {
+            return IsDirectUplineOf(customerLevel.Value);
+        }
+
+        public bool IsNotDirectUplineOf(Level customerLevel)
+        {
+            return !IsDirectUplineOf(customerLevel);
+        }
+
+        public bool IsDirectDownlineOf(Level uplineLevel)
         {
             return GapBetweenTwoLevels(uplineLevel.Value, this.Value) == 1;
+        }
+
+        public bool IsNotDirectDownlineOf(Level uplineLevel)
+        {
+            return !IsDirectDownlineOf(uplineLevel);
         }
 
         public bool Is(Enumeration level)
