@@ -8,6 +8,6 @@
     {
         IResult UpdateCustomerSetting(UpdateSettingParam updateParam);
 
-        IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParam updateMultipleParam);
+        IResult UpdateCustomerSetting(UpdateMultipleSettingParam updateMultipleParam);
     }
 }

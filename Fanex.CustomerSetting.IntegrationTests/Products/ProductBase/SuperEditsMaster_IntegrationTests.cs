@@ -215,7 +215,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdateMultipleSettingParam(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);

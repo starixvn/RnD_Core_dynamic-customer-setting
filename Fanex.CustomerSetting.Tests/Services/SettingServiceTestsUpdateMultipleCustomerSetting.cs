@@ -53,7 +53,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam)));
+                    () => _settingService.UpdateCustomerSetting(updateMultipleSettingParam)));
         }
 
         [Test]
@@ -66,7 +66,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam)));
+                    () => _settingService.UpdateCustomerSetting(updateMultipleSettingParam)));
         }
 
         [Test]
@@ -76,7 +76,7 @@
             UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             _validationService.Received().ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
@@ -111,7 +111,7 @@
             SetupSettingTypeServiceStub();
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             var numOfSettingTypes = updateMultipleSettingParam.Setting.SettingTypes.Count();
@@ -127,7 +127,7 @@
             SetupSettingTypeServiceStub();
 
             //// Act
-            _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             var numOfRunPostTasks = updateMultipleSettingParam.Setting.SettingTypes.Count();
@@ -150,7 +150,7 @@
             SetupSettingTypeServiceStub(false);
 
             //// Act
-            var actualResult = _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -165,7 +165,7 @@
             SetupSettingTypeServiceStub();
 
             //// Act
-            var actualResult = _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -205,7 +205,7 @@
             _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
 
             //// Act
-            var actualResult = _settingService.UpdateMultipleCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
 
             //// Assert
             var updateSettingResult = actualResult as UpdateSettingResult;

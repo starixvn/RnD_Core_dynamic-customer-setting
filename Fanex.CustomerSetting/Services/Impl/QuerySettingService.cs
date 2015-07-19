@@ -19,7 +19,7 @@
         private readonly IProductService _productService;
         private readonly IResourceService _resourceService;
         private readonly ILogger _logger;
-        private readonly ISettingTypeServiceFactory _settingResolver;
+        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
         private readonly IDynamicRepository _dynamicRepository;
 
         public QuerySettingService(
@@ -28,7 +28,7 @@
             IProductService productService = null,
             IResourceService resourceService = null,
             ILogger logger = null,
-            ISettingTypeServiceFactory settingResolver = null,
+            ISettingTypeServiceFactory settingTypeServiceFactory = null,
             IDynamicRepository dynamicRepository = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -39,7 +39,7 @@
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
             _logger = logger ?? Logger.Log;
-            _settingResolver = settingResolver ?? new SettingTypeServiceFactory();
+            _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
@@ -133,7 +133,7 @@
 
             try
             {
-                var settingTypeService = _settingResolver.CreateInstance(productSettingType);
+                var settingTypeService = _settingTypeServiceFactory.CreateInstance(productSettingType);
 
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
                 customerSettingType.Id = productSettingType.Id;

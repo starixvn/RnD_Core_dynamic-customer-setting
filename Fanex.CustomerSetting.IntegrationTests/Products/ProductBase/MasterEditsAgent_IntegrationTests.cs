@@ -232,7 +232,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdateMultipleSettingParam(agentSetting, agentIds, agentNames, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);

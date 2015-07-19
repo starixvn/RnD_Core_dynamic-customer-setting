@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -23,13 +24,13 @@
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
         private readonly ILogger _logger;
-        private readonly ISettingTypeServiceFactory _settingResolver;
+        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         public UpdateSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
             ILogger logger = null,
-            ISettingTypeServiceFactory settingResolver = null)
+            ISettingTypeServiceFactory settingTypeServiceFactory = null)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
@@ -37,7 +38,7 @@
             _settingContext = settingContext;
             _validationService = validationService ?? new ValidationService(_settingContext);
             _logger = logger ?? Logger.Log;
-            _settingResolver = settingResolver ?? new SettingTypeServiceFactory();
+            _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
         }
 
         /// <summary>
@@ -50,7 +51,7 @@
             Check.Argument.IsNotNull(updateParam, "updateParam");
             Check.Argument.IsNotNegativeOrZero(updateParam.Setting.SettingTypes.Count(), "updateParam.Setting.SettingTypes.Count");
 
-            var validationResult = ValidateUpdateSettingAction(updateParam);
+            var validationResult = Validate(updateParam);
 
             if (!validationResult.IsSuccessful)
             {
@@ -60,7 +61,7 @@
             return new UpdateSettingResult(UpdateCustomerSettingTypes(updateParam));
         }
 
-        private IResult ValidateUpdateSettingAction(UpdateSettingParam updateParam)
+        private IResult Validate(UpdateSettingParam updateParam)
         {
             return _validationService.ValidateUpdateSettingAction(updateParam);
         }
@@ -102,7 +103,7 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
-            var settingTypeService = _settingResolver.CreateInstance(settingType);
+            var settingTypeService = _settingTypeServiceFactory.CreateInstance(settingType);
 
             return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
         }
@@ -123,12 +124,12 @@
             _logger.Error(customerSettingException.Message, customerSettingException);
         }
 
-        public IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParam updateMultipleParam)
+        public IResult UpdateCustomerSetting(UpdateMultipleSettingParam updateMultipleParam)
         {
             Check.Argument.IsNotNull(updateMultipleParam, "updateMultipleParam");
             Check.Argument.IsNotNegativeOrZero(updateMultipleParam.Setting.SettingTypes.Count(), "updateMultipleParam.Setting.SettingTypes.Count");
 
-            var validationResult = ValidateUpdateMultipleCustomerSettingAction(updateMultipleParam);
+            var validationResult = Validate(updateMultipleParam);
 
             if (!validationResult.IsSuccessful)
             {
@@ -140,7 +141,7 @@
             return MapUpdateSettingResultWithCustomerName(results, updateMultipleParam.CustomerIds, updateMultipleParam.CustomerNames);
         }
 
-        private IResult ValidateUpdateMultipleCustomerSettingAction(UpdateMultipleSettingParam updateMultipleParam)
+        private IResult Validate(UpdateMultipleSettingParam updateMultipleParam)
         {
             return _validationService.ValidateUpdateMultipleSettingAction(updateMultipleParam);
         }
@@ -183,7 +184,7 @@
 
         private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
-            var settingTypeService = _settingResolver.CreateInstance(settingType);
+            var settingTypeService = _settingTypeServiceFactory.CreateInstance(settingType);
 
             return settingTypeService.UpdateMultipleCustomersSettingType(
                     _settingContext,

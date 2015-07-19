@@ -43,9 +43,21 @@
             return SetSportTypeBetTypeName(customerPT, settingContext.Language);
         }
 
-        public override SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Enumerations.Level uplineLevel, byte productId, SettingType settingType)
+        public override SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext, 
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId, 
+            SettingType settingType)
         {
-            var result = _dataAccess.UpdateCustomerPT(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
+            var result = _dataAccess.UpdateCustomerPT(
+                settingContext, 
+                customerId, 
+                customerLevel, 
+                uplineLevel, 
+                productId, 
+                settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);
 

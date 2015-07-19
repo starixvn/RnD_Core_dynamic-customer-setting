@@ -180,7 +180,7 @@
 
             //// Act
             var updatingMultipleParam = new UpdateMultipleSettingParam(memberSetting, memberIds, memberNames, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateMultipleCustomerSetting(updatingMultipleParam);
+            var updateResult = _updateSettingService.UpdateCustomerSetting(updatingMultipleParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);

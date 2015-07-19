@@ -36,6 +36,12 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging">
+      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -78,7 +84,8 @@
   <ItemGroup>
     <Compile Include="Contexts\SettingContext.cs" />
     <Compile Include="Contexts\SettingContextManager.cs" />
-    <Compile Include="Controllers\CustomerSettingController.cs" />
+    <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
+    <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Helpers\SettingModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
