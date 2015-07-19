@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Fanex.CustomerSetting.SettingType2.Template1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Bet Limit Setting Type")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Fanex.CustomerSetting.SettingType2.Template1")]

@@ -29,7 +29,7 @@
             IDataAccess positionTakingDataAccess)
             : base(resourceService, logger)
         {
-            MessageService = messageService ?? new PTMessageService(ResourceService);
+            MessageService = messageService ?? new MessageService(ResourceService);
             _positionTakingDataAccess = positionTakingDataAccess ?? new DataAccess();
         }
 

@@ -75,11 +75,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\ProductStatusConstants.cs" />
-    <Compile Include="Constants\ProductStatusErrorCode.cs" />
-    <Compile Include="Constants\ProductStatusMessageType.cs" />
-    <Compile Include="DataAccesses\IProductStatusDataAccess.cs" />
-    <Compile Include="DataAccesses\ProductStatusDataAccess.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Constants\ErrorCode.cs" />
+    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="DataAccesses\IDataAccess.cs" />
+    <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="Dtos\ProductStatusItemDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ProductStatusItem.cs" />
@@ -89,7 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductStatusMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\ProductStatusMessageService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\SettingType4Service.cs" />
   </ItemGroup>
   <ItemGroup>

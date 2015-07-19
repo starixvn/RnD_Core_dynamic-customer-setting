@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Constants
 {
-    internal static class BetLimitConstants
+    internal static class Constants
     {
         public const byte SettingTypeId = 2;
         public const byte SettingTempateId = 1;

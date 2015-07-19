@@ -19,7 +19,7 @@
         {
             SettingContext = new SettingContextStub();
             ResourceService = Substitute.For<IResourceService>();
-            MessageService = new CommissionMessageService(ResourceService);
+            MessageService = new MessageService(ResourceService);
         }
 
         [Test]

@@ -12,7 +12,7 @@
 
     public class SettingType3Service : BaseSettingTypeService, ISettingTypeService
     {
-        private readonly ICommissionDataAccess _commissionDataAccess;
+        private readonly IDataAccess _commissionDataAccess;
 
         public SettingType3Service()
             : this(null, null, null, null)
@@ -23,11 +23,11 @@
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,
-            ICommissionDataAccess commissionDataAccess)
+            IDataAccess commissionDataAccess)
             : base(resourceService, logger)
         {
-            MessageService = messageService ?? new CommissionMessageService(ResourceService);
-            _commissionDataAccess = commissionDataAccess ?? new CommissionDataAccess();
+            MessageService = messageService ?? new MessageService(ResourceService);
+            _commissionDataAccess = commissionDataAccess ?? new DataAccess();
         }
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)

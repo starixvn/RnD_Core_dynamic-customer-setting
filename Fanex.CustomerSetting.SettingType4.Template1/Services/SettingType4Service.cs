@@ -12,7 +12,7 @@
 
     public class SettingType4Service : BaseSettingTypeService, ISettingTypeService
     {
-        private readonly IProductStatusDataAccess _productStatusDataAccess;
+        private readonly IDataAccess _productStatusDataAccess;
 
         public SettingType4Service()
             : this(null, null, null, null)
@@ -23,11 +23,11 @@
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,
-            IProductStatusDataAccess productDataAccess)
+            IDataAccess productDataAccess)
             : base(resourceService, logger)
         {
-            MessageService = messageService ?? new ProductStatusMessageService(ResourceService);
-            _productStatusDataAccess = productDataAccess ?? new ProductStatusDataAccess();
+            MessageService = messageService ?? new MessageService(ResourceService);
+            _productStatusDataAccess = productDataAccess ?? new DataAccess();
         }
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)

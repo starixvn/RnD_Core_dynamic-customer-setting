@@ -6,9 +6,9 @@
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
     using Fanex.CustomerSetting.SettingType4.Template1.Resources;
 
-    public class ProductStatusMessageService : BaseMessageService, IMessageService
+    public class MessageService : BaseMessageService, IMessageService
     {
-        public ProductStatusMessageService(IResourceService resourceService = null)
+        public MessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
         }
@@ -17,7 +17,7 @@
         {
             switch (msgType)
             {
-                case ProductStatusMessageType.ProductStatusViolation:
+                case MessageType.ProductStatusViolation:
                     return TranslateDefaultSettingTypeViolationMessage(ProductStatusMessage.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

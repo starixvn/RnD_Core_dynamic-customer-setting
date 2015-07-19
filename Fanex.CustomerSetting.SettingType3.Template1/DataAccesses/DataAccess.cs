@@ -14,7 +14,7 @@
     using Fanex.CustomerSetting.SettingType3.Template1.Models;
     using Fanex.Data;
 
-    public class CommissionDataAccess : BaseDataAccess, ICommissionDataAccess
+    public class DataAccess : BaseDataAccess, IDataAccess
     {
         private static readonly Dictionary<byte, string> QueryCommissionSpKeys = new Dictionary<byte, string>
         {
@@ -39,13 +39,13 @@
         {
             var settingKey = CreateQueryCommissionSPSettingKey(
                 queryParam.CustomerLevel,
-                CommissionConstants.SettingTypeId,
-                CommissionConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, CommissionConstants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<CommissionItemDto>(parameterValues);
             }
         }
@@ -81,8 +81,8 @@
 
             var updateSettingKey = "CustSetting_DiscountUpd";
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                CommissionConstants.SettingTypeId,
-                CommissionConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 productId);
 
             return ExecuteNonQuery(updateSettingKey + keySuffix, param);

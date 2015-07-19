@@ -42,47 +42,47 @@
 
         public override IResult Validate()
         {
-            if (MinBet > BetLimitConstants.MaxBetLimitValue
-                || MaxBet > BetLimitConstants.MaxBetLimitValue
-                || MaxPerMatch > BetLimitConstants.MaxBetLimitValue)
+            if (MinBet > Constants.MaxBetLimitValue
+                || MaxBet > Constants.MaxBetLimitValue
+                || MaxPerMatch > Constants.MaxBetLimitValue)
             {
                 return new Result(
-                    BetLimitErrorCode.BetLimitExceedMaxValue,
+                    ErrorCode.BetLimitExceedMaxValue,
                     BetLimitMessage.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
                 return new Result(
-                    BetLimitErrorCode.MinBetIsNegative,
+                    ErrorCode.MinBetIsNegative,
                     BetLimitMessage.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
                 return new Result(
-                    BetLimitErrorCode.MaxBetIsNegative,
+                    ErrorCode.MaxBetIsNegative,
                     BetLimitMessage.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
                 return new Result(
-                    BetLimitErrorCode.MaxPerMatchIsNegative,
+                    ErrorCode.MaxPerMatchIsNegative,
                     BetLimitMessage.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
                 return new Result(
-                    BetLimitErrorCode.MinBetIsGreaterThanMaxBet,
+                    ErrorCode.MinBetIsGreaterThanMaxBet,
                     BetLimitMessage.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
                 return new Result(
-                    BetLimitErrorCode.MaxBetIsGreaterThanMaxPerMatch,
+                    ErrorCode.MaxBetIsGreaterThanMaxPerMatch,
                     BetLimitMessage.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 

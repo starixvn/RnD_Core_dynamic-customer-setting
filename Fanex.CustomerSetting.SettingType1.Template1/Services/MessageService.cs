@@ -8,9 +8,9 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class PTMessageService : BaseMessageService, IMessageService
+    public class MessageService : BaseMessageService, IMessageService
     {
-        public PTMessageService(IResourceService resourceService = null)
+        public MessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
         }

@@ -6,9 +6,9 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
-    public class BetLimitMessageService : BaseMessageService, IMessageService
+    public class MessageService : BaseMessageService, IMessageService
     {
-        public BetLimitMessageService(IResourceService resourceService = null)
+        public MessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
         }
@@ -17,7 +17,7 @@
         {
             switch (msgType)
             {
-                case BetLimitMessageType.BetLimitViolation:
+                case MessageType.BetLimitViolation:
                     return TranslateDefaultSettingTypeViolationMessage(BetLimitMessage.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

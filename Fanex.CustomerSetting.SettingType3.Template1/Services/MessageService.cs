@@ -6,9 +6,9 @@
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
     using Fanex.CustomerSetting.SettingType3.Template1.Resources;
 
-    public class CommissionMessageService : BaseMessageService, IMessageService
+    public class MessageService : BaseMessageService, IMessageService
     {
-        public CommissionMessageService(IResourceService resourceService = null)
+        public MessageService(IResourceService resourceService = null)
             : base(resourceService)
         {
         }
@@ -17,7 +17,7 @@
         {
             switch (msgType)
             {
-                case CommissionMessageType.CommissionViolation:
+                case MessageType.CommissionViolation:
                     return TranslateDefaultSettingTypeViolationMessage(CommissionMessage.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

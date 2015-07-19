@@ -17,7 +17,7 @@
         {
             SettingContext = new SettingContextStub();
             ResourceService = Substitute.For<IResourceService>();
-            MessageService = new ProductStatusMessageService(ResourceService);
+            MessageService = new MessageService(ResourceService);
         }
 
         [Test]

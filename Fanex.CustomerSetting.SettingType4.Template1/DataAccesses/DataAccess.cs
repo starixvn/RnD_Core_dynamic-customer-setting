@@ -14,7 +14,7 @@
     using Fanex.CustomerSetting.SettingType4.Template1.Models;
     using Fanex.Data;
 
-    public class ProductStatusDataAccess : BaseDataAccess, IProductStatusDataAccess
+    public class DataAccess : BaseDataAccess, IDataAccess
     {
         private static readonly Dictionary<byte, string> QueryProductStatusSpKeys = new Dictionary<byte, string>
         {
@@ -39,13 +39,13 @@
         {
             var settingKey = CreateQueryProductStatusSPSettingKey(
                 queryParam.CustomerLevel,
-                ProductStatusConstants.SettingTypeId,
-                ProductStatusConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, ProductStatusConstants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<ProductStatusItemDto>(parameterValues);
             }
         }
@@ -81,8 +81,8 @@
 
             var updateSettingKey = "CustSetting_DisableStatUpd";
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                ProductStatusConstants.SettingTypeId,
-                ProductStatusConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 productId);
 
             return ExecuteNonQuery(updateSettingKey + keySuffix, param);

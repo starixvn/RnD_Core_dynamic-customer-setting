@@ -14,7 +14,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using Fanex.Data;
 
-    public class BetLimitDataAccess : BaseDataAccess, IBetLimitDataAccess
+    public class DataAccess : BaseDataAccess, IDataAccess
     {
         private static readonly Dictionary<byte, string> QueryBetLimitSpKeys = new Dictionary<byte, string>
         {
@@ -39,13 +39,13 @@
         {
             var settingKey = CreateQueryBetLimitSPSettingKey(
                 queryParam.CustomerLevel,
-                BetLimitConstants.SettingTypeId,
-                BetLimitConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 queryParam.ProductId);
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, BetLimitConstants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<BetLimitItemDto>(parameterValues);
             }
         }
@@ -82,8 +82,8 @@
             var updateSettingKey = "CustSetting_BetLimitUpd";
 
             var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                BetLimitConstants.SettingTypeId,
-                BetLimitConstants.SettingTempateId,
+                Constants.SettingTypeId,
+                Constants.SettingTempateId,
                 productId);
 
             return ExecuteNonQuery(updateSettingKey + keySuffix, param);

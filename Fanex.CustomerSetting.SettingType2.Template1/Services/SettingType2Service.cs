@@ -12,7 +12,7 @@
 
     public class SettingType2Service : BaseSettingTypeService, ISettingTypeService
     {
-        private readonly IBetLimitDataAccess _betLimitDataAccess;
+        private readonly IDataAccess _betLimitDataAccess;
 
         public SettingType2Service()
             : this(null, null, null, null)
@@ -23,11 +23,11 @@
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,
-            IBetLimitDataAccess betLimitDataAccess)
+            IDataAccess betLimitDataAccess)
             : base(resourceService, logger)
         {
-            MessageService = messageService ?? new BetLimitMessageService(ResourceService);
-            _betLimitDataAccess = betLimitDataAccess ?? new BetLimitDataAccess();
+            MessageService = messageService ?? new MessageService(ResourceService);
+            _betLimitDataAccess = betLimitDataAccess ?? new DataAccess();
         }
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)

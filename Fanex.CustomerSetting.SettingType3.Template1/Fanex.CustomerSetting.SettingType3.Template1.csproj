@@ -75,11 +75,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\CommissionErrorCode.cs" />
-    <Compile Include="Constants\CommissionConstants.cs" />
-    <Compile Include="Constants\CommissionMessageType.cs" />
-    <Compile Include="DataAccesses\ICommissionDataAccess.cs" />
-    <Compile Include="DataAccesses\CommissionDataAccess.cs" />
+    <Compile Include="Constants\ErrorCode.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="DataAccesses\IDataAccess.cs" />
+    <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="Dtos\CommissionDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CommissionItem.cs" />
@@ -89,7 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommissionMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\CommissionMessageService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\SettingType3Service.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -105,7 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PTMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\PTMessageService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\SettingType1Service.cs" />
     <Compile Include="Utilities\PTFormatter.cs" />
   </ItemGroup>

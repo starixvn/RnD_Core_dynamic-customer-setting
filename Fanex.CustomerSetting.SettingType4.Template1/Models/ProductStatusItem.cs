@@ -45,7 +45,7 @@
             if (Downline != null && IsDisabled && !Downline.IsDisabled)
             {
                 return new Result(
-                    ProductStatusErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
+                    ErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
                     ProductStatusMessage.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 

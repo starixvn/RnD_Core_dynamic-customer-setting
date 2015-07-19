@@ -75,11 +75,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\BetLimitConstants.cs" />
-    <Compile Include="Constants\BetLimitErrorCode.cs" />
-    <Compile Include="Constants\BetLimitMessageType.cs" />
-    <Compile Include="DataAccesses\IBetLimitDataAccess.cs" />
-    <Compile Include="DataAccesses\BetLimitDataAccess.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Constants\ErrorCode.cs" />
+    <Compile Include="Constants\MessageType.cs" />
+    <Compile Include="DataAccesses\IDataAccess.cs" />
+    <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="Dtos\BetLimitItemDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetLimitItem.cs" />
@@ -89,7 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BetLimitMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\BetLimitMessageService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\SettingType2Service.cs" />
   </ItemGroup>
   <ItemGroup>

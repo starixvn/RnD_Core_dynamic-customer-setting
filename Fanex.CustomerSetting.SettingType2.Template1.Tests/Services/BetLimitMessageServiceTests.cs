@@ -17,7 +17,7 @@
         {
             SettingContext = new SettingContextStub();
             ResourceService = Substitute.For<IResourceService>();
-            MessageService = new BetLimitMessageService(ResourceService);
+            MessageService = new MessageService(ResourceService);
         }
 
         [Test]
