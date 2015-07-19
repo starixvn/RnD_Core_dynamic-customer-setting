@@ -1,10 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Handlers
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Concurrent;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
@@ -16,7 +13,7 @@
         private const string TypeWithAssemblyFormat = "{0}, {1}";
 
         private static ConcurrentDictionary<string, ISettingTypeService> _settingTypeServiceCached = new ConcurrentDictionary<string, ISettingTypeService>();
-        
+
         public ISettingTypeService CreateInstance(SettingType settingType)
         {
             ISettingTypeService settingTypeService = null;

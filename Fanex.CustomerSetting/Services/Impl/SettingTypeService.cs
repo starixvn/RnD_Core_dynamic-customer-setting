@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -15,6 +14,11 @@
 
     public abstract class SettingTypeService : ISettingTypeService
     {
+        protected SettingTypeService()
+            : this(null, null)
+        {
+        }
+
         protected SettingTypeService(
             IResourceService resourceService,
             ILogger logger)
@@ -143,7 +147,7 @@
             customerSettingException.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             customerSettingException.SetProductInfo(productId, customerSettingType);
 
-            Logger.Error(ex.Message, ex);
+            Logger.Error(customerSettingException.Message, customerSettingException);
         }
     }
 }

@@ -120,7 +120,7 @@
             customerSettingException.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             customerSettingException.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            _logger.Error(customerSettingException.Message, customerSettingException);
         }
 
         public IResult UpdateMultipleCustomerSetting(UpdateMultipleSettingParam updateMultipleParam)
@@ -247,7 +247,7 @@
             customerSettingException.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
             customerSettingException.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            _logger.Error(customerSettingException.Message, customerSettingException);
         }
     }
 }

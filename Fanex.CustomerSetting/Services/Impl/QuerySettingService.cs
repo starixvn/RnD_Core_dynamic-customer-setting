@@ -156,7 +156,7 @@
             exception.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
             exception.SetProductInfo(queryParam.ProductId, productSettingType);
 
-            _logger.Error(ex.Message, ex);
+            _logger.Error(exception.Message, exception);
         }
     }
 }
