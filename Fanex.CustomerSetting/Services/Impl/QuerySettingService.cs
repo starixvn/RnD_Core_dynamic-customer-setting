@@ -48,6 +48,7 @@
         {
             ValidateQuerySetting(queryParam);
 
+            // TODO should we use Task here
             var product = GetProduct(queryParam.ProductId);
             var customerInfo = GetCustomerInfo(queryParam.CustomerId);
             var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
@@ -113,19 +114,11 @@
         {
             var customerSettingTypes = new List<SettingType>();
 
+            // TODO Should we user parallel here
             foreach (var productSettingType in productSettingTypes)
             {
-                SettingType customerSettingType = new SettingType();
-
-                try
-                {
-                    customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-                }
-                catch (Exception ex)
-                {
-                    LogQuerySettingTypeError(queryParam, productSettingType, ex);
-                }
-
+                SettingType customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
+              
                 if (customerSettingType.SettingItems.Any())
                 {
                     customerSettingTypes.Add(customerSettingType);
@@ -136,18 +129,28 @@
         }
 
         private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
-        {
-            var settingTypeService = _settingResolver.ResolveSettingTypeServce(productSettingType);
-            var customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
-            
-            customerSettingType.Id = productSettingType.Id;
-            customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
-            customerSettingType.SettingLevel = productSettingType.SettingLevel;
+        { 
+            SettingType customerSettingType = new SettingType();
+
+            try
+            {
+                var settingTypeService = _settingResolver.ResolveSettingTypeServce(productSettingType);
+                var customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+
+                customerSettingType.Id = productSettingType.Id;
+                customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
+                customerSettingType.SettingLevel = productSettingType.SettingLevel;
+            }
+            catch (Exception ex)
+            {
+                WriteLog(queryParam, productSettingType, ex);
+                // TODO Should we create ErrorSettingType here
+            }
 
             return customerSettingType;
         }
 
-        private void LogQuerySettingTypeError(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
+        private void WriteLog(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
         {
             var customerSettingException = new CustomerSettingException(ex.Message, ex);
             customerSettingException.SetSettingContextInfo("Query Setting", _settingContext);
