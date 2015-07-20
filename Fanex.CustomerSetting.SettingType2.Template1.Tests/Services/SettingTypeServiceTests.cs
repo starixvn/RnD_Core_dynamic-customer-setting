@@ -1,12 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Tests.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using Fanex.CustomerSetting.SettingType2.Template1.Services;
     using Fanex.CustomerSetting.Tests;
@@ -49,7 +51,7 @@
             _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerBetLimit(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
         }
 
         [Test]
@@ -58,28 +60,38 @@
             //// Arrange
             var queryParam = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
-            var customerBetLimit = new SettingType
-            {
-                Id = 1,
-                SettingTemplate = 1,
-                SettingLevel = 1,
-                SettingItems = new List<BetLimitItem>
+            var betLimitItemsRawData = new List<BetLimitItemDto>
                 {
-                   new BetLimitItem
-                   {
-                       SportTypeId = 1
-                   }
-                }
-            };
+                    new BetLimitItemDto
+                    {
+                        BetTypeId = 1,
+                        SportTypeId = 1,
+                        MinBet = 10,
+                        MaxBet = 100,
+                        MaxPerMatch = 1000,
+                        MinBetMin = 1,
+                        MaxBetMax = 120,
+                        MaxPerMatchMax = 1200
+                    }
+                };
 
             //// Stub
-            _dataAccess.GetCustomerBetLimit(Arg.Any<QuerySettingParam>()).Returns(customerBetLimit);
+            _dataAccess.GetCustomerBetLimitItemsRawData(Arg.Any<QuerySettingParam>()).Returns(betLimitItemsRawData);
 
             //// Act
-            var actualCustomerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            Assert.AreSame(customerBetLimit, actualCustomerBetLimit);
+            var actualCustomerBetLimitItem = customerBetLimit.SettingItems.First() as BetLimitItem;
+
+            Assert.AreEqual(1, actualCustomerBetLimitItem.SportTypeId);
+            Assert.AreEqual(1, actualCustomerBetLimitItem.BetTypeId);
+            Assert.AreEqual(10, actualCustomerBetLimitItem.MinBet);
+            Assert.AreEqual(100, actualCustomerBetLimitItem.MaxBet);
+            Assert.AreEqual(1000, actualCustomerBetLimitItem.MaxPerMatch);
+            Assert.AreEqual(1, actualCustomerBetLimitItem.Constraint.MinBet);
+            Assert.AreEqual(120, actualCustomerBetLimitItem.Constraint.MaxBet);
+            Assert.AreEqual(1200, actualCustomerBetLimitItem.Constraint.MaxPerMatch);
         }
 
         [Test]

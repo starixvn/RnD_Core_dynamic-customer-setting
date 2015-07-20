@@ -59,8 +59,8 @@
 
             var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
             Assert.IsNotNull(masterPTItem);
-            Assert.GreaterOrEqual(masterPTItem.IS3 ? masterPTItem.US3 : masterPTItem.M3, 1);
-            Assert.GreaterOrEqual(masterPTItem.S3, 1);
+            Assert.GreaterOrEqual(masterPTItem.IS3 ? masterPTItem.US3 : masterPTItem.S3, 1);
+            Assert.GreaterOrEqual(masterPTItem.M3, 1);
             Assert.GreaterOrEqual(masterPTItem.N3, 0);
 
             var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;

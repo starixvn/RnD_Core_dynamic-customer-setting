@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Services
 {
+    using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -9,6 +10,8 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
+    using Fanex.CustomerSetting.SettingType3.Template1.Models;
     using Fanex.Logging;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
@@ -33,7 +36,13 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)
         {
-            var customerCommission = _commissionDataAccess.GetCustomerCommission(queryParam);
+            var commissionItemsRawData = _commissionDataAccess.GetCustomerCommissionItemsRawData(queryParam);
+
+            var customerCommission = new SettingType
+            {
+                Name = Label.Commission,
+                SettingItems = commissionItemsRawData.Select<CommissionItemDto, CommissionItem>(commItemDto => new CommissionItem(commItemDto))
+            };
 
             return SetSportTypeBetTypeName(customerCommission, settingContext.Language);
         }

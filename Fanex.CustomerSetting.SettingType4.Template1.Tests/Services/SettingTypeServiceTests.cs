@@ -2,12 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType4.Template1.Models;
     using Fanex.CustomerSetting.SettingType4.Template1.Services;
     using Fanex.CustomerSetting.Tests;
@@ -65,7 +67,7 @@
             _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerProductStatus(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
         }
 
         [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
@@ -76,28 +78,31 @@
             //// Arrange
             var queryParam = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
-            var customerProductStatus = new SettingType
+            var productStatusItemsRawData = new List<ProductStatusItemDto>
             {
-                Id = 1,
-                SettingTemplate = 1,
-                SettingLevel = 1,
-                SettingItems = new List<ProductStatusItem>
+                new ProductStatusItemDto
                 {
-                   new ProductStatusItem
-                   {
-                       SportTypeId = 1
-                   }
+                    BetTypeId = 1,
+                    SportTypeId = 1,
+                    IsDisabled = true,
+                    IsDisabledDownline = true,
+                    IsDisabledUpline = false
                 }
             };
 
             //// Stub
-            _dataAccess.GetCustomerProductStatus(Arg.Any<QuerySettingParam>()).Returns(customerProductStatus);
+            _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<QuerySettingParam>()).Returns(productStatusItemsRawData);
 
             //// Act
             var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            Assert.AreSame(customerProductStatus, actualCustomerProductStatus);
+            var actualCustomerProductStatusItem = actualCustomerProductStatus.SettingItems.First() as ProductStatusItem;
+            Assert.AreEqual(1, actualCustomerProductStatusItem.SportTypeId);
+            Assert.AreEqual(1, actualCustomerProductStatusItem.BetTypeId);
+            Assert.AreEqual(true, actualCustomerProductStatusItem.IsDisabled);
+            Assert.AreEqual(false, actualCustomerProductStatusItem.Upline.IsDisabled);
+            Assert.AreEqual(true, actualCustomerProductStatusItem.Downline.IsDisabled);
         }
 
         private static object[] GetCustomerSettingType_ViewInDirectDownlineCustomer_Cases =

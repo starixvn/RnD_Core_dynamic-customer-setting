@@ -24,18 +24,7 @@
             { Level.Member.Value, "CustSetting_MemberBetLimitSelect" }
         };
 
-        public SettingType GetCustomerBetLimit(QuerySettingParam queryParam)
-        {
-            var betLimitItemDtoList = ReadBetLimitItemsRawData(queryParam);
-
-            return new SettingType
-            {
-                Name = Label.BetSetting,
-                SettingItems = betLimitItemDtoList.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
-            };
-        }
-
-        private IEnumerable<BetLimitItemDto> ReadBetLimitItemsRawData(QuerySettingParam queryParam)
+        public IEnumerable<BetLimitItemDto> GetCustomerBetLimitItemsRawData(QuerySettingParam queryParam)
         {
             var settingKey = CreateQueryBetLimitSPSettingKey(
                 queryParam.CustomerLevel,

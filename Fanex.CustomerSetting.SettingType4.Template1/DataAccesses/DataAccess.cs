@@ -24,18 +24,7 @@
             { Level.Member.Value, "CustSetting_MemberProductStatusSelect" }
         };
 
-        public SettingType GetCustomerProductStatus(QuerySettingParam queryParam)
-        {
-            var productStatusItemDtoList = ReadProductStatusItemsRawData(queryParam);
-
-            return new SettingType
-            {
-                Name = Label.ProductStatus,
-                SettingItems = productStatusItemDtoList.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
-            };
-        }
-
-        private IEnumerable<ProductStatusItemDto> ReadProductStatusItemsRawData(QuerySettingParam queryParam)
+        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QuerySettingParam queryParam)
         {
             var settingKey = CreateQueryProductStatusSPSettingKey(
                 queryParam.CustomerLevel,

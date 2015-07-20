@@ -24,18 +24,7 @@
             { Level.Member.Value, "CustSetting_MemberCommissionSelect" }
         };
 
-        public SettingType GetCustomerCommission(QuerySettingParam queryParam)
-        {
-            var commissionItemDtoList = ReadCommissionItemsRawData(queryParam);
-
-            return new SettingType
-            {
-                Name = Label.Commission,
-                SettingItems = commissionItemDtoList.Select<CommissionItemDto, CommissionItem>(commItemDto => new CommissionItem(commItemDto))
-            };
-        }
-
-        private IEnumerable<CommissionItemDto> ReadCommissionItemsRawData(QuerySettingParam queryParam)
+        public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(QuerySettingParam queryParam)
         {
             var settingKey = CreateQueryCommissionSPSettingKey(
                 queryParam.CustomerLevel,

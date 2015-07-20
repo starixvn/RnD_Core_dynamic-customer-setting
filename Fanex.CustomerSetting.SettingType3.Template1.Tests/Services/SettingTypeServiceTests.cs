@@ -10,6 +10,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Models;
     using Fanex.CustomerSetting.SettingType3.Template1.Services;
     using Fanex.CustomerSetting.Tests;
@@ -52,7 +53,7 @@
             _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerCommission(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
         }
 
         [Test]
@@ -61,28 +62,31 @@
             //// Arrange
             var queryParam = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
-            var customerCommission = new SettingType
+            var commissionItemsRawData = new List<CommissionItemDto>
             {
-                Id = 1,
-                SettingTemplate = 1,
-                SettingLevel = 1,
-                SettingItems = new List<CommissionItem>
+                new CommissionItemDto
                 {
-                   new CommissionItem
-                   {
-                       SportTypeId = 1
-                   }
+                    BetTypeId = 1,
+                    SportTypeId = 1,
+                    CommRate = 0.009m,
+                    UplineCommRate = 0.01m,
+                    UplineOfUplineCommRate = 0.1m
                 }
             };
 
             //// Stub
-            _dataAccess.GetCustomerCommission(Arg.Any<QuerySettingParam>()).Returns(customerCommission);
+            _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<QuerySettingParam>()).Returns(commissionItemsRawData);
 
             //// Act
             var actualCustomerCommission = _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            Assert.AreSame(customerCommission, actualCustomerCommission);
+            var actualCustomerCommissionItem = actualCustomerCommission.SettingItems.First() as CommissionItem;
+            Assert.AreEqual(1, actualCustomerCommissionItem.BetTypeId);
+            Assert.AreEqual(1, actualCustomerCommissionItem.SportTypeId);
+            Assert.AreEqual(0.009m, actualCustomerCommissionItem.CommRate);
+            Assert.AreEqual(0.01m, actualCustomerCommissionItem.Upline.CommRate);
+            Assert.AreEqual(0.1m, actualCustomerCommissionItem.Upline.Upline.CommRate);
         }
 
         [Test]

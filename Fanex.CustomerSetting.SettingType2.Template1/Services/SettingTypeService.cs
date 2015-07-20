@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Services
 {
+    using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -9,6 +10,8 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
+    using Fanex.CustomerSetting.SettingType2.Template1.Models;
     using Fanex.Logging;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
@@ -33,7 +36,13 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)
         {
-            var customerBetLimit = _betLimitDataAccess.GetCustomerBetLimit(queryParam);
+            var betLimitItemsRawData = _betLimitDataAccess.GetCustomerBetLimitItemsRawData(queryParam);
+
+            var customerBetLimit = new SettingType
+            {
+                Name = Label.BetSetting,
+                SettingItems = betLimitItemsRawData.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
+            };
 
             return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
         }
