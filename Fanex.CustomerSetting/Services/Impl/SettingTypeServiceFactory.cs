@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
@@ -15,10 +16,7 @@
 
         public ISettingTypeService GetInstance(SettingType settingType)
         {
-            if (settingType == null)
-            {
-                throw new ArgumentNullException("settingType");
-            }
+            Check.Argument.IsNotNull(settingType, "settingType");
 
             var settingTypeService = GetInstanceFromCache(settingType);
 
@@ -43,15 +41,18 @@
         private ISettingTypeService CreateInstanceAndCache(SettingType settingType)
         {
             ISettingTypeService settingTypeService = null;
-            Type settingTypeServiceType = Type.GetType(GetFullTypeServiceName(settingType));
+            var fullTypeName = GetFullTypeServiceName(settingType);
+            Type settingTypeServiceType = Type.GetType(fullTypeName);
 
-            if (settingTypeServiceType != null)
+            if (settingTypeServiceType == null)
             {
-                settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
-
-                var cacheKey = GetCacheKey(settingType);
-                settingTypeServiceInstances.TryAdd(cacheKey, settingTypeService);
+                throw new DllNotFoundException(string.Format("{0} not found", fullTypeName));
             }
+
+            settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
+
+            var cacheKey = GetCacheKey(settingType);
+            settingTypeServiceInstances.TryAdd(cacheKey, settingTypeService);
 
             return settingTypeService;
         }
@@ -66,8 +67,7 @@
         private string GetFullTypeServiceName(SettingType settingType)
         {
             var assemblyName = string.Format(AssemblyNameFormat, settingType.Id, settingType.SettingTemplate);
-            string typeName = string.Format(TypeNameFormat, assemblyName);
-
+            var typeName = string.Format(TypeNameFormat, assemblyName);
             return string.Join(", ", typeName, assemblyName);
         }
     }

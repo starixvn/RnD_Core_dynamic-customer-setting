@@ -123,6 +123,7 @@
     <Compile Include="Services\SettingTypeServicesTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
+    <Compile Include="Services\SettingTypeServiceFactoryTest.cs" />
     <Compile Include="Services\UpdateSettingServiceTest.cs" />
     <Compile Include="Services\UpdateMultipleCustomerSettingTest.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateMultipleSettingAction.cs" />
