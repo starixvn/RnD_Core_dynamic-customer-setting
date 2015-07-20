@@ -96,7 +96,12 @@
             Level uplineLevel = null)
         {
             customerLevel = customerLevel ?? Level.Member;
-            uplineLevel = uplineLevel ?? Level.Master;
+            
+            if (customerLevel.IsMemberLevel)
+            {
+                uplineLevel = uplineLevel ?? Level.Master;
+            }
+            
             return new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
         }
 

@@ -83,8 +83,8 @@
                     if (settingItem is DefaultSettingItem)
                     {
                         var defaultSettingItem = settingItem as DefaultSettingItem;
-                        defaultSettingItem.BetTypeName = ResourceService.GetBetTypeName(defaultSettingItem.BetTypeId, language);
-                        defaultSettingItem.SportTypeName = ResourceService.GetSportTypeName(defaultSettingItem.SportTypeId, language);
+                        defaultSettingItem.BetTypeName = GetBetTypeName(defaultSettingItem.BetTypeId, language);
+                        defaultSettingItem.SportTypeName = GetSportTypeName(defaultSettingItem.SportTypeId, language);
                         defaultSettingItems.Add(defaultSettingItem);
                     }
                     else
@@ -97,6 +97,26 @@
             }
 
             return settingType;
+        }
+
+        private string GetBetTypeName(short betTypeId, string language)
+        {
+            if(betTypeId > 0)
+            {
+                return ResourceService.GetBetTypeName(betTypeId, language);
+            }
+
+            return string.Empty;
+        }
+
+        private string GetSportTypeName(short sportTypeId, string language)
+        {
+            if (sportTypeId > 0)
+            {
+                return ResourceService.GetSportTypeName(sportTypeId, language);
+            }
+
+            return string.Empty;
         }
 
         protected SettingResult CreateSettingResult(IResult result, int customerId, SettingType settingType)

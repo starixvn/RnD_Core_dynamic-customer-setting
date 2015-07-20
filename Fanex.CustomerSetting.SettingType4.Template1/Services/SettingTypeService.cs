@@ -33,7 +33,7 @@
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)
         {
             if (queryParam.CustomerLevel.IsMemberLevel
-                && queryParam.UplineLevel.IsNotDirectUplineOf(queryParam.CustomerLevel))
+                && queryParam.UplineLevel.IsNotAgentLevel)
             {
                 return new SettingType();
             }

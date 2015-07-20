@@ -72,7 +72,7 @@
             byte productId,
             SettingType settingType)
         {
-            IEnumerable<SettingResult> results = new List<SettingResult>();
+            var results = Enumerable.Empty<SettingResult>();
             var ungroupedCustomerIds = customerIds;
 
             if (customerLevel.IsMemberLevel)

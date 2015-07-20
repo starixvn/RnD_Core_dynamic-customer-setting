@@ -160,7 +160,7 @@
             _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
-            _dynamicRepository.Received().Get<bool>(Arg.Is<ActorStatusQueryCriteria>(criteria => criteria.ActorId == _settingContext.Actor.Id));
+            _dynamicRepository.Received().Get<bool>(Arg.Is<ActorStatusQueryCriteria>(criteria => criteria.CustId == _settingContext.Actor.Id));
         }
 
         [Test]

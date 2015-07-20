@@ -10,7 +10,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class PositionTakingMessageServiceTests : BaseMessageServiceTests
+    public class MessageServiceTests : BaseMessageServiceTests
     {
         [SetUp]
         public void Setup()

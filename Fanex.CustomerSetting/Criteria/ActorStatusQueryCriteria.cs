@@ -4,7 +4,7 @@
 
     public class ActorStatusQueryCriteria : CriteriaBase
     {
-        public int ActorId { get; set; }
+        public int CustId { get; set; }
 
         public override string GetSettingKey()
         {
@@ -13,7 +13,7 @@
 
         public override bool IsValid()
         {
-            return ActorId > 0;
+            return CustId > 0;
         }
     }
 }

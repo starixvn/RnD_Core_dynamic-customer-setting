@@ -89,7 +89,7 @@
         {
             var enabledStatus = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
                 {
-                    ActorId = actor.Id
+                    CustId = actor.Id
                 });
 
             if (!enabledStatus)
@@ -187,8 +187,6 @@
                 CheckCustomerSettingTypesIsValidWithProductProfile(productId, settingTypes);
 
                 CheckSettingTypesAreValid(settingTypes);
-
-                return Result.Success;
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -202,6 +200,8 @@
 
                 return Result.SystemError;
             }
+
+            return Result.Success;
         }
 
         private void CheckQueryPermission(int customerId, Level customerLevel, byte productId, Level uplineLevel)
@@ -279,8 +279,6 @@
                 CheckUpdateSetting(updateMultipleParam);
 
                 CheckActorPermissionOnMultipleMembers(updateMultipleParam.CustomerIds, updateMultipleParam.Setting.CustomerLevel);
-
-                return Result.Success;
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -294,6 +292,8 @@
 
                 return Result.SystemError;
             }
+
+            return Result.Success;
         }
 
         private void CheckUpdateSetting(UpdateSettingParam updateParam)

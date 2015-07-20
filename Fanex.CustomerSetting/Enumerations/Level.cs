@@ -54,6 +54,22 @@
             }
         }
 
+        public bool IsAgentLevel
+        {
+            get
+            {
+                return this == Agent;
+            }
+        }
+
+        public bool IsNotAgentLevel
+        {
+            get
+            {
+                return !IsAgentLevel;
+            }
+        }
+
         public bool IsDirectUplineOf(byte downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;

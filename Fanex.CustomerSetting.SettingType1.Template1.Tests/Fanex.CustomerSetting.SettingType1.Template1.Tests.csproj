@@ -81,7 +81,8 @@
     <Compile Include="Models\SuperPTOnMemberItemTests.cs" />
     <Compile Include="Models\SuperPTItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\PositionTakingMessageServiceTests.cs" />
+    <Compile Include="Services\MessageServiceTests.cs" />
+    <Compile Include="Services\SettingTypeServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
