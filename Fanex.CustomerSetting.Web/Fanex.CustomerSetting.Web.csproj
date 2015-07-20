@@ -91,6 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Styles\customer-setting.css.map">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </None>
     <None Include="Assets\Styles\customer-setting.scss" />
     <None Include="bower.json" />
     <None Include="package.json" />
@@ -134,12 +137,17 @@
     <Content Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.htm" />
     <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.htm" />
     <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Styles\customer-setting.css">
+      <DependentUpon>customer-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting.min.css">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
     <Content Include="Assets\Styles\Images\loading.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Assets\NodeModules\ts-angular-annotation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registration.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\core.ts" />

@@ -40,23 +40,32 @@
                    .pipe(gulp.dest(paths.compass));
     });
 
-    gulp.task("install-jslibs", function () {
-        return gulp.src(paths.bower + "**/*{.min}.js")
-                   .pipe(gulp.dest(paths.compass));
+    gulp.task("install-jquery", function () {
+        return gulp.src(paths.bower + "jquery/dist/**")
+                   .pipe(gulp.dest(paths.library + "JQuery"));
     });
+
+    gulp.task("install-angular", function () {
+        return gulp.src(paths.bower + "Angular/angular*")
+                   .pipe(gulp.dest(paths.library + "AngularJs"));
+    });
+
+    gulp.task("install-jslibs", ["install-jquery", "install-angular"]);
 
     gulp.task("copy-customer-setting-asset", function () {
         return gulp.src(paths.source)
                    .pipe(gulp.dest(paths.app));
     });
 
+    // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
+    // We can fix it by gulp-ruby-sass, which uses Ruby as runtime compiler but it needs the Ruby gem be installed on the building machine.
     gulp.task("compile-styles", function () {
         var sass = require("gulp-sass");
         var sourcemaps = require("gulp-sourcemaps");
 
         return gulp.src(paths.content + "*.scss")
+                   .pipe(sass({ compass: true }))
                    .pipe(sourcemaps.init())
-                   .pipe(sass())
                    .pipe(sourcemaps.write())
                    .pipe(gulp.dest(paths.content));
     });
@@ -82,7 +91,11 @@
         runSequence(
             ["clean", "install-tsd", "install-bower"],
             ["install-compass", "install-jslibs", "copy-customer-setting-asset"],
-            ["compile-styles", "compile-scripts"],
+            ["compile-scripts"],
             done);
+    });
+
+    gulp.task("watch-ts", ["compile-scripts"], function () {
+        gulp.watch(paths.script + "*.ts", ["compile-scripts"]);
     });
 })(require);

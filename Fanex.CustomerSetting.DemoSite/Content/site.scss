@@ -43,6 +43,7 @@ body {
                 border-right-width: 0;
                 clear: left;
                 float: left;
+                min-height: 151px;
                 min-width: 290px;
                 position: relative;
 
@@ -57,13 +58,13 @@ body {
 
                 &:before {
                     border-left-color: $border-color;
-                    border-width: 68px;
+                    border-width: 81px;
                     top: 0;
                 }
 
                 &:after {
                     border-left-color: $background-color;
-                    border-width: 67px;
+                    border-width: 80px;
                     top: 1px;
                 }
 
@@ -76,8 +77,7 @@ body {
                     border-right-width: 1px;
                     clear: none;
                     margin-left: 5px;
-                    padding-left: 85px;
-                    min-height: 126px;
+                    padding-left: 105px;
 
                     &:before,
                     &:after {
@@ -111,6 +111,15 @@ body {
                     font-size: 11px;
                     padding: 1px 0;
                     width: 170px;
+
+                    &.checkbox {
+                        margin: {
+                            left: 0;
+                            right: 0;
+                        }
+
+                        width: auto;
+                    }
                 }
 
                 &.submit {
@@ -132,6 +141,11 @@ body {
                         padding: 4px 12px;
                         text-align: center;
                         vertical-align: middle;
+
+                        &:disabled {
+                            background-image: none;
+                            cursor: default;
+                        }
                     }
 
                     &.large-group {

@@ -3,50 +3,28 @@
 module CustomerSetting {
     var app: ng.IModule = ng.module("customerSetting", ["ng", "oc.lazyLoad"]);
 
-    export function controller(target: Function): any {
-        var name: string = getComponentName(target);
-        var dependencies: any[] = getComponentArgs(target);
-
-        dependencies.push(target);
-        app.controller(name, dependencies);
+    export function controller(target: any): any {
+        app.controller(target.$componentName, target);
     }
 
-    export function service(target: Function): any {
-        var name: string = getComponentName(target);
-        var dependencies: any[] = getComponentArgs(target);
-
-        dependencies.push(target);
-        app.service(name, dependencies);
+    export function service(target: any): any {
+        app.service(target.$componentName, target);
     }
 
-    export function provider(target: Function): any {
-        var name: string = getComponentName(target);
-        var dependencies: any[] = getComponentArgs(target);
-
-        dependencies.push(target);
-        app.provider(name, dependencies);
+    export function provider(target: any): any {
+        app.provider(target.$componentName, target);
     }
 
-    export function directive(target: Function): any {
-        var name: string = getComponentName(target);
-        var dependencies: any[] = getComponentArgs(target);
-
-        dependencies.push(target);
-        app.directive(name, dependencies);
+    export function directive(target: any): any {
+        app.directive(target.$componentName, target);
     }
 
-    export function value(target: Function): any {
-        var name: string = getComponentName(target);
-
-        app.value(name, target);
+    export function value(target: any): any {
+        app.value(target.$componentName, target);
     }
 
-    export function filter(target: Function) {
-        var name: string = getComponentName(target);
-        var dependencies: any[] = getComponentArgs(target);
-
-        dependencies.push(target);
-        app.filter(name, dependencies);
+    export function filter(target: any) {
+        app.filter(target.$componentName, target);
     }
 
     function getComponentArgs(component: Function): string[] {

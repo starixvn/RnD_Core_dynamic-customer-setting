@@ -13,7 +13,7 @@
     var assetPaths = {
         bower: "./bower_components/",
         app: "./Assets/Scripts/App/",
-        style: "./Assets/Styles/*.scss",
+        style: "./Assets/Styles/",
         image: "./Assets/Styles/Images/",
         compass: "./Assets/Styles/Compass/"
     };
@@ -101,7 +101,9 @@
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
-    gulp.task("publish-styles", function () {
+    // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
+    // We can fix it by gulp-ruby-sass, which uses Ruby as runtime compiler but it needs the Ruby gem be installed on the building machine.
+    gulp.task("publish-styles2", function () {
         var header = require("gulp-header");
         var rename = require("gulp-rename");
         var sass = require("gulp-sass");
@@ -109,7 +111,7 @@
         var minify = require("gulp-minify-css");
         var pkg = require("./package.json");
 
-        return gulp.src(assetPaths.style)
+        return gulp.src(assetPaths.style + "**")
                    .pipe(sourcemaps.init())
                    .pipe(sass())
                    .pipe(sourcemaps.write())
@@ -117,6 +119,15 @@
                    .pipe(gulp.dest(publishPaths.customerSetting))
                    .pipe(minify())
                    .pipe(rename({ suffix: ".min" }))
+                   .pipe(gulp.dest(publishPaths.customerSetting));
+    });
+
+    gulp.task("publish-styles", function () {
+        var header = require("gulp-header");
+        var pkg = require("./package.json");
+
+        return gulp.src(assetPaths.style + "customer-setting*.{map,css}")
+                   .pipe(header(banner, { pkg: pkg }))
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
@@ -130,6 +141,7 @@
         var sourcemaps = require("gulp-sourcemaps");
         var templateCache = require("gulp-angular-templatecache");
         var ts = require("gulp-typescript");
+        var typescriptAngular = require("gulp-typescript-angular");
         var uglify = require("gulp-uglify");
         var pkg = require("./package.json");
         var modules = [];
@@ -151,6 +163,17 @@
                     noImplicitAny: true,
                     out: moduleName + ".js",
                     removeComments: true
+                })))
+                .pipe(gulpif(/[.]js$/, typescriptAngular({
+                    decoratorModuleName: "CustomerSetting",
+                    patterns: [
+                        { pattern: /Controller$/, type: "controller" },
+                        { pattern: /Service$/, type: "service" },
+                        { pattern: /Provider$/, type: "provider" },
+                        { pattern: /Directive$/, type: "directive" },
+                        { pattern: /Value$/, type: "value" },
+                        { pattern: /Filter$/, type: "filter" }
+                    ]
                 })))
                 .pipe(gulpif(/[.]htm$/, templateCache({
                     module: "customerSetting"

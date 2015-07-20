@@ -210,6 +210,12 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
     <Content Include="Content\Images\tab-icon.png" />
+    <Content Include="Content\site.css">
+      <DependentUpon>site.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Gulpfile.js" />
     <Content Include="Web.config" />
@@ -275,13 +281,15 @@
     <Content Include="package.json" />
     <Content Include="tsd.json" />
     <Content Include="Content\site.scss" />
-    <Content Include="App\CustomerSetting\core.min.js.map">
-      <DependentUpon>core.min.js</DependentUpon>
+    <Content Include="Content\site.css.map">
+      <DependentUpon>site.css</DependentUpon>
     </Content>
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -323,7 +331,7 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-  <!--<Target Name="BeforeBuild">
+  <Target Name="BeforeBuild">
     <Exec Command="npm install" />
-  </Target>-->
+  </Target>
 </Project>

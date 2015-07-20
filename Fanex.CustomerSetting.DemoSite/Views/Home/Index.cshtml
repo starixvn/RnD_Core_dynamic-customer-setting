@@ -6,54 +6,91 @@
         <div class="form-tab">
             <label class="tab-label">Customer Setting</label>
         </div>
-        <form class="form form-290-width first">
+        <div class="form form-290-width first">
             <div class="form-group">
-                <label class="control-label">Role Type</label>
+                <label class="control-label">Actor Role Type</label>
                 <select class="form-control"
-                        data-ng-options="item.roleId as item.roleName for item in ctrl.roles"
-                        data-ng-model="actorInfo.roleId"
-                        data-ng-change="changeRole()"></select>
+                        data-ng-options="item.roleId as item.roleName for item in ctrl.actorRoles"
+                        data-ng-model="ctrl.actor.role"
+                        data-ng-change="ctrl.changeActorRole()"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">Actor ID</label>
-                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.actorId" />
+                <input type="number"
+                       class="form-control"
+                       maxlength="15"
+                       data-ng-model="ctrl.actor.actorId"
+                       data-ng-change="ctrl.disableSavingSession()" />
             </div>
             <div class="form-group">
                 <label class="control-label">Sub-account ID</label>
-                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.subAccId" />
+                <input type="number"
+                       class="form-control"
+                       maxlength="15"
+                       data-ng-model="ctrl.actor.subAccountId"
+                       data-ng-change="ctrl.disableSavingSession()" />
             </div>
             <div class="form-group">
                 <label class="control-label">Language</label>
                 <select class="form-control"
-                        data-ng-options="item.value as item.name for item in languages"
-                        data-ng-model="actorInfo.selectedLanguage"
-                        data-ng-change="changeLanguage()"></select>
+                        data-ng-options="item.code as item.name for item in ctrl.languages"
+                        data-ng-model="ctrl.actor.language"
+                        data-ng-change="ctrl.disableSavingSession()"></select>
             </div>
             <div class="form-group submit">
-                <button>Save</button>
+                <button data-ng-disabled="ctrl.preventSavingSession" data-ng-click="ctrl.saveSession()">Save</button>
             </div>
-        </form>
-        <form class="form form-290-width last ">
+        </div>
+        <div class="form form-290-width last ">
+            <div class="form-group">
+                <label class="control-label large-label">Customer Role Type</label>
+                <select class="form-control"
+                        data-ng-options="item.roleId as item.roleName for item in ctrl.targetRoles"
+                        data-ng-model="ctrl.target.role"
+                        data-ng-change="ctrl.changeTargetRole()"></select>
+            </div>
             <div class="form-group">
                 <label class="control-label large-label">Product ID</label>
-                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.productId" />
+                <input type="number"
+                       class="form-control"
+                       maxlength="15"
+                       data-ng-model="ctrl.target.productId"
+                       data-ng-change="ctrl.disableShowingData()" />
             </div>
             <div class="form-group">
+                <label class="control-label large-label">Multiple Updates</label>
+                <input type="checkbox"
+                       class="form-control checkbox"
+                       data-ng-model="ctrl.isMultiple"
+                       data-ng-change="ctrl.changeTargetRole()" />
+            </div>
+            <div class="form-group" data-ng-hide="ctrl.isMultiple">
                 <label class="control-label large-label">Customer ID</label>
-                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.customerID" />
+                <input type="number"
+                       class="form-control"
+                       maxlength="15"
+                       data-ng-model="ctrl.target.customerId"
+                       data-ng-change="ctrl.disableShowingData()" />
             </div>
-            <div class="form-group hide">
+            <div class="form-group" data-ng-hide="!ctrl.isMultiple">
                 <label class="control-label large-label">Customer IDs</label>
-                <input type="number" class="form-control" maxlength="15" data-ng-model="actorInfo.customerIDs" />
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="ctrl.target.customerIds"
+                       data-ng-change="ctrl.disableShowingData()" />
             </div>
-            <div class="form-group hide">
+            <div class="form-group" data-ng-hide="!ctrl.isMultiple">
                 <label class="control-label large-label">Customer Names</label>
-                <input type="text" class="form-control" maxlength="15" data-ng-model="actorInfo.customerNames" />
+                <input type="text"
+                       class="form-control"
+                       maxlength="15"
+                       data-ng-model="ctrl.target.customerNames"
+                       data-ng-change="ctrl.disableShowingData()" />
             </div>
             <div class="form-group submit large-group">
-                <button>Show</button>
+                <button data-ng-disabled="ctrl.preventShowingData">Show</button>
             </div>
-        </form>
+        </div>
     </div>
     <div class="content">
     </div>

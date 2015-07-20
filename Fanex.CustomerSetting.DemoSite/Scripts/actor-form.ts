@@ -1,15 +1,15 @@
-﻿/// <reference path="typings/tsd.d.ts" />
+﻿/// <reference path="typings/angularjs/angular.d.ts" />
 module ActorForm {
-    class Language {
-        constructor(public name: string, public code: string) { }
-    }
-
     enum RoleType {
         company = 5,
         super = 4,
         master = 3,
         agent = 2,
         member = 1
+    }
+
+    class Language {
+        constructor(public name: string, public code: string) { }
     }
 
     class Role {
@@ -19,29 +19,85 @@ module ActorForm {
     class Actor {
         constructor(
             public actorId: number,
+            public actorName: string,
             public role: RoleType,
             public subAccountId: number,
             public language: string) { }
+
+        public static getAvailableRoles(): Role[] {
+            var roles: Role[] = new Array<Role>();
+
+            for (var role in RoleType) {
+                if (!isNaN(role) && parseInt(role) !== RoleType.member) {
+                    roles.push(new Role(RoleType[role], parseInt(role)));
+                }
+            }
+
+            return roles;
+        }
     }
 
-    interface Target {
-        productId: number;
-        role: RoleType;
+    class Target {
+        constructor(
+            public productId: number,
+            public role: RoleType) { }
+
+        public static getAvailableRoles(actorRole: RoleType): Role[] {
+            var tempRoles: RoleType[] = new Array<RoleType>();
+            var roles: Role[] = new Array<Role>();
+
+            switch (actorRole) {
+                case RoleType.company:
+                    tempRoles.push(
+                        RoleType.super,
+                        RoleType.master,
+                        RoleType.agent,
+                        RoleType.member);
+                    break;
+
+                case RoleType.super:
+                    tempRoles.push(
+                        RoleType.master,
+                        RoleType.agent,
+                        RoleType.member);
+                    break;
+
+                case RoleType.master:
+                    tempRoles.push(
+                        RoleType.agent,
+                        RoleType.member);
+                    break;
+
+                case RoleType.agent:
+                    tempRoles.push(RoleType.member);
+                    break;
+            }
+
+            for (var roleIndex in tempRoles) {
+                roles.push(new Role(RoleType[tempRoles[roleIndex]], tempRoles[roleIndex]));
+            }
+
+            return roles;
+        }
     }
 
-    class SingleTarget implements Target {
+    class SingleTarget extends Target {
         constructor(
             public customerId: number,
             public role: RoleType,
-            public productId: number) { }
+            public productId: number) {
+            super(productId, role);
+        }
     }
 
-    class MultipleTargets implements Target {
+    class MultipleTargets extends Target {
         constructor(
             public customerIds: string,
             public customerNames: string,
             public role: RoleType,
-            public productId: number) { }
+            public productId: number) {
+            super(productId, role);
+        }
 
         public getFirstCustomerId(): number {
             var ids: string[] = this.customerIds.split(",");
@@ -69,47 +125,95 @@ module ActorForm {
                 new Language("Tiếng Việt (vi-VN)", "vi-VN"));
         }
 
-        public static getAvailableActorRoles(): Role[] {
-            var roles: Role[] = new Array<Role>();
-
-            for (var role in RoleType) {
-                roles.push(new Role(RoleType[role], role));
-            }
-
-            return roles;
-        }
-
         public static getSampleActor(selectedRole: RoleType): Actor {
             var actorId: number = 0;
+            var name: string = "";
             var subAccId: number = 0;
 
             switch (selectedRole) {
                 case RoleType.company:
                     actorId = 8;
+                    name = "sa";
                     subAccId = 111;
                     break;
 
                 case RoleType.super:
                     actorId = 2;
+                    name = "SA-RM";
                     subAccId = 3;
                     break;
 
                 case RoleType.master:
                     actorId = 4174;
+                    name = "wsrm";
                     subAccId = 728497;
                     break;
 
                 case RoleType.agent:
                     actorId = 1262;
+                    name = "428rm";
                     subAccId = 728498;
                     break;
             }
 
-            return this.createActor(actorId, selectedRole, subAccId);
+            return this.createActor(actorId, name, selectedRole, subAccId);
         }
 
-        private static createActor(id: number, role: RoleType, subAccId: number): Actor {
-            return new Actor(id, role, subAccId, this.defaultLanguage);
+        public static getSampleSingleTarget(role: RoleType): SingleTarget {
+            var id: number = 0;
+
+            switch (role) {
+                case RoleType.super:
+                    id = 2;
+                    break;
+
+                case RoleType.master:
+                    id = 4174;
+                    break;
+
+                case RoleType.agent:
+                    id = 1262;
+                    break;
+
+                case RoleType.member:
+                    id = 1277;
+                    break;
+            }
+
+            return this.createSingleTarget(id, role);
+        }
+
+        public static getSampleMultipleTarget(role: RoleType): MultipleTargets {
+            var ids: string = "";
+            var names: string = "";
+
+            switch (role) {
+                case RoleType.company:
+                    ids = "2, 3, 4";
+                    names = "SA-RM, SA-US$, SA-TB";
+                    break;
+
+                case RoleType.super:
+                    ids = "4174, 4300, 4356";
+                    names = "mrm, mbrm, MYRM";
+                    break;
+
+                case RoleType.master:
+                    ids = "1262, 1653, 2400";
+                    names = "wsrm, SKRM, 216COM";
+                    break;
+
+                case RoleType.agent:
+                    ids = "1277, 1284, 1290";
+                    names = "428RM, 305RM, 302RM";
+                    break;
+            }
+
+            return this.createMultipleTargetInfo(ids, names, role);
+        }
+
+        private static createActor(id: number, name: string, role: RoleType, subAccId: number): Actor {
+            return new Actor(id, name, role, subAccId, this.defaultLanguage);
         }
 
         private static createSingleTarget(id: number, role: RoleType): SingleTarget {
@@ -125,21 +229,69 @@ module ActorForm {
         public static $inject: string[] = ["$http"];
 
         constructor(private $http: ng.IHttpService) {
-            this.actor = SampleDataFactory.getSampleActor(RoleType.company);
-            this.target = null;
-            this.isMultiple = false;
+            this.actorRoles = Actor.getAvailableRoles();
             this.languages = SampleDataFactory.getLanuages();
-            this.roles = SampleDataFactory.getAvailableActorRoles();
+            this.isMultiple = false;
+            this.changeActorRole();
         }
 
         public actor: Actor;
-        public isMultiple: boolean;
-        public target: Target;
+        public actorRoles: Role[];
         public languages: Language[];
-        public roles: Role[];
+        public target: Target;
+        public targetRoles: Role[];
+        public isMultiple: boolean;
+        public preventSavingSession: boolean;
+        public preventShowingData: boolean;
+
+        public changeActorRole(): void {
+            var selectedRoleId = this.actor !== undefined ? this.actor.role : RoleType.company;
+
+            this.actor = SampleDataFactory.getSampleActor(selectedRoleId);
+            this.targetRoles = Target.getAvailableRoles(selectedRoleId);
+
+            this.isMultiple = false;
+            this.target = undefined;
+            this.changeTargetRole();
+            this.enableSavingSession();
+            this.disableShowingData();
+        }
+
+        public disableSavingSession() {
+            this.preventSavingSession = true;
+        }
+
+        public enableSavingSession() {
+            this.preventSavingSession = false;
+        }
+
+        public disableShowingData() {
+            this.preventShowingData = true;
+        }
+
+        public enableShowingData() {
+            this.preventShowingData = false;
+        }
+
+        public changeTargetRole(): void {
+            var selectedRoleId = this.target !== undefined ? this.target.role : this.targetRoles[0].roleId;
+
+            if (this.isMultiple) {
+                this.target = SampleDataFactory.getSampleMultipleTarget(selectedRoleId);
+            } else {
+                this.target = SampleDataFactory.getSampleSingleTarget(selectedRoleId);
+            }
+        }
+
+        public saveSession(): void {
+            this.$http.post("home/saveSession", this.actor).success(() => {
+                this.disableSavingSession();
+                this.enableShowingData();
+            });
+        }
     }
+
+    var app = angular.module("actor-form", [])
+
+    app.controller("ActorController", ActorForm.ActorController);
 }
-
-var app = angular.module("actor-form", [])
-
-app.controller("ActorController", ActorForm.ActorController);
