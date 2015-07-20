@@ -110,6 +110,7 @@
     <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateSettingParamTests.cs" />
     <Compile Include="Enumeration\UserLevelTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceFactory.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
     <Compile Include="Models\SettingItemStub.cs" />
@@ -122,11 +123,11 @@
     <Compile Include="Services\BaseSettingTypeServicesTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
-    <Compile Include="Services\SettingServiceTestsUpdateCustomerSetting.cs" />
-    <Compile Include="Services\SettingServiceTestsUpdateMultipleCustomerSetting.cs" />
+    <Compile Include="Services\UpdateSettingServiceTest.cs" />
+    <Compile Include="Services\UpdateMultipleCustomerSettingTest.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateMultipleSettingAction.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
-    <Compile Include="Services\SettingServiceTestsGetCustomerSetting.cs" />
+    <Compile Include="Services\QuerySettingServiceTest.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateQuerySettingAction.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateSettingAction.cs" />
     <Compile Include="Utilz\LanguageNameConverterTests.cs" />

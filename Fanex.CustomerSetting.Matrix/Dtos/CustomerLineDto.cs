@@ -4,7 +4,7 @@
 
     public class CustomerLineDto
     {
-        public int? CustID { get; set; }
+        public int? CustId { get; set; }
 
         public string UserName { get; set; }
 
@@ -12,11 +12,11 @@
 
         public byte? Currency { get; set; }
 
-        public int? SuperID { get; set; }
+        public int? SuperId { get; set; }
 
-        public int? MasterID { get; set; }
+        public int? MasterId { get; set; }
 
-        public int? AgentID { get; set; }
+        public int? AgentId { get; set; }
 
         public string SuperName { get; set; }
 

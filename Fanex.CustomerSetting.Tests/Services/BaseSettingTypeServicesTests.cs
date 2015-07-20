@@ -103,7 +103,6 @@
             Assert.AreEqual(successMessage, actualSettingResult.Message);
         }
 
-        [Test]
         public void TranslateUpdateResultMessage_SettingResultIsFailed_AlwaysCallTranslateMessage()
         {
             //// Arrange
@@ -115,7 +114,7 @@
             MessageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>()).Returns(messageContent);
 
             //// Act
-            var actualSettingResult = this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
+           this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
 
             //// Assert
             MessageService.Received().TranslateMessage(

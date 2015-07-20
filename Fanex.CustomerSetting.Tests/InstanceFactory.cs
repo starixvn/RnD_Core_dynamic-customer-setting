@@ -104,7 +104,7 @@
         {
             return new Product
             {
-                Id = 1,
+                Id = productId,
                 SettingTypes = new List<SettingType>
                 {
                     InstanceFactory.CreateProductSettingType(1, 1),

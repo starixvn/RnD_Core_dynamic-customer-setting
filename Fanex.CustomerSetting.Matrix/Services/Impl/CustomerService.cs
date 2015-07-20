@@ -62,7 +62,7 @@
         {
             var super = new Customer
             {
-                Id = customerLineDto.SuperID.GetValueOrDefault(0),
+                Id = customerLineDto.SuperId.GetValueOrDefault(0),
                 Name = customerLineDto.SuperName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
                 CustomerLevel = Level.Super
@@ -75,7 +75,7 @@
         {
             var master = new Customer
             {
-                Id = customerLineDto.MasterID.GetValueOrDefault(0),
+                Id = customerLineDto.MasterId.GetValueOrDefault(0),
                 Name = customerLineDto.MasterName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
                 CustomerLevel = Level.Master
@@ -88,7 +88,7 @@
         {
             var agent = new Customer
             {
-                Id = customerLineDto.AgentID.GetValueOrDefault(0),
+                Id = customerLineDto.AgentId.GetValueOrDefault(0),
                 Name = customerLineDto.AgentName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
                 CustomerLevel = Level.Agent
@@ -101,7 +101,7 @@
         {
             var customer = new Customer
             {
-                Id = customerLineDto.CustID.GetValueOrDefault(0),
+                Id = customerLineDto.CustId.GetValueOrDefault(0),
                 Name = customerLineDto.UserName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
                 CustomerLevel = customerLineDto.CustomerLevel

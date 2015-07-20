@@ -17,7 +17,6 @@
     {
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
-        private ISettingContext _settingContext;
         private IRemotingRefService _remotingRefApi;
         private ICache _cacheManager;
         private string _language;
@@ -25,7 +24,6 @@
         [SetUp]
         public void Setup()
         {
-            _settingContext = new SettingContextStub();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
             _remotingRefApi = Substitute.For<IRemotingRefService>();
             _cacheManager = Substitute.For<ICache>();

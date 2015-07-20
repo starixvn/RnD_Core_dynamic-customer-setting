@@ -15,7 +15,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingServiceTestsUpdateCustomerSetting
+    public class UpdateSettingServiceTest
     {
         private IUpdateSettingService _settingService;
         private ISettingContext _settingContext;

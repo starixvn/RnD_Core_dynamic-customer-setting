@@ -17,7 +17,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QuerySettingParam(0, Level.Master, 0, null)));
+                    () => new QuerySettingParam(customerId, Level.Master, 0, null)));
         }
 
         [Test]

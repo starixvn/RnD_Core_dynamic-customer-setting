@@ -66,6 +66,11 @@
 
         public bool IsDirectUplineOf(Enumeration customerLevel)
         {
+            if (customerLevel == null)
+            {
+                return false;
+            }
+
             return IsDirectUplineOf(customerLevel.Value);
         }
 
@@ -76,6 +81,11 @@
 
         public bool IsDirectDownlineOf(Enumeration uplineLevel)
         {
+            if (uplineLevel == null)
+            {
+                return false;
+            }
+
             return GapBetweenTwoLevels(uplineLevel.Value, this.Value) == 1;
         }
 

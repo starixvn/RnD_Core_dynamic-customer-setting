@@ -19,7 +19,7 @@
             ISettingTypeService settingTypeService = null;
             var cacheKey = GenerateCacheKey(settingType);
 
-            if (SettingTypeServiceFactory._settingTypeServiceCached.ContainsKey(cacheKey))
+            if (_settingTypeServiceCached.ContainsKey(cacheKey))
             {
                 settingTypeService = GetSettingTypeServiceFromCache(cacheKey);
             }
@@ -33,7 +33,7 @@
 
         private ISettingTypeService GetSettingTypeServiceFromCache(string cacheKey)
         {
-            return SettingTypeServiceFactory._settingTypeServiceCached[cacheKey];
+            return _settingTypeServiceCached[cacheKey];
         }
 
         private ISettingTypeService CreateSettingTypeServiceInstanceAndCache(SettingType settingType, string cacheKey)
@@ -46,7 +46,7 @@
             {
                 settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
 
-                SettingTypeServiceFactory._settingTypeServiceCached.TryAdd(cacheKey, settingTypeService);
+               _settingTypeServiceCached.TryAdd(cacheKey, settingTypeService);
             }
 
             return settingTypeService;
