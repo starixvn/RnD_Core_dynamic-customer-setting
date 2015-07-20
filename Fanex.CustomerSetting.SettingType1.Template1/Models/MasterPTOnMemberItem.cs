@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class MasterPTOnMemberItem : BasePTItem
+    public class MasterPTOnMemberItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} MasterPT=\"{1}\" AutoMasterPT=\"{2}\" IsAutoMasterPT=\"{3}\"/>";
 

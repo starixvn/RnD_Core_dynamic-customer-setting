@@ -37,16 +37,16 @@
             { Level.Member.Value, "CustSetting_MemberPTSelect" }
         };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
-            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+            SmaQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTItem> },
                 { Level.Agent.Value,  GetPTSettingItem<AgentPTItem> }
             };
 
-        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
-           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<BasePTItem>>>
+        private static readonly Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
+           MemberQueryPTSettingItemFuncs = new Dictionary<byte, Func<ObjectDb, Hashtable, IEnumerable<PTItem>>>
             {
                 { Level.Super.Value, GetPTSettingItem<SuperPTOnMemberItem> },
                 { Level.Master.Value,  GetPTSettingItem<MasterPTOnMemberItem> },

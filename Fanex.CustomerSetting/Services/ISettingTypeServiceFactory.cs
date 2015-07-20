@@ -6,6 +6,6 @@
 
     public interface ISettingTypeServiceFactory
     {
-        ISettingTypeService CreateInstance(SettingType settingType);
+        ISettingTypeService GetInstance(SettingType settingType);
     }
 }

@@ -90,7 +90,7 @@
       <DependentUpon>BetLimitMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\SettingType2Service.cs" />
+    <Compile Include="Services\SettingTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">

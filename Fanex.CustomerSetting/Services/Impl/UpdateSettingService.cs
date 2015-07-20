@@ -103,7 +103,7 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
-            var settingTypeService = _settingTypeServiceFactory.CreateInstance(settingType);
+            var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
             return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
         }
@@ -184,7 +184,7 @@
 
         private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
-            var settingTypeService = _settingTypeServiceFactory.CreateInstance(settingType);
+            var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
             return settingTypeService.UpdateMultipleCustomersSettingType(
                     _settingContext,

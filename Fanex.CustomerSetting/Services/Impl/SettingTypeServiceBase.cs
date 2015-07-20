@@ -12,14 +12,14 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.Logging;
 
-    public abstract class SettingTypeService : ISettingTypeService
+    public abstract class SettingTypeServiceBase : ISettingTypeService
     {
-        protected SettingTypeService()
+        protected SettingTypeServiceBase()
             : this(null, null)
         {
         }
 
-        protected SettingTypeService(
+        protected SettingTypeServiceBase(
             IResourceService resourceService,
             ILogger logger)
         {

@@ -10,16 +10,16 @@
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
     using Fanex.Logging;
 
-    public class SettingType4Service : SettingTypeService, ISettingTypeService
+    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
     {
         private readonly IDataAccess _productStatusDataAccess;
 
-        public SettingType4Service()
+        public SettingTypeService()
             : this(null, null, null, null)
         {
         }
 
-        public SettingType4Service(
+        public SettingTypeService(
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,

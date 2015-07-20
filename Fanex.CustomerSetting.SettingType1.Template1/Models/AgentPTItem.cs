@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class AgentPTItem : BasePTItem
+    public class AgentPTItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} MasterPT=\"{1}\" IsAutoMasterPT=\"{2}\" AutoMasterPT=\"{3}\" AgentPT=\"{4}\" AgentMinPT=\"{5}\" UpdAllMems=\"{6}\" NewMasterPT=\"{7}\"/>";
 

@@ -90,7 +90,7 @@
       <DependentUpon>CommissionMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\SettingType3Service.cs" />
+    <Compile Include="Services\SettingTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -93,7 +93,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AgentPTOnMemberItem.cs" />
     <Compile Include="Models\PTSettingType.cs" />
-    <Compile Include="Models\BasePTItem.cs" />
+    <Compile Include="Models\PTItem.cs" />
     <Compile Include="Models\SuperPTItem.cs" />
     <Compile Include="Models\AgentPTItem.cs" />
     <Compile Include="Models\MasterPTOnMemberItem.cs" />
@@ -106,7 +106,7 @@
       <DependentUpon>PTMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\SettingType1Service.cs" />
+    <Compile Include="Services\SettingTypeService.cs" />
     <Compile Include="Utilities\PTFormatter.cs" />
   </ItemGroup>
   <ItemGroup>

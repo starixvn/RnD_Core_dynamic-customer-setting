@@ -133,7 +133,7 @@
 
             try
             {
-                var settingTypeService = _settingTypeServiceFactory.CreateInstance(productSettingType);
+                var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
 
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
                 customerSettingType.Id = productSettingType.Id;

@@ -11,7 +11,7 @@
         public void ToXml_ReturnFormattedXml(bool isLive, string expectedXml)
         {
             //// Arrange
-            var positionTakingItem = new BasePTItem
+            var positionTakingItem = new PTItem
                 {
                     SportTypeId = 1,
                     BetTypeId = 1,

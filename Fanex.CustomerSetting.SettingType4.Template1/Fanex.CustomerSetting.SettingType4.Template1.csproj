@@ -90,7 +90,7 @@
       <DependentUpon>ProductStatusMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\SettingType4Service.cs" />
+    <Compile Include="Services\SettingTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class MessageService : BaseMessageService, IMessageService
+    public class MessageService : MessageServiceBase, IMessageService
     {
         public MessageService(IResourceService resourceService = null)
             : base(resourceService)

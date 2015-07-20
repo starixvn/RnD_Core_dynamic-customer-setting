@@ -263,7 +263,7 @@
             _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingResolver.Received(dummySettingTypes.Count()).CreateInstance(Arg.Any<SettingType>());
+            _settingResolver.Received(dummySettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -286,7 +286,7 @@
         {
             var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
             _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QuerySettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
-            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         ////[Test]

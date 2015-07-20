@@ -99,7 +99,7 @@
             _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
-            _settingResolver.Received(updateParam.Setting.SettingTypes.Count()).CreateInstance(Arg.Any<SettingType>());
+            _settingResolver.Received(updateParam.Setting.SettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
         }
 
         private void SetupSettingTypeServiceStub(bool isReturnSuccessfulResult = true)
@@ -114,7 +114,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(result);
 
-            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]

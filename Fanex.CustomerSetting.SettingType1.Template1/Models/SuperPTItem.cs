@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class SuperPTItem : BasePTItem
+    public class SuperPTItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT=\"{2}\" AgentPT=\"{3}\" SuperMinPT=\"{4}\"/>";
 

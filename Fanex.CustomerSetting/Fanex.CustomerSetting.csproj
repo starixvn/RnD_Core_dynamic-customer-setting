@@ -140,8 +140,8 @@
     <Compile Include="Dtos\Results\Result.cs" />
     <Compile Include="Dtos\Results\IResult.cs" />
     <Compile Include="Services\IMessageService.cs" />
-    <Compile Include="Services\Impl\BaseMessageService.cs" />
-    <Compile Include="Services\Impl\SettingTypeService.cs" />
+    <Compile Include="Services\Impl\MessageServiceBase.cs" />
+    <Compile Include="Services\Impl\SettingTypeServiceBase.cs" />
     <Compile Include="Services\Impl\QuerySettingService.cs" />
     <Compile Include="Services\Impl\ResourceService.cs" />
     <Compile Include="Services\IQuerySettingService.cs" />

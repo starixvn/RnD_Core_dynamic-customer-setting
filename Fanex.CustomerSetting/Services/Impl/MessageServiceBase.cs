@@ -9,12 +9,12 @@
     using Fanex.CustomerSetting.Dtos.Messages;
     using Fanex.CustomerSetting.Resource;
 
-    public abstract class BaseMessageService : IMessageService
+    public abstract class MessageServiceBase : IMessageService
     {
         private const string NotFoundMessageFormat = "Undefined error message {0}";
         private const string MessageFormat = "Msg_{0}";
 
-        protected BaseMessageService(IResourceService resourceService)
+        protected MessageServiceBase(IResourceService resourceService)
         {
             ResourceService = resourceService ?? new ResourceService();
         }

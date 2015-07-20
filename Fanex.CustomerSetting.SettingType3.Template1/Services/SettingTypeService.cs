@@ -10,16 +10,16 @@
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
     using Fanex.Logging;
 
-    public class SettingType3Service : SettingTypeService, ISettingTypeService
+    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
     {
         private readonly IDataAccess _commissionDataAccess;
 
-        public SettingType3Service()
+        public SettingTypeService()
             : this(null, null, null, null)
         {
         }
 
-        public SettingType3Service(
+        public SettingTypeService(
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,

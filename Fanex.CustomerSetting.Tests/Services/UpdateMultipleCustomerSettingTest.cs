@@ -99,7 +99,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]
@@ -115,7 +115,7 @@
 
             //// Assert
             var numOfSettingTypes = updateMultipleSettingParam.Setting.SettingTypes.Count();
-            _settingResolver.Received(numOfSettingTypes).CreateInstance(Arg.Any<SettingType>());
+            _settingResolver.Received(numOfSettingTypes).GetInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -202,7 +202,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.CreateInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
 
             //// Act
             var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);

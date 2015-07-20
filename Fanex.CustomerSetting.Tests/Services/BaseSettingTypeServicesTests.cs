@@ -16,7 +16,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingTypeServicesTests : SettingTypeService
+    public class SettingTypeServicesTests : SettingTypeServiceBase
     {
         private const string DefaultLanguage = "en-US";
 

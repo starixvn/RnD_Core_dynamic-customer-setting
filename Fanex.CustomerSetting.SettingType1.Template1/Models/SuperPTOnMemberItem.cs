@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class SuperPTOnMemberItem : BasePTItem
+    public class SuperPTOnMemberItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} SuperPT=\"{1}\" AutoSuperPT=\"{2}\" IsAutoSuperPT=\"{3}\"/>";
 

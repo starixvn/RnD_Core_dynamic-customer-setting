@@ -7,64 +7,68 @@
 
     public class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {
-        private const string CacheKeyFormat = "{0}_{1}";
-        private const string AssemblyFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
-        private const string SettingTypeServiceFormat = "{0}.Services.SettingType{1}Service";
-        private const string TypeWithAssemblyFormat = "{0}, {1}";
+        private const string AssemblyNameFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
+        private const string TypeNameFormat = "{0}.Services.SettingTypeService";
 
-        private static ConcurrentDictionary<string, ISettingTypeService> _settingTypeServiceCached = new ConcurrentDictionary<string, ISettingTypeService>();
+        private static ConcurrentDictionary<string, ISettingTypeService> settingTypeServiceInstances = new ConcurrentDictionary<string, ISettingTypeService>();
+        private static ConcurrentDictionary<string, string> fullTypeNameDictionary = new ConcurrentDictionary<string, string>();
 
-        public ISettingTypeService CreateInstance(SettingType settingType)
+        public ISettingTypeService GetInstance(SettingType settingType)
         {
-            ISettingTypeService settingTypeService = null;
-            var cacheKey = GenerateCacheKey(settingType);
-
-            if (_settingTypeServiceCached.ContainsKey(cacheKey))
+            if (settingType == null)
             {
-                settingTypeService = GetSettingTypeServiceFromCache(cacheKey);
+                throw new ArgumentNullException("settingType");
             }
-            else
+
+            var settingTypeService = GetInstanceFromCache(settingType);
+
+            if (settingTypeService == null)
             {
-                settingTypeService = CreateSettingTypeServiceInstanceAndCache(settingType, cacheKey);
+                settingTypeService = CreateInstanceAndCache(settingType);
             }
 
             return settingTypeService;
         }
 
-        private ISettingTypeService GetSettingTypeServiceFromCache(string cacheKey)
-        {
-            return _settingTypeServiceCached[cacheKey];
-        }
-
-        private ISettingTypeService CreateSettingTypeServiceInstanceAndCache(SettingType settingType, string cacheKey)
+        private ISettingTypeService GetInstanceFromCache(SettingType settingType)
         {
             ISettingTypeService settingTypeService = null;
-            string fullTypeName = GetFullTypeName(SettingTypeServiceFormat, settingType.Id, settingType.SettingTemplate);
-            Type settingTypeServiceType = Type.GetType(fullTypeName);
+            var cacheKey = GetCacheKey(settingType);
+
+            settingTypeServiceInstances.TryGetValue(cacheKey, out settingTypeService);
+
+            return settingTypeService;
+        }
+
+        private ISettingTypeService CreateInstanceAndCache(SettingType settingType)
+        {
+            ISettingTypeService settingTypeService = null;
+            Type settingTypeServiceType = Type.GetType(GetFullTypeServiceName(settingType));
 
             if (settingTypeServiceType != null)
             {
                 settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
 
-               _settingTypeServiceCached.TryAdd(cacheKey, settingTypeService);
+                var cacheKey = GetCacheKey(settingType);
+                settingTypeServiceInstances.TryAdd(cacheKey, settingTypeService);
             }
 
             return settingTypeService;
         }
 
-        private string GetFullTypeName(
-            string typeNameFormat,
-            short settingTypeId,
-            byte settingTemplate)
+        private string GetCacheKey(SettingType settingType)
         {
-            string assemblyName = string.Format(AssemblyFormat, settingTypeId, settingTemplate);
-            string typeName = string.Format(typeNameFormat, assemblyName, settingTypeId);
-            return string.Format(TypeWithAssemblyFormat, typeName, assemblyName);
+            var cacheKey = string.Join("_", settingType.Id, settingType.SettingTemplate);
+
+            return cacheKey;
         }
 
-        private string GenerateCacheKey(SettingType settingType)
+        private string GetFullTypeServiceName(SettingType settingType)
         {
-            return string.Format(CacheKeyFormat, settingType.Id, settingType.SettingTemplate);
+            var assemblyName = string.Format(AssemblyNameFormat, settingType.Id, settingType.SettingTemplate);
+            string typeName = string.Format(TypeNameFormat, assemblyName);
+
+            return string.Join(", ", typeName, assemblyName);
         }
     }
 }

@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
-    public class AgentPTOnMemberItem : BasePTItem
+    public class AgentPTOnMemberItem : PTItem
     {
         private const string PositionTakingXmlFormat = "<PT {0} AgentPT=\"{1}\"/>";
 
