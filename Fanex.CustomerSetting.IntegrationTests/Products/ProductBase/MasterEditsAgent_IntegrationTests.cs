@@ -53,7 +53,7 @@
             Assert.AreEqual(agentId, agentSetting.CustomerId);
             Assert.AreEqual(Level.Agent, agentSetting.CustomerLevel);
             Assert.AreEqual(productId, agentSetting.ProductId);
-            Assert.AreEqual(productName, agentSetting.ProductName);
+            ////Assert.AreEqual(productName, agentSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, agentSetting.SettingTypes.Count());
 
             var agentPT = agentSetting.SettingTypes.ElementAt(0) as PTSettingType;
@@ -157,8 +157,6 @@
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-
             var newAgentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newAgentPTItem = newAgentSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTItem;
             Assert.AreEqual(agentPTItem.IM2, newAgentPTItem.IM2);
@@ -236,8 +234,6 @@
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
-
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication * 2); //// Wait for replication data.
 
             foreach (var agentId in agentIds)
             {

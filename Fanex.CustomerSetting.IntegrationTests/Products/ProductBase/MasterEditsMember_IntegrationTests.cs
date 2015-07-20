@@ -52,7 +52,7 @@
             Assert.AreEqual(memberId, memberSetting.CustomerId);
             Assert.AreEqual(Level.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(productId, memberSetting.ProductId);
-            Assert.AreEqual(productName, memberSetting.ProductName);
+            ////Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes - 1, memberSetting.SettingTypes.Count());
 
             var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
@@ -147,8 +147,6 @@
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
-
             var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newMasterOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
             if (masterPTOnMemberItem.IM1)
@@ -212,8 +210,6 @@
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
-
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication * 2); //// Wait for replication data.
 
             foreach (var memberId in memberIds)
             {

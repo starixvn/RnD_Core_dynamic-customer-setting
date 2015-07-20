@@ -83,9 +83,9 @@
             Assert.AreEqual(Result.AccessDenied.Code, actualUpdateResult.Code);
         }
 
-        private void AssumeUpdateCustomerSettingActionIsValid()
+        private void AssumeUpdateCustomerSettingActionIsValid(UpdateSettingParam updateParam)
         {
-            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateSettingParam>()).Returns(Result.Success);
+            _validationService.ValidateUpdateSettingAction(updateParam).Returns(Result.Success);
         }
 
         [Test]
@@ -93,7 +93,7 @@
         {
             //// Arrange
             UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
-            AssumeUpdateCustomerSettingActionIsValid();
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
             //// Act
             _settingService.UpdateCustomerSetting(updateParam);
@@ -122,7 +122,7 @@
         {
             //// Arrange
             UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
-            AssumeUpdateCustomerSettingActionIsValid();
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub();
 
             //// Act
@@ -143,7 +143,7 @@
         {
             //// Arrange
             UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
-            AssumeUpdateCustomerSettingActionIsValid();
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub(false);
 
             //// Act
@@ -158,7 +158,7 @@
         {
             //// Arrange
             UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
-            AssumeUpdateCustomerSettingActionIsValid();
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub();
 
             //// Act

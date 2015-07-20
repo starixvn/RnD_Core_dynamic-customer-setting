@@ -82,9 +82,9 @@
             _validationService.Received().ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
         }
 
-        private void AssumeUpdateMultipleCustomersSettingActionIsValid()
+        private void AssumeUpdateMultipleCustomersSettingActionIsValid(UpdateMultipleSettingParam updateParam)
         {
-            _validationService.ValidateUpdateMultipleSettingAction(Arg.Any<UpdateMultipleSettingParam>()).Returns(Result.Success);
+            _validationService.ValidateUpdateMultipleSettingAction(updateParam).Returns(Result.Success);
         }
 
         private void SetupSettingTypeServiceStub(bool isReturnSuccessfulResult = true)
@@ -107,7 +107,7 @@
         {
             //// Arrange
             UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-            AssumeUpdateMultipleCustomersSettingActionIsValid();
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub();
 
             //// Act
@@ -123,7 +123,7 @@
         {
             //// Arrange
             var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-            AssumeUpdateMultipleCustomersSettingActionIsValid();
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub();
 
             //// Act
@@ -146,7 +146,7 @@
         {
             //// Arrange
             UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-            AssumeUpdateMultipleCustomersSettingActionIsValid();
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub(false);
 
             //// Act
@@ -161,7 +161,7 @@
         {
             //// Arrange
             UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-            AssumeUpdateMultipleCustomersSettingActionIsValid();
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub();
 
             //// Act
@@ -176,7 +176,7 @@
         {
             //// Arrange
             UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-            AssumeUpdateMultipleCustomersSettingActionIsValid();
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
             var successResultOfCustomer1 = new SettingResult(
                 Result.Success.Code,

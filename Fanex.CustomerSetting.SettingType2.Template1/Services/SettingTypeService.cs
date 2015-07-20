@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Services
 {
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -39,6 +40,8 @@
 
         public override SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
             var result = _betLimitDataAccess.UpdateCustomerBetLimit(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);

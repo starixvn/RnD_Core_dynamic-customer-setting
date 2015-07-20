@@ -101,7 +101,7 @@
 
         private string GetBetTypeName(short betTypeId, string language)
         {
-            if(betTypeId > 0)
+            if (betTypeId > 0)
             {
                 return ResourceService.GetBetTypeName(betTypeId, language);
             }

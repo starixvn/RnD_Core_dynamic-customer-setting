@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Services
 {
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -51,6 +52,8 @@
             byte productId,
             SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
             var result = _productStatusDataAccess.UpdateCustomerProductStatus(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);

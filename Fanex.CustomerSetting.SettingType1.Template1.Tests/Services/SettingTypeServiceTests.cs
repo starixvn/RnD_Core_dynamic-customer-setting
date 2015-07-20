@@ -1,9 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -87,7 +85,7 @@
             Assert.AreSame(customerPT, actualCustomerPT);
         }
 
-        #endregion
+        #endregion Get Customer Setting Type Tests
 
         #region Update Customer Setting Type Tests
 
@@ -141,7 +139,7 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        #endregion
+        #endregion Update Customer Setting Type Tests
 
         #region Update Multiple Customers Setting Type
 
@@ -157,7 +155,7 @@
 
             //// Act
             _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
-            
+
             //// Assert
             _dataAccess.Received().GetGroupedMemberIds(Arg.Is("1,2"));
         }
@@ -173,7 +171,7 @@
             var customerPT = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Stub
-            var groupedMemberIds = new List<int>{ 1 };
+            var groupedMemberIds = new List<int> { 1 };
             _dataAccess.GetGroupedMemberIds(Arg.Any<string>()).Returns(groupedMemberIds);
 
             //// Act
@@ -266,6 +264,6 @@
             Assert.AreEqual(3, actualResults.Count());
         }
 
-        #endregion
+        #endregion Update Multiple Customers Setting Type
     }
 }

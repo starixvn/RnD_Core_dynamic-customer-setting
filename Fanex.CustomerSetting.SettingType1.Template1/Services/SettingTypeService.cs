@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -51,6 +52,8 @@
             byte productId, 
             SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
             var result = _dataAccess.UpdateCustomerPT(
                 settingContext, 
                 customerId, 
@@ -109,6 +112,8 @@
             Level uplineLevel,
             SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
             var updatedResult = _dataAccess.UpdateGroupedMembersSetting(
                 settingContext.Actor.Id,
                 settingContext.Actor.SubAccountId,

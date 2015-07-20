@@ -53,7 +53,7 @@
             Assert.AreEqual(SuperId, superSetting.CustomerId);
             Assert.AreEqual(Level.Super, superSetting.CustomerLevel);
             Assert.AreEqual(productId, superSetting.ProductId);
-            Assert.AreEqual(productName, superSetting.ProductName);
+            ////Assert.AreEqual(productName, superSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, superSetting.SettingTypes.Count());
 
             var superPTITem = superSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;
@@ -117,7 +117,6 @@
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
 
             var newSuperSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newSuperPTItem = newSuperSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as SuperPTItem;

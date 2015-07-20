@@ -129,7 +129,6 @@
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
 
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication); //// Wait for replication data.
             var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var newAgentOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
             Assert.AreEqual(agentPTOnMemberItem.A1, newAgentOnMemberPTItem.A1);
@@ -184,8 +183,6 @@
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);
-
-            Thread.Sleep(TestConfig.NumOfSleepSecondsWaitingForReplication * 2); //// Wait for replication data.
 
             foreach (var memberId in memberIds)
             {

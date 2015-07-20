@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Tests.Services
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
@@ -15,9 +16,22 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1013:ClosingCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1204:StaticElementsMustAppearBeforeInstanceElements", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1012:OpeningCurlyBracketsMustBeSpacedCorrectly", Justification = "Reviewed.")]
     [TestFixture]
     public class SettingTypeServiceTests
     {
+        private static object[] GetCustomerSettingType_ViewDirectDownlineCustomer_Cases =
+        {
+            new object[] { Level.Super, null },
+            new object[] { Level.Master, null },
+            new object[] { Level.Agent, null},
+            new object[] { Level.Member, Level.Agent }
+        };
+
         private ISettingTypeService _settingType4Service;
         private IResourceService _resourceService;
         private ILogger _logger;
@@ -37,14 +51,6 @@
 
             _settingType4Service = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
         }
-
-        private static object[] GetCustomerSettingType_ViewDirectDownlineCustomer_Cases =
-        {
-            new object[] { Level.Super, null },
-            new object[] { Level.Master, null },
-            new object[] { Level.Agent, null},
-            new object[] { Level.Member, Level.Agent }
-        };
 
         [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
         public void GetCustomerSettingType_ViewDirectDownlineCustomer_AlwaysCallGetCustomerProductStatus(
