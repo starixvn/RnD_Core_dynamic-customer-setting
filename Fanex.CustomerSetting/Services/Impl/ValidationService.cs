@@ -185,8 +185,6 @@
                 CheckActorLevelHasUpdatePermissionInCurrentSystem();
 
                 CheckCustomerSettingTypesIsValidWithProductProfile(productId, settingTypes);
-
-                CheckSettingTypesAreValid(settingTypes);
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -244,19 +242,6 @@
                 if (!productSettingTypes.Any(stt => stt.Id == customerSettingType.Id))
                 {
                     throw new CustomerSettingException(Result.AccessDenied.Message);
-                }
-            }
-        }
-
-        private void CheckSettingTypesAreValid(IEnumerable<SettingType> settingTypes)
-        {
-            foreach (SettingType settingType in settingTypes)
-            {
-                var result = settingType.Validate();
-
-                if (!result.IsSuccessful)
-                {
-                    throw new CustomerSettingException(result.Message);
                 }
             }
         }

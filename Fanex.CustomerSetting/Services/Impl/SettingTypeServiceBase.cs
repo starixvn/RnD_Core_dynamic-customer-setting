@@ -142,9 +142,9 @@
                 }
                 catch (Exception ex)
                 {
-                    settingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, settingType.Id, settingType.Name);
+                    settingTypeResult = new SettingResult(Result.SystemError, customerId, settingType.Id, settingType.Name);
 
-                    WriteUpdateSettingTypeLog(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, ex);
+                    WriteLog(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, ex);
                 }
 
                 settingTypeResults.Add(settingTypeResult);
@@ -153,7 +153,7 @@
             return settingTypeResults;
         }
 
-        private void WriteUpdateSettingTypeLog(
+        private void WriteLog(
             ISettingContext settingContext,
             int customerId,
             Level customerLevel,

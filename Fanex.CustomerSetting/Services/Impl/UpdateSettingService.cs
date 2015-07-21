@@ -88,21 +88,37 @@
         {
             try
             {
+                CheckSettingTypeIsValid(settingType);
+
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
                 return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
             }
+            catch (CustomerSettingException customerSettingException)
+            {
+                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, customerSettingException);
+
+                return new SettingResult(Result.AccessDenied, customerId, settingType.Id, settingType.Name);
+            }
             catch (Exception ex)
             {
-                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, ex);
+                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, new CustomerSettingException(ex.Message, ex));
 
                 return new SettingResult(
-                    Result.SystemError.Code,
-                    Result.SystemError.Message,
-                    0,
+                    Result.SystemError,
                     customerId,
                     settingType.Id,
                     settingType.Name);
+            }
+        }
+
+        private void CheckSettingTypeIsValid(SettingType settingType)
+        {
+            var result = settingType.Validate();
+
+            if (result.IsNotOk)
+            {
+                throw new CustomerSettingException(result.Message);
             }
         }
 
@@ -112,14 +128,13 @@
             Level uplineLevel,
             byte productId,
             SettingType customerSettingType,
-            Exception ex)
+            CustomerSettingException ex)
         {
-            var customerSettingException = new CustomerSettingException(ex.Message, ex);
-            customerSettingException.SetSettingContextInfo("Update Setting", _settingContext);
-            customerSettingException.SetCustomerInfo(customerId, customerLevel, uplineLevel);
-            customerSettingException.SetProductInfo(productId, customerSettingType);
+            ex.SetSettingContextInfo("Update Setting", _settingContext);
+            ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
+            ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(customerSettingException.Message, customerSettingException);
+            _logger.Error(ex.Message, ex);
         }
 
         public IResult UpdateCustomerSetting(UpdateMultipleSettingParam updateMultipleParam)
@@ -167,6 +182,8 @@
         {
             try
             {
+                CheckSettingTypeIsValid(settingType);
+
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
                 return settingTypeService.UpdateMultipleCustomersSettingType(
@@ -177,19 +194,17 @@
                         productId,
                         settingType);
             }
+            catch (CustomerSettingException customerSettingException)
+            {
+                WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, customerSettingException);
+
+                return new List<SettingResult> { new SettingResult(Result.AccessDenied, 0, settingType.Id, settingType.Name) };
+            }
             catch (Exception ex)
             {
-                WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
+                WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, new CustomerSettingException(ex.Message, ex));
 
-                var errorResult = new SettingResult(
-                    Result.SystemError.Code,
-                    Result.SystemError.Message,
-                    msgType: 0,
-                    customerId: 0,
-                    settingTypeId: settingType.Id,
-                    settingTypeName: settingType.Name);
-
-                return new List<SettingResult> { errorResult };
+                return new List<SettingResult> { new SettingResult(Result.SystemError, 0, settingType.Id, settingType.Name) };
             }
         }
 
@@ -239,14 +254,13 @@
             Level uplineLevel,
             byte productId,
             SettingType customerSettingType,
-            Exception ex)
+            CustomerSettingException ex)
         {
-            var customerSettingException = new CustomerSettingException(ex.Message, ex);
-            customerSettingException.SetSettingContextInfo("Update Multiple Setting", _settingContext);
-            customerSettingException.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
-            customerSettingException.SetProductInfo(productId, customerSettingType);
+            ex.SetSettingContextInfo("Update Multiple Setting", _settingContext);
+            ex.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
+            ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(customerSettingException.Message, customerSettingException);
+            _logger.Error(ex.Message, ex);
         }
     }
 }

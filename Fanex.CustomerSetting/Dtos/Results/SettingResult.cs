@@ -74,6 +74,21 @@
         {
         }
 
+        public SettingResult(
+            IResult result,
+            int customerId,
+            int settingTypeId,
+            string settingTypeName)
+            : this(
+            result.Code,
+            result.Message,
+            0,
+            customerId,
+            settingTypeId,
+            settingTypeName)
+        {
+        }
+
         public int CustomerId { get; private set; }
 
         public string CustomerName { get; set; }

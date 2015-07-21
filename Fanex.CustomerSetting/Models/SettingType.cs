@@ -72,20 +72,19 @@
             return (failedResult == null) ? Result.Success : failedResult;
         }
 
-        private SettingResult GetFailedResult()
+        private IResult GetFailedResult()
         {
-            var failedResults = SettingItems
-                .Select(item => item.Validate())
-                .Where(result => !result.IsSuccessful);
-
-            if (!failedResults.Any())
+            foreach (var settingItem in SettingItems)
             {
-                return null;
+                var result = settingItem.Validate();
+
+                if (result.IsNotOk)
+                {
+                    return result;
+                }
             }
 
-            var failedMessages = failedResults.Select(result => result.Message);
-
-            return new SettingResult(Result.DataError.Code, Result.DataError.Message, 0, 0, Id, Name, failedMessages);
+            return null;
         }
     }
 }

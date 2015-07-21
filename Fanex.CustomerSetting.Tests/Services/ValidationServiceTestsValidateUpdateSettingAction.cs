@@ -145,34 +145,34 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [Test]
-        public void ValidateUpdateSetting_Always_CallValidateMethodOnEachSettingItem()
-        {
-            //// Arrange
-            var updateParam = InstanceFactory.CreateUpdateSettingParam();
-            var settingItemMock = Substitute.For<ISettingItem>();
-            updateParam.Setting.SettingTypes = new List<SettingType>
-            {
-                new SettingType
-                {
-                    Id = 1,
-                    SettingTemplate = 1,
-                    SettingItems = new List<ISettingItem>
-                    {
-                        settingItemMock
-                    }
-                }
-            };
+        ////[Test]
+        ////public void ValidateUpdateSetting_Always_CallValidateMethodOnEachSettingItem()
+        ////{
+        ////    //// Arrange
+        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
+        ////    var settingItemMock = Substitute.For<ISettingItem>();
+        ////    updateParam.Setting.SettingTypes = new List<SettingType>
+        ////    {
+        ////        new SettingType
+        ////        {
+        ////            Id = 1,
+        ////            SettingTemplate = 1,
+        ////            SettingItems = new List<ISettingItem>
+        ////            {
+        ////                settingItemMock
+        ////            }
+        ////        }
+        ////    };
 
-            AssumeValidateQuerySettingIsSuccessful();
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId).Returns(updateParam.Setting.SettingTypes);
+        ////    AssumeValidateQuerySettingIsSuccessful();
+        ////    _productService.GetProductSettingTypes(updateParam.Setting.ProductId).Returns(updateParam.Setting.SettingTypes);
 
-            //// Act
-            _validationService.ValidateUpdateSettingAction(updateParam);
+        ////    //// Act
+        ////    _validationService.ValidateUpdateSettingAction(updateParam);
 
-            //// Assert
-            settingItemMock.Received().Validate();
-        }
+        ////    //// Assert
+        ////    settingItemMock.Received().Validate();
+        ////}
 
         [Test]
         public void ValidateUpdateSetting_CompanyPerformsUpdateActionInAgencySystem_ReturnAccessDeniedResult()
