@@ -17,7 +17,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private IRemotingRefService _remotingRefApi;
-        private ICustomerSettingCache _cacheManager;
+        private ICacheManager _cacheManager;
         private string _language;
 
         [SetUp]
@@ -25,7 +25,7 @@
         {
             _dymanicRepository = Substitute.For<IDynamicRepository>();
             _remotingRefApi = Substitute.For<IRemotingRefService>();
-            _cacheManager = Substitute.For<ICustomerSettingCache>();
+            _cacheManager = Substitute.For<ICacheManager>();
             _language = "en-US";
             _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi, _cacheManager);
         }

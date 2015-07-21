@@ -11,7 +11,7 @@
         private const string AssemblyNameFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
         private const string TypeNameFormat = "{0}.Services.SettingTypeService";
 
-        private static ConcurrentDictionary<string, ISettingTypeService> ServiceInstanceCached = new ConcurrentDictionary<string, ISettingTypeService>();
+        private static ConcurrentDictionary<string, ISettingTypeService> serviceInstanceCached = new ConcurrentDictionary<string, ISettingTypeService>();
 
         public ISettingTypeService GetInstance(SettingType settingType)
         {
@@ -31,7 +31,7 @@
         {
             ISettingTypeService settingTypeService = null;
 
-            ServiceInstanceCached.TryGetValue(settingType.ToString(), out settingTypeService);
+            serviceInstanceCached.TryGetValue(settingType.ToString(), out settingTypeService);
 
             return settingTypeService;
         }
@@ -49,7 +49,7 @@
             
             settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
 
-            ServiceInstanceCached.TryAdd(settingType.ToString(), settingTypeService);
+            serviceInstanceCached.TryAdd(settingType.ToString(), settingTypeService);
 
             return settingTypeService;
         }

@@ -1,12 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.RemotingRefApi;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Utilz;
     using Fanex.NAP.Framework.Data;
 
@@ -21,16 +19,16 @@
 
         private readonly IDynamicRepository _resourceRepository;
         private readonly IRemotingRefService _remotingRef;
-        private readonly ICustomerSettingCache _cacheManager;
+        private readonly ICacheManager _cacheManager;
 
         public ResourceService(
             IDynamicRepository resourceRepository = null, 
             IRemotingRefService remotingRef = null,
-            ICustomerSettingCache cacheManager = null)
+            CacheManager cacheManager = null)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();
-            _cacheManager = cacheManager ?? new CustomerSettingCache();
+            _cacheManager = cacheManager ?? new CacheManager();
         }
 
         public string GetProductName(byte productId, string language)

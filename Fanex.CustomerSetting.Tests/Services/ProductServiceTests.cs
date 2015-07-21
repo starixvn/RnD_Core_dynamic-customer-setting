@@ -16,13 +16,13 @@
     {
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
-        private ICustomerSettingCache _cacheManager;
+        private ICacheManager _cacheManager;
 
         [SetUp]
         public void Setup()
         {
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _cacheManager = Substitute.For<ICustomerSettingCache>();
+            _cacheManager = Substitute.For<ICacheManager>();
             _productService = new ProductService(_dynamicRepository, _cacheManager);
         }
 

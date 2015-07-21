@@ -123,8 +123,8 @@
     <Compile Include="Models\SettingType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ICustomerSettingCache.cs" />
-    <Compile Include="Services\Impl\CustomerSettingCache.cs" />
+    <Compile Include="Common\ICacheManager.cs" />
+    <Compile Include="Common\CacheManager.cs" />
     <Compile Include="Services\ISettingTypeServiceFactory.cs" />
     <Compile Include="Services\Impl\SettingTypeServiceFactory.cs" />
     <Compile Include="Dtos\Results\Result.cs" />
