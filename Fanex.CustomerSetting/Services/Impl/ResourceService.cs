@@ -24,7 +24,7 @@
         public ResourceService(
             IDynamicRepository resourceRepository = null, 
             IRemotingRefService remotingRef = null,
-            CacheManager cacheManager = null)
+            ICacheManager cacheManager = null)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();

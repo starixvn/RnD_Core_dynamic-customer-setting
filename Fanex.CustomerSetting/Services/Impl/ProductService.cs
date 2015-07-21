@@ -16,7 +16,7 @@
         private readonly IDynamicRepository _productRepository;
         private readonly ICacheManager _cacheManager;
 
-        public ProductService(IDynamicRepository productRepository = null, CacheManager cacheManager = null)
+        public ProductService(IDynamicRepository productRepository = null, ICacheManager cacheManager = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
             _cacheManager = cacheManager ?? new CacheManager();

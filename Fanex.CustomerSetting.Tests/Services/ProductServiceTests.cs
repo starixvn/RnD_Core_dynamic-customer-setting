@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
