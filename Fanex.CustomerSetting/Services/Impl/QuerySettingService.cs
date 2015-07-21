@@ -7,7 +7,6 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
@@ -117,7 +116,7 @@
             foreach (var productSettingType in productSettingTypes)
             {
                 SettingType customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
-              
+
                 if (customerSettingType.SettingItems.Any())
                 {
                     customerSettingTypes.Add(customerSettingType);
@@ -128,7 +127,7 @@
         }
 
         private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
-        { 
+        {
             SettingType customerSettingType = productSettingType;
 
             try

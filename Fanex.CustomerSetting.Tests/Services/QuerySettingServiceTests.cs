@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -26,7 +26,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private ILogger _logger;
-        private ISettingTypeServiceFactory _settingResolver;
+        private ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         private ISettingTypeService _settingTypeService;
 
@@ -38,7 +38,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
+            _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
@@ -49,7 +49,7 @@
                 _productService,
                 _resourceService,
                 _logger,
-                _settingResolver,
+                _settingTypeServiceFactory,
                 _dymanicRepository);
         }
 
@@ -263,7 +263,7 @@
             _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingResolver.Received(dummySettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
+            _settingTypeServiceFactory.Received(dummySettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -286,28 +286,27 @@
         {
             var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
             _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QuerySettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
-            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
-        ////[Test]
-        ////public void GetCustomerSetting_RaisedException_ExecuteLogQueryCustomerSettingTypeError()
-        ////{
-        ////    //// Arrange
-        ////    QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-        ////    AssumeQuerySettingActionIsValid();
-        ////    SetupProductSettingTypesStub();
-        ////    _settingResolver.ResolveSettingDataAccess(Arg.Any<SettingType>()).Returns(x => { throw new Exception(); });
+        [Test]
+        public void GetCustomerSetting_RaisedException_AlwaysCallLogError()
+        {
+            //// Arrange
+            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            AssumeQuerySettingActionIsValid();
+            SetupProductSettingTypesStub();
 
-        ////    //// Act
-        ////   _querySettingService.GetCustomerSetting(querySettingParam);
+            var expectedException = new Exception("Expected Exception");
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
 
-        ////    //// Assert
-        ////    _loggingService.Received().LogQueryCustomerSettingTypeError(
-        ////        Arg.Is<int>(customerId => customerId == querySettingParam.CustomerId),
-        ////        Arg.Is<UserLevel>(uplineLevel => uplineLevel == querySettingParam.UplineLevel),
-        ////        Arg.Is<byte>(productId => productId == querySettingParam.ProductId),
-        ////        Arg.Any<SettingType>(),
-        ////        Arg.Any<Exception>());
-        ////}
+            //// Act
+            _querySettingService.GetCustomerSetting(querySettingParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
+        }
     }
 }

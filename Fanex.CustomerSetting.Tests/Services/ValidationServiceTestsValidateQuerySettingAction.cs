@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -346,5 +347,27 @@
         {
             Level.Super, Level.Master, Level.Agent
         };
+
+        [Test]
+        public void ValidateQuerySetting_RaisedException_AlwaysLogError()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam(
+                customerId: 1,
+                customerLevel: Level.Master,
+                productId: 1);
+            _settingContext.Actor.Level = Level.Company;
+
+            var expectedException = new Exception("Expected Exception");
+            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
+        }
     }
 }

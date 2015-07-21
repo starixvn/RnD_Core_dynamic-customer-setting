@@ -6,7 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public abstract class BaseMessageServiceTests
+    public abstract class MessageServiceBaseTests
     {
         private const int ExceptionMessageType = 100;
         private const int OtherMessageType = 101;

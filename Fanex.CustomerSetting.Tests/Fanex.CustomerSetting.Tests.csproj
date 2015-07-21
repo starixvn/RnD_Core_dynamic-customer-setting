@@ -103,8 +103,8 @@
     <Compile Include="Models\DefaultSettingItemTests.cs" />
     <Compile Include="Models\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BaseMessageServiceTests.cs" />
-    <Compile Include="Services\SettingTypeServicesTests.cs" />
+    <Compile Include="Services\MessageServiceBaseTests.cs" />
+    <Compile Include="Services\SettingTypeServiceBaseTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
     <Compile Include="Services\SettingTypeServiceFactoryTests.cs" />

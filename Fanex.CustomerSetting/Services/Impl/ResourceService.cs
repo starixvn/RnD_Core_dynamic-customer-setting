@@ -67,6 +67,7 @@
             Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
 
             var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+            
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
                 : sportTypeName;
@@ -77,6 +78,7 @@
             Check.Argument.IsNotNegativeOrZero(betTypeId, "betTypeId");
 
             var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
+            
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
                 : betTypeName;

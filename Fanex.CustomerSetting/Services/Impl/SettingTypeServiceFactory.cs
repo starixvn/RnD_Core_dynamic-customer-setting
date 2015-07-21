@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Handlers
+﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System;
     using System.Collections.Concurrent;
@@ -46,7 +46,7 @@
             {
                 throw new DllNotFoundException(string.Format("{0} not found", fullTypeName));
             }
-            
+
             settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
 
             serviceInstanceCached.TryAdd(settingType.ToString(), settingTypeService);

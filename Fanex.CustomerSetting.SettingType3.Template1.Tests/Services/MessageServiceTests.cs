@@ -12,7 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class MessageServiceTests : BaseMessageServiceTests
+    public class MessageServiceTests : MessageServiceBaseTests
     {
         [SetUp]
         public void Setup()

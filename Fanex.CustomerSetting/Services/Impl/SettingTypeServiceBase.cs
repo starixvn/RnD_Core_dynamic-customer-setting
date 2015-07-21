@@ -144,7 +144,7 @@
                 {
                     settingTypeResult = new SettingResult(Result.SystemError.Code, Result.SystemError.Message, 0, customerId, settingType.Id, settingType.Name);
 
-                    LogUpdateCustomerSettingTypeError(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, ex);
+                    WriteUpdateSettingTypeLog(settingContext, customerId, customerLevel, uplineLevel, productId, settingType, ex);
                 }
 
                 settingTypeResults.Add(settingTypeResult);
@@ -153,7 +153,7 @@
             return settingTypeResults;
         }
 
-        private void LogUpdateCustomerSettingTypeError(
+        private void WriteUpdateSettingTypeLog(
             ISettingContext settingContext,
             int customerId,
             Level customerLevel,

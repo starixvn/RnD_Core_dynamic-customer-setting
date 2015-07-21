@@ -1,8 +1,6 @@
-﻿namespace Fanex.CustomerSetting.Handlers
+﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Services;
 
     public interface ISettingTypeServiceFactory
     {

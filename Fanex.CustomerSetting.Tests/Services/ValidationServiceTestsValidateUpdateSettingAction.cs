@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -211,6 +211,27 @@
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void ValidateUpdateSetting_RaisedException_AlwaysLogError()
+        {
+            //// Arrange
+            var updateParam = InstanceFactory.CreateUpdateSettingParam();
+            _settingContext.Actor.Level = Level.Company;
+
+            AssumeValidateQuerySettingIsSuccessful();
+
+            var expectedException = new Exception("Expected Exception");
+            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            _validationService.ValidateUpdateSettingAction(updateParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
         }
     }
 }

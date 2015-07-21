@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -22,7 +22,7 @@
         private IValidationService _validationService;
         private IProductService _productService;
         private ILogger _logger;
-        private ISettingTypeServiceFactory _settingResolver;
+        private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ISettingTypeService _settingTypeService;
 
         [SetUp]
@@ -32,7 +32,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
+            _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
 
@@ -40,7 +40,7 @@
                 _settingContext,
                 _validationService,
                 _logger,
-                _settingResolver);
+                _settingTypeServiceFactory);
         }
 
         [Test]
@@ -99,7 +99,7 @@
             _settingService.UpdateCustomerSetting(updateParam);
 
             //// Assert
-            _settingResolver.Received(updateParam.Setting.SettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
+            _settingTypeServiceFactory.Received(updateParam.Setting.SettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
         }
 
         private void SetupSettingTypeServiceStub(bool isReturnSuccessfulResult = true)
@@ -114,7 +114,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(result);
 
-            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]
@@ -166,6 +166,25 @@
 
             //// Assert
             Assert.IsTrue(actualUpdateResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_RaisedException_AlwaysCallLogError()
+        {
+            //// Arrange
+            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
+
+            var expectedException = new Exception("Expected Exception");
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            _settingService.UpdateCustomerSetting(updateParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
         }
     }
 }

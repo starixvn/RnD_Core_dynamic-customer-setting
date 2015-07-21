@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -16,11 +17,12 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingTypeServicesTests : SettingTypeServiceBase
+    public class SettingTypeServiceBaseTests : SettingTypeServiceBase
     {
         private const string DefaultLanguage = "en-US";
 
-        public SettingTypeServicesTests()
+        [SetUp]
+        public void SetUp()
         {
             ResourceService = Substitute.For<IResourceService>();
             Logger = Substitute.For<ILogger>();
@@ -39,7 +41,8 @@
                         {
                             BetTypeId = 1,
                             SportTypeId = 1
-                        }
+                        },
+                        new DefaultSettingItem()
                     }
             };
             var sportTypeName = "SportTypeName";
@@ -161,25 +164,25 @@
             Assert.AreEqual(customerIds.Count, settingTypeResults.Count());
         }
 
-        ////[Test]
-        ////public void UpdateMultipleCustomersSettingType_RaisedException_AlwaysCallLogError()
-        ////{
-        ////    //// Act
-        ////    var customerIds = new List<int> { 0 };
-        ////    var settingContext = new SettingContextStub();
+        [Test]
+        public void UpdateMultipleCustomersSettingType_RaisedException_ReturnErrorResult()
+        {
+            //// Act
+            var customerIds = new List<int> { 0 };
+            var settingContext = new SettingContextStub();
 
-        ////    //// Act
-        ////    this.UpdateMultipleCustomersSettingType(
-        ////        settingContext,
-        ////        customerIds,
-        ////        Level.Member,
-        ////        Level.Agent,
-        ////        Arg.Any<byte>(),
-        ////        new SettingType());
+            //// Act
+            var updateResults = this.UpdateMultipleCustomersSettingType(
+                settingContext,
+                customerIds,
+                Level.Member,
+                Level.Agent,
+                Arg.Any<byte>(),
+                new SettingType());
 
-        ////    //// Assert
-        ////    Logger.Received().Error(Arg.Any<string>(), Arg.Any<CustomerSettingException>());
-        ////}
+            //// Assert
+            Assert.IsFalse(updateResults.First().IsSuccessful);
+        }
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)
         {

@@ -71,13 +71,13 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                LogQuerySettingError(customerId, customerLevel, uplineLevel, customerSettingException);
+                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.Message);
             }
             catch (Exception ex)
             {
-                LogQuerySettingError(customerId, customerLevel, uplineLevel, new CustomerSettingException(ex.Message, ex));
+                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
@@ -153,7 +153,7 @@
             }
         }
 
-        private void LogQuerySettingError(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex)
+        private void WriteQuerySettingLog(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Query Setting", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
@@ -190,13 +190,13 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                LogUpdateSettingError(updateParam, customerSettingException);
+                WriteUpdateSettingLog(updateParam, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.Message);
             }
             catch (Exception ex)
             {
-                LogUpdateSettingError(updateParam, new CustomerSettingException(ex.Message, ex));
+                WriteUpdateSettingLog(updateParam, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
@@ -261,7 +261,7 @@
             }
         }
 
-        private void LogUpdateSettingError(UpdateSettingParam updateParam, CustomerSettingException ex)
+        private void WriteUpdateSettingLog(UpdateSettingParam updateParam, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Setting", _settingContext);
             ex.SetCustomerInfo(updateParam.Setting.CustomerId, updateParam.Setting.CustomerLevel, updateParam.UplineLevel);
@@ -282,13 +282,13 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                LogUpdateMultipleSettingError(updateMultipleParam, customerSettingException);
+                WriteUpdateMultipleSettingLog(updateMultipleParam, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.Message);
             }
             catch (Exception ex)
             {
-                LogUpdateMultipleSettingError(updateMultipleParam, new CustomerSettingException(ex.Message, ex));
+                WriteUpdateMultipleSettingLog(updateMultipleParam, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
@@ -319,7 +319,7 @@
             }
         }
 
-        private void LogUpdateMultipleSettingError(UpdateMultipleSettingParam updateParam, CustomerSettingException ex)
+        private void WriteUpdateMultipleSettingLog(UpdateMultipleSettingParam updateParam, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Multiple Setting", _settingContext);
             ex.SetCustomerInfo(

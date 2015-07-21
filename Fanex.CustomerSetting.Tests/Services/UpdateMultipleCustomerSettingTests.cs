@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Handlers;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -23,7 +23,7 @@
         private IValidationService _validationService;
         private IProductService _productService;
         private ILogger _logger;
-        private ISettingTypeServiceFactory _settingResolver;
+        private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ISettingTypeService _settingTypeService;
 
         [SetUp]
@@ -33,7 +33,7 @@
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _logger = Substitute.For<ILogger>();
-            _settingResolver = Substitute.For<ISettingTypeServiceFactory>();
+            _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
 
             _settingTypeService = Substitute.For<ISettingTypeService>();
 
@@ -41,7 +41,7 @@
                 _settingContext,
                 _validationService,
                 _logger,
-                _settingResolver);
+                _settingTypeServiceFactory);
         }
 
         [Test]
@@ -99,7 +99,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
         [Test]
@@ -115,7 +115,7 @@
 
             //// Assert
             var numOfSettingTypes = updateMultipleSettingParam.Setting.SettingTypes.Count();
-            _settingResolver.Received(numOfSettingTypes).GetInstance(Arg.Any<SettingType>());
+            _settingTypeServiceFactory.Received(numOfSettingTypes).GetInstance(Arg.Any<SettingType>());
         }
 
         [Test]
@@ -202,7 +202,7 @@
                Arg.Any<byte>(),
                Arg.Any<SettingType>()).Returns(results);
 
-            _settingResolver.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
 
             //// Act
             var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
@@ -212,6 +212,26 @@
             Assert.IsTrue(
                 updateSettingResult.SubResults.Any(settingResult => settingResult.CustomerName == "Username1")
                 && updateSettingResult.SubResults.Any(settingResult => settingResult.CustomerName == "Username2"));
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_RaisedException_AlwaysCallLogError()
+        {
+            //// Arrange
+            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
+
+            var expectedException = new Exception("Expected Exception");
+            _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
         }
     }
 }

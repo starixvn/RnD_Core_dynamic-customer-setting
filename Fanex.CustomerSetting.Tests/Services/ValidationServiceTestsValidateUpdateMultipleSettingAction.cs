@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -94,6 +94,22 @@
         }
 
         [Test]
+        public void ValidateUpdateMultipleSetting_ActorHasNoPermission_ReturnAccessDeniedResult()
+        {
+            //// Arrange
+            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
+
+            AssumeValidateUpdateSettingIsSuccessful();
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(Result.DataError);
+
+            //// Act
+            var actualResult = _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
+
+            //// Assert
+            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        }
+
+        [Test]
         public void ValidateUpdateMultipleSetting_CustomerIsNotMember_DontCallValidatePermissionMultiple()
         {
             //// Arrange
@@ -107,6 +123,26 @@
 
             //// Assert
             _validationDataAccess.DidNotReceive().ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>());
+        }
+
+        [Test]
+        public void ValidateUpdateMultipleSetting_RaisedException_AlwaysLogError()
+        {
+            //// Arrange
+            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
+
+            AssumeValidateUpdateSettingIsSuccessful();
+
+            var expectedException = new Exception("Expected Exception");
+            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(x => { throw expectedException; });
+
+            //// Act
+            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(expectedException.Message)),
+                Arg.Any<CustomerSettingException>());
         }
     }
 }

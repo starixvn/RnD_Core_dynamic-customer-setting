@@ -3,13 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Handlers;
     using Fanex.CustomerSetting.Models;
     using Fanex.Logging;
 
