@@ -48,7 +48,7 @@
             {
                 throw new DllNotFoundException(string.Format("{0} not found", fullTypeName));
             }
-
+            
             settingTypeService = Activator.CreateInstance(settingTypeServiceType) as ISettingTypeService;
 
             var cacheKey = GetCacheKey(settingType);

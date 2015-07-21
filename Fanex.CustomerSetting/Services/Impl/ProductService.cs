@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Caching;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
@@ -14,12 +13,12 @@
         private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}";
 
         private readonly IDynamicRepository _productRepository;
-        private readonly ICache _cacheManager;
+        private readonly ICustomerSettingCache _cacheManager;
 
-        public ProductService(IDynamicRepository productRepository = null, ICache cacheManager = null)
+        public ProductService(IDynamicRepository productRepository = null, ICustomerSettingCache cacheManager = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
-            _cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
+            _cacheManager = cacheManager ?? new CustomerSettingCache();
         }
 
         public IEnumerable<SettingType> GetProductSettingTypes(byte productId)

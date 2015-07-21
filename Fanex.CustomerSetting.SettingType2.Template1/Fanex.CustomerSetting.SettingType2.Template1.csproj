@@ -107,7 +107,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fanex.CustomerSetting.SettingType2.Template1.xml" />
+    <Content Include="Fanex.CustomerSetting.SettingType2.Template1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BetLimitMessage.resx">

@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
   <Function Name="Position_Taking_Template_1">
-    <Setting Key="CustSetting_SuperPTSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_SuperPTSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_MasterPTSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_MasterPTSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_AgentPTSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_AgentPTSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_MemberPTSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_MemberPTSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
 
-    <Setting Key="CustSetting_GroupedPTMemberLstSelect" SpName="Acc_CustSetting_GroupedPTMemberLstSelect" DbName="DBAGE.BODB02.bodbAdminNet" TimeOut="600">
+    <Setting Key="CustSetting_GroupedPTMemberLstSelect" SpName="Acc_CustSetting_GroupedPTMemberLstSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="CustID" ObjectProperty="Id" />
     </Setting>
     

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Caching;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
@@ -22,16 +21,16 @@
 
         private readonly IDynamicRepository _resourceRepository;
         private readonly IRemotingRefService _remotingRef;
-        private readonly ICache _cacheManager;
+        private readonly ICustomerSettingCache _cacheManager;
 
         public ResourceService(
             IDynamicRepository resourceRepository = null, 
-            IRemotingRefService remotingRef = null, 
-            ICache cacheManager = null)
+            IRemotingRefService remotingRef = null,
+            ICustomerSettingCache cacheManager = null)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();
-            _cacheManager = cacheManager ?? CacheService.CreateInstance();
+            _cacheManager = cacheManager ?? new CustomerSettingCache();
         }
 
         public string GetProductName(byte productId, string language)

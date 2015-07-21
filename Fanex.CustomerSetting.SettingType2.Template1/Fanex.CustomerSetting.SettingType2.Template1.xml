@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
   <Function Name="Bet_Limit_Template_1">
-    <Setting Key="CustSetting_SuperBetLimitSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_SuperBetLimitSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_MasterBetLimitSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+    <Setting Key="CustSetting_MasterBetLimitSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" >
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_AgentBetLimitSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+    <Setting Key="CustSetting_AgentBetLimitSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" >
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>
     
-    <Setting Key="CustSetting_MemberBetLimitSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" >
+    <Setting Key="CustSetting_MemberBetLimitSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" >
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
     </Setting>

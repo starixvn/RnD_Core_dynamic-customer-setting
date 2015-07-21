@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Caching;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -17,13 +16,13 @@
     {
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
-        private ICache _cacheManager;
+        private ICustomerSettingCache _cacheManager;
 
         [SetUp]
         public void Setup()
         {
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _cacheManager = Substitute.For<ICache>();
+            _cacheManager = Substitute.For<ICustomerSettingCache>();
             _productService = new ProductService(_dynamicRepository, _cacheManager);
         }
 
