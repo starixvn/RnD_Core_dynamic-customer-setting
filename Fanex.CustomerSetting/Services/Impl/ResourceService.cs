@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
+    using System;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.RemotingRefApi;
@@ -19,16 +19,16 @@
 
         private readonly IDynamicRepository _resourceRepository;
         private readonly IRemotingRefService _remotingRef;
-        private readonly ICacheManager _cacheManager;
+        private readonly ICachingService _cachingservice;
 
         public ResourceService(
-            IDynamicRepository resourceRepository = null, 
+            IDynamicRepository resourceRepository = null,
             IRemotingRefService remotingRef = null,
-            ICacheManager cacheManager = null)
+            ICachingService cacheService = null)
         {
             _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();
-            _cacheManager = cacheManager ?? new CacheManager();
+            _cachingservice = cacheService ?? new CachingService();
         }
 
         public string GetProductName(byte productId, string language)
@@ -43,6 +43,21 @@
             }
 
             return string.Format(ProductDefaultFormat, productId);
+        }
+
+        private ProductName GetProductNameFromCache(byte productId)
+        {
+            var cacheKey = string.Format(ProductNamesCacheKey, productId);
+
+            var productName = _cachingservice.GetOrAdd<ProductName>(
+                cacheKey,
+                () =>
+                {
+                    return _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
+                },
+                new TimeSpan(1, 0, 0));
+
+            return productName;
         }
 
         private string GetProductNameWithLanguage(ProductName productName, string language)
@@ -82,25 +97,6 @@
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
                 : betTypeName;
-        }
-
-        private ProductName GetProductNameFromCache(byte productId)
-        {
-            var cacheKey = string.Format(ProductNamesCacheKey, productId);
-
-            var productName = _cacheManager.Get<ProductName>(cacheKey);
-
-            if (ReferenceEquals(null, productName))
-            {
-                productName = _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
-
-                if (!ReferenceEquals(null, productName))
-                {
-                    _cacheManager.Set<ProductName>(cacheKey, productName, ProductNamesCacheTimeout);
-                }
-            }
-
-            return productName;
         }
     }
 }

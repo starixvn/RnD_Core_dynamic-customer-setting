@@ -1,66 +1,44 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.NAP.Framework.Data;
 
     public class ProductService : IProductService
     {
-        private const int SettingTypeCacheTimeout = 60 * 60; //// 1 hour
+        private const int SettingTypeCacheDuration = 1; //// 1 hour
         private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}";
 
         private readonly IDynamicRepository _productRepository;
-        private readonly ICacheManager _cacheManager;
+        private readonly ICachingService _cachingService;
 
-        public ProductService(IDynamicRepository productRepository = null, ICacheManager cacheManager = null)
+        public ProductService(IDynamicRepository productRepository = null, ICachingService cachingService = null)
         {
             _productRepository = productRepository ?? new DynamicRepository();
-            _cacheManager = cacheManager ?? new CacheManager();
+            _cachingService = cachingService ?? new CachingService();
         }
 
         public IEnumerable<SettingType> GetProductSettingTypes(byte productId)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var settingTypes = GetSettingTypesFromCache(productId);
-
-            if (settingTypes == null)
-            {
-                settingTypes = GetSettingTypesFromDatabase(productId);
-                SetSettingTypesToCache(productId, settingTypes);
-            }
+            var settingTypes = _cachingService.GetOrAdd(
+                   string.Format(SettingTypesCacheKey, productId),
+                   () =>
+                   {
+                       return _productRepository.Fetch<SettingType>(
+                           new ProductSettingTypesQueryCriteria
+                       {
+                           ProductId = productId
+                       });
+                   }, 
+                   new TimeSpan(1, 0, 0));
 
             return settingTypes;
-        }
-
-        private IEnumerable<SettingType> GetSettingTypesFromCache(byte productId)
-        {
-            var cacheKey = string.Format(SettingTypesCacheKey, productId);
-
-            return _cacheManager.Get<IEnumerable<SettingType>>(cacheKey);
-        }
-
-        private IEnumerable<SettingType> GetSettingTypesFromDatabase(byte productId)
-        {
-            return _productRepository.Fetch<SettingType>(new
-                ProductSettingTypesQueryCriteria
-            {
-                ProductId = productId
-            });
-        }
-
-        private void SetSettingTypesToCache(byte productId, IEnumerable<SettingType> settingTypes)
-        {
-            if (settingTypes != null && settingTypes.Any())
-            {
-                var cacheKey = string.Format(SettingTypesCacheKey, productId);
-
-                _cacheManager.Set<IEnumerable<SettingType>>(cacheKey, settingTypes);
-            }
         }
 
         public SettingType GetProductSettingType(byte productId, byte settingTypeId)

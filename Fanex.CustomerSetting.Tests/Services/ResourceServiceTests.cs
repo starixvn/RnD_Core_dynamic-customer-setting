@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Dtos;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.RemotingRefApi;
@@ -18,7 +17,7 @@
         private IResourceService _resourceService;
         private IDynamicRepository _dymanicRepository;
         private IRemotingRefService _remotingRefApi;
-        private ICacheManager _cacheManager;
+        private ICachingService _cachingService;
         private string _language;
 
         [SetUp]
@@ -26,9 +25,9 @@
         {
             _dymanicRepository = Substitute.For<IDynamicRepository>();
             _remotingRefApi = Substitute.For<IRemotingRefService>();
-            _cacheManager = Substitute.For<ICacheManager>();
+            _cachingService = Substitute.For<ICachingService>();
             _language = "en-US";
-            _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi, _cacheManager);
+            _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi, _cachingService);
         }
 
         #region Get Product Name
@@ -51,7 +50,10 @@
             //// Arrange
             byte productId = 1;
             var productName = new ProductName { ProductId = productId, ProductNameEN = "product name EN" };
-            _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(productName);
+            _cachingService.GetOrAdd<ProductName>(
+                Arg.Any<string>(), 
+                Arg.Any<Func<ProductName>>(), 
+                new TimeSpan(1, 0, 0)).Returns(productName);
 
             //// Act
             var actualResult = _resourceService.GetProductName(productId, _language);
@@ -66,7 +68,10 @@
             //// Arrange
             byte productId = 1;
             ProductName nullProductName = null;
-            _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(nullProductName);
+             _cachingService.GetOrAdd<ProductName>(
+                Arg.Any<string>(), 
+                Arg.Any<Func<ProductName>>(), 
+                new TimeSpan(1, 0, 0)).Returns(nullProductName);
 
             //// Act
             var actualResult = _resourceService.GetProductName(productId, _language);
@@ -82,7 +87,12 @@
             byte productId = 1;
             ProductName productName = new ProductName { ProductNameEN = "A product name" };
             ProductName nullProductName = null;
-            _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(nullProductName);
+
+            _cachingService.GetOrAdd<ProductName>(
+               Arg.Any<string>(),
+               Arg.Any<Func<ProductName>>(),
+               new TimeSpan(1, 0, 0)).Returns(productName);
+
             _dymanicRepository.Get<ProductName>(Arg.Any<ICriteria>()).Returns(productName);
 
             //// Act
@@ -98,7 +108,10 @@
             //// Arrange
             byte productId = 1;
             ProductName productName = new ProductName { ProductNameEN = "Prod EN", ProductNameTH = "Prod TH" };
-            _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(productName);
+            _cachingService.GetOrAdd<ProductName>(
+              Arg.Any<string>(),
+              Arg.Any<Func<ProductName>>(),
+              new TimeSpan(1, 0, 0)).Returns(productName);
 
             //// Act
             var actualResult = _resourceService.GetProductName(productId, _language);
@@ -113,7 +126,10 @@
             //// Arrange
             byte productId = 1;
             ProductName productName = new ProductName { ProductNameEN = "Prod EN", ProductNameTH = "Prod TH" };
-            _cacheManager.Get<ProductName>(Arg.Any<string>()).Returns(productName);
+            _cachingService.GetOrAdd<ProductName>(
+              Arg.Any<string>(),
+              Arg.Any<Func<ProductName>>(),
+              new TimeSpan(1, 0, 0)).Returns(productName);
 
             //// Act
             var actualResult = _resourceService.GetProductName(productId, Arg.Any<string>());

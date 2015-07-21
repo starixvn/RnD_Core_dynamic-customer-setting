@@ -13,22 +13,24 @@
 
         private static void RunConcurrentExperiment()
         {
+            var factory = new SettingTypeServiceFactory();
+
             Task.Factory.StartNew(() =>
             {
-                //// User A
-                var factory = new SettingTypeServiceFactory();
-
                 var settingTypeService = factory.GetSettingTypeService();
-                settingTypeService.UpdateSettingType("User A");
+                settingTypeService.UpdateSettingType("Setting Type A");
             });
 
             Task.Factory.StartNew(() =>
             {
-                //// User B
-                var factory = new SettingTypeServiceFactory();
-
                 var settingTypeService = factory.GetSettingTypeService();
-                settingTypeService.UpdateSettingType("User B");
+                settingTypeService.UpdateSettingType("Setting Type  B");
+            });
+
+            Task.Factory.StartNew(() =>
+            {
+                var settingTypeService = factory.GetSettingTypeService();
+                settingTypeService.UpdateSettingType("Setting Type  C");
             });
 
             Console.ReadLine();

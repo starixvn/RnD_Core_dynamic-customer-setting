@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Common;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
@@ -17,14 +16,14 @@
     {
         private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
-        private ICacheManager _cacheManager;
+        private ICachingService _cachingService;
 
         [SetUp]
         public void Setup()
         {
             _dynamicRepository = Substitute.For<IDynamicRepository>();
-            _cacheManager = Substitute.For<ICacheManager>();
-            _productService = new ProductService(_dynamicRepository, _cacheManager);
+            _cachingService = Substitute.For<ICachingService>();
+            _productService = new ProductService(_dynamicRepository, _cachingService);
         }
 
         [Test]
@@ -45,7 +44,11 @@
             //// Arrange
             byte productId = 1;
             IEnumerable<SettingType> settingTypes = new List<SettingType> { new SettingType() };
-            _cacheManager.Get<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1").Returns(settingTypes);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+              Arg.Any<string>(),
+              Arg.Any<Func<IEnumerable<SettingType>>>(),
+              new TimeSpan(1, 0, 0))
+              .Returns(settingTypes);
 
             //// Act
             var actualSettingTypes = _productService.GetProductSettingTypes(productId);
@@ -60,7 +63,11 @@
             //// Arrange
             byte productId = 1;
             IEnumerable<SettingType> settingTypes = null;
-            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypes);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+              Arg.Any<string>(),
+              Arg.Any<Func<IEnumerable<SettingType>>>(),
+              new TimeSpan(1, 0, 0))
+              .Returns(settingTypes);
 
             //// Act
             _productService.GetProductSettingTypes(productId);
@@ -77,7 +84,11 @@
             byte productId = 1;
             IEnumerable<SettingType> settingTypesInCache = null;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
-            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypesInCache);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+               Arg.Any<string>(),
+               Arg.Any<Func<IEnumerable<SettingType>>>(),
+               new TimeSpan(1, 0, 0))
+               .Returns(settingTypesInCache);
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
@@ -94,14 +105,18 @@
             byte productId = 1;
             IEnumerable<SettingType> settingTypesInCache = null;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
-            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypesInCache);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+              Arg.Any<string>(),
+              Arg.Any<Func<IEnumerable<SettingType>>>(),
+              new TimeSpan(1, 0, 0))
+              .Returns(settingTypesInCache);
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
             _productService.GetProductSettingTypes(productId);
 
             //// Assert
-            _cacheManager.Received().Set<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1", settingTypesFromDatabase);
+            _cachingService.Received().Add<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1", settingTypesFromDatabase);
         }
 
         /// <summary>
@@ -114,7 +129,11 @@
             byte productId = 1;
             byte settingType = 1;
             IEnumerable<SettingType> settingTypes = new List<SettingType> { new SettingType { Id = 1, SettingLevel = 1 } };
-            _cacheManager.Get<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1").Returns(settingTypes);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+                Arg.Any<string>(), 
+                Arg.Any<Func<IEnumerable<SettingType>>>(), 
+                new TimeSpan(1, 0, 0))
+                .Returns(settingTypes);
 
             //// Act
             var actualSettingType = _productService.GetProductSettingType(productId, settingType);
@@ -131,7 +150,11 @@
             byte settingType = 1;
             IEnumerable<SettingType> settingTypesInCache = null;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType>();
-            _cacheManager.Get<IEnumerable<SettingType>>(Arg.Any<string>()).Returns(settingTypesInCache);
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
+               Arg.Any<string>(),
+               Arg.Any<Func<IEnumerable<SettingType>>>(),
+               new TimeSpan(1, 0, 0))
+               .Returns(settingTypesInCache);
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
