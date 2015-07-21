@@ -92,7 +92,7 @@
                         settingType.Id,
                         settingType.Name);
 
-                    LogUpdateCustomerSettingTypeError(customerId, customerLevel, uplineLevel, productId, settingType, ex);
+                    WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, ex);
                 }
 
                 settingTypeResults.Add(updateSettingTypeResult);
@@ -108,7 +108,7 @@
             return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
         }
 
-        private void LogUpdateCustomerSettingTypeError(
+        private void WriteLog(
             int customerId,
             Level customerLevel,
             Level uplineLevel,
@@ -173,7 +173,7 @@
                         settingTypeId: settingType.Id,
                         settingTypeName: settingType.Name);
 
-                    LogUpdateMultipleCustomersSettingTypeError(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
+                    WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
 
                     results.Add(errorResult);
                 }
@@ -235,7 +235,7 @@
             return customerIdNameContainer;
         }
 
-        private void LogUpdateMultipleCustomersSettingTypeError(
+        private void WriteLog(
             IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,
@@ -244,7 +244,7 @@
             Exception ex)
         {
             var customerSettingException = new CustomerSettingException(ex.Message, ex);
-            customerSettingException.SetSettingContextInfo("Update Setting", _settingContext);
+            customerSettingException.SetSettingContextInfo("Update Multiple Setting", _settingContext);
             customerSettingException.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
             customerSettingException.SetProductInfo(productId, customerSettingType);
 
