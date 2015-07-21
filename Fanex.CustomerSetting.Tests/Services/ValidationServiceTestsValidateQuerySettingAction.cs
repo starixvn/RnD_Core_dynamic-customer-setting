@@ -183,7 +183,7 @@
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
-            Assert.AreEqual("Account ActorName was disbaled.", actualResult.Message);
+            Assert.IsTrue(actualResult.Message.Contains("Account ActorName was disbaled."));
         }
 
         [Test]

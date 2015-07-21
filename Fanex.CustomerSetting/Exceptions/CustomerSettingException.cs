@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.Serialization;
+    using System.Text;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
@@ -96,6 +97,14 @@
 
         public string UplineLevel { get; set; }
 
+        public override string Message
+        {
+            get
+            {
+                return BuildMessage();
+            }
+        }
+
         public void SetSettingContextInfo(string actionName, ISettingContext settingContext)
         {
             ActorName = actionName;
@@ -177,6 +186,37 @@
                 info.AddValue("CustomerLevel", this.CustomerLevel);
                 info.AddValue("UplineLevel", this.UplineLevel);
             }
+        }
+
+        private string BuildMessage()
+        {
+            var messageBuilder = new StringBuilder();
+
+            messageBuilder.AppendLine(base.Message);
+            messageBuilder.AppendFormat("Action: {0}", ActionName).AppendLine();
+
+            messageBuilder.AppendFormat("Language: {0}", Language).AppendLine();
+            messageBuilder.AppendFormat("IP: {0}", IP).AppendLine();
+            messageBuilder.AppendFormat("System: {0}", SystemId).AppendLine();
+            messageBuilder.AppendFormat("Domain: {0}", Domain).AppendLine();
+
+            messageBuilder.AppendFormat("Actor Id: {0}", ActorId).AppendLine();
+            messageBuilder.AppendFormat("Actor Name: {0}", ActorName).AppendLine();
+            messageBuilder.AppendFormat("Actor Level: {0}", ActorLevel).AppendLine();
+            messageBuilder.AppendFormat("Sub Account Id: {0}", SubAccountId).AppendLine();
+
+            messageBuilder.AppendFormat("Customer Id(s): {0}", CustomerId > 0 ? CustomerId.ToString() : CustomerIds).AppendLine();
+            messageBuilder.AppendFormat("Customer Level: {0}", CustomerLevel).AppendLine();
+            messageBuilder.AppendFormat("Upline Level: {0}", UplineLevel).AppendLine();
+
+            messageBuilder.AppendFormat("ProductId: {0}", ProductId).AppendLine();
+
+            messageBuilder.AppendFormat("Setting Type Id: {0}", SettingTypeId).AppendLine();
+            messageBuilder.AppendFormat("Setting Type Name: {0}", SettingTypeName).AppendLine();
+            messageBuilder.AppendFormat("Setting Type Level: {0}", SettingTypeLevel).AppendLine();
+            messageBuilder.AppendFormat("Setting Type Template: {0}", SettingTypeTemplate).AppendLine();
+
+            return messageBuilder.ToString();
         }
     }
 }
