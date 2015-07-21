@@ -18,7 +18,7 @@
                 //// User A
                 var factory = new SettingTypeServiceFactory();
 
-                var settingTypeService = factory.GetConcurrentClass();
+                var settingTypeService = factory.GetSettingTypeService();
                 settingTypeService.UpdateSettingType("User A");
             });
 
@@ -27,7 +27,7 @@
                 //// User B
                 var factory = new SettingTypeServiceFactory();
 
-                var settingTypeService = factory.GetConcurrentClass();
+                var settingTypeService = factory.GetSettingTypeService();
                 settingTypeService.UpdateSettingType("User B");
             });
 

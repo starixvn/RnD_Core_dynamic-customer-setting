@@ -8,7 +8,7 @@
 
         private static ConcurrentDictionary<string, SettingTypeService> settingTypeServiceInstances = new ConcurrentDictionary<string, SettingTypeService>();
 
-        public SettingTypeService GetConcurrentClass()
+        public SettingTypeService GetSettingTypeService()
         {
             var settingTypeService = GetInstanceFromCache();
 
