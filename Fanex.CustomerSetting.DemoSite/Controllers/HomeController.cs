@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Web.Contexts;
@@ -19,7 +20,13 @@
             int subAccountId = 0,
             string language = "en-US")
         {
-            SettingContextManager.Init(actorId, actorname, Level.FromValue<Level>(role));
+            if (CustomerSettingSection.Settings.SystemId != (byte)SystemType.Agency)
+            {
+                subAccountId = 0;
+            }
+
+            SettingContextManager.Init(actorId, actorname, Level.FromValue<Level>(role), subAccountId);
+            SettingContextManager.SetLanguage(language);
 
             return Json(Result.Success);
         }

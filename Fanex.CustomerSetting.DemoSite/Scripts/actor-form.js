@@ -44,7 +44,7 @@ var ActorForm;
                     roles.push(new Role(RoleType[role], parseInt(role)));
                 }
             }
-            return roles;
+            return roles.sort(function (num1, num2) { return num2.roleId - num1.roleId; });
         };
         return Actor;
     })();
@@ -54,26 +54,13 @@ var ActorForm;
             this.role = role;
         }
         Target.getAvailableRoles = function (actorRole) {
-            var tempRoles = new Array();
             var roles = new Array();
-            switch (actorRole) {
-                case RoleType.company:
-                    tempRoles.push(RoleType.super, RoleType.master, RoleType.agent, RoleType.member);
-                    break;
-                case RoleType.super:
-                    tempRoles.push(RoleType.master, RoleType.agent, RoleType.member);
-                    break;
-                case RoleType.master:
-                    tempRoles.push(RoleType.agent, RoleType.member);
-                    break;
-                case RoleType.agent:
-                    tempRoles.push(RoleType.member);
-                    break;
+            for (var role in RoleType) {
+                if (!isNaN(role) && parseInt(role) < actorRole) {
+                    roles.push(new Role(RoleType[role], parseInt(role)));
+                }
             }
-            for (var roleIndex in tempRoles) {
-                roles.push(new Role(RoleType[tempRoles[roleIndex]], tempRoles[roleIndex]));
-            }
-            return roles;
+            return roles.sort(function (num1, num2) { return num2.roleId - num1.roleId; });
         };
         return Target;
     })();

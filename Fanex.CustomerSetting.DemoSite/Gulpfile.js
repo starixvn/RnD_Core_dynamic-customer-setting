@@ -95,7 +95,8 @@
             done);
     });
 
-    gulp.task("watch-ts", ["compile-scripts"], function () {
+    gulp.task("watch", ["compile-scripts", "copy-customer-setting-asset"], function () {
+        gulp.watch(paths.source, ["copy-customer-setting-asset"]);
         gulp.watch(paths.script + "*.ts", ["compile-scripts"]);
     });
 })(require);

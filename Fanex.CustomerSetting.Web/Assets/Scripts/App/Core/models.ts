@@ -1,16 +1,11 @@
-﻿/// <reference path="../../../typings/tsd.d.ts" />
-/// <reference path="module-registration.ts" />
+﻿module CustomerSetting {
+    export interface ISettingItem {
+        typeName: string;
 
-module CustomerSetting {
-    enum UserLevel {
-        company = 5,
-        super = 4,
-        master = 3,
-        agent = 2,
-        member = 1
+        oldSetting: ISettingItem;
     }
 
-    class CustomerInfo {
+    export class CustomerInfo {
         public username: string;
 
         public username2: string;
@@ -26,12 +21,6 @@ module CustomerSetting {
         public fax: string;
 
         public email: string;
-    }
-
-    export interface ISettingItem {
-        typeName: string;
-
-        oldSetting: ISettingItem;
     }
 
     export class DefaultSettingItem implements ISettingItem {
@@ -59,18 +48,18 @@ module CustomerSetting {
     }
 
     export class Setting {
-        private _customerLevel: UserLevel;
+        private _customerLevel: Level;
 
         public customerId: number;
 
         public customerInfo: CustomerInfo;
 
-        public get customerLevel(): UserLevel {
+        public get customerLevel(): Level {
             return this._customerLevel;
         }
 
-        public set customerLevel(level: UserLevel) {
-            if (level === UserLevel.company) {
+        public set customerLevel(level: Level) {
+            if (level === Level.company) {
                 throw "Wrong customer level.";
             }
 
@@ -83,4 +72,4 @@ module CustomerSetting {
 
         public settingType: Array<SettingType>;
     }
-} 
+}

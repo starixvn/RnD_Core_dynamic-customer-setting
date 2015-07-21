@@ -170,9 +170,9 @@
                         { pattern: /Controller$/, type: "controller" },
                         { pattern: /Service$/, type: "service" },
                         { pattern: /Provider$/, type: "provider" },
-                        { pattern: /Directive$/, type: "directive" },
-                        { pattern: /Value$/, type: "value" },
-                        { pattern: /Filter$/, type: "filter" }
+                        { pattern: /Directive$/, type: "directive", removePattern: true },
+                        { pattern: /Value$/, type: "value", removePattern: true },
+                        { pattern: /Filter$/, type: "filter", removePattern: true }
                     ]
                 })))
                 .pipe(gulpif(/[.]htm$/, templateCache({
@@ -199,5 +199,9 @@
             "install-compass",
             ["publish-template", "publish-styles", "publish-script"],
             done);
+    });
+
+    gulp.task("watch-ts", ["publish-script"], function () {
+        gulp.watch(assetPaths.app + "**/*.ts", ["publish-script"]);
     });
 })(require);

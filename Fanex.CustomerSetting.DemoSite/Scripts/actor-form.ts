@@ -33,7 +33,7 @@ module ActorForm {
                 }
             }
 
-            return roles;
+            return roles.sort((num1, num2) => num2.roleId - num1.roleId);
         }
     }
 
@@ -43,41 +43,15 @@ module ActorForm {
             public role: RoleType) { }
 
         public static getAvailableRoles(actorRole: RoleType): Role[] {
-            var tempRoles: RoleType[] = new Array<RoleType>();
             var roles: Role[] = new Array<Role>();
 
-            switch (actorRole) {
-                case RoleType.company:
-                    tempRoles.push(
-                        RoleType.super,
-                        RoleType.master,
-                        RoleType.agent,
-                        RoleType.member);
-                    break;
-
-                case RoleType.super:
-                    tempRoles.push(
-                        RoleType.master,
-                        RoleType.agent,
-                        RoleType.member);
-                    break;
-
-                case RoleType.master:
-                    tempRoles.push(
-                        RoleType.agent,
-                        RoleType.member);
-                    break;
-
-                case RoleType.agent:
-                    tempRoles.push(RoleType.member);
-                    break;
+            for (var role in RoleType) {
+                if (!isNaN(role) && parseInt(role) < actorRole) {
+                    roles.push(new Role(RoleType[role], parseInt(role)));
+                }
             }
 
-            for (var roleIndex in tempRoles) {
-                roles.push(new Role(RoleType[tempRoles[roleIndex]], tempRoles[roleIndex]));
-            }
-
-            return roles;
+            return roles.sort((num1, num2) => num2.roleId - num1.roleId);
         }
     }
 
