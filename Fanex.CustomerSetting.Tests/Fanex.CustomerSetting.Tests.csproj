@@ -106,10 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
-    <Compile Include="Dtos\Params\QuerySettingParamTest.cs" />
+    <Compile Include="Dtos\Params\QuerySettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateSettingParamTests.cs" />
-    <Compile Include="Enumeration\UserLevelTest.cs" />
+    <Compile Include="Enumeration\UserLevelTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceFactory.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
@@ -117,18 +117,18 @@
     <Compile Include="Models\SettingTests.cs" />
     <Compile Include="Models\SettingTypeTests.cs" />
     <Compile Include="Models\DefaultSettingItemTests.cs" />
-    <Compile Include="Models\UserTest.cs" />
+    <Compile Include="Models\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseMessageServiceTests.cs" />
     <Compile Include="Services\SettingTypeServicesTests.cs" />
     <Compile Include="Services\ProductServiceTests.cs" />
     <Compile Include="Services\ResourceServiceTests.cs" />
-    <Compile Include="Services\SettingTypeServiceFactoryTest.cs" />
-    <Compile Include="Services\UpdateSettingServiceTest.cs" />
-    <Compile Include="Services\UpdateMultipleCustomerSettingTest.cs" />
+    <Compile Include="Services\SettingTypeServiceFactoryTests.cs" />
+    <Compile Include="Services\UpdateSettingServiceTests.cs" />
+    <Compile Include="Services\UpdateMultipleCustomerSettingTests.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateMultipleSettingAction.cs" />
     <Compile Include="Criteria\CustomerQueryCriteriaTests.cs" />
-    <Compile Include="Services\QuerySettingServiceTest.cs" />
+    <Compile Include="Services\QuerySettingServiceTests.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateQuerySettingAction.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateSettingAction.cs" />
     <Compile Include="Utilz\LanguageNameConverterTests.cs" />

@@ -6,7 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class QuerySettingParamTest
+    public class QuerySettingParamTests
     {
         private object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 

@@ -7,7 +7,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UserLevelTest
+    public class UserLevelTests
     {
         [Test]
         public void Is_InputParamIsNull_ReturnFalse()

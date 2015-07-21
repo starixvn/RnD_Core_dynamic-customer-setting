@@ -15,7 +15,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SettingTypeServiceFactoryTest
+    public class SettingTypeServiceFactoryTests
     {
         [Test]
         public void GetInstance_SettingTypeIsNull_ThrowArgumentNullException()

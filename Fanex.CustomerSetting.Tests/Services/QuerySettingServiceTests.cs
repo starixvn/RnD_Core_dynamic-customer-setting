@@ -17,7 +17,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class QuerySettingServiceTest
+    public class QuerySettingServiceTests
     {
         private IQuerySettingService _querySettingService;
         private ISettingContext _settingContext;

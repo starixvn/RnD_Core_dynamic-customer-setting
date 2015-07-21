@@ -6,7 +6,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UserTest
+    public class UserTests
     {
         private static object[] isMethodAlwaysReturnRightValueCases =  
         {
