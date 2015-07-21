@@ -78,22 +78,7 @@
 
             foreach (var settingType in settingTypes)
             {
-                try
-                {
-                    updateSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
-                }
-                catch (Exception ex)
-                {
-                    updateSettingTypeResult = new SettingResult(
-                        Result.SystemError.Code,
-                        Result.SystemError.Message,
-                        0,
-                        customerId,
-                        settingType.Id,
-                        settingType.Name);
-
-                    WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, ex);
-                }
+                updateSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
 
                 settingTypeResults.Add(updateSettingTypeResult);
             }
@@ -103,9 +88,24 @@
 
         private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
         {
-            var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
+            try
+            {
+                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
-            return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+            }
+            catch (Exception ex)
+            {
+                WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, ex);
+
+                return new SettingResult(
+                    Result.SystemError.Code,
+                    Result.SystemError.Message,
+                    0,
+                    customerId,
+                    settingType.Id,
+                    settingType.Name);
+            }
         }
 
         private void WriteLog(
@@ -157,26 +157,9 @@
 
             foreach (var settingType in settingTypes)
             {
-                try
-                {
-                    var updateResults = UpdateMultipleCustomersSettingType(customerIds, customerLevel, uplineLevel, productId, settingType);
+                var updateResults = UpdateMultipleCustomersSettingType(customerIds, customerLevel, uplineLevel, productId, settingType);
 
-                    results.AddRange(updateResults);
-                }
-                catch (Exception ex)
-                {
-                    var errorResult = new SettingResult(
-                        Result.SystemError.Code,
-                        Result.SystemError.Message,
-                        msgType: 0,
-                        customerId: 0,
-                        settingTypeId: settingType.Id,
-                        settingTypeName: settingType.Name);
-
-                    WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
-
-                    results.Add(errorResult);
-                }
+                results.AddRange(updateResults);
             }
 
             return results;
@@ -184,15 +167,32 @@
 
         private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
-            var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
+            try
+            {
+                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
-            return settingTypeService.UpdateMultipleCustomersSettingType(
-                    _settingContext,
-                    customerIds,
-                    customerLevel,
-                    uplineLevel,
-                    productId,
-                    settingType);
+                return settingTypeService.UpdateMultipleCustomersSettingType(
+                        _settingContext,
+                        customerIds,
+                        customerLevel,
+                        uplineLevel,
+                        productId,
+                        settingType);
+            }
+            catch (Exception ex)
+            {
+                WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, ex);
+
+                var errorResult = new SettingResult(
+                    Result.SystemError.Code,
+                    Result.SystemError.Message,
+                    msgType: 0,
+                    customerId: 0,
+                    settingTypeId: settingType.Id,
+                    settingTypeName: settingType.Name);
+
+                return new List<SettingResult> { errorResult };
+            }
         }
 
         private UpdateSettingResult MapUpdateSettingResultWithCustomerName(
