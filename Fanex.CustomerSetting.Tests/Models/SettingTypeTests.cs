@@ -11,7 +11,7 @@
     public class SettingTypeTests
     {
         [Test]
-        public void ToXml_ReturnFormattedXml()
+        public void ToXml_Always_ReturnFormattedXml()
         {
             //// Arrange
             var settingType = new SettingType
@@ -88,6 +88,25 @@
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test] 
+        public void ToStringMethod_Always_ReturnCombinationOfIdAndTemplate()
+        {
+            //// Arrange
+            short settingTypeId = 1;
+            byte template = 3;
+            SettingType settingType = new SettingType
+            {
+                Id = settingTypeId,
+                SettingTemplate = template
+            };
+
+            //// Act
+            var actual = settingType.ToString();
+
+            //// Assert
+            Assert.AreEqual(string.Join("_", settingTypeId, template), actual);
         }
     }
 }

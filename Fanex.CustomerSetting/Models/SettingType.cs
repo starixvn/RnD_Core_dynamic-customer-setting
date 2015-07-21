@@ -48,6 +48,11 @@
             }
         }
 
+        public override string ToString()
+        {
+            return string.Join("_", this.Id, this.SettingTemplate);
+        }
+
         public virtual string ToXml()
         {
             var settingItemsXml = string.Join(string.Empty, SettingItems.Select(settingItem => settingItem.ToXml()));

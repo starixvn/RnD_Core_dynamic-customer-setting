@@ -4,7 +4,7 @@
     {
         private const string DefaultLanguageName = "en";
 
-        public static string GetRefLanguageName(string languageName)
+        public static string GetRefLanguageName(string languageName = DefaultLanguageName)
         {
             if (string.IsNullOrWhiteSpace(languageName))
             {
