@@ -26,28 +26,13 @@
 
         public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = CreateQueryProductStatusSPSettingKey(
-                queryParam.CustomerLevel,
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                queryParam.ProductId);
+            var settingKey = QueryProductStatusSpKeys[queryParam.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<ProductStatusItemDto>(parameterValues);
             }
-        }
-
-        private string CreateQueryProductStatusSPSettingKey(
-            Level customerLevel,
-            byte settingTypeId,
-            byte settingTemplateId,
-            byte productId)
-        {
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
-
-            return QueryProductStatusSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerProductStatus(
@@ -68,13 +53,7 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_DisableStatUpd";
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                productId);
-
-            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
+            return ExecuteNonQuery("CustSetting_DisableStatUpd", param);
         }
     }
 }

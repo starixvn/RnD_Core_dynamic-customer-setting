@@ -159,6 +159,9 @@
   <data name="ProductNameMissing" xml:space="preserve">
     <value>Product Id {0} does not have name in {1}</value>
   </data>
+  <data name="SettingTypeError" xml:space="preserve">
+    <value>This setting type is error, please notify your administrator.</value>
+  </data>
   <data name="SportTypeOrBetTypeIsInvalid" xml:space="preserve">
     <value>Sport Type or Bet Type is invalid!</value>
   </data>

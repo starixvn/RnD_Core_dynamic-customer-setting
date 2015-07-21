@@ -98,8 +98,6 @@
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
     <Compile Include="Enumerations\Enumeration.cs" />
     <Compile Include="Configurations\CustomerSettingSection.cs" />
-    <Compile Include="Configurations\SettingTypeCollection.cs" />
-    <Compile Include="Configurations\SettingTypeElement.cs" />
     <Compile Include="Constants\MessageType.cs" />
     <Compile Include="Constants\ResultValue.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />
@@ -124,6 +122,7 @@
     <Compile Include="Enumerations\Level.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\ErrorSettingItem.cs" />
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />

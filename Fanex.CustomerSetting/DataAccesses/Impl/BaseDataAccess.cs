@@ -65,15 +65,5 @@
 
             return param;
         }
-
-        protected string GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(byte settingTypeId, byte settingTemplateId, byte productId)
-        {
-            if (CustomerSettingSection.Settings.IsProductNotUseDefaultSettingTypeStoredProcedures(settingTypeId, settingTemplateId, productId))
-            {
-                return string.Format("_{0}", productId);
-            }
-
-            return string.Empty;
-        }
     }
 }

@@ -26,28 +26,13 @@
 
         public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = CreateQueryCommissionSPSettingKey(
-                queryParam.CustomerLevel,
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                queryParam.ProductId);
+            var settingKey = QueryCommissionSpKeys[queryParam.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<CommissionItemDto>(parameterValues);
             }
-        }
-
-        private string CreateQueryCommissionSPSettingKey(
-            Level customerLevel,
-            byte settingTypeId,
-            byte settingTemplateId,
-            byte productId)
-        {
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
-
-            return QueryCommissionSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerCommission(
@@ -68,13 +53,7 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_DiscountUpd";
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                productId);
-
-            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
+            return ExecuteNonQuery("CustSetting_DiscountUpd", param);
         }
     }
 }

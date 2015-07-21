@@ -129,7 +129,7 @@
 
         private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
         { 
-            SettingType customerSettingType = new SettingType();
+            SettingType customerSettingType = productSettingType;
 
             try
             {
@@ -144,6 +144,8 @@
             {
                 WriteLog(queryParam, productSettingType, ex);
                 //// TODO Should we create ErrorSettingType here.
+
+                customerSettingType.SettingItems = new List<ISettingItem> { new ErrorSettingItem() };
             }
 
             return customerSettingType;

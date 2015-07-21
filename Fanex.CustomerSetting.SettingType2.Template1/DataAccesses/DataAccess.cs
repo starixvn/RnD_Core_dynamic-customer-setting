@@ -26,28 +26,13 @@
 
         public IEnumerable<BetLimitItemDto> GetCustomerBetLimitItemsRawData(QuerySettingParam queryParam)
         {
-            var settingKey = CreateQueryBetLimitSPSettingKey(
-                queryParam.CustomerLevel,
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                queryParam.ProductId);
+            var settingKey = QueryBetLimitSpKeys[queryParam.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
                 return objectDb.Query<BetLimitItemDto>(parameterValues);
             }
-        }
-
-        private string CreateQueryBetLimitSPSettingKey(
-            Level customerLevel,
-            byte settingTypeId,
-            byte settingTemplateId,
-            byte productId)
-        {
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
-
-            return QueryBetLimitSpKeys[customerLevel.Value] + keySuffix;
         }
 
         public IResult UpdateCustomerBetLimit(
@@ -68,14 +53,7 @@
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
 
-            var updateSettingKey = "CustSetting_BetLimitUpd";
-
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                productId);
-
-            return ExecuteNonQuery(updateSettingKey + keySuffix, param);
+            return ExecuteNonQuery("CustSetting_BetLimitUpd", param);
         }
     }
 }

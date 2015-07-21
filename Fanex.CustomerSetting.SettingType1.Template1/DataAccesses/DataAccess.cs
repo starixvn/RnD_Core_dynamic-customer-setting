@@ -72,11 +72,7 @@
                 Name = Label.PositionTaking
             };
 
-            var settingKey = CreateQueryPTSPSettingKey(
-                queryParam.CustomerLevel,
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                queryParam.ProductId);
+            var settingKey = QueryPTSpKeys[queryParam.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
@@ -95,13 +91,6 @@
             }
 
             return settingType;
-        }
-
-        private string CreateQueryPTSPSettingKey(Level customerLevel, byte settingTypeId, byte settingTemplateId, byte productId)
-        {
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(settingTypeId, settingTemplateId, productId);
-
-            return QueryPTSpKeys[customerLevel.Value] + keySuffix;
         }
 
         private Hashtable CreateQueryPTSettingSpParam(QuerySettingParam querySettingParam)
@@ -126,7 +115,9 @@
             string positionTakingXml)
         {
             var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, positionTakingXml);
-            var settingKey = GetSettingKeyForUpdating(customerLevel, uplineLevel, productId);
+            var settingKey = (customerLevel == Level.Member)
+                ? UpdateMemberPTSpKeys[uplineLevel.Value]
+                : UpdateSmaPTSpKeys[customerLevel.Value];
 
             return ExecuteNonQuery(settingKey, parameters);
         }
@@ -144,20 +135,6 @@
             param.Add("msgtype", 0);
 
             return param;
-        }
-
-        private string GetSettingKeyForUpdating(Level customerLevel, Level uplineLevel, byte productId)
-        {
-            var updateSettingKey = (customerLevel == Level.Member)
-                ? UpdateMemberPTSpKeys[uplineLevel.Value]
-                : UpdateSmaPTSpKeys[customerLevel.Value];
-
-            var keySuffix = GetKeySuffixOfProductDoesNotUserDefaultSettingTypeSps(
-                Constants.SettingTypeId,
-                Constants.SettingTempateId,
-                productId);
-
-            return updateSettingKey + keySuffix;
         }
 
         public IEnumerable<int> GetGroupedMemberIds(string memberIds)
