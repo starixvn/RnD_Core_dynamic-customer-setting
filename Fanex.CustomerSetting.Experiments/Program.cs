@@ -15,22 +15,20 @@
         {
             Task.Factory.StartNew(() =>
             {
-                //// Caller A
-                var experiment = new ConcurrentExperiment();
-                experiment.Init();
+                //// User A
+                var factory = new SettingTypeServiceFactory();
 
-                var concurrentClassA = experiment.GetConcurrentClass();
-                concurrentClassA.Run("Caller A");
+                var settingTypeService = factory.GetConcurrentClass();
+                settingTypeService.UpdateSettingType("User A");
             });
 
             Task.Factory.StartNew(() =>
             {
-                //// Caller B
-                var experiment = new ConcurrentExperiment();
-                experiment.Init();
+                //// User B
+                var factory = new SettingTypeServiceFactory();
 
-                var concurrentClassB = experiment.GetConcurrentClass();
-                concurrentClassB.Run("Caller B");
+                var settingTypeService = factory.GetConcurrentClass();
+                settingTypeService.UpdateSettingType("User B");
             });
 
             Console.ReadLine();

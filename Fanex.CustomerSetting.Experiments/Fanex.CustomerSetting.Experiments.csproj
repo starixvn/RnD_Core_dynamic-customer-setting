@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concurrent\ConcurrentClass.cs" />
-    <Compile Include="Concurrent\ConcurrentExperiment.cs" />
+    <Compile Include="Concurrent\SettingTypeService.cs" />
+    <Compile Include="Concurrent\SettingTypeServiceFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
