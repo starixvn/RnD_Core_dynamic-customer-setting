@@ -58,7 +58,7 @@
 
         private void AssumeCutomerIsDownlineOfActor()
         {
-            _validationDataAccess.ValidateBelonging(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+            _dynamicRepository.Get<bool>(Arg.Any<CheckBelongingCriteria>()).Returns(true);
         }
 
         private void AssumeActorStatusIsEnabled()
@@ -206,15 +206,15 @@
             _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == queryParam.CustomerId));
         }
 
-        private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases =
+        private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging_Cases =
         {
             new object[] {Level.Super, Level.Super},
             new object[] {Level.Master, Level.Master},
             new object[] {Level.Agent, Level.Agent}
         };
 
-        [Test, TestCaseSource("ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn_Cases")]
-        public void ValidateQuerySetting_ActorIsNotCompany_AlwaysCallValidateBelongIn(
+        [Test, TestCaseSource("ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging_Cases")]
+        public void ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging(
             Level actorLevel,
             Level uplineLevel)
         {
@@ -233,7 +233,9 @@
             _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
-            _validationDataAccess.Received().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
+            _dynamicRepository.Received().Get<bool>(Arg.Is<CheckBelongingCriteria>(
+                criteria => criteria.ActorId == _settingContext.Actor.Id
+                    && criteria.CustomerId == queryParam.CustomerId));
         }
 
         [Test]
@@ -254,7 +256,9 @@
             _validationService.ValidateQuerySettingAction(queryParam);
 
             //// Assert
-            _validationDataAccess.DidNotReceive().ValidateBelonging(_settingContext.Actor.Id, queryParam.CustomerId);
+            _dynamicRepository.DidNotReceive().Get<bool>(Arg.Is<CheckBelongingCriteria>(
+                criteria => criteria.ActorId == _settingContext.Actor.Id
+                    && criteria.CustomerId == queryParam.CustomerId));
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]

@@ -126,11 +126,15 @@
         {
             if (actor.IsNotCompany)
             {
-                var isBelonging = _validationDataAccess.ValidateBelonging(actor.Id, customerId);
+                var isBelonging = _dynamicRepository.Get<bool>(new CheckBelongingCriteria
+                {
+                    ActorId = actor.Id,
+                    CustomerId = customerId
+                });
 
                 if (!isBelonging)
                 {
-                    throw new CustomerSettingException(Result.AccessDenied.Message);
+                    throw new CustomerSettingException(Message.CustomersAreNotSameLine);
                 }
             }
         }
@@ -207,7 +211,7 @@
             var querySettingParam = new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
             var result = ValidateQuerySettingAction(querySettingParam);
 
-            if (!result.IsSuccessful)
+            if (result.IsNotOk)
             {
                 throw new CustomerSettingException(result.Message);
             }
@@ -285,7 +289,7 @@
         {
             var result = ValidateUpdateSettingAction(updateParam);
 
-            if (!result.IsSuccessful)
+            if (result.IsNotOk)
             {
                 throw new CustomerSettingException(result.Message);
             }
@@ -297,7 +301,7 @@
             {
                 var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
-                if (!result.IsSuccessful)
+                if (result.IsNotOk)
                 {
                     throw new CustomerSettingException(result.Message);
                 }

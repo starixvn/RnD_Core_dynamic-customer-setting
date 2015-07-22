@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customers are not in the same line!.
+        /// </summary>
+        public static string CustomersAreNotSameLine {
+            get {
+                return ResourceManager.GetString("CustomersAreNotSameLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is not valid..
         /// </summary>
         public static string DataIsNotValid {

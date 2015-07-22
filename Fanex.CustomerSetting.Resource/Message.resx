@@ -123,6 +123,9 @@
   <data name="AccountWasDisabled" xml:space="preserve">
     <value>Account {0} was disbaled.</value>
   </data>
+  <data name="CustomersAreNotSameLine" xml:space="preserve">
+    <value>Customers are not in the same line!</value>
+  </data>
   <data name="DataIsNotValid" xml:space="preserve">
     <value>Data is not valid.</value>
   </data>
