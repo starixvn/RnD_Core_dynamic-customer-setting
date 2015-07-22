@@ -11,6 +11,7 @@
     using NUnit.Framework;
     using SettingTypesIntegration = Fanex.CustomerSetting.IntegrationTests.Products.ProductBase.SettingTypes;
 
+    [TestFixture]
     public class Product249_AgentEditsMember_IntegrationTests : AgentEditsMember_IntegrationTests
     {
         private IEnumerable<Action<ISetting>> _assertGotSettingTypes = new List<Action<ISetting>>
@@ -33,7 +34,7 @@
                 };
 
         [Test]
-        public void Product255_AgentViewsMemberSetting()
+        public void Product249_AgentViewsMemberSetting()
         {
             AgentViewsMemberSetting(
                 _assertGotSettingTypes,
@@ -47,7 +48,7 @@
         }
 
         [Test]
-        public void Product255_CompanyViewsMemberSettingByAgentView()
+        public void Product249_CompanyViewsMemberSettingByAgentView()
         {
             AgentViewsMemberSetting(
                 _assertGotSettingTypes,
@@ -61,7 +62,7 @@
         }
 
         [Test]
-        public void Product255_AgentUpdatesMemberSetting()
+        public void Product249_AgentUpdatesMemberSetting()
         {
             AgentUpdatesMemberSetting(
                 _modifySettingTypes, 
@@ -71,7 +72,7 @@
         }
 
         [Test]
-        public void Product255_CompanyUpdatesMemberSettingByAgentView()
+        public void Product249_CompanyUpdatesMemberSettingByAgentView()
         {
             CompanyUpdatesMemberSettingByAgentView(
                 _modifySettingTypes, 
@@ -81,7 +82,7 @@
         }
 
         [Test]
-        public void Product255_AgentUpdatesMultipleMembersSetting()
+        public void Product249_AgentUpdatesMultipleMembersSetting()
         {
             AgentUpdatesMultipleMembersSetting(
                 _modifySettingTypes, 
