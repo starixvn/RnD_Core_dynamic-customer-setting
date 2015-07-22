@@ -73,7 +73,7 @@
             {
                 WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
+                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@
             {
                 WriteUpdateSettingLog(updateParam, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
+                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
             catch (Exception ex)
             {
@@ -273,7 +273,7 @@
             {
                 WriteUpdateMultipleSettingLog(updateMultipleParam, customerSettingException);
 
-                return new Result(ResultValue.AccessDenied, customerSettingException.Message);
+                return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
             catch (Exception ex)
             {

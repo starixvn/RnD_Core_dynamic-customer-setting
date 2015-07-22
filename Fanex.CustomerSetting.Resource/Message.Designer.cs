@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account {0} was disbaled..
+        ///   Looks up a localized string similar to Account {0} was disabled..
         /// </summary>
         public static string AccountWasDisabled {
             get {
@@ -214,7 +214,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sub Account Id Should Be Zero When System Is Not Agency.
+        ///   Looks up a localized string similar to Sub Account Id Should Be Zero When System Is Not Agency..
         /// </summary>
         public static string SubAccountIdShouldBeZeroWhenSystemIsNotAgency {
             get {
@@ -250,7 +250,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have changed your position taking.
+        ///   Looks up a localized string similar to You have changed your position taking..
         /// </summary>
         public static string UpdateMemberPtInfo {
             get {
@@ -295,7 +295,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upline Level cannot be null incase of editting member.
+        ///   Looks up a localized string similar to Upline Level cannot be null incase of editting member..
         /// </summary>
         public static string UplineLevelCannotBeNullIncaseOfEdittingMember {
             get {
@@ -304,7 +304,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upline Level is not valid.
+        ///   Looks up a localized string similar to Upline Level is not valid..
         /// </summary>
         public static string UplineLevelIsNotValid {
             get {
@@ -313,7 +313,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upline Level should be null.
+        ///   Looks up a localized string similar to Upline Level should be null..
         /// </summary>
         public static string UplineLevelShouldBeNull {
             get {

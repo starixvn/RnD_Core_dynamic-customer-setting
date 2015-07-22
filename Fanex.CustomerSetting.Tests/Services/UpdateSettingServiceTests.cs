@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Dtos.Results;
@@ -86,6 +87,88 @@
         private void AssumeUpdateCustomerSettingActionIsValid(UpdateSettingParam updateParam)
         {
             _validationService.ValidateUpdateSettingAction(updateParam).Returns(Result.Success);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_Always_CallCheckSettingTypeValid()
+        {
+            //// Arrange
+            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
+
+            var settingItemMock = Substitute.For<ISettingItem>();
+            settingItemMock.Validate().Returns(Result.DataError);
+
+            updateParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemMock }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateParam);
+
+            //// Assert
+            settingItemMock.Received().Validate();
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_SettingTypeIsNotValid_ReturnFailedResult()
+        {
+            //// Arrange
+            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
+
+            var settingItemStub = Substitute.For<ISettingItem>();
+            settingItemStub.Validate().Returns(Result.DataError);
+
+            updateParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemStub }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateParam);
+
+            //// Assert
+            var updateSettingResult = result as UpdateSettingResult;
+            Assert.IsTrue(updateSettingResult.IsNotOk);
+            Assert.AreEqual(Result.DataError.Message, updateSettingResult.SubResults.First().Message);
+        }
+
+        [Test]
+        public void UpdateCustomerSetting_SettingTypeIsNotValid_AlwaysCallLogError()
+        {
+            //// Arrange
+            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+
+            AssumeUpdateCustomerSettingActionIsValid(updateParam);
+
+            var settingItemStub = Substitute.For<ISettingItem>();
+            settingItemStub.Validate().Returns(Result.DataError);
+
+            updateParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemStub }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(Result.DataError.Message)),
+                Arg.Any<CustomerSettingException>());
         }
 
         [Test]

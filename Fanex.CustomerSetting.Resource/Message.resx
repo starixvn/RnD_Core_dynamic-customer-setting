@@ -121,7 +121,7 @@
     <value>You do not have permission to access this page.</value>
   </data>
   <data name="AccountWasDisabled" xml:space="preserve">
-    <value>Account {0} was disbaled.</value>
+    <value>Account {0} was disabled.</value>
   </data>
   <data name="CustomersAreNotSameLine" xml:space="preserve">
     <value>Customers are not in the same line!</value>
@@ -169,7 +169,7 @@
     <value>Sport Type or Bet Type is invalid!</value>
   </data>
   <data name="SubAccountIdShouldBeZeroWhenSystemIsNotAgency" xml:space="preserve">
-    <value>Sub Account Id Should Be Zero When System Is Not Agency</value>
+    <value>Sub Account Id Should Be Zero When System Is Not Agency.</value>
   </data>
   <data name="SystemError" xml:space="preserve">
     <value>Oops... you are here because of a system error, please notify your administrator.</value>
@@ -181,7 +181,7 @@
     <value>Updated commission setting successfully.</value>
   </data>
   <data name="UpdateMemberPtInfo" xml:space="preserve">
-    <value>You have changed your position taking</value>
+    <value>You have changed your position taking.</value>
   </data>
   <data name="UpdateMemberPtQuestion" xml:space="preserve">
     <value>Do you want to update all member's position taking to:</value>
@@ -196,12 +196,12 @@
     <value>Updated product status successfully.</value>
   </data>
   <data name="UplineLevelCannotBeNullIncaseOfEdittingMember" xml:space="preserve">
-    <value>Upline Level cannot be null incase of editting member</value>
+    <value>Upline Level cannot be null incase of editting member.</value>
   </data>
   <data name="UplineLevelIsNotValid" xml:space="preserve">
-    <value>Upline Level is not valid</value>
+    <value>Upline Level is not valid.</value>
   </data>
   <data name="UplineLevelShouldBeNull" xml:space="preserve">
-    <value>Upline Level should be null</value>
+    <value>Upline Level should be null.</value>
   </data>
 </root>

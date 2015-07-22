@@ -98,7 +98,7 @@
             {
                 WriteLog(customerId, customerLevel, uplineLevel, productId, settingType, customerSettingException);
 
-                return new SettingResult(Result.AccessDenied, customerId, settingType.Id, settingType.Name);
+                return new SettingResult(Result.AccessDenied.Code, customerSettingException.OriginalMessage, 0, customerId, settingType.Id, settingType.Name);
             }
             catch (Exception ex)
             {
@@ -198,7 +198,10 @@
             {
                 WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, customerSettingException);
 
-                return new List<SettingResult> { new SettingResult(Result.AccessDenied, 0, settingType.Id, settingType.Name) };
+                return new List<SettingResult> 
+                { 
+                    new SettingResult(Result.AccessDenied.Code, customerSettingException.OriginalMessage, 0, 0, settingType.Id, settingType.Name)
+                };
             }
             catch (Exception ex)
             {

@@ -183,7 +183,7 @@
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
-            Assert.IsTrue(actualResult.Message.Contains("Account ActorName was disbaled."));
+            Assert.AreEqual("Account ActorName was disabled.", actualResult.Message);
         }
 
         [Test]
@@ -239,6 +239,30 @@
         }
 
         [Test]
+        public void ValidateQuerySetting_IsNotSameLine_ReturnAccessDeninedResult()
+        {
+            //// Arrange
+            QuerySettingParam queryParam = new QuerySettingParam(
+                customerId: 1,
+                customerLevel: Level.Member,
+                productId: 1,
+                uplineLevel: Level.Agent);
+            _settingContext.Actor.Level = Level.Agent;
+
+            AssumeActorStatusIsEnabled();
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+
+            _dynamicRepository.Get<bool>(Arg.Any<CheckBelongingCriteria>()).Returns(false);
+
+            //// Act
+            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+
+            //// Assert
+            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+            Assert.AreEqual("Customers are not in the same line!", actualResult.Message);
+        }
+
+        [Test]
         public void ValidateQuerySetting_ActorIsCompany_DontCallValidateBelongIn()
         {
             //// Arrange
@@ -261,8 +285,8 @@
                     && criteria.CustomerId == queryParam.CustomerId));
         }
 
-        [Test, TestCaseSource("ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]
-        public void ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
+        [Test, TestCaseSource("ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]
+        public void ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_ReturnAccessDeniedResult(
             Level actorLevel,
             Level uplineLevel)
         {
@@ -283,9 +307,10 @@
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+            Assert.AreEqual("Upline Level is not valid.", actualResult.Message);
         }
 
-        private static object[] ValidateQuerySetting_EdittingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
+        private static object[] ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_Cases =
         {
             new object[] {Level.Super, Level.Master},
             new object[] {Level.Master, Level.Agent},

@@ -35,15 +35,22 @@
                        {
                            ProductId = productId
                        });
-                   }, 
-                   new TimeSpan(1, 0, 0));
+                   },
+                   new TimeSpan(SettingTypeCacheDuration, 0, 0));
 
             return settingTypes;
         }
 
         public SettingType GetProductSettingType(byte productId, byte settingTypeId)
         {
-            return GetProductSettingTypes(productId).FirstOrDefault(settingType => settingType.Id == settingTypeId);
+            var productSettingTypes = GetProductSettingTypes(productId);
+
+            if (productSettingTypes == null)
+            {
+                return null;
+            }
+
+            return productSettingTypes.FirstOrDefault(settingType => settingType.Id == settingTypeId);
         }
     }
 }

@@ -53,6 +53,14 @@
             }
         }
 
+        public string OriginalMessage 
+        { 
+            get
+            {
+                return base.Message;
+            }
+        }
+
         public string ActionName { get; set; }
 
         //// System information
@@ -107,7 +115,7 @@
 
         public void SetSettingContextInfo(string actionName, ISettingContext settingContext)
         {
-            ActorName = actionName;
+            ActionName = actionName;
 
             SystemId = settingContext.System;
             Language = settingContext.Language;

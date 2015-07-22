@@ -87,6 +87,88 @@
             _validationService.ValidateUpdateMultipleSettingAction(updateParam).Returns(Result.Success);
         }
 
+        [Test]
+        public void UpdateMultipleCustomerSetting_Always_CallCheckSettingTypeValid()
+        {
+            //// Arrange
+            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
+
+            var settingItemMock = Substitute.For<ISettingItem>();
+            settingItemMock.Validate().Returns(Result.DataError);
+
+            updateMultipleSettingParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemMock }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+
+            //// Assert
+            settingItemMock.Received().Validate();
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_SettingTypeIsNotValid_ReturnFailedResult()
+        {
+            //// Arrange
+            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
+
+            var settingItemStub = Substitute.For<ISettingItem>();
+            settingItemStub.Validate().Returns(Result.DataError);
+
+            updateMultipleSettingParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemStub }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+
+            //// Assert
+            var updateSettingResult = result as UpdateSettingResult;
+            Assert.IsTrue(updateSettingResult.IsNotOk);
+            Assert.AreEqual(Result.DataError.Message, updateSettingResult.SubResults.First().Message);
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerSetting_SettingTypeIsNotValid_AlwaysCallLogError()
+        {
+            //// Arrange
+            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+
+            AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
+
+            var settingItemStub = Substitute.For<ISettingItem>();
+            settingItemStub.Validate().Returns(Result.DataError);
+
+            updateMultipleSettingParam.Setting.SettingTypes = new List<SettingType>
+            {
+                new SettingType
+                {
+                    SettingItems = new List<ISettingItem> { settingItemStub }
+                }
+            };
+
+            //// Act
+            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+
+            //// Assert
+            _logger.Received().Error(
+                Arg.Is<string>(message => message.Contains(Result.DataError.Message)),
+                Arg.Any<CustomerSettingException>());
+        }
+
         private void SetupSettingTypeServiceStub(bool isReturnSuccessfulResult = true)
         {
             var results = new List<SettingResult> { new SettingResult(isReturnSuccessfulResult ? Result.Success : Result.DataError) };

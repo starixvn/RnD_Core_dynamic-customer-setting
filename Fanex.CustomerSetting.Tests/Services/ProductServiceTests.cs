@@ -62,15 +62,13 @@
         {
             //// Arrange
             byte productId = 1;
-            IEnumerable<SettingType> settingTypes = null;
-            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
-              Arg.Any<string>(),
-              Arg.Any<Func<IEnumerable<SettingType>>>(),
-              new TimeSpan(1, 0, 0))
-              .Returns(settingTypes);
+            var cachingServiceStub = new CachingService();
+            cachingServiceStub.Remove("Fanex.CustomerSetting.SettingTypesCacheKey_1");
+
+            var productService = new ProductService(_dynamicRepository, cachingServiceStub);
 
             //// Act
-            _productService.GetProductSettingTypes(productId);
+            productService.GetProductSettingTypes(productId);
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
@@ -82,41 +80,19 @@
         {
             //// Arrange
             byte productId = 1;
-            IEnumerable<SettingType> settingTypesInCache = null;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
-            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
-               Arg.Any<string>(),
-               Arg.Any<Func<IEnumerable<SettingType>>>(),
-               new TimeSpan(1, 0, 0))
-               .Returns(settingTypesInCache);
+            var cachingServiceStub = new CachingService();
+            cachingServiceStub.Remove("Fanex.CustomerSetting.SettingTypesCacheKey_1");
+
+            var productService = new ProductService(_dynamicRepository, cachingServiceStub);
+
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingTypes = _productService.GetProductSettingTypes(productId);
+            var actualSettingTypes = productService.GetProductSettingTypes(productId);
 
             //// Assert
             Assert.AreSame(settingTypesFromDatabase, actualSettingTypes);
-        }
-
-        [Test]
-        public void GetProductSettingTypes_GotSettingTypeFromDatabase_AlwaysSetSettingTypesToCache()
-        {
-            //// Arrange
-            byte productId = 1;
-            IEnumerable<SettingType> settingTypesInCache = null;
-            IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
-            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
-              Arg.Any<string>(),
-              Arg.Any<Func<IEnumerable<SettingType>>>(),
-              new TimeSpan(1, 0, 0))
-              .Returns(settingTypesInCache);
-            _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
-
-            //// Act
-            _productService.GetProductSettingTypes(productId);
-
-            //// Assert
-            _cachingService.Received().Add<IEnumerable<SettingType>>("Fanex.CustomerSetting.SettingTypesCacheKey_1", settingTypesFromDatabase);
         }
 
         /// <summary>
@@ -130,8 +106,8 @@
             byte settingType = 1;
             IEnumerable<SettingType> settingTypes = new List<SettingType> { new SettingType { Id = 1, SettingLevel = 1 } };
             _cachingService.GetOrAdd<IEnumerable<SettingType>>(
-                Arg.Any<string>(), 
-                Arg.Any<Func<IEnumerable<SettingType>>>(), 
+                Arg.Any<string>(),
+                Arg.Any<Func<IEnumerable<SettingType>>>(),
                 new TimeSpan(1, 0, 0))
                 .Returns(settingTypes);
 
@@ -150,11 +126,10 @@
             byte settingType = 1;
             IEnumerable<SettingType> settingTypesInCache = null;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType>();
-            _cachingService.GetOrAdd<IEnumerable<SettingType>>(
-               Arg.Any<string>(),
-               Arg.Any<Func<IEnumerable<SettingType>>>(),
-               new TimeSpan(1, 0, 0))
+
+            _cachingService.GetOrAdd<IEnumerable<SettingType>>(Arg.Any<string>(), Arg.Any<Func<IEnumerable<SettingType>>>(), new TimeSpan(1, 0, 0))
                .Returns(settingTypesInCache);
+
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
