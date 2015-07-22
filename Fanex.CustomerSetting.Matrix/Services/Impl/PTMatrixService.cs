@@ -17,7 +17,7 @@
     public class PTMatrixService : IPTMatrixService
     {
         private const string DefaultLanguage = "en-US";
-        private const byte PTSettingTypeId = 1;
+        private const byte SettingTypeId = 1;
         private readonly IResourceService _resourceService;
         private readonly IProductService _productService;
         private readonly IDynamicRepository _dynamicRepository;
@@ -37,7 +37,7 @@
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
             Check.Argument.IsNotEmpty(customerName, "customerName");
 
-            var settingType = GetPTSettingType(productId);
+            var settingType = GetSettingType(productId);
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(customerName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(customerName, productId);
             var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
@@ -50,9 +50,9 @@
                 };
         }
 
-        private SettingType GetPTSettingType(byte productId)
+        private SettingType GetSettingType(byte productId)
         {
-            var ptSettingType = _productService.GetProductSettingType(productId, PTSettingTypeId);
+            var ptSettingType = _productService.GetProductSettingType(productId, SettingTypeId);
 
             if (ptSettingType == null)
             {

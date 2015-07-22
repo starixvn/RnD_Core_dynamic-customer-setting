@@ -25,10 +25,11 @@
 
             var customerLineDto = GetCustomerLineDto(customerName);
             var customerLine = new List<Customer>();
+            var customerLevel = customerLineDto.CustomerLevel;
 
             ////switch (customerLineDto.CustomerLevel.Value)
             ////{
-            ////    case Level.Super:
+            ////    case Level.Super.Value:
             ////        customerLine.Add(GetCustomer(customerLineDto));
 
             ////        break;

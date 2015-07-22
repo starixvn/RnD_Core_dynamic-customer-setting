@@ -140,6 +140,7 @@
             var actor = new User { Id = masterId, Level = Level.Master, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
+            _querySettingService = new QuerySettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(agentIds.First(), Level.Agent, productId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
