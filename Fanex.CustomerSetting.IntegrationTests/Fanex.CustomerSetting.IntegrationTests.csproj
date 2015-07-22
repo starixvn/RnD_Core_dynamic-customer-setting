@@ -96,7 +96,10 @@
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="ProductInfo.cs" />
     <Compile Include="Products\Product249\Product249Constants.cs" />
+    <Compile Include="Products\Product249\Product249_AgentEditsMember_IntegrationTests.cs" />
     <Compile Include="Products\Product249\Product249_CompanyEditsSuper_IntegrationTests.cs" />
+    <Compile Include="Products\Product249\Product249_MasterEditsAgent_IntegrationTests.cs" />
+    <Compile Include="Products\Product249\Product249_SuperEditsMaster_IntegrationTests.cs" />
     <Compile Include="Products\Product255\Product255_MasterEditsMember_IntegrationTests.cs" />
     <Compile Include="Products\Product255\Product255_AgentEditsMember_IntegrationTests.cs" />
     <Compile Include="Products\Product255\Product255_CompanyEditsSuper_IntegrationTests.cs" />

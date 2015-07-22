@@ -16,14 +16,15 @@
         [Test]
         public void Product249_CompanyViewsSuperSetting()
         {
-            CompanyViewsSuperSetting(new List<Action<ISetting>>
+            CompanyViewsSuperSetting(
+                new List<Action<ISetting>>
                 {
                     SettingTypesIntegration.SettingType2.AssertGotBetLimit,
                     SettingTypesIntegration.SettingType4.AssertGotSMAProductStatus
                 },
-            Product249Constants.ProductId,
-            Product249Constants.ProductName,
-            Product249Constants.NumOfSettingType);
+                Product249Constants.ProductId,
+                Product249Constants.ProductName,
+                Product249Constants.NumOfSettingType);
         }
 
         [Test]

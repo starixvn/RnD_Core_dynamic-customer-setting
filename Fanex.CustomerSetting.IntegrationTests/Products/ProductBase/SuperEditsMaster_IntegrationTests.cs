@@ -142,6 +142,7 @@
 
             var actor = new User { Id = superId, Level = Level.Super, Name = "ActorName" };
             _settingContext = new SettingContext(actor);
+            _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
             var querySettingParam = new QuerySettingParam(masterIds.First(), Level.Master, productId);
 
