@@ -2,8 +2,9 @@
 {
     public static class ProductInfo
     {
-        public const byte ProductId = 255;
-        public const string ProductName = "Product 255";
-        public const byte NumOfSettingType = 4;
+        public const byte PTSettingTypeId = 1;
+        public const byte BetLimitSettingTypeId = 2;
+        public const byte CommissionSettingTypeId = 3;
+        public const byte ProductStatusSettingTypeId = 4;
     }
 }

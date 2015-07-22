@@ -31,6 +31,7 @@
         }
 
         protected void ViewingMasterSetting(
+            IEnumerable<Action<ISetting>> assertGotSettingTypes,
             int actorId, 
             Level actorLevel,
             int masterId = SettingInfo.MasterId,
@@ -57,54 +58,43 @@
             ////Assert.AreEqual(productName, masterSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, masterSetting.SettingTypes.Count());
 
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            Assert.IsNotNull(masterPTItem);
-            Assert.GreaterOrEqual(masterPTItem.IS3 ? masterPTItem.US3 : masterPTItem.S3, 1);
-            Assert.GreaterOrEqual(masterPTItem.M3, 1);
-            Assert.GreaterOrEqual(masterPTItem.N3, 0);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.IsNotNull(masterBetLimitItem);
-            Assert.GreaterOrEqual(masterBetLimitItem.MinBet, 0);
-            Assert.GreaterOrEqual(masterBetLimitItem.MaxBet, 0);
-            Assert.GreaterOrEqual(masterBetLimitItem.MaxPerMatch, 0);
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.IsNotNull(masterCommissionItem);
-            Assert.GreaterOrEqual(masterCommissionItem.CommRate, 0);
-            Assert.LessOrEqual(masterCommissionItem.CommRate, 0.01);
-            Assert.GreaterOrEqual(masterCommissionItem.Upline.CommRate, 0);
-            Assert.LessOrEqual(masterCommissionItem.Upline.CommRate, 0.01);
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.IsNotNull(masterProductStatusItem);
-            Assert.IsNotNull(masterProductStatusItem.Downline);
+            foreach (Action<ISetting> assertGotSettingType in assertGotSettingTypes)
+            {
+                assertGotSettingType(masterSetting);
+            }
         }
 
         protected void CompanyUpdatesMasterSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.CompanyId,
             byte productId = Product255Constants.ProductId,
             int masterId = SettingInfo.MasterId)
         {
-            UpdatingMasterSetting(actorId, Level.Company, masterId, productId, true);
-            UpdatingMasterSetting(actorId, Level.Company, masterId, productId, false);
+            UpdatingMasterSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Company, masterId, productId);
+
+            //// UpdatingMasterSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Company, masterId, productId);
         }
 
         protected void SuperUpdatesMasterSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.SuperId,
             byte productId = Product255Constants.ProductId,
             int masterId = SettingInfo.MasterId)
         {
-            UpdatingMasterSetting(actorId, Level.Super, masterId, productId, true);
-            UpdatingMasterSetting(actorId, Level.Super, masterId, productId, false);
+            UpdatingMasterSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Super, masterId, productId);
+
+            //// UpdatingMasterSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Super, masterId, productId);
         }
 
         private void UpdatingMasterSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId, 
             Level actorLevel,
             int masterId,            
-            byte productId,
-            bool isDisbaledProductStatus)
+            byte productId)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -114,33 +104,13 @@
             var querySettingParam = new QuerySettingParam(masterId, Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            masterPTItem.IS3 = !masterPTItem.IS3;
-            if (masterPTItem.IS3)
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
+
+            foreach (var modifySettingType in modifySettingTypes)
             {
-                masterPTItem.US3 = (byte)(masterPTItem.US3 == 20 ? 21 : 20);
-                masterPTItem.S3 = 0;
+                var modifiedSettingTypeInfo = modifySettingType(masterSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
-            else
-            {
-                masterPTItem.S3 = (byte)(masterPTItem.S3 == 20 ? 21 : 20);
-                masterPTItem.US3 = 0;
-            }
-
-            masterPTItem.M3 = (byte)(masterPTItem.M3 == 65 ? 66 : 65);
-            masterPTItem.N3 = (byte)(masterPTItem.N3 == 5 ? 6 : 5);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            masterBetLimitItem.MinBet = masterBetLimitItem.MinBet == 50 ? 51 : 50;
-            masterBetLimitItem.MaxBet = masterBetLimitItem.MaxBet == 500 ? 501 : 500;
-            masterBetLimitItem.MaxPerMatch = masterBetLimitItem.MaxPerMatch == 450550 ? 450551 : 450550;
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            masterCommissionItem.CommRate = masterCommissionItem.CommRate == 0.0080m ? 0.0081m : 0.0080m;
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            masterProductStatusItem.IsDisabled = isDisbaledProductStatus;
-            masterProductStatusItem.Downline.IsDisabled = isDisbaledProductStatus;
 
             //// Act
             var updateParam = new UpdateSettingParam(masterSetting, querySettingParam.UplineLevel);
@@ -150,27 +120,17 @@
             Assert.IsTrue(updateResult.IsSuccessful);
 
             var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
-            Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
-            Assert.AreEqual(masterPTItem.S3, newMasterPTItem.S3);
-            Assert.AreEqual(masterPTItem.M3, newMasterPTItem.M3);
-            Assert.AreEqual(masterPTItem.N3, newMasterPTItem.N3);
 
-            var newMasterBetLimitItem = newMasterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.AreEqual(masterBetLimitItem.MinBet, newMasterBetLimitItem.MinBet);
-            Assert.AreEqual(masterBetLimitItem.MaxBet, newMasterBetLimitItem.MaxBet);
-            Assert.AreEqual(masterBetLimitItem.MaxPerMatch, newMasterBetLimitItem.MaxPerMatch);
-
-            var newMasterCommissionItem = newMasterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.AreEqual(masterCommissionItem.CommRate, newMasterCommissionItem.CommRate);
-
-            var newMasterProductStatusItem = newMasterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.AreEqual(masterProductStatusItem.IsDisabled, newMasterProductStatusItem.IsDisabled);
-            Assert.AreEqual(masterProductStatusItem.Downline.IsDisabled, newMasterProductStatusItem.Downline.IsDisabled);
+            foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
+            {
+                var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                assertUpdatedSettingType.Value(expectedSettingItem, newMasterSetting);
+            }
         }
 
         protected void SuperUpdatesMultipleMastersSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int superId = SettingInfo.SuperId,
             byte productId = Product255Constants.ProductId,
             IEnumerable<int> masterIds = null,
@@ -186,30 +146,14 @@
             var querySettingParam = new QuerySettingParam(masterIds.First(), Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTItem = masterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-            if (masterPTItem.IS3)
+
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
+
+            foreach (var modifySettingType in modifySettingTypes)
             {
-                masterPTItem.US3 = (byte)(masterPTItem.US3 == 20 ? 21 : 20);
+                var modifiedSettingTypeInfo = modifySettingType(masterSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
-            else
-            {
-                masterPTItem.S3 = (byte)(masterPTItem.S3 == 20 ? 21 : 20);
-            }
-
-            masterPTItem.M3 = (byte)(masterPTItem.M3 == 65 ? 66 : 65);
-            masterPTItem.N3 = (byte)(masterPTItem.N3 == 5 ? 6 : 5);
-
-            var masterBetLimitItem = masterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            masterBetLimitItem.MinBet = masterBetLimitItem.MinBet == 50 ? 51 : 50;
-            masterBetLimitItem.MaxBet = masterBetLimitItem.MaxBet == 500 ? 501 : 500;
-            masterBetLimitItem.MaxPerMatch = masterBetLimitItem.MaxPerMatch == 450550 ? 450551 : 450550;
-
-            var masterCommissionItem = masterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            masterCommissionItem.CommRate = masterCommissionItem.CommRate == 0.0080m ? 0.0081m : 0.0080m;
-
-            var masterProductStatusItem = masterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            masterProductStatusItem.IsDisabled = false;
-            masterProductStatusItem.Downline.IsDisabled = false;
 
             //// Act
             var updatingMultipleParam = new UpdateMultipleSettingParam(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
@@ -222,24 +166,12 @@
             {
                 querySettingParam.CustomerId = masterId;
                 var newMasterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-                var newMasterPTItem = newMasterSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTItem;
-                Assert.AreEqual(masterPTItem.IS3, newMasterPTItem.IS3);
-                Assert.AreEqual(masterPTItem.US3, newMasterPTItem.US3);
-                Assert.AreEqual(masterPTItem.S3, newMasterPTItem.S3);
-                Assert.AreEqual(masterPTItem.M3, newMasterPTItem.M3);
-                Assert.AreEqual(masterPTItem.N3, newMasterPTItem.N3);
 
-                var newMasterBetLimitItem = newMasterSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-                Assert.AreEqual(masterBetLimitItem.MinBet, newMasterBetLimitItem.MinBet);
-                Assert.AreEqual(masterBetLimitItem.MaxBet, newMasterBetLimitItem.MaxBet);
-                Assert.AreEqual(masterBetLimitItem.MaxPerMatch, newMasterBetLimitItem.MaxPerMatch);
-
-                var newMasterCommissionItem = newMasterSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-                Assert.AreEqual(masterCommissionItem.CommRate, newMasterCommissionItem.CommRate);
-
-                var newMasterProductStatusItem = newMasterSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-                Assert.AreEqual(masterProductStatusItem.IsDisabled, newMasterProductStatusItem.IsDisabled);
-                Assert.AreEqual(masterProductStatusItem.Downline.IsDisabled, newMasterProductStatusItem.Downline.IsDisabled);
+                foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
+                {
+                    var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                    assertUpdatedSettingType.Value(expectedSettingItem, newMasterSetting);
+                }
             }
         }
     }

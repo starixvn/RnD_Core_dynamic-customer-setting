@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.IntegrationTests.Products.ProductBase
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -30,6 +31,7 @@
         }
 
         protected void AgentViewsMemberSetting(
+            IEnumerable<Action<ISetting>> assertGotSettingTypes,
             int actorId,
             Level actorLevel,
             int memberId = SettingInfo.MemberId,
@@ -56,49 +58,39 @@
             ////Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, memberSetting.SettingTypes.Count());
 
-            var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
-            Assert.IsNotNull(agentPTOnMemberItem);
-            Assert.GreaterOrEqual(agentPTOnMemberItem.A1, 1);
-
-            var memberBetLimitItem = memberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.IsNotNull(memberBetLimitItem);
-            Assert.GreaterOrEqual(memberBetLimitItem.MinBet, 0);
-            Assert.GreaterOrEqual(memberBetLimitItem.MaxBet, 0);
-            Assert.GreaterOrEqual(memberBetLimitItem.MaxPerMatch, 0);
-
-            var memberCommissionItem = memberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.IsNotNull(memberCommissionItem);
-            Assert.GreaterOrEqual(memberCommissionItem.CommRate, 0);
-            Assert.LessOrEqual(memberCommissionItem.CommRate, 0.01);
-            //// Agent comm
-            Assert.GreaterOrEqual(memberCommissionItem.Upline.CommRate, 0);
-            Assert.LessOrEqual(memberCommissionItem.Upline.CommRate, 0.01);
+            foreach (Action<ISetting> assertGotSettingType in assertGotSettingTypes)
+            {
+                assertGotSettingType(memberSetting);
+            }
         }
 
         protected void AgentUpdatesMemberSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.AgentId,
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            AgentUpdatesMemberSetting(actorId, Level.Agent, memberId, productId, true);
-            AgentUpdatesMemberSetting(actorId, Level.Agent, memberId, productId, false);
+            AgentUpdatesMemberSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Agent, memberId, productId);
         }
 
         protected void CompanyUpdatesMemberSettingByAgentView(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.CompanyId,
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
-            AgentUpdatesMemberSetting(actorId, Level.Company, memberId, productId, true);
-            AgentUpdatesMemberSetting(actorId, Level.Company, memberId, productId, false);
+            AgentUpdatesMemberSetting(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Company, memberId, productId);
         }
 
         private void AgentUpdatesMemberSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId,
             Level actorLevel,
             int memberId,
-            byte productId,
-            bool isDisabledProductStatus)
+            byte productId)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -108,19 +100,13 @@
             var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
-            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 14 ? 15 : 14);
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
 
-            var memberBetLimitItem = memberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            memberBetLimitItem.MinBet = memberBetLimitItem.MinBet == 70 ? 71 : 70;
-            memberBetLimitItem.MaxBet = memberBetLimitItem.MaxBet == 300 ? 301 : 300;
-            memberBetLimitItem.MaxPerMatch = memberBetLimitItem.MaxPerMatch == 250550 ? 250551 : 250550;
-
-            var memberCommissionItem = memberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            memberCommissionItem.CommRate = memberCommissionItem.CommRate == 0.0033m ? 0.0032m : 0.0033m;
-
-            var memberProductStatusItem = memberSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            memberProductStatusItem.IsDisabled = isDisabledProductStatus;
+            foreach (var modifySettingType in modifySettingTypes)
+            {
+                var modifiedSettingTypeInfo = modifySettingType(memberSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
+            }
 
             //// Act
             var updateParam = new UpdateSettingParam(memberSetting, querySettingParam.UplineLevel);
@@ -130,22 +116,17 @@
             Assert.IsTrue(updateResult.IsSuccessful);
 
             var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var newAgentOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
-            Assert.AreEqual(agentPTOnMemberItem.A1, newAgentOnMemberPTItem.A1);
 
-            var newMemberBetLimitItem = newMemberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.AreEqual(memberBetLimitItem.MinBet, newMemberBetLimitItem.MinBet);
-            Assert.AreEqual(memberBetLimitItem.MaxBet, newMemberBetLimitItem.MaxBet);
-            Assert.AreEqual(memberBetLimitItem.MaxPerMatch, newMemberBetLimitItem.MaxPerMatch);
-
-            var newMemberCommissionItem = newMemberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.AreEqual(memberCommissionItem.CommRate, newMemberCommissionItem.CommRate);
-
-            var newMemberProductStatusItem = newMemberSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            Assert.AreEqual(memberProductStatusItem.IsDisabled, newMemberProductStatusItem.IsDisabled);
+            foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
+            {
+                var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                assertUpdatedSettingType.Value(expectedSettingItem, newMemberSetting);
+            }
         }
 
         protected void AgentUpdatesMultipleMembersSetting(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int agentId = SettingInfo.AgentId,
             byte productId = Product255Constants.ProductId,
             IEnumerable<int> memberIds = null,
@@ -163,19 +144,14 @@
             var querySettingParam = new QuerySettingParam(memberIds.First(), Level.Member, productId, Level.Agent);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var agentPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
-            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 14 ? 15 : 14);
 
-            var memberBetLimitItem = memberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            memberBetLimitItem.MinBet = memberBetLimitItem.MinBet == 70 ? 71 : 70;
-            memberBetLimitItem.MaxBet = memberBetLimitItem.MaxBet == 300 ? 301 : 300;
-            memberBetLimitItem.MaxPerMatch = memberBetLimitItem.MaxPerMatch == 250550 ? 250551 : 250550;
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
 
-            var memberCommissionItem = memberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            memberCommissionItem.CommRate = memberCommissionItem.CommRate == 0.0033m ? 0.0032m : 0.0033m;
-
-            var memberProductStatusItem = memberSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-            memberProductStatusItem.IsDisabled = false;
+            foreach (var modifySettingType in modifySettingTypes)
+            {
+                var modifiedSettingTypeInfo = modifySettingType(memberSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
+            }
 
             //// Act
             var updatingMultipleParam = new UpdateMultipleSettingParam(memberSetting, memberIds, memberNames, querySettingParam.UplineLevel);
@@ -188,19 +164,12 @@
             {
                 querySettingParam.CustomerId = memberId;
                 var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-                var newAgentOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as AgentPTOnMemberItem;
-                Assert.AreEqual(agentPTOnMemberItem.A1, newAgentOnMemberPTItem.A1);
 
-                var newMemberBetLimitItem = newMemberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-                Assert.AreEqual(memberBetLimitItem.MinBet, newMemberBetLimitItem.MinBet);
-                Assert.AreEqual(memberBetLimitItem.MaxBet, newMemberBetLimitItem.MaxBet);
-                Assert.AreEqual(memberBetLimitItem.MaxPerMatch, newMemberBetLimitItem.MaxPerMatch);
-
-                var newMemberCommissionItem = newMemberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-                Assert.AreEqual(memberCommissionItem.CommRate, newMemberCommissionItem.CommRate);
-
-                var newMemberProductStatusItem = newMemberSetting.SettingTypes.ElementAt(3).SettingItems.ElementAt(0) as ProductStatusItem;
-                Assert.AreEqual(memberProductStatusItem.IsDisabled, newMemberProductStatusItem.IsDisabled);
+                foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
+                {
+                    var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                    assertUpdatedSettingType.Value(expectedSettingItem, newMemberSetting);
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.IntegrationTests.Products.ProductBase
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -29,6 +30,7 @@
         }
 
         protected void MasterViewsMemberSetting(
+            IEnumerable<Action<ISetting>> assertGotSettingTypes,
             int actorId,
             Level actorLevel,
             int memberId = SettingInfo.MemberId,
@@ -55,55 +57,41 @@
             ////Assert.AreEqual(productName, memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes - 1, memberSetting.SettingTypes.Count());
 
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
-            Assert.IsNotNull(masterPTOnMember);
-
-            var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
-            Assert.IsNotNull(masterPTOnMemberItem);
-            Assert.GreaterOrEqual(masterPTOnMemberItem.IM1 ? masterPTOnMemberItem.UM1 : masterPTOnMemberItem.M1, 0);
-            Assert.GreaterOrEqual(masterPTOnMemberItem.A1, 1);
-
-            var memberBetLimitItem = memberSetting.SettingTypes.ElementAt(1).SettingItems.ElementAt(0) as BetLimitItem;
-            Assert.IsNotNull(memberBetLimitItem);
-            Assert.GreaterOrEqual(memberBetLimitItem.MinBet, 0);
-            Assert.GreaterOrEqual(memberBetLimitItem.MaxBet, 0);
-            Assert.GreaterOrEqual(memberBetLimitItem.MaxPerMatch, 0);
-
-            var memberCommissionItem = memberSetting.SettingTypes.ElementAt(2).SettingItems.ElementAt(0) as CommissionItem;
-            Assert.IsNotNull(memberCommissionItem);
-            Assert.GreaterOrEqual(memberCommissionItem.CommRate, 0);
-            Assert.LessOrEqual(memberCommissionItem.CommRate, 0.01);
-            //// Agent comm
-            Assert.GreaterOrEqual(memberCommissionItem.Upline.CommRate, 0);
-            Assert.LessOrEqual(memberCommissionItem.Upline.CommRate, 0.01);
+            foreach (Action<ISetting> assertGotSettingType in assertGotSettingTypes)
+            {
+                assertGotSettingType(memberSetting);
+            }
         }
 
         protected void MasterUpdatesPTOnMember(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.MasterId,
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
             //// Update two time for auto pt and not auto pt
-            MasterUpdatesPTOnMember(actorId, Level.Master, memberId, productId, true);
-            MasterUpdatesPTOnMember(actorId, Level.Master, memberId, productId, false);
+            MasterUpdatesPTOnMember(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Master, memberId, productId);
         }
 
         protected void CompanyUpdatesMasterPTOnMember(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId = SettingInfo.CompanyId,
             byte productId = Product255Constants.ProductId,
             int memberId = SettingInfo.MemberId)
         {
             //// Update two time for auto pt and not auto pt
-            MasterUpdatesPTOnMember(actorId, Level.Company, memberId, productId, true);
-            MasterUpdatesPTOnMember(actorId, Level.Company, memberId, productId, false);
+            MasterUpdatesPTOnMember(modifySettingTypes, assertUpdatedSettingTypes, actorId, Level.Company, memberId, productId);
         }
 
         private void MasterUpdatesPTOnMember(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int actorId,
             Level actorLevel,
             int memberId,
-            byte productId,
-            bool isDisbaledProductStatus)
+            byte productId)
         {
             //// Arrange
             var actor = new User { Id = actorId, Level = actorLevel, Name = "ActorName" };
@@ -113,29 +101,13 @@
             var querySettingParam = new QuerySettingParam(memberId, Level.Member, productId, Level.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
-            var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
-            if (!masterPTOnMember.IsDisableMasterAutoPT)
-            {
-                if (masterPTOnMemberItem.IM2)
-                {
-                    masterPTOnMemberItem.IM1 = true;
-                }
-                else
-                {
-                    masterPTOnMemberItem.IM1 = !masterPTOnMemberItem.IM1;
-                }
-            }
 
-            if (masterPTOnMemberItem.IM1)
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
+
+            foreach (var modifySettingType in modifySettingTypes)
             {
-                masterPTOnMemberItem.UM1 = (byte)(masterPTOnMemberItem.UM1 == 21 ? 22 : 21);
-                masterPTOnMemberItem.M1 = 0;
-            }
-            else
-            {
-                masterPTOnMemberItem.M1 = (byte)(masterPTOnMemberItem.M1 == 21 ? 22 : 21);
-                masterPTOnMemberItem.UM1 = 0;
+                var modifiedSettingTypeInfo = modifySettingType(memberSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
 
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
@@ -148,18 +120,17 @@
             Assert.IsTrue(updateResult.IsSuccessful);
 
             var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var newMasterOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
-            if (masterPTOnMemberItem.IM1)
+
+            foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
             {
-                Assert.AreEqual(masterPTOnMemberItem.UM1, newMasterOnMemberPTItem.UM1);
-            }
-            else
-            {
-                Assert.AreEqual(masterPTOnMemberItem.M1, newMasterOnMemberPTItem.M1);
+                var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                assertUpdatedSettingType.Value(expectedSettingItem, newMemberSetting);
             }
         }
 
         protected void MasterUpdatesPTOnMultipleMembers(
+            IEnumerable<Func<ISetting, ModifySettingTypeInfo>> modifySettingTypes,
+            Dictionary<byte, Action<ISettingItem, ISetting>> assertUpdatedSettingTypes,
             int masterId = SettingInfo.MasterId,
             byte productId = Product255Constants.ProductId,
             IEnumerable<int> memberIds = null,
@@ -176,30 +147,12 @@
             var querySettingParam = new QuerySettingParam(memberIds.First(), Level.Member, productId, Level.Master);
 
             var memberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-            var masterPTOnMember = memberSetting.SettingTypes.ElementAt(0) as PTSettingType;
-            var masterPTOnMemberItem = memberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
+            var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
 
-            if (!masterPTOnMember.IsDisableMasterAutoPT)
+            foreach (var modifySettingType in modifySettingTypes)
             {
-                if (masterPTOnMemberItem.IM2)
-                {
-                    masterPTOnMemberItem.IM1 = true;
-                }
-                else
-                {
-                    masterPTOnMemberItem.IM1 = !masterPTOnMemberItem.IM1;
-                }
-            }
-
-            if (masterPTOnMemberItem.IM1)
-            {
-                masterPTOnMemberItem.UM1 = (byte)(masterPTOnMemberItem.UM1 == 21 ? 22 : 21);
-                masterPTOnMemberItem.M1 = 0;
-            }
-            else
-            {
-                masterPTOnMemberItem.M1 = (byte)(masterPTOnMemberItem.M1 == 21 ? 22 : 21);
-                masterPTOnMemberItem.UM1 = 0;
+                var modifiedSettingTypeInfo = modifySettingType(memberSetting);
+                expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
 
             memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
@@ -215,14 +168,11 @@
             {
                 querySettingParam.CustomerId = memberId;
                 var newMemberSetting = _querySettingService.GetCustomerSetting(querySettingParam);
-                var newMasterOnMemberPTItem = newMemberSetting.SettingTypes.ElementAt(0).SettingItems.ElementAt(0) as MasterPTOnMemberItem;
-                if (masterPTOnMemberItem.IM1)
+
+                foreach (var assertUpdatedSettingType in assertUpdatedSettingTypes)
                 {
-                    Assert.AreEqual(masterPTOnMemberItem.UM1, newMasterOnMemberPTItem.UM1);
-                }
-                else
-                {
-                    Assert.AreEqual(masterPTOnMemberItem.M1, newMasterOnMemberPTItem.M1);
+                    var expectedSettingItem = expectedSettingTypeData[assertUpdatedSettingType.Key];
+                    assertUpdatedSettingType.Value(expectedSettingItem, newMemberSetting);
                 }
             }
         }

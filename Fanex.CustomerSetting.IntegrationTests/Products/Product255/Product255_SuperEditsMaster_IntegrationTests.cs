@@ -1,41 +1,76 @@
 ﻿namespace Fanex.CustomerSetting.IntegrationTests.Products.Product255
 {
-    using Fanex.CustomerSetting.Constants;
+    using System;
+    using System.Collections.Generic;
     using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.IntegrationTests.Products.ProductBase;
+    using Fanex.CustomerSetting.Models;
     using NUnit.Framework;
+    using SettingTypesIntegration = Fanex.CustomerSetting.IntegrationTests.Products.ProductBase.SettingTypes;
 
     [TestFixture]
     public class Product255_SuperEditsMaster_IntegrationTests : SuperEditsMaster_IntegrationTests
     {
+        private IEnumerable<Action<ISetting>> _assertGotSettingTypes = new List<Action<ISetting>>
+                {
+                    SettingTypesIntegration.SettingType1.AssertGotMasterPT,
+                    SettingTypesIntegration.SettingType2.AssertGotBetLimit,
+                    SettingTypesIntegration.SettingType3.AssertGotCommission,
+                    SettingTypesIntegration.SettingType4.AssertGotSMAProductStatus
+                };
+
+        private IEnumerable<Func<ISetting, ModifySettingTypeInfo>> _modifySettingTypes = new List<Func<ISetting, ModifySettingTypeInfo>>
+                {
+                    SettingTypesIntegration.SettingType1.ModifyMasterPT,
+                    SettingTypesIntegration.SettingType2.ModifyMasterBetLimit,
+                    SettingTypesIntegration.SettingType3.ModifyMasterCommission,
+                    SettingTypesIntegration.SettingType4.ModifySMAProductStatus
+                };
+
+        private Dictionary<byte, Action<ISettingItem, ISetting>> _assertUpdatedSettingTypes =
+                new Dictionary<byte, Action<ISettingItem, ISetting>>
+                {
+                    { ProductInfo.PTSettingTypeId, SettingTypesIntegration.SettingType1.AssertUpdatedMasterPT },
+                    { ProductInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
+                    { ProductInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
+                    { ProductInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus },
+                };
+
         [Test]
         public void Product255_SuperViewsMasterSetting()
         {
-            ViewingMasterSetting(SettingInfo.SuperId, Level.Super);
+            ViewingMasterSetting(
+                _assertGotSettingTypes,
+                SettingInfo.SuperId,
+                Level.Super);
         }
 
         [Test]
         public void Product255_CompanyViewsMasterSetting()
         {
-            ViewingMasterSetting(SettingInfo.CompanyId, Level.Company);
+            ViewingMasterSetting(
+                _assertGotSettingTypes,
+                SettingInfo.CompanyId,
+                Level.Company);
         }
 
         [Test]
         public void Product255_SuperUpdatesMasterSetting()
         {
-            SuperUpdatesMasterSetting();
+            SuperUpdatesMasterSetting(_modifySettingTypes, _assertUpdatedSettingTypes);
         }
 
         [Test]
         public void Product255_CompanyUpdatesMasterSetting()
         {
-            CompanyUpdatesMasterSetting();
+            CompanyUpdatesMasterSetting(_modifySettingTypes, _assertUpdatedSettingTypes);
         }
 
         [Test]
         public void Product255_SuperUpdatesMultipleMastersSetting()
         {
-            SuperUpdatesMultipleMastersSetting();
+            SuperUpdatesMultipleMastersSetting(_modifySettingTypes, _assertUpdatedSettingTypes);
         }
     }
 }
