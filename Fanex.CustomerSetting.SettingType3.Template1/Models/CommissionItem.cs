@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Resources;
 
-    public class CommissionItem : DefaultSettingItem
+    public class CommissionItem : SettingItem
     {
         private const string CommissionXmlFormat = "<Discount {0} Discount=\"{1}\"/>";
 

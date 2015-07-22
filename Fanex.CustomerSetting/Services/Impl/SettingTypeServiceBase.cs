@@ -76,13 +76,13 @@
         {
             if (settingType != null && settingType.SettingItems.Any())
             {
-                List<DefaultSettingItem> defaultSettingItems = new List<DefaultSettingItem>();
+                List<SettingItem> defaultSettingItems = new List<SettingItem>();
 
                 foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
-                    if (settingItem is DefaultSettingItem)
+                    if (settingItem is SettingItem)
                     {
-                        var defaultSettingItem = settingItem as DefaultSettingItem;
+                        var defaultSettingItem = settingItem as SettingItem;
                         defaultSettingItem.BetTypeName = GetBetTypeName(defaultSettingItem.BetTypeId, language);
                         defaultSettingItem.SportTypeName = GetSportTypeName(defaultSettingItem.SportTypeId, language);
                         defaultSettingItems.Add(defaultSettingItem);

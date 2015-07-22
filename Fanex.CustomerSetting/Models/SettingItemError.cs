@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Resource;
 
-    public class ErrorSettingItem : ISettingItem
+    public class SettingItemError : ISettingItem
     {
         public string ErrorMessage
         {

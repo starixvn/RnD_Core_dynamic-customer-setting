@@ -166,7 +166,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
+  <!--<Target Name="BeforeBuild">
     <Exec Command="npm install" />
-  </Target>
+  </Target>-->
 </Project>

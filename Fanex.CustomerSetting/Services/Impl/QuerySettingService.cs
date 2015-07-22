@@ -144,7 +144,7 @@
                 WriteLog(queryParam, productSettingType, ex);
                 //// TODO Should we create ErrorSettingType here.
 
-                customerSettingType.SettingItems = new List<ISettingItem> { new ErrorSettingItem() };
+                customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
             }
 
             return customerSettingType;

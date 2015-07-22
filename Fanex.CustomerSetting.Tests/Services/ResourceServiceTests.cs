@@ -86,7 +86,6 @@
             //// Arrange
             byte productId = 1;
             ProductName productName = new ProductName { ProductNameEN = "A product name" };
-            ProductName nullProductName = null;
 
             _cachingService.GetOrAdd<ProductName>(
                Arg.Any<string>(),

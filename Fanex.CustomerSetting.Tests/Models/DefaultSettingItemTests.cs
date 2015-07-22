@@ -15,7 +15,7 @@
             short betTypeId)
         {
             //// Arrange
-            var settingItem = new DefaultSettingItem
+            var settingItem = new SettingItem
                 {
                     SportTypeId = sportTypeId,
                     BetTypeId = betTypeId
@@ -35,7 +35,7 @@
             short betTypeId)
         {
             //// Arrange
-            var settingItem = new DefaultSettingItem
+            var settingItem = new SettingItem
             {
                 SportTypeId = sportTypeId,
                 BetTypeId = betTypeId
@@ -57,7 +57,7 @@
             string expectedXml)
         {
             //// Arrange
-            var settingItem = new DefaultSettingItem
+            var settingItem = new SettingItem
             {
                 SportTypeId = sportTypeId,
                 BetTypeId = betTypeId

@@ -103,7 +103,7 @@
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\DefaultSettingItem.cs" />
+    <Compile Include="Models\SettingItem.cs" />
     <Compile Include="Criteria\CustomerInfoQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />
@@ -112,7 +112,7 @@
     <Compile Include="Enumerations\Level.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\ErrorSettingItem.cs" />
+    <Compile Include="Models\SettingItemError.cs" />
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />

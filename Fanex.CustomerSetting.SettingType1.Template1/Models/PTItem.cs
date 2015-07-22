@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models;
 
-    public class PTItem : DefaultSettingItem
+    public class PTItem : SettingItem
     {
         private const string BasePTXmlFormat = "{0} IsLive=\"{1}\"";
 
