@@ -4,11 +4,11 @@
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -48,12 +48,12 @@
         public void ValidateQuerySetting_QuerySettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = null;
+            CustomerSettingQuery query = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _validationService.ValidateQuerySettingAction(queryParam)));
+                    () => _validationService.ValidateQuerySettingAction(query)));
         }
 
         private void AssumeCutomerIsDownlineOfActor()
@@ -78,7 +78,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1,
@@ -88,10 +88,10 @@
 
             AssumeCutomerIsDownlineOfActor();
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -116,7 +116,7 @@
             Level customerLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
@@ -124,11 +124,11 @@
             _settingContext.Actor.Level = userLevel;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -149,7 +149,7 @@
         public void ValidateQuerySetting_Always_CallGetActorStatus()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -158,7 +158,7 @@
             _settingContext.Actor.Level = Level.Agent;
 
             //// Act
-            _validationService.ValidateQuerySettingAction(queryParam);
+            _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             _dynamicRepository.Received().Get<bool>(Arg.Is<ActorStatusQueryCriteria>(criteria => criteria.CustId == _settingContext.Actor.Id));
@@ -168,7 +168,7 @@
         public void ValidateQuerySetting_ActorIsDisabled_ReturnFailedResult()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -179,7 +179,7 @@
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(false);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -190,7 +190,7 @@
         public void ValidateQuerySetting_Always_CallGetCustomerLevel()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -200,10 +200,10 @@
             AssumeActorStatusIsEnabled();
 
             //// Act
-            _validationService.ValidateQuerySettingAction(queryParam);
+            _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
-            _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == queryParam.CustomerId));
+            _dynamicRepository.Received().Get<byte>(Arg.Is<CustomerLevelQueryCriteria>(criteria => criteria.CustId == query.CustomerId));
         }
 
         private static object[] ValidateQuerySetting_ActorIsNotCompany_AlwaysCallCheckBelonging_Cases =
@@ -219,7 +219,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -227,22 +227,22 @@
             _settingContext.Actor.Level = actorLevel;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
 
             //// Act
-            _validationService.ValidateQuerySettingAction(queryParam);
+            _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             _dynamicRepository.Received().Get<bool>(Arg.Is<CheckBelongingCriteria>(
                 criteria => criteria.ActorId == _settingContext.Actor.Id
-                    && criteria.CustomerId == queryParam.CustomerId));
+                    && criteria.CustomerId == query.CustomerId));
         }
 
         [Test]
         public void ValidateQuerySetting_IsNotSameLine_ReturnAccessDeninedResult()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -250,12 +250,12 @@
             _settingContext.Actor.Level = Level.Agent;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
 
             _dynamicRepository.Get<bool>(Arg.Any<CheckBelongingCriteria>()).Returns(false);
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
@@ -266,7 +266,7 @@
         public void ValidateQuerySetting_ActorIsCompany_DontCallValidateBelongIn()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -274,15 +274,15 @@
             _settingContext.Actor.Level = Level.Company;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
 
             //// Act
-            _validationService.ValidateQuerySettingAction(queryParam);
+            _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             _dynamicRepository.DidNotReceive().Get<bool>(Arg.Is<CheckBelongingCriteria>(
                 criteria => criteria.ActorId == _settingContext.Actor.Id
-                    && criteria.CustomerId == queryParam.CustomerId));
+                    && criteria.CustomerId == query.CustomerId));
         }
 
         [Test, TestCaseSource("ValidateQuerySetting_EditingMemberAndActorLevelIsDifferentWithUplineLevel_Cases")]
@@ -291,7 +291,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -299,11 +299,11 @@
             _settingContext.Actor.Level = actorLevel;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
@@ -323,7 +323,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -331,11 +331,11 @@
             _settingContext.Actor.Level = actorLevel;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -355,18 +355,18 @@
         public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(Level customerLevel)
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
             _settingContext.Actor.Level = Level.Company;
 
             AssumeActorStatusIsEnabled();
-            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(queryParam.CustomerLevel);
+            AssumeCustomerLevelIsEqualWithValueStoreInDatabase(query.CustomerLevel);
             AssumeCutomerIsDownlineOfActor();
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var actualResult = _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -381,7 +381,7 @@
         public void ValidateQuerySetting_RaisedException_AlwaysLogError()
         {
             //// Arrange
-            CustomerSettingQuery queryParam = new CustomerSettingQuery(
+            CustomerSettingQuery query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Master,
                 productId: 1);
@@ -391,7 +391,7 @@
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
 
             //// Act
-            var actualResult = _validationService.ValidateQuerySettingAction(queryParam);
+           _validationService.ValidateQuerySettingAction(query);
 
             //// Assert
             _logger.Received().Error(

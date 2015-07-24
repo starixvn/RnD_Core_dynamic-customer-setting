@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Tests;
     using Fanex.NAP.Framework.Data;

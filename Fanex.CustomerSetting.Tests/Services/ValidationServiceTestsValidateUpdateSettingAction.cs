@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -67,11 +67,11 @@
             //// Assert
 
             _validationService.Received().ValidateQuerySettingAction(
-                Arg.Is<CustomerSettingQuery>(queryParam =>
-                    queryParam.CustomerId == updateParam.Setting.CustomerId
-                    && queryParam.CustomerLevel == updateParam.Setting.CustomerLevel
-                    && queryParam.ProductId == updateParam.Setting.ProductId
-                    && queryParam.UplineLevel == updateParam.UplineLevel));
+                Arg.Is<CustomerSettingQuery>(query =>
+                    query.CustomerId == updateParam.Setting.CustomerId
+                    && query.CustomerLevel == updateParam.Setting.CustomerLevel
+                    && query.ProductId == updateParam.Setting.ProductId
+                    && query.UplineLevel == updateParam.UplineLevel));
         }
 
         [Test]

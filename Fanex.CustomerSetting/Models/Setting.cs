@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     [Serializable]
     public class Setting : ISetting

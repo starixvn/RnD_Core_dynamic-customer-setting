@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Web.Contexts;

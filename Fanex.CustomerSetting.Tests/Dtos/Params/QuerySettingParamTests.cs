@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Dtos.Params
 {
     using System;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
     using NUnit.Framework;
 
     [TestFixture]

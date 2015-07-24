@@ -1,6 +1,6 @@
-﻿namespace Fanex.CustomerSetting.Utilz
+﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    public static class LanguageNameConverter
+    internal static class LanguageNameConverter
     {
         private const string DefaultLanguageName = "en";
 

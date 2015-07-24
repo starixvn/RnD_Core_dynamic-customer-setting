@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     public class Customer
     {

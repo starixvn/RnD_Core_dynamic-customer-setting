@@ -2,11 +2,11 @@
 {
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
@@ -36,10 +36,10 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext, 
-            CustomerSettingQuery queryParam, 
+            CustomerSettingQuery query, 
             SettingType productSettingType)
         {
-            var commissionItemsRawData = _commissionDataAccess.GetCustomerCommissionItemsRawData(queryParam);
+            var commissionItemsRawData = _commissionDataAccess.GetCustomerCommissionItemsRawData(query);
 
             var customerCommission = new SettingType
             {

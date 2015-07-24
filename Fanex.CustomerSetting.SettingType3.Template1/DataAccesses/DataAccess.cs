@@ -3,10 +3,10 @@
     using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.Data;
@@ -21,13 +21,13 @@
             { Level.Member.Value, "CustSetting_MemberCommissionSelect" }
         };
 
-        public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(CustomerSettingQuery queryParam)
+        public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(CustomerSettingQuery query)
         {
-            var settingKey = QueryCommissionSpKeys[queryParam.CustomerLevel.Value];
+            var settingKey = QueryCommissionSpKeys[query.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
                 return objectDb.Query<CommissionItemDto>(parameterValues);
             }
         }

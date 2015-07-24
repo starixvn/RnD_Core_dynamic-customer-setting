@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Messages;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Messages;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -183,7 +183,7 @@
             Assert.IsFalse(updateResults.First().IsSuccessful);
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query, SettingType productSettingType)
         {
             throw new NotImplementedException();
         }

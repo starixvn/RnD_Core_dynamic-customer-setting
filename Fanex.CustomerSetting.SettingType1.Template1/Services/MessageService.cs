@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Services
 {
     using System.Resources;
-    using Fanex.CustomerSetting.Messages;
+    using Fanex.CustomerSetting.Models.Messages;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
@@ -42,6 +42,7 @@
         private MessageContent TranslateMessage<T>(string rawMessage, byte settingLevel, string language) where T : ISubMessage
         {
             var mainMessage = Deserialize<MainMessage<T>>(rawMessage);
+
             return GetMessageContent<T>(mainMessage, settingLevel, language);
         }
 

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
     using System;
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     public class CustomerInfo
     {

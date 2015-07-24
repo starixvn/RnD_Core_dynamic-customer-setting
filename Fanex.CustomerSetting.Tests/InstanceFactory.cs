@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tests
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Tests.Models;
 
     public static class InstanceFactory

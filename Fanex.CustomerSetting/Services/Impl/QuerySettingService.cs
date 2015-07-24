@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Requests;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
@@ -63,7 +63,10 @@
 
         private void Validate(CustomerSettingQuery query)
         {
-            Check.Argument.IsNotNull(query, "query");
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
 
             var validationResult = _validationService.ValidateQuerySettingAction(query);
 
@@ -142,7 +145,6 @@
             catch (Exception ex)
             {
                 WriteLog(query, productSettingType, ex);
-                //// TODO Should we create ErrorSettingType here.
 
                 customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
             }

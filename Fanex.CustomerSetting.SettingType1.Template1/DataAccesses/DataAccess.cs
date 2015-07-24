@@ -4,11 +4,11 @@
     using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;

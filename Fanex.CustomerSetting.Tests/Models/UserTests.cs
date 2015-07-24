@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using NUnit.Framework;
 
     [TestFixture]

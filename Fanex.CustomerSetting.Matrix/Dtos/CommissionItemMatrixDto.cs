@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Dtos
 {
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     public class CommissionItemMatrixDto
     {

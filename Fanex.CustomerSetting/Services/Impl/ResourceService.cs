@@ -5,7 +5,6 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.RemotingRefApi;
-    using Fanex.CustomerSetting.Utilz;
     using Fanex.NAP.Framework.Data;
 
     public class ResourceService : IResourceService

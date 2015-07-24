@@ -5,16 +5,16 @@
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Results;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
@@ -50,7 +50,10 @@
         /// <returns>Query action is valid or not.</returns>
         public virtual IResult ValidateQuerySettingAction(CustomerSettingQuery query)
         {
-            Check.Argument.IsNotNull(query, "query");
+            if (query == null)
+            {
+                throw new NotImplementedException("query");
+            }
 
             var customerId = query.CustomerId;
             var customerLevel = query.CustomerLevel;
@@ -261,7 +264,10 @@
 
         public IResult ValidateUpdateMultipleSettingAction(MultipleUpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(command, "command");
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
 
             try
             {

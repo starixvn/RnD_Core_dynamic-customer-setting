@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
 {
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Messages;
+    using Fanex.CustomerSetting.Models.Messages;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
 

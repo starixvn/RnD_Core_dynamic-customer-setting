@@ -3,8 +3,8 @@
     using System;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Resource;
 
     /// <summary>

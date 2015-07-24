@@ -1,8 +1,8 @@
-﻿namespace Fanex.CustomerSetting.Requests
+﻿namespace Fanex.CustomerSetting.Models.Requests
 {
     using System;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     public class CustomerSettingQuery
     {

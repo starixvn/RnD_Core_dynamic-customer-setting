@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Requests;
     using NUnit.Framework;
 
     [TestFixture]

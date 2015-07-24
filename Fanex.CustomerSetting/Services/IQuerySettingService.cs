@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Requests;
 
     public interface IQuerySettingService
     {

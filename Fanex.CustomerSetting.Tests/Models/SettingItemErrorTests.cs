@@ -1,8 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Results;
     using FluentAssertions;
     using NUnit.Framework;
 
@@ -30,7 +31,7 @@
         {
             //// Arrange
             var errorItem = new SettingItemError();
-            IResult expected = new Result(Constants.ResultValue.Error, Message.SettingTypeError);
+            IResult expected = new Result(ResultValue.Error, Message.SettingTypeError);
 
             //// Act
             IResult settingResult = errorItem.Validate();

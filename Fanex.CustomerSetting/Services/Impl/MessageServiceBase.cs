@@ -5,8 +5,8 @@
     using System.Resources;
     using System.Xml.Serialization;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Messages;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Messages;
     using Fanex.CustomerSetting.Resource;
 
     public abstract class MessageServiceBase : IMessageService

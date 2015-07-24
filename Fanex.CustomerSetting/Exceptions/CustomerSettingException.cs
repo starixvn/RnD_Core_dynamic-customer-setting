@@ -3,8 +3,8 @@
     using System;
     using System.Runtime.Serialization;
     using System.Text;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     [Serializable]
     public class CustomerSettingException : Exception

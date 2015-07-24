@@ -126,7 +126,6 @@
     <Compile Include="Services\QuerySettingServiceTests.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateQuerySettingAction.cs" />
     <Compile Include="Services\ValidationServiceTestsValidateUpdateSettingAction.cs" />
-    <Compile Include="Utilz\LanguageNameConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

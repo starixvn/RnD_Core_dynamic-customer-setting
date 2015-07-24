@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
@@ -60,14 +60,14 @@
             Level uplineLevel)
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
+            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<CustomerSettingQuery>(queryParam));
+            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<CustomerSettingQuery>(query));
         }
 
         [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
@@ -76,7 +76,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
+            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var productStatusItemsRawData = new List<ProductStatusItemDto>
             {
@@ -94,7 +94,7 @@
             _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(productStatusItemsRawData);
 
             //// Act
-            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
             var actualCustomerProductStatusItem = actualCustomerProductStatus.SettingItems.First() as ProductStatusItem;
@@ -117,11 +117,11 @@
             Level uplineLevel)
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
+            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
             Assert.IsEmpty(actualCustomerProductStatus.SettingItems);

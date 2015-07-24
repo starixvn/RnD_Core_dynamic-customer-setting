@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
 
     public interface ISettingTypeService
     {

@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
     using NUnit.Framework;
 
     [TestFixture]

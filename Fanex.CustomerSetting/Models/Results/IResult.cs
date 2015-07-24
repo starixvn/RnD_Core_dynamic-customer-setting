@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Results
+﻿namespace Fanex.CustomerSetting.Models.Results
 {
     /// <summary>
     /// Stores result information for displaying on web.

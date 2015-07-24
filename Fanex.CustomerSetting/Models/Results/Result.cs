@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.Results
+﻿namespace Fanex.CustomerSetting.Models.Results
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Models.Constants;
     using Resource = Fanex.CustomerSetting.Resource;
 
     public class Result : IResult

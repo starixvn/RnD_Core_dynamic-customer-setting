@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Messages
+﻿namespace Fanex.CustomerSetting.Models.Messages
 {
     using Fanex.CustomerSetting.Services;
 

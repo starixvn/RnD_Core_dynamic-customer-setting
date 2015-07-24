@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.Messages
+﻿namespace Fanex.CustomerSetting.Models.Messages
 {
     using System;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Enumerations;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
 
     public class DefaultSubMessage : ISubMessage

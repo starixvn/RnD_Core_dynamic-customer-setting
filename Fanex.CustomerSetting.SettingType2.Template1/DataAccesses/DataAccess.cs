@@ -3,10 +3,10 @@
     using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.Data;
@@ -21,13 +21,13 @@
             { Level.Member.Value, "CustSetting_MemberBetLimitSelect" }
         };
 
-        public IEnumerable<BetLimitItemDto> GetCustomerBetLimitItemsRawData(CustomerSettingQuery queryParam)
+        public IEnumerable<BetLimitItemDto> GetCustomerBetLimitItemsRawData(CustomerSettingQuery query)
         {
-            var settingKey = QueryBetLimitSpKeys[queryParam.CustomerLevel.Value];
+            var settingKey = QueryBetLimitSpKeys[query.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(queryParam, Constants.SettingTypeId);
+                var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
                 return objectDb.Query<BetLimitItemDto>(parameterValues);
             }
         }

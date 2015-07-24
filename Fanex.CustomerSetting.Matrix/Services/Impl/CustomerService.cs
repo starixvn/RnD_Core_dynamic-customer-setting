@@ -1,13 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.NAP.Framework.Data;
 
     public class CustomerService : ICustomerService

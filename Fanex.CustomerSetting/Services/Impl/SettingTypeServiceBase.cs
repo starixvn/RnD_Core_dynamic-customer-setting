@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.Logging;
 
     public abstract class SettingTypeServiceBase : ISettingTypeService
@@ -61,6 +61,7 @@
             else
             {
                 var messageContent = MessageService.TranslateMessage(result.MsgType, result.Message, settingLevel, language);
+
                 return new SettingResult(result, messageContent.MainMessage, messageContent.SubMessages);
             }
         }
@@ -121,15 +122,41 @@
 
         protected SettingResult CreateSettingResult(IResult result, int customerId, SettingType settingType)
         {
-            return new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
+            return new SettingResult(
+                result.Code, 
+                result.Message, 
+                result.MsgType, 
+                customerId, 
+                settingType.Id, 
+                settingType.Name);
         }
 
-        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery queryParam, SettingType productSettingType);
+        public abstract SettingType GetCustomerSettingType(
+            ISettingContext settingContext, 
+            CustomerSettingQuery query, 
+            SettingType productSettingType);
 
-        public abstract SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Enumerations.Level uplineLevel, byte productId, SettingType settingType);
+        public abstract SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext, 
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId, 
+            SettingType settingType);
 
-        public virtual IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(ISettingContext settingContext, IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        public virtual IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(
+            ISettingContext settingContext, 
+            IEnumerable<int> customerIds, 
+            Level customerLevel,
+            Level uplineLevel, 
+            byte productId, 
+            SettingType settingType)
         {
+            if (customerIds == null)
+            {
+                throw new ArgumentNullException("customerIds");
+            }
+
             var settingTypeResults = new List<SettingResult>();
             SettingResult settingTypeResult = null;
 
@@ -138,7 +165,13 @@
                 try
                 {
                     //// Faced with duplication code here, i'm trying to findout solution.
-                    settingTypeResult = UpdateCustomerSettingType(settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                    settingTypeResult = UpdateCustomerSettingType(
+                        settingContext, 
+                        customerId, 
+                        customerLevel, 
+                        uplineLevel, 
+                        productId, 
+                        settingType);
                 }
                 catch (Exception ex)
                 {

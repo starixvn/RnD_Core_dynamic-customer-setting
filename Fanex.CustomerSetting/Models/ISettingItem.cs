@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Results;
 
     public interface ISettingItem
     {

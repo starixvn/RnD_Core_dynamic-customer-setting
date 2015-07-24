@@ -1,8 +1,8 @@
-﻿namespace Fanex.CustomerSetting.Results
+﻿namespace Fanex.CustomerSetting.Models.Results
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Constants;
+    using Fanex.CustomerSetting.Models.Constants;
 
     public class UpdateSettingResult : Result
     {

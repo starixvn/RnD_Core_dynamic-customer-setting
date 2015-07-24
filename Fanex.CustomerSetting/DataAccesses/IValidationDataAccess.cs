@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.DataAccesses
 {
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Results;
 
     public interface IValidationDataAccess
     {

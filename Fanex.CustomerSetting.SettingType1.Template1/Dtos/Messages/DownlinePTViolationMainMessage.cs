@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Messages;
+    using Fanex.CustomerSetting.Models.Messages;
 
     [XmlRoot("Root")]
     public class DownlinePTViolationMainMessage : MainMessage<DownlinePTViolationSubMessage>

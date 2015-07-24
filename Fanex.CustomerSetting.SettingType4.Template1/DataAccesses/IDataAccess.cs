@@ -1,15 +1,15 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Template1.DataAccesses
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
 
     public interface IDataAccess
     {
-        IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery queryParam);
+        IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery query);
 
         IResult UpdateCustomerProductStatus(
             ISettingContext settingContext,

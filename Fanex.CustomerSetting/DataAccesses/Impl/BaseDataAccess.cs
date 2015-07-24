@@ -3,9 +3,9 @@
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.Data;
 
     public class BaseDataAccess

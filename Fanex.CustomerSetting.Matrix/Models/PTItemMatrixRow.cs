@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Matrix.Dtos;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
     public class PTItemMatrixRow
     {

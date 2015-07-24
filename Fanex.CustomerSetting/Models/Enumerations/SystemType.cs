@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Enumerations
+﻿namespace Fanex.CustomerSetting.Models.Enumerations
 {
     using System.Diagnostics.CodeAnalysis;
 

@@ -2,8 +2,8 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Web.Contexts;
 
     public class HomeController : Controller

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Results
+﻿namespace Fanex.CustomerSetting.Models.Results
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

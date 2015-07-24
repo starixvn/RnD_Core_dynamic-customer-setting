@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
@@ -45,21 +45,21 @@
         public void GetCustomerSettingType_Always_CallGetCustomerPT()
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam();
+            var query = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            _settingType1Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerPT(Arg.Is<CustomerSettingQuery>(queryParam));
+            _dataAccess.Received().GetCustomerPT(Arg.Is<CustomerSettingQuery>(query));
         }
 
         [Test]
         public void GetCustomerSettingType_Always_ReturnCustomerPT()
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam();
+            var query = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var customerPT = new SettingType
             {
@@ -79,7 +79,7 @@
             _dataAccess.GetCustomerPT(Arg.Any<CustomerSettingQuery>()).Returns(customerPT);
 
             //// Act
-            var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
             Assert.AreSame(customerPT, actualCustomerPT);

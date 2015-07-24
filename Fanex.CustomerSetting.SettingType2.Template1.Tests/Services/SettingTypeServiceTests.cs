@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Requests;
-    using Fanex.CustomerSetting.Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
@@ -44,21 +44,21 @@
         public void GetCustomerSettingType_Always_CallGetCustomerBetLimit()
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam();
+            var query = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            _settingType2Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<CustomerSettingQuery>(queryParam));
+            _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<CustomerSettingQuery>(query));
         }
 
         [Test]
         public void GetCustomerSettingType_Always_ReturnCustomerBetLimit()
         {
             //// Arrange
-            var queryParam = InstanceFactory.CreateQuerySettingParam();
+            var query = InstanceFactory.CreateQuerySettingParam();
             var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var betLimitItemsRawData = new List<BetLimitItemDto>
                 {
@@ -79,7 +79,7 @@
             _dataAccess.GetCustomerBetLimitItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(betLimitItemsRawData);
 
             //// Act
-            var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+            var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, query, productSettingType);
 
             //// Assert
             var actualCustomerBetLimitItem = customerBetLimit.SettingItems.First() as BetLimitItem;

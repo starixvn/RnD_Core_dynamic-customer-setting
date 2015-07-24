@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Messages;
+    using Fanex.CustomerSetting.Models.Messages;
 
     public interface IMessageService
     {
