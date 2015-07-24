@@ -4,7 +4,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
@@ -34,20 +34,24 @@
             _productStatusDataAccess = productDataAccess ?? new DataAccess();
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(
+            ISettingContext settingContext, 
+            CustomerSettingQuery query, 
+            SettingType productSettingType)
         {
-            if (queryParam.CustomerLevel.IsMemberLevel
-                && queryParam.UplineLevel.IsNotAgentLevel)
+            if (query.CustomerLevel.IsMemberLevel
+                && query.UplineLevel.IsNotAgentLevel)
             {
                 return new SettingType();
             }
 
-            var productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatusItemsRawData(queryParam);
+            var productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatusItemsRawData(query);
 
             var customerBetLimit = new SettingType
             {
                 Name = Label.ProductStatus,
-                SettingItems = productStatusItemsRawData.Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
+                SettingItems = productStatusItemsRawData
+                .Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
             };
 
             return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
@@ -63,11 +67,21 @@
         {
             Check.Argument.IsNotNull(settingType, "settingType");
 
-            var result = _productStatusDataAccess.UpdateCustomerProductStatus(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
+            var result = _productStatusDataAccess.UpdateCustomerProductStatus(
+                settingContext, 
+                customerId, 
+                customerLevel, 
+                uplineLevel, 
+                productId, 
+                settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);
 
-            return TranslateUpdateResultMessage(settingResult, Message.UpdateProductStatusSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return TranslateUpdateResultMessage(
+                settingResult, 
+                Message.UpdateProductStatusSuccessfully, 
+                settingType.SettingLevel, 
+                settingContext.Language);
         }
     }
 }

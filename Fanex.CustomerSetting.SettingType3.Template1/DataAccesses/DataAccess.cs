@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
@@ -21,7 +21,7 @@
             { Level.Member.Value, "CustSetting_MemberCommissionSelect" }
         };
 
-        public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(QueryCustomerSettingParam queryParam)
+        public IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(CustomerSettingQuery queryParam)
         {
             var settingKey = QueryCommissionSpKeys[queryParam.CustomerLevel.Value];
 

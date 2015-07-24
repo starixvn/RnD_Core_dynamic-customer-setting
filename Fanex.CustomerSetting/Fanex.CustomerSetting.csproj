@@ -116,9 +116,9 @@
     <Compile Include="Models\ISetting.cs" />
     <Compile Include="Models\ISettingContext.cs" />
     <Compile Include="Models\ISettingItem.cs" />
-    <Compile Include="Params\UpdateMultipleCustomerSettingParam.cs" />
-    <Compile Include="Params\UpdateCustomerSettingParam.cs" />
-    <Compile Include="Params\QuerySettingParam.cs" />
+    <Compile Include="Requests\MultipleUpdateCustomerSettingCommand.cs" />
+    <Compile Include="Requests\UpdateCustomerSettingCommand.cs" />
+    <Compile Include="Requests\CustomerSettingQuery.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SettingType.cs" />
@@ -166,9 +166,7 @@
       <Name>Fanex.CustomerSetting.Resource</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dtos\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
@@ -21,7 +21,7 @@
             { Level.Member.Value, "CustSetting_MemberProductStatusSelect" }
         };
 
-        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QueryCustomerSettingParam queryParam)
+        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery queryParam)
         {
             var settingKey = QueryProductStatusSpKeys[queryParam.CustomerLevel.Value];
 

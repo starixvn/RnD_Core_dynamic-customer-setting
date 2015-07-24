@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -48,7 +48,7 @@
         public void ValidateQuerySetting_QuerySettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = null;
+            CustomerSettingQuery queryParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -78,7 +78,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1,
@@ -116,7 +116,7 @@
             Level customerLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
@@ -149,7 +149,7 @@
         public void ValidateQuerySetting_Always_CallGetActorStatus()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -168,7 +168,7 @@
         public void ValidateQuerySetting_ActorIsDisabled_ReturnFailedResult()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -190,7 +190,7 @@
         public void ValidateQuerySetting_Always_CallGetCustomerLevel()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -219,7 +219,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -242,7 +242,7 @@
         public void ValidateQuerySetting_IsNotSameLine_ReturnAccessDeninedResult()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -266,7 +266,7 @@
         public void ValidateQuerySetting_ActorIsCompany_DontCallValidateBelongIn()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -291,7 +291,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -323,7 +323,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -355,7 +355,7 @@
         public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(Level customerLevel)
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
@@ -381,7 +381,7 @@
         public void ValidateQuerySetting_RaisedException_AlwaysLogError()
         {
             //// Arrange
-            QueryCustomerSettingParam queryParam = new QueryCustomerSettingParam(
+            CustomerSettingQuery queryParam = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Master,
                 productId: 1);

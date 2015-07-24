@@ -5,7 +5,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
@@ -67,7 +67,7 @@
             _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<QueryCustomerSettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<CustomerSettingQuery>(queryParam));
         }
 
         [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
@@ -91,7 +91,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<QueryCustomerSettingParam>()).Returns(productStatusItemsRawData);
+            _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(productStatusItemsRawData);
 
             //// Act
             var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

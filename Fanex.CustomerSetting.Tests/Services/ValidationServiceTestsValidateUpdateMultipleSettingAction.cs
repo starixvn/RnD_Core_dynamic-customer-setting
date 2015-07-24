@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -55,7 +55,7 @@
 
         private void AssumeValidateUpdateSettingIsSuccessful()
         {
-            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateCustomerSettingParam>()).Returns(Result.Success);
+            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateCustomerSettingCommand>()).Returns(Result.Success);
         }
 
         [Test]
@@ -69,7 +69,7 @@
 
             //// Assert
             _validationService.Received().ValidateUpdateSettingAction(
-                Arg.Is<UpdateCustomerSettingParam>(updateParam =>
+                Arg.Is<UpdateCustomerSettingCommand>(updateParam =>
                     updateParam.Setting.CustomerId == updateMultipleSettingParam.Setting.CustomerId
                     && updateParam.UplineLevel == updateMultipleSettingParam.UplineLevel
                     && updateParam.Setting.ProductId == updateMultipleSettingParam.Setting.ProductId));

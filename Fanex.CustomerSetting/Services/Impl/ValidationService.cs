@@ -12,7 +12,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.Logging;
@@ -46,15 +46,15 @@
         /// Validate Query action is valid or not, this function also using by
         /// update action, this function mark virtual for testable update action validation.
         /// </summary>
-        /// <param name="queryParam">Query information for querying customer setting.</param>
+        /// <param name="query">Query information for querying customer setting.</param>
         /// <returns>Query action is valid or not.</returns>
-        public virtual IResult ValidateQuerySettingAction(QueryCustomerSettingParam queryParam)
+        public virtual IResult ValidateQuerySettingAction(CustomerSettingQuery query)
         {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
+            Check.Argument.IsNotNull(query, "query");
 
-            var customerId = queryParam.CustomerId;
-            var customerLevel = queryParam.CustomerLevel;
-            var uplineLevel = queryParam.UplineLevel;
+            var customerId = query.CustomerId;
+            var customerLevel = query.CustomerLevel;
+            var uplineLevel = query.UplineLevel;
             var actor = _settingContext.Actor;
 
             try
@@ -170,17 +170,17 @@
         /// customer setting to database.
         /// This function was marked virtual in order to make it testable when test update multiple action.
         /// </summary>
-        /// <param name="updateParam">Customer setting information to update to database.</param>
+        /// <param name="command">Customer setting information to update to database.</param>
         /// <returns>Customer setting is valid for update to database or not.</returns>
-        public virtual IResult ValidateUpdateSettingAction(UpdateCustomerSettingParam updateParam)
+        public virtual IResult ValidateUpdateSettingAction(UpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(updateParam, "updateParam");
+            Check.Argument.IsNotNull(command, "command");
 
-            var customerId = updateParam.Setting.CustomerId;
-            var customerLevel = updateParam.Setting.CustomerLevel;
-            var productId = updateParam.Setting.ProductId;
-            var uplineLevel = updateParam.UplineLevel;
-            var settingTypes = updateParam.Setting.SettingTypes;
+            var customerId = command.Setting.CustomerId;
+            var customerLevel = command.Setting.CustomerLevel;
+            var productId = command.Setting.ProductId;
+            var uplineLevel = command.UplineLevel;
+            var settingTypes = command.Setting.SettingTypes;
 
             try
             {
@@ -192,13 +192,13 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateSettingLog(updateParam, customerSettingException);
+                WriteUpdateSettingLog(command, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
             catch (Exception ex)
             {
-                WriteUpdateSettingLog(updateParam, new CustomerSettingException(ex.Message, ex));
+                WriteUpdateSettingLog(command, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
@@ -208,7 +208,7 @@
 
         private void CheckQueryPermission(int customerId, Level customerLevel, byte productId, Level uplineLevel)
         {
-            var querySettingParam = new QueryCustomerSettingParam(customerId, customerLevel, productId, uplineLevel);
+            var querySettingParam = new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel);
             var result = ValidateQuerySettingAction(querySettingParam);
 
             if (result.IsNotOk)
@@ -250,34 +250,34 @@
             }
         }
 
-        private void WriteUpdateSettingLog(UpdateCustomerSettingParam updateParam, CustomerSettingException ex)
+        private void WriteUpdateSettingLog(UpdateCustomerSettingCommand command, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Setting", _settingContext);
-            ex.SetCustomerInfo(updateParam.Setting.CustomerId, updateParam.Setting.CustomerLevel, updateParam.UplineLevel);
-            ex.SetProductInfo(updateParam.Setting.ProductId);
+            ex.SetCustomerInfo(command.Setting.CustomerId, command.Setting.CustomerLevel, command.UplineLevel);
+            ex.SetProductInfo(command.Setting.ProductId);
 
             _logger.Error(ex.Message, ex);
         }
 
-        public IResult ValidateUpdateMultipleSettingAction(UpdateMultipleCustomerSettingParam updateMultipleParam)
+        public IResult ValidateUpdateMultipleSettingAction(MultipleUpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(updateMultipleParam, "updateMultipleParam");
+            Check.Argument.IsNotNull(command, "command");
 
             try
             {
-                CheckUpdateSetting(updateMultipleParam);
+                CheckUpdateSetting(command);
 
-                CheckActorPermissionOnMultipleMembers(updateMultipleParam.CustomerIds, updateMultipleParam.Setting.CustomerLevel);
+                CheckActorPermissionOnMultipleMembers(command.CustomerIds, command.Setting.CustomerLevel);
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateMultipleSettingLog(updateMultipleParam, customerSettingException);
+                WriteUpdateMultipleSettingLog(command, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
             catch (Exception ex)
             {
-                WriteUpdateMultipleSettingLog(updateMultipleParam, new CustomerSettingException(ex.Message, ex));
+                WriteUpdateMultipleSettingLog(command, new CustomerSettingException(ex.Message, ex));
 
                 return Result.SystemError;
             }
@@ -285,9 +285,9 @@
             return Result.Success;
         }
 
-        private void CheckUpdateSetting(UpdateCustomerSettingParam updateParam)
+        private void CheckUpdateSetting(UpdateCustomerSettingCommand command)
         {
-            var result = ValidateUpdateSettingAction(updateParam);
+            var result = ValidateUpdateSettingAction(command);
 
             if (result.IsNotOk)
             {
@@ -308,14 +308,14 @@
             }
         }
 
-        private void WriteUpdateMultipleSettingLog(UpdateMultipleCustomerSettingParam updateParam, CustomerSettingException ex)
+        private void WriteUpdateMultipleSettingLog(MultipleUpdateCustomerSettingCommand command, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Multiple Setting", _settingContext);
             ex.SetCustomerInfo(
-                string.Join(",", updateParam.CustomerIds),
-                updateParam.Setting.CustomerLevel,
-                updateParam.UplineLevel);
-            ex.SetProductInfo(updateParam.Setting.ProductId);
+                string.Join(",", command.CustomerIds),
+                command.Setting.CustomerLevel,
+                command.UplineLevel);
+            ex.SetProductInfo(command.Setting.ProductId);
 
             _logger.Error(ex.Message, ex);
         }

@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.IntegrationTests.Products.Product255;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Configuration;
@@ -40,7 +40,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(agentId, Level.Agent, productId, null);
+            var querySettingParam = new CustomerSettingQuery(agentId, Level.Agent, productId, null);
 
             //// Act
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -92,7 +92,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(agentId, Level.Agent, productId);
+            var querySettingParam = new CustomerSettingQuery(agentId, Level.Agent, productId);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
@@ -105,7 +105,7 @@
             }
 
             //// Act
-            var updateParam = new UpdateCustomerSettingParam(agentSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateCustomerSettingCommand(agentSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.Update(updateParam);
 
             //// Assert
@@ -136,7 +136,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(agentIds.First(), Level.Agent, productId, null);
+            var querySettingParam = new CustomerSettingQuery(agentIds.First(), Level.Agent, productId, null);
 
             var agentSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
@@ -149,7 +149,7 @@
             }
 
             //// Act
-            var updatingMultipleParam = new UpdateMultipleCustomerSettingParam(agentSetting, agentIds, agentNames, querySettingParam.UplineLevel);
+            var updatingMultipleParam = new MultipleUpdateCustomerSettingCommand(agentSetting, agentIds, agentNames, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.Update(updatingMultipleParam);
 
             //// Assert

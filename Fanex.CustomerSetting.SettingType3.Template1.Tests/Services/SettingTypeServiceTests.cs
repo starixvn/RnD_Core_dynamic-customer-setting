@@ -4,7 +4,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
@@ -51,7 +51,7 @@
             _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<QueryCustomerSettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<CustomerSettingQuery>(queryParam));
         }
 
         [Test]
@@ -73,7 +73,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<QueryCustomerSettingParam>()).Returns(commissionItemsRawData);
+            _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(commissionItemsRawData);
 
             //// Act
             var actualCustomerCommission = _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

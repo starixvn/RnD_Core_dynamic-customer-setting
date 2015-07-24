@@ -4,7 +4,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
@@ -52,7 +52,7 @@
             _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerPT(Arg.Is<QueryCustomerSettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerPT(Arg.Is<CustomerSettingQuery>(queryParam));
         }
 
         [Test]
@@ -76,7 +76,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerPT(Arg.Any<QueryCustomerSettingParam>()).Returns(customerPT);
+            _dataAccess.GetCustomerPT(Arg.Any<CustomerSettingQuery>()).Returns(customerPT);
 
             //// Act
             var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
@@ -154,7 +154,7 @@
             var customerPT = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Act
-            _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
+            _settingType1Service.UpdateMultipleCustomerSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
 
             //// Assert
             _dataAccess.Received().GetGroupedMemberIds(Arg.Is("1,2"));
@@ -175,7 +175,7 @@
             _dataAccess.GetGroupedMemberIds(Arg.Any<string>()).Returns(groupedMemberIds);
 
             //// Act
-            _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
+            _settingType1Service.UpdateMultipleCustomerSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
 
             //// Assert
             _dataAccess.Received().UpdateGroupedMembersSetting(
@@ -198,7 +198,7 @@
             var customerPT = InstanceFactory.CreateCustomerSettingType(1);
 
             //// Act
-            _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
+            _settingType1Service.UpdateMultipleCustomerSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
 
             //// Assert
             _dataAccess.Received().UpdateCustomerPT(
@@ -231,7 +231,7 @@
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act
-            var actualResults = _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
+            var actualResults = _settingType1Service.UpdateMultipleCustomerSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
 
             //// Assert
             Assert.IsTrue(actualResults.All(actualResult => actualResult.IsSuccessful));
@@ -258,7 +258,7 @@
                 Arg.Any<string>()).Returns(Result.Success);
 
             //// Act
-            var actualResults = _settingType1Service.UpdateMultipleCustomersSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
+            var actualResults = _settingType1Service.UpdateMultipleCustomerSettingType(_settingContext, customerIds, customerLevel, uplineLevel, productId, customerPT);
 
             //// Assert
             Assert.AreEqual(3, actualResults.Count());

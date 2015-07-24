@@ -47,15 +47,17 @@
 
         private MessageContent GetMessageContent<T>(MainMessage<T> positionTakingMainMessage, byte settingLevel, string language) where T : ISubMessage
         {
-            var translatedSubMessages = positionTakingMainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
-            var translatedMainMessage = GetMessage(PTMessage.ResourceManager, positionTakingMainMessage.MessageId);
-            return new MessageContent(translatedMainMessage, translatedSubMessages);
+            var subMessage = positionTakingMainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
+            var mainMessage = GetMessage(PTMessage.ResourceManager, positionTakingMainMessage.MessageId);
+
+            return new MessageContent(mainMessage, subMessage);
         }
 
         private MessageContent TranslateDownlinePTViolationMessage(string rawMessage, byte settingLevel, string language)
         {
             var positionTakingMainMessage = Deserialize<DownlinePTViolationMainMessage>(rawMessage);
             positionTakingMainMessage.GroupUsernameBySportTypeBetType();
+
             return GetMessageContent<DownlinePTViolationSubMessage>(positionTakingMainMessage, settingLevel, language);
         }
     }

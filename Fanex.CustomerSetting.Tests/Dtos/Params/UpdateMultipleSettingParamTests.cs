@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using NUnit.Framework;
 
     [TestFixture]
@@ -12,7 +12,7 @@
         public void SetCustomerIds_CustomerIdListIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -24,7 +24,7 @@
         public void SetCustomerIds_CustomerIdListHasNoItemWhenCustomerNameListHasItem_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -36,7 +36,7 @@
         public void SetCustomerNames_CustomerNameListIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -48,7 +48,7 @@
         public void SetCustomerNames_CustomerNameListHasNoItemWhenCustomerIdListHasItems_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -60,7 +60,7 @@
         public void SetCustomerNames_CustomerIdListDoesNotMatchWithCustomerNameList_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -76,7 +76,7 @@
         public void SetSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            MultipleUpdateCustomerSettingCommand updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
             Assert.Throws<ArgumentNullException>(

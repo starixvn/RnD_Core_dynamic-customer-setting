@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
@@ -42,17 +42,17 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public ISetting GetCustomerSetting(QueryCustomerSettingParam queryParam)
+        public ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
-            Validate(queryParam);
+            Validate(query);
 
-            var customerInfo = GetCustomerInfo(queryParam.CustomerId);
-            var product = GetProductInfo(queryParam.ProductId);
-            var customerSettingTypes = GetCustomerSettingTypes(queryParam, product.SettingTypes);
+            var customerInfo = GetCustomerInfo(query.CustomerId);
+            var product = GetProductInfo(query.ProductId);
+            var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             ISetting setting = new Setting(
-                queryParam.CustomerId,
-                queryParam.CustomerLevel,
+                query.CustomerId,
+                query.CustomerLevel,
                 customerInfo,
                 product.Id,
                 product.Name,
@@ -61,11 +61,11 @@
             return setting;
         }
 
-        private void Validate(QueryCustomerSettingParam queryParam)
+        private void Validate(CustomerSettingQuery query)
         {
-            Check.Argument.IsNotNull(queryParam, "queryParam");
+            Check.Argument.IsNotNull(query, "query");
 
-            var validationResult = _validationService.ValidateQuerySettingAction(queryParam);
+            var validationResult = _validationService.ValidateQuerySettingAction(query);
 
             if (validationResult.IsNotOk)
             {
@@ -104,10 +104,10 @@
         /// <summary>
         /// Get {Customer}{SettingType} => means Get SuperPositionTaking, MasterCommission ....
         /// </summary>
-        /// <param name="queryParam">The query setting parameters.</param>
+        /// <param name="query">The query setting parameters.</param>
         /// <param name="productSettingTypes">The product setting types.</param>
         /// <returns>Customer setting on each setting type.</returns>
-        private IList<SettingType> GetCustomerSettingTypes(QueryCustomerSettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
+        private IList<SettingType> GetCustomerSettingTypes(CustomerSettingQuery query, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
 
@@ -115,7 +115,7 @@
             // How to display setting type by order.
             foreach (var productSettingType in productSettingTypes)
             {
-                SettingType customerSettingType = GetCustomerSettingType(queryParam, productSettingType);
+                SettingType customerSettingType = GetCustomerSettingType(query, productSettingType);
 
                 if (customerSettingType.SettingItems.Any())
                 {
@@ -126,7 +126,7 @@
             return customerSettingTypes;
         }
 
-        private SettingType GetCustomerSettingType(QueryCustomerSettingParam queryParam, SettingType productSettingType)
+        private SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
         {
             SettingType customerSettingType = productSettingType;
 
@@ -134,14 +134,14 @@
             {
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
 
-                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
+                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query, productSettingType);
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
             }
             catch (Exception ex)
             {
-                WriteLog(queryParam, productSettingType, ex);
+                WriteLog(query, productSettingType, ex);
                 //// TODO Should we create ErrorSettingType here.
 
                 customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
@@ -150,12 +150,12 @@
             return customerSettingType;
         }
 
-        private void WriteLog(QueryCustomerSettingParam queryParam, SettingType productSettingType, Exception ex)
+        private void WriteLog(CustomerSettingQuery query, SettingType productSettingType, Exception ex)
         {
             var exception = new CustomerSettingException(ex.Message, ex);
             exception.SetSettingContextInfo("Query Setting", _settingContext);
-            exception.SetCustomerInfo(queryParam.CustomerId, queryParam.CustomerLevel, queryParam.UplineLevel);
-            exception.SetProductInfo(queryParam.ProductId, productSettingType);
+            exception.SetCustomerInfo(query.CustomerId, query.CustomerLevel, query.UplineLevel);
+            exception.SetProductInfo(query.ProductId, productSettingType);
 
             _logger.Error(exception.Message, exception);
         }

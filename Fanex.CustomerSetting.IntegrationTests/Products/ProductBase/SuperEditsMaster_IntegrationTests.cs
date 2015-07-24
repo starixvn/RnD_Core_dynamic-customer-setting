@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.IntegrationTests.Products.Product255;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Configuration;
@@ -40,7 +40,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(masterId, Level.Master, productId);
+            var querySettingParam = new CustomerSettingQuery(masterId, Level.Master, productId);
 
             //// Act
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -96,7 +96,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(masterId, Level.Master, productId);
+            var querySettingParam = new CustomerSettingQuery(masterId, Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
             var expectedSettingTypeData = new Dictionary<byte, ISettingItem>();
@@ -108,7 +108,7 @@
             }
 
             //// Act
-            var updateParam = new UpdateCustomerSettingParam(masterSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateCustomerSettingCommand(masterSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.Update(updateParam);
 
             //// Assert
@@ -139,7 +139,7 @@
             _settingContext = new SettingContext(actor);
             _querySettingService = new QuerySettingService(_settingContext);
             _updateSettingService = new UpdateSettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(masterIds.First(), Level.Master, productId);
+            var querySettingParam = new CustomerSettingQuery(masterIds.First(), Level.Master, productId);
 
             var masterSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
@@ -152,7 +152,7 @@
             }
 
             //// Act
-            var updatingMultipleParam = new UpdateMultipleCustomerSettingParam(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
+            var updatingMultipleParam = new MultipleUpdateCustomerSettingCommand(masterSetting, masterIds, masterNames, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.Update(updatingMultipleParam);
 
             //// Assert

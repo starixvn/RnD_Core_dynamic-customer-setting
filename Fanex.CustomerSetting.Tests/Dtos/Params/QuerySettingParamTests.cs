@@ -2,7 +2,7 @@
 {
     using System;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using NUnit.Framework;
 
     [TestFixture]
@@ -17,7 +17,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QueryCustomerSettingParam(customerId, Level.Master, 0, null)));
+                    () => new CustomerSettingQuery(customerId, Level.Master, 0, null)));
         }
 
         [Test]
@@ -26,7 +26,7 @@
             //// Assert
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QueryCustomerSettingParam(1, Level.Master, 0, null)));
+                    () => new CustomerSettingQuery(1, Level.Master, 0, null)));
         }
 
         [Test, TestCaseSource("dataSourceSMALevels")]
@@ -35,7 +35,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => new QueryCustomerSettingParam(1, customerLevel, 1, customerLevel)));
+                    () => new CustomerSettingQuery(1, customerLevel, 1, customerLevel)));
         }
         
         [Test]
@@ -44,7 +44,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new QueryCustomerSettingParam(1, Level.Member, 1, null)));
+                    () => new CustomerSettingQuery(1, Level.Member, 1, null)));
         }
     }
 }

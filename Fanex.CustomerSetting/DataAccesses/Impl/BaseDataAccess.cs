@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Enumerations;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.Data;
 
@@ -45,7 +45,7 @@
             throw new ArgumentException("result output param is nulll or does not contain neither errcode nor errmsg.");
         }
 
-        protected Hashtable GetSPParamsForGettingSettingType(QueryCustomerSettingParam querySettingParam, byte settingType)
+        protected Hashtable GetSPParamsForGettingSettingType(CustomerSettingQuery querySettingParam, byte settingType)
         {
             if (querySettingParam == null)
             {

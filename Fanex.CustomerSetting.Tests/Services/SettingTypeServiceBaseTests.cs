@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Messages;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -151,7 +151,7 @@
             var customerIds = new List<int> { 1, 2 };
 
             //// Act
-            var settingTypeResults = this.UpdateMultipleCustomersSettingType(
+            var settingTypeResults = this.UpdateMultipleCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 customerIds,
                 Arg.Any<Level>(),
@@ -171,7 +171,7 @@
             var settingContext = new SettingContextStub();
 
             //// Act
-            var updateResults = this.UpdateMultipleCustomersSettingType(
+            var updateResults = this.UpdateMultipleCustomerSettingType(
                 settingContext,
                 customerIds,
                 Level.Member,
@@ -183,7 +183,7 @@
             Assert.IsFalse(updateResults.First().IsSuccessful);
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery queryParam, SettingType productSettingType)
         {
             throw new NotImplementedException();
         }

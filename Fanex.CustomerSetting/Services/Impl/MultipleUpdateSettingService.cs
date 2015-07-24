@@ -7,40 +7,40 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
 
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        public IResult Update(UpdateMultipleCustomerSettingParam updateMultipleParam)
+        public IResult Update(MultipleUpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(updateMultipleParam, "updateMultipleParam");
-            Check.Argument.IsNotNegativeOrZero(updateMultipleParam.Setting.SettingTypes.Count(), "updateMultipleParam.Setting.SettingTypes.Count");
+            Check.Argument.IsNotNull(command, "command");
+            Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            var validationResult = Validate(updateMultipleParam);
+            var validationResult = Validate(command);
 
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
             }
 
-            var results = UpdateSettingTypesForMultipleCustomers(updateMultipleParam);
+            var results = UpdateSettingTypesForMultipleCustomers(command);
 
-            return MapUpdateSettingResultWithCustomerName(results, updateMultipleParam.CustomerIds, updateMultipleParam.CustomerNames);
+            return MapUpdateSettingResultWithCustomerName(results, command.CustomerIds, command.CustomerNames);
         }
 
-        private IResult Validate(UpdateMultipleCustomerSettingParam updateMultipleParam)
+        private IResult Validate(MultipleUpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateMultipleSettingAction(updateMultipleParam);
+            return _validationService.ValidateUpdateMultipleSettingAction(command);
         }
 
-        private List<SettingResult> UpdateSettingTypesForMultipleCustomers(UpdateMultipleCustomerSettingParam updateMultipleParam)
+        private List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
         {
-            var customerLevel = updateMultipleParam.Setting.CustomerLevel;
-            var uplineLevel = updateMultipleParam.UplineLevel;
-            var customerIds = updateMultipleParam.CustomerIds;
-            var settingTypes = updateMultipleParam.Setting.SettingTypes;
-            var productId = updateMultipleParam.Setting.ProductId;
+            var customerLevel = command.Setting.CustomerLevel;
+            var uplineLevel = command.UplineLevel;
+            var customerIds = command.CustomerIds;
+            var settingTypes = command.Setting.SettingTypes;
+            var productId = command.Setting.ProductId;
             var results = new List<SettingResult>();
 
             foreach (var settingType in settingTypes)
@@ -66,7 +66,7 @@
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
-                return settingTypeService.UpdateMultipleCustomersSettingType(
+                return settingTypeService.UpdateMultipleCustomerSettingType(
                         _settingContext,
                         customerIds,
                         customerLevel,

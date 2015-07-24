@@ -4,7 +4,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
@@ -34,7 +34,10 @@
             _commissionDataAccess = commissionDataAccess ?? new DataAccess();
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(
+            ISettingContext settingContext, 
+            CustomerSettingQuery queryParam, 
+            SettingType productSettingType)
         {
             var commissionItemsRawData = _commissionDataAccess.GetCustomerCommissionItemsRawData(queryParam);
 
@@ -47,15 +50,31 @@
             return SetSportTypeBetTypeName(customerCommission, settingContext.Language);
         }
 
-        public override SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        public override SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext, 
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId, 
+            SettingType settingType)
         {
             Check.Argument.IsNotNull(settingType, "settingType");
 
-            var result = _commissionDataAccess.UpdateCustomerCommission(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
+            var result = _commissionDataAccess.UpdateCustomerCommission(
+                settingContext, 
+                customerId, 
+                customerLevel, 
+                uplineLevel, 
+                productId, 
+                settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);
 
-            return TranslateUpdateResultMessage(settingResult, Message.UpdateCommissionSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return TranslateUpdateResultMessage(
+                settingResult, 
+                Message.UpdateCommissionSuccessfully, 
+                settingType.SettingLevel, 
+                settingContext.Language);
         }
     }
 }

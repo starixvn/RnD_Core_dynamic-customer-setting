@@ -4,7 +4,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
@@ -34,9 +34,12 @@
             _betLimitDataAccess = betLimitDataAccess ?? new DataAccess();
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(
+            ISettingContext settingContext, 
+            CustomerSettingQuery query, 
+            SettingType productSettingType)
         {
-            var betLimitItemsRawData = _betLimitDataAccess.GetCustomerBetLimitItemsRawData(queryParam);
+            var betLimitItemsRawData = _betLimitDataAccess.GetCustomerBetLimitItemsRawData(query);
 
             var customerBetLimit = new SettingType
             {
@@ -47,15 +50,31 @@
             return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
         }
 
-        public override SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        public override SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext, 
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId, 
+            SettingType settingType)
         {
             Check.Argument.IsNotNull(settingType, "settingType");
 
-            var result = _betLimitDataAccess.UpdateCustomerBetLimit(settingContext, customerId, customerLevel, uplineLevel, productId, settingType.ToXml());
+            var result = _betLimitDataAccess.UpdateCustomerBetLimit(
+                settingContext, 
+                customerId, 
+                customerLevel, 
+                uplineLevel, 
+                productId, 
+                settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);
 
-            return TranslateUpdateResultMessage(settingResult, Message.UpdateBetSettingSuccessfully, settingType.SettingLevel, settingContext.Language);
+            return TranslateUpdateResultMessage(
+                settingResult, 
+                Message.UpdateBetSettingSuccessfully, 
+                settingType.SettingLevel, 
+                settingContext.Language);
         }
     }
 }

@@ -3,13 +3,13 @@
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
 
     public interface IDataAccess
     {
-        IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QueryCustomerSettingParam queryParam);
+        IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery queryParam);
 
         IResult UpdateCustomerProductStatus(
             ISettingContext settingContext,

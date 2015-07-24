@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.Logging;
 
@@ -42,35 +42,35 @@
         /// <summary>
         /// Updates the customer setting, includes list of setting types.
         /// </summary>
-        /// <param name="updateParam">The update parameters.</param>
+        /// <param name="command">The update parameters.</param>
         /// <returns>Result after update customer setting.</returns>
-        public IResult Update(UpdateCustomerSettingParam updateParam)
+        public IResult Update(UpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(updateParam, "updateParam");
-            Check.Argument.IsNotNegativeOrZero(updateParam.Setting.SettingTypes.Count(), "updateParam.Setting.SettingTypes.Count");
+            Check.Argument.IsNotNull(command, "command");
+            Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            var validationResult = Validate(updateParam);
+            var validationResult = Validate(command);
 
             if (!validationResult.IsSuccessful)
             {
                 return validationResult;
             }
 
-            return new UpdateSettingResult(UpdateCustomerSettingTypes(updateParam));
+            return new UpdateSettingResult(UpdateCustomerSettingTypes(command));
         }
 
-        private IResult Validate(UpdateCustomerSettingParam updateParam)
+        private IResult Validate(UpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateSettingAction(updateParam);
+            return _validationService.ValidateUpdateSettingAction(command);
         }
 
-        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingParam updateParam)
+        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
-            var settingTypes = updateParam.Setting.SettingTypes;
-            var customerId = updateParam.Setting.CustomerId;
-            var customerLevel = updateParam.Setting.CustomerLevel;
-            var uplineLevel = updateParam.UplineLevel;
-            var productId = updateParam.Setting.ProductId;
+            var settingTypes = command.Setting.SettingTypes;
+            var customerId = command.Setting.CustomerId;
+            var customerLevel = command.Setting.CustomerLevel;
+            var uplineLevel = command.UplineLevel;
+            var productId = command.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
             SettingResult updateSettingTypeResult = null;
 
@@ -84,7 +84,12 @@
             return settingTypeResults;
         }
 
-        private SettingResult UpdateCustomerSettingType(int customerId, Level customerLevel, SettingType settingType, byte productId, Level uplineLevel)
+        private SettingResult UpdateCustomerSettingType(
+            int customerId, 
+            Level customerLevel, 
+            SettingType settingType, 
+            byte productId, 
+            Level uplineLevel)
         {
             try
             {

@@ -5,7 +5,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
@@ -36,10 +36,10 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext,
-            QueryCustomerSettingParam queryParam,
+            CustomerSettingQuery query,
             SettingType productSettingType)
         {
-            var customerPT = _dataAccess.GetCustomerPT(queryParam);
+            var customerPT = _dataAccess.GetCustomerPT(query);
 
             return SetSportTypeBetTypeName(customerPT, settingContext.Language);
         }
@@ -67,7 +67,7 @@
             return TranslateUpdateResultMessage(settingResult, Message.UpdatePositionTakingSuccessfully, settingType.SettingLevel, settingContext.Language);
         }
 
-        public override IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
+        public override IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(
             ISettingContext settingContext,
             IEnumerable<int> customerIds,
             Level customerLevel,
@@ -90,7 +90,7 @@
                 }
             }
 
-            var updateUnGroupedCustomerResults = base.UpdateMultipleCustomersSettingType(
+            var updateUnGroupedCustomerResults = base.UpdateMultipleCustomerSettingType(
                                                                 settingContext,
                                                                 ungroupedCustomerIds,
                                                                 customerLevel,

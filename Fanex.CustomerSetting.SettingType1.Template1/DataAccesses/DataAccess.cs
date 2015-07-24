@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.DataAccesses.Impl;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
@@ -65,22 +65,22 @@
             return objectDb.Query<T>(parameters);
         }
 
-        public SettingType GetCustomerPT(QueryCustomerSettingParam queryParam)
+        public SettingType GetCustomerPT(CustomerSettingQuery query)
         {
             var settingType = new PTSettingType
             {
                 Name = Label.PositionTaking
             };
 
-            var settingKey = QueryPTSpKeys[queryParam.CustomerLevel.Value];
+            var settingKey = QueryPTSpKeys[query.CustomerLevel.Value];
 
             using (ObjectDb objectDb = new ObjectDb(settingKey))
             {
-                var parameters = CreateQueryPTSettingSpParam(queryParam);
+                var parameters = CreateQueryPTSettingSpParam(query);
 
-                var queryFunction = (queryParam.CustomerLevel == Level.Member)
-                   ? MemberQueryPTSettingItemFuncs[queryParam.UplineLevel.Value]
-                   : SmaQueryPTSettingItemFuncs[queryParam.CustomerLevel.Value];
+                var queryFunction = (query.CustomerLevel == Level.Member)
+                   ? MemberQueryPTSettingItemFuncs[query.UplineLevel.Value]
+                   : SmaQueryPTSettingItemFuncs[query.CustomerLevel.Value];
 
                 settingType.SettingItems = queryFunction(objectDb, parameters);
 
@@ -93,12 +93,12 @@
             return settingType;
         }
 
-        private Hashtable CreateQueryPTSettingSpParam(QueryCustomerSettingParam querySettingParam)
+        private Hashtable CreateQueryPTSettingSpParam(CustomerSettingQuery query)
         {
-            var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, Constants.SettingTypeId);
+            var parameters = this.GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
 
-            if (querySettingParam.CustomerLevel == Level.Agent
-                || querySettingParam.UplineLevel == Level.Master)
+            if (query.CustomerLevel == Level.Agent
+                || query.UplineLevel == Level.Master)
             {
                 parameters.Add("disableautompt", null);
             }

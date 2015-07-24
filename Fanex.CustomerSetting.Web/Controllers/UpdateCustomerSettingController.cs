@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Web.Contexts;
@@ -21,7 +21,7 @@
         }
 
         [HttpPost]
-        public JsonResult Index(UpdateCustomerSettingParam updateSetting)
+        public JsonResult Index(UpdateCustomerSettingCommand updateSetting)
         {
             var result = _customerSettingService.Update(updateSetting);
 
@@ -29,7 +29,7 @@
         }
 
         [HttpPost]
-        public JsonResult Index(UpdateMultipleCustomerSettingParam updateMulitpleSetting)
+        public JsonResult Index(MultipleUpdateCustomerSettingCommand updateMulitpleSetting)
         {
             var result = _customerSettingService.Update(updateMulitpleSetting);
 

@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Results;
     using Fanex.Logging;
 
@@ -124,11 +124,11 @@
             return new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
         }
 
-        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType);
+        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery queryParam, SettingType productSettingType);
 
         public abstract SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Enumerations.Level uplineLevel, byte productId, SettingType settingType);
 
-        public virtual IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(ISettingContext settingContext, IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        public virtual IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(ISettingContext settingContext, IEnumerable<int> customerIds, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
         {
             var settingTypeResults = new List<SettingResult>();
             SettingResult settingTypeResult = null;

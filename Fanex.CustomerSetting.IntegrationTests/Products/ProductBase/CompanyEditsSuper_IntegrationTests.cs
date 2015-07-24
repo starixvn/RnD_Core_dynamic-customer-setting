@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.IntegrationTests.Products.Product255;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Configuration;
@@ -39,7 +39,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(superId, Level.Super, productId);
+            var querySettingParam = new CustomerSettingQuery(superId, Level.Super, productId);
 
             //// Act
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -70,7 +70,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QueryCustomerSettingParam(superId, Level.Super, productId, null);
+            var querySettingParam = new CustomerSettingQuery(superId, Level.Super, productId, null);
 
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
@@ -83,7 +83,7 @@
             }
 
             //// Act
-            var updateParam = new UpdateCustomerSettingParam(superSetting, querySettingParam.UplineLevel);
+            var updateParam = new UpdateCustomerSettingCommand(superSetting, querySettingParam.UplineLevel);
             var updateResult = _updateSettingService.Update(updateParam);
 
             //// Assert
