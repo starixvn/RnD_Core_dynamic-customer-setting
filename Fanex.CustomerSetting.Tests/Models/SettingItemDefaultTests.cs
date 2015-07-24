@@ -1,10 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using Fanex.CustomerSetting.Models;
+    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
-    public class DefaultSettingItemTests
+    public class SettingItemDefaultTests
     {
         [TestCase(0, 1)]
         [TestCase(-1, 1)]
@@ -15,7 +16,7 @@
             short betTypeId)
         {
             //// Arrange
-            var settingItem = new SettingItem
+            var settingItem = new SettingItemDefault
                 {
                     SportTypeId = sportTypeId,
                     BetTypeId = betTypeId
@@ -35,7 +36,7 @@
             short betTypeId)
         {
             //// Arrange
-            var settingItem = new SettingItem
+            var settingItem = new SettingItemDefault
             {
                 SportTypeId = sportTypeId,
                 BetTypeId = betTypeId
@@ -57,7 +58,7 @@
             string expectedXml)
         {
             //// Arrange
-            var settingItem = new SettingItem
+            var settingItem = new SettingItemDefault
             {
                 SportTypeId = sportTypeId,
                 BetTypeId = betTypeId
@@ -68,6 +69,16 @@
 
             //// Assert
             Assert.AreEqual(expectedXml, actualXml);
+        }
+
+        [Test]
+        public void TypeName_Always_ReturnsExpectedValue()
+        {
+            //// Arrange
+            var settingItem = new SettingItemDefault();
+
+            //// Assert
+            settingItem.TypeName.ShouldBeEquivalentTo<string>(settingItem.GetType().AssemblyQualifiedName);
         }
     }
 }

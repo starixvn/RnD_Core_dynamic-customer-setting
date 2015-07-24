@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
-    public class BetLimitItem : SettingItem
+    public class BetLimitItem : SettingItemDefault
     {
         private const string BetLimitXmlFormat = "<BetLimit {0} MinBet=\"{1}\" MaxBet=\"{2}\" MaxPerMatch=\"{3}\"/>";
 

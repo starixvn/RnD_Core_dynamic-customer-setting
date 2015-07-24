@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType4.Template1.Resources;
 
-    public class ProductStatusItem : SettingItem
+    public class ProductStatusItem : SettingItemDefault
     {
         private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
 

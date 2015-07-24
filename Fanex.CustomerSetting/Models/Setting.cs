@@ -116,11 +116,6 @@
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value", "Setting Types cannot be null.");
-                }
-
                 _settingType = value;
             }
         }

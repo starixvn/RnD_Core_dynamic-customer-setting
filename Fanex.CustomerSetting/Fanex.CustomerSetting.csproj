@@ -103,7 +103,7 @@
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\SettingItem.cs" />
+    <Compile Include="Models\SettingItemDefault.cs" />
     <Compile Include="Criteria\CustomerInfoQueryCriteria.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteria.cs" />
     <Compile Include="DataAccesses\Impl\BaseDataAccess.cs" />

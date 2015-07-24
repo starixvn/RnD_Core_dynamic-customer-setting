@@ -37,12 +37,12 @@
             {
                 SettingItems = new List<ISettingItem>
                     {
-                        new SettingItem
+                        new SettingItemDefault
                         {
                             BetTypeId = 1,
                             SportTypeId = 1
                         },
-                        new SettingItem()
+                        new SettingItemDefault()
                     }
             };
             var sportTypeName = "SportTypeName";
@@ -54,7 +54,7 @@
             var actualSettingType = this.SetSportTypeBetTypeName(settingType, DefaultLanguage);
 
             //// Assert
-            SettingItem settingItem = actualSettingType.SettingItems.First() as SettingItem;
+            SettingItemDefault settingItem = actualSettingType.SettingItems.First() as SettingItemDefault;
             Assert.AreEqual(sportTypeName, settingItem.SportTypeName);
             Assert.AreEqual(betTypeName, settingItem.BetTypeName);
         }

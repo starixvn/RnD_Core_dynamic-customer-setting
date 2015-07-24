@@ -4,12 +4,34 @@
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
+    using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]
     public class SettingTypeTests
     {
+        [Test]
+        public void SettingItemsProperty_SetNullValueThenGet_ReturnEmptySettingItem()
+        {
+            //// Arrange
+            var settingType = new SettingType();
+
+            //// Act
+            settingType.SettingItems = null;    
+            
+            //// Assert
+            settingType.SettingItems.Should().BeEmpty();
+        }
+
+        [Test]
+        public void TypeName_Always_ReturnExpectedValue()
+        {
+            var settingType = new SettingType();
+
+            settingType.TypeName.ShouldBeEquivalentTo<string>(settingType.GetType().AssemblyQualifiedName);
+        }
+
         [Test]
         public void ToXml_Always_ReturnFormattedXml()
         {

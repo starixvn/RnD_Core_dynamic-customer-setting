@@ -3,6 +3,7 @@
     using System;
     using Fanex.CustomerSetting.Services.Impl;
     using NUnit.Framework;
+    using FluentAssertions;
 
     [TestFixture]
     public class SettingTypeServiceFactoryTests
@@ -10,12 +11,14 @@
         [Test]
         public void GetInstance_SettingTypeIsNull_ThrowArgumentNullException()
         {
-            Assert.Throws(
-                Is.TypeOf<ArgumentNullException>(),
-                delegate
-                {
-                    new SettingTypeServiceFactory().GetInstance(null);
-                });
+            //// Arrange
+            var factory = new SettingTypeServiceFactory();
+
+            //// Act
+            Action action = () => factory.GetInstance(null);
+
+            //// Assert
+            action.ShouldThrow<ArgumentNullException>("settingType");
         }
     }
 }

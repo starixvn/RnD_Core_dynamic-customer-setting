@@ -21,12 +21,12 @@
 
         public IResult Validate()
         {
-            throw new NotImplementedException();
+            return new Result(Constants.ResultValue.Error, Message.SettingTypeError);
         }
 
         public string ToXml()
         {
-            throw new NotImplementedException();
+            return string.Format("<Error>{0}</Error>", Message.SettingTypeError);
         }
     }
 }
