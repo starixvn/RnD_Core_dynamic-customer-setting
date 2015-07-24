@@ -10,22 +10,37 @@
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
+html,
 body {
+  height: 100%;
+}
+
+body {
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  margin: 0;
   min-width: 768px;
+  position: relative;
 }
 
 .container {
-  font-family: Tahoma, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  line-height: 1.5;
-  margin: auto;
-  max-width: 960px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-.container .form-area {
+.container .left-panel {
   overflow: hidden;
   *zoom: 1;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  width: 320px;
 }
-.container .form-area .form-tab {
+.container .left-panel .form-tab {
   background-image: linear-gradient(#8594A2, #344d61, #849ba8);
   -moz-border-radius-topleft: 3px;
   -webkit-border-top-left-radius: 3px;
@@ -35,73 +50,47 @@ body {
   border-top-right-radius: 3px;
   background-repeat: no-repeat;
   display: inline-block;
-  float: left;
   padding: 4px;
 }
-.container .form-area .form-tab .tab-label {
+.container .left-panel .form-tab .tab-label {
   color: #fff;
   font-weight: bold;
 }
-.container .form-area .form {
+.container .left-panel .form {
   background-color: #e6e9f0;
   border: 1px solid #7c98a4;
-  padding: 5px 10px;
-}
-.container .form-area .form.form-290-width {
-  border-right-width: 0;
-  clear: left;
-  float: left;
-  min-height: 151px;
   min-width: 290px;
+  padding: 5px 10px;
   position: relative;
 }
-.container .form-area .form.form-290-width:before, .container .form-area .form.form-290-width:after {
-  border: solid transparent;
-  content: "";
-  left: 100%;
-  position: absolute;
-  width: 0;
-}
-.container .form-area .form.form-290-width:before {
-  border-left-color: #7c98a4;
-  border-width: 81px;
-  top: 0;
-}
-.container .form-area .form.form-290-width:after {
-  border-left-color: #e6e9f0;
-  border-width: 80px;
-  top: 1px;
-}
-.container .form-area .form.form-290-width.first {
+.container .left-panel .form.first {
   z-index: 1;
 }
-.container .form-area .form.form-290-width.last {
-  border-left-width: 0;
-  border-right-width: 1px;
-  clear: none;
-  margin-left: 5px;
-  padding-left: 105px;
+.container .left-panel .form.first:before, .container .left-panel .form.first:after {
+  border-color: #e6e9f0 transparent transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+  bottom: -19px;
+  content: " ";
+  left: 140px;
+  position: absolute;
 }
-.container .form-area .form.form-290-width.last:before, .container .form-area .form.form-290-width.last:after {
-  left: 0;
+.container .left-panel .form.first:before {
+  border-color: #7c98a4 transparent transparent transparent;
+  bottom: -20px;
 }
-.container .form-area .form.form-290-width.last:before {
-  border-left-color: #7c98a4;
+.container .left-panel .form.last {
+  border-top: none;
+  padding-top: 20px;
 }
-.container .form-area .form.form-290-width.last:after {
-  border-left-color: #fff;
-}
-.container .form-area .form .form-group {
+.container .left-panel .form .form-group {
   margin: 5px 0;
 }
-.container .form-area .form .form-group .control-label {
+.container .left-panel .form .form-group .control-label {
   display: inline-block;
-  min-width: 80px;
+  min-width: 100px;
 }
-.container .form-area .form .form-group .control-label.large-label {
-  width: 100px;
-}
-.container .form-area .form .form-group .form-control {
+.container .left-panel .form .form-group .form-control {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -109,17 +98,17 @@ body {
   padding: 1px 0;
   width: 170px;
 }
-.container .form-area .form .form-group .form-control.checkbox {
+.container .left-panel .form .form-group .form-control.checkbox {
   margin-left: 0;
   margin-right: 0;
   width: auto;
 }
-.container .form-area .form .form-group.submit {
+.container .left-panel .form .form-group.submit {
   overflow: hidden;
   *zoom: 1;
-  width: 252px;
+  width: 272px;
 }
-.container .form-area .form .form-group.submit button {
+.container .left-panel .form .form-group.submit button {
   background-image: linear-gradient(#8594A2, #344d61, #849ba8);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -139,15 +128,24 @@ body {
   text-align: center;
   vertical-align: middle;
 }
-.container .form-area .form .form-group.submit button:disabled {
+.container .left-panel .form .form-group.submit button:disabled {
   background-image: none;
   cursor: default;
 }
-.container .form-area .form .form-group.submit.large-group {
-  width: 272px;
+.container .content {
+  overflow: hidden;
+  *zoom: 1;
+  bottom: 0;
+  left: 330px;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-.container .main-content-frame {
+.container .content .content-frame {
   border: none;
+  height: 100%;
+  width: 100%;
 }
 
 .hide {

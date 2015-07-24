@@ -1,14 +1,14 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<div class="container" data-ng-app="actor-form">
-    <div class="form-area" data-ng-controller="ActorController as ctrl">
+<div class="container" data-ng-app="actor-form" data-ng-controller="ActorController as ctrl">
+    <div class="left-panel">
         <div class="form-tab">
             <label class="tab-label">Customer Setting</label>
         </div>
-        <div class="form form-290-width first">
+        <div class="form first">
             <div class="form-group">
-                <label class="control-label">Actor Role Type</label>
+                <label class="control-label">Actor Role</label>
                 <select class="form-control"
                         data-ng-options="item.roleId as item.roleName for item in ctrl.actorRoles"
                         data-ng-model="ctrl.actor.role"
@@ -41,16 +41,16 @@
                 <button data-ng-disabled="ctrl.preventSavingSession" data-ng-click="ctrl.saveSession()">Login</button>
             </div>
         </div>
-        <div class="form form-290-width last ">
+        <div class="form last ">
             <div class="form-group">
-                <label class="control-label large-label">Customer Role Type</label>
+                <label class="control-label">Customer Role</label>
                 <select class="form-control"
                         data-ng-options="item.roleId as item.roleName for item in ctrl.targetRoles"
                         data-ng-model="ctrl.target.role"
                         data-ng-change="ctrl.changeTargetRole()"></select>
             </div>
             <div class="form-group">
-                <label class="control-label large-label">Product ID</label>
+                <label class="control-label">Product ID</label>
                 <input type="number"
                        class="form-control"
                        maxlength="15"
@@ -58,14 +58,14 @@
                        data-ng-change="ctrl.disableShowingData()" />
             </div>
             <div class="form-group">
-                <label class="control-label large-label">Multiple Updates</label>
+                <label class="control-label">Multiple Updates</label>
                 <input type="checkbox"
                        class="form-control checkbox"
                        data-ng-model="ctrl.isMultiple"
                        data-ng-change="ctrl.changeTargetRole()" />
             </div>
             <div class="form-group" data-ng-hide="ctrl.isMultiple">
-                <label class="control-label large-label">Customer ID</label>
+                <label class="control-label">Customer ID</label>
                 <input type="number"
                        class="form-control"
                        maxlength="15"
@@ -73,25 +73,26 @@
                        data-ng-change="ctrl.disableShowingData()" />
             </div>
             <div class="form-group" data-ng-hide="!ctrl.isMultiple">
-                <label class="control-label large-label">Customer IDs</label>
+                <label class="control-label">Customer IDs</label>
                 <input type="text"
                        class="form-control"
                        data-ng-model="ctrl.target.customerIds"
                        data-ng-change="ctrl.disableShowingData()" />
             </div>
             <div class="form-group" data-ng-hide="!ctrl.isMultiple">
-                <label class="control-label large-label">Customer Names</label>
+                <label class="control-label">Customer Names</label>
                 <input type="text"
                        class="form-control"
                        maxlength="15"
                        data-ng-model="ctrl.target.customerNames"
                        data-ng-change="ctrl.disableShowingData()" />
             </div>
-            <div class="form-group submit large-group">
-                <button data-ng-disabled="ctrl.preventShowingData">Show</button>
+            <div class="form-group submit">
+                <button data-ng-disabled="ctrl.preventShowingData" data-ng-click="ctrl.showSetting()">Show</button>
             </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content" data-ng-show="ctrl.settingPath !== undefined">
+        <iframe id="setting-page" name="setting-page" class="content-frame" height="100%" data-ng-src="{{ctrl.settingPath}}"></iframe>
     </div>
 </div>

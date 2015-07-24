@@ -4,6 +4,7 @@
 (function () {
     var resources = {};
     
+    resources["label"] = {};
     resources["label"]["en-us"] = {
         "AgentMaxPT": "Agent Max PT",
         "AgentMinPT": "Agent Min PT",
@@ -49,6 +50,7 @@
         "UserNames": "UserNames"
     };
     
+    resources["message"] = {};
     resources["message"]["en-us"] = {
         "AccessDeniedMsg": "You do not have permission to access this page.",
         "AccountWasDisabled": "Account {0} was disbaled.",
@@ -63,6 +65,7 @@
         "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}",
         "Msg_90001": "Update process is unsuccessful !",
         "NoChangeToUpdate": "There is no change to update!",
+        "ProductNameMissing": "Product Id {0} does not have name in {1}",
         "SportTypeOrBetTypeIsInvalid": "Sport Type or Bet Type is invalid!",
         "SubAccountIdShouldBeZeroWhenSystemIsNotAgency": "Sub Account Id Should Be Zero When System Is Not Agency",
         "SystemError": "Oops... you are here because of a system error, please notify your administrator.",

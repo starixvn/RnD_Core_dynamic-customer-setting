@@ -42,6 +42,14 @@
         public static invalidParam(paramName: string): string {
             return paramName + " has taken an invalid value.";
         }
+
+        public static wrongCustomerLevel(): string {
+            return "Wrong customer level.";
+        }
+
+        public static customerIdsNotMatchCustomerNames(): string {
+            return "The number of customer IDs does not match with the number of customer names.";
+        }
     }
 
     export class DefaultAppSettings {

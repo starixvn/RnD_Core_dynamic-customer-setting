@@ -163,23 +163,23 @@ module ActorForm {
 
             switch (role) {
                 case RoleType.company:
-                    ids = "2, 3, 4";
-                    names = "SA-RM, SA-US$, SA-TB";
+                    ids = "2,3,4";
+                    names = "SA-RM,SA-US$,SA-TB";
                     break;
 
                 case RoleType.super:
-                    ids = "4174, 4300, 4356";
-                    names = "mrm, mbrm, MYRM";
+                    ids = "4174,4300,4356";
+                    names = "mrm,mbrm,MYRM";
                     break;
 
                 case RoleType.master:
-                    ids = "1262, 1653, 2400";
-                    names = "wsrm, SKRM, 216COM";
+                    ids = "1262,1653,2400";
+                    names = "wsrm,SKRM,216COM";
                     break;
 
                 case RoleType.agent:
-                    ids = "1277, 1284, 1290";
-                    names = "428RM, 305RM, 302RM";
+                    ids = "1277,1284,1290";
+                    names = "428RM,305RM,302RM";
                     break;
             }
 
@@ -217,6 +217,7 @@ module ActorForm {
         public isMultiple: boolean;
         public preventSavingSession: boolean;
         public preventShowingData: boolean;
+        public settingPath: string;
 
         public changeActorRole(): void {
             var selectedRoleId = this.actor !== undefined ? this.actor.role : RoleType.company;
@@ -262,6 +263,23 @@ module ActorForm {
                 this.disableSavingSession();
                 this.enableShowingData();
             });
+        }
+
+        public showSetting(): void {
+            var settingPath: string = "ViewCustomerSetting#index?productId=" + this.target.productId + "&customerLevel=" + this.target.role;
+
+            if (this.actor.role !== RoleType.company) {
+                settingPath += "&uplineLevel=" + this.actor.role;
+            }
+
+            if (this.isMultiple) {
+                settingPath += "&customerIds='" + (<MultipleTargets>this.target).customerIds + "'";
+                settingPath += "&customerNames='" + (<MultipleTargets>this.target).customerNames + "'";
+            } else {
+                settingPath += "&customerId=" + (<SingleTarget>this.target).customerId;
+            }
+
+            this.settingPath = settingPath;
         }
     }
 

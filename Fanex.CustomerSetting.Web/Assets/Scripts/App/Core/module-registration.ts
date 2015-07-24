@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 
 module CustomerSetting {
-    var app: ng.IModule = ng.module("customerSetting", ["ng", "oc.lazyLoad"]);
+    var app: ng.IModule = angular.module("customerSetting", ["oc.lazyLoad"]);
 
     export function controller(target: any): any {
         app.controller(target.$componentName, target);
@@ -15,6 +15,10 @@ module CustomerSetting {
         app.provider(target.$componentName, target);
     }
 
+    export function factory(target: any): any {
+        app.factory(target.$componentName, target);
+    }
+
     export function directive(target: any): any {
         app.directive(target.$componentName, target);
     }
@@ -24,6 +28,6 @@ module CustomerSetting {
     }
 
     export function filter(target: any) {
-        app.filter(target.$componentName, target);
+        app.filter(target.$componentName, [target]);
     }
 }

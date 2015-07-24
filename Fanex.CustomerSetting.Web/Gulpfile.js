@@ -164,17 +164,6 @@
                     out: moduleName + ".js",
                     removeComments: true
                 })))
-                .pipe(gulpif(/[.]js$/, typescriptAngular({
-                    decoratorModuleName: "CustomerSetting",
-                    patterns: [
-                        { pattern: /Controller$/, type: "controller" },
-                        { pattern: /Service$/, type: "service" },
-                        { pattern: /Provider$/, type: "provider" },
-                        { pattern: /Directive$/, type: "directive", removePattern: true },
-                        { pattern: /Value$/, type: "value", removePattern: true },
-                        { pattern: /Filter$/, type: "filter", removePattern: true }
-                    ]
-                })))
                 .pipe(gulpif(/[.]htm$/, templateCache({
                     module: "customerSetting"
                 })))

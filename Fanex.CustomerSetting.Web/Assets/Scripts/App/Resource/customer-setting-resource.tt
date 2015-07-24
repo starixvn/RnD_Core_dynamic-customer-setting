@@ -49,7 +49,7 @@
         var cultureIndex = fileName.IndexOf('.');
         var culture = cultureIndex > 0 ? fileName.Substring(cultureIndex + 1) : "en-US";
         var resourceName = cultureIndex > 0 ? fileName.Substring(0, cultureIndex) : fileName;
-        var language = new StringBuilder(string.Format("\r\n    resources[\"{0}\"][\"{1}\"] = {{", resourceName.ToLower(), culture.ToLower()));
+        var language = new StringBuilder(string.Format("\r\n    resources[\"{0}\"] = {{}};\r\n    resources[\"{0}\"][\"{1}\"] = {{", resourceName.ToLower(), culture.ToLower()));
         var filePath = Path.Combine(resourcePath, string.Format("{0}.resx", fileName));
 
         if (File.Exists(filePath))

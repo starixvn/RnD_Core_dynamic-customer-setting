@@ -3,29 +3,43 @@
 $background-color: #e6e9f0;
 $border-color: #7c98a4;
 
+html,
 body {
-    min-width: 768px;
+    height: 100%;
 }
 
-.container {
+body {
     font: {
         family: Tahoma, Arial, Helvetica, sans-serif;
         size: 11px;
     }
 
-    line-height: 1.5;
-    margin: auto;
-    max-width: 960px;
+    margin: 0;
+    min-width: 768px;
+    position: relative;
+}
 
-    .form-area {
+.container {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .left-panel {
         @include clearfix();
+        bottom: 0;
+        left: 0;
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        width: 320px;
 
         .form-tab {
             @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
             @include border-top-radius(3px);
             background-repeat: no-repeat;
             display: inline-block;
-            float: left;
             padding: 4px;
 
             .tab-label {
@@ -37,61 +51,36 @@ body {
         .form {
             background-color: $background-color;
             border: 1px solid $border-color;
+            min-width: 290px;
             padding: 5px 10px;
+            position: relative;
 
-            &.form-290-width {
-                border-right-width: 0;
-                clear: left;
-                float: left;
-                min-height: 151px;
-                min-width: 290px;
-                position: relative;
+            &.first {
+                z-index: 1;
 
                 &:before,
                 &:after {
-                    border: solid transparent;
-                    content: "";
-                    left: 100%;
+                    border: {
+                        color: $background-color transparent transparent transparent;
+                        style: solid;
+                        width: 10px;
+                    }
+
+                    bottom: -19px;
+                    content: " ";
+                    left: 140px;
                     position: absolute;
-                    width: 0;
                 }
 
                 &:before {
-                    border-left-color: $border-color;
-                    border-width: 81px;
-                    top: 0;
+                    border-color: $border-color transparent transparent transparent;
+                    bottom: -20px;
                 }
+            }
 
-                &:after {
-                    border-left-color: $background-color;
-                    border-width: 80px;
-                    top: 1px;
-                }
-
-                &.first {
-                    z-index: 1;
-                }
-
-                &.last {
-                    border-left-width: 0;
-                    border-right-width: 1px;
-                    clear: none;
-                    margin-left: 5px;
-                    padding-left: 105px;
-
-                    &:before,
-                    &:after {
-                        left: 0;
-                    }
-
-                    &:before {
-                        border-left-color: $border-color;
-                    }
-
-                    &:after {
-                        border-left-color: #fff;
-                    }
-                }
+            &.last {
+                border-top: none;
+                padding-top: 20px;
             }
 
             .form-group {
@@ -99,11 +88,7 @@ body {
 
                 .control-label {
                     display: inline-block;
-                    min-width: 80px;
-
-                    &.large-label {
-                        width: 100px;
-                    }
+                    min-width: 100px;
                 }
 
                 .form-control {
@@ -124,7 +109,7 @@ body {
 
                 &.submit {
                     @include clearfix();
-                    width: 252px;
+                    width: 272px;
 
                     button {
                         @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
@@ -147,17 +132,25 @@ body {
                             cursor: default;
                         }
                     }
-
-                    &.large-group {
-                        width: 272px;
-                    }
                 }
             }
         }
     }
 
-    .main-content-frame {
-        border: none;
+    .content {
+        @include clearfix();
+        bottom: 0;
+        left: 330px;
+        padding: 5px;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .content-frame {
+            border: none;
+            height: 100%;
+            width: 100%;
+        }
     }
 }
 

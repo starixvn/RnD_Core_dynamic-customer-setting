@@ -149,20 +149,20 @@ var ActorForm;
             var names = "";
             switch (role) {
                 case RoleType.company:
-                    ids = "2, 3, 4";
-                    names = "SA-RM, SA-US$, SA-TB";
+                    ids = "2,3,4";
+                    names = "SA-RM,SA-US$,SA-TB";
                     break;
                 case RoleType.super:
-                    ids = "4174, 4300, 4356";
-                    names = "mrm, mbrm, MYRM";
+                    ids = "4174,4300,4356";
+                    names = "mrm,mbrm,MYRM";
                     break;
                 case RoleType.master:
-                    ids = "1262, 1653, 2400";
-                    names = "wsrm, SKRM, 216COM";
+                    ids = "1262,1653,2400";
+                    names = "wsrm,SKRM,216COM";
                     break;
                 case RoleType.agent:
-                    ids = "1277, 1284, 1290";
-                    names = "428RM, 305RM, 302RM";
+                    ids = "1277,1284,1290";
+                    names = "428RM,305RM,302RM";
                     break;
             }
             return this.createMultipleTargetInfo(ids, names, role);
@@ -225,6 +225,20 @@ var ActorForm;
                 _this.disableSavingSession();
                 _this.enableShowingData();
             });
+        };
+        ActorController.prototype.showSetting = function () {
+            var settingPath = "ViewCustomerSetting#index?productId=" + this.target.productId + "&customerLevel=" + this.target.role;
+            if (this.actor.role !== RoleType.company) {
+                settingPath += "&uplineLevel=" + this.actor.role;
+            }
+            if (this.isMultiple) {
+                settingPath += "&customerIds='" + this.target.customerIds + "'";
+                settingPath += "&customerNames='" + this.target.customerNames + "'";
+            }
+            else {
+                settingPath += "&customerId=" + this.target.customerId;
+            }
+            this.settingPath = settingPath;
         };
         ActorController.$inject = ["$http"];
         return ActorController;

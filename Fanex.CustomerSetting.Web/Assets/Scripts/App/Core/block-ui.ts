@@ -1,11 +1,15 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="module-registration.ts" />
 
 module CustomerSetting {
-    @directive
     export class BlockUiDirective {
         public get restrict(): string {
             return "A";
+        }
+
+        public get scope(): any {
+            return {
+                isLoading: "="
+            }
         }
 
         public get template(): string {
@@ -14,6 +18,9 @@ module CustomerSetting {
 
         public get replace(): boolean {
             return true;
+        }
+
+        public link: ng.IDirectiveLinkFn = (scope: IBlockUiScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any): void => {
         }
     }
 

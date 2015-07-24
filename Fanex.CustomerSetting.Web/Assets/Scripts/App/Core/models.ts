@@ -1,4 +1,6 @@
-﻿module CustomerSetting {
+﻿/// <reference path="constants.ts" />
+
+module CustomerSetting {
     export interface ISettingItem {
         typeName: string;
 
@@ -60,7 +62,7 @@
 
         public set customerLevel(level: Level) {
             if (level === Level.company) {
-                throw "Wrong customer level.";
+                throw CommonErrorMessages.wrongCustomerLevel;
             }
 
             this._customerLevel = level;
