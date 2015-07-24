@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Params
+﻿namespace Fanex.CustomerSetting.Params
 {
     using System;
     using System.Collections.Generic;
@@ -6,12 +6,12 @@
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class UpdateMultipleSettingParam : UpdateSettingParam
+    public class UpdateMultipleCustomerSettingParam : UpdateCustomerSettingParam
     {
         private IEnumerable<int> _customerIds;
         private IEnumerable<string> _customerNames;
 
-        public UpdateMultipleSettingParam(
+        public UpdateMultipleCustomerSettingParam(
             ISetting setting,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames,

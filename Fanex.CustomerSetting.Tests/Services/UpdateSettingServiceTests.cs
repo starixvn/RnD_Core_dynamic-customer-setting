@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -48,25 +48,25 @@
         public void UpdateCustomerSetting_UpdateSettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateSettingParam updateParam = null;
+            UpdateCustomerSettingParam updateParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updateParam)));
+                    () => _settingService.Update(updateParam)));
         }
 
         [Test]
         public void UpdateCustomerSetting_Always_CallValidateUpdateSetting()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateParam);
+            _settingService.Update(updateParam);
 
             //// Assert
-            _validationService.Received().ValidateUpdateSettingAction(Arg.Is<UpdateSettingParam>(
+            _validationService.Received().ValidateUpdateSettingAction(Arg.Is<UpdateCustomerSettingParam>(
                 actualSettingCommand => actualSettingCommand == updateParam));
         }
 
@@ -74,17 +74,17 @@
         public void UpdateCustomerSetting_ValidationIsFailed_ReturnFailedResult()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
-            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateSettingParam>()).Returns(Result.AccessDenied);
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            _validationService.ValidateUpdateSettingAction(Arg.Any<UpdateCustomerSettingParam>()).Returns(Result.AccessDenied);
 
             //// Act
-            var actualUpdateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var actualUpdateResult = _settingService.Update(updateParam);
 
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualUpdateResult.Code);
         }
 
-        private void AssumeUpdateCustomerSettingActionIsValid(UpdateSettingParam updateParam)
+        private void AssumeUpdateCustomerSettingActionIsValid(UpdateCustomerSettingParam updateParam)
         {
             _validationService.ValidateUpdateSettingAction(updateParam).Returns(Result.Success);
         }
@@ -93,7 +93,7 @@
         public void UpdateCustomerSetting_Always_CallCheckSettingTypeValid()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
@@ -109,7 +109,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateParam);
+            var result = _settingService.Update(updateParam);
 
             //// Assert
             settingItemMock.Received().Validate();
@@ -119,7 +119,7 @@
         public void UpdateCustomerSetting_SettingTypeIsNotValid_ReturnFailedResult()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
@@ -135,7 +135,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateParam);
+            var result = _settingService.Update(updateParam);
 
             //// Assert
             var updateSettingResult = result as UpdateSettingResult;
@@ -147,7 +147,7 @@
         public void UpdateCustomerSetting_SettingTypeIsNotValid_AlwaysCallLogError()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
@@ -163,7 +163,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateParam);
+            var result = _settingService.Update(updateParam);
 
             //// Assert
             _logger.Received().Error(
@@ -175,11 +175,11 @@
         public void UpdateCustomerSetting_Always_CallResolveSettingTypeService()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateParam);
+            _settingService.Update(updateParam);
 
             //// Assert
             _settingTypeServiceFactory.Received(updateParam.Setting.SettingTypes.Count()).GetInstance(Arg.Any<SettingType>());
@@ -204,12 +204,12 @@
         public void UpdateCustomerSetting_Always_CallUpdateCustomerSettingType()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateParam);
+            _settingService.Update(updateParam);
 
             //// Assert
             _settingTypeService.Received(updateParam.Setting.SettingTypes.Count()).UpdateCustomerSettingType(
@@ -225,12 +225,12 @@
         public void UpdateCustomerSetting_UpdateSettingTypeIsFailed_ReturnFailedResult()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub(false);
 
             //// Act
-            var actualUpdateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var actualUpdateResult = _settingService.Update(updateParam);
 
             //// Assert
             Assert.IsFalse(actualUpdateResult.IsSuccessful);
@@ -240,12 +240,12 @@
         public void UpdateCustomerSetting_UpdatedSetting_ReturnSuccessResult()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
             SetupSettingTypeServiceStub();
 
             //// Act
-            var actualUpdateResult = _settingService.UpdateCustomerSetting(updateParam);
+            var actualUpdateResult = _settingService.Update(updateParam);
 
             //// Assert
             Assert.IsTrue(actualUpdateResult.IsSuccessful);
@@ -255,14 +255,14 @@
         public void UpdateCustomerSetting_RaisedException_AlwaysCallLogError()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
             AssumeUpdateCustomerSettingActionIsValid(updateParam);
 
             var expectedException = new Exception("Expected Exception");
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateParam);
+            _settingService.Update(updateParam);
 
             //// Assert
             _logger.Received().Error(

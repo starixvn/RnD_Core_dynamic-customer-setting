@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -57,7 +57,7 @@
         public void GetCustomerSetting_QuerySettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = null;
+            QueryCustomerSettingParam querySettingParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
@@ -69,14 +69,14 @@
         public void GetCustomerSetting_Always_CallValidateQuerySetting()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            _validationService.ValidateQuerySettingAction(Arg.Any<QueryCustomerSettingParam>()).Returns(Result.Success);
 
             //// Act
             _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _validationService.Received().ValidateQuerySettingAction(Arg.Is<QuerySettingParam>(
+            _validationService.Received().ValidateQuerySettingAction(Arg.Is<QueryCustomerSettingParam>(
                 actualQuerySettingParam => actualQuerySettingParam.CustomerId == querySettingParam.CustomerId
                     && actualQuerySettingParam.CustomerLevel == querySettingParam.CustomerLevel
                     && actualQuerySettingParam.ProductId == querySettingParam.ProductId
@@ -87,8 +87,8 @@
         public void GetCustomerSetting_QuerySettingActionIsNotValid_ThrowInvalidOperationException()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
-            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.AccessDenied);
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            _validationService.ValidateQuerySettingAction(Arg.Any<QueryCustomerSettingParam>()).Returns(Result.AccessDenied);
 
             //// Act
             Assert.Throws<InvalidOperationException>(
@@ -98,14 +98,14 @@
 
         private void AssumeQuerySettingActionIsValid()
         {
-            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QueryCustomerSettingParam>()).Returns(Result.Success);
         }
 
         [Test]
         public void GetCustomerSetting_Always_CallGetCustomerInformation()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -120,7 +120,7 @@
         public void GetCustomerSetting_CustomerIsValid_ReturnCustomerId()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -134,7 +134,7 @@
         public void GetCustomerSetting_CustomerIsValid_ReturnCustomerLevel()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -148,7 +148,7 @@
         public void GetCustomerSetting_CustomerIsValid_ReturnCustomerInformation()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var expectedCustomerInfo = new CustomerInfo { UserName = "CustomerUserName" };
             _dymanicRepository.Get<CustomerInfo>(Arg.Any<CustomerInfoQueryCriteria>()).Returns(expectedCustomerInfo);
@@ -164,7 +164,7 @@
         public void GetCustomerSetting_Always_CallGetProductSettingTypes()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -179,7 +179,7 @@
         public void GetCustomerSetting_ProductHasSettingTypes_ReturnCustomerSettingTypesMatchedWithProduct()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             var productSettingTypes = InstanceFactory.CreateProduct().SettingTypes;
@@ -199,7 +199,7 @@
         public void GetCustomerSetting_Always_CallGetProductName()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -215,7 +215,7 @@
         public void GetCustomerSetting_Always_ReturnProductName()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var expectedProductName = "ProductName";
             _resourceService.GetProductName(Arg.Any<byte>(), Arg.Any<string>()).Returns(expectedProductName);
@@ -231,7 +231,7 @@
         public void GetCustomerSetting_Always_ReturnProductId()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
 
             //// Act
@@ -254,7 +254,7 @@
         public void GetCustomerSetting_Always_CallResolveSettingTypeService()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var dummySettingTypes = SetupProductSettingTypesStub();
             SetupSettingTypeServiceStub();
@@ -270,7 +270,7 @@
         public void GetCustomerSetting_Always_CallGetCustomerSettingType()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             var productSettingTypes = SetupProductSettingTypesStub();
             SetupSettingTypeServiceStub();
@@ -285,7 +285,7 @@
         private void SetupSettingTypeServiceStub(SettingType dummySettingType = null)
         {
             var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
-            _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QuerySettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
+            _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<QueryCustomerSettingParam>(), Arg.Any<SettingType>()).Returns(customerSettingType);
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 
@@ -293,7 +293,7 @@
         public void GetCustomerSetting_RaisedException_AlwaysCallLogError()
         {
             //// Arrange
-            QuerySettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
+            QueryCustomerSettingParam querySettingParam = InstanceFactory.CreateQuerySettingParam();
             AssumeQuerySettingActionIsValid();
             SetupProductSettingTypesStub();
 

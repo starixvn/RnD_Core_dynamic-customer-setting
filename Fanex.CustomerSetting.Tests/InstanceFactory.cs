@@ -1,14 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Tests
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.CustomerSetting.Tests.Models;
 
     public static class InstanceFactory
     {
-        public static UpdateSettingParam CreateUpdateSettingParam(
+        public static UpdateCustomerSettingParam CreateUpdateSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
@@ -16,7 +16,7 @@
         {
             customerLevel = customerLevel ?? Level.Master;
             var setting = CreateCustomerSetting(customerId, customerLevel, productId);
-            return new UpdateSettingParam(setting, uplineLevel);
+            return new UpdateCustomerSettingParam(setting, uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(
@@ -64,7 +64,7 @@
             };
         }
 
-        public static UpdateMultipleSettingParam CreateUpdateMultipleSettingParam(
+        public static UpdateMultipleCustomerSettingParam CreateUpdateMultipleSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
@@ -80,7 +80,7 @@
                         InstanceFactory.CreateCustomerSettingType(4, 1)
                     };
 
-            var updateMultipleParam = new UpdateMultipleSettingParam(
+            var updateMultipleParam = new UpdateMultipleCustomerSettingParam(
                 new Setting(customerId, customerLevel, productId, settingTypes),
                 new List<int> { customerId, 2 },
                 new List<string> { "Username1", "Username2" },
@@ -89,7 +89,7 @@
             return updateMultipleParam;
         }
 
-        public static QuerySettingParam CreateQuerySettingParam(
+        public static QueryCustomerSettingParam CreateQuerySettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
@@ -102,7 +102,7 @@
                 uplineLevel = uplineLevel ?? Level.Master;
             }
             
-            return new QuerySettingParam(customerId, customerLevel, productId, uplineLevel);
+            return new QueryCustomerSettingParam(customerId, customerLevel, productId, uplineLevel);
         }
 
         public static Product CreateProduct(byte productId = 1)

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.DataAccesses.Impl
 {
     using System.Collections;
-    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Results;
 
     public class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
     {

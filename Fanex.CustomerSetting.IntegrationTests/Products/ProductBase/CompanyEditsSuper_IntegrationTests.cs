@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.IntegrationTests.Products.Product255;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Configuration;
@@ -39,7 +39,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(superId, Level.Super, productId);
+            var querySettingParam = new QueryCustomerSettingParam(superId, Level.Super, productId);
 
             //// Act
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
@@ -70,7 +70,7 @@
             _settingContext = new SettingContext(actor);
             _updateSettingService = new UpdateSettingService(_settingContext);
             _querySettingService = new QuerySettingService(_settingContext);
-            var querySettingParam = new QuerySettingParam(superId, Level.Super, productId, null);
+            var querySettingParam = new QueryCustomerSettingParam(superId, Level.Super, productId, null);
 
             var superSetting = _querySettingService.GetCustomerSetting(querySettingParam);
 
@@ -83,8 +83,8 @@
             }
 
             //// Act
-            var updateParam = new UpdateSettingParam(superSetting, querySettingParam.UplineLevel);
-            var updateResult = _updateSettingService.UpdateCustomerSetting(updateParam);
+            var updateParam = new UpdateCustomerSettingParam(superSetting, querySettingParam.UplineLevel);
+            var updateResult = _updateSettingService.Update(updateParam);
 
             //// Assert
             Assert.IsTrue(updateResult.IsSuccessful);

@@ -1,13 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Tests.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
@@ -53,7 +51,7 @@
             _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<QueryCustomerSettingParam>(queryParam));
         }
 
         [Test]
@@ -75,7 +73,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<QuerySettingParam>()).Returns(commissionItemsRawData);
+            _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<QueryCustomerSettingParam>()).Returns(commissionItemsRawData);
 
             //// Act
             var actualCustomerCommission = _settingType3Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

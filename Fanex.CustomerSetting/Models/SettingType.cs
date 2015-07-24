@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Results;
 
     [Serializable]
     public class SettingType

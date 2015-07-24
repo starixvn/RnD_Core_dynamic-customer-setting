@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using NUnit.Framework;
 
     [TestFixture]
@@ -20,7 +20,7 @@
                 customerLevel: customerLevel,
                 productId: 1,
                 settingTypes: new List<SettingType>());
-            var updateSettingParam = new UpdateSettingParam(setting);
+            var updateSettingParam = new UpdateCustomerSettingParam(setting);
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -40,14 +40,14 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => new UpdateSettingParam(setting)));
+                    () => new UpdateCustomerSettingParam(setting)));
         }
 
         [Test]
         public void SetSetting_SettingIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
+            UpdateCustomerSettingParam updateParam = InstanceFactory.CreateUpdateSettingParam();
 
             //// Act
             Assert.Throws<ArgumentNullException>(

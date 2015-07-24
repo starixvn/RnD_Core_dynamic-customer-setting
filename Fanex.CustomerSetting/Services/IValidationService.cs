@@ -1,14 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
 
     public interface IValidationService
     {
-        IResult ValidateQuerySettingAction(QuerySettingParam queryParam);
+        IResult ValidateQuerySettingAction(QueryCustomerSettingParam queryParam);
 
-        IResult ValidateUpdateSettingAction(UpdateSettingParam updateParam);
+        IResult ValidateUpdateSettingAction(UpdateCustomerSettingParam updateParam);
 
-        IResult ValidateUpdateMultipleSettingAction(UpdateMultipleSettingParam updateMultipleParam);
+        IResult ValidateUpdateMultipleSettingAction(UpdateMultipleCustomerSettingParam updateMultipleParam);
     }
 }

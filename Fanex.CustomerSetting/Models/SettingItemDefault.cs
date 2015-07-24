@@ -1,9 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    using System;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Results;
 
     public class SettingItemDefault : ISettingItem
     {

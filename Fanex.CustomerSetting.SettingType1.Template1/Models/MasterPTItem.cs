@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models
 {
-    using Fanex.CustomerSetting.Dtos.Results;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 

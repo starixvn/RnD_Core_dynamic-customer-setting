@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.Messages
 {
     using System;
     using System.Xml.Serialization;

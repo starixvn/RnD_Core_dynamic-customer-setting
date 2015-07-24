@@ -2,11 +2,11 @@
 {
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
@@ -34,7 +34,7 @@
             _betLimitDataAccess = betLimitDataAccess ?? new DataAccess();
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType)
         {
             var betLimitItemsRawData = _betLimitDataAccess.GetCustomerBetLimitItemsRawData(queryParam);
 

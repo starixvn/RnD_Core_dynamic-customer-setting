@@ -1,17 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
 
     public interface ISettingTypeService
     {
-        SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType);
+        SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType);
 
         SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType);
 

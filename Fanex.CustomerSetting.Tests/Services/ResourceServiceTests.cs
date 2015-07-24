@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Dtos;
+    using Fanex.CustomerSetting;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.RemotingRefApi;
     using Fanex.CustomerSetting.Services;

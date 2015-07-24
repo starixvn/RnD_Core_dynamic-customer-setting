@@ -2,16 +2,13 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType4.Template1.Constants;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Template1.Models;
     using Fanex.Data;
 
     public class DataAccess : BaseDataAccess, IDataAccess
@@ -24,7 +21,7 @@
             { Level.Member.Value, "CustSetting_MemberProductStatusSelect" }
         };
 
-        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QuerySettingParam queryParam)
+        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(QueryCustomerSettingParam queryParam)
         {
             var settingKey = QueryProductStatusSpKeys[queryParam.CustomerLevel.Value];
 

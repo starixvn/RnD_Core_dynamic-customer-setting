@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
@@ -67,7 +67,7 @@
             _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<QueryCustomerSettingParam>(queryParam));
         }
 
         [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
@@ -91,7 +91,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<QuerySettingParam>()).Returns(productStatusItemsRawData);
+            _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<QueryCustomerSettingParam>()).Returns(productStatusItemsRawData);
 
             //// Act
             var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

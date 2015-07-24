@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Results;
 
     public class SettingItemStub : ISettingItem
     {

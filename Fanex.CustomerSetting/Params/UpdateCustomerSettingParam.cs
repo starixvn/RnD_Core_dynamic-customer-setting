@@ -1,16 +1,16 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Params
+﻿namespace Fanex.CustomerSetting.Params
 {
     using System;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
 
-    public class UpdateSettingParam
+    public class UpdateCustomerSettingParam
     {
         private Level _uplineLevel;
         private ISetting _setting;
 
-        public UpdateSettingParam(
+        public UpdateCustomerSettingParam(
             ISetting setting,
             Level uplineLevel = null)
         {

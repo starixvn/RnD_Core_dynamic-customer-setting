@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -48,41 +48,41 @@
         public void UpdateMultipleCustomerSetting_UpdateMultipleSettingParamIsNull_ThrowArgumentNullException()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = null;
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = null;
 
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updateMultipleSettingParam)));
+                    () => _settingService.Update(updateMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_NumberOfSettingTypesIsZero_ThrowArgumentOutOfRangeException()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
             updateMultipleSettingParam.Setting.SettingTypes = new List<SettingType>();
 
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _settingService.UpdateCustomerSetting(updateMultipleSettingParam)));
+                    () => _settingService.Update(updateMultipleSettingParam)));
         }
 
         [Test]
         public void UpdateMultipleCustomerSetting_Always_CallValidateUpdateMultipleSetting()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             _validationService.Received().ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
         }
 
-        private void AssumeUpdateMultipleCustomersSettingActionIsValid(UpdateMultipleSettingParam updateParam)
+        private void AssumeUpdateMultipleCustomersSettingActionIsValid(UpdateMultipleCustomerSettingParam updateParam)
         {
             _validationService.ValidateUpdateMultipleSettingAction(updateParam).Returns(Result.Success);
         }
@@ -91,7 +91,7 @@
         public void UpdateMultipleCustomerSetting_Always_CallCheckSettingTypeValid()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
@@ -107,7 +107,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var result = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             settingItemMock.Received().Validate();
@@ -117,7 +117,7 @@
         public void UpdateMultipleCustomerSetting_SettingTypeIsNotValid_ReturnFailedResult()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
@@ -133,7 +133,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var result = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             var updateSettingResult = result as UpdateSettingResult;
@@ -145,7 +145,7 @@
         public void UpdateMultipleCustomerSetting_SettingTypeIsNotValid_AlwaysCallLogError()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
@@ -161,7 +161,7 @@
             };
 
             //// Act
-            var result = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var result = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             _logger.Received().Error(
@@ -188,12 +188,12 @@
         public void UpdateMultipleCustomerSetting_Always_CallResolveSettingTypeService()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             var numOfSettingTypes = updateMultipleSettingParam.Setting.SettingTypes.Count();
@@ -209,7 +209,7 @@
             SetupSettingTypeServiceStub();
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             var numOfRunPostTasks = updateMultipleSettingParam.Setting.SettingTypes.Count();
@@ -227,12 +227,12 @@
         public void UpdateMultipleCustomerSetting_UpdateIsFailed_ReturnFailedResult()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub(false);
 
             //// Act
-            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
@@ -242,12 +242,12 @@
         public void UpdateMultipleCustomerSetting_Updated_ReturnSuccessResult()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
             SetupSettingTypeServiceStub();
 
             //// Act
-            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -257,7 +257,7 @@
         public void UpdateMultipleCustomerSetting_UpdatedSettingTypes_ReturnResultWithCustomerName()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
             var successResultOfCustomer1 = new SettingResult(
@@ -287,7 +287,7 @@
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
 
             //// Act
-            var actualResult = _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            var actualResult = _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             var updateSettingResult = actualResult as UpdateSettingResult;
@@ -300,7 +300,7 @@
         public void UpdateMultipleCustomerSetting_RaisedException_AlwaysCallLogError()
         {
             //// Arrange
-            UpdateMultipleSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
+            UpdateMultipleCustomerSettingParam updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
 
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
@@ -308,7 +308,7 @@
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
 
             //// Act
-            _settingService.UpdateCustomerSetting(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             _logger.Received().Error(

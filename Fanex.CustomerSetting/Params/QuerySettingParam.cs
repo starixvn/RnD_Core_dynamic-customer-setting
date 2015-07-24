@@ -1,17 +1,17 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Params
+﻿namespace Fanex.CustomerSetting.Params
 {
     using System;
     using Fanex.CustomerSetting.Constants;
     using Fanex.CustomerSetting.Enumerations;
 
-    public class QuerySettingParam
+    public class QueryCustomerSettingParam
     {
         private int _customerId;
         private Level _customerLevel;
         private byte _productId;
         private Level _uplineLevel;
 
-        public QuerySettingParam(
+        public QueryCustomerSettingParam(
             int customerId, 
             Level customerLevel, 
             byte productId, 

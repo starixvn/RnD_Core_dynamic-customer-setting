@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
@@ -36,7 +36,7 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext,
-            QuerySettingParam queryParam,
+            QueryCustomerSettingParam queryParam,
             SettingType productSettingType)
         {
             var customerPT = _dataAccess.GetCustomerPT(queryParam);

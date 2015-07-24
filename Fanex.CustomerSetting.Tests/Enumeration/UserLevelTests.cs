@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Enumeration
 {
-    using System;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Enumerations;
-    using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]

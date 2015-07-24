@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -51,7 +51,7 @@
 
         private void AssumeValidateQuerySettingIsSuccessful()
         {
-            _validationService.ValidateQuerySettingAction(Arg.Any<QuerySettingParam>()).Returns(Result.Success);
+            _validationService.ValidateQuerySettingAction(Arg.Any<QueryCustomerSettingParam>()).Returns(Result.Success);
         }
 
         [Test]
@@ -67,7 +67,7 @@
             //// Assert
 
             _validationService.Received().ValidateQuerySettingAction(
-                Arg.Is<QuerySettingParam>(queryParam =>
+                Arg.Is<QueryCustomerSettingParam>(queryParam =>
                     queryParam.CustomerId == updateParam.Setting.CustomerId
                     && queryParam.CustomerLevel == updateParam.Setting.CustomerLevel
                     && queryParam.ProductId == updateParam.Setting.ProductId

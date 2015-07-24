@@ -5,11 +5,11 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.Logging;
 
     public abstract class SettingTypeServiceBase : ISettingTypeService
@@ -124,7 +124,7 @@
             return new SettingResult(result.Code, result.Message, result.MsgType, customerId, settingType.Id, settingType.Name);
         }
 
-        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, QuerySettingParam queryParam, SettingType productSettingType);
+        public abstract SettingType GetCustomerSettingType(ISettingContext settingContext, QueryCustomerSettingParam queryParam, SettingType productSettingType);
 
         public abstract SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Enumerations.Level customerLevel, Enumerations.Level uplineLevel, byte productId, SettingType settingType);
 

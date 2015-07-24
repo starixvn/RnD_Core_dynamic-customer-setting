@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.Messages
 {
     using Fanex.CustomerSetting.Services;
 

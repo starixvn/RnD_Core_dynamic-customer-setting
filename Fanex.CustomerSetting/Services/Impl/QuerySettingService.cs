@@ -5,9 +5,9 @@
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
@@ -42,7 +42,7 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public ISetting GetCustomerSetting(QuerySettingParam queryParam)
+        public ISetting GetCustomerSetting(QueryCustomerSettingParam queryParam)
         {
             Validate(queryParam);
 
@@ -61,7 +61,7 @@
             return setting;
         }
 
-        private void Validate(QuerySettingParam queryParam)
+        private void Validate(QueryCustomerSettingParam queryParam)
         {
             Check.Argument.IsNotNull(queryParam, "queryParam");
 
@@ -107,7 +107,7 @@
         /// <param name="queryParam">The query setting parameters.</param>
         /// <param name="productSettingTypes">The product setting types.</param>
         /// <returns>Customer setting on each setting type.</returns>
-        private IList<SettingType> GetCustomerSettingTypes(QuerySettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
+        private IList<SettingType> GetCustomerSettingTypes(QueryCustomerSettingParam queryParam, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
 
@@ -126,7 +126,7 @@
             return customerSettingTypes;
         }
 
-        private SettingType GetCustomerSettingType(QuerySettingParam queryParam, SettingType productSettingType)
+        private SettingType GetCustomerSettingType(QueryCustomerSettingParam queryParam, SettingType productSettingType)
         {
             SettingType customerSettingType = productSettingType;
 
@@ -150,7 +150,7 @@
             return customerSettingType;
         }
 
-        private void WriteLog(QuerySettingParam queryParam, SettingType productSettingType, Exception ex)
+        private void WriteLog(QueryCustomerSettingParam queryParam, SettingType productSettingType, Exception ex)
         {
             var exception = new CustomerSettingException(ex.Message, ex);
             exception.SetSettingContextInfo("Query Setting", _settingContext);

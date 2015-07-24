@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType2.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
@@ -51,7 +51,7 @@
             _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<QueryCustomerSettingParam>(queryParam));
         }
 
         [Test]
@@ -76,7 +76,7 @@
                 };
 
             //// Stub
-            _dataAccess.GetCustomerBetLimitItemsRawData(Arg.Any<QuerySettingParam>()).Returns(betLimitItemsRawData);
+            _dataAccess.GetCustomerBetLimitItemsRawData(Arg.Any<QueryCustomerSettingParam>()).Returns(betLimitItemsRawData);
 
             //// Act
             var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

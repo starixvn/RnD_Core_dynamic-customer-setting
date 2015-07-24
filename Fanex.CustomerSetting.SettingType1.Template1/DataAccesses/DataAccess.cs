@@ -4,11 +4,11 @@
     using System.Collections;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
     using Fanex.Data;
@@ -65,7 +65,7 @@
             return objectDb.Query<T>(parameters);
         }
 
-        public SettingType GetCustomerPT(QuerySettingParam queryParam)
+        public SettingType GetCustomerPT(QueryCustomerSettingParam queryParam)
         {
             var settingType = new PTSettingType
             {
@@ -93,7 +93,7 @@
             return settingType;
         }
 
-        private Hashtable CreateQueryPTSettingSpParam(QuerySettingParam querySettingParam)
+        private Hashtable CreateQueryPTSettingSpParam(QueryCustomerSettingParam querySettingParam)
         {
             var parameters = this.GetSPParamsForGettingSettingType(querySettingParam, Constants.SettingTypeId);
 

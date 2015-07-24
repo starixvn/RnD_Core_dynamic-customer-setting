@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Results;
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;

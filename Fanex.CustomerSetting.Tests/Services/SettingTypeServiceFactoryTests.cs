@@ -2,8 +2,8 @@
 {
     using System;
     using Fanex.CustomerSetting.Services.Impl;
-    using NUnit.Framework;
     using FluentAssertions;
+    using NUnit.Framework;
 
     [TestFixture]
     public class SettingTypeServiceFactoryTests

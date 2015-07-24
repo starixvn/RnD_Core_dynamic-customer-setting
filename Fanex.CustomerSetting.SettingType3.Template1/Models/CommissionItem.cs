@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Models
 {
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.SettingType3.Template1.Constants;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Resources;

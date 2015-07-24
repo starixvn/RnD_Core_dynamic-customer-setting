@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Enumerations;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType1.Template1.Models;
@@ -52,7 +52,7 @@
             _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);
 
             //// Assert
-            _dataAccess.Received().GetCustomerPT(Arg.Is<QuerySettingParam>(queryParam));
+            _dataAccess.Received().GetCustomerPT(Arg.Is<QueryCustomerSettingParam>(queryParam));
         }
 
         [Test]
@@ -76,7 +76,7 @@
             };
 
             //// Stub
-            _dataAccess.GetCustomerPT(Arg.Any<QuerySettingParam>()).Returns(customerPT);
+            _dataAccess.GetCustomerPT(Arg.Any<QueryCustomerSettingParam>()).Returns(customerPT);
 
             //// Act
             var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, queryParam, productSettingType);

@@ -6,7 +6,7 @@
     using System.Xml.Serialization;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Constants;
-    using Fanex.CustomerSetting.Dtos.Messages;
+    using Fanex.CustomerSetting.Messages;
     using Fanex.CustomerSetting.Resource;
 
     public abstract class MessageServiceBase : IMessageService

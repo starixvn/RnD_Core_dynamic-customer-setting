@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Dtos.Results
+﻿namespace Fanex.CustomerSetting.Results
 {
     /// <summary>
     /// Stores result information for displaying on web.

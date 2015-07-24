@@ -1,13 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Dtos.Params;
-    using Fanex.CustomerSetting.Dtos.Results;
-    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
+    using Fanex.CustomerSetting.Results;
 
     public interface IUpdateSettingService
     {
-        IResult UpdateCustomerSetting(UpdateSettingParam updateParam);
+        IResult Update(UpdateCustomerSettingParam updateParam);
 
-        IResult UpdateCustomerSetting(UpdateMultipleSettingParam updateMultipleParam);
+        IResult Update(UpdateMultipleCustomerSettingParam updateMultipleParam);
     }
 }

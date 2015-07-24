@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Dtos.Params;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Params;
 
     public interface IQuerySettingService
     {
-        ISetting GetCustomerSetting(QuerySettingParam queryParam);
+        ISetting GetCustomerSetting(QueryCustomerSettingParam queryParam);
     }
 }

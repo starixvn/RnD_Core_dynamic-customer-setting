@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using Fanex.CustomerSetting.Dtos.Results;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.CustomerSetting.Results;
     using FluentAssertions;
     using NUnit.Framework;
 
