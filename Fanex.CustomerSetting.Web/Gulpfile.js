@@ -161,7 +161,6 @@
                     typescript: require("typescript"),
                     target: "ES5",
                     noImplicitAny: true,
-                    out: moduleName + ".js",
                     removeComments: true
                 })))
                 .pipe(gulpif(/[.]htm$/, templateCache({
@@ -190,7 +189,8 @@
             done);
     });
 
-    gulp.task("watch-ts", ["publish-script"], function () {
-        gulp.watch(assetPaths.app + "**/*.ts", ["publish-script"]);
+    gulp.task("watch", ["publish-script", "publish-template"], function () {
+        gulp.watch(assetPaths.app + "**/*.{ts, htm}", ["publish-script"]);
+        gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
     });
 })(require);

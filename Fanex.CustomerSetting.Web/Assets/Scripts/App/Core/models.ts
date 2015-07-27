@@ -1,51 +1,43 @@
-﻿/// <reference path="constants.ts" />
+﻿/// <reference path="common.ts" />
 
 module CustomerSetting {
-    export interface ISettingItem {
+    export interface SettingItem {
         typeName: string;
+        oldSetting: SettingItem;
+    }
 
-        oldSetting: ISettingItem;
+    export enum Level {
+        company = 5,
+        super = 4,
+        master = 3,
+        agent = 2,
+        member = 1
     }
 
     export class CustomerInfo {
         public username: string;
-
         public username2: string;
-
         public firstName: string;
-
         public lastName: string;
-
         public phone: string;
-
         public mobilePhone: string;
-
         public fax: string;
-
         public email: string;
     }
 
-    export class DefaultSettingItem implements ISettingItem {
+    export class DefaultSettingItem implements SettingItem {
         public sportTypeId: number;
-
         public sportTypeName: string;
-
         public betTypeId: number;
-
         public betTypeName: string;
-
         public typeName: string;
-
         public oldSetting: DefaultSettingItem;
     }
 
     export class SettingType {
         public id: number;
-
         public name: string;
-
         public settingTemplate: number;
-
         public settingLevel: number;
     }
 
@@ -53,7 +45,6 @@ module CustomerSetting {
         private _customerLevel: Level;
 
         public customerId: number;
-
         public customerInfo: CustomerInfo;
 
         public get customerLevel(): Level {
@@ -62,16 +53,14 @@ module CustomerSetting {
 
         public set customerLevel(level: Level) {
             if (level === Level.company) {
-                throw CommonErrorMessages.wrongCustomerLevel;
+                throw Exceptions.wrongCustomerLevel;
             }
 
             this._customerLevel = level;
         }
 
         public productId: number;
-
         public productName: string;
-
         public settingType: Array<SettingType>;
     }
 }

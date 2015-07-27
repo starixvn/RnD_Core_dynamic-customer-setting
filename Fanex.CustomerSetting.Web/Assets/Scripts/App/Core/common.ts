@@ -1,12 +1,6 @@
-﻿module CustomerSetting {
-    export enum Level {
-        company = 5,
-        super = 4,
-        master = 3,
-        agent = 2,
-        member = 1
-    }
+﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 
+module CustomerSetting {
     export enum SettingLevel {
         product = 1,
         sportType = 2,
@@ -21,20 +15,20 @@
     }
 
     export class ErrorCodes {
-        public static get internalError(): number {
-            return -1;
+        public static get systemError(): string {
+            return "SystemError";
         }
 
-        public static get noChange(): number {
-            return -2;
+        public static get noChangeToUpdate(): string {
+            return "NoChangeToUpdate";
         }
 
-        public static get accessDenied(): number {
-            return -3;
+        public static get accessDenied(): string {
+            return "AccessDeniedMsg";
         }
     }
 
-    export class CommonErrorMessages {
+    export class Exceptions {
         public static negativeParam(paramName: string): string {
             return paramName + " must be greater than zero.";
         }
@@ -52,7 +46,7 @@
         }
     }
 
-    export class DefaultAppSettings {
+    export class Defaults {
         public static get language(): string {
             return "en-US";
         }

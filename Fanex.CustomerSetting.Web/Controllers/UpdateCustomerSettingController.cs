@@ -17,23 +17,23 @@
 
         public UpdateCustomerSettingController()
             : this(null)
-        { 
+        {
         }
 
         [HttpPost]
-        public JsonResult Index(UpdateCustomerSettingCommand updateSetting)
+        public JsonResult UpdateSetting(UpdateCustomerSettingCommand updateSetting)
         {
             var result = _customerSettingService.Update(updateSetting);
 
-            return Json(result);
+            return new JsonNetResult(result);
         }
 
         [HttpPost]
-        public JsonResult Index(MultipleUpdateCustomerSettingCommand updateMulitpleSetting)
+        public JsonResult UpdateMultipleSetting(MultipleUpdateCustomerSettingCommand updateMulitpleSetting)
         {
             var result = _customerSettingService.Update(updateMulitpleSetting);
 
-            return Json(result);
+            return new JsonNetResult(result);
         }
     }
 }

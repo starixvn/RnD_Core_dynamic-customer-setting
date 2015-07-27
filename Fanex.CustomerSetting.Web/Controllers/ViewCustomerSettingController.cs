@@ -22,32 +22,28 @@
         }
 
         [HttpGet]
+        //[OutputCache(Duration = 14400)]
         public ActionResult Index()
         {
             string filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");
             string htmlContent = System.IO.File.ReadAllText(filePath);
             string rootUrl = Request.ApplicationPath;
             string min = HttpContext.IsDebuggingEnabled ? string.Empty : ".min";
-            var versionId = new Guid();
-
-            if (rootUrl.EndsWith("/", StringComparison.CurrentCulture))
-            {
-                rootUrl = rootUrl.Substring(0, rootUrl.Length - 1);
-            }
+            string versionId = HttpContext.IsDebuggingEnabled ? "0.0.1" : Guid.NewGuid().ToString("N");
 
             htmlContent = htmlContent.Replace("{{rootUrl}}", rootUrl);
             htmlContent = htmlContent.Replace("{{min}}", min);
-            htmlContent = htmlContent.Replace("{{version}}", versionId.ToString());
+            htmlContent = htmlContent.Replace("{{version}}", versionId);
 
             return Content(htmlContent, "text/HTML");
         }
 
         [HttpGet]
-        public JsonResult GetSetting(CustomerSettingQuery querySetting)
+        public JsonResult QuerySetting(CustomerSettingQuery querySetting)
         {
             var customerSetting = _querySettingService.GetCustomerSetting(querySetting);
 
-            return Json(customerSetting, JsonRequestBehavior.AllowGet);
+            return new JsonNetResult(customerSetting, JsonRequestBehavior.AllowGet);
         }
     }
 }

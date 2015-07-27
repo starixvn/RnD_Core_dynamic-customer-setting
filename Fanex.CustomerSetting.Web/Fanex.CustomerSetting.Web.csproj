@@ -121,8 +121,9 @@
     <Folder Include="Assets\Scripts\Specs\SettingType4.Template1\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\App\Core\ocLazyLoad.js" />
+    <Content Include="Assets\Scripts\App\Core\OcLazyLoad\ocLazyLoad.js" />
     <Content Include="Assets\Scripts\App\customer-setting.htm" />
     <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -148,15 +149,14 @@
     <Content Include="Gulpfile.js" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\block-ui.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\constants.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\common.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\controller.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\models.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registration.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registrater.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\parameters.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\service.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.ts" />
@@ -180,7 +180,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <!--<Target Name="BeforeBuild">
+  <Target Name="BeforeBuild">
     <Exec Command="npm install" />
-  </Target>-->
+  </Target>
 </Project>

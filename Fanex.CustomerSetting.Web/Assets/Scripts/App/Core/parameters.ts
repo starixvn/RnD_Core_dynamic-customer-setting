@@ -1,51 +1,52 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="constants.ts" />
+/// <reference path="common.ts" />
 /// <reference path="models.ts" />
+/// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
     export class AbstractSettingQuery {
-        private _productId: number;
-        private _uplineLevel: Level;
-        private _customerLevel: Level;
+        private prodId: number;
+        private uplineLv: Level;
+        private custLv: Level;
 
         public get productId(): number {
-            return this._productId;
+            return this.prodId;
         }
 
         public set productId(productId: number) {
             if (productId <= 0) {
-                throw CommonErrorMessages.negativeParam("productId");
+                throw Exceptions.negativeParam("productId");
             }
 
-            this._productId = productId;
+            this.prodId = productId;
         }
 
         public get uplineLevel(): Level {
-            return this._uplineLevel;
+            return this.uplineLv;
         }
 
         public set uplineLevel(level: Level) {
             if (level < Level.agent) {
-                throw CommonErrorMessages.invalidParam("uplineLevel");
+                throw Exceptions.invalidParam("uplineLevel");
             }
 
             if (level === Level.company) {
                 level = null;
             }
 
-            this._uplineLevel = level;
+            this.uplineLv = level;
         }
 
         public get customerLevel(): Level {
-            return this._customerLevel;
+            return this.custLv;
         }
 
         public set customerLevel(level: Level) {
             if (level < Level.member || level > Level.super) {
-                throw CommonErrorMessages.wrongCustomerLevel;
+                throw Exceptions.wrongCustomerLevel;
             }
 
-            this._customerLevel = level;
+            this.custLv = level;
         }
     }
 
@@ -58,7 +59,7 @@ module CustomerSetting {
 
         public set customerId(custId: number) {
             if (custId <= 0) {
-                throw CommonErrorMessages.negativeParam("customerId");
+                throw Exceptions.negativeParam("customerId");
             }
 
             this._customerId = custId;
@@ -66,40 +67,40 @@ module CustomerSetting {
     }
 
     export class MultipleSettingQuery extends AbstractSettingQuery {
-        private _customerIds: Array<number>;
-        private _customerNames: Array<string>;
+        private custIds: Array<number>;
+        private custNames: Array<string>;
 
         public getCustomerIds(): Array<number> {
-            return this._customerIds;
+            return this.custIds;
         }
 
         public set customerIds(custIds: string) {
             if (custIds === undefined || custIds === "") {
-                throw CommonErrorMessages.invalidParam("customerIds");
+                throw Exceptions.invalidParam("customerIds");
             }
 
-            this._customerIds = custIds.split(",").map(custId => parseInt(custId.trim()));
+            this.custIds = custIds.split(",").map(custId => parseInt(custId.trim()));
         }
 
         public getCustomerNames(): Array<string> {
-            return this._customerNames;
+            return this.custNames;
         }
 
         public set customerNames(names: string) {
             if (names === undefined || names === "") {
-                throw CommonErrorMessages.invalidParam("customerNames");
+                throw Exceptions.invalidParam("customerNames");
             }
 
-            this._customerNames = names.split(",").map(name => name.trim());
+            this.custNames = names.split(",").map(name => name.trim());
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
             var query: SettingQuery = undefined;
 
-            if (this._customerIds.length > 0) {
+            if (this.custIds.length > 0 && this.validate()) {
                 query = new SettingQuery();
 
-                query.customerId = this._customerIds[0];
+                query.customerId = this.custIds[0];
                 query.customerLevel = this.customerLevel;
                 query.uplineLevel = this.uplineLevel;
                 query.productId = this.productId;
@@ -109,7 +110,7 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            return this._customerIds.length === this._customerNames.length;
+            return this.custIds.length === this.custNames.length;
         }
     }
 
@@ -120,61 +121,13 @@ module CustomerSetting {
     }
 
     export class MultipleSettingCommand extends SettingCommand {
-        constructor(public customerIds: Array<number>, public customerNames: Array<string>, uplineLevel: Level, setting: Setting) {
+        public customerIds: Array<number>;
+        public customerNames: Array<string>;
+
+        constructor(customerIds: Array<number>, customerNames: Array<string>, uplineLevel: Level, setting: Setting) {
             super(uplineLevel, setting);
-        }
-    }
-
-    export class ParametersFactory {
-        private _isMultuiple: boolean;
-        private _params: AbstractSettingQuery;
-
-        constructor(private $location: ng.ILocationService, private $rootScope: ng.IRootScopeService) {
-            this.searchForParams();
-
-            $rootScope.$on("$locationChangeStart", () => {
-                this.searchForParams();
-                $rootScope.$emit("customer-setting-path-changed");
-            });
-        }
-
-        public getSettingQuery(): SettingQuery {
-            if (this._isMultuiple) {
-                var multipleQuery = <MultipleSettingQuery>this._params;
-
-                if (!multipleQuery.validate()) {
-                    throw CommonErrorMessages.customerIdsNotMatchCustomerNames();
-                }
-
-                return multipleQuery.getFirstCustomerSettingQuery();
-            } else {
-                return <SettingQuery>this._params;
-            }
-        }
-
-        public createSettingCommand(setting: Setting): SettingCommand {
-            if (this._isMultuiple) {
-                var query = <MultipleSettingQuery>this._params;
-
-                return new MultipleSettingCommand(
-                    query.getCustomerIds(),
-                    query.getCustomerNames(),
-                    query.uplineLevel,
-                    setting);
-            } else {
-                return new SettingCommand(this._params.uplineLevel, setting);
-            }
-        }
-
-        private searchForParams(): void {
-            var params: any = this.$location.search();
-
-            if (params !== undefined) {
-                this._isMultuiple = params.isMultiple;
-                this._params = params;
-            }
-
-            this._params = undefined;
+            this.customerIds = customerIds;
+            this.customerNames = customerNames;
         }
     }
 }

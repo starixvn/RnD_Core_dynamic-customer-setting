@@ -13,7 +13,7 @@
             bundles.Add(new ScriptBundle("~/bundles/js2").Include(
                         "~/Scripts/Libraries/JQuery/jquery.js",
                         "~/Scripts/Libraries/AngularJs/angular.js",
-                        "~/Scripts/actor-form.js"));
+                        "~/Scripts/demo-form.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css"));
