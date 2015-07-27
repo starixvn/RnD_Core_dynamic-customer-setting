@@ -10,7 +10,9 @@
     <Setting Key="CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="SettingType" ObjectProperty="Id" />
     </Setting>
-    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="ProductName" ObjectProperty="ProductNameEN" />
+    </Setting>
     <Setting Key="CustSetting_CustomerInfoSelect" SpName="Acc_CustSetting_CustomerInfoSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     
   </Function>

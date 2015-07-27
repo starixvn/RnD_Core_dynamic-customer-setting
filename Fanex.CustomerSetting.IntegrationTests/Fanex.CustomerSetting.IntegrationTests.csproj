@@ -94,7 +94,13 @@
   <ItemGroup>
     <Compile Include="Models\ModifySettingTypeInfo.cs" />
     <Compile Include="Models\SettingContext.cs" />
-    <Compile Include="ProductInfo.cs" />
+    <Compile Include="SettingTypeInfo.cs" />
+    <Compile Include="Products\Product248\Product248Constants.cs" />
+    <Compile Include="Products\Product248\Product248_AgentEditsMember_IntegrationTests.cs" />
+    <Compile Include="Products\Product248\Product248_CompanyEditsSuper_IntegrationTests.cs" />
+    <Compile Include="Products\Product248\Product248_MasterEditsAgent_IntegrationTests.cs" />
+    <Compile Include="Products\Product248\Product248_SuperEditsMaster_IntegrationTests.cs" />
+    <Compile Include="Products\Product248\Product248_ViewCommissionMatrix_IntegrationTests.cs" />
     <Compile Include="Products\Product249\Product249Constants.cs" />
     <Compile Include="Products\Product249\Product249_AgentEditsMember_IntegrationTests.cs" />
     <Compile Include="Products\Product249\Product249_CompanyEditsSuper_IntegrationTests.cs" />
@@ -186,6 +192,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup />

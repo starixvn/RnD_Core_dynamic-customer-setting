@@ -31,10 +31,10 @@
         private Dictionary<byte, Action<ISettingItem, ISetting>> _assertUpdatedSettingTypes =
                 new Dictionary<byte, Action<ISettingItem, ISetting>>
                 {
-                    { ProductInfo.PTSettingTypeId, SettingTypesIntegration.SettingType1.AssertUpdatedMasterPT },
-                    { ProductInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
-                    { ProductInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
-                    { ProductInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus },
+                    { SettingTypeInfo.PTSettingTypeId, SettingTypesIntegration.SettingType1.AssertUpdatedMasterPT },
+                    { SettingTypeInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
+                    { SettingTypeInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
+                    { SettingTypeInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus },
                 };
 
         [Test]

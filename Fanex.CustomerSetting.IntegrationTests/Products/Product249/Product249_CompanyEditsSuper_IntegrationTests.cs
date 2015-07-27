@@ -24,7 +24,6 @@
                     SettingTypesIntegration.SettingType4.AssertGotSMAProductStatus
                 },
                 Product249Constants.ProductId,
-                Product249Constants.ProductName,
                 Product249Constants.NumOfSettingType);
         }
 
@@ -40,9 +39,9 @@
                     },
                 new Dictionary<byte, Action<ISettingItem, ISetting>>
                     {
-                        { ProductInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
-                        { ProductInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
-                        { ProductInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus }
+                        { SettingTypeInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
+                        { SettingTypeInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
+                        { SettingTypeInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus }
                     },
                 Product249Constants.ProductId);
         }

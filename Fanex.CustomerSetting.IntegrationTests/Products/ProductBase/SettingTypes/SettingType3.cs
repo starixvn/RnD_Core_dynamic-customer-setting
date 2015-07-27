@@ -10,7 +10,7 @@
     {
         public static void AssertGotCommission(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var commissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 
@@ -21,7 +21,7 @@
 
         public static ModifySettingTypeInfo ModifySuperCommission(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var superCommissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 
@@ -30,13 +30,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = superCommissionItem,
-                SettingTypeId = ProductInfo.CommissionSettingTypeId
+                SettingTypeId = SettingTypeInfo.CommissionSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMasterCommission(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var masterCommissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 
@@ -45,13 +45,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = masterCommissionItem,
-                SettingTypeId = ProductInfo.CommissionSettingTypeId
+                SettingTypeId = SettingTypeInfo.CommissionSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyAgentCommission(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var agentCommissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 
@@ -60,13 +60,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = agentCommissionItem,
-                SettingTypeId = ProductInfo.CommissionSettingTypeId
+                SettingTypeId = SettingTypeInfo.CommissionSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMemberCommission(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var memberCommissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 
@@ -75,13 +75,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = memberCommissionItem,
-                SettingTypeId = ProductInfo.CommissionSettingTypeId
+                SettingTypeId = SettingTypeInfo.CommissionSettingTypeId
             };
         }
 
         public static void AssertUpdatedCommission(ISettingItem commissionItem, ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.CommissionSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.CommissionSettingTypeId).FirstOrDefault();
 
             var newCommissionItem = settingType.SettingItems.ElementAt(0) as CommissionItem;
 

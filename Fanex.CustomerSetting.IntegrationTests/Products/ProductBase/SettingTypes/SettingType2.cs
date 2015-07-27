@@ -13,7 +13,7 @@
     {
         public static void AssertGotBetLimit(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var betLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 
@@ -25,7 +25,7 @@
 
         public static ModifySettingTypeInfo ModifySuperBetLimit(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var superBetLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 
@@ -36,13 +36,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = superBetLimitItem,
-                SettingTypeId = ProductInfo.BetLimitSettingTypeId
+                SettingTypeId = SettingTypeInfo.BetLimitSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMasterBetLimit(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var masterBetLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 
@@ -53,13 +53,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = masterBetLimitItem,
-                SettingTypeId = ProductInfo.BetLimitSettingTypeId
+                SettingTypeId = SettingTypeInfo.BetLimitSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyAgentBetLimit(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var agentBetLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 
@@ -70,13 +70,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = agentBetLimitItem,
-                SettingTypeId = ProductInfo.BetLimitSettingTypeId
+                SettingTypeId = SettingTypeInfo.BetLimitSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMemberBetLimit(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var memberBetLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 
@@ -87,13 +87,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = memberBetLimitItem,
-                SettingTypeId = ProductInfo.BetLimitSettingTypeId
+                SettingTypeId = SettingTypeInfo.BetLimitSettingTypeId
             };
         }
 
         public static void AssertUpdatedBetLimit(ISettingItem betLimitItem, ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.BetLimitSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.BetLimitSettingTypeId).FirstOrDefault();
 
             var newBetLimitItem = settingType.SettingItems.ElementAt(0) as BetLimitItem;
 

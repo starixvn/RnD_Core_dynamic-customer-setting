@@ -28,7 +28,6 @@
         protected void CompanyViewsSuperSetting(
             IEnumerable<Action<ISetting>> assertGotSettingTypes,
             byte productId = Product255Constants.ProductId,
-            string productName = Product255Constants.ProductName,
             byte numOfSettingTypes = Product255Constants.NumOfSettingType,
             int actorId = SettingInfo.CompanyId,
             int superId = SettingInfo.SuperId,
@@ -49,7 +48,7 @@
             Assert.AreEqual(superId, superSetting.CustomerId);
             Assert.AreEqual(Level.Super, superSetting.CustomerLevel);
             Assert.AreEqual(productId, superSetting.ProductId);
-            ////Assert.AreEqual(productName, superSetting.ProductName);
+            Assert.IsNotNullOrEmpty(superSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, superSetting.SettingTypes.Count());
 
             foreach (Action<ISetting> assertGotSettingType in assertGotSettingTypes)

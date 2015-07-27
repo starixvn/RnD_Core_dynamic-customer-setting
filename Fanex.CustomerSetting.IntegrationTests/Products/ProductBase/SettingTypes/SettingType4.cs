@@ -10,7 +10,7 @@
     {
         public static void AssertGotSMAProductStatus(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var productStatus = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 
@@ -20,7 +20,7 @@
 
         public static void AssertGotMemberProductStatus(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var productStatus = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 
@@ -29,7 +29,7 @@
 
         public static ModifySettingTypeInfo ModifySMAProductStatus(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var productStatusItem = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 
@@ -39,13 +39,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = productStatusItem,
-                SettingTypeId = ProductInfo.ProductStatusSettingTypeId
+                SettingTypeId = SettingTypeInfo.ProductStatusSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMemberProductStatus(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var productStatusItem = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 
@@ -54,13 +54,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = productStatusItem,
-                SettingTypeId = ProductInfo.ProductStatusSettingTypeId
+                SettingTypeId = SettingTypeInfo.ProductStatusSettingTypeId
             };
         }
 
         public static void AssertUpdatedSMAProductStatus(ISettingItem productStatusItem, ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var newProductStatus = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 
@@ -72,7 +72,7 @@
 
         public static void AssertUpdatedMemberProductStatus(ISettingItem productStatusItem, ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.ProductStatusSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.ProductStatusSettingTypeId).FirstOrDefault();
 
             var newProductStatus = settingType.SettingItems.ElementAt(0) as ProductStatusItem;
 

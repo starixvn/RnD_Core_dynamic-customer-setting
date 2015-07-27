@@ -32,7 +32,6 @@
             int memberId = SettingInfo.MemberId,
             string memberUsername = SettingInfo.MemberUserName,
             byte productId = Product255Constants.ProductId,
-            string productName = Product255Constants.ProductName,
             byte numOfSettingTypes = Product255Constants.NumOfSettingType)
         {
             //// Arrange
@@ -50,7 +49,7 @@
             Assert.AreEqual(memberId, memberSetting.CustomerId);
             Assert.AreEqual(Level.Member, memberSetting.CustomerLevel);
             Assert.AreEqual(productId, memberSetting.ProductId);
-            ////Assert.AreEqual(productName, memberSetting.ProductName);
+            Assert.IsNotNullOrEmpty(memberSetting.ProductName);
             Assert.AreEqual(numOfSettingTypes, memberSetting.SettingTypes.Count());
 
             foreach (Action<ISetting> assertGotSettingType in assertGotSettingTypes)

@@ -27,7 +27,7 @@
         private Dictionary<byte, Action<ISettingItem, ISetting>> _assertUpdatedSettingTypes =
                 new Dictionary<byte, Action<ISettingItem, ISetting>>
                 {
-                    { ProductInfo.PTSettingTypeId, SettingTypesIntegration.SettingType1.AssertUpdatedSuperPTOnMember }
+                    { SettingTypeInfo.PTSettingTypeId, SettingTypesIntegration.SettingType1.AssertUpdatedSuperPTOnMember }
                 };
 
         [Test]

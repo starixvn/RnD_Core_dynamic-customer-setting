@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.IntegrationTests
 {
-    public static class ProductInfo
+    public static class SettingTypeInfo
     {
         public const byte PTSettingTypeId = 1;
         public const byte BetLimitSettingTypeId = 2;

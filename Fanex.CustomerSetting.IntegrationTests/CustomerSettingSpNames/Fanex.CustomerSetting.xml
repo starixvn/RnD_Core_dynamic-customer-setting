@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Customer_Setting_Core">
     <Setting Key="CustSetting_SameLineCheck" SpName="Acc_CustSetting_SameLineCheck" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -6,12 +6,14 @@
     <Setting Key="CustSetting_SettingDetailSelect" SpName="Acc_CustSetting_SettingDetailSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="CustSetting_ActorStatusSelect" SpName="Acc_CustSetting_ActorStatusSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="CustSetting_CustomerLevelSelect" SpName="Acc_CustSetting_CustomerRoleSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    
+
     <Setting Key="CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="SettingType" ObjectProperty="Id" />
     </Setting>
-    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="ProductName" ObjectProperty="ProductNameEN" />
+    </Setting>
     <Setting Key="CustSetting_CustomerInfoSelect" SpName="Acc_CustSetting_CustomerInfoSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    
+
   </Function>
 </Functions>

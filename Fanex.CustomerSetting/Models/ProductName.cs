@@ -22,6 +22,8 @@
 
         public string ProductNameEN { get; set; }
 
+        public string ProductNameEL { get; set; }
+
         public string ProductNameRU { get; set; }
     }
 }

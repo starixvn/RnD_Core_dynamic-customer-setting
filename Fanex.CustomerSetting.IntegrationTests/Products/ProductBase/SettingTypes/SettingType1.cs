@@ -12,7 +12,7 @@
 
         public static void AssertGotSuperPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var superPTITem = settingType.SettingItems.ElementAt(0) as SuperPTItem;
 
@@ -26,7 +26,7 @@
 
         public static void AssertGotMasterPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var masterPTItem = settingType.SettingItems.ElementAt(0) as MasterPTItem;
 
@@ -38,7 +38,7 @@
 
         public static void AssertGotAgentPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var agentPTItem = settingType.SettingItems.ElementAt(0) as AgentPTItem;
 
@@ -50,7 +50,7 @@
 
         public static void AssertGotAgentPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var agentPTOnMemberItem = settingType.SettingItems.ElementAt(0) as AgentPTOnMemberItem;
 
@@ -60,7 +60,7 @@
 
         public static void AssertGotMasterPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var masterPTOnMemberItem = settingType.SettingItems.ElementAt(0) as MasterPTOnMemberItem;
 
@@ -71,7 +71,7 @@
 
         public static void AssertGotSuperPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var superPTOnMember = settingType.SettingItems.ElementAt(0) as SuperPTOnMemberItem;
 
@@ -87,7 +87,7 @@
 
         public static ModifySettingTypeInfo ModifySuperPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var superPTItem = settingType.SettingItems.ElementAt(0) as SuperPTItem;
 
@@ -99,13 +99,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = superPTItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMasterPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var masterPTItem = settingType.SettingItems.ElementAt(0) as MasterPTItem;
 
@@ -124,13 +124,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = masterPTItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyAgentPT(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var agentPT = settingType as PTSettingType;
             var agentPTItem = settingType.SettingItems.ElementAt(0) as AgentPTItem;
@@ -154,13 +154,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = agentPTItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyAgentPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var agentPTOnMemberItem = settingType.SettingItems.ElementAt(0) as AgentPTOnMemberItem;
 
@@ -169,13 +169,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = agentPTOnMemberItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifyMasterPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var masterPTOnMember = settingType as PTSettingType;
             var masterPTOnMemberItem = settingType.SettingItems.ElementAt(0) as MasterPTOnMemberItem;
@@ -205,13 +205,13 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = masterPTOnMemberItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
         public static ModifySettingTypeInfo ModifySuperPTOnMember(ISetting setting)
         {
-            var settingType = setting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = setting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var superPTOnMemberItem = settingType.SettingItems.ElementAt(0) as SuperPTOnMemberItem;
 
@@ -238,7 +238,7 @@
             return new ModifySettingTypeInfo
             {
                 SettingItem = superPTOnMemberItem,
-                SettingTypeId = ProductInfo.PTSettingTypeId
+                SettingTypeId = SettingTypeInfo.PTSettingTypeId
             };
         }
 
@@ -248,7 +248,7 @@
 
         public static void AssertUpdatedSuperPT(ISettingItem superPTItem, ISetting newSuperSetting)
         {
-            var settingType = newSuperSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newSuperSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newSuperPTItem = settingType.SettingItems.ElementAt(0) as SuperPTItem;
             var expectedSuperPTItem = superPTItem as SuperPTItem;
@@ -260,7 +260,7 @@
 
         public static void AssertUpdatedMasterPT(ISettingItem masterPTItem, ISetting newMasterSetting)
         {
-            var settingType = newMasterSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newMasterSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newMasterPTItem = settingType.SettingItems.ElementAt(0) as MasterPTItem;
 
@@ -274,7 +274,7 @@
 
         public static void AssertUpdatedAgentPT(ISettingItem agentPTItem, ISetting newAgentSetting)
         {
-            var settingType = newAgentSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newAgentSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newAgentPTItem = settingType.SettingItems.ElementAt(0) as AgentPTItem;
 
@@ -288,7 +288,7 @@
 
         public static void AssertUpdatedAgentPTOnMember(ISettingItem agentPTOnMemberItem, ISetting newAgentPTOnMemberSetting)
         {
-            var settingType = newAgentPTOnMemberSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newAgentPTOnMemberSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newAgentPTOnMemberItem = settingType.SettingItems.ElementAt(0) as AgentPTOnMemberItem;
 
@@ -299,7 +299,7 @@
 
         public static void AssertUpdatedMasterPTOnMember(ISettingItem masterPTOnMemberItem, ISetting newMasterPTOnMemberSetting)
         {
-            var settingType = newMasterPTOnMemberSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newMasterPTOnMemberSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newMasterPTOnMemberItem = settingType.SettingItems.ElementAt(0) as MasterPTOnMemberItem;
 
@@ -317,7 +317,7 @@
 
         public static void AssertUpdatedSuperPTOnMember(ISettingItem superPTOnMemberItem, ISetting newSuperPTOnMemberSetting)
         {
-            var settingType = newSuperPTOnMemberSetting.SettingTypes.Where(st => st.Id == ProductInfo.PTSettingTypeId).FirstOrDefault();
+            var settingType = newSuperPTOnMemberSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId).FirstOrDefault();
 
             var newSuperPTOnMemberItem = settingType.SettingItems.ElementAt(0) as SuperPTOnMemberItem;
 
