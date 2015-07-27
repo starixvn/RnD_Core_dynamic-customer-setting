@@ -13,7 +13,7 @@
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
         public PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
         {
-            CustomerLevel = pTMatrixDto.CustomerLevel;
+            CustomerLevel = Enumeration.FromValue<Level>(pTMatrixDto.LevelValue);
             SuperPT = pTMatrixDto.SuperPT;
             MasterPT = pTMatrixDto.MasterPT;
             AgentPT = pTMatrixDto.AgentPT;

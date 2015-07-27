@@ -10,7 +10,6 @@
 
     public class CustomerService : ICustomerService
     {
-
         private readonly IDynamicRepository _dynamicRepository;
 
         public CustomerService(IDynamicRepository dynamicRepository = null)
@@ -24,20 +23,20 @@
 
             var customerLineDto = GetCustomerLineDto(customerName);
             var customerLine = new List<Customer>();
-            var customerLevel = customerLineDto.CustomerLevel;
+            var customerLevel = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue);
 
-            if(customerLevel.IsMasterLevel)
+            if (customerLevel.IsMasterLevel)
             {
                 customerLine.Add(GetSuper(customerLineDto));
             }
-            
-            if(customerLevel.IsAgentLevel)
+
+            if (customerLevel.IsAgentLevel)
             {
                 customerLine.Add(GetSuper(customerLineDto));
                 customerLine.Add(GetMaster(customerLineDto));
             }
 
-            if(customerLevel.IsMemberLevel)
+            if (customerLevel.IsMemberLevel)
             {
                 customerLine.Add(GetSuper(customerLineDto));
                 customerLine.Add(GetMaster(customerLineDto));
@@ -95,7 +94,7 @@
                 Id = customerLineDto.CustId.GetValueOrDefault(0),
                 Name = customerLineDto.UserName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = customerLineDto.CustomerLevel
+                CustomerLevel = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue)
             };
 
             return customer;

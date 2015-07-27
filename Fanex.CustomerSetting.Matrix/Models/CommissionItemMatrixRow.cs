@@ -11,7 +11,7 @@
 
         public CommissionItemMatrixRow(CommissionItemMatrixDto commissionItemMatrixDto)
         {
-            CustomerLevel = commissionItemMatrixDto.CustomerLevel;
+            CustomerLevel = Enumeration.FromValue<Level>(commissionItemMatrixDto.LevelValue);
             CommRate = commissionItemMatrixDto.CommRate;
         }
 

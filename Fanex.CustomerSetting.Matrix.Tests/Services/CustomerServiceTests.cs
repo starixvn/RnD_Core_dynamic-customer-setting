@@ -38,8 +38,7 @@
 
             //// Assert
             _dynamicRepository.Received().Get<CustomerLineDto>(Arg.Is<CustomerLineQueryCriteria>(
-                criteria => criteria.UserName == customerName
-                ));
+                criteria => criteria.UserName == customerName));
         }
 
         [Test]
@@ -129,7 +128,7 @@
             return new CustomerLineDto
             {
                 CustId = 1,
-                CustomerLevel = customerLevel,
+                LevelValue = customerLevel.Value,
                 SuperId = 2,
                 SuperName = "SuperName",
                 MasterId = 3,

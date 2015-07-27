@@ -4,7 +4,7 @@
 
     public class CommissionItemMatrixDto
     {
-        public Level CustomerLevel { get; set; }
+        public byte LevelValue { get; set; }
 
         public short SportType { get; set; }
 

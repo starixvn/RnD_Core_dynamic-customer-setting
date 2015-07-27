@@ -8,7 +8,7 @@
 
         public string UserName { get; set; }
 
-        public Level CustomerLevel { get; set; }
+        public byte LevelValue { get; set; }
 
         public byte? Currency { get; set; }
 

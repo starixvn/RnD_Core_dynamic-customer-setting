@@ -252,7 +252,7 @@
                 IsLive = isLive,
                 SportType = sportType,
                 BetType = betType,
-                CustomerLevel = customerLevel,
+                LevelValue = customerLevel.Value,
                 SuperPT = superPT,
                 AutoSuperPT = autoSuperPT,
                 IsAutoSuperPT = isAutoSuperPT,

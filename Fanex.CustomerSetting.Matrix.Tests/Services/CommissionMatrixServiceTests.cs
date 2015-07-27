@@ -203,7 +203,7 @@
             {
                 SportType = sportType,
                 BetType = betType,
-                CustomerLevel = customerLevel,
+                LevelValue = customerLevel.Value,
                 CommRate = (decimal)commRate
             };
         }

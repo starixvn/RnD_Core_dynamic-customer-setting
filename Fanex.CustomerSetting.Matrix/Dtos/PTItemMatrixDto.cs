@@ -10,7 +10,7 @@
 
         public bool IsLive { get; set; }
 
-        public Level CustomerLevel { get; set; }
+        public byte LevelValue { get; set; }
 
         public byte? SuperPT { get; set; }
 
