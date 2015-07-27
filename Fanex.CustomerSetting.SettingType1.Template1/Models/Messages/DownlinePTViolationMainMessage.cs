@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models.Messages
 {
     using System.Linq;
     using System.Xml.Serialization;

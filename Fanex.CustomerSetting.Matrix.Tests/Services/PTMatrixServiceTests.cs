@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Matrix.UnitTests.Services
+﻿namespace Fanex.CustomerSetting.Matrix.Tests.Services
 {
     using System;
     using System.Collections.Generic;
@@ -66,6 +66,7 @@
         private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
         {
             dummySettingType = dummySettingType ?? InstanceFactory.CreateProductSettingType(1);
+
             _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<byte>()).Returns(dummySettingType);
 
             return dummySettingType;

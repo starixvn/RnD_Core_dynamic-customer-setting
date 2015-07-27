@@ -1,21 +1,22 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages
+﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models.Messages
 {
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingType1.Template1.Utilities;
 
-    public class DownlinePTViolationSubMessage : WrongPTSubMessage
+    public class MinPTViolationSubMessage : WrongPTSubMessage
     {
         [XmlAttribute]
-        public string UserName { get; set; }
+        public byte MinPT { get; set; }
 
         public override string ToString(IResourceService resourceService, string language, byte settingLevel)
         {
             return string.Format(
                 "{0} - {1}: {2}",
                 base.ToString(resourceService, language, settingLevel),
-                Label.UserNames,
-                UserName);
+                IsLive ? Label.MinLive : Label.Min,
+                PTFormatter.FormatPT(MinPT));
         }
     }
 }

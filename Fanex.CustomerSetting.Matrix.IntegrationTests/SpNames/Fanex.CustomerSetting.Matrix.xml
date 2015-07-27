@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Functions>
+  <Function Name="Customer_Setting_Maxtrix">
+    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_CustomerLineSelect" SpName="Acc_CustSetting_CustomerLineSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_IsAllowMasterAutoPTSelectByUsername" SpName="Acc_CustSetting_IsAllowMasterAutoPTSelectByUsername" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
+</Functions>

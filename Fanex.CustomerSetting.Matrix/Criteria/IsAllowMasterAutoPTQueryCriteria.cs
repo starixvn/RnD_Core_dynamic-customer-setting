@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "CustSetting_IsAllowMasterAutoPTSelectByUsername";
+            return "CustSetting_AllowMasterPTSelect";
         }
 
         public override bool IsValid()

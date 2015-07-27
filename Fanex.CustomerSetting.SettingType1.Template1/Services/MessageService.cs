@@ -1,11 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Services
 {
-    using System.Resources;
     using Fanex.CustomerSetting.Models.Messages;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType1.Template1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Template1.Dtos.Messages;
+    using Fanex.CustomerSetting.SettingType1.Template1.Models.Messages;
     using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class MessageService : MessageServiceBase, IMessageService

@@ -1,11 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    public class Customer
+    public class Customer : Entity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public byte Currency { get; set; }

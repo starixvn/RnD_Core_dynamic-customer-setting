@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Matrix.UnitTests.Services
+﻿namespace Fanex.CustomerSetting.Matrix.Tests.Services
 {
     using System;
     using System.Collections.Generic;

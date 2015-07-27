@@ -70,6 +70,38 @@
             }
         }
 
+        public bool IsMasterLevel
+        {
+            get
+            {
+                return this == Master;
+            }
+        }
+
+        public bool IsNotMasterLevel
+        {
+            get
+            {
+                return !IsMasterLevel;
+            }
+        }
+
+        public bool IsSuperLevel
+        {
+            get
+            {
+                return this == Super;
+            }
+        }
+
+        public bool IsNotSuperLevel
+        {
+            get
+            {
+                return !IsSuperLevel;
+            }
+        }
+
         public bool IsDirectUplineOf(byte downlineLevelValue)
         {
             return GapBetweenTwoLevels(this.Value, downlineLevelValue) == 1;

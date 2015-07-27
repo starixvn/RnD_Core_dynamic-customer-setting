@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.CustomerSetting.Matrix.UnitTests")]
+[assembly: AssemblyTitle("Fanex.CustomerSetting.Matrix.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.CustomerSetting.Matrix.UnitTests")]
+[assembly: AssemblyProduct("Fanex.CustomerSetting.Matrix.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7b4e4d25-4520-4d97-af49-c80b931c5b1b")]
+[assembly: Guid("ccdcba44-f4cf-4ed9-adda-b7fcb12824a8")]
 
 // Version information for an assembly consists of the following four values:
 //

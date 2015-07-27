@@ -12,7 +12,7 @@
 
         public override string GetSettingKey()
         {
-            return "CustSetting_CustomerLine";
+            return "CustSetting_CustomerLineInfoSelect";
         }
 
         public override bool IsValid()

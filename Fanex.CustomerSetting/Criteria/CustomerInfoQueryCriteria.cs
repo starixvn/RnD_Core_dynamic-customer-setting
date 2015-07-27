@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "CustSetting_UserInfoSelect";
+            return "CustSetting_CustomerInfoSelect";
         }
 
         public override bool IsValid()
