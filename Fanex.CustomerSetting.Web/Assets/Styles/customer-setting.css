@@ -227,7 +227,7 @@ select {
   padding: 1px 6px;
 }
 
-.loading-container .block-overlay {
+.block-overlay {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
   background: #fff;
@@ -238,7 +238,8 @@ select {
   top: 0;
   z-index: 10008;
 }
-.loading-container .block-loading {
+
+.block-loading {
   background: url(images/loading.gif) no-repeat center center;
   bottom: 0;
   left: 0;

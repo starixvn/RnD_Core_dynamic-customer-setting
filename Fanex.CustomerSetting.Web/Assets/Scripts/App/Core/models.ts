@@ -63,4 +63,19 @@ module CustomerSetting {
         public productName: string;
         public settingType: Array<SettingType>;
     }
+
+    export class Result {
+        constructor(
+            public code: number,
+            public message: string,
+            public messageType: MessageType) { }
+
+        public get systemError(): Result {
+            return new Result(-1, "SystemError", MessageType.error);
+        }
+
+        public get noChangeToUpdate(): Result {
+            return new Result(-2, "NoChangeToUpdate", MessageType.error);
+        }
+    }
 }

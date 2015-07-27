@@ -14,20 +14,6 @@ module CustomerSetting {
         error = 2
     }
 
-    export class ErrorCodes {
-        public static get systemError(): string {
-            return "SystemError";
-        }
-
-        public static get noChangeToUpdate(): string {
-            return "NoChangeToUpdate";
-        }
-
-        public static get accessDenied(): string {
-            return "AccessDeniedMsg";
-        }
-    }
-
     export class Exceptions {
         public static negativeParam(paramName: string): string {
             return paramName + " must be greater than zero.";

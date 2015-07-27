@@ -2,14 +2,6 @@
     "use strict";
 
     var gulp = require("gulp");
-    var banner = [
-                "/**",
-                " * <%= pkg.name %> - <%= pkg.description %>",
-                " * @version v<%= pkg.version %>",
-                " * @author <%= pkg.author %>",
-                " * @license <%= pkg.license %>",
-                " */",
-                ""].join("\n");
     var assetPaths = {
         bower: "./bower_components/",
         app: "./Assets/Scripts/App/",
@@ -104,7 +96,6 @@
     // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
     // We can fix it by gulp-ruby-sass, which uses Ruby as runtime compiler but it needs the Ruby gem be installed on the building machine.
     gulp.task("publish-styles2", function () {
-        var header = require("gulp-header");
         var rename = require("gulp-rename");
         var sass = require("gulp-sass");
         var sourcemaps = require("gulp-sourcemaps");
@@ -115,19 +106,23 @@
                    .pipe(sourcemaps.init())
                    .pipe(sass())
                    .pipe(sourcemaps.write())
-                   .pipe(header(banner, { pkg: pkg }))
                    .pipe(gulp.dest(publishPaths.customerSetting))
                    .pipe(minify())
                    .pipe(rename({ suffix: ".min" }))
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
-    gulp.task("publish-styles", function () {
-        var header = require("gulp-header");
+    gulp.task("publish-images", function () {
+        var pkg = require("./package.json");
+
+        return gulp.src(assetPaths.image + "*.*")
+                   .pipe(gulp.dest(publishPaths.customerSetting + "Images"));
+    });
+
+    gulp.task("publish-styles", ["publish-images"], function () {
         var pkg = require("./package.json");
 
         return gulp.src(assetPaths.style + "customer-setting*.{map,css}")
-                   .pipe(header(banner, { pkg: pkg }))
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
@@ -136,12 +131,10 @@
         var fs = require("fs");
         var gulpif = require("gulp-if");
         var gulpignore = require("gulp-ignore");
-        var header = require("gulp-header");
         var rename = require("gulp-rename");
         var sourcemaps = require("gulp-sourcemaps");
         var templateCache = require("gulp-angular-templatecache");
         var ts = require("gulp-typescript");
-        var typescriptAngular = require("gulp-typescript-angular");
         var uglify = require("gulp-uglify");
         var pkg = require("./package.json");
         var modules = [];
@@ -168,7 +161,6 @@
                 })))
                 .pipe(gulpignore.exclude(/[.]tt$/))
                 .pipe(concat(moduleName + ".js"))
-                .pipe(header(banner, { pkg: pkg }))
                 .pipe(sourcemaps.write("."))
                 .pipe(gulp.dest(publishPaths.customerSetting))
                 .pipe(uglify())
@@ -189,8 +181,9 @@
             done);
     });
 
-    gulp.task("watch", ["publish-script", "publish-template"], function () {
+    gulp.task("watch", ["publish-script", "publish-template", "publish-styles"], function () {
         gulp.watch(assetPaths.app + "**/*.{ts, htm}", ["publish-script"]);
         gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
+        gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
     });
 })(require);
