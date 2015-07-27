@@ -48,6 +48,16 @@ module CustomerSetting {
 
             this.custLv = level;
         }
+
+        constructor();
+        constructor(param: any);
+        constructor(param?: any) {
+            if (param !== undefined) {
+                this.productId = param.productId;
+                this.uplineLevel = param.uplineLevel;
+                this.customerLevel = param.customerLevel;
+            }
+        }
     }
 
     export class SettingQuery extends AbstractSettingQuery {
@@ -63,6 +73,26 @@ module CustomerSetting {
             }
 
             this._customerId = custId;
+        }
+
+        public toParamString(): string {
+            var paramString = "customerId=" + this.customerId + "&customerLevel=" + this.customerLevel + "&productId=" + this.productId;
+
+            if (this.uplineLevel !== undefined) {
+                paramString += "&uplineLevel=" + this.uplineLevel;
+            }
+
+            return paramString;
+        }
+
+        constructor();
+        constructor(param: any);
+        constructor(param?: any) {
+            super(param);
+
+            if (param !== undefined) {
+                this.customerId = param.customerId;
+            }
         }
     }
 
@@ -107,6 +137,17 @@ module CustomerSetting {
             }
 
             return query;
+        }
+
+        constructor();
+        constructor(param: any);
+        constructor(param?: any) {
+            super(param);
+
+            if (param !== undefined) {
+                this.customerIds = param.customerIds;
+                this.customerNames = param.customerNames;
+            }
         }
 
         public validate(): boolean {

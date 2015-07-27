@@ -75,7 +75,7 @@ module DemoFrom {
                 params.customerId = (<SingleTarget>this.target).customerId;
             }
 
-            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "#");
+            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "/#?");
 
             // Cheating step, force the iframe to reload. Because I don't want to create another super simple directive just for the demo page.
             (<HTMLIFrameElement>document.getElementById("setting-page")).contentWindow.location.reload();

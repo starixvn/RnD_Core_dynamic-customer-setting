@@ -204,11 +204,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.Template1.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.Template1.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.Template1.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.Template1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.Template1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.Template1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>

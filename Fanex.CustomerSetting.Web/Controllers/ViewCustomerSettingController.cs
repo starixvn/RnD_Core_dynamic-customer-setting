@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -39,8 +40,17 @@
         }
 
         [HttpGet]
-        public JsonResult QuerySetting(CustomerSettingQuery querySetting)
+        public JsonResult QuerySetting(
+            int customerId,
+            byte customerLevel,
+            byte productId,
+            byte? uplineLevel = null)
         {
+            var querySetting = new CustomerSettingQuery(
+                customerId,
+                Level.FromValue<Level>(customerLevel),
+                productId,
+                uplineLevel != null ? Level.FromValue<Level>(uplineLevel.Value) : null);
             var customerSetting = _querySettingService.GetCustomerSetting(querySetting);
 
             return new JsonNetResult(customerSetting, JsonRequestBehavior.AllowGet);

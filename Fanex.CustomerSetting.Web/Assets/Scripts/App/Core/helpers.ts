@@ -37,7 +37,7 @@ module CustomerSetting {
 
         public getSettingQuery(): SettingQuery {
             if (this.isMultiple) {
-                var multipleQuery = <MultipleSettingQuery>this.params;
+                var multipleQuery = new MultipleSettingQuery(this.params);
 
                 if (!multipleQuery.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
@@ -45,13 +45,13 @@ module CustomerSetting {
 
                 return multipleQuery.getFirstCustomerSettingQuery();
             } else {
-                return <SettingQuery>this.params;
+                return new SettingQuery(this.params);
             }
         }
 
         public getMultipleSetting(): MultipleSettingQuery {
             if (this.isMultiple) {
-                var query = <MultipleSettingQuery>this.params;
+                var query = new MultipleSettingQuery(this.params);
 
                 if (!query.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
@@ -65,7 +65,7 @@ module CustomerSetting {
 
         public createSettingCommand(setting: Setting): SettingCommand {
             if (this.isMultiple) {
-                var query = <MultipleSettingQuery>this.params;
+                var query = new MultipleSettingQuery(this.params);
 
                 if (!query.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();

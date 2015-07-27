@@ -70,12 +70,22 @@ module CustomerSetting {
             public message: string,
             public messageType: MessageType) { }
 
-        public get systemError(): Result {
+        public static get systemError(): Result {
             return new Result(-1, "SystemError", MessageType.error);
         }
 
-        public get noChangeToUpdate(): Result {
+        public static get noChangeToUpdate(): Result {
             return new Result(-2, "NoChangeToUpdate", MessageType.error);
+        }
+    }
+
+    export class SettingResult extends Result {
+        constructor(
+            public code?: number,
+            public message?: string,
+            public messageType?: MessageType,
+            public subResults?: Array<Result>) {
+            super(code, message, messageType);
         }
     }
 }

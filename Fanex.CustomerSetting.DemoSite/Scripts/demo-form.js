@@ -61,7 +61,7 @@ var DemoFrom;
             else {
                 params.customerId = this.target.customerId;
             }
-            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "#");
+            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "/#?");
             document.getElementById("setting-page").contentWindow.location.reload();
         };
         DemoFormController.$inject = ["$http", "$location"];

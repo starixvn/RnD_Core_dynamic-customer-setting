@@ -123,8 +123,8 @@
   <ItemGroup>
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\App\Core\InlineMessage\inline-message.htm" />
     <Content Include="Assets\Scripts\App\Core\OcLazyLoad\ocLazyLoad.js" />
+    <Content Include="Assets\Scripts\App\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\App\Core\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\App\customer-setting.htm" />
     <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.tt">
@@ -155,10 +155,10 @@
     <TypeScriptCompile Include="Assets\Scripts\App\Core\helpers.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\common.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\controller.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\InlineMessage\inline-message.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registrater.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />

@@ -1,0 +1,10 @@
+﻿<div class="result-container" data-ng-show="result">
+    <div class="result" data-ng-show="!result.subResults" data-ng-class="result.messageType.toString()">
+        <div class="message-icon"></div>
+        <div data-ng-bind-html="result.message"></div>
+    </div>
+    <div data-ng-show="!result.subResults" data-ng-repeat="subResult in result.subResults" data-ng-class="subResult.messageType.toString()">
+        <div class="message-icon"></div>
+        <div data-ng-bind-html="subResult.message"></div>
+    </div>
+</div>

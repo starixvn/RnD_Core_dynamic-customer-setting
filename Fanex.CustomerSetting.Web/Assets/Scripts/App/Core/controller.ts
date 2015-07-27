@@ -28,6 +28,7 @@ module CustomerSetting {
 
         public isUIblocked: boolean;
         public setting: Setting;
+        public updSettingResult: SettingResult;
 
         constructor(
             private $http: ng.IHttpService,
@@ -40,7 +41,11 @@ module CustomerSetting {
             var query = this.parametersService.getSettingQuery();
 
             this.isUIblocked = true;
-            console.log(query);
+            this.$http.get(this.appConfigService.resolveRootUrl("viewCustomerSetting/querySetting?" + query.toParamString())).success((data: Setting) => {
+                console.log(data);
+                this.isUIblocked = false;
+                this.updSettingResult = <SettingResult>Result.systemError;
+            });
         }
     }
 
