@@ -164,7 +164,7 @@
 
             var agentPTOnMemberItem = settingType.SettingItems.ElementAt(0) as AgentPTOnMemberItem;
 
-            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 14 ? 15 : 14);
+            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 20 ? 21 : 20);
 
             return new ModifySettingTypeInfo
             {

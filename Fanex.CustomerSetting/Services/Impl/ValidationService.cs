@@ -52,7 +52,7 @@
         {
             if (query == null)
             {
-                throw new NotImplementedException("query");
+                throw new ArgumentNullException("query");
             }
 
             var customerId = query.CustomerId;

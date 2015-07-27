@@ -20,6 +20,7 @@
                 new List<Action<ISetting>>
                 {
                     SettingTypesIntegration.SettingType2.AssertGotBetLimit,
+                    SettingTypesIntegration.SettingType3.AssertGotCommission,
                     SettingTypesIntegration.SettingType4.AssertGotSMAProductStatus
                 },
                 Product249Constants.ProductId,
@@ -34,11 +35,13 @@
                 new List<Func<ISetting, ModifySettingTypeInfo>>
                     {
                         SettingTypesIntegration.SettingType2.ModifySuperBetLimit,
+                        SettingTypesIntegration.SettingType3.ModifySuperCommission,
                         SettingTypesIntegration.SettingType4.ModifySMAProductStatus
                     },
                 new Dictionary<byte, Action<ISettingItem, ISetting>>
                     {
                         { ProductInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
+                        { ProductInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
                         { ProductInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus }
                     },
                 Product249Constants.ProductId);

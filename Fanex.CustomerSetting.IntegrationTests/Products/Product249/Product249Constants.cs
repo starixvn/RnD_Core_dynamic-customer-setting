@@ -6,6 +6,6 @@
         
         public const string ProductName = "CSR-Sample Product-EN";
 
-        public const byte NumOfSettingType = 2;
+        public const byte NumOfSettingType = 3;
     }
 }

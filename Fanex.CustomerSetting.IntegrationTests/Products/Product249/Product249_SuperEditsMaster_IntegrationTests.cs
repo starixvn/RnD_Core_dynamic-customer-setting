@@ -15,12 +15,14 @@
         private IEnumerable<Action<ISetting>> _assertGotSettingTypes = new List<Action<ISetting>>
                 {
                     SettingTypesIntegration.SettingType2.AssertGotBetLimit,
+                    SettingTypesIntegration.SettingType3.AssertGotCommission,
                     SettingTypesIntegration.SettingType4.AssertGotSMAProductStatus
                 };
 
         private IEnumerable<Func<ISetting, ModifySettingTypeInfo>> _modifySettingTypes = new List<Func<ISetting, ModifySettingTypeInfo>>
                 {
                     SettingTypesIntegration.SettingType2.ModifyMasterBetLimit,
+                    SettingTypesIntegration.SettingType3.ModifyMasterCommission,
                     SettingTypesIntegration.SettingType4.ModifySMAProductStatus
                 };
 
@@ -28,6 +30,7 @@
                 new Dictionary<byte, Action<ISettingItem, ISetting>>
                 {
                     { ProductInfo.BetLimitSettingTypeId, SettingTypesIntegration.SettingType2.AssertUpdatedBetLimit },
+                    { ProductInfo.CommissionSettingTypeId, SettingTypesIntegration.SettingType3.AssertUpdatedCommission },
                     { ProductInfo.ProductStatusSettingTypeId, SettingTypesIntegration.SettingType4.AssertUpdatedSMAProductStatus }
                 };
 
