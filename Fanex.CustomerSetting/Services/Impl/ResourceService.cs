@@ -9,12 +9,11 @@
 
     public class ResourceService : IResourceService
     {
-        private const int ProductNamesCacheTimeout = 12 * 60 * 60; // 1 day
-        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey_{0}";
+        private const int ProductNamesCacheTimeout = 1; // 1 hour
+        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey_{0}_{1}";
         private const string SportTypeDefaultFormat = "Sport Type {0}";
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
-        private const string DefaultRefDataLanguage = "en";
 
         private readonly IDynamicRepository _resourceRepository;
         private readonly IRemotingRefService _remotingRef;
@@ -34,57 +33,46 @@
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var productName = GetProductNameFromCache(productId);
+            var languageKey = LanguageNameConverter.GetRefLanguageName(language).ToUpper();
+
+            var productName = GetProductNameFromCache(productId, languageKey);
 
             if (productName != null)
             {
-                return GetProductNameWithLanguage(productName, language);
+                return productName.Name;
             }
 
             return string.Format(ProductDefaultFormat, productId);
         }
 
-        private ProductName GetProductNameFromCache(byte productId)
+        private ProductName GetProductNameFromCache(byte productId, string languageKey)
         {
-            var cacheKey = string.Format(ProductNamesCacheKey, productId);
+            var cacheKey = string.Format(ProductNamesCacheKey, productId, languageKey);
 
             var productName = _cachingservice.GetOrAdd<ProductName>(
                 cacheKey,
                 () =>
                 {
-                    return _resourceRepository.Query<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
+                    return _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria
+                    {
+                        ProductId = productId,
+                        LanguageKey = languageKey
+                    });
                 },
-                new TimeSpan(1, 0, 0));
+                new TimeSpan(ProductNamesCacheTimeout, 0, 0));
 
             return productName;
         }
 
-        private string GetProductNameWithLanguage(ProductName productName, string language)
-        {
-            var propertyName = string.Format("ProductName{0}", LanguageNameConverter.GetRefLanguageName(language).ToUpper());
-            var property = productName.GetType().GetProperty(propertyName);
-
-            if (property == null)
-            {
-                return productName.ProductNameEN;
-            }
-            else if (property.GetValue(productName, null) == null)
-            {
-                return string.Format(Resource.Message.ProductNameMissing, productName.ProductId, language);
-            }
-
-            return property.GetValue(productName, null).ToString();
-        }
-
         public string GetSportTypeName(int sportTypeId, string language)
         {
-            if(sportTypeId <= 0)
+            if (sportTypeId <= 0)
             {
                 return string.Empty;
             }
 
             var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
-            
+
             return string.IsNullOrEmpty(sportTypeName)
                 ? string.Format(SportTypeDefaultFormat, sportTypeId)
                 : sportTypeName;
@@ -98,7 +86,7 @@
             }
 
             var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
-            
+
             return string.IsNullOrEmpty(betTypeName)
                 ? string.Format(BetTypeDefaultFormat, betTypeId)
                 : betTypeName;

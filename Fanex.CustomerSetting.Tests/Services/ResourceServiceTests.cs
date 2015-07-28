@@ -49,7 +49,7 @@
         {
             //// Arrange
             byte productId = 1;
-            var productName = new ProductName { ProductId = productId, ProductNameEN = "product name EN" };
+            var productName = new ProductName { ProductId = productId, Name = "product name EN" };
             _cachingService.GetOrAdd<ProductName>(
                 Arg.Any<string>(), 
                 Arg.Any<Func<ProductName>>(), 
@@ -59,7 +59,7 @@
             var actualResult = _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            Assert.AreEqual(productName.ProductNameEN, actualResult);
+            Assert.AreEqual(productName.Name, actualResult);
         }
 
         [Test]
@@ -85,7 +85,7 @@
         {
             //// Arrange
             byte productId = 1;
-            ProductName productName = new ProductName { ProductNameEN = "A product name" };
+            ProductName productName = new ProductName { Name = "A product name" };
 
             _cachingService.GetOrAdd<ProductName>(
                Arg.Any<string>(),
@@ -98,43 +98,7 @@
             var actualResult = _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            Assert.AreEqual(productName.ProductNameEN, actualResult);
-        }
-
-        [Test]
-        public void GetProductName_Always_ReturnProductNameInRightLanguage()
-        {
-            //// Arrange
-            byte productId = 1;
-            ProductName productName = new ProductName { ProductNameEN = "Prod EN", ProductNameTH = "Prod TH" };
-            _cachingService.GetOrAdd<ProductName>(
-              Arg.Any<string>(),
-              Arg.Any<Func<ProductName>>(),
-              new TimeSpan(1, 0, 0)).Returns(productName);
-
-            //// Act
-            var actualResult = _resourceService.GetProductName(productId, _language);
-
-            //// Assert
-            Assert.AreEqual(productName.ProductNameEN, actualResult);
-        }
-
-        [Test]
-        public void GetProductName_UnSupportedLanguage_ReturnProductNameInEnglish()
-        {
-            //// Arrange
-            byte productId = 1;
-            ProductName productName = new ProductName { ProductNameEN = "Prod EN", ProductNameTH = "Prod TH" };
-            _cachingService.GetOrAdd<ProductName>(
-              Arg.Any<string>(),
-              Arg.Any<Func<ProductName>>(),
-              new TimeSpan(1, 0, 0)).Returns(productName);
-
-            //// Act
-            var actualResult = _resourceService.GetProductName(productId, Arg.Any<string>());
-
-            //// Assert
-            Assert.AreEqual(productName.ProductNameEN, actualResult);
+            Assert.AreEqual(productName.Name, actualResult);
         }
 
         #endregion Get Product Name

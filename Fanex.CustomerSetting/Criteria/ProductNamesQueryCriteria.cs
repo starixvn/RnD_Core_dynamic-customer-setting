@@ -4,7 +4,9 @@
 
     public class ProductNamesQueryCriteria : CriteriaBase
     {
-        public byte? ProductId { get; set; }
+        public byte ProductId { get; set; }
+
+        public string LanguageKey { get; set; }
 
         public override string GetSettingKey()
         {
@@ -13,7 +15,7 @@
 
         public override bool IsValid()
         {
-            return true;
+            return ProductId > 0 && !string.IsNullOrEmpty(LanguageKey);
         }
     }
 }
