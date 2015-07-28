@@ -23,12 +23,18 @@ module CustomerSetting {
 
     export class ParametersService {
         private params: AbstractSettingQuery;
-        private multiple: boolean;
+        private isMultiple: boolean;
+        private lang: string;
+        private custNames: string;
 
         public static $inject: string[] = ["$location"];
 
-        public get isMultiple(): boolean {
-            return this.multiple;
+        public get language(): string {
+            return this.lang;
+        }
+
+        public get customerNames(): string {
+            return this.custNames;
         }
 
         constructor(private $location: ng.ILocationService) {
@@ -47,20 +53,6 @@ module CustomerSetting {
             } else {
                 return new SettingQuery(this.params);
             }
-        }
-
-        public getMultipleSetting(): MultipleSettingQuery {
-            if (this.isMultiple) {
-                var query = new MultipleSettingQuery(this.params);
-
-                if (!query.validate()) {
-                    throw Exceptions.customerIdsNotMatchCustomerNames();
-                }
-
-                return query;
-            }
-
-            return undefined;
         }
 
         public createSettingCommand(setting: Setting): SettingCommand {
@@ -85,8 +77,10 @@ module CustomerSetting {
             var params: any = this.$location.search();
 
             if (params !== undefined) {
-                this.multiple = params.isMultiple || false;
                 this.params = params;
+                this.isMultiple = params.isMultiple || false;
+                this.lang = params.language;
+                this.custNames = params.customerNames;
             } else {
                 this.params = undefined;
             }
@@ -94,4 +88,12 @@ module CustomerSetting {
     }
 
     ModuleRegister.service("parametersService", ParametersService);
+
+    export function NAValue() {
+        return (value: string) => {
+            return value || "---";
+        }
+    }
+
+    ModuleRegister.filter("naValue", NAValue);
 }

@@ -39,6 +39,8 @@ module CustomerSetting {
         public name: string;
         public settingTemplate: number;
         public settingLevel: number;
+        public settingItems: Array<SettingItem>;
+        public typeName: string;
     }
 
     export class Setting {
@@ -61,14 +63,14 @@ module CustomerSetting {
 
         public productId: number;
         public productName: string;
-        public settingType: Array<SettingType>;
+        public settingTypes: Array<SettingType>;
     }
 
     export class Result {
         constructor(
             public code: number,
             public message: string,
-            public messageType: MessageType) { }
+            public msgType: MessageType) { }
 
         public static get systemError(): Result {
             return new Result(-1, "SystemError", MessageType.error);
@@ -83,9 +85,9 @@ module CustomerSetting {
         constructor(
             public code?: number,
             public message?: string,
-            public messageType?: MessageType,
+            public msgType?: MessageType,
             public subResults?: Array<Result>) {
-            super(code, message, messageType);
+            super(code, message, msgType);
         }
     }
 }

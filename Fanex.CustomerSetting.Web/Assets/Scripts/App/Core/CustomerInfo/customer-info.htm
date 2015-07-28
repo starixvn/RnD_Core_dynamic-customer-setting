@@ -1,26 +1,26 @@
-﻿<div class="information-block">
-    <div class="header">{{"GeneralInformation" | resourceTranslation}}</div>
+﻿<div class="block info-block" data-ng-show="info">
+    <div class="header">{{::("GeneralInformation" | label)}}</div>
     <div class="row">
-        <div class="col-1">{{"Username" | resourceTranslation}}</div>
-        <div class="col-2" data-ng-bind="userName"></div>
-        <div class="col-3">{{"Nickname" | resourceTranslation}}</div>
-        <div class="col-4" data-ng-bind="nickName"></div>
+        <div class="col-1">{{::("Username" | label)}}</div>
+        <div class="col-2">{{info.userName | naValue}}</div>
+        <div class="col-3">{{::("Nickname" | label)}}</div>
+        <div class="col-4">{{info.username2 | naValue}}</div>
     </div>
     <div class="row">
-        <div class="col-1">{{"FirstName" | resourceTranslation}}</div>
-        <div class="col-2" data-ng-bind="firstName"></div>
-        <div class="col-3">{{"Phone" | resourceTranslation}}</div>
-        <div class="col-4" data-ng-bind="phone"></div>
+        <div class="col-1">{{::("FirstName" | label)}}</div>
+        <div class="col-2">{{info.firstName | naValue}}</div>
+        <div class="col-3">{{::("Phone" | label)}}</div>
+        <div class="col-4">{{info.phone | naValue}}</div>
     </div>
     <div class="row">
-        <div class="col-1">{{"LastName" | resourceTranslation}}</div>
-        <div class="col-2" data-ng-bind="lastName"></div>
-        <div class="col-3">{{"MobilePhone" | resourceTranslation}}</div>
-        <div class="col-4" data-ng-bind="mobilePhone"></div>
+        <div class="col-1">{{::("LastName" | label)}}</div>
+        <div class="col-2">{{info.lastName | naValue}}</div>
+        <div class="col-3">{{::("MobilePhone" | label)}}</div>
+        <div class="col-4">{{info.mobilePhone | naValue}}</div>
     </div>
-    <div class="row">
-        <div class="col-1">{{"Fax" | resourceTranslation}}</div>
-        <div class="col-2" data-ng-bind="fax"></div>
+    <div class="row last-row">
+        <div class="col-1">{{::("Fax" | label)}}</div>
+        <div class="col-2">{{info.fax | naValue}}</div>
         <div class="col-3"></div>
         <div class="col-4"></div>
     </div>

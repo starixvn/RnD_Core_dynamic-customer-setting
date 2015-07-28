@@ -1,5 +1,9 @@
 ﻿@import "Compass/_compass.scss";
 
+$border-color: #7c98a4;
+$background-color: #e6e9f0;
+$header-color: #b5c4d0;
+
 body {
     font: {
         family: Tahoma, Arial, helvetica, sans-serif;
@@ -54,7 +58,7 @@ select {
 
 .update {
     @include box-sizing(border-box);
-    background-color: #7c98a4;
+    background-color: $border-color;
     border: 0;
     color: #fff;
     cursor: pointer;
@@ -111,24 +115,21 @@ select {
     float: left;
 }
 
-.message-container {
+.result-container {
     @include box-sizing(border-box);
-    border: solid 1px #7c98a4;
+    border: solid 1px $border-color;
     background-color: #f6f5f2;
     font-weight: bold;
     margin-bottom: 10px;
 
-    &.name {
-        padding: 3px 5px;
-    }
-
-    &.message {
+    .result {
         padding: 3px 5px;
 
         &.success {
             color: #618e11;
 
-            .icon {
+            .message-icon {
+                @extend .icon;
                 background-position: -65px 0;
             }
         }
@@ -136,7 +137,8 @@ select {
         &.warning {
             color: #c28f06;
 
-            .icon {
+            .message-icon {
+                @extend .icon;
                 background-position: -51px 0;
             }
         }
@@ -144,7 +146,8 @@ select {
         &.error {
             color: #f40000;
 
-            .icon {
+            .message-icon {
+                @extend .icon;
                 background-position: -51px 0;
             }
         }
@@ -152,10 +155,6 @@ select {
         .content {
             line-height: 15px;
             padding-left: 20px;
-
-            .rows {
-                padding-left: 15px;
-            }
         }
 
         .icon {
@@ -166,7 +165,7 @@ select {
     }
 }
 
-.dialog-container {
+/*.dialog-container {
     .dialog-overlay {
         @include opacity(0.5);
         background-color: #fff;
@@ -234,7 +233,7 @@ select {
             }
         }
     }
-}
+}*/
 
 .block-overlay {
     @include opacity(0.5);
@@ -257,7 +256,7 @@ select {
     z-index: 10009;
 }
 
-.tooltip-container {
+/*.tooltip-container {
     padding: 5px 0;
     position: absolute;
     z-index: 1070;
@@ -270,36 +269,67 @@ select {
         text-align: center;
         text-decoration: none;
     }
-}
+}*/
 
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
 .customer-setting {
+    background-color: $background-color;
+    border: 1px solid $border-color;
     float: left;
+    padding: 2px;
     width: 860px;
-}
 
-.product-container {
-    .container {
+    .block {
+        @include box-sizing(border-box);
         background-color: #fff;
+        border: 1px solid $border-color;
+        margin-bottom: 10px;
+        width: 100%;
 
-        border: {
-            bottom: 1px solid #7c98a4;
-            right: 1px solid #7c98a4;
+        .header {
+            background-color: $header-color;
+            border-bottom: 1px solid $border-color;
+            font-weight: bold;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+
+            &.customer-names-header {
+                border-bottom: none;
+            }
+
+            .update {
+                border-left: 1px solid $border-color;
+                cursor: pointer;
+                float: right;
+                height: 100%;
+                line-height: 20px;
+                width: 42px;
+            }
         }
 
+        .body {
+        }
+    }
+}
+
+/*.product-container {
+    .container {
+        background-color: #fff;
+        border: 1px solid $border-color;
         float: left;
         margin-bottom: 10px;
         width: 100%;
 
         .header {
             @include box-sizing(border-box);
-            background-color: #b5c4d0;
+            background-color: $background-color;
 
             border: {
-                left: 1px solid #7c98a4;
-                top: 1px solid #7c98a4;
+                left: 1px solid $border-color;
+                top: 1px solid $border-color;
             }
 
             font-weight: bold;
@@ -308,7 +338,7 @@ select {
             text-align: center;
 
             .update {
-                border-left: 1px solid #7c98a4;
+                border-left: 1px solid $border-color;
                 cursor: pointer;
                 float: right;
                 height: 100%;
@@ -324,11 +354,11 @@ select {
 
                 div {
                     @include box-sizing(border-box);
-                    background-color: #b5c4d0;
+                    background-color: $background-color;
 
                     border: {
-                        left: 1px solid #7c98a4;
-                        top: 1px solid #7c98a4;
+                        left: 1px solid $border-color;
+                        top: 1px solid $border-color;
                     }
 
                     float: left;
@@ -343,11 +373,11 @@ select {
                 @include box-sizing(border-box);
                 @include clearfix();
                 @include ellipsis(true);
-                background-color: #b5c4d0;
+                background-color: $background-color;
 
                 border: {
-                    left: 1px solid #7c98a4;
-                    top: 1px solid #7c98a4;
+                    left: 1px solid $border-color;
+                    top: 1px solid $border-color;
                 }
 
                 float: left;
@@ -368,8 +398,8 @@ select {
                 @include clearfix();
 
                 border: {
-                    left: 1px solid #7c98a4;
-                    top: 1px solid #7c98a4;
+                    left: 1px solid $border-color;
+                    top: 1px solid $border-color;
                 }
 
                 height: 23px;
@@ -379,29 +409,35 @@ select {
             }
         }
     }
-}
+}*/
 
-.information-block > .row {
-    float: left;
-    width: 100%;
+.info-block .row {
+    @include clearfix();
 
-    div {
+    &.last-row {
+        .col-1,
+        .col-2,
+        .col-3,
+        .col-4 {
+            border-bottom: none;
+        }
+    }
+
+    .col-1,
+    .col-2,
+    .col-3,
+    .col-4 {
         @include box-sizing(border-box);
-        @include clearfix();
 
         border: {
-            left: 1px solid #7c98a4;
-            top: 1px solid #7c98a4;
+            bottom: 1px solid $border-color;
+            right: 1px solid $border-color;
         }
 
         float: left;
         height: 23px;
         line-height: 23px;
         padding: 0 3px;
-    }
-
-    col-1,
-    col-3 {
         width: 20%;
     }
 
@@ -409,12 +445,16 @@ select {
     .col-4 {
         width: 30%;
     }
+
+    .col-4 {
+        border-right: none;
+    }
 }
 
 /*********************************************************/
 /*                    Setting Type 1                     */
 /*********************************************************/
-.dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
+/*.dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
     margin-left: 20px;
 }
 
@@ -441,12 +481,12 @@ select {
             text-align: left;
         }
     }
-}
+}*/
 
 /*********************************************************/
 /*                    Setting Type 2                     */
 /*********************************************************/
-.bet-limit-block {
+/*.bet-limit-block {
     .bet-limit-item {
         float: left;
         width: 100%;
@@ -484,24 +524,24 @@ select {
             }
         }
     }
-}
+}*/
 
 /*********************************************************/
 /*                    Setting Type 3                     */
 /*********************************************************/
-.discount-block .discount-item {
+/*.discount-block .discount-item {
     float: left;
     width: 50%;
 
     &.full-width {
         width: 100%;
     }
-}
+}*/
 
 /*********************************************************/
 /*                    Setting Type 4                     */
 /*********************************************************/
-.status-block .status-item {
+/*.status-block .status-item {
     float: left;
     width: 50%;
 
@@ -512,4 +552,4 @@ select {
     .col-value .downline {
         margin-left: 10px;
     }
-}
+}*/

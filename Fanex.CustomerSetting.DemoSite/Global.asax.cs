@@ -4,6 +4,8 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Web;
     using Fanex.Data.Configuration;
 
     public class MvcApplication : System.Web.HttpApplication
@@ -17,6 +19,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbSettingProviderManager.Current.Start();
+            ModelBinders.Binders.Add(typeof(ISettingItem), new SettingModelBinder());
         }
     }
 }

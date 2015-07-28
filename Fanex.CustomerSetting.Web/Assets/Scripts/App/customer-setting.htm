@@ -6,7 +6,14 @@
     <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/customerSetting/customer-setting.min.css?v={{version}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
-    <setting-result data-result="ctrl.updSettingResult"></setting-result>
+    <setting-result data-result="ctrl.requestMsgResult"></setting-result>
+    <div class="customer-setting" data-ng-show="ctrl.setting">
+        <div class="block" data-ng-if="ctrl.customerNames">
+            <div class="header customer-names-header">{{ctrl.customerNames}}</div>
+        </div>
+        <customer-info data-ng-if="!ctrl.customerNames" data-info="ctrl.setting.customerInfo"></customer-info>
+        <div data-setting-type-loader data-setting="ctrl.setting"></div>
+    </div>
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
     <script type="text/javascript" src="{{rootUrl}}scripts/libraries/angularjs/angular.min.js?v={{version}}"></script>
     <script type="text/javascript" src="{{rootUrl}}app/customersetting/core{{min}}.js?v={{version}}"></script>

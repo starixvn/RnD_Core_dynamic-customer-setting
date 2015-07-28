@@ -14,17 +14,19 @@ module CustomerSetting {
         }
 
         public setLanguage(language: string): void {
+            var defaultLanguage: string = Defaults.language.toLowerCase();
+
             if (angular.isDefined(language)) {
                 language = language.toLowerCase();
             } else {
-                language = Defaults.language;
+                language = defaultLanguage;
             }
 
             this.label = this.customerSettingResource["label"][language];
             this.message = this.customerSettingResource["message"][language];
 
             if (angular.isUndefined(this.label)) {
-                this.label = this.customerSettingResource["label"][Defaults.language];
+                this.label = this.customerSettingResource["label"][defaultLanguage];
             }
 
             if (angular.isUndefined(this.label)) {
@@ -32,7 +34,7 @@ module CustomerSetting {
             }
 
             if (angular.isUndefined(this.message)) {
-                this.message = this.customerSettingResource["message"][Defaults.language];
+                this.message = this.customerSettingResource["message"][defaultLanguage];
             }
 
             if (angular.isUndefined(this.message)) {
@@ -82,5 +84,5 @@ module CustomerSetting {
     }
 
     LabelFilter.$inject = ["resourceService"];
-    ModuleRegister.filter("labelFilter", LabelFilter);
+    ModuleRegister.filter("label", LabelFilter);
 }

@@ -1,0 +1,11 @@
+﻿<div class="block default-setting-block" data-ng-show="settingType">
+    <div class="header" data-ng-attr-setting-type="{{settingType.id}}">{{settingType.name}}</div>
+    <div data-ng-show="settingType.settingLevel===settingLevel.sportTypeBetType">{{settingType.sportTypeName}}</div>
+    <div class="name-col"></div>
+    <div class="name-col"
+         data-ng-repeat="settingItem in settingType.settingItems"
+         data-ng-attr-sport-type="settingItem.sportTypeId"
+         data-ng-attr-sport-type="settingItem.betTypeId">
+        {{settingType.settingLevel===settingLevel.product ? settingType.productName : (settingItem.settingLevel===settingLevel.sportType ? settingItem.sportTypeName : settingItem.betTypeName)}}
+    </div>
+</div>

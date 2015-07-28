@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 
 module CustomerSetting {
-    var app: ng.IModule = angular.module("customerSetting", []);
+    var app: ng.IModule = angular.module("customerSetting", ["oc.lazyLoad"]);
 
     export class ModuleRegister {
         public static controller(name: string, target: Function) {
@@ -21,10 +21,14 @@ module CustomerSetting {
         }
 
         public static directive(name: string, target: any) {
-            var args: any[] = [];
+            var directiveFactory: ng.IDirectiveFactory = function () {
+                var args = Array.prototype.concat.apply([null], arguments);
 
-            args.push.apply(target.$inject || []);
-            app.directive(name, () => new target(args));
+                return new (Function.prototype.bind.apply(target, args));
+            }
+
+            directiveFactory.$inject = target.$inject
+            app.directive(name, directiveFactory);
         }
 
         public static value(name: string, target: Object) {

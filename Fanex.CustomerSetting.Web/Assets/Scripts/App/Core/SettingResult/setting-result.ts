@@ -1,10 +1,10 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../core/module-registrater.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
     class SettingResultDirective implements ng.IDirective {
-        public static $inject = ["$window"];
-
         public replace: boolean = true;
 
         public get scope(): any {
@@ -15,15 +15,25 @@ module CustomerSetting {
 
         public templateUrl: string = "SettingResult/setting-result.htm";
 
-        public controller: Function = ($scope: ng.IScope) => {
+        public controller: any = ["$scope", "$window", ($scope: SettingResultScope, $window: ng.IWindowService) => {
             $scope.$watch("result", (result) => {
                 if (angular.isDefined(result)) {
-                    this.$window.scrollTo(0, 0);
-                }
-            });
-        }
+                    $window.scrollTo(0, 0);
 
-        constructor(private $window: ng.IWindowService) { }
+                    if (angular.isDefined(result.subResults) && angular.isArray(result.subResults)) {
+                        angular.forEach(result.subResults, (subResult) => {
+                            subResult.msgType = MessageType[subResult.msgType.toString()];
+                        });
+                    } else {
+                        result.msgType = MessageType[result.msgType.toString()];
+                    }
+                }
+            })
+        }];
+    }
+
+    interface SettingResultScope extends ng.IScope {
+        result: SettingResult;
     }
 
     ModuleRegister.directive("settingResult", SettingResultDirective);

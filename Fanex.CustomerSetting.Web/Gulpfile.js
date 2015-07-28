@@ -153,7 +153,7 @@
                 .pipe(gulpif(/[.]ts$/, ts({
                     typescript: require("typescript"),
                     target: "ES5",
-                    noImplicitAny: true,
+                    noImplicitAny: false,
                     removeComments: true
                 })))
                 .pipe(gulpif(/[.]htm$/, templateCache({
@@ -182,7 +182,7 @@
     });
 
     gulp.task("watch", ["publish-script", "publish-template", "publish-styles"], function () {
-        gulp.watch(assetPaths.app + "**/*.{ts, htm}", ["publish-script"]);
+        gulp.watch(assetPaths.app + "**/*.{ts,htm}", ["publish-script"]);
         gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
         gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
     });

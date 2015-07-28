@@ -3,6 +3,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     public class JsonNetResult : JsonResult
     {
@@ -32,7 +33,10 @@
 
                 if (Data != null)
                 {
-                    var serializer = JsonSerializer.Create(new JsonSerializerSettings());
+                    var serializer = JsonSerializer.Create(new JsonSerializerSettings()
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    });
                     var writer = new JsonTextWriter(response.Output)
                     {
                         Formatting = Formatting.Indented

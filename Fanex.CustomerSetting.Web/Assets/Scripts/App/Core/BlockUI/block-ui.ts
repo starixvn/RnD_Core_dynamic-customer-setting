@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../core/module-registrater.ts" />
+/// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
     class BlockUiDirective implements ng.IDirective {

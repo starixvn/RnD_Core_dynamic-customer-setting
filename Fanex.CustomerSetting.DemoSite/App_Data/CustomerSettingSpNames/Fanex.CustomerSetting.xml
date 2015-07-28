@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
   <Function Name="Customer_Setting_Core">
-    <Setting Key="Acc_CustSetting_EnabledAccountCheck" SpName="Acc_CustSetting_EnabledAccountCheck" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_SameLineCheck" SpName="Acc_CustSetting_SameLineCheck" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_custSetting_RoleIDCheck" SpName="Acc_custSetting_RoleIDCheck" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_MultiCustPermissionValidate" SpName="Acc_CustSetting_MultiCustPermissionValidate" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_SettingDetailSelect" SpName="Acc_CustSetting_SettingDetailSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_SameLineCheck" SpName="Acc_CustSetting_SameLineCheck" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_MultiCustPermissionValidate" SpName="Acc_CustSetting_MultiCustPermissionValidate" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_SettingDetailSelect" SpName="Acc_CustSetting_SettingDetailSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ActorStatusSelect" SpName="Acc_CustSetting_ActorStatusSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_CustomerLevelSelect" SpName="Acc_CustSetting_CustomerRoleSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    
+    <Setting Key="CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="SettingType" ObjectProperty="Id" />
     </Setting>
-    <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_UserInfoSelect" SpName="Acc_CustSetting_UserInfoSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_CustomerInfoSelect" SpName="Acc_CustSetting_CustomerInfoSelect" DbName="DBTXN.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     
   </Function>
 </Functions>

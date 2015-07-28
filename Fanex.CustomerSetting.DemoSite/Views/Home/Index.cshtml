@@ -20,7 +20,7 @@
                        class="form-control"
                        maxlength="15"
                        data-ng-model="ctrl.actor.actorId"
-                       data-ng-change="ctrl.switchForm(true)" />
+                       data-ng-change="ctrl.switchForm(false)" />
             </div>
             <div class="form-group">
                 <label class="control-label">Sub-account ID</label>
@@ -28,14 +28,14 @@
                        class="form-control"
                        maxlength="15"
                        data-ng-model="ctrl.actor.subAccountId"
-                       data-ng-change="ctrl.switchForm(true)" />
+                       data-ng-change="ctrl.switchForm(false)" />
             </div>
             <div class="form-group">
                 <label class="control-label">Language</label>
                 <select class="form-control"
                         data-ng-options="item.key as item.value for item in ctrl.languages"
                         data-ng-model="ctrl.actor.language"
-                        data-ng-change="ctrl.switchForm(true)"></select>
+                        data-ng-change="ctrl.switchForm(false)"></select>
             </div>
             <div class="form-group submit">
                 <button data-ng-disabled="ctrl.preventSavingSession"
