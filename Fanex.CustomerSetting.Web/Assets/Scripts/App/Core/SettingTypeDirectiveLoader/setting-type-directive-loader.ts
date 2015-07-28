@@ -8,6 +8,7 @@
 module CustomerSetting {
     interface SettingTypeLoaderScope extends ng.IScope {
         setting: Setting;
+        update: (settingTypeId: { settingTypeId: number }) => void;
     }
 
     class SettingTypeDirectiveLoader implements ng.IDirective {
@@ -18,7 +19,8 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                setting: "="
+                setting: "=",
+                update: "&"
             }
         }
 
@@ -49,7 +51,9 @@ module CustomerSetting {
                         " data-product-name=\"setting.productName\"",
                         " data-setting-type=\"setting.settingTypes[",
                         index,
-                        "]\"></",
+                        "]\"",
+                        "data-update=\"update({ settingTypeId: settingTypeId})\"",
+                        "></",
                         settingTypeName,
                         "></div>"
                     ];
@@ -57,32 +61,6 @@ module CustomerSetting {
 
                     element.append(settingTypeElement);
                     this.$compile(settingTypeElement)(scope);
-                });
-            }
-        }
-
-        private generateNodes2(scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
-            if (angular.isDefined(scope.setting)) {
-                angular.forEach(scope.setting.settingTypes, (settingType, index) => {
-                    var scriptUrl = "app/customerSetting/settingType" + settingType.id + ".template" + settingType.settingTemplate + ".js";
-                    this.$ocLazyLoad.load(this.appConfigService.resolveRootUrl(scriptUrl)).then(() => {
-                        var settingTypeEleName = "settingtype" + settingType.id + "-template" + settingType.settingTemplate;
-                        var settingTypeEleParts = [
-                            "<",
-                            settingTypeEleName,
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"></",
-                            settingTypeEleName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(settingTypeEleParts.join(""));
-
-                        element.append(settingTypeElement);
-                        this.$compile(settingTypeElement)(scope);
-                    });
                 });
             }
         }

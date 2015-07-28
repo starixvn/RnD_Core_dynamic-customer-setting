@@ -12,7 +12,8 @@ module CustomerSetting {
             return {
                 productId: "=",
                 productName: "=",
-                settingType: "="
+                settingType: "=",
+                update: "&"
             }
         }
 

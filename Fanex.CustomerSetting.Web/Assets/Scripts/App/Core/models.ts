@@ -4,6 +4,8 @@ module CustomerSetting {
     export interface SettingItem {
         typeName: string;
         oldSetting: SettingItem;
+        backup(): void;
+        isChanged(): boolean;
     }
 
     export enum Level {
@@ -15,14 +17,27 @@ module CustomerSetting {
     }
 
     export class CustomerInfo {
-        public username: string;
-        public username2: string;
+        public userName: string;
+        public userName2: string;
         public firstName: string;
         public lastName: string;
         public phone: string;
         public mobilePhone: string;
         public fax: string;
         public email: string;
+
+        constructor(info: any) {
+            if (info !== undefined) {
+                this.userName = info.userName;
+                this.userName2 = info.userName2;
+                this.firstName = info.firstName;
+                this.lastName = info.lastName;
+                this.phone = info.phone;
+                this.mobilePhone = info.mobilePhone;
+                this.fax = info.fax;
+                this.email = info.email;
+            }
+        }
     }
 
     export class DefaultSettingItem implements SettingItem {
@@ -31,7 +46,33 @@ module CustomerSetting {
         public betTypeId: number;
         public betTypeName: string;
         public typeName: string;
+        public isLive: boolean;
         public oldSetting: DefaultSettingItem;
+
+        constructor(settingItem: any) {
+            if (settingItem !== undefined) {
+                this.sportTypeId = settingItem.sportTypeId;
+                this.sportTypeName = settingItem.sportTypeName;
+                this.betTypeId = settingItem.betTypeId;
+                this.betTypeName = settingItem.betTypeName;
+                this.typeName = settingItem.typeName;
+
+                if (settingItem.isLive !== undefined) {
+                    this.isLive = settingItem.isLive;
+                }
+            }
+        }
+
+        public backup(): void {
+            this.oldSetting = new DefaultSettingItem(this);
+        }
+
+        public isChanged(): boolean {
+            return (this.sportTypeId !== this.oldSetting.sportTypeId)
+                || (this.sportTypeName !== this.oldSetting.sportTypeName)
+                || (this.betTypeId !== this.oldSetting.betTypeId)
+                || (this.betTypeName !== this.oldSetting.betTypeName);
+        }
     }
 
     export class SettingType {
@@ -41,6 +82,17 @@ module CustomerSetting {
         public settingLevel: number;
         public settingItems: Array<SettingItem>;
         public typeName: string;
+
+        constructor(settingType: any) {
+            if (settingType !== undefined) {
+                this.id = settingType.id;
+                this.name = settingType.name;
+                this.settingTemplate = settingType.settingTemplate;
+                this.settingLevel = settingType.settingLevel;
+                this.settingItems = settingType.settingItems;
+                this.typeName = settingType.typeName;
+            }
+        }
     }
 
     export class Setting {
@@ -64,6 +116,17 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
+
+        constructor(setting: any) {
+            if (setting !== undefined) {
+                this.customerId = setting.productId;
+                this.customerInfo = new CustomerInfo(setting.customerInfo);
+                this.customerLevel = setting.customerLevel.value;
+                this.productId = setting.productId;
+                this.productName = setting.productName;
+                this.settingTypes = setting.settingTypes.map((settingType) => new SettingType(settingType));
+            }
+        }
     }
 
     export class Result {

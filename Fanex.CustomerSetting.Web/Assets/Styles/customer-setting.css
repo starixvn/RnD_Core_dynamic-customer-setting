@@ -66,23 +66,20 @@ select {
   width: 13px;
 }
 
-.update {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background-color: #7c98a4;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  font-weight: bold;
-  line-height: 16px;
-  margin-bottom: 10px;
-  min-width: 70px;
-  padding: 4px 12px;
-  text-align: center;
-  vertical-align: middle;
-}
-
+/*.update {
+    @include box-sizing(border-box);
+    background-color: $border-color;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 16px;
+    margin-bottom: 10px;
+    min-width: 70px;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+}*/
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -97,21 +94,18 @@ select {
   background-position: 0 0;
   background-repeat: no-repeat;
   display: inline-block;
-  line-height: 23px;
   height: 16px;
-  margin-top: 1px;
-  vertical-align: text-top;
   width: 16px;
 }
-.icon.icon-update, .result-container .result.success .icon-update.message-icon, .result-container .result.warning .icon-update.message-icon, .result-container .result.error .icon-update.message-icon {
+.icon.update-icon, .result-container .result.success .update-icon.message-icon, .result-container .result.warning .update-icon.message-icon, .result-container .result.error .update-icon.message-icon {
   background-position: 0 0;
 }
-.icon.icon-copy, .result-container .result.success .icon-copy.message-icon, .result-container .result.warning .icon-copy.message-icon, .result-container .result.error .icon-copy.message-icon {
+.icon.copy-icon, .result-container .result.success .copy-icon.message-icon, .result-container .result.warning .copy-icon.message-icon, .result-container .result.error .copy-icon.message-icon {
   background-position: -16px 0;
   width: 20px;
   height: 20px;
 }
-.icon.icon-close, .result-container .result.success .icon-close.message-icon, .result-container .result.warning .icon-close.message-icon, .result-container .result.error .icon-close.message-icon {
+.icon.close-icon, .result-container .result.success .close-icon.message-icon, .result-container .result.warning .close-icon.message-icon, .result-container .result.error .close-icon.message-icon {
   background-position: -36px 0;
   width: 15px;
   height: 15px;
@@ -301,8 +295,30 @@ select {
   cursor: pointer;
   float: right;
   height: 100%;
-  line-height: 20px;
   width: 42px;
+}
+.customer-setting .block .header .update .icon, .customer-setting .block .header .update .result-container .result.success .message-icon, .result-container .result.success .customer-setting .block .header .update .message-icon, .customer-setting .block .header .update .result-container .result.warning .message-icon, .result-container .result.warning .customer-setting .block .header .update .message-icon, .customer-setting .block .header .update .result-container .result.error .message-icon, .result-container .result.error .customer-setting .block .header .update .message-icon {
+  vertical-align: middle;
+}
+.customer-setting .block .header.sport-group-header {
+  background-color: #cadceb;
+  text-align: left;
+}
+.customer-setting .block .name-col {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #b5c4d0;
+  border-bottom: 1px solid #7c98a4;
+  border-right: 1px solid #7c98a4;
+  clear: left;
+  height: 23px;
+  line-height: 23px;
+  padding: 0 3px;
+  width: 20%;
+}
+.customer-setting .block .name-col.last {
+  border-bottom: none;
 }
 
 /*.product-container {

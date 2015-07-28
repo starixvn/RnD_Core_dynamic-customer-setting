@@ -43,14 +43,19 @@ module CustomerSetting {
             this.querySetting();
         }
 
+        public update(settingTypeId?: number): void {
+            console.log(settingTypeId);
+        }
+
         private querySetting(): void {
             var query = this.parametersService.getSettingQuery();
 
             this.isUIblocked = true;
-            this.$http.get(this.appConfigService.resolveRootUrl("viewCustomerSetting/querySetting?" + query.toParamString())).success((data: Setting) => {
+            this.$http.get(this.appConfigService.resolveRootUrl("viewCustomerSetting/querySetting?" + query.toParamString())).success((data: any) => {
                 //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data.json")).success((data: Setting) => {
                 //console.log(JSON.stringify(data));
-                this.setting = data;
+                this.setting = new Setting(data);
+                console.log(this.setting);
                 this.isUIblocked = false;
             }).error((error: Result) => {
                 var error = Result.systemError;

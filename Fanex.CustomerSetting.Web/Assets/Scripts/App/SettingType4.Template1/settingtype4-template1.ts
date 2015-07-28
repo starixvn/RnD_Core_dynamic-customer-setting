@@ -1,8 +1,15 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
 /// <reference path="../core/helpers.ts" />
+/// <reference path="../core/models.ts" />
 
 module CustomerSetting {
+    interface SettingType4Template1Scope extends ng.IScope {
+        productId: number;
+        productName: string;
+        settingType: SettingType;
+        update: (settingTypeId: { settingTypeId: number }) => void;
+    }
+
     class SettingType4Template1Directive implements ng.IDirective {
         //public static $inject = ["$templateCache"];
 
@@ -12,11 +19,15 @@ module CustomerSetting {
             return {
                 productId: "=",
                 productName: "=",
-                settingType: "="
+                settingType: "=",
+                update: "&"
             }
         }
 
         public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
+
+        public link: ng.IDirectiveLinkFn = (scope: SettingType4Template1Scope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        }
 
         constructor(private appConfigService: AppConfigService) { }
     }

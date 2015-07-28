@@ -56,7 +56,7 @@ select {
     }
 }
 
-.update {
+/*.update {
     @include box-sizing(border-box);
     background-color: $border-color;
     border: 0;
@@ -69,7 +69,7 @@ select {
     padding: 4px 12px;
     text-align: center;
     vertical-align: middle;
-}
+}*/
 
 [ng\:cloak],
 [ng-cloak],
@@ -88,23 +88,20 @@ select {
     }
 
     display: inline-block;
-    line-height: 23px;
     height: 16px;
-    margin-top: 1px;
-    vertical-align: text-top;
     width: 16px;
 
-    &.icon-update {
+    &.update-icon {
         background-position: 0 0;
     }
 
-    &.icon-copy {
+    &.copy-icon {
         background-position: -16px 0;
         width: 20px;
         height: 20px;
     }
 
-    &.icon-close {
+    &.close-icon {
         background-position: -36px 0;
         width: 15px;
         height: 15px;
@@ -305,12 +302,37 @@ select {
                 cursor: pointer;
                 float: right;
                 height: 100%;
-                line-height: 20px;
                 width: 42px;
+
+                .icon {
+                    vertical-align: middle;
+                }
+            }
+
+            &.sport-group-header {
+                background-color: #cadceb;
+                text-align: left;
             }
         }
 
-        .body {
+        .name-col {
+            @include box-sizing(border-box);
+            background-color: $header-color;
+
+            border: {
+                bottom: 1px solid $border-color;
+                right: 1px solid $border-color;
+            }
+
+            clear: left;
+            height: 23px;
+            line-height: 23px;
+            padding: 0 3px;
+            width: 20%;
+
+            &.last {
+                border-bottom: none;
+            }
         }
     }
 }
