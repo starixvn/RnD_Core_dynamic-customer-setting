@@ -52,7 +52,7 @@
                 cacheKey,
                 () =>
                 {
-                    return _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
+                    return _resourceRepository.Query<ProductName>(new ProductNamesQueryCriteria { ProductId = productId });
                 },
                 new TimeSpan(1, 0, 0));
 
