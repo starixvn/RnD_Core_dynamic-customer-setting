@@ -126,7 +126,6 @@
     <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.htm" />
     <Content Include="Assets\Scripts\App\Core\OcLazyLoad\ocLazyLoad.js" />
     <Content Include="Assets\Scripts\App\Core\SettingResult\setting-result.htm" />
-    <Content Include="Assets\Scripts\App\Core\SettingTypeDirectiveLoader\setting-type-directive-loader.htm" />
     <Content Include="Assets\Scripts\App\Core\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\App\customer-setting.htm" />
     <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.tt">

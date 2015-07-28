@@ -204,7 +204,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\sample-data.json" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Matrix.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -248,29 +247,8 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\CustomerSetting\core.js" />
-    <Content Include="App\CustomerSetting\core.min.js" />
-    <Content Include="App\CustomerSetting\customer-setting.css" />
-    <Content Include="App\CustomerSetting\customer-setting.css.map" />
-    <Content Include="App\CustomerSetting\customer-setting.htm" />
-    <Content Include="App\CustomerSetting\customer-setting.html" />
-    <Content Include="App\CustomerSetting\customer-setting.min.css" />
-    <Content Include="App\CustomerSetting\customer-setting2.htm" />
-    <Content Include="App\CustomerSetting\Images\loading.gif" />
-    <Content Include="App\CustomerSetting\Images\sprite.png" />
-    <Content Include="App\CustomerSetting\loading.gif" />
-    <Content Include="App\CustomerSetting\resource.js" />
-    <Content Include="App\CustomerSetting\resource.min.js" />
-    <Content Include="App\CustomerSetting\settingtype1.template1.js" />
-    <Content Include="App\CustomerSetting\settingtype1.template1.min.js" />
-    <Content Include="App\CustomerSetting\settingtype2.template1.js" />
-    <Content Include="App\CustomerSetting\settingtype2.template1.min.js" />
-    <Content Include="App\CustomerSetting\settingtype3.template1.js" />
-    <Content Include="App\CustomerSetting\settingtype3.template1.min.js" />
-    <Content Include="App\CustomerSetting\settingtype4.template1.js" />
-    <Content Include="App\CustomerSetting\settingtype4.template1.min.js" />
-    <Content Include="App\CustomerSetting\sprite.png" />
-    <Content Include="App\sample-data.json" />
+    <Content Include="App\CustomerSetting\Images\*.*" />
+    <Content Include="App\CustomerSetting\*.*" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -323,7 +301,9 @@
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\CustomerSetting\Images\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

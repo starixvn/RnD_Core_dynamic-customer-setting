@@ -116,32 +116,56 @@
         var pkg = require("./package.json");
 
         return gulp.src(assetPaths.image + "*.*")
-                   .pipe(gulp.dest(publishPaths.customerSetting + "Images"));
+                   .pipe(gulp.dest(publishPaths.customerSetting + "Styles/Images"));
     });
 
     gulp.task("publish-styles", ["publish-images"], function () {
         var pkg = require("./package.json");
 
         return gulp.src(assetPaths.style + "customer-setting*.{map,css}")
-                   .pipe(gulp.dest(publishPaths.customerSetting));
+                   .pipe(gulp.dest(publishPaths.customerSetting + "Styles"));
     });
 
-    gulp.task("publish-script", function (callback) {
+    gulp.task("publish-core-script", function () {
         var concat = require("gulp-concat");
-        var fs = require("fs");
         var gulpif = require("gulp-if");
-        var gulpignore = require("gulp-ignore");
         var rename = require("gulp-rename");
         var sourcemaps = require("gulp-sourcemaps");
         var templateCache = require("gulp-angular-templatecache");
         var ts = require("gulp-typescript");
         var uglify = require("gulp-uglify");
-        var pkg = require("./package.json");
+
+        gulp.src(assetPaths.app + "Core/**")
+            .pipe(gulpif(/[.]ts$/, ts({
+                typescript: require("typescript"),
+                target: "ES5",
+                noImplicitAny: false,
+                removeComments: true
+            })))
+            .pipe(gulpif(/[.]htm$/, templateCache({
+                module: "customerSetting"
+            })))
+            .pipe(concat("core.js"))
+            .pipe(sourcemaps.write("."))
+            .pipe(gulp.dest(publishPaths.customerSetting))
+            .pipe(uglify())
+            .pipe(rename({ suffix: ".min" }))
+            .pipe(gulp.dest(publishPaths.customerSetting));
+    });
+
+    gulp.task("publish-modules-script", function (callback) {
+        var concat = require("gulp-concat");
+        var fs = require("fs");
+        var gulpif = require("gulp-if");
+        var rename = require("gulp-rename");
+        var sourcemaps = require("gulp-sourcemaps");
+        var ts = require("gulp-typescript");
+        var uglify = require("gulp-uglify");
         var modules = [];
         var moduleName = "";
 
         fs.readdirSync(assetPaths.app).filter(function (item) {
-            if (fs.statSync(assetPaths.app + item).isDirectory()) {
+            if (fs.statSync(assetPaths.app + item).isDirectory() && item !== "Core") {
                 modules.push(item.toLowerCase());
             }
         });
@@ -149,27 +173,28 @@
         for (var index in modules) {
             moduleName = modules[index];
 
-            gulp.src(assetPaths.app + moduleName + "/**")
+            gulp.src(assetPaths.app + moduleName + "/*.{js,ts}")
                 .pipe(gulpif(/[.]ts$/, ts({
                     typescript: require("typescript"),
                     target: "ES5",
                     noImplicitAny: false,
                     removeComments: true
                 })))
-                .pipe(gulpif(/[.]htm$/, templateCache({
-                    module: "customerSetting"
-                })))
-                .pipe(gulpignore.exclude(/[.]tt$/))
-                .pipe(concat(moduleName + ".js"))
+                .pipe(concat(moduleName.replace(".", "-") + ".js"))
                 .pipe(sourcemaps.write("."))
-                .pipe(gulp.dest(publishPaths.customerSetting))
+                .pipe(gulp.dest(publishPaths.customerSetting + moduleName))
                 .pipe(uglify())
                 .pipe(rename({ suffix: ".min" }))
-                .pipe(gulp.dest(publishPaths.customerSetting));
+                .pipe(gulp.dest(publishPaths.customerSetting + moduleName));
+
+            gulp.src(assetPaths.app + moduleName + "/*.htm")
+                .pipe(gulp.dest(publishPaths.customerSetting + moduleName));
         }
 
         callback.call();
     });
+
+    gulp.task("publish-script", ["publish-core-script", "publish-modules-script"]);
 
     gulp.task("prebuild", function (done) {
         var runSequence = require("run-sequence");
