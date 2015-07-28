@@ -78,7 +78,10 @@
 
         public string GetSportTypeName(int sportTypeId, string language)
         {
-            Check.Argument.IsNotNegativeOrZero(sportTypeId, "sportTypeId");
+            if(sportTypeId <= 0)
+            {
+                return string.Empty;
+            }
 
             var sportTypeName = _remotingRef.GetSportTypeName(sportTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             
@@ -89,7 +92,10 @@
 
         public string GetBetTypeName(int betTypeId, string language)
         {
-            Check.Argument.IsNotNegativeOrZero(betTypeId, "betTypeId");
+            if (betTypeId <= 0)
+            {
+                return string.Empty;
+            }
 
             var betTypeName = _remotingRef.GetBetTypeName(betTypeId.ToString(), LanguageNameConverter.GetRefLanguageName(language).ToUpper());
             

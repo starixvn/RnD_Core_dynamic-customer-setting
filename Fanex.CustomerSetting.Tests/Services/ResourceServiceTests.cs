@@ -143,12 +143,13 @@
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void GetSportTypeName_SportTypeIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int sportTypeId)
+        public void GetSportTypeName_SportTypeIdIsNegativeOrZero_ReturnEmptyName(int sportTypeId)
         {
+            //// Act
+            var actualSportTypeName = _resourceService.GetSportTypeName(sportTypeId, _language);
+
             //// Assert
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _resourceService.GetSportTypeName(sportTypeId, _language)));
+            Assert.IsEmpty(actualSportTypeName);
         }
 
         [Test]
@@ -204,12 +205,13 @@
 
         [TestCase(0)]
         [TestCase(-1)]
-        public void GetBetTypeName_BetTypeIdIsNegativeOrZero_ThrowArgumentOutOfRangeException(int betTypeId)
+        public void GetBetTypeName_BetTypeIdIsNegativeOrZero_ReturnEmptyName(int betTypeId)
         {
+            //// Act
+            var actualBetTypeName = _resourceService.GetBetTypeName(betTypeId, _language);
+
             //// Assert
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _resourceService.GetBetTypeName(betTypeId, _language)));
+            Assert.IsEmpty(actualBetTypeName);
         }
 
         [Test]

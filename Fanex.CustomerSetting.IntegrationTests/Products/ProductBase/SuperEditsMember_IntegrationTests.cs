@@ -107,7 +107,7 @@
                 expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
 
-            memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
+            memberSetting.SettingTypes = memberSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId);
 
             //// Act
             var updateParam = new UpdateCustomerSettingCommand(memberSetting, querySettingParam.UplineLevel);
@@ -156,7 +156,7 @@
                 expectedSettingTypeData.Add(modifiedSettingTypeInfo.SettingTypeId, modifiedSettingTypeInfo.SettingItem);
             }
 
-            memberSetting.SettingTypes = memberSetting.SettingTypes.Take(1);
+            memberSetting.SettingTypes = memberSetting.SettingTypes.Where(st => st.Id == SettingTypeInfo.PTSettingTypeId);
 
             //// Act
             var updatingMultipleParam = new MultipleUpdateCustomerSettingCommand(memberSetting, memberIds, memberNames, querySettingParam.UplineLevel);
