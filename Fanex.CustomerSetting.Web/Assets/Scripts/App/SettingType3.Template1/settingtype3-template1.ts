@@ -42,7 +42,7 @@ module CustomerSetting {
 
             return isChanged
                 || this.commRate !== oldSetting.commRate
-                || (this.upline && this.upline.isChanged());
+                || (this.upline && this.upline.commRate !== oldSetting.upline.commRate);
         }
     }
 

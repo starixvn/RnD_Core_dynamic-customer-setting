@@ -83,7 +83,9 @@ module CustomerSetting {
         public settingItems: Array<SettingItem>;
         public typeName: string;
 
-        constructor(settingType: any) {
+        constructor();
+        constructor(settingType: any)
+        constructor(settingType?: any) {
             if (settingType) {
                 this.id = settingType.id;
                 this.name = settingType.name;
@@ -93,25 +95,32 @@ module CustomerSetting {
                 this.typeName = settingType.typeName;
             }
         }
+
+        public getChanges(): SettingType {
+            var updatedSettingType: SettingType = undefined;
+            var changedSettingItems: Array<SettingItem> = this.settingItems.filter((item) => {
+                return item.isChanged();
+            });
+
+            if (changedSettingItems.length > 0) {
+                updatedSettingType = new SettingType();
+
+                updatedSettingType.id = this.id;
+                updatedSettingType.name = this.name;
+                updatedSettingType.settingTemplate = this.settingTemplate;
+                updatedSettingType.settingLevel = this.settingLevel;
+                updatedSettingType.settingItems = changedSettingItems;
+                updatedSettingType.typeName = this.typeName;
+            }
+
+            return updatedSettingType;
+        }
     }
 
     export class Setting {
-        private custLevel: Level;
-
+        public customerLevel: Level;
         public customerId: number;
         public customerInfo: CustomerInfo;
-
-        public get customerLevel(): Level {
-            return this.custLevel;
-        }
-
-        public set customerLevel(level: Level) {
-            if (level === Level.company) {
-                throw Exceptions.wrongCustomerLevel;
-            }
-
-            this.custLevel = level;
-        }
 
         public productId: number;
         public productName: string;
@@ -121,7 +130,7 @@ module CustomerSetting {
         constructor(setting: any)
         constructor(setting?: any) {
             if (setting) {
-                this.customerId = setting.productId;
+                this.customerId = setting.customerId;
                 this.customerInfo = new CustomerInfo(setting.customerInfo);
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
@@ -130,17 +139,39 @@ module CustomerSetting {
             }
         }
 
-        public getSettingType(settingTypeId: number): Setting {
-            var newSetting: Setting = new Setting();
+        public getChanges(settingTypeId?: number): Setting {
+            var newSetting: Setting = undefined;
+            var settingTypes: Array<SettingType>;
+            var changedSettingTypes: Array<SettingType> = new Array<SettingType>();
 
-            newSetting.customerId = this.productId;
-            newSetting.customerInfo = this.customerInfo;
-            newSetting.customerLevel = this.customerLevel;
-            newSetting.productId = this.productId;
-            newSetting.productName = this.productName;
-            newSetting.settingTypes = this.settingTypes.filter((item) => {
-                return item.id === settingTypeId;
-            });
+            if (settingTypeId) {
+                settingTypes = this.settingTypes.filter((item) => {
+                    return item.id === settingTypeId;
+                });
+            } else {
+                settingTypes = this.settingTypes;
+            }
+
+            if (settingTypes.length > 0) {
+                settingTypes.forEach((settingType) => {
+                    var changedSettingType: SettingType = settingType.getChanges();
+
+                    if (changedSettingType) {
+                        changedSettingTypes.push(changedSettingType);
+                    }
+                });
+            }
+
+            if (changedSettingTypes.length > 0) {
+                newSetting = new Setting();
+
+                newSetting.customerId = this.customerId;
+                newSetting.customerInfo = this.customerInfo;
+                newSetting.customerLevel = this.customerLevel;
+                newSetting.productId = this.productId;
+                newSetting.productName = this.productName;
+                newSetting.settingTypes = changedSettingTypes;
+            }
 
             return newSetting;
         }

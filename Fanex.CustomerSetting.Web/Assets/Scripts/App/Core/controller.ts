@@ -24,6 +24,7 @@ module CustomerSetting {
 
         public static $inject: string[] = [
             "$http",
+            "$timeout",
             "appConfigService",
             "parametersService",
             "resourceService"];
@@ -35,6 +36,7 @@ module CustomerSetting {
 
         constructor(
             private $http: ng.IHttpService,
+            private $timeout: ng.ITimeoutService,
             private appConfigService: AppConfigService,
             private parametersService: ParametersService,
             private resourceService: ResourceService) {
@@ -44,21 +46,37 @@ module CustomerSetting {
         }
 
         public update(settingTypeId?: number): void {
-            var setting = settingTypeId ? this.setting.getSettingType(settingTypeId) : this.setting;
+            var setting = settingTypeId ? this.setting.getChanges(settingTypeId) : this.setting;
             var path = this.customerNames ? this.updateMultiplePath : this.updatePath;
+            var command: SettingCommand;
 
-            this.isUIblocked = true;
-            this.$http.post(this.appConfigService.resolveRootUrl(path), this.parametersService.createSettingCommand(setting)).success((msg: SettingResult) => {
-                this.requestMsgResult = msg;
-            }).error(() => {
-                var error: Result = Result.systemError;
+            if (setting) {
+                this.isUIblocked = true;
+                command = this.parametersService.createSettingCommand(setting);
+
+                this.$http.post(this.appConfigService.resolveRootUrl(path), JSON.stringify(command)).success((msg: SettingResult) => {
+                    this.requestMsgResult = msg;
+                    this.querySetting();
+
+                    this.$timeout(() => {
+                        this.requestMsgResult = undefined;
+                    }, Defaults.displayingMsgTime);
+                }).error(() => {
+                    var error: Result = Result.systemError;
+
+                    error.message = this.resourceService.getMessage(error.message);
+
+                    this.requestMsgResult = error;
+                }).finally(() => {
+                    this.isUIblocked = false;
+                });
+            } else {
+                var error: Result = SettingResult.noChangeToUpdate;
 
                 error.message = this.resourceService.getMessage(error.message);
 
                 this.requestMsgResult = error;
-            }).finally(() => {
-                this.isUIblocked = false;
-            });
+            }
         }
 
         private querySetting(): void {

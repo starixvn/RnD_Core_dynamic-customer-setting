@@ -49,8 +49,8 @@ module CustomerSetting {
 
             return isChanged
                 || this.isDisabled !== oldSetting.isDisabled
-                || (this.upline && this.upline.isChanged())
-                || (this.downline && this.downline.isChanged());
+                || (this.upline && this.upline.isDisabled !== oldSetting.upline.isDisabled)
+                || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
         }
     }
 
@@ -102,6 +102,11 @@ module CustomerSetting {
         public templateUrl: string = "status-checkbox.html";
 
         public controller: any = ["$scope", ($scope: StatusCheckboxScope) => {
+            $scope.isChecked = !$scope.settingItem.isDisabled;
+            $scope.isEnabled = !$scope.uplineSettingItem || ($scope.uplineSettingItem && !$scope.uplineSettingItem.isDisabled);
+            $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
+            $scope.isDownlineEnabled = $scope.isChecked;
+
             $scope.change = () => {
                 $scope.isDownlineEnabled = $scope.isChecked;
                 $scope.settingItem.downline.isDisabled = !$scope.isDownlineChecked;
@@ -116,12 +121,12 @@ module CustomerSetting {
             }
         }];
 
-        public link: ng.IDirectiveLinkFn = (scope: StatusCheckboxScope) => {
-            scope.isChecked = !scope.settingItem.isDisabled;
-            scope.isEnabled = !scope.uplineSettingItem || (scope.uplineSettingItem && !scope.uplineSettingItem.isDisabled);
-            scope.isDownlineChecked = !scope.settingItem.downline.isDisabled;
-            scope.isDownlineEnabled = scope.isChecked;
-        }
+        //public link: ng.IDirectiveLinkFn = (scope: StatusCheckboxScope) => {
+        //    scope.isChecked = !scope.settingItem.isDisabled;
+        //    scope.isEnabled = !scope.uplineSettingItem || (scope.uplineSettingItem && !scope.uplineSettingItem.isDisabled);
+        //    scope.isDownlineChecked = !scope.settingItem.downline.isDisabled;
+        //    scope.isDownlineEnabled = scope.isChecked;
+        //}
     }
 
     angular.module("customerSetting").directive("statusCheckbox", [function () {

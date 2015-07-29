@@ -51,6 +51,10 @@ module CustomerSetting {
         public static get percentageDivider(): number {
             return 100;
         }
+
+        public static get displayingMsgTime(): number {
+            return 3000;
+        }
     }
 
     export class KeyValuePair<T, K> {
