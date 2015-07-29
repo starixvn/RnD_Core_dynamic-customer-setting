@@ -41,7 +41,7 @@
             return settingTypes;
         }
 
-        public SettingType GetProductSettingType(byte productId, byte settingTypeId)
+        public SettingType GetProductSettingType(byte productId, short settingTypeId)
         {
             var productSettingTypes = GetProductSettingTypes(productId);
 

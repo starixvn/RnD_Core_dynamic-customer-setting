@@ -66,7 +66,7 @@
         private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
         {
             dummySettingType = dummySettingType ?? InstanceFactory.CreateProductSettingType(3);
-            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<byte>()).Returns(dummySettingType);
+            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<short>()).Returns(dummySettingType);
 
             return dummySettingType;
         }
