@@ -44,7 +44,21 @@ module CustomerSetting {
         }
 
         public update(settingTypeId?: number): void {
-            console.log(settingTypeId);
+            var setting = settingTypeId ? this.setting.getSettingType(settingTypeId) : this.setting;
+            var path = this.customerNames ? this.updateMultiplePath : this.updatePath;
+
+            this.isUIblocked = true;
+            this.$http.post(this.appConfigService.resolveRootUrl(path), this.parametersService.createSettingCommand(setting)).success((msg: SettingResult) => {
+                this.requestMsgResult = msg;
+            }).error(() => {
+                var error: Result = Result.systemError;
+
+                error.message = this.resourceService.getMessage(error.message);
+
+                this.requestMsgResult = error;
+            }).finally(() => {
+                this.isUIblocked = false;
+            });
         }
 
         private querySetting(): void {
@@ -54,14 +68,13 @@ module CustomerSetting {
             this.$http.get(this.appConfigService.resolveRootUrl(this.queryPath + query.toParamString())).success((data: any) => {
                 //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data.json")).success((data: any) => {
                 this.setting = new Setting(data);
-                console.log(data);
-                this.isUIblocked = false;
-            }).error((error: Result) => {
+            }).error(() => {
                 var error: Result = Result.systemError;
 
                 error.message = this.resourceService.getMessage(error.message);
 
                 this.requestMsgResult = error;
+            }).finally(() => {
                 this.isUIblocked = false;
             });
         }

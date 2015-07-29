@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Enumerations;
 
     [Serializable]
@@ -13,6 +12,10 @@
         private Level _customerLevel;
         private byte _productId;
         private IEnumerable<SettingType> _settingType;
+
+        public Setting()
+        {
+        }
 
         public Setting(
             int customerId,

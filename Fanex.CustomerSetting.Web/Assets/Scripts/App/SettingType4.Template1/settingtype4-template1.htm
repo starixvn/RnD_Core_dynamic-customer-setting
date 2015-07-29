@@ -6,18 +6,21 @@
                                 data-value-template-url="valueTemplateUrl">
     </default-setting-type-block>
     <script type="text/ng-template" id="settingtyp4-template1-value.html">
-        <label>
+        <status-checkbox data-setting-item="item"></status-checkbox>
+    </script>
+    <script type="text/ng-template" id="status-checkbox.html">
+        <label class="status-checkbox">
             <input type="checkbox"
-                   data-ng-bind="!item.isDisabled"
-                   data-ng-model="item.isDisabled"
-                   data-ng-disabled="item.upline.isDisabled" />
+                   data-ng-model="isChecked"
+                   data-ng-disabled="!isEnabled"
+                   data-ng-change="change()" />
             {{'Enable' | label}}
         </label>
-        <label>
+        <label class="status-checkbox">
             <input type="checkbox"
-                   data-ng-bind="!item.downline.isDisabled && !item.isDisabled"
-                   data-ng-model="item.downline.isDisabled"
-                   data-ng-disabled="!item.downline.isDisabled || !item.isDisabled" />
+                   data-ng-model="isDownlineChecked"
+                   data-ng-disabled="!isDownlineEnabled"
+                   data-ng-change="changeDownline()" />
             {{'EnableDownline' | label}}
         </label>
     </script>

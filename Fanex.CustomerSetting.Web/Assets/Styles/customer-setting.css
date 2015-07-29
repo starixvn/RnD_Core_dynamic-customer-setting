@@ -53,10 +53,11 @@ select {
   height: 19px;
 }
 
-.checkbox {
+.status-checkbox {
   cursor: pointer;
+  margin-right: 10px;
 }
-.checkbox > input {
+.status-checkbox input {
   cursor: pointer;
   height: 13px;
   margin: 0;
@@ -84,10 +85,6 @@ select {
   padding: 4px 12px;
   text-align: center;
   vertical-align: middle;
-}
-.update-btn:disabled {
-  background-image: none;
-  cursor: default;
 }
 
 [ng\:cloak],

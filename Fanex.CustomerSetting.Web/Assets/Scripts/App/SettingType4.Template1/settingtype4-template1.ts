@@ -2,6 +2,7 @@
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helpers.ts" />
 /// <reference path="../core/models.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
     class Settingtype4Item extends DefaultSettingItem {
@@ -78,5 +79,54 @@ module CustomerSetting {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType4Template1Directive, args));
+    }]);
+
+    interface StatusCheckboxScope extends ng.IScope {
+        settingItem: Settingtype4Item;
+        uplineSettingItem: Settingtype4Item;
+        isChecked: boolean;
+        isEnabled: boolean;
+        isDownlineChecked: boolean;
+        isDownlineEnabled: boolean;
+        change(): void;
+        changeDownline(): void;
+    }
+
+    class StatusCheckboxDirective implements ng.IDirective {
+        public get scope(): any {
+            return {
+                settingItem: "="
+            }
+        }
+
+        public templateUrl: string = "status-checkbox.html";
+
+        public controller: any = ["$scope", ($scope: StatusCheckboxScope) => {
+            $scope.change = () => {
+                $scope.isDownlineEnabled = $scope.isChecked;
+                $scope.settingItem.downline.isDisabled = !$scope.isDownlineChecked;
+
+                if (!$scope.isChecked && $scope.isDownlineChecked) {
+                    $scope.isDownlineChecked = false;
+                }
+            }
+
+            $scope.changeDownline = () => {
+                $scope.settingItem.downline.isDisabled = !$scope.isDownlineChecked;
+            }
+        }];
+
+        public link: ng.IDirectiveLinkFn = (scope: StatusCheckboxScope) => {
+            scope.isChecked = !scope.settingItem.isDisabled;
+            scope.isEnabled = !scope.uplineSettingItem || (scope.uplineSettingItem && !scope.uplineSettingItem.isDisabled);
+            scope.isDownlineChecked = !scope.settingItem.downline.isDisabled;
+            scope.isDownlineEnabled = scope.isChecked;
+        }
+    }
+
+    angular.module("customerSetting").directive("statusCheckbox", [function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(StatusCheckboxDirective, args));
     }]);
 }

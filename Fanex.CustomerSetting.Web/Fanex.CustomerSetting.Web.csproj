@@ -88,6 +88,7 @@
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Helpers\LevelModelBinder.cs" />
+    <Compile Include="Helpers\SettingItemModelBinder.cs" />
     <Compile Include="Helpers\SettingModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

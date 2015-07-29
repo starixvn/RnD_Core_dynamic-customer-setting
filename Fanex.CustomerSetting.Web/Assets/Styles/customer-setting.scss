@@ -42,20 +42,6 @@ select {
     height: 19px;
 }
 
-.checkbox {
-    cursor: pointer;
-
-    & > input {
-        cursor: pointer;
-        height: 13px;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        top: 2px;
-        width: 13px;
-    }
-}
-
 .update-btn {
     @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
     @include border-radius(3px);
@@ -70,11 +56,6 @@ select {
     padding: 4px 12px;
     text-align: center;
     vertical-align: middle;
-
-    &:disabled {
-        background-image: none;
-        cursor: default;
-    }
 }
 
 [ng\:cloak],
@@ -519,6 +500,21 @@ select {
             padding: 0;
             width: 80%;
         }
+    }
+}
+
+.status-checkbox {
+    cursor: pointer;
+    margin-right: 10px;
+
+    input {
+        cursor: pointer;
+        height: 13px;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        top: 2px;
+        width: 13px;
     }
 }
 

@@ -117,7 +117,9 @@ module CustomerSetting {
         public productName: string;
         public settingTypes: Array<SettingType>;
 
-        constructor(setting: any) {
+        constructor();
+        constructor(setting: any)
+        constructor(setting?: any) {
             if (setting) {
                 this.customerId = setting.productId;
                 this.customerInfo = new CustomerInfo(setting.customerInfo);
@@ -126,6 +128,21 @@ module CustomerSetting {
                 this.productName = setting.productName;
                 this.settingTypes = setting.settingTypes.map((settingType) => new SettingType(settingType));
             }
+        }
+
+        public getSettingType(settingTypeId: number): Setting {
+            var newSetting: Setting = new Setting();
+
+            newSetting.customerId = this.productId;
+            newSetting.customerInfo = this.customerInfo;
+            newSetting.customerLevel = this.customerLevel;
+            newSetting.productId = this.productId;
+            newSetting.productName = this.productName;
+            newSetting.settingTypes = this.settingTypes.filter((item) => {
+                return item.id === settingTypeId;
+            });
+
+            return newSetting;
         }
     }
 

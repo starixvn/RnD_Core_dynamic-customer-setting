@@ -9,6 +9,10 @@
         private Level _uplineLevel;
         private ISetting _setting;
 
+        public UpdateCustomerSettingCommand()
+        {
+        }
+
         public UpdateCustomerSettingCommand(
             ISetting setting,
             Level uplineLevel = null)
