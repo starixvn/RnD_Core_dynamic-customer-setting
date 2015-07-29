@@ -104,7 +104,7 @@
         private void CheckActorAndCustomerLevelsConstrain(User actor, Level customerLevel)
         {
             var isValidConstrain = actor.IsCompany
-                || customerLevel.IsMemberLevel
+                || customerLevel.IsMemberLevel()
                 || actor.Level.IsDirectUplineOf(customerLevel);
 
             if (!isValidConstrain)
@@ -117,7 +117,7 @@
         {
             //// If actor is not company when edit member, actor level should equal with upline level.
             if (actor.IsNotCompany
-                && customerLevel.IsMemberLevel
+                && customerLevel.IsMemberLevel()
                 && uplineLevel.IsNot(null)
                 && actor.Level.IsNot(uplineLevel))
             {
@@ -303,7 +303,7 @@
 
         private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, Level customerLevel)
         {
-            if (customerLevel.IsMemberLevel)
+            if (customerLevel.IsMemberLevel())
             {
                 var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 

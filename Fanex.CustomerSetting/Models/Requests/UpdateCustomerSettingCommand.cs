@@ -55,12 +55,12 @@
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
 
-                    if (Setting.CustomerLevel.IsNotMemberLevel)
+                    if (Setting.CustomerLevel.IsNotMemberLevel())
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-                else if (Setting.CustomerLevel.IsMemberLevel)
+                else if (Setting.CustomerLevel.IsMemberLevel())
                 {
                     throw new ArgumentNullException("value", "Upline cannot be null when update member setting.");
                 }

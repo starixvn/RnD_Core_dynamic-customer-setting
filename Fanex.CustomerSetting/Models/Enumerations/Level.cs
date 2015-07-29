@@ -22,84 +22,54 @@
         {
         }
 
-        public bool IsMemberLevel
+        public bool IsMemberLevel()
         {
-            get
-            {
-                return this == Member;
-            }
+            return this == Member;
         }
 
-        public bool IsNotMemberLevel
+        public bool IsNotMemberLevel()
         {
-            get
-            {
-                return !IsMemberLevel;
-            }
+            return !IsMemberLevel();
         }
 
-        public bool IsCompanyLevel
+        public bool IsCompanyLevel()
         {
-            get
-            {
-                return this == Company;
-            }
+            return this == Company;
         }
 
-        public bool IsNotCompanyLevel
+        public bool IsNotCompanyLevel()
         {
-            get
-            {
-                return !IsCompanyLevel;
-            }
+            return !IsCompanyLevel();
         }
 
-        public bool IsAgentLevel
+        public bool IsAgentLevel()
         {
-            get
-            {
-                return this == Agent;
-            }
+            return this == Agent;
         }
 
-        public bool IsNotAgentLevel
+        public bool IsNotAgentLevel()
         {
-            get
-            {
-                return !IsAgentLevel;
-            }
+            return !IsAgentLevel();
         }
 
-        public bool IsMasterLevel
+        public bool IsMasterLevel()
         {
-            get
-            {
-                return this == Master;
-            }
+            return this == Master;
         }
 
-        public bool IsNotMasterLevel
+        public bool IsNotMasterLevel()
         {
-            get
-            {
-                return !IsMasterLevel;
-            }
+            return !IsMasterLevel();
         }
 
-        public bool IsSuperLevel
+        public bool IsSuperLevel()
         {
-            get
-            {
-                return this == Super;
-            }
+            return this == Super;
         }
 
-        public bool IsNotSuperLevel
+        public bool IsNotSuperLevel()
         {
-            get
-            {
-                return !IsSuperLevel;
-            }
+            return !IsSuperLevel();
         }
 
         public bool IsDirectUplineOf(byte downlineLevelValue)

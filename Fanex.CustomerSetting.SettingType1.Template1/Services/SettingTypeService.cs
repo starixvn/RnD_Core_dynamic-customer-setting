@@ -78,7 +78,7 @@
             var results = Enumerable.Empty<SettingResult>();
             var ungroupedCustomerIds = customerIds;
 
-            if (customerLevel.IsMemberLevel)
+            if (customerLevel.IsMemberLevel())
             {
                 var groupedMemberIds = GetGroupedMemberIds(customerIds);
 

@@ -97,12 +97,12 @@
                     }
 
                     // If current context is editting super/master/agent then Upline level should be null.
-                    if (_customerLevel.IsNotMemberLevel)
+                    if (_customerLevel.IsNotMemberLevel())
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
                     }
                 }
-                else if (_customerLevel.IsMemberLevel)
+                else if (_customerLevel.IsMemberLevel())
                 {
                     // When editting member, upline level should have value
                     throw new ArgumentNullException("value", "Upline cannot be null when getting member setting.");

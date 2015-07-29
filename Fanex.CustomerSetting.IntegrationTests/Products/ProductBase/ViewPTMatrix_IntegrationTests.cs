@@ -52,7 +52,7 @@
             Assert.Greater(superPTRow.MasterPT, 0);
             Assert.Greater(superPTRow.AgentPT, 0);
             Assert.GreaterOrEqual(superPTRow.MinPT, 0);
-            Assert.IsTrue(superPTRow.CustomerLevel.IsSuperLevel);
+            Assert.IsTrue(superPTRow.CustomerLevel.IsSuperLevel());
         }
 
         private void AssertSuperInfo(int superId, string superName, IEnumerable<Customer> superLine)
@@ -93,7 +93,7 @@
         {
             var masterPTRow = masterPTMatrix.PTItemMatrices.First().PTItemMatrixRows.ElementAt(1);
 
-            Assert.IsTrue(masterPTRow.CustomerLevel.IsMasterLevel);
+            Assert.IsTrue(masterPTRow.CustomerLevel.IsMasterLevel());
 
             if (masterPTMatrix.IsAllowMasterAutoPT && masterPTRow.IsAutoMasterPT.Value)
             {

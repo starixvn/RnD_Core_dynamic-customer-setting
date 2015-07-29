@@ -97,7 +97,7 @@
         {
             customerLevel = customerLevel ?? Level.Member;
             
-            if (customerLevel.IsMemberLevel)
+            if (customerLevel.IsMemberLevel())
             {
                 uplineLevel = uplineLevel ?? Level.Master;
             }

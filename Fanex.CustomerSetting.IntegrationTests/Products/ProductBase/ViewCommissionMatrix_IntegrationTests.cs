@@ -40,7 +40,7 @@
             var superCommissionRow = commissionMatrix.CommissionItemMatrices.First().CommissionItemMatrixRows.First();
             Assert.GreaterOrEqual(superCommissionRow.CommRate, 0);
             Assert.LessOrEqual(superCommissionRow.CommRate, 0.01);
-            Assert.IsTrue(superCommissionRow.CustomerLevel.IsSuperLevel);
+            Assert.IsTrue(superCommissionRow.CustomerLevel.IsSuperLevel());
         }
 
         protected void ViewMasterCommissionMatrix(
@@ -66,7 +66,7 @@
         {
             var masterCommissionRow = masterCommissionMatrix.CommissionItemMatrices.First().CommissionItemMatrixRows.ElementAt(1);
 
-            Assert.IsTrue(masterCommissionRow.CustomerLevel.IsMasterLevel);
+            Assert.IsTrue(masterCommissionRow.CustomerLevel.IsMasterLevel());
             Assert.GreaterOrEqual(masterCommissionRow.CommRate, 0);
             Assert.LessOrEqual(masterCommissionRow.CommRate, 0.01);
         }
@@ -97,7 +97,7 @@
         {
             var agentCommissionRow = agentCommissionMatrix.CommissionItemMatrices.First().CommissionItemMatrixRows.ElementAt(2);
 
-            Assert.IsTrue(agentCommissionRow.CustomerLevel.IsAgentLevel);
+            Assert.IsTrue(agentCommissionRow.CustomerLevel.IsAgentLevel());
             Assert.GreaterOrEqual(agentCommissionRow.CommRate, 0);
             Assert.LessOrEqual(agentCommissionRow.CommRate, 0.01);
         }
@@ -132,7 +132,7 @@
         {
             var memberCommissionRow = memberCommissionMatrix.CommissionItemMatrices.First().CommissionItemMatrixRows.ElementAt(3);
 
-            Assert.IsTrue(memberCommissionRow.CustomerLevel.IsMemberLevel);
+            Assert.IsTrue(memberCommissionRow.CustomerLevel.IsMemberLevel());
             Assert.GreaterOrEqual(memberCommissionRow.CommRate, 0);
             Assert.LessOrEqual(memberCommissionRow.CommRate, 0.01);
         }

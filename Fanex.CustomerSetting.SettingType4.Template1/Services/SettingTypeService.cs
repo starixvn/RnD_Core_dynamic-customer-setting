@@ -39,8 +39,8 @@
             CustomerSettingQuery query, 
             SettingType productSettingType)
         {
-            if (query.CustomerLevel.IsMemberLevel
-                && query.UplineLevel.IsNotAgentLevel)
+            if (query.CustomerLevel.IsMemberLevel()
+                && query.UplineLevel.IsNotAgentLevel())
             {
                 return new SettingType();
             }

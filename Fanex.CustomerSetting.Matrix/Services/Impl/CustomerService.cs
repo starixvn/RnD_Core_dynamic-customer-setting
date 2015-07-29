@@ -25,18 +25,18 @@
             var customerLine = new List<Customer>();
             var customerLevel = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue);
 
-            if (customerLevel.IsMasterLevel)
+            if (customerLevel.IsMasterLevel())
             {
                 customerLine.Add(GetSuper(customerLineDto));
             }
 
-            if (customerLevel.IsAgentLevel)
+            if (customerLevel.IsAgentLevel())
             {
                 customerLine.Add(GetSuper(customerLineDto));
                 customerLine.Add(GetMaster(customerLineDto));
             }
 
-            if (customerLevel.IsMemberLevel)
+            if (customerLevel.IsMemberLevel())
             {
                 customerLine.Add(GetSuper(customerLineDto));
                 customerLine.Add(GetMaster(customerLineDto));
