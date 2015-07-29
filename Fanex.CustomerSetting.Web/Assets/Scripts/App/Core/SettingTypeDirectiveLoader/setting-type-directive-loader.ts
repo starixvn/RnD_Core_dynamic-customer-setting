@@ -12,7 +12,7 @@ module CustomerSetting {
     }
 
     class SettingTypeDirectiveLoader implements ng.IDirective {
-        public static $inject = ["$compile", "$ocLazyLoad", "appConfigService"];
+        public static $inject: string[] = ["$compile", "$ocLazyLoad", "appConfigService"];
 
         public replace: boolean = true;
         public restrict: string = "A";
@@ -39,8 +39,7 @@ module CustomerSetting {
             if (angular.isDefined(scope.setting)) {
                 angular.forEach(scope.setting.settingTypes, (settingType, index) => {
                     var settingTypeName = "settingtype" + settingType.id + "-template" + settingType.settingTemplate;
-                    var srciptFileName = settingTypeName.replace("-", ".");
-                    var filePath = "app/customerSetting/" + srciptFileName + "/" + settingTypeName + ".js";
+                    var filePath = "app/customerSetting/" + settingTypeName.replace("-", ".") + "/" + settingTypeName + ".js";
                     var newNodeParts = [
                         "<div data-oc-lazy-load=\"'",
                         this.appConfigService.resolveRootUrl(filePath),

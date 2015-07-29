@@ -1,17 +1,17 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../resource/resource-translation.ts" />
 /// <reference path="common.ts" />
+/// <reference path="helpers.ts" />
 /// <reference path="models.ts" />
 /// <reference path="module-registrater.ts" />
 /// <reference path="parameters.ts" />
-/// <reference path="helpers.ts" />
 
 module CustomerSetting {
     export class CustomerSettingController {
         private isMultipleUpdates: boolean;
 
         private get queryPath(): string {
-            return "viewCustomerSetting/querySetting";
+            return "viewCustomerSetting/querySetting?";
         }
 
         private get updatePath(): string {
@@ -22,7 +22,7 @@ module CustomerSetting {
             return "updateCustomerSetting/updateMultipleSetting";
         }
 
-        public static $inject = [
+        public static $inject: string[] = [
             "$http",
             "appConfigService",
             "parametersService",
@@ -48,17 +48,16 @@ module CustomerSetting {
         }
 
         private querySetting(): void {
-            var query = this.parametersService.getSettingQuery();
+            var query: SettingQuery = this.parametersService.getSettingQuery();
 
             this.isUIblocked = true;
-            this.$http.get(this.appConfigService.resolveRootUrl("viewCustomerSetting/querySetting?" + query.toParamString())).success((data: any) => {
-                //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data.json")).success((data: Setting) => {
-                //console.log(JSON.stringify(data));
+            this.$http.get(this.appConfigService.resolveRootUrl(this.queryPath + query.toParamString())).success((data: any) => {
+                //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data.json")).success((data: any) => {
                 this.setting = new Setting(data);
-                console.log(this.setting);
+                console.log(data);
                 this.isUIblocked = false;
             }).error((error: Result) => {
-                var error = Result.systemError;
+                var error: Result = Result.systemError;
 
                 error.message = this.resourceService.getMessage(error.message);
 

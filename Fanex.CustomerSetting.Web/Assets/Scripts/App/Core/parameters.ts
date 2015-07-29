@@ -52,7 +52,7 @@ module CustomerSetting {
         constructor();
         constructor(param: any);
         constructor(param?: any) {
-            if (param !== undefined) {
+            if (param) {
                 this.productId = param.productId;
                 this.uplineLevel = param.uplineLevel;
                 this.customerLevel = param.customerLevel;
@@ -61,10 +61,10 @@ module CustomerSetting {
     }
 
     export class SettingQuery extends AbstractSettingQuery {
-        private _customerId: number;
+        private custId: number;
 
         public get customerId(): number {
-            return this._customerId;
+            return this.custId;
         }
 
         public set customerId(custId: number) {
@@ -72,17 +72,7 @@ module CustomerSetting {
                 throw Exceptions.negativeParam("customerId");
             }
 
-            this._customerId = custId;
-        }
-
-        public toParamString(): string {
-            var paramString = "customerId=" + this.customerId + "&customerLevel=" + this.customerLevel + "&productId=" + this.productId;
-
-            if (this.uplineLevel !== undefined) {
-                paramString += "&uplineLevel=" + this.uplineLevel;
-            }
-
-            return paramString;
+            this.custId = custId;
         }
 
         constructor();
@@ -90,9 +80,19 @@ module CustomerSetting {
         constructor(param?: any) {
             super(param);
 
-            if (param !== undefined) {
+            if (param) {
                 this.customerId = param.customerId;
             }
+        }
+
+        public toParamString(): string {
+            var paramString: string = "customerId=" + this.customerId + "&customerLevel=" + this.customerLevel + "&productId=" + this.productId;
+
+            if (this.uplineLevel) {
+                paramString += "&uplineLevel=" + this.uplineLevel;
+            }
+
+            return paramString;
         }
     }
 
@@ -105,7 +105,7 @@ module CustomerSetting {
         }
 
         public set customerIds(custIds: string) {
-            if (custIds === undefined || custIds === "") {
+            if (!custIds || custIds === "") {
                 throw Exceptions.invalidParam("customerIds");
             }
 
@@ -117,11 +117,22 @@ module CustomerSetting {
         }
 
         public set customerNames(names: string) {
-            if (names === undefined || names === "") {
+            if (!names || names === "") {
                 throw Exceptions.invalidParam("customerNames");
             }
 
             this.custNames = names.split(",").map(name => name.trim());
+        }
+
+        constructor();
+        constructor(param: any);
+        constructor(param?: any) {
+            super(param);
+
+            if (param) {
+                this.customerIds = param.customerIds;
+                this.customerNames = param.customerNames;
+            }
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
@@ -137,17 +148,6 @@ module CustomerSetting {
             }
 
             return query;
-        }
-
-        constructor();
-        constructor(param: any);
-        constructor(param?: any) {
-            super(param);
-
-            if (param !== undefined) {
-                this.customerIds = param.customerIds;
-                this.customerNames = param.customerNames;
-            }
         }
 
         public validate(): boolean {

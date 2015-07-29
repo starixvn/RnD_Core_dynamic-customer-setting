@@ -13,6 +13,7 @@
         </div>
         <customer-info data-ng-if="!ctrl.customerNames" data-info="ctrl.setting.customerInfo"></customer-info>
         <div data-setting-type-loader data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></div>
+        <button class="update-btn" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
     </div>
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
     <script type="text/javascript" src="{{rootUrl}}scripts/libraries/angularjs/angular.min.js?v={{version}}"></script>

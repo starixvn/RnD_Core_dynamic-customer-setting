@@ -4,6 +4,10 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
+    interface SettingResultScope extends ng.IScope {
+        result: SettingResult;
+    }
+
     class SettingResultDirective implements ng.IDirective {
         public replace: boolean = true;
 
@@ -16,7 +20,7 @@ module CustomerSetting {
         public templateUrl: string = "SettingResult/setting-result.htm";
 
         public controller: any = ["$scope", "$window", ($scope: SettingResultScope, $window: ng.IWindowService) => {
-            $scope.$watch("result", (result) => {
+            $scope.$watch("result", (result: SettingResult) => {
                 if (angular.isDefined(result)) {
                     $window.scrollTo(0, 0);
 
@@ -30,10 +34,6 @@ module CustomerSetting {
                 }
             })
         }];
-    }
-
-    interface SettingResultScope extends ng.IScope {
-        result: SettingResult;
     }
 
     ModuleRegister.directive("settingResult", SettingResultDirective);

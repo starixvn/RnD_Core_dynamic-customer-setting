@@ -27,7 +27,7 @@ module CustomerSetting {
         public email: string;
 
         constructor(info: any) {
-            if (info !== undefined) {
+            if (info) {
                 this.userName = info.userName;
                 this.userName2 = info.userName2;
                 this.firstName = info.firstName;
@@ -50,7 +50,7 @@ module CustomerSetting {
         public oldSetting: DefaultSettingItem;
 
         constructor(settingItem: any) {
-            if (settingItem !== undefined) {
+            if (settingItem) {
                 this.sportTypeId = settingItem.sportTypeId;
                 this.sportTypeName = settingItem.sportTypeName;
                 this.betTypeId = settingItem.betTypeId;
@@ -84,7 +84,7 @@ module CustomerSetting {
         public typeName: string;
 
         constructor(settingType: any) {
-            if (settingType !== undefined) {
+            if (settingType) {
                 this.id = settingType.id;
                 this.name = settingType.name;
                 this.settingTemplate = settingType.settingTemplate;
@@ -96,13 +96,13 @@ module CustomerSetting {
     }
 
     export class Setting {
-        private _customerLevel: Level;
+        private custLevel: Level;
 
         public customerId: number;
         public customerInfo: CustomerInfo;
 
         public get customerLevel(): Level {
-            return this._customerLevel;
+            return this.custLevel;
         }
 
         public set customerLevel(level: Level) {
@@ -110,7 +110,7 @@ module CustomerSetting {
                 throw Exceptions.wrongCustomerLevel;
             }
 
-            this._customerLevel = level;
+            this.custLevel = level;
         }
 
         public productId: number;
@@ -118,7 +118,7 @@ module CustomerSetting {
         public settingTypes: Array<SettingType>;
 
         constructor(setting: any) {
-            if (setting !== undefined) {
+            if (setting) {
                 this.customerId = setting.productId;
                 this.customerInfo = new CustomerInfo(setting.customerInfo);
                 this.customerLevel = setting.customerLevel.value;

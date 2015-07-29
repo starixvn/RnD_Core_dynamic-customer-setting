@@ -56,20 +56,26 @@ select {
     }
 }
 
-/*.update {
-    @include box-sizing(border-box);
-    background-color: $border-color;
+.update-btn {
+    @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
+    @include border-radius(3px);
+    background-repeat: no-repeat;
     border: 0;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
+    font-size: 11px;
     line-height: 16px;
-    margin-bottom: 10px;
     min-width: 70px;
     padding: 4px 12px;
     text-align: center;
     vertical-align: middle;
-}*/
+
+    &:disabled {
+        background-image: none;
+        cursor: default;
+    }
+}
 
 [ng\:cloak],
 [ng-cloak],
@@ -280,6 +286,7 @@ select {
 
     .block {
         @include box-sizing(border-box);
+        @include clearfix();
         background-color: #fff;
         border: 1px solid $border-color;
         margin-bottom: 10px;
@@ -297,6 +304,16 @@ select {
                 border-bottom: none;
             }
 
+            &.sport-group-header {
+                background-color: #cadceb;
+                padding: 0 3px;
+                text-align: left;
+
+                &.not-first {
+                    border-top: 1px solid $border-color;
+                }
+            }
+
             .update {
                 border-left: 1px solid $border-color;
                 cursor: pointer;
@@ -308,130 +325,106 @@ select {
                     vertical-align: middle;
                 }
             }
+        }
 
-            &.sport-group-header {
-                background-color: #cadceb;
-                text-align: left;
+        .setting-type-group {
+            @include clearfix();
+        }
+
+        .setting-group {
+            border-bottom: 1px solid $border-color;
+            display: inline-block;
+            width: 50%;
+            float: left;
+
+            &.last,
+            &.near-last {
+                border-bottom: none;
+            }
+
+            &.only-one {
+                width: 100%;
+
+                .name-col {
+                    width: 20%;
+                }
+
+                .value-col {
+                    border-right: none;
+                    width: 80%;
+                }
             }
         }
 
-        .name-col {
+        .name-col,
+        .value-col {
             @include box-sizing(border-box);
             background-color: $header-color;
-
-            border: {
-                bottom: 1px solid $border-color;
-                right: 1px solid $border-color;
-            }
-
-            clear: left;
+            display: inline-block;
+            border-right: 1px solid $border-color;
+            float: left;
             height: 23px;
             line-height: 23px;
+            padding: 0 3px;
+            width: 40%;
+        }
+
+        .value-col {
+            background-color: #fff;
+            width: 60%;
+
+            &.last {
+                border-right: none;
+            }
+        }
+
+        %col {
+            @include box-sizing(border-box);
+            border-right: 1px solid $border-color;
+            float: left;
+            height: 25px;
             padding: 0 3px;
             width: 20%;
 
             &.last {
-                border-bottom: none;
+                border-right: none;
+            }
+        }
+
+        .empty-cell,
+        .w20-percent {
+            @extend %col;
+            width: 20%;
+        }
+
+        .w25-percent {
+            @extend %col;
+            width: 25%;
+        }
+
+        .w27-percent {
+            @extend %col;
+            width: 27%;
+
+            &.last {
+                width: 26%;
+            }
+        }
+
+        .w231px {
+            @extend %col;
+            width: 231px;
+
+            &.second {
+                width: 232px;
+            }
+
+            &.last {
+                width: 223px;
             }
         }
     }
 }
-
-/*.product-container {
-    .container {
-        background-color: #fff;
-        border: 1px solid $border-color;
-        float: left;
-        margin-bottom: 10px;
-        width: 100%;
-
-        .header {
-            @include box-sizing(border-box);
-            background-color: $background-color;
-
-            border: {
-                left: 1px solid $border-color;
-                top: 1px solid $border-color;
-            }
-
-            font-weight: bold;
-            height: 25px;
-            line-height: 25px;
-            text-align: center;
-
-            .update {
-                border-left: 1px solid $border-color;
-                cursor: pointer;
-                float: right;
-                height: 100%;
-                line-height: 20px;
-                width: 42px;
-            }
-        }
-
-        .body {
-            .row-title {
-                float: left;
-                width: 100%;
-
-                div {
-                    @include box-sizing(border-box);
-                    background-color: $background-color;
-
-                    border: {
-                        left: 1px solid $border-color;
-                        top: 1px solid $border-color;
-                    }
-
-                    float: left;
-                    font-weight: bold;
-                    height: 25px;
-                    line-height: 25px;
-                    text-align: center;
-                }
-            }
-
-            .col-name {
-                @include box-sizing(border-box);
-                @include clearfix();
-                @include ellipsis(true);
-                background-color: $background-color;
-
-                border: {
-                    left: 1px solid $border-color;
-                    top: 1px solid $border-color;
-                }
-
-                float: left;
-                height: 23px;
-                line-height: 23px;
-                padding: 0 3px;
-                width: 140px;
-
-                .copy-item {
-                    cursor: pointer;
-                    float: right;
-                    line-height: 0;
-                }
-            }
-
-            .col-value {
-                @include box-sizing(border-box);
-                @include clearfix();
-
-                border: {
-                    left: 1px solid $border-color;
-                    top: 1px solid $border-color;
-                }
-
-                height: 23px;
-                line-height: 23px;
-                margin-left: 140px;
-                padding: 0 3px;
-            }
-        }
-    }
-}*/
 
 .info-block .row {
     @include clearfix();
@@ -508,6 +501,27 @@ select {
 /*********************************************************/
 /*                    Setting Type 2                     */
 /*********************************************************/
+.setting-type-2.block,
+.setting-type-1.block {
+    .setting-group {
+        width: 100%;
+
+        &.near-last {
+            border-bottom: 1px solid $border-color;
+        }
+
+        .name-col {
+            width: 20%;
+        }
+
+        .value-col {
+            border-right: none;
+            padding: 0;
+            width: 80%;
+        }
+    }
+}
+
 /*.bet-limit-block {
     .bet-limit-item {
         float: left;
@@ -563,6 +577,9 @@ select {
 /*********************************************************/
 /*                    Setting Type 4                     */
 /*********************************************************/
+.setting-type-4 {
+}
+
 /*.status-block .status-item {
     float: left;
     width: 50%;

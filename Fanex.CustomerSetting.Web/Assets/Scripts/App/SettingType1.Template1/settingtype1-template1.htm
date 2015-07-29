@@ -1,4 +1,23 @@
 ﻿<div>
-    <data-default-setting-block data-product-id="productId" data-product-name="productName" data-setting-type="settingType" data-update="update({ settingTypeId: settingTypeId })"></data-default-setting-block>
-    <div data-ng-repeat="settingItem in settingType.settingItems">Developing</div>
+    <default-setting-type-block class="setting-type-1"
+                                data-product-id="productId"
+                                data-product-name="productName"
+                                data-setting-type="settingType"
+                                data-update="update({ settingTypeId: settingTypeId })"
+                                data-header-template-url="headerTemplateUrl"
+                                data-value-template-url="valueTemplateUrl">
+    </default-setting-type-block>
+    <script type="text/ng-template" id="settingtyp1-template1-value.html">
+        <div class="w25-percent"></div>
+        <div class="w25-percent"></div>
+        <div class="w25-percent"></div>
+        <div class="w25-percent last"></div>
+    </script>
+    <script type="text/ng-template" id="settingtyp1-template1-header.html">
+        <div class="empty-cell"></div>
+        <div class="w20-percent">{{::('SuperMaxPT' | label)}}</div>
+        <div class="w20-percent">{{::('MasterMaxPT' | label)}}</div>
+        <div class="w20-percent">{{::('AgentMaxPT' | label)}}</div>
+        <div class="w20-percent last">{{::('SuperMinPT' | label)}}</div>
+    </script>
 </div>

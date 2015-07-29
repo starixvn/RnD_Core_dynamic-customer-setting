@@ -4,18 +4,36 @@
         <div class="update">
             <span class="icon update-icon"
                   data-ng-attr-title="{{'Update' | label}}"
-                  data-ng-click="update({settingTypeId: settingType.id})"></span>
+                  data-ng-click="update({ settingTypeId: settingType.id })"></span>
         </div>
     </div>
-    <div class="header sport-group-header"
-         data-ng-show="settingType.settingLevel===settingLevel.sportTypeBetType && settingType.settingItems.length > 0"
-         data-ng-attr-sport-type="settingItem.sportTypeId">{{settingType.settingItems[0].sportTypeName}}</div>
-    <div class="name-col"></div>
-    <div class="name-col"
-         data-ng-repeat="settingItem in settingType.settingItems"
-         data-ng-class="{'last':$last}"
-         data-ng-attr-sport-type="settingItem.sportTypeId"
-         data-ng-attr-sport-type="settingItem.betTypeId">
-        {{settingType.settingLevel===settingLevel.product ? productName : (settingType.settingLevel===settingLevel.sportType ? settingItem.sportTypeName : settingItem.betTypeName)}}
+    <div class="setting-type-group" data-ng-repeat="group in sportGroups">
+        <div class="header sport-group-header"
+             data-ng-show="settingType.settingLevel===settingLevel.sportTypeBetType"
+             data-ng-class="{'not-first':($index > 0)}"
+             data-ng-attr-sport-type="group[0].sportTypeId">
+            {{group[0].sportTypeName}}
+        </div>
+        <div class="header" data-ng-include="headerTemplateUrl"></div>
+        <div class="setting-group"
+             data-ng-repeat="item in group"
+             data-ng-class="{'last':$last, 'near-last':(($index === group.length - 2) && ($index % 2 === 0)), 'only-one':(group.length === 1)}">
+            <div class="name-col"
+                 data-ng-attr-product="productId"
+                 data-ng-attr-sport-type="item.sportTypeId"
+                 data-ng-attr-sport-type="item.betTypeId">
+                {{settingType.settingLevel===settingLevel.product ? productName : (settingType.settingLevel===settingLevel.sportType ? item.sportTypeName : item.betTypeName)}}
+                {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+            </div>
+            <div class="value-col"
+                 data-ng-include="valueTemplateUrl"
+                 data-ng-class="{'last':($index % 2 === 1)}">
+            </div>
+        </div>
+        <div class="setting-group last extended-setting-group"
+             data-ng-if="(group.length % 2 === 1) && (group.length > 1)">
+            <div class="name-col"></div>
+            <div class="value-col last"></div>
+        </div>
     </div>
 </div>

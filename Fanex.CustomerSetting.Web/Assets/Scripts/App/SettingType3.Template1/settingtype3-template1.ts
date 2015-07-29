@@ -1,28 +1,64 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helpers.ts" />
 
 module CustomerSetting {
-    class SettingType3Template1Directive implements ng.IDirective {
-        //public static $inject = ["$templateCache"];
+    interface SettingType3Template1Scope extends SettingTypeDirectiveSharedScope {
+        rateRanges: Array<KeyValuePair<number, number>>;
+    }
 
-        public replace: boolean = true;
+    class Settingtype3Item extends DefaultSettingItem {
+        public commRate: number;
+        public upline: Settingtype3Item;
 
-        public get scope(): any {
-            return {
-                productId: "=",
-                productName: "=",
-                settingType: "=",
-                update: "&"
+        constructor(settingItem: any) {
+            super(settingItem);
+
+            if (settingItem) {
+                this.commRate = settingItem.commRate;
+
+                if (settingItem.upline) {
+                    this.upline = new Settingtype3Item(settingItem.upline);
+                }
             }
         }
 
-        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
+        public backup(): void {
+            var oldSetting: Settingtype3Item;
 
-        constructor(private appConfigService: AppConfigService) { }
+            super.backup();
+            oldSetting = <Settingtype3Item>this.oldSetting;
+
+            oldSetting.commRate = this.commRate;
+
+            if (this.upline) {
+                oldSetting.upline = new Settingtype3Item(this.upline);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = super.isChanged();
+            var oldSetting: Settingtype3Item = <Settingtype3Item>this.oldSetting;
+
+            return isChanged
+                || this.commRate !== oldSetting.commRate
+                || (this.upline && this.upline.isChanged());
+        }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", function () {
+    class SettingType3Template1Directive extends SettingTypeDirective {
+        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
+
+        public link: ng.IDirectiveLinkFn = (scope: SettingType3Template1Scope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+            scope.valueTemplateUrl = "settingtyp3-template1-value.html";
+        }
+
+        constructor(private appConfigService: AppConfigService, private valueRangeGenerator: ValueRangeGenerator) {
+            super();
+        }
+    }
+
+    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "valueRangeGenerator", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));

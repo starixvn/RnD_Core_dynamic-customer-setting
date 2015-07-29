@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
     using System;
-    using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Enumerations;
 
     public class CustomerSettingQuery
@@ -11,10 +10,14 @@
         private byte _productId;
         private Level _uplineLevel;
 
+        public CustomerSettingQuery()
+        {
+        }
+
         public CustomerSettingQuery(
-            int customerId, 
-            Level customerLevel, 
-            byte productId, 
+            int customerId,
+            Level customerLevel,
+            byte productId,
             Level uplineLevel = null)
         {
             CustomerId = customerId;
@@ -92,7 +95,7 @@
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
                     }
-                    
+
                     // If current context is editting super/master/agent then Upline level should be null.
                     if (_customerLevel.IsNotMemberLevel)
                     {

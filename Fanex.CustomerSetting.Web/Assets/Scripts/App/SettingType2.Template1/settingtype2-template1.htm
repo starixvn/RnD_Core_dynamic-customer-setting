@@ -1,4 +1,27 @@
 ﻿<div>
-    <data-default-setting-block data-product-id="productId" data-product-name="productName" data-setting-type="settingType" data-update="update({ settingTypeId: settingTypeId })"></data-default-setting-block>
-    <div data-ng-repeat="settingItem in settingType.settingItems">Developing</div>
+    <default-setting-type-block class="setting-type-2"
+                                data-product-id="productId"
+                                data-product-name="productName"
+                                data-setting-type="settingType"
+                                data-update="update({ settingTypeId: settingTypeId })"
+                                data-header-template-url="headerTemplateUrl"
+                                data-value-template-url="valueTemplateUrl">
+    </default-setting-type-block>
+    <script type="text/ng-template" id="settingtyp2-template1-value.html">
+        <div class="w231px">
+            <input type="text" maxlength="14" data-ng-bind="item.minBet" />
+        </div>
+        <div class="w231px second">
+            <input type="text" maxlength="14" data-ng-bind="item.maxBet" />
+        </div>
+        <div class="w231px last">
+            <input type="text" maxlength="14" data-ng-bind="item.maxPerMatch" />
+        </div>
+    </script>
+    <script type="text/ng-template" id="settingtyp2-template1-header.html">
+        <div class="empty-cell"></div>
+        <div class="w27-percent">{{::('MinBet' | label)}}</div>
+        <div class="w27-percent">{{::('MinBet' | label)}}</div>
+        <div class="w27-percent last">{{::('MinBet' | label)}}</div>
+    </script>
 </div>

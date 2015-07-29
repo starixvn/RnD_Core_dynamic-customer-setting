@@ -1,4 +1,11 @@
 ﻿<div>
-    <data-default-setting-block data-product-id="productId" data-product-name="productName" data-setting-type="settingType" data-update="update({ settingTypeId: settingTypeId })"></data-default-setting-block>
-    <div data-ng-repeat="settingItem in settingType.settingItems">Developing</div>
+    <default-setting-type-block data-product-id="productId"
+                                data-product-name="productName"
+                                data-setting-type="settingType"
+                                data-update="update({ settingTypeId: settingTypeId })"
+                                data-value-template-url="valueTemplateUrl">
+    </default-setting-type-block>
+    <script type="text/ng-template" id="settingtyp3-template1-value.html">
+        <select data-ng-options="item.key as item.value in valueRangeGenerator.generateRanges(0, item.upline.commRate, 0.0005, 10000)"></select>
+    </script>
 </div>

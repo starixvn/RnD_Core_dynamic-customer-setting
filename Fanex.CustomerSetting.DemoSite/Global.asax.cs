@@ -5,6 +5,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Web;
     using Fanex.Data.Configuration;
 
@@ -20,6 +21,7 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbSettingProviderManager.Current.Start();
             ModelBinders.Binders.Add(typeof(ISettingItem), new SettingModelBinder());
+            ModelBinders.Binders.Add(typeof(Level), new LevelModelBinder());
         }
     }
 }

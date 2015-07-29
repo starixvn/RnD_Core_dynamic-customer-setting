@@ -1,10 +1,10 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="module-registrater.ts" />
 /// <reference path="parameters.ts" />
-/// <reference path="../core/module-registrater.ts" />
 
 module CustomerSetting {
     export class AppConfigService {
-        public static $inject = ["$rootScope"];
+        public static $inject: string[] = ["$rootScope"];
 
         private rootUrl: string;
 
@@ -43,7 +43,7 @@ module CustomerSetting {
 
         public getSettingQuery(): SettingQuery {
             if (this.isMultiple) {
-                var multipleQuery = new MultipleSettingQuery(this.params);
+                var multipleQuery: MultipleSettingQuery = new MultipleSettingQuery(this.params);
 
                 if (!multipleQuery.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
@@ -57,7 +57,7 @@ module CustomerSetting {
 
         public createSettingCommand(setting: Setting): SettingCommand {
             if (this.isMultiple) {
-                var query = new MultipleSettingQuery(this.params);
+                var query: MultipleSettingQuery = new MultipleSettingQuery(this.params);
 
                 if (!query.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
@@ -76,7 +76,7 @@ module CustomerSetting {
         private searchForParams(): void {
             var params: any = this.$location.search();
 
-            if (params !== undefined) {
+            if (params) {
                 this.params = params;
                 this.isMultiple = params.isMultiple || false;
                 this.lang = params.language;
@@ -96,4 +96,23 @@ module CustomerSetting {
     }
 
     ModuleRegister.filter("naValue", NAValue);
+
+    export class ValueRangeGenerator {
+        public generateRanges(min: number, max: number, step: number, divider: number): Array<KeyValuePair<number, number>> {
+            var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();
+
+            min = Math.max(0, min);
+            max = Math.max(0, max);
+
+            while (max >= min) {
+                ranges.push(new KeyValuePair<number, number>(max, max));
+                max -= step;
+                max = Math.round(max * divider) / divider;
+            }
+
+            return ranges;
+        }
+    }
+
+    ModuleRegister.service("valueRangeGenerator", ValueRangeGenerator);
 }

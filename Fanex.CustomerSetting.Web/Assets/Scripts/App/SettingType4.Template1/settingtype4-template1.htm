@@ -1,4 +1,24 @@
 ﻿<div>
-    <data-default-setting-block data-product-id="productId" data-product-name="productName" data-setting-type="settingType" data-update="update({ settingTypeId: settingTypeId })"></data-default-setting-block>
-    <div data-ng-repeat="settingItem in settingType.settingItems">Developing</div>
+    <default-setting-type-block data-product-id="productId"
+                                data-product-name="productName"
+                                data-setting-type="settingType"
+                                data-update="update({ settingTypeId: settingTypeId })"
+                                data-value-template-url="valueTemplateUrl">
+    </default-setting-type-block>
+    <script type="text/ng-template" id="settingtyp4-template1-value.html">
+        <label>
+            <input type="checkbox"
+                   data-ng-bind="!item.isDisabled"
+                   data-ng-model="item.isDisabled"
+                   data-ng-disabled="item.upline.isDisabled" />
+            {{'Enable' | label}}
+        </label>
+        <label>
+            <input type="checkbox"
+                   data-ng-bind="!item.downline.isDisabled && !item.isDisabled"
+                   data-ng-model="item.downline.isDisabled"
+                   data-ng-disabled="!item.downline.isDisabled || !item.isDisabled" />
+            {{'EnableDownline' | label}}
+        </label>
+    </script>
 </div>
