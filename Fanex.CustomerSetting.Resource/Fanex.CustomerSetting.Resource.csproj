@@ -56,6 +56,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Label.ja-JP.resx" />
+    <EmbeddedResource Include="Label.ko-KR.resx" />
+    <EmbeddedResource Include="Label.th-TH.resx" />
+    <EmbeddedResource Include="Label.vi-VN.resx" />
+    <EmbeddedResource Include="Label.zh-CN.resx" />
+    <EmbeddedResource Include="Label.zh-TW.resx" />
+    <EmbeddedResource Include="Message.ja-JP.resx" />
+    <EmbeddedResource Include="Message.ko-KR.resx" />
     <EmbeddedResource Include="Message.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Message.Designer.cs</LastGenOutput>
@@ -64,6 +72,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Label.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Message.th-TH.resx" />
+    <EmbeddedResource Include="Message.vi-VN.resx" />
+    <EmbeddedResource Include="Message.zh-CN.resx" />
+    <EmbeddedResource Include="Message.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
