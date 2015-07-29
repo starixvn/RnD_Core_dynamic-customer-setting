@@ -25,7 +25,7 @@
             {
                 if (_settingItems == null)
                 {
-                    _settingItems = Enumerable.Empty<ISettingItem>();
+                    _settingItems = new List<ISettingItem>();
                 }
 
                 return _settingItems;

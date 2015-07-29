@@ -111,7 +111,7 @@
             {
                 if (_settingType == null)
                 {
-                    _settingType = Enumerable.Empty<SettingType>();
+                    _settingType = new List<SettingType>();
                 }
 
                 return _settingType;
