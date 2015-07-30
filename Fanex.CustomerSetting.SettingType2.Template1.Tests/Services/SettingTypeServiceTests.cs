@@ -89,9 +89,9 @@
             Assert.AreEqual(10, actualCustomerBetLimitItem.MinBet);
             Assert.AreEqual(100, actualCustomerBetLimitItem.MaxBet);
             Assert.AreEqual(1000, actualCustomerBetLimitItem.MaxPerMatch);
-            Assert.AreEqual(1, actualCustomerBetLimitItem.Constraint.MinBet);
-            Assert.AreEqual(120, actualCustomerBetLimitItem.Constraint.MaxBet);
-            Assert.AreEqual(1200, actualCustomerBetLimitItem.Constraint.MaxPerMatch);
+            Assert.AreEqual(1, actualCustomerBetLimitItem.Upline.MinBet);
+            Assert.AreEqual(120, actualCustomerBetLimitItem.Upline.MaxBet);
+            Assert.AreEqual(1200, actualCustomerBetLimitItem.Upline.MaxPerMatch);
         }
 
         [Test]

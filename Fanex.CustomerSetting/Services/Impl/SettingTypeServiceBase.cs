@@ -144,7 +144,6 @@
             {
                 try
                 {
-                    //// Faced with duplication code here, i'm trying to findout solution.
                     settingTypeResult = UpdateCustomerSettingType(
                         settingContext, 
                         customerId, 

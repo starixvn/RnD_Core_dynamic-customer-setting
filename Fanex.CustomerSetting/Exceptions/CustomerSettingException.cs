@@ -115,6 +115,11 @@
 
         public void SetSettingContextInfo(string actionName, ISettingContext settingContext)
         {
+            if (settingContext == null)
+            {
+                throw new ArgumentNullException("settingContext", "Setting Context cannot be null");
+            }
+
             ActionName = actionName;
 
             SystemId = settingContext.System;

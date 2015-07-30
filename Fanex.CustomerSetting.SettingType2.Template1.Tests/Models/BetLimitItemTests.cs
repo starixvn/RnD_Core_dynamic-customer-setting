@@ -93,9 +93,9 @@
             Assert.AreEqual(1, actualBetLimitItem.MinBet);
             Assert.AreEqual(5, actualBetLimitItem.MaxBet);
             Assert.AreEqual(10, actualBetLimitItem.MaxPerMatch);
-            Assert.AreEqual(0, actualBetLimitItem.Constraint.MinBet);
-            Assert.AreEqual(7, actualBetLimitItem.Constraint.MaxBet);
-            Assert.AreEqual(15, actualBetLimitItem.Constraint.MaxPerMatch);
+            Assert.AreEqual(0, actualBetLimitItem.Upline.MinBet);
+            Assert.AreEqual(7, actualBetLimitItem.Upline.MaxBet);
+            Assert.AreEqual(15, actualBetLimitItem.Upline.MaxPerMatch);
         }
     }
 }

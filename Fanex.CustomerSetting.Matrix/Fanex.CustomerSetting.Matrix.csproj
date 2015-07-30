@@ -85,6 +85,7 @@
     <Compile Include="Dtos\CommissionItemMatrixDto.cs" />
     <Compile Include="Dtos\CustomerLineDto.cs" />
     <Compile Include="Dtos\PTItemMatrixDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CommissionMatrix.cs" />
     <Compile Include="Models\SettingItemMatrix.cs" />
     <Compile Include="Models\CommissionItemMatrix.cs" />

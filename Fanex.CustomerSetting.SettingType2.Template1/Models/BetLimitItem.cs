@@ -24,7 +24,7 @@
             MaxBet = betLimitItemDto.MaxBet;
             MinBet = betLimitItemDto.MinBet;
             MaxPerMatch = betLimitItemDto.MaxPerMatch;
-            Constraint = new BetLimitItem
+            Upline = new BetLimitItem
             {
                 MinBet = betLimitItemDto.MinBetMin,
                 MaxBet = betLimitItemDto.MaxBetMax,
@@ -38,7 +38,7 @@
 
         public decimal MaxPerMatch { get; set; }
 
-        public BetLimitItem Constraint { get; set; }
+        public BetLimitItem Upline { get; set; }
 
         public override IResult Validate()
         {

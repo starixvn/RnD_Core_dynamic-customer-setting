@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Models.Enumerations;
@@ -13,6 +14,11 @@
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
         public PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
         {
+            if (pTMatrixDto == null)
+            {
+                throw new ArgumentNullException("pTMatrixDto", "PT Item Matrix Dto cannot be null");
+            }
+
             CustomerLevel = Enumeration.FromValue<Level>(pTMatrixDto.LevelValue);
             SuperPT = pTMatrixDto.SuperPT;
             MasterPT = pTMatrixDto.MasterPT;
