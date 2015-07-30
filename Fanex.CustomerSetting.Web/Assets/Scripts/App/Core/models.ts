@@ -135,8 +135,6 @@ module CustomerSetting {
                 return new KeyValuePair<string, any>(prop, rawData[prop]);
             });
 
-            console.log(extraData);
-
             return extraData;
         }
     }

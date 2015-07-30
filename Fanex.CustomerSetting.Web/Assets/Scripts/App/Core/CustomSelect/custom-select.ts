@@ -28,7 +28,7 @@ module CustomerSetting {
         }
 
         public controller: any = ["$scope", "valueRangeGenerator", ($scope: RangedValueSelectScope, valueRangeGenerator: ValueRangeGenerator) => {
-            $scope.$watchGroup(["min", "max"], () => {
+            $scope.$watchGroup(["value", "min", "max"], () => {
                 var newRange: KeyValuePair<number, number>[] = valueRangeGenerator.generateRanges(
                     $scope.value,
                     $scope.min,
@@ -37,6 +37,7 @@ module CustomerSetting {
                     $scope.divisor);
 
                 $scope.range = newRange;
+                console.log(newRange);
             });
         }];
     }

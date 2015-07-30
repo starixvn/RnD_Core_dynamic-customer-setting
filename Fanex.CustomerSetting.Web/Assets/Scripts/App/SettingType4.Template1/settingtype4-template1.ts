@@ -99,7 +99,7 @@ module CustomerSetting {
         public templateUrl: string = "status-checkbox.html";
 
         public controller: any = ["$scope", "$rootScope", ($scope: StatusCheckboxScope, $rootScope: ng.IRootScopeService) => {
-            $rootScope.$on("customerSetting.settingItemsGrouped", () => {
+            $scope.$watch("settingItem", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;
                 $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
@@ -108,14 +108,11 @@ module CustomerSetting {
 
             $scope.change = () => {
                 $scope.settingItem.isDisabled = !$scope.isChecked;
+                $scope.isDownlineDisabled = !$scope.isChecked;
 
                 if (!$scope.isChecked && $scope.isDownlineChecked) {
                     $scope.isDownlineChecked = false;
                     $scope.settingItem.downline.isDisabled = true;
-                }
-
-                if ($scope.isChecked && (<Settingtype4Template1Item>$scope.settingItem.oldSetting).isDisabled) {
-                    $scope.isDownlineDisabled = false;
                 }
             }
 

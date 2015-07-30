@@ -58,18 +58,30 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: SettingType3Template1Scope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
-            scope.step = 0.0005;
-            scope.divisor = 10000;
+            scope.step = this.settingtype3Template1Config.step;
+            scope.divisor = this.settingtype3Template1Config.divisor;
         }
 
-        constructor(private appConfigService: AppConfigService) {
+        constructor(private appConfigService: AppConfigService, private settingtype3Template1Config: Settingtype3Template1ConfigService) {
             super(Settingtype3Template1Item);
         }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", function () {
+    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "settingtype3Template1ConfigService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));
     }]);
+
+    class Settingtype3Template1ConfigService {
+        public get step(): number {
+            return 0.0005;
+        }
+
+        public get divisor(): number {
+            return 10000;
+        }
+    }
+
+    angular.module("customerSetting").service("settingtype3Template1ConfigService", Settingtype3Template1ConfigService);
 }

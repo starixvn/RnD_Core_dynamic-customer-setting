@@ -12,14 +12,14 @@
         <label class="status-checkbox">
             <input type="checkbox"
                    data-ng-model="isChecked"
-                   data-ng-disabled="!isEnabled"
+                   data-ng-disabled="isDisabled"
                    data-ng-change="change()" />
             {{'Enable' | label}}
         </label>
         <label class="status-checkbox">
             <input type="checkbox"
                    data-ng-model="isDownlineChecked"
-                   data-ng-disabled="!isDownlineEnabled"
+                   data-ng-disabled="isDownlineDisabled"
                    data-ng-change="changeDownline()" />
             {{'EnableDownline' | label}}
         </label>

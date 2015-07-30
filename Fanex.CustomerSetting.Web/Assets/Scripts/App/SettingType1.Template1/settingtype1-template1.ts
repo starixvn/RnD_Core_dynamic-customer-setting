@@ -69,8 +69,6 @@ module CustomerSetting {
             }).forEach(prop => {
                 this[prop] = rawData[prop];
             });
-
-            console.log(this);
         }
     }
 

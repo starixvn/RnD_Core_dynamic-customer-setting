@@ -21,7 +21,7 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbSettingProviderManager.Current.Start();
             ModelBinders.Binders.Add(typeof(ISetting), new SettingModelBinder());
-            ModelBinders.Binders.Add(typeof(ISettingItem), new SettingModelBinder());
+            ModelBinders.Binders.Add(typeof(ISettingItem), new SettingItemModelBinder());
             ModelBinders.Binders.Add(typeof(Level), new LevelModelBinder());
         }
     }
