@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="common.ts" />
+/// <reference path="helpers.ts" />
 /// <reference path="models.ts" />
 /// <reference path="module-registrater.ts" />
 
@@ -86,13 +87,17 @@ module CustomerSetting {
         }
 
         public toParamString(): string {
-            var paramString: string = "customerId=" + this.customerId + "&customerLevel=" + this.customerLevel + "&productId=" + this.productId;
+            var params: string = StringFormater.format(
+                "customerId={0}&customerLevel={1}&productId={2}",
+                this.customerId,
+                this.customerLevel,
+                this.productId);
 
             if (this.uplineLevel) {
-                paramString += "&uplineLevel=" + this.uplineLevel;
+                params += StringFormater.format("&uplineLevel={0}", this.uplineLevel);
             }
 
-            return paramString;
+            return params;
         }
     }
 
@@ -117,7 +122,7 @@ module CustomerSetting {
         }
 
         public set customerNames(names: string) {
-            if (!names || names === "") {
+            if (!names) {
                 throw Exceptions.invalidParam("customerNames");
             }
 

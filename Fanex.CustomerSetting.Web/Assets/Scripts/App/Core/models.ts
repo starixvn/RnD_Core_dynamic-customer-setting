@@ -4,7 +4,6 @@ module CustomerSetting {
     export interface SettingItem {
         typeName: string;
         oldSetting: SettingItem;
-        backup(): void;
         isChanged(): boolean;
     }
 
@@ -49,7 +48,9 @@ module CustomerSetting {
         public isLive: boolean;
         public oldSetting: DefaultSettingItem;
 
-        constructor(settingItem: any) {
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem?: any) {
             if (settingItem) {
                 this.sportTypeId = settingItem.sportTypeId;
                 this.sportTypeName = settingItem.sportTypeName;
@@ -63,15 +64,21 @@ module CustomerSetting {
             }
         }
 
-        public backup(): void {
-            this.oldSetting = new DefaultSettingItem(this);
-        }
-
         public isChanged(): boolean {
             return (this.sportTypeId !== this.oldSetting.sportTypeId)
                 || (this.sportTypeName !== this.oldSetting.sportTypeName)
                 || (this.betTypeId !== this.oldSetting.betTypeId)
                 || (this.betTypeName !== this.oldSetting.betTypeName);
+        }
+
+        public backup(): void {
+            this.oldSetting = this.oldSetting || new DefaultSettingItem();
+
+            this.oldSetting.sportTypeId = this.sportTypeId;
+            this.oldSetting.sportTypeName = this.sportTypeName;
+            this.oldSetting.betTypeId = this.betTypeId;
+            this.oldSetting.betTypeName = this.betTypeName;
+            this.oldSetting.typeName = this.typeName;
         }
     }
 
@@ -82,6 +89,7 @@ module CustomerSetting {
         public settingLevel: number;
         public settingItems: Array<SettingItem>;
         public typeName: string;
+        public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
         constructor(settingType: any)
@@ -93,16 +101,17 @@ module CustomerSetting {
                 this.settingLevel = settingType.settingLevel;
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
+                this.extraData = this.getExtraData(settingType);
             }
         }
 
         public getChanges(): SettingType {
-            var updatedSettingType: SettingType = undefined;
-            var changedSettingItems: Array<SettingItem> = this.settingItems.filter((item) => {
+            var updatedSettingType: SettingType;
+            var changedSettingItems: Array<SettingItem> = this.settingItems.filter(item => {
                 return item.isChanged();
             });
 
-            if (changedSettingItems.length > 0) {
+            if (changedSettingItems && changedSettingItems.length > 0) {
                 updatedSettingType = new SettingType();
 
                 updatedSettingType.id = this.id;
@@ -115,13 +124,27 @@ module CustomerSetting {
 
             return updatedSettingType;
         }
+
+        private getExtraData(rawData: any): Array<KeyValuePair<string, any>> {
+            var extraData: Array<KeyValuePair<string, any>> = new Array<KeyValuePair<string, any>>();
+            var addedProperties: string[] = ["id", "name", "settingTemplate", "settingLevel", "settingItems", "typeName"];
+
+            extraData = Object.keys(rawData).filter(propName => {
+                return addedProperties.indexOf(propName) < 0;
+            }).map(prop => {
+                return new KeyValuePair<string, any>(prop, rawData[prop]);
+            });
+
+            console.log(extraData);
+
+            return extraData;
+        }
     }
 
     export class Setting {
         public customerLevel: Level;
         public customerId: number;
         public customerInfo: CustomerInfo;
-
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
@@ -140,20 +163,20 @@ module CustomerSetting {
         }
 
         public getChanges(settingTypeId?: number): Setting {
-            var newSetting: Setting = undefined;
-            var settingTypes: Array<SettingType>;
+            var newSetting: Setting;
+            var matchedSettingTypes: Array<SettingType>;
             var changedSettingTypes: Array<SettingType> = new Array<SettingType>();
 
             if (settingTypeId) {
-                settingTypes = this.settingTypes.filter((item) => {
+                matchedSettingTypes = this.settingTypes.filter(item => {
                     return item.id === settingTypeId;
                 });
             } else {
-                settingTypes = this.settingTypes;
+                matchedSettingTypes = this.settingTypes;
             }
 
-            if (settingTypes.length > 0) {
-                settingTypes.forEach((settingType) => {
+            if (matchedSettingTypes && matchedSettingTypes.length > 0) {
+                matchedSettingTypes.forEach(settingType => {
                     var changedSettingType: SettingType = settingType.getChanges();
 
                     if (changedSettingType) {
@@ -192,7 +215,7 @@ module CustomerSetting {
         }
     }
 
-    export class SettingResult extends Result {
+    export class Results extends Result {
         constructor(
             public code?: number,
             public message?: string,

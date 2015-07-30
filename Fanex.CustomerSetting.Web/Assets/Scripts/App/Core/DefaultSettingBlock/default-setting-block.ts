@@ -26,6 +26,24 @@ module CustomerSetting {
                 valueTemplateUrl: "="
             }
         }
+
+        public controller: any = ["$scope", "$rootScope", ($scope: SettingTypeDirectiveSharedScope, $rootScope: ng.IRootScopeService) => {
+            $scope.$watch("settingType", (settingType: SettingType) => {
+                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                    angular.forEach(settingType.settingItems, (item, index) => {
+                        if (angular.isDefined(item)) {
+                            settingType.settingItems[index] = new this.settingItemType(item);
+                        }
+                    });
+
+                    console.log(settingType.settingItems[0]);
+                }
+
+                $rootScope.$emit("customerSetting.settingTypeChanged");
+            });
+        }];
+
+        constructor(private settingItemType: new (settingItem: any) => SettingItem) { }
     }
 
     interface DefaultSettingTypeDirectiveScope extends SettingTypeDirectiveSharedScope {
@@ -36,17 +54,25 @@ module CustomerSetting {
     class DefaultSettingTypeDirective extends SettingTypeDirective {
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
-        public controller: any = ["$scope", "settingLevel", ($scope: DefaultSettingTypeDirectiveScope, settingLevel: SettingLevel) => {
-            $scope.settingLevel = settingLevel;
+        public controller: any = [
+            "$scope",
+            "$rootScope",
+            "settingLevel",
+            ($scope: DefaultSettingTypeDirectiveScope, $rootScope: ng.IRootScopeService, settingLevel: SettingLevel) => {
+                $scope.settingLevel = settingLevel;
 
-            if (angular.isDefined($scope.settingType) && angular.isArray($scope.settingType.settingItems)) {
-                if ($scope.settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                    $scope.sportGroups = this.groupSettingItemsBySportType($scope.settingType.settingItems);
-                } else {
-                    $scope.sportGroups = <DefaultSettingItem[][]>[$scope.settingType.settingItems];
-                }
-            }
-        }];
+                $rootScope.$on("customerSetting.settingTypeChanged", () => {
+                    if (angular.isDefined($scope.settingType) && angular.isArray($scope.settingType.settingItems)) {
+                        if ($scope.settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                            $scope.sportGroups = this.groupSettingItemsBySportType($scope.settingType.settingItems);
+                        } else {
+                            $scope.sportGroups = <DefaultSettingItem[][]>[$scope.settingType.settingItems];
+                        }
+                    }
+
+                    $rootScope.$emit("customerSetting.settingItemsGrouped");
+                });
+            }];
 
         private groupSettingItemsBySportType(settingItems: SettingItem[]): DefaultSettingItem[][] {
             var currentSportTypeId: number = -1;

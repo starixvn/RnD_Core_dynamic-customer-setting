@@ -32,6 +32,7 @@
             string versionId = HttpContext.IsDebuggingEnabled ? "0.0.1" : Guid.NewGuid().ToString("N");
 
             htmlContent = htmlContent.Replace("{{rootUrl}}", rootUrl);
+            htmlContent = htmlContent.Replace("{{debug}}", HttpContext.IsDebuggingEnabled.ToString().ToLowerInvariant());
             htmlContent = htmlContent.Replace("{{min}}", min);
             htmlContent = htmlContent.Replace("{{version}}", versionId);
 

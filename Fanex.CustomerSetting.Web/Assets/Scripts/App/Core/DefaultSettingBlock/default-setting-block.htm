@@ -9,25 +9,25 @@
     </div>
     <div class="setting-type-group" data-ng-repeat="group in sportGroups">
         <div class="header sport-group-header"
-             data-ng-show="settingType.settingLevel===settingLevel.sportTypeBetType"
-             data-ng-class="{'not-first':($index > 0)}"
+             data-ng-show="settingType.settingLevel === settingLevel.sportTypeBetType"
+             data-ng-class="{ 'not-first': ($index > 0) }"
              data-ng-attr-sport-type="group[0].sportTypeId">
             {{group[0].sportTypeName}}
         </div>
         <div class="header" data-ng-include="headerTemplateUrl"></div>
         <div class="setting-group"
              data-ng-repeat="item in group"
-             data-ng-class="{'last':$last, 'near-last':(($index === group.length - 2) && ($index % 2 === 0)), 'only-one':(group.length === 1)}">
+             data-ng-class="{ 'last': $last, 'near-last': ($index === group.length - 2) && ($index % 2 === 0), 'only-one': group.length === 1 }">
             <div class="name-col"
                  data-ng-attr-product="productId"
                  data-ng-attr-sport-type="item.sportTypeId"
                  data-ng-attr-sport-type="item.betTypeId">
-                {{settingType.settingLevel===settingLevel.product ? productName : (settingType.settingLevel===settingLevel.sportType ? item.sportTypeName : item.betTypeName)}}
+                {{settingType.settingLevel === settingLevel.product ? productName : (settingType.settingLevel === settingLevel.sportType ? item.sportTypeName : item.betTypeName)}}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
             </div>
             <div class="value-col"
                  data-ng-include="valueTemplateUrl"
-                 data-ng-class="{'last':($index % 2 === 1)}">
+                 data-ng-class="{'last': $index % 2 === 1 }">
             </div>
         </div>
         <div class="setting-group last extended-setting-group"

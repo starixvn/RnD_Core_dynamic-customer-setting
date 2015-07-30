@@ -6,6 +6,13 @@
                                 data-value-template-url="valueTemplateUrl">
     </default-setting-type-block>
     <script type="text/ng-template" id="settingtyp3-template1-value.html">
-        <select data-ng-options="item.key as item.value in valueRangeGenerator.generateRanges(0, item.upline.commRate, 0.0005, 10000)"></select>
+        <select data-ng-model="item.commRate"
+                data-ranged-value-select
+                data-value="item.commRate"
+                data-min="0"
+                data-max="item.upline.commRate"
+                data-step="step"
+                data-divisor="divisor"
+                data-ng-options="item.key as item.value for item in range"></select>
     </script>
 </div>

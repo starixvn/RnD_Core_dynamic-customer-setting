@@ -10,12 +10,17 @@
         {
             if (bindingContext != null)
             {
-                var type = typeof(Setting);
-                var model = Activator.CreateInstance(type);
+                ValueProviderResult typeValue = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".TypeName");
 
-                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
+                if (typeValue != null)
+                {
+                    Type type = Type.GetType((string)typeValue.ConvertTo(typeof(string)), true);
+                    object model = Activator.CreateInstance(type);
 
-                return model;
+                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
+
+                    return model;
+                }
             }
 
             return base.CreateModel(controllerContext, bindingContext, modelType);

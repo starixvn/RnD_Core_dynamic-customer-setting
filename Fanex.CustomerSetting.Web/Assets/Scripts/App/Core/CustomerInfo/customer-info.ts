@@ -7,7 +7,8 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                info: "="
+                info: "=",
+                names: "="
             }
         }
 

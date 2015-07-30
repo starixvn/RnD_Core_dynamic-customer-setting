@@ -54,7 +54,7 @@ module CustomerSetting {
                 this.isUIblocked = true;
                 command = this.parametersService.createSettingCommand(setting);
 
-                this.$http.post(this.appConfigService.resolveRootUrl(path), JSON.stringify(command)).success((msg: SettingResult) => {
+                this.$http.post(this.appConfigService.resolveRootUrl(path), JSON.stringify(command)).success((msg: Results) => {
                     this.requestMsgResult = msg;
                     this.querySetting();
 
@@ -71,7 +71,7 @@ module CustomerSetting {
                     this.isUIblocked = false;
                 });
             } else {
-                var error: Result = SettingResult.noChangeToUpdate;
+                var error: Result = Results.noChangeToUpdate;
 
                 error.message = this.resourceService.getMessage(error.message);
 

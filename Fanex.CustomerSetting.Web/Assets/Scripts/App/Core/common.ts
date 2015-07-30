@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="helpers.ts" />
 /// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
@@ -19,11 +20,11 @@ module CustomerSetting {
 
     export class Exceptions {
         public static negativeParam(paramName: string): string {
-            return paramName + " must be greater than zero.";
+            return StringFormater.format(paramName, "{0} must be greater than zero.");
         }
 
         public static invalidParam(paramName: string): string {
-            return paramName + " has taken an invalid value.";
+            return StringFormater.format(paramName, "{0} has taken an invalid value.");
         }
 
         public static wrongCustomerLevel(): string {

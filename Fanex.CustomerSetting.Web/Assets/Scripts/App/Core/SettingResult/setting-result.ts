@@ -5,7 +5,7 @@
 
 module CustomerSetting {
     interface SettingResultScope extends ng.IScope {
-        result: SettingResult;
+        result: Results;
     }
 
     class SettingResultDirective implements ng.IDirective {
@@ -20,12 +20,12 @@ module CustomerSetting {
         public templateUrl: string = "SettingResult/setting-result.htm";
 
         public controller: any = ["$scope", "$window", ($scope: SettingResultScope, $window: ng.IWindowService) => {
-            $scope.$watch("result", (result: SettingResult) => {
+            $scope.$watch("result", (result: Results) => {
                 if (angular.isDefined(result)) {
                     $window.scrollTo(0, 0);
 
                     if (angular.isDefined(result.subResults) && angular.isArray(result.subResults)) {
-                        angular.forEach(result.subResults, (subResult) => {
+                        angular.forEach(result.subResults, subResult => {
                             subResult.msgType = MessageType[subResult.msgType.toString()];
                         });
                     } else {

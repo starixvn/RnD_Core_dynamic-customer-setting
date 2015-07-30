@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="customerSetting" data-ng-init="rootUrl='{{rootUrl}}'">
+<html data-ng-app="customerSetting" data-ng-init="rootUrl='{{rootUrl}}'; debug='{{debug}}'">
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -8,11 +8,8 @@
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
     <setting-result data-result="ctrl.requestMsgResult"></setting-result>
     <div class="customer-setting" data-ng-show="ctrl.setting">
-        <div class="block" data-ng-if="ctrl.customerNames">
-            <div class="header customer-names-header">{{ctrl.customerNames}}</div>
-        </div>
-        <customer-info data-ng-if="!ctrl.customerNames" data-info="ctrl.setting.customerInfo"></customer-info>
-        <div data-setting-type-loader data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></div>
+        <customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></customer-info>
+        <setting-type-loader data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
         <button class="update-btn" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
     </div>
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
