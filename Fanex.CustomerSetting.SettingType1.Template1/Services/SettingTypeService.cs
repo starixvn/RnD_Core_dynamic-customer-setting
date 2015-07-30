@@ -36,8 +36,7 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext,
-            CustomerSettingQuery query,
-            SettingType productSettingType)
+            CustomerSettingQuery query)
         {
             var customerPT = _dataAccess.GetCustomerPT(query);
 
@@ -58,8 +57,7 @@
                 settingContext, 
                 customerId, 
                 customerLevel, 
-                uplineLevel, 
-                productId, 
+                uplineLevel,
                 settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);

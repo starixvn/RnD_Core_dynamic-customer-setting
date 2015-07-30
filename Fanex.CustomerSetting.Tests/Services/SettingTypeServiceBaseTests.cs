@@ -183,7 +183,7 @@
             Assert.IsFalse(updateResults.First().IsSuccessful);
         }
 
-        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query, SettingType productSettingType)
+        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
             throw new NotImplementedException();
         }

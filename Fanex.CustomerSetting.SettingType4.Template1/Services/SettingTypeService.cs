@@ -36,8 +36,7 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext, 
-            CustomerSettingQuery query, 
-            SettingType productSettingType)
+            CustomerSettingQuery query)
         {
             if (query.CustomerLevel.IsMemberLevel()
                 && query.UplineLevel.IsNotAgentLevel())
@@ -72,7 +71,6 @@
                 customerId, 
                 customerLevel, 
                 uplineLevel, 
-                productId, 
                 settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);

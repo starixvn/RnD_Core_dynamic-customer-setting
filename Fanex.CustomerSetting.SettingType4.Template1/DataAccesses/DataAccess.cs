@@ -37,7 +37,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string productStatusXml)
         {
             var param = new Hashtable();

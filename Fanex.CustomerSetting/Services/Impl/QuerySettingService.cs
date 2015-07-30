@@ -137,7 +137,7 @@
             {
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
 
-                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query, productSettingType);
+                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query);
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;

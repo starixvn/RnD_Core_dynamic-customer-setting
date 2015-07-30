@@ -113,8 +113,7 @@
 
         public abstract SettingType GetCustomerSettingType(
             ISettingContext settingContext, 
-            CustomerSettingQuery query, 
-            SettingType productSettingType);
+            CustomerSettingQuery query);
 
         public abstract SettingResult UpdateCustomerSettingType(
             ISettingContext settingContext, 

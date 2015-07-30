@@ -46,10 +46,9 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType1Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            _settingType1Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             _dataAccess.Received().GetCustomerPT(Arg.Is<CustomerSettingQuery>(query));
@@ -60,7 +59,6 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var customerPT = new SettingType
             {
                 Id = 1,
@@ -79,7 +77,7 @@
             _dataAccess.GetCustomerPT(Arg.Any<CustomerSettingQuery>()).Returns(customerPT);
 
             //// Act
-            var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            var actualCustomerPT = _settingType1Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             Assert.AreSame(customerPT, actualCustomerPT);
@@ -108,7 +106,6 @@
                 Arg.Is(customerId),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(productId),
                 Arg.Is(customerPT.ToXml()));
         }
 
@@ -129,7 +126,6 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<byte>(),
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act
@@ -206,7 +202,6 @@
                 Arg.Is<int>(customerId => customerIds.Contains(customerId)),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(productId),
                 Arg.Is(customerPT.ToXml()));
         }
 
@@ -227,7 +222,6 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<byte>(),
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act

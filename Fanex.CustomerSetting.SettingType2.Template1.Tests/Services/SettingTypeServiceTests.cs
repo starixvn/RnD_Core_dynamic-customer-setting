@@ -45,10 +45,9 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType2Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            _settingType2Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             _dataAccess.Received().GetCustomerBetLimitItemsRawData(Arg.Is<CustomerSettingQuery>(query));
@@ -59,7 +58,6 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var betLimitItemsRawData = new List<BetLimitItemDto>
                 {
                     new BetLimitItemDto
@@ -79,7 +77,7 @@
             _dataAccess.GetCustomerBetLimitItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(betLimitItemsRawData);
 
             //// Act
-            var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            var customerBetLimit = _settingType2Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             var actualCustomerBetLimitItem = customerBetLimit.SettingItems.First() as BetLimitItem;
@@ -113,7 +111,6 @@
                 Arg.Is(customerId),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(productId),
                 Arg.Is(customerBetLimit.ToXml()));
         }
 
@@ -134,7 +131,6 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<byte>(),
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act

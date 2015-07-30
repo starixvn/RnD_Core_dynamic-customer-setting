@@ -36,8 +36,7 @@
 
         public override SettingType GetCustomerSettingType(
             ISettingContext settingContext, 
-            CustomerSettingQuery query, 
-            SettingType productSettingType)
+            CustomerSettingQuery query)
         {
             var commissionItemsRawData = _commissionDataAccess.GetCustomerCommissionItemsRawData(query);
 
@@ -65,7 +64,6 @@
                 customerId, 
                 customerLevel, 
                 uplineLevel, 
-                productId, 
                 settingType.ToXml());
 
             var settingResult = CreateSettingResult(result, customerId, settingType);

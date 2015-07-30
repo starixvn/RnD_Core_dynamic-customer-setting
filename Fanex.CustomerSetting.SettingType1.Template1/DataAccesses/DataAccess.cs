@@ -111,7 +111,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string positionTakingXml)
         {
             var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, positionTakingXml);

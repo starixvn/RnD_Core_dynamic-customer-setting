@@ -15,7 +15,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string positionTakingXml);
 
         IEnumerable<int> GetGroupedMemberIds(string memberIds);

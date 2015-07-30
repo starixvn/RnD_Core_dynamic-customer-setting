@@ -37,7 +37,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string commissionXml)
         {
             var param = new Hashtable();

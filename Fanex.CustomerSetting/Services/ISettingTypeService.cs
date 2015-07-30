@@ -10,8 +10,7 @@
     {
         SettingType GetCustomerSettingType(
             ISettingContext settingContext, 
-            CustomerSettingQuery query, 
-            SettingType productSettingType);
+            CustomerSettingQuery query);
 
         SettingResult UpdateCustomerSettingType(
             ISettingContext settingContext, 

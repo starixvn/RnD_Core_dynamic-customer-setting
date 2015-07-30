@@ -16,7 +16,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string productStatusXml);
     }
 }

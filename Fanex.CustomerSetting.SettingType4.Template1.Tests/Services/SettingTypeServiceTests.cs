@@ -61,10 +61,9 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            _settingType4Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<CustomerSettingQuery>(query));
@@ -77,7 +76,6 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var productStatusItemsRawData = new List<ProductStatusItemDto>
             {
                 new ProductStatusItemDto
@@ -94,7 +92,7 @@
             _dataAccess.GetCustomerProductStatusItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(productStatusItemsRawData);
 
             //// Act
-            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             var actualCustomerProductStatusItem = actualCustomerProductStatus.SettingItems.First() as ProductStatusItem;
@@ -118,10 +116,9 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             Assert.IsEmpty(actualCustomerProductStatus.SettingItems);
@@ -146,7 +143,6 @@
                 Arg.Is(customerId),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(productId),
                 Arg.Is(customerProductStatus.ToXml()));
         }
 
@@ -167,7 +163,6 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<byte>(),
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act

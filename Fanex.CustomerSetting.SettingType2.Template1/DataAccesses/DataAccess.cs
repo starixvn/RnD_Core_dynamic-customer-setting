@@ -37,7 +37,6 @@
             int customerId,
             Level customerLevel,
             Level uplineLevel,
-            byte productId,
             string betLimitXml)
         {
             var param = new Hashtable();

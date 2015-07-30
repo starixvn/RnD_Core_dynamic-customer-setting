@@ -279,13 +279,13 @@
             _querySettingService.GetCustomerSetting(querySettingParam);
 
             //// Assert
-            _settingTypeService.Received(productSettingTypes.Count()).GetCustomerSettingType(_settingContext, querySettingParam, Arg.Any<SettingType>());
+            _settingTypeService.Received(productSettingTypes.Count()).GetCustomerSettingType(_settingContext, querySettingParam);
         }
 
         private void SetupSettingTypeServiceStub(SettingType dummySettingType = null)
         {
             var customerSettingType = dummySettingType ?? InstanceFactory.CreateCustomerSettingType(1);
-            _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerSettingQuery>(), Arg.Any<SettingType>()).Returns(customerSettingType);
+            _settingTypeService.GetCustomerSettingType(Arg.Any<ISettingContext>(), Arg.Any<CustomerSettingQuery>()).Returns(customerSettingType);
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(_settingTypeService);
         }
 

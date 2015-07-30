@@ -45,10 +45,9 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
 
             //// Act
-            _settingType3Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            _settingType3Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             _dataAccess.Received().GetCustomerCommissionItemsRawData(Arg.Is<CustomerSettingQuery>(query));
@@ -59,7 +58,6 @@
         {
             //// Arrange
             var query = InstanceFactory.CreateQuerySettingParam();
-            var productSettingType = InstanceFactory.CreateProductSettingType(1);
             var commissionItemsRawData = new List<CommissionItemDto>
             {
                 new CommissionItemDto
@@ -76,7 +74,7 @@
             _dataAccess.GetCustomerCommissionItemsRawData(Arg.Any<CustomerSettingQuery>()).Returns(commissionItemsRawData);
 
             //// Act
-            var actualCustomerCommission = _settingType3Service.GetCustomerSettingType(_settingContext, query, productSettingType);
+            var actualCustomerCommission = _settingType3Service.GetCustomerSettingType(_settingContext, query);
 
             //// Assert
             var actualCustomerCommissionItem = actualCustomerCommission.SettingItems.First() as CommissionItem;
@@ -106,7 +104,6 @@
                 Arg.Is(customerId),
                 Arg.Is(customerLevel),
                 Arg.Is(uplineLevel),
-                Arg.Is(productId),
                 Arg.Is(customerCommission.ToXml()));
         }
 
@@ -127,7 +124,6 @@
                 Arg.Any<int>(),
                 Arg.Any<Level>(),
                 Arg.Any<Level>(),
-                Arg.Any<byte>(),
                 Arg.Any<string>()).Returns(successResult);
 
             //// Act
