@@ -19,6 +19,8 @@
 
         public byte SettingLevel { get; set; }
 
+        public byte DisplayOrder { get; set; }
+
         public IEnumerable<ISettingItem> SettingItems
         {
             get
