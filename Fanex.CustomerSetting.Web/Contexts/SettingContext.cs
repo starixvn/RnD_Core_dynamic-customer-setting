@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Net;
     using System.Web;
-    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Models;
 
     internal class SettingContext : ISettingContext
@@ -58,13 +57,7 @@
             }
         }
 
-        public byte System
-        {
-            get
-            {
-                return CustomerSettingSection.Settings.SystemId;
-            }
-        }
+        public byte System { get; set; }
 
         public string Domain
         {

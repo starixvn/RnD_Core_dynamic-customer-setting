@@ -151,11 +151,10 @@
             //// Arrange
             var updateParam = InstanceFactory.CreateUpdateSettingParam();
             _settingContext.Actor.Level = Level.Company;
+            _settingContext.System = (byte)SystemType.Agency;
 
             AssumeValidateQuerySettingIsSuccessful();
             AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
-
-            _validationService.GetCurrentSystemId().Returns((byte)SystemType.Agency);
 
             //// Act
             var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
@@ -166,16 +165,15 @@
 
         [TestCase((byte)SystemType.Accounting)]
         [TestCase((byte)SystemType.ExternalAccounting)]
-        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte systemId)
+        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte system)
         {
             //// Arrange
             var updateParam = InstanceFactory.CreateUpdateSettingParam();
             _settingContext.Actor.Level = Level.Company;
+            _settingContext.System = system;
 
             AssumeValidateQuerySettingIsSuccessful();
             AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
-
-            _validationService.GetCurrentSystemId().Returns(systemId);
 
             //// Act
             var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);

@@ -8,7 +8,7 @@
 
         string IP { get; }
 
-        byte System { get; }
+        byte System { get; set; }
 
         string Domain { get; }
     }

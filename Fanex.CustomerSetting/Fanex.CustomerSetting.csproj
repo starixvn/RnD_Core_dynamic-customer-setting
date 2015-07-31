@@ -87,7 +87,6 @@
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
     <Compile Include="Models\Enumerations\Enumeration.cs" />
-    <Compile Include="Configurations\CustomerSettingSection.cs" />
     <Compile Include="Models\Constants\MessageType.cs" />
     <Compile Include="Models\Constants\ResultValue.cs" />
     <Compile Include="Criteria\ProductNamesQueryCriteria.cs" />

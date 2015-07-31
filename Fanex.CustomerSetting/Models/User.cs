@@ -9,7 +9,7 @@
         private int _id;
         private string _name;
         private int _subAccountId;
-        private Level _userLevel;
+        private Level _level;
 
         public new int Id
         {
@@ -69,7 +69,7 @@
         {
             get
             {
-                return _userLevel;
+                return _level;
             }
 
             set
@@ -84,7 +84,7 @@
                     throw new ArgumentOutOfRangeException("value", "Cannot set level Member to user");
                 }
 
-                _userLevel = value;
+                _level = value;
             }
         }
         

@@ -24,7 +24,7 @@
 
         public string IP { get; private set; }
 
-        public byte System { get; private set; }
+        public byte System { get; set; }
 
         public string Domain { get; private set; }
     }

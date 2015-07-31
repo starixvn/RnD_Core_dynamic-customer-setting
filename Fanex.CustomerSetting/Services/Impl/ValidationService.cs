@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.DataAccesses;
     using Fanex.CustomerSetting.DataAccesses.Impl;
@@ -222,22 +221,11 @@
 
         private void CheckActorLevelHasUpdatePermissionInCurrentSystem()
         {
-            var currentSystemId = GetCurrentSystemId();
-
-            if (_settingContext.Actor.IsCompany && currentSystemId == (byte)SystemType.Agency)
+            if (_settingContext.Actor.IsCompany 
+                && _settingContext.System == (byte)SystemType.Agency)
             {
                 throw new CustomerSettingException(Result.AccessDenied.Message);
             }
-        }
-
-        /// <summary>
-        /// Gets the system identifier, declares virtual for being testable.
-        /// </summary>
-        /// <returns>Current system id which actor performs actions.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
-        public virtual byte GetCurrentSystemId()
-        {
-            return CustomerSettingSection.Settings.SystemId;
         }
 
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)

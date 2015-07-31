@@ -12,10 +12,7 @@
             Name = "Admin"
         };
 
-        private User _subAccount = new User
-        {
-            Id = 2
-        };
+        private byte _systemId = 1;
 
         private string _language = "en-US";
 
@@ -29,19 +26,6 @@
             set
             {
                 _actor = value;
-            }
-        }
-
-        public User SubAccount
-        {
-            get
-            {
-                return _subAccount;
-            }
-
-            set
-            {
-                _subAccount = value;
             }
         }
 
@@ -65,7 +49,15 @@
 
         public byte System
         {
-            get { return 1; }
+            get
+            {
+                return _systemId;
+            }
+
+            set
+            {
+                _systemId = value;
+            }
         }
 
         public string Domain

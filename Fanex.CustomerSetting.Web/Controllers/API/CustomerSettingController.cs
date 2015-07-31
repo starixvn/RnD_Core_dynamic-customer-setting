@@ -50,8 +50,8 @@
                 request.ActorId,
                 request.ActorName,
                 request.ActorLevel,
-                request.SubAccountId,
-                request.SystemId);
+                request.SystemId,
+                request.SubAccountId);
 
             IQuerySettingService querySettingService = new QuerySettingService(SettingContextManager.SettingContext);
 

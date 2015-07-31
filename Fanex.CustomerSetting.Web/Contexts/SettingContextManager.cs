@@ -2,7 +2,6 @@
 {
     using System;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Resource;
@@ -36,27 +35,10 @@
             int loginUserId,
             string loginUserName,
             byte loginUserLevel,
+            byte system,
             int subAccountId = 0)
         {
-            ValidateSubAccountWithSystem(subAccountId, CustomerSettingSection.Settings.SystemId);
-
-            SettingContext.Actor = new User
-            {
-                Id = loginUserId,
-                Name = loginUserName,
-                Level = Enumeration.FromValue<Level>(loginUserLevel),
-                SubAccountId = subAccountId
-            };
-        }
-
-        public static void Init(
-          int loginUserId,
-          string loginUserName,
-          byte loginUserLevel,
-          int subAccountId = 0,
-          byte systemId = 0)
-        {
-            ValidateSubAccountWithSystem(subAccountId, systemId);
+            ValidateSubAccountWithSystem(subAccountId, system);
 
             SettingContext.Actor = new User
             {
@@ -68,11 +50,11 @@
         }
 
         private static void ValidateSubAccountWithSystem(
-            int subAccountId, 
-            byte systemId)
+            int subAccountId,
+            byte system)
         {
             if (subAccountId > 0
-                && systemId != (byte)SystemType.Agency)
+                && system != (byte)SystemType.Agency)
             {
                 throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
             }
