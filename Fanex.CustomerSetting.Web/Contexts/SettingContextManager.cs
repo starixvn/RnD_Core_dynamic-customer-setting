@@ -47,6 +47,8 @@
                 Level = Enumeration.FromValue<Level>(loginUserLevel),
                 SubAccountId = subAccountId
             };
+
+            SettingContext.System = system;
         }
 
         private static void ValidateSubAccountWithSystem(
