@@ -163,7 +163,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomSelect\custom-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\common.ts" />
@@ -174,6 +173,7 @@
     <TypeScriptCompile Include="Assets\Scripts\App\Core\parameters.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingTypeDirectiveLoader\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />
