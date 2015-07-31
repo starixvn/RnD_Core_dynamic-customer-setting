@@ -31,8 +31,9 @@ module CustomerSetting {
 
         public isUIblocked: boolean;
         public customerNames: string;
+        public uplineLevel: Level;
         public setting: Setting;
-        public requestMsgResult: Result;
+        public requestMsgResult: Result | Results;
 
         constructor(
             private $http: ng.IHttpService,
@@ -42,39 +43,44 @@ module CustomerSetting {
             private resourceService: ResourceService) {
             this.resourceService.setLanguage(this.parametersService.language);
             this.customerNames = this.parametersService.customerNames;
+            this.uplineLevel = this.parametersService.uplineLevel;
             this.querySetting();
         }
 
         public update(settingTypeId?: number): void {
-            var setting = settingTypeId ? this.setting.getChanges(settingTypeId) : this.setting;
-            var path = this.customerNames ? this.updateMultiplePath : this.updatePath;
+            var setting: Setting = settingTypeId ? this.setting.getChanges(settingTypeId) : this.setting;
+            var path: string = this.customerNames ? this.updateMultiplePath : this.updatePath;
+            var validationResult: Result;
             var command: SettingCommand;
 
             if (setting) {
-                this.isUIblocked = true;
-                command = this.parametersService.createSettingCommand(setting);
+                if (setting.validate()) {
+                    command = this.parametersService.createSettingCommand(setting);
+                    validationResult = command.validate();
 
-                this.$http.post(this.appConfigService.resolveRootUrl(path), JSON.stringify(command)).success((msg: Results) => {
-                    this.requestMsgResult = msg;
-                    this.querySetting();
+                    if (validationResult.isSuccessful && this.requestMsgResult === undefined) {
+                        this.isUIblocked = true;
+                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).success((msg: Results) => {
+                            this.requestMsgResult = new Results(msg.code, msg.message, msg.msgType, msg.subResults);
+                            this.querySetting();
 
-                    this.$timeout(() => {
-                        this.requestMsgResult = undefined;
-                    }, Defaults.displayingMsgTime);
-                }).error(() => {
-                    var error: Result = Result.systemError;
+                            this.$timeout(() => {
+                                (<Results>this.requestMsgResult).removeSuccessResults();
+                            }, Defaults.displayingMsgTime);
+                        }).error(() => {
+                            var error: Result = Result.systemError;
 
-                    error.message = this.resourceService.getMessage(error.message);
-
-                    this.requestMsgResult = error;
-                }).finally(() => {
-                    this.isUIblocked = false;
-                });
+                            error.message = this.resourceService.getMessage(error.message);
+                            this.requestMsgResult = error;
+                        }).finally(() => {
+                            this.isUIblocked = false;
+                        });
+                    }
+                }
             } else {
                 var error: Result = Results.noChangeToUpdate;
 
                 error.message = this.resourceService.getMessage(error.message);
-
                 this.requestMsgResult = error;
             }
         }
@@ -90,7 +96,6 @@ module CustomerSetting {
                 var error: Result = Result.systemError;
 
                 error.message = this.resourceService.getMessage(error.message);
-
                 this.requestMsgResult = error;
             }).finally(() => {
                 this.isUIblocked = false;

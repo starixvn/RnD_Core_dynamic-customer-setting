@@ -5,12 +5,15 @@
 
 module CustomerSetting {
     export interface SettingTypeDirectiveSharedScope extends ng.IScope {
+        uplineLevel: Level;
+        customerLevel: Level;
         productId: number;
         productName: string;
         settingType: SettingType;
         update: (settingTypeId: { settingTypeId: number }) => void;
         headerTemplateUrl: string;
         valueTemplateUrl: string;
+        levelIdentifier: Level;
     }
 
     export class SettingTypeDirective implements ng.IDirective {
@@ -18,16 +21,20 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
+                uplineLevel: "=",
+                customerLevel: "=",
                 productId: "=",
                 productName: "=",
                 settingType: "=",
                 update: "&",
                 headerTemplateUrl: "=",
-                valueTemplateUrl: "="
+                valueTemplateUrl: "=",
+                levelIdentifier: "="
             }
         }
 
-        public controller: any = ["$scope", "$rootScope", ($scope: SettingTypeDirectiveSharedScope, $rootScope: ng.IRootScopeService) => {
+        public controller: any = ["$scope", "levelIdentifier", ($scope: SettingTypeDirectiveSharedScope, levelIdentifier: Level) => {
+            $scope.levelIdentifier = levelIdentifier;
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                     angular.forEach(settingType.settingItems, (item, index) => {
@@ -35,11 +42,7 @@ module CustomerSetting {
                             settingType.settingItems[index] = new this.settingItemType(item);
                         }
                     });
-
-                    console.log(settingType.settingItems[0]);
                 }
-
-                $rootScope.$emit("customerSetting.settingTypeChanged");
             });
         }];
 
@@ -56,21 +59,18 @@ module CustomerSetting {
 
         public controller: any = [
             "$scope",
-            "$rootScope",
             "settingLevel",
-            ($scope: DefaultSettingTypeDirectiveScope, $rootScope: ng.IRootScopeService, settingLevel: SettingLevel) => {
+            ($scope: DefaultSettingTypeDirectiveScope, settingLevel: SettingLevel) => {
                 $scope.settingLevel = settingLevel;
 
-                $rootScope.$on("customerSetting.settingTypeChanged", () => {
-                    if (angular.isDefined($scope.settingType) && angular.isArray($scope.settingType.settingItems)) {
-                        if ($scope.settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                            $scope.sportGroups = this.groupSettingItemsBySportType($scope.settingType.settingItems);
+                $scope.$watch("settingType", (settingType: SettingType) => {
+                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                        if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                            $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
                         } else {
-                            $scope.sportGroups = <DefaultSettingItem[][]>[$scope.settingType.settingItems];
+                            $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
                         }
                     }
-
-                    $rootScope.$emit("customerSetting.settingItemsGrouped");
                 });
             }];
 

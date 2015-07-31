@@ -7,7 +7,7 @@ module CustomerSetting {
         private label: any;
         private message: any;
 
-        public static $inject = ["customerSettingResource"];
+        public static $inject: string[] = ["customerSettingResource"];
 
         constructor(private customerSettingResource: any) {
             this.setLanguage(Defaults.language);
@@ -68,7 +68,7 @@ module CustomerSetting {
             var msg: string = this.getMessage(key);
 
             msg = msg.replace(/{(\d+)}/g, (match, index) => {
-                return args[index] || match;
+                return args[index] === (undefined || null) ? match : args[index];
             });
 
             return msg;
@@ -85,4 +85,13 @@ module CustomerSetting {
 
     LabelFilter.$inject = ["resourceService"];
     ModuleRegister.filter("label", LabelFilter);
+
+    export function MessageFilter(resourceService: ResourceService) {
+        return (name: string, ...replacements: string[]) => {
+            return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
+        }
+    }
+
+    LabelFilter.$inject = ["resourceService"];
+    ModuleRegister.filter("message", MessageFilter);
 }

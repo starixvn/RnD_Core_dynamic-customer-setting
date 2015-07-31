@@ -1,21 +1,27 @@
 ﻿<div>
     <default-setting-type-block class="setting-type-2"
+                                data-upline-level="uplineLevel"
+                                data-customer-level="customerLevel"
                                 data-product-id="productId"
                                 data-product-name="productName"
                                 data-setting-type="settingType"
                                 data-update="update({ settingTypeId: settingTypeId })"
                                 data-header-template-url="headerTemplateUrl"
-                                data-value-template-url="valueTemplateUrl">
+                                data-value-template-url="valueTemplateUrl"
+                                data-level-identifier="levelIdentifier">
     </default-setting-type-block>
     <script type="text/ng-template" id="settingtyp2-template1-value.html">
         <div class="w231px">
-            <input type="text" maxlength="14" data-ng-bind="item.minBet" />
+            <input type="text" maxlength="14" data-ng-model="item.minBet" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
+            <span class="constraint" ng-hide="customerLevel === levelIdentifier.super"> >= {{item.upline.minBet}}</span>
         </div>
         <div class="w231px second">
-            <input type="text" maxlength="14" data-ng-bind="item.maxBet" />
+            <input type="text" maxlength="14" data-ng-model="item.maxBet" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
+            <span ng-hide="customerLevel === levelIdentifier.super"> <= {{item.upline.maxBet}}</span>
         </div>
         <div class="w231px last">
-            <input type="text" maxlength="14" data-ng-bind="item.maxPerMatch" />
+            <input type="text" maxlength="14" data-ng-model="item.maxPerMatch" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
+            <span ng-hide="customerLevel === levelIdentifier.super"> <= {{item.upline.maxPerMatch}}</span>
         </div>
     </script>
     <script type="text/ng-template" id="settingtyp2-template1-header.html">

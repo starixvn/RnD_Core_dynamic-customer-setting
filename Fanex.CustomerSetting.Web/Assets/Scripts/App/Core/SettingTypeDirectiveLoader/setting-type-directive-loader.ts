@@ -8,6 +8,7 @@
 
 module CustomerSetting {
     interface SettingTypeLoaderScope extends ng.IScope {
+        uplineLevel: Level;
         setting: Setting;
         update: (settingTypeId: { settingTypeId: number }) => void;
     }
@@ -20,6 +21,7 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
+                uplineLevel: "=",
                 setting: "=",
                 update: "&"
             }
@@ -39,11 +41,16 @@ module CustomerSetting {
         }
 
         private generateNodes(scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
+            console.log("Before:");
+            console.log(this.loadedSettingTypes);
             if (angular.isDefined(scope.setting)) {
                 angular.forEach(scope.setting.settingTypes, (settingType, index) => {
-                    var templateId = new KeyValuePair<number, number>(settingType.id, settingType.settingTemplate);
+                    var loaded = this.loadedSettingTypes.some(item => {
+                        return item.key === settingType.id
+                            && item.value === settingType.settingTemplate
+                    });
 
-                    if (this.loadedSettingTypes.indexOf(templateId) < 0) {
+                    if (!loaded) {
                         var settingTypeName: string = StringFormater.format("settingtype{0}-template{1}", settingType.id, settingType.settingTemplate);
                         var filePath: string = StringFormater.format(
                             "app/customerSetting/{0}/{1}{2}.js",
@@ -56,6 +63,8 @@ module CustomerSetting {
                             "'\">",
                             "<",
                             settingTypeName,
+                            " data-upline-level=\"uplineLevel\"",
+                            " data-customer-level=\"setting.customerLevel\"",
                             " data-product-id=\"setting.productId\"",
                             " data-product-name=\"setting.productName\"",
                             " data-setting-type=\"setting.settingTypes[",
@@ -70,10 +79,12 @@ module CustomerSetting {
 
                         element.append(settingTypeElement);
                         this.$compile(settingTypeElement)(scope);
-                        this.loadedSettingTypes.push(templateId);
+                        this.loadedSettingTypes.push(new KeyValuePair<number, number>(settingType.id, settingType.settingTemplate));
                     }
                 });
             }
+            console.log("After:");
+            console.log(this.loadedSettingTypes);
         }
     }
 

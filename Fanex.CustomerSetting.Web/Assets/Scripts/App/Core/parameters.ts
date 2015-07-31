@@ -110,7 +110,7 @@ module CustomerSetting {
         }
 
         public set customerIds(custIds: string) {
-            if (!custIds || custIds === "") {
+            if (!custIds) {
                 throw Exceptions.invalidParam("customerIds");
             }
 
@@ -164,6 +164,15 @@ module CustomerSetting {
         constructor(
             public uplineLevel: Level,
             public setting: Setting) { }
+
+        public validate(): Result {
+            if (this.uplineLevel && (this.uplineLevel <= Level.member || this.uplineLevel >= Level.company)
+                || (!this.setting)) {
+                return Result.invalidParameters;
+            }
+
+            return Result.normal;
+        }
     }
 
     export class MultipleSettingCommand extends SettingCommand {
@@ -174,6 +183,16 @@ module CustomerSetting {
             super(uplineLevel, setting);
             this.customerIds = customerIds;
             this.customerNames = customerNames;
+        }
+
+        public validate(): Result {
+            return super.validate() || (() => {
+                if (!this.customerIds || !this.customerNames) {
+                    return Result.invalidParameters;
+                }
+
+                return Result.normal;
+            })();
         }
     }
 }

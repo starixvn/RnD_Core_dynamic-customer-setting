@@ -48,23 +48,22 @@ textarea.invalid:focus {
   border: 1px solid #e9322d;
 }
 
+input[type=text] {
+  width: 100%;
+}
+input[type=text].has-constraint {
+  display: inline-block;
+  width: 50%;
+}
+
 select {
   min-width: 60px;
   height: 19px;
 }
 
-.status-checkbox {
-  cursor: pointer;
-  margin-right: 10px;
-}
-.status-checkbox input {
-  cursor: pointer;
-  height: 13px;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  top: 2px;
-  width: 13px;
+.constraint {
+  display: inline-block;
+  width: 47%;
 }
 
 .update-btn {
@@ -118,8 +117,8 @@ select {
   height: 15px;
 }
 
-.pull-left {
-  float: left;
+.relative-position {
+  position: relative;
 }
 
 .result-container {
@@ -253,20 +252,35 @@ select {
   z-index: 10009;
 }
 
-/*.tooltip-container {
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1070;
+.tooltip-container {
+  padding: 5px 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.tooltip-container .tooltip-content {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #e9322d;
+  color: #fff;
+  max-width: 300px;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+}
+.tooltip-container:after {
+  border-color: #e9322d transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  width: 0;
+}
 
-    .tooltip-inner {
-        background-color: #000;
-        color: #fff;
-        max-width: 300px;
-        padding: 4px 8px;
-        text-align: center;
-        text-decoration: none;
-    }
-}*/
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
@@ -483,6 +497,20 @@ select {
   border-right: none;
   padding: 0;
   width: 80%;
+}
+
+.status-checkbox {
+  cursor: pointer;
+  margin-right: 10px;
+}
+.status-checkbox input {
+  cursor: pointer;
+  height: 13px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: 2px;
+  width: 13px;
 }
 
 /*.bet-limit-block {

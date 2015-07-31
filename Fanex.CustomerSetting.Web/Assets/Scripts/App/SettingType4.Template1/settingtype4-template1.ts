@@ -39,8 +39,15 @@ module CustomerSetting {
 
             return isChanged
                 || this.isDisabled !== oldSetting.isDisabled
-                || (this.upline && this.upline.isDisabled !== oldSetting.upline.isDisabled)
                 || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
+        }
+
+        public get validation(): ValidationResult {
+            if (this.isDisabled && !this.downline.isDisabled) {
+                return new ValidationResult("DownlineStatusIsInvalid");
+            }
+
+            return <ValidationResult>Result.normal;
         }
 
         private backupSettingtype4Template1(): void {
@@ -62,7 +69,7 @@ module CustomerSetting {
     }
 
     class SettingType4Template1Directive extends SettingTypeDirective {
-        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
+        public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp4-template1-value.html";
@@ -90,6 +97,8 @@ module CustomerSetting {
     }
 
     class StatusCheckboxDirective implements ng.IDirective {
+        public replace: boolean = true;
+
         public get scope(): any {
             return {
                 settingItem: "="
@@ -98,7 +107,7 @@ module CustomerSetting {
 
         public templateUrl: string = "status-checkbox.html";
 
-        public controller: any = ["$scope", "$rootScope", ($scope: StatusCheckboxScope, $rootScope: ng.IRootScopeService) => {
+        public controller: any = ["$scope", "$rootScope", ($scope: StatusCheckboxScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;

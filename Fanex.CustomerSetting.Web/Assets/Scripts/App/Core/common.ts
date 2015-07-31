@@ -23,6 +23,10 @@ module CustomerSetting {
             return StringFormater.format(paramName, "{0} must be greater than zero.");
         }
 
+        public static invalidParams(): string {
+            return "The request parameters have get some invalid values.";
+        }
+
         public static invalidParam(paramName: string): string {
             return StringFormater.format(paramName, "{0} has taken an invalid value.");
         }

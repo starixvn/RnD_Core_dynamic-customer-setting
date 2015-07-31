@@ -7,11 +7,12 @@ module CustomerSetting {
         public static $inject: string[] = ["$rootScope"];
 
         private rootUrl: string;
+        private debug: boolean;
 
         constructor(private $rootScope: ng.IRootScopeService) { }
 
         public resolveRootUrl(url: string): string {
-            if (angular.isUndefined(this.rootUrl)) {
+            if (!this.rootUrl) {
                 this.rootUrl = this.$rootScope["rootUrl"];
             }
 
@@ -19,7 +20,11 @@ module CustomerSetting {
         }
 
         public debugMode(): boolean {
-            return this.$rootScope["debug"] === "true";
+            if (!this.debug) {
+                this.debug = this.$rootScope["debug"] === "true";
+            }
+
+            return this.debug;
         }
     }
 
@@ -30,6 +35,7 @@ module CustomerSetting {
         private isMultiple: boolean;
         private lang: string;
         private custNames: string;
+        private uplineLvl: Level;
 
         public static $inject: string[] = ["$location"];
 
@@ -39,6 +45,10 @@ module CustomerSetting {
 
         public get customerNames(): string {
             return this.custNames;
+        }
+
+        public get uplineLevel(): Level {
+            return this.uplineLvl;
         }
 
         constructor(private $location: ng.ILocationService) {
@@ -85,6 +95,7 @@ module CustomerSetting {
                 this.isMultiple = params.isMultiple || false;
                 this.lang = params.language;
                 this.custNames = params.customerNames;
+                this.uplineLvl = params.uplineLevel;
             } else {
                 this.params = undefined;
             }
@@ -100,4 +111,31 @@ module CustomerSetting {
     }
 
     ModuleRegister.filter("naValue", NAValue);
+
+    export class ValueRangeGenerator {
+        public generateRanges(value: number, min: number, max: number, step: number, divider: number): Array<KeyValuePair<string, number>> {
+            var ranges: Array<KeyValuePair<string, number>> = new Array<KeyValuePair<string, number>>();
+
+            min = Math.max(0, min);
+            max = Math.max(0, max);
+
+            if (value > max) {
+                ranges.push(new KeyValuePair<string, number>(value.toString(), value));
+            }
+
+            while (max >= min) {
+                ranges.push(new KeyValuePair<string, number>(max.toString(), max));
+                max -= step;
+                max = Math.round(max * divider) / divider;
+            }
+
+            if (value < min) {
+                ranges.push(new KeyValuePair<string, number>(value.toString(), value));
+            }
+
+            return ranges;
+        }
+    }
+
+    ModuleRegister.service("valueRangeGenerator", ValueRangeGenerator);
 }

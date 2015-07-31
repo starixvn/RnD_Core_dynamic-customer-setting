@@ -3,6 +3,8 @@
 $border-color: #7c98a4;
 $background-color: #e6e9f0;
 $header-color: #b5c4d0;
+$focus-border-color: #66afe9;
+$invalid-color: #e9322d;
 
 body {
     font: {
@@ -25,21 +27,35 @@ textarea {
     }
 
     &:focus {
-        border-color: #66afe9;
+        border-color: $focus-border-color;
     }
 
     &.invalid {
-        border: 1px solid #e9322d;
+        border: 1px solid $invalid-color;
 
         &:focus {
-            border: 1px solid #e9322d;
+            border: 1px solid $invalid-color;
         }
+    }
+}
+
+input[type=text] {
+    width: 100%;
+
+    &.has-constraint {
+        display: inline-block;
+        width: 50%;
     }
 }
 
 select {
     min-width: 60px;
     height: 19px;
+}
+
+.constraint {
+    display: inline-block;
+    width: 47%;
 }
 
 .update-btn {
@@ -95,8 +111,8 @@ select {
     }
 }
 
-.pull-left {
-    float: left;
+.relative-position {
+    position: relative;
 }
 
 .result-container {
@@ -240,20 +256,35 @@ select {
     z-index: 10009;
 }
 
-/*.tooltip-container {
+.tooltip-container {
     padding: 5px 0;
     position: absolute;
-    z-index: 1070;
+    top: 0;
+    z-index: 1;
 
-    .tooltip-inner {
-        background-color: #000;
+    .tooltip-content {
+        @include border-radius(3px);
+        background-color: $invalid-color;
         color: #fff;
         max-width: 300px;
         padding: 4px 8px;
         text-align: center;
         text-decoration: none;
     }
-}*/
+
+    &:after {
+        border: {
+            color: $invalid-color transparent transparent transparent;
+            style: solid;
+            width: 5px;
+        }
+
+        content: " ";
+        display: block;
+        margin: 0 auto;
+        width: 0;
+    }
+}
 
 /*********************************************************/
 /*           Customer Info & Shared Styles               */

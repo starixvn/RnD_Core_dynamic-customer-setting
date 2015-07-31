@@ -1,10 +1,12 @@
 ﻿/// <reference path="common.ts" />
+/// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
     export interface SettingItem {
         typeName: string;
         oldSetting: SettingItem;
         isChanged(): boolean;
+        validation: ValidationResult;
     }
 
     export enum Level {
@@ -14,6 +16,8 @@ module CustomerSetting {
         agent = 2,
         member = 1
     }
+
+    ModuleRegister.value("levelIdentifier", Level);
 
     export class CustomerInfo {
         public userName: string;
@@ -71,7 +75,11 @@ module CustomerSetting {
                 || (this.betTypeName !== this.oldSetting.betTypeName);
         }
 
-        public backup(): void {
+        public get validation(): ValidationResult {
+            return <ValidationResult>Result.normal;
+        }
+
+        protected backup(): void {
             this.oldSetting = this.oldSetting || new DefaultSettingItem();
 
             this.oldSetting.sportTypeId = this.sportTypeId;
@@ -125,6 +133,18 @@ module CustomerSetting {
             return updatedSettingType;
         }
 
+        public validate(): boolean {
+            var validSettingItems: boolean = this.settingItems.every(item => {
+                return item.validation.isSuccessful;
+            });
+
+            return this.id > 0
+                && this.settingTemplate > 0
+                && this.settingLevel > 0
+                && this.typeName !== undefined
+                && validSettingItems;
+        }
+
         private getExtraData(rawData: any): Array<KeyValuePair<string, any>> {
             var extraData: Array<KeyValuePair<string, any>> = new Array<KeyValuePair<string, any>>();
             var addedProperties: string[] = ["id", "name", "settingTemplate", "settingLevel", "settingItems", "typeName"];
@@ -156,7 +176,7 @@ module CustomerSetting {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
-                this.settingTypes = setting.settingTypes.map((settingType) => new SettingType(settingType));
+                this.settingTypes = setting.settingTypes.map(settingType => new SettingType(settingType));
             }
         }
 
@@ -196,13 +216,32 @@ module CustomerSetting {
 
             return newSetting;
         }
+
+        public validate(): boolean {
+            var validSettingTypes: boolean = this.settingTypes.every(item => {
+                return item.validate();
+            });
+
+            return this.customerLevel < Level.company
+                && this.customerId > 0
+                && this.productId > 0
+                && validSettingTypes;
+        }
     }
 
     export class Result {
+        public get isSuccessful(): boolean {
+            return this.code === 0;
+        }
+
         constructor(
             public code: number,
             public message: string,
             public msgType: MessageType) { }
+
+        public static get normal(): Result {
+            return new Result(0, "", MessageType.success);
+        }
 
         public static get systemError(): Result {
             return new Result(-1, "SystemError", MessageType.error);
@@ -211,15 +250,40 @@ module CustomerSetting {
         public static get noChangeToUpdate(): Result {
             return new Result(-2, "NoChangeToUpdate", MessageType.error);
         }
+
+        public static get invalidParameters(): Result {
+            return new Result(-3, Exceptions.invalidParams(), MessageType.error);
+        }
     }
 
     export class Results extends Result {
+        public get isSuccessful(): boolean {
+            return this.code === 0
+                && (!this.subResults || this.subResults.every(result => {
+                    return result.isSuccessful;
+                }));
+        }
+
         constructor(
             public code?: number,
             public message?: string,
             public msgType?: MessageType,
             public subResults?: Array<Result>) {
             super(code, message, msgType);
+        }
+
+        public removeSuccessResults(): void {
+            this.subResults = this.subResults.filter(result => {
+                return !result.isSuccessful;
+            });
+        }
+    }
+
+    export class ValidationResult extends Result {
+        constructor(
+            public message: string,
+            public fieldName?: string) {
+            super(-8000, message, MessageType.error);
         }
     }
 }

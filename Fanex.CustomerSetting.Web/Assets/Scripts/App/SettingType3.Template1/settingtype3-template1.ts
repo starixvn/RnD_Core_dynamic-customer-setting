@@ -48,40 +48,70 @@ module CustomerSetting {
         }
     }
 
-    interface SettingType3Template1Scope extends SettingTypeDirectiveSharedScope {
-        step: number;
-        divisor: number;
-    }
-
     class SettingType3Template1Directive extends SettingTypeDirective {
-        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
+        public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingType3Template1Scope) => {
+        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
-            scope.step = this.settingtype3Template1Config.step;
-            scope.divisor = this.settingtype3Template1Config.divisor;
         }
 
-        constructor(private appConfigService: AppConfigService, private settingtype3Template1Config: Settingtype3Template1ConfigService) {
+        constructor(private appConfigService: AppConfigService) {
             super(Settingtype3Template1Item);
         }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "settingtype3Template1ConfigService", function () {
+    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));
     }]);
 
-    class Settingtype3Template1ConfigService {
-        public get step(): number {
+    interface SettingType3Template1ItemScope extends ng.IScope {
+        settingItem: Settingtype3Template1Item;
+        range: Array<KeyValuePair<string, number>>;
+    }
+
+    class CommRateDirective implements ng.IDirective {
+        public replace: boolean = true;
+
+        public get scope(): any {
+            return {
+                settingItem: "="
+            }
+        }
+
+        public templateUrl: string = "settingtyp3-template1-drop.html";
+
+        public controller: any = ["$scope", "$rootScope", ($scope: SettingType3Template1ItemScope) => {
+            var step: number = Settingtype3Template1Config.step;
+            var divisor: number = Settingtype3Template1Config.divisor;
+
+            $scope.$watch("settingItem", () => {
+                $scope.range = this.valueRangeGenerator.generateRanges(
+                    $scope.settingItem.commRate,
+                    0,
+                    $scope.settingItem.upline.commRate,
+                    step,
+                    divisor);
+            });
+        }];
+
+        constructor(private valueRangeGenerator: ValueRangeGenerator) { }
+    }
+
+    angular.module("customerSetting").directive("commRate", ["valueRangeGenerator", function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(CommRateDirective, args));
+    }]);
+
+    class Settingtype3Template1Config {
+        public static get step(): number {
             return 0.0005;
         }
 
-        public get divisor(): number {
+        public static get divisor(): number {
             return 10000;
         }
     }
-
-    angular.module("customerSetting").service("settingtype3Template1ConfigService", Settingtype3Template1ConfigService);
 }
