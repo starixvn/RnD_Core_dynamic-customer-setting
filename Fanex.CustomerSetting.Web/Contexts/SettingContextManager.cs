@@ -35,24 +35,44 @@
         public static void Init(
             int loginUserId,
             string loginUserName,
-            Level loginUserLevel,
+            byte loginUserLevel,
             int subAccountId = 0)
         {
-            ValidateSubAccountWithAgencySystem(subAccountId);
+            ValidateSubAccountWithSystem(subAccountId, CustomerSettingSection.Settings.SystemId);
 
             SettingContext.Actor = new User
             {
                 Id = loginUserId,
                 Name = loginUserName,
-                Level = loginUserLevel,
+                Level = Enumeration.FromValue<Level>(loginUserLevel),
                 SubAccountId = subAccountId
             };
         }
 
-        private static void ValidateSubAccountWithAgencySystem(int subAccountId)
+        public static void Init(
+          int loginUserId,
+          string loginUserName,
+          byte loginUserLevel,
+          int subAccountId = 0,
+          byte systemId = 0)
+        {
+            ValidateSubAccountWithSystem(subAccountId, systemId);
+
+            SettingContext.Actor = new User
+            {
+                Id = loginUserId,
+                Name = loginUserName,
+                Level = Enumeration.FromValue<Level>(loginUserLevel),
+                SubAccountId = subAccountId
+            };
+        }
+
+        private static void ValidateSubAccountWithSystem(
+            int subAccountId, 
+            byte systemId)
         {
             if (subAccountId > 0
-                && CustomerSettingSection.Settings.SystemId != (byte)SystemType.Agency)
+                && systemId != (byte)SystemType.Agency)
             {
                 throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
             }

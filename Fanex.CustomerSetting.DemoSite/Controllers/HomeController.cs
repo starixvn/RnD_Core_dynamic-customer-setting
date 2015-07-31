@@ -25,7 +25,7 @@
                 subAccountId = 0;
             }
 
-            SettingContextManager.Init(actorId, actorname, Level.FromValue<Level>(role), subAccountId);
+            SettingContextManager.Init(actorId, actorname, role, subAccountId);
             SettingContextManager.SetLanguage(language);
 
             return Json(Result.Success);

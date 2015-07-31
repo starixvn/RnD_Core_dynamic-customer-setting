@@ -15,15 +15,31 @@
         }
 
         public CustomerSettingQuery(
-            int customerId,
-            Level customerLevel,
-            byte productId,
-            Level uplineLevel = null)
+          int customerId,
+          Level customerLevel,
+          byte productId,
+          Level uplineLevel = null)
         {
             CustomerId = customerId;
             CustomerLevel = customerLevel;
             ProductId = productId;
             UplineLevel = uplineLevel;
+        }
+
+        public CustomerSettingQuery(
+           int customerId,
+           byte customerLevel,
+           byte productId,
+           byte? uplineLevel)
+        {
+            CustomerId = customerId;
+            CustomerLevel = Enumeration.FromValue<Level>(customerLevel);
+            ProductId = productId;
+
+            if (uplineLevel.HasValue)
+            {
+                UplineLevel = Enumeration.FromValue<Level>(uplineLevel.Value);
+            }
         }
 
         public int CustomerId
