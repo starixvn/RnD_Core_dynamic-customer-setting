@@ -13,7 +13,7 @@ module CustomerSetting {
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = true) {
+        constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
 
             if (settingItem) {
@@ -22,12 +22,12 @@ module CustomerSetting {
                 this.maxPerMatch = settingItem.maxPerMatch;
 
                 if (settingItem.upline) {
-                    this.upline = new Settingtype2Template1Item(settingItem.upline, false);
+                    this.upline = new Settingtype2Template1Item(settingItem.upline);
                 }
             }
 
             if (backup) {
-                this.settingType2Template1Backup();
+                this.oldSetting = new Settingtype2Template1Item(this);
             }
         }
 
@@ -130,21 +130,6 @@ module CustomerSetting {
 
             return true;
         }
-
-        private settingType2Template1Backup(): void {
-            var oldSetting: Settingtype2Template1Item;
-
-            this.oldSetting = new Settingtype2Template1Item(undefined, false);
-            super.backup();
-            oldSetting = <Settingtype2Template1Item>this.oldSetting;
-            oldSetting.minBet = this.minBet;
-            oldSetting.maxBet = this.maxBet;
-            oldSetting.maxPerMatch = this.maxPerMatch;
-
-            if (this.upline) {
-                oldSetting.upline = new Settingtype2Template1Item(this.upline, false);
-            }
-        }
     }
 
     class SettingType2Template1Directive extends SettingTypeDirective {
@@ -153,14 +138,17 @@ module CustomerSetting {
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             scope.headerTemplateUrl = "settingtyp2-template1-header.html";
             scope.valueTemplateUrl = "settingtyp2-template1-value.html";
+            scope.settingTypeName = this.resourceService.getLabel("BetSetting");
         }
 
-        constructor(private appConfigService: AppConfigService) {
-            super(Settingtype2Template1Item);
+        constructor(
+            private appConfigService: AppConfigService,
+            private resourceService: ResourceService) {
+            super((settingItem: any, backup?: boolean) => new Settingtype2Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype2Template1", ["appConfigService", function () {
+    angular.module("customerSetting").directive("settingtype2Template1", ["appConfigService", "resourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType2Template1Directive, args));

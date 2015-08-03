@@ -10,6 +10,7 @@ module CustomerSetting {
         productId: number;
         productName: string;
         settingType: SettingType;
+        settingTypeName: string;
         update: (settingTypeId: { settingTypeId: number }) => void;
         headerTemplateUrl: string;
         valueTemplateUrl: string;
@@ -26,10 +27,7 @@ module CustomerSetting {
                 productId: "=",
                 productName: "=",
                 settingType: "=",
-                update: "&",
-                headerTemplateUrl: "=",
-                valueTemplateUrl: "=",
-                avaiCustomerLevels: "="
+                update: "&"
             }
         }
 
@@ -40,14 +38,14 @@ module CustomerSetting {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                     angular.forEach(settingType.settingItems, (item, index) => {
                         if (angular.isDefined(item)) {
-                            settingType.settingItems[index] = new this.settingItemType(item);
+                            settingType.settingItems[index] = this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel);
                         }
                     });
                 }
             });
         }];
 
-        constructor(private settingItemType: new (settingItem: any) => SettingItem) { }
+        constructor(private settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => SettingItem) { }
     }
 
     interface DefaultSettingTypeDirectiveScope extends SettingTypeDirectiveSharedScope {
@@ -55,7 +53,8 @@ module CustomerSetting {
         sportGroups: DefaultSettingItem[][];
     }
 
-    class DefaultSettingTypeGroupingDirective extends SettingTypeDirective {
+    class DefaultSettingTypeGroupingDirective implements ng.IDirective {
+        public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
         public controller: any = ["$scope", ($scope: DefaultSettingTypeDirectiveScope) => {

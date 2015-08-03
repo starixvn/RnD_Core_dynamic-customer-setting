@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
     class Settingtype3Template1Item extends DefaultSettingItem {
@@ -10,19 +11,19 @@ module CustomerSetting {
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = true) {
+        constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
 
             if (settingItem) {
                 this.commRate = settingItem.commRate;
 
                 if (settingItem.upline) {
-                    this.upline = new Settingtype3Template1Item(settingItem.upline, false);
+                    this.upline = new Settingtype3Template1Item(settingItem.upline);
                 }
             }
 
             if (backup) {
-                this.settingType3Template1Backup();
+                this.oldSetting = new Settingtype3Template1Item(this);
             }
         }
 
@@ -45,18 +46,6 @@ module CustomerSetting {
 
             return true;
         }
-        private settingType3Template1Backup(): void {
-            var oldSetting: Settingtype3Template1Item;
-
-            this.oldSetting = new Settingtype3Template1Item(undefined, false);
-            super.backup();
-            oldSetting = <Settingtype3Template1Item>this.oldSetting;
-            oldSetting.commRate = this.commRate;
-
-            if (this.upline) {
-                oldSetting.upline = new Settingtype3Template1Item(this.upline, false);
-            }
-        }
     }
 
     class SettingType3Template1Directive extends SettingTypeDirective {
@@ -64,14 +53,17 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
+            scope.settingTypeName = this.resourceService.getLabel("Commission");
         }
 
-        constructor(private appConfigService: AppConfigService) {
-            super(Settingtype3Template1Item);
+        constructor(
+            private appConfigService: AppConfigService,
+            private resourceService: ResourceService) {
+            super((settingItem: any, backup?: boolean) => new Settingtype3Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", function () {
+    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "resourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));

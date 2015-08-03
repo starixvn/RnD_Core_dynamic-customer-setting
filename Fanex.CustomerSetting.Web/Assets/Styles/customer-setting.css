@@ -66,6 +66,10 @@ select {
   height: 19px;
 }
 
+.select-wrapper {
+  display: inline-block;
+}
+
 .align-center {
   text-align: center;
 }
@@ -283,10 +287,6 @@ select {
   width: 0;
 }
 
-.tooltip-wrapper {
-  display: inline-block;
-}
-
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
@@ -488,6 +488,10 @@ select {
 .setting-type-2.block .setting-group,
 .setting-type-1.block .setting-group {
   width: 100%;
+}
+.setting-type-2.block .setting-group.extended-setting-group,
+.setting-type-1.block .setting-group.extended-setting-group {
+  display: none;
 }
 .setting-type-2.block .setting-group.near-last,
 .setting-type-1.block .setting-group.near-last {

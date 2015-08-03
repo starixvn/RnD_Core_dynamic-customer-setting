@@ -1,6 +1,6 @@
 ﻿<div class="block default-setting-block" data-ng-show="settingType">
     <div class="header" data-ng-attr-setting-type="{{settingType.id}}">
-        {{settingType.name}}
+        {{settingTypeName}}
         <div class="update">
             <span class="icon update-icon"
                   data-ng-attr-title="{{'Update' | label}}"
@@ -30,7 +30,7 @@
                  data-ng-class="{'last': $index % 2 === 1 }">
             </div>
         </div>
-        <div class="setting-group last extended-setting-group"
+        <div class="setting-group extended-setting-group last"
              data-ng-if="(group.length % 2 === 1) && (group.length > 1)">
             <div class="name-col"></div>
             <div class="value-col last"></div>

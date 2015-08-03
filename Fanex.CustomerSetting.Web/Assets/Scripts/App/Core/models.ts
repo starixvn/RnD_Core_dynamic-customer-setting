@@ -78,16 +78,6 @@ module CustomerSetting {
         public validate(): boolean {
             return true;
         }
-
-        protected backup(): void {
-            this.oldSetting = this.oldSetting || new DefaultSettingItem();
-
-            this.oldSetting.sportTypeId = this.sportTypeId;
-            this.oldSetting.sportTypeName = this.sportTypeName;
-            this.oldSetting.betTypeId = this.betTypeId;
-            this.oldSetting.betTypeName = this.betTypeName;
-            this.oldSetting.typeName = this.typeName;
-        }
     }
 
     export class SettingType {
@@ -116,7 +106,11 @@ module CustomerSetting {
         public getChanges(): SettingType {
             var updatedSettingType: SettingType;
             var changedSettingItems: Array<SettingItem> = this.settingItems.filter(item => {
-                return item.isChanged();
+                if (item.isChanged) {
+                    return item.isChanged();
+                } else {
+                    return false;
+                }
             });
 
             if (changedSettingItems && changedSettingItems.length > 0) {
@@ -247,7 +241,9 @@ module CustomerSetting {
         constructor(
             public code: number,
             public message: string,
-            public msgType: MessageType) { }
+            public msgType: MessageType) {
+            this.msgType = this.code !== 0 ? MessageType.error : this.msgType;
+        }
 
         public static get normal(): Result {
             return new Result(0, "", MessageType.success);
@@ -267,6 +263,8 @@ module CustomerSetting {
     }
 
     export class Results extends Result {
+        public subResults: Array<Result>
+
         public get isSuccessful(): boolean {
             return this.code === 0
                 && (!this.subResults || this.subResults.every(result => {
@@ -275,19 +273,22 @@ module CustomerSetting {
         }
 
         constructor(
-            public code?: number,
-            public message?: string,
-            public msgType?: MessageType,
-            public subResults?: Array<Result>) {
+            code?: number,
+            message?: string,
+            msgType?: MessageType,
+            subResults?: any[]) {
             super(code, message, msgType);
+            this.subResults = subResults.map(item => new Result(item.code, item.message, item.msgType));
         }
 
-        public removeSuccessResults(): void {
+        public removeSuccessResults(): Array<Result> {
             if (this.subResults) {
                 this.subResults = this.subResults.filter(result => {
                     return !result.isSuccessful;
                 });
             }
+
+            return this.subResults || new Array<Result>();
         }
     }
 

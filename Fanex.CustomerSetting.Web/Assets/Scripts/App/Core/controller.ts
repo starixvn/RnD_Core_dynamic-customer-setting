@@ -62,12 +62,17 @@ module CustomerSetting {
 
                     if (validationResult.isSuccessful) {
                         this.isUIblocked = true;
-                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).success((msg: Results) => {
+                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).success((msg: any) => {
                             this.requestMsgResult = new Results(msg.code, msg.message, msg.msgType, msg.subResults);
-                            this.querySetting();
+
+                            if (this.requestMsgResult.isSuccessful) {
+                                this.querySetting();
+                            }
 
                             this.$timeout(() => {
-                                (<Results>this.requestMsgResult).removeSuccessResults();
+                                if ((<Results>this.requestMsgResult).removeSuccessResults().length === 0) {
+                                    this.requestMsgResult = undefined;
+                                }
                             }, Defaults.displayingMsgTime);
                         }).error(() => {
                             var error: Result = Result.systemError;

@@ -1,19 +1,11 @@
 ﻿<div>
-    <default-setting-type-grouping data-upline-level="uplineLevel"
-                                   data-customer-level="customerLevel"
-                                   data-product-id="productId"
-                                   data-product-name="productName"
-                                   data-setting-type="settingType"
-                                   data-update="update({ settingTypeId: settingTypeId })"
-                                   data-value-template-url="valueTemplateUrl"
-                                   data-extra-data="extraData">
-    </default-setting-type-grouping>
+    <default-setting-type-grouping></default-setting-type-grouping>
     <script type="text/ng-template" id="settingtyp3-template1-value.html">
         <comm-rate data-setting-item="item"></comm-rate>
     </script>
     <script type="text/ng-template" id="settingtyp3-template1-drop.html">
         <div>
-            <div class="tooltip-wrapper" data-tooltip data-message="settingItem.validationState.message">
+            <div class="select-wrapper" data-tooltip data-message="settingItem.validationState.message">
                 <select data-ng-model="settingItem.commRate"
                         data-ng-options="item.value as item.key for item in range"></select>
             </div>

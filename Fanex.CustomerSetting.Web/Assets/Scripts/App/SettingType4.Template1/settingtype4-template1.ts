@@ -13,23 +13,23 @@ module CustomerSetting {
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = true) {
+        constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
 
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
 
                 if (settingItem.upline) {
-                    this.upline = new Settingtype4Template1Item(settingItem.upline, false);
+                    this.upline = new Settingtype4Template1Item(settingItem.upline);
                 }
 
                 if (settingItem.downline) {
-                    this.downline = new Settingtype4Template1Item(settingItem.downline, false);
+                    this.downline = new Settingtype4Template1Item(settingItem.downline);
                 }
             }
 
             if (backup) {
-                this.backupSettingtype4Template1();
+                this.oldSetting = new Settingtype4Template1Item(this);
             }
         }
 
@@ -53,23 +53,6 @@ module CustomerSetting {
 
             return true;
         }
-
-        private backupSettingtype4Template1(): void {
-            var oldSetting: Settingtype4Template1Item;
-
-            this.oldSetting = new Settingtype4Template1Item(undefined, false);
-            super.backup();
-            oldSetting = <Settingtype4Template1Item>this.oldSetting;
-            oldSetting.isDisabled = this.isDisabled;
-
-            if (this.upline) {
-                oldSetting.upline = new Settingtype4Template1Item(this.upline, false);
-            }
-
-            if (this.downline) {
-                oldSetting.downline = new Settingtype4Template1Item(this.downline, false);
-            }
-        }
     }
 
     class SettingType4Template1Directive extends SettingTypeDirective {
@@ -77,14 +60,17 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp4-template1-value.html";
+            scope.settingTypeName = this.resourceService.getLabel("ProductStatus");
         }
 
-        constructor(private appConfigService: AppConfigService) {
-            super(Settingtype4Template1Item);
+        constructor(
+            private appConfigService: AppConfigService,
+            private resourceService: ResourceService) {
+            super((settingItem: any, backup?: boolean) => new Settingtype4Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype4Template1", ["appConfigService", function () {
+    angular.module("customerSetting").directive("settingtype4Template1", ["appConfigService", "resourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType4Template1Directive, args));

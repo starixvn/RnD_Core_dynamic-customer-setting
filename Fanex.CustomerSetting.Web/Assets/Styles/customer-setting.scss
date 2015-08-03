@@ -64,6 +64,10 @@ select {
     height: 19px;
 }
 
+.select-wrapper {
+    display: inline-block;
+}
+
 .align-center {
     text-align: center;
 }
@@ -291,10 +295,6 @@ select {
         margin: 0 auto;
         width: 0;
     }
-}
-
-.tooltip-wrapper {
-    display: inline-block;
 }
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
@@ -527,6 +527,10 @@ select {
 .setting-type-1.block {
     .setting-group {
         width: 100%;
+
+        &.extended-setting-group {
+            display: none;
+        }
 
         &.near-last {
             border-bottom: 1px solid $border-color;
