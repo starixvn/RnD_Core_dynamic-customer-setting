@@ -13,7 +13,7 @@ module CustomerSetting {
         update: (settingTypeId: { settingTypeId: number }) => void;
         headerTemplateUrl: string;
         valueTemplateUrl: string;
-        levelIdentifier: Level;
+        avaiCustomerLevels: Object;
     }
 
     export class SettingTypeDirective implements ng.IDirective {
@@ -29,12 +29,13 @@ module CustomerSetting {
                 update: "&",
                 headerTemplateUrl: "=",
                 valueTemplateUrl: "=",
-                levelIdentifier: "="
+                avaiCustomerLevels: "="
             }
         }
 
-        public controller: any = ["$scope", "levelIdentifier", ($scope: SettingTypeDirectiveSharedScope, levelIdentifier: Level) => {
-            $scope.levelIdentifier = levelIdentifier;
+        public controller: any = ["$scope", ($scope: SettingTypeDirectiveSharedScope) => {
+            $scope.avaiCustomerLevels = Level;
+
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                     angular.forEach(settingType.settingItems, (item, index) => {
@@ -50,29 +51,26 @@ module CustomerSetting {
     }
 
     interface DefaultSettingTypeDirectiveScope extends SettingTypeDirectiveSharedScope {
-        settingLevel: SettingLevel;
+        avaiSettingLevels: Object;
         sportGroups: DefaultSettingItem[][];
     }
 
-    class DefaultSettingTypeDirective extends SettingTypeDirective {
+    class DefaultSettingTypeGroupingDirective extends SettingTypeDirective {
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
-        public controller: any = [
-            "$scope",
-            "settingLevel",
-            ($scope: DefaultSettingTypeDirectiveScope, settingLevel: SettingLevel) => {
-                $scope.settingLevel = settingLevel;
+        public controller: any = ["$scope", ($scope: DefaultSettingTypeDirectiveScope) => {
+            $scope.avaiSettingLevels = SettingLevel;
 
-                $scope.$watch("settingType", (settingType: SettingType) => {
-                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                        if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                            $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
-                        } else {
-                            $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
-                        }
+            $scope.$watch("settingType", (settingType: SettingType) => {
+                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                    if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                        $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+                    } else {
+                        $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
                     }
-                });
-            }];
+                }
+            });
+        }];
 
         private groupSettingItemsBySportType(settingItems: SettingItem[]): DefaultSettingItem[][] {
             var currentSportTypeId: number = -1;
@@ -102,5 +100,5 @@ module CustomerSetting {
         }
     }
 
-    ModuleRegister.directive("defaultSettingTypeBlock", DefaultSettingTypeDirective);
+    ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
 }

@@ -9,7 +9,7 @@
     </div>
     <div class="setting-type-group" data-ng-repeat="group in sportGroups">
         <div class="header sport-group-header"
-             data-ng-show="settingType.settingLevel === settingLevel.sportTypeBetType"
+             data-ng-show="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
              data-ng-class="{ 'not-first': ($index > 0) }"
              data-ng-attr-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
@@ -22,7 +22,7 @@
                  data-ng-attr-product="{{productId}}"
                  data-ng-attr-sport-type="{{item.sportTypeId}}"
                  data-ng-attr-bet-type="{{item.betTypeId}}">
-                {{settingType.settingLevel === settingLevel.product ? productName : (settingType.settingLevel === settingLevel.sportType ? item.sportTypeName : item.betTypeName)}}
+                {{settingType.settingLevel === avaiSettingLevels.product ? productName : (settingType.settingLevel === avaiSettingLevels.sportType ? item.sportTypeName : item.betTypeName)}}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
             </div>
             <div class="value-col"

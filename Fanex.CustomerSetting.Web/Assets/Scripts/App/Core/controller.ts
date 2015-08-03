@@ -48,17 +48,19 @@ module CustomerSetting {
         }
 
         public update(settingTypeId?: number): void {
-            var setting: Setting = settingTypeId ? this.setting.getChanges(settingTypeId) : this.setting;
             var path: string = this.customerNames ? this.updateMultiplePath : this.updatePath;
+            var setting: Setting = this.setting.getChanges(settingTypeId);
             var validationResult: Result;
             var command: SettingCommand;
+
+            this.requestMsgResult = undefined;
 
             if (setting) {
                 if (setting.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
-                    if (validationResult.isSuccessful && this.requestMsgResult === undefined) {
+                    if (validationResult.isSuccessful) {
                         this.isUIblocked = true;
                         this.$http.post(this.appConfigService.resolveRootUrl(path), command).success((msg: Results) => {
                             this.requestMsgResult = new Results(msg.code, msg.message, msg.msgType, msg.subResults);
@@ -75,6 +77,8 @@ module CustomerSetting {
                         }).finally(() => {
                             this.isUIblocked = false;
                         });
+                    } else {
+                        this.requestMsgResult = validationResult;
                     }
                 }
             } else {

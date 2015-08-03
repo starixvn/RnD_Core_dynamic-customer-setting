@@ -1,33 +1,54 @@
 ﻿<div>
-    <default-setting-type-block class="setting-type-2"
-                                data-upline-level="uplineLevel"
-                                data-customer-level="customerLevel"
-                                data-product-id="productId"
-                                data-product-name="productName"
-                                data-setting-type="settingType"
-                                data-update="update({ settingTypeId: settingTypeId })"
-                                data-header-template-url="headerTemplateUrl"
-                                data-value-template-url="valueTemplateUrl"
-                                data-level-identifier="levelIdentifier">
-    </default-setting-type-block>
-    <script type="text/ng-template" id="settingtyp2-template1-value.html">
-        <div class="w231px">
-            <input type="text" maxlength="14" data-ng-model="item.minBet" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
-            <span class="constraint" ng-hide="customerLevel === levelIdentifier.super"> >= {{item.upline.minBet}}</span>
-        </div>
-        <div class="w231px second">
-            <input type="text" maxlength="14" data-ng-model="item.maxBet" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
-            <span ng-hide="customerLevel === levelIdentifier.super"> <= {{item.upline.maxBet}}</span>
-        </div>
-        <div class="w231px last">
-            <input type="text" maxlength="14" data-ng-model="item.maxPerMatch" data-ng-class="{ 'has-constraint': customerLevel !== levelIdentifier.super }" />
-            <span ng-hide="customerLevel === levelIdentifier.super"> <= {{item.upline.maxPerMatch}}</span>
-        </div>
-    </script>
+    <default-setting-type-grouping class="setting-type-2"
+                                   data-upline-level="uplineLevel"
+                                   data-customer-level="customerLevel"
+                                   data-product-id="productId"
+                                   data-product-name="productName"
+                                   data-setting-type="settingType"
+                                   data-update="update({ settingTypeId: settingTypeId })"
+                                   data-header-template-url="headerTemplateUrl"
+                                   data-value-template-url="valueTemplateUrl"
+                                   data-avai-customer-levels="avaiCustomerLevels">
+    </default-setting-type-grouping>
     <script type="text/ng-template" id="settingtyp2-template1-header.html">
         <div class="empty-cell"></div>
-        <div class="w27-percent">{{::('MinBet' | label)}}</div>
-        <div class="w27-percent">{{::('MinBet' | label)}}</div>
-        <div class="w27-percent last">{{::('MinBet' | label)}}</div>
+        <div class="w80-percent">
+            <div class="w33-percent">{{::('MinBet' | label)}}</div>
+            <div class="w33-percent">{{::('MaxBet' | label)}}</div>
+            <div class="w33-percent last">{{::('MaxPerMatch' | label)}}</div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="settingtyp2-template1-value.html">
+        <div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent">
+            <div class="w33-percent align-center">{{item.minBet}}</div>
+            <div class="w33-percent align-center">{{item.maxBet}}</div>
+            <div class="w33-percent last align-center">{{item.maxPerMatch}}</div>
+        </div>
+        <input type="hidden" value="{{uplineLevel}}" />
+        <input type="hidden" value="{{avaiCustomerLevels.agent}}" />
+        <div data-ng-if="customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent">
+            <bet-setting-input class="w33-percent"
+                               data-setting-item="item"
+                               data-upline-level="uplineLevel"
+                               data-customer-level="customerLevel"
+                               data-field-name="'minBet'"></bet-setting-input>
+            <bet-setting-input class="w33-percent"
+                               data-setting-item="item"
+                               data-upline-level="uplineLevel"
+                               data-customer-level="customerLevel"
+                               data-field-name="'maxBet'"></bet-setting-input>
+            <bet-setting-input class="w33-percent last"
+                               data-setting-item="item"
+                               data-upline-level="uplineLevel"
+                               data-customer-level="customerLevel"
+                               data-field-name="'maxPerMatch'"></bet-setting-input>
+        </div>
+    </script>
+    <script type="text/ng-template" id="bet-setting-input.html">
+        <div>
+            <input type="text"
+                   maxlength="14"
+                   class="number" />
+        </div>
     </script>
 </div>

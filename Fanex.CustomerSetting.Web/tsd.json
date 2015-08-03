@@ -6,31 +6,31 @@
     "bundle": "./Assets/Typings/tsd.d.ts",
     "installed": {
         "jquery/jquery.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-animate.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-cookies.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-route.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-sanitize.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-mocks.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "angularjs/angular-resource.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         },
         "oclazyload/oclazyload.d.ts": {
-            "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+            "commit": "287cb2e1b112bdef6de8de0dd64836583b0c49ea"
         }
     }
 }

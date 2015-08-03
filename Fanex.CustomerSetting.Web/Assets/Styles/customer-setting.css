@@ -13,6 +13,7 @@
 body {
   font-family: Tahoma, Arial, helvetica, sans-serif;
   font-size: 11px;
+  position: relative;
 }
 
 input,
@@ -28,6 +29,7 @@ textarea {
   border: 1px solid #aeaeae;
   font-family: Tahoma, Arial, helvetica, sans-serif;
   font-size: 11px;
+  outline: none;
 }
 input:focus,
 button:focus,
@@ -55,15 +57,17 @@ input[type=text].has-constraint {
   display: inline-block;
   width: 50%;
 }
+input[type=text].number {
+  text-align: right;
+}
 
 select {
   min-width: 60px;
   height: 19px;
 }
 
-.constraint {
-  display: inline-block;
-  width: 47%;
+.align-center {
+  text-align: center;
 }
 
 .update-btn {
@@ -117,10 +121,6 @@ select {
   height: 15px;
 }
 
-.relative-position {
-  position: relative;
-}
-
 .result-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -146,7 +146,7 @@ select {
   background-position: -51px 0;
 }
 .result-container .result.error {
-  color: #f40000;
+  color: #e9322d;
 }
 .result-container .result.error .message-icon {
   background-position: -51px 0;
@@ -239,7 +239,7 @@ select {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 10008;
+  z-index: 100;
 }
 
 .block-loading {
@@ -249,7 +249,7 @@ select {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 10009;
+  z-index: 101;
 }
 
 .tooltip-container {
@@ -264,6 +264,8 @@ select {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
+  opacity: 0.85;
   background-color: #e9322d;
   color: #fff;
   max-width: 300px;
@@ -281,15 +283,17 @@ select {
   width: 0;
 }
 
+.tooltip-wrapper {
+  display: inline-block;
+}
+
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
 .customer-setting {
   background-color: #e6e9f0;
   border: 1px solid #7c98a4;
-  float: left;
   padding: 2px;
-  width: 860px;
 }
 .customer-setting .block {
   -webkit-box-sizing: border-box;
@@ -376,7 +380,7 @@ select {
   border-right: none;
 }
 .customer-setting .block .empty-cell,
-.customer-setting .block .w20-percent, .customer-setting .block .w25-percent, .customer-setting .block .w27-percent, .customer-setting .block .w231px {
+.customer-setting .block .w20-percent, .customer-setting .block .w25-percent, .customer-setting .block .w27-percent, .customer-setting .block .w33-percent, .customer-setting .block .w80-percent {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -384,10 +388,9 @@ select {
   float: left;
   height: 25px;
   padding: 0 3px;
-  width: 20%;
 }
 .customer-setting .block .last.empty-cell,
-.customer-setting .block .last.w20-percent, .customer-setting .block .last.w25-percent, .customer-setting .block .last.w27-percent, .customer-setting .block .last.w231px {
+.customer-setting .block .last.w20-percent, .customer-setting .block .last.w25-percent, .customer-setting .block .last.w27-percent, .customer-setting .block .last.w33-percent, .customer-setting .block .last.w80-percent {
   border-right: none;
 }
 .customer-setting .block .empty-cell,
@@ -403,14 +406,16 @@ select {
 .customer-setting .block .w27-percent.last {
   width: 26%;
 }
-.customer-setting .block .w231px {
-  width: 231px;
+.customer-setting .block .w33-percent {
+  width: 33%;
 }
-.customer-setting .block .w231px.second {
-  width: 232px;
+.customer-setting .block .w33-percent.last {
+  width: 34%;
 }
-.customer-setting .block .w231px.last {
-  width: 223px;
+.customer-setting .block .w80-percent {
+  border-right: none;
+  padding: 0;
+  width: 80%;
 }
 
 .info-block .row {
@@ -478,7 +483,7 @@ select {
     }
 }*/
 /*********************************************************/
-/*                    Setting Type 2                     */
+/*                  Setting Type 1 & 2                   */
 /*********************************************************/
 .setting-type-2.block .setting-group,
 .setting-type-1.block .setting-group {
@@ -499,6 +504,9 @@ select {
   width: 80%;
 }
 
+/*********************************************************/
+/*                  Setting Type 3 & 4                   */
+/*********************************************************/
 .status-checkbox {
   cursor: pointer;
   margin-right: 10px;
@@ -512,71 +520,5 @@ select {
   top: 2px;
   width: 13px;
 }
-
-/*.bet-limit-block {
-    .bet-limit-item {
-        float: left;
-        width: 100%;
-
-        .min-bet,
-        .max-bet,
-        .max-per-match {
-            @include box-sizing(border-box);
-            @include clearfix();
-
-            border: {
-                left: 1px solid #7c98a4;
-                top: 1px solid #7c98a4;
-            }
-
-            float: left;
-            height: 23px;
-            line-height: 23px;
-            padding: 0 3px;
-            width: 240px;
-
-            input {
-                text-align: right;
-                width: 50%;
-
-                &.full-width {
-                    @include box-sizing(border-box);
-                    width: 100%;
-                }
-            }
-
-            .read-only {
-                background-color: #b5c4d0;
-                text-align: center;
-            }
-        }
-    }
-}*/
-/*********************************************************/
-/*                    Setting Type 3                     */
-/*********************************************************/
-/*.discount-block .discount-item {
-    float: left;
-    width: 50%;
-
-    &.full-width {
-        width: 100%;
-    }
-}*/
-/*********************************************************/
-/*                    Setting Type 4                     */
-/*********************************************************/
-/*.status-block .status-item {
-    float: left;
-    width: 50%;
-
-    &.full-width {
-        width: 100%;
-    }
-
-    .col-value .downline {
-        margin-left: 10px;
-    }
-}*/
 
 /*# sourceMappingURL=customer-setting.css.map */

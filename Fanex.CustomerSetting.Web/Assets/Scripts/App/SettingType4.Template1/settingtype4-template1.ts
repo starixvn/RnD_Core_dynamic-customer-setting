@@ -42,12 +42,16 @@ module CustomerSetting {
                 || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
         }
 
-        public get validation(): ValidationResult {
+        public validate(): boolean {
             if (this.isDisabled && !this.downline.isDisabled) {
-                return new ValidationResult("DownlineStatusIsInvalid");
+                this.validationState = new ValidationResult("DownlineStatusIsInvalid");
+
+                return false;
             }
 
-            return <ValidationResult>Result.normal;
+            this.validationState = <ValidationResult> Result.normal;
+
+            return true;
         }
 
         private backupSettingtype4Template1(): void {
@@ -101,7 +105,9 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                settingItem: "="
+                customerLevel: "=",
+                settingItem: "=",
+                avaiCustomerLevels: "="
             }
         }
 
@@ -111,8 +117,11 @@ module CustomerSetting {
             $scope.$watch("settingItem", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;
-                $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
-                $scope.isDownlineDisabled = true;
+
+                if ($scope.settingItem.downline) {
+                    $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
+                    $scope.isDownlineDisabled = true;
+                }
             });
 
             $scope.change = () => {
@@ -121,7 +130,10 @@ module CustomerSetting {
 
                 if (!$scope.isChecked && $scope.isDownlineChecked) {
                     $scope.isDownlineChecked = false;
-                    $scope.settingItem.downline.isDisabled = true;
+
+                    if ($scope.settingItem.downline) {
+                        $scope.settingItem.downline.isDisabled = true;
+                    }
                 }
             }
 

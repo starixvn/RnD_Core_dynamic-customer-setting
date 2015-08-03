@@ -5,12 +5,17 @@ $background-color: #e6e9f0;
 $header-color: #b5c4d0;
 $focus-border-color: #66afe9;
 $invalid-color: #e9322d;
+$success-color: #618e11;
+$warning-color: #c28f06;
+$error-color: $invalid-color; // #f40000;
 
 body {
     font: {
         family: Tahoma, Arial, helvetica, sans-serif;
         size: 11px;
     }
+
+    position: relative;
 }
 
 input,
@@ -25,6 +30,8 @@ textarea {
         family: Tahoma, Arial, helvetica, sans-serif;
         size: 11px;
     }
+
+    outline: none;
 
     &:focus {
         border-color: $focus-border-color;
@@ -46,6 +53,10 @@ input[type=text] {
         display: inline-block;
         width: 50%;
     }
+
+    &.number {
+        text-align: right;
+    }
 }
 
 select {
@@ -53,9 +64,8 @@ select {
     height: 19px;
 }
 
-.constraint {
-    display: inline-block;
-    width: 47%;
+.align-center {
+    text-align: center;
 }
 
 .update-btn {
@@ -111,10 +121,6 @@ select {
     }
 }
 
-.relative-position {
-    position: relative;
-}
-
 .result-container {
     @include box-sizing(border-box);
     border: solid 1px $border-color;
@@ -126,7 +132,7 @@ select {
         padding: 3px 5px;
 
         &.success {
-            color: #618e11;
+            color: $success-color;
 
             .message-icon {
                 @extend .icon;
@@ -135,7 +141,7 @@ select {
         }
 
         &.warning {
-            color: #c28f06;
+            color: $warning-color;
 
             .message-icon {
                 @extend .icon;
@@ -144,7 +150,7 @@ select {
         }
 
         &.error {
-            color: #f40000;
+            color: $error-color;
 
             .message-icon {
                 @extend .icon;
@@ -243,7 +249,7 @@ select {
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 10008;
+    z-index: 100;
 }
 
 .block-loading {
@@ -253,7 +259,7 @@ select {
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 10009;
+    z-index: 101;
 }
 
 .tooltip-container {
@@ -264,6 +270,7 @@ select {
 
     .tooltip-content {
         @include border-radius(3px);
+        @include opacity(0.85);
         background-color: $invalid-color;
         color: #fff;
         max-width: 300px;
@@ -286,15 +293,16 @@ select {
     }
 }
 
+.tooltip-wrapper {
+    display: inline-block;
+}
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
 .customer-setting {
     background-color: $background-color;
     border: 1px solid $border-color;
-    float: left;
     padding: 2px;
-    width: 860px;
 
     .block {
         @include box-sizing(border-box);
@@ -396,7 +404,6 @@ select {
             float: left;
             height: 25px;
             padding: 0 3px;
-            width: 20%;
 
             &.last {
                 border-right: none;
@@ -423,17 +430,20 @@ select {
             }
         }
 
-        .w231px {
+        .w33-percent {
             @extend %col;
-            width: 231px;
-
-            &.second {
-                width: 232px;
-            }
+            width: 33%;
 
             &.last {
-                width: 223px;
+                width: 34%;
             }
+        }
+
+        .w80-percent {
+            @extend %col;
+            border-right: none;
+            padding: 0;
+            width: 80%;
         }
     }
 }
@@ -511,7 +521,7 @@ select {
 }*/
 
 /*********************************************************/
-/*                    Setting Type 2                     */
+/*                  Setting Type 1 & 2                   */
 /*********************************************************/
 .setting-type-2.block,
 .setting-type-1.block {
@@ -534,6 +544,9 @@ select {
     }
 }
 
+/*********************************************************/
+/*                  Setting Type 3 & 4                   */
+/*********************************************************/
 .status-checkbox {
     cursor: pointer;
     margin-right: 10px;
@@ -548,74 +561,3 @@ select {
         width: 13px;
     }
 }
-
-/*.bet-limit-block {
-    .bet-limit-item {
-        float: left;
-        width: 100%;
-
-        .min-bet,
-        .max-bet,
-        .max-per-match {
-            @include box-sizing(border-box);
-            @include clearfix();
-
-            border: {
-                left: 1px solid #7c98a4;
-                top: 1px solid #7c98a4;
-            }
-
-            float: left;
-            height: 23px;
-            line-height: 23px;
-            padding: 0 3px;
-            width: 240px;
-
-            input {
-                text-align: right;
-                width: 50%;
-
-                &.full-width {
-                    @include box-sizing(border-box);
-                    width: 100%;
-                }
-            }
-
-            .read-only {
-                background-color: #b5c4d0;
-                text-align: center;
-            }
-        }
-    }
-}*/
-
-/*********************************************************/
-/*                    Setting Type 3                     */
-/*********************************************************/
-/*.discount-block .discount-item {
-    float: left;
-    width: 50%;
-
-    &.full-width {
-        width: 100%;
-    }
-}*/
-
-/*********************************************************/
-/*                    Setting Type 4                     */
-/*********************************************************/
-.setting-type-4 {
-}
-
-/*.status-block .status-item {
-    float: left;
-    width: 50%;
-
-    &.full-width {
-        width: 100%;
-    }
-
-    .col-value .downline {
-        margin-left: 10px;
-    }
-}*/

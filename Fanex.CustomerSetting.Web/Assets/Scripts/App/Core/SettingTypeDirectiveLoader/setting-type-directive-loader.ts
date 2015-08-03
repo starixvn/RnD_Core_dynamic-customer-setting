@@ -41,8 +41,6 @@ module CustomerSetting {
         }
 
         private generateNodes(scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
-            console.log("Before:");
-            console.log(this.loadedSettingTypes);
             if (angular.isDefined(scope.setting)) {
                 angular.forEach(scope.setting.settingTypes, (settingType, index) => {
                     var loaded = this.loadedSettingTypes.some(item => {
@@ -53,14 +51,15 @@ module CustomerSetting {
                     if (!loaded) {
                         var settingTypeName: string = StringFormater.format("settingtype{0}-template{1}", settingType.id, settingType.settingTemplate);
                         var filePath: string = StringFormater.format(
-                            "app/customerSetting/{0}/{1}{2}.js",
+                            "app/customerSetting/{0}/{1}{2}.js?v={3}",
                             settingTypeName.replace("-", "."),
                             settingTypeName,
-                            this.appConfigService.debugMode() ? "" : ".min");
+                            this.appConfigService.debugMode() ? "" : ".min",
+                            this.appConfigService.debugMode() ? "0.0.1" : this.appConfigService.scriptVersion());
                         var newNodeParts = [
-                            "<div data-oc-lazy-load=\"'",
+                            "<div data-oc-lazy-load=\"{ files: ['",
                             this.appConfigService.resolveRootUrl(filePath),
-                            "'\">",
+                            "'], cache: true }\">",
                             "<",
                             settingTypeName,
                             " data-upline-level=\"uplineLevel\"",
@@ -83,8 +82,6 @@ module CustomerSetting {
                     }
                 });
             }
-            console.log("After:");
-            console.log(this.loadedSettingTypes);
         }
     }
 

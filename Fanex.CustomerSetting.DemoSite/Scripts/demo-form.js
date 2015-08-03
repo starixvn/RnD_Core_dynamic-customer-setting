@@ -26,16 +26,32 @@ var DemoFrom;
             this.target = undefined;
             this.targetRoles = Target.getAvailableRoles(selectedRole);
             this.isMultipleUpdates = false;
-            this.getTarget();
+            this.getTarget(selectedRole);
             this.switchForm(false);
         };
-        DemoFormController.prototype.getTarget = function () {
+        DemoFormController.prototype.changeUplineLevel = function () {
+        };
+        DemoFormController.prototype.getTarget = function (actorRole) {
             var selectedRole = angular.isDefined(this.target) ? this.target.role : this.targetRoles[0].key;
-            if (this.isMultipleUpdates) {
-                this.target = SampleDataFactory.getMultipleTarget(selectedRole);
+            var uplineRole = actorRole;
+            this.uplineRoles = undefined;
+            if (selectedRole === Role.member) {
+                if (actorRole === Role.company) {
+                    this.uplineRoles = Target.getUplineRoles(selectedRole);
+                    uplineRole = this.uplineRoles[0].key;
+                }
+                else {
+                    uplineRole = actorRole;
+                }
             }
             else {
-                this.target = SampleDataFactory.getSingleTarget(selectedRole);
+                uplineRole = undefined;
+            }
+            if (this.isMultipleUpdates) {
+                this.target = SampleDataFactory.getMultipleTarget(selectedRole, uplineRole);
+            }
+            else {
+                this.target = SampleDataFactory.getSingleTarget(selectedRole, uplineRole);
             }
         };
         DemoFormController.prototype.saveSession = function () {
@@ -48,11 +64,9 @@ var DemoFrom;
             var params = {
                 language: this.actor.language,
                 productId: this.target.productId,
-                customerLevel: this.target.role
+                customerLevel: this.target.role,
+                uplineLevel: this.target.uplineRole
             };
-            if (this.actor.role !== Role.company) {
-                params.uplineLevel = this.actor.role;
-            }
             if (this.isMultipleUpdates) {
                 params.isMultiple = true;
                 params.customerIds = this.target.customerIds;
@@ -103,7 +117,7 @@ var DemoFrom;
             }
             return this.createActor(actorId, name, selectedRole, subAccId);
         };
-        SampleDataFactory.getSingleTarget = function (role) {
+        SampleDataFactory.getSingleTarget = function (role, uplineRole) {
             var id = 0;
             switch (role) {
                 case Role.super:
@@ -119,9 +133,9 @@ var DemoFrom;
                     id = 1277;
                     break;
             }
-            return this.createSingleTarget(id, role);
+            return this.createSingleTarget(id, role, uplineRole);
         };
-        SampleDataFactory.getMultipleTarget = function (role) {
+        SampleDataFactory.getMultipleTarget = function (role, uplineRole) {
             var ids = "";
             var names = "";
             switch (role) {
@@ -142,16 +156,16 @@ var DemoFrom;
                     names = "428RM,305RM,302RM";
                     break;
             }
-            return this.createMultipleTargetInfo(ids, names, role);
+            return this.createMultipleTargetInfo(ids, names, role, uplineRole);
         };
         SampleDataFactory.createActor = function (id, name, role, subAccId) {
             return new Actor(id, name, role, subAccId, this.defaultLanguage);
         };
-        SampleDataFactory.createSingleTarget = function (id, role) {
-            return new SingleTarget(id, role, this.defaultProductId);
+        SampleDataFactory.createSingleTarget = function (id, role, uplineRole) {
+            return new SingleTarget(id, role, uplineRole, this.defaultProductId);
         };
-        SampleDataFactory.createMultipleTargetInfo = function (ids, names, role) {
-            return new MultipleTargets(ids, names, role, this.defaultProductId);
+        SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
+            return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         };
         SampleDataFactory.defaultProductId = 255;
         SampleDataFactory.defaultLanguage = "en-US";
@@ -193,15 +207,26 @@ var DemoFrom;
         return Actor;
     })();
     var Target = (function () {
-        function Target(productId, role) {
+        function Target(productId, role, uplineRole) {
             this.productId = productId;
             this.role = role;
+            this.uplineRole = uplineRole;
         }
-        Target.getAvailableRoles = function (actorRole) {
+        Target.getAvailableRoles = function (uplineRole) {
             var roles = new Array();
             for (var item in Role) {
                 var roleId = parseInt(item);
-                if (!isNaN(roleId) && roleId < actorRole) {
+                if (!isNaN(roleId) && roleId < uplineRole) {
+                    roles.push(new KeyValuePair(roleId, Role[roleId]));
+                }
+            }
+            return roles.sort(function (num1, num2) { return num2.key - num1.key; });
+        };
+        Target.getUplineRoles = function (downlineRole) {
+            var roles = new Array();
+            for (var item in Role) {
+                var roleId = parseInt(item);
+                if (!isNaN(roleId) && roleId > downlineRole && roleId < Role.company) {
                     roles.push(new KeyValuePair(roleId, Role[roleId]));
                 }
             }
@@ -211,16 +236,16 @@ var DemoFrom;
     })();
     var SingleTarget = (function (_super) {
         __extends(SingleTarget, _super);
-        function SingleTarget(customerId, role, productId) {
-            _super.call(this, productId, role);
+        function SingleTarget(customerId, role, uplineRole, productId) {
+            _super.call(this, productId, role, uplineRole);
             this.customerId = customerId;
         }
         return SingleTarget;
     })(Target);
     var MultipleTargets = (function (_super) {
         __extends(MultipleTargets, _super);
-        function MultipleTargets(customerIds, customerNames, role, productId) {
-            _super.call(this, productId, role);
+        function MultipleTargets(customerIds, customerNames, role, uplineRole, productId) {
+            _super.call(this, productId, role, uplineRole);
             this.customerIds = customerIds;
             this.customerNames = customerNames;
         }

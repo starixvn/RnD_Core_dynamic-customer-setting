@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="helpers.ts" />
-/// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
     export enum SettingLevel {
@@ -9,8 +8,6 @@ module CustomerSetting {
         betType = 3,
         sportTypeBetType = 4
     }
-
-    ModuleRegister.value("settingLevel", SettingLevel);
 
     export enum MessageType {
         success = 0,

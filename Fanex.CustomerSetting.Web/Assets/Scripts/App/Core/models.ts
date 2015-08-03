@@ -1,12 +1,11 @@
 ﻿/// <reference path="common.ts" />
-/// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
     export interface SettingItem {
         typeName: string;
         oldSetting: SettingItem;
         isChanged(): boolean;
-        validation: ValidationResult;
+        validate(): boolean;
     }
 
     export enum Level {
@@ -16,8 +15,6 @@ module CustomerSetting {
         agent = 2,
         member = 1
     }
-
-    ModuleRegister.value("levelIdentifier", Level);
 
     export class CustomerInfo {
         public userName: string;
@@ -51,6 +48,7 @@ module CustomerSetting {
         public typeName: string;
         public isLive: boolean;
         public oldSetting: DefaultSettingItem;
+        public validationState: ValidationResult;
 
         constructor();
         constructor(settingItem: any);
@@ -66,6 +64,8 @@ module CustomerSetting {
                     this.isLive = settingItem.isLive;
                 }
             }
+
+            this.validationState = <ValidationResult>ValidationResult.normal;
         }
 
         public isChanged(): boolean {
@@ -75,8 +75,8 @@ module CustomerSetting {
                 || (this.betTypeName !== this.oldSetting.betTypeName);
         }
 
-        public get validation(): ValidationResult {
-            return <ValidationResult>Result.normal;
+        public validate(): boolean {
+            return true;
         }
 
         protected backup(): void {
@@ -128,6 +128,14 @@ module CustomerSetting {
                 updatedSettingType.settingLevel = this.settingLevel;
                 updatedSettingType.settingItems = changedSettingItems;
                 updatedSettingType.typeName = this.typeName;
+
+                // Workaround for the setting type that has some its own properties but we don't want to make new class for it.
+                // We use the dynamic aspect of JavaScript in this case to keep the process be simple.
+                if (this.extraData && this.extraData.length > 0) {
+                    this.extraData.forEach(extraItem => {
+                        (<any>updatedSettingType)[extraItem.key] = extraItem.value;
+                    });
+                }
             }
 
             return updatedSettingType;
@@ -135,7 +143,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             var validSettingItems: boolean = this.settingItems.every(item => {
-                return item.validation.isSuccessful;
+                return item.validate();
             });
 
             return this.id > 0
@@ -147,7 +155,9 @@ module CustomerSetting {
 
         private getExtraData(rawData: any): Array<KeyValuePair<string, any>> {
             var extraData: Array<KeyValuePair<string, any>> = new Array<KeyValuePair<string, any>>();
-            var addedProperties: string[] = ["id", "name", "settingTemplate", "settingLevel", "settingItems", "typeName"];
+            var addedProperties: string[] = Object.keys(this).filter(prop => {
+                return prop !== "extraData";
+            });
 
             extraData = Object.keys(rawData).filter(propName => {
                 return addedProperties.indexOf(propName) < 0;
@@ -160,9 +170,9 @@ module CustomerSetting {
     }
 
     export class Setting {
-        public customerLevel: Level;
         public customerId: number;
         public customerInfo: CustomerInfo;
+        public customerLevel: Level;
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
@@ -273,16 +283,19 @@ module CustomerSetting {
         }
 
         public removeSuccessResults(): void {
-            this.subResults = this.subResults.filter(result => {
-                return !result.isSuccessful;
-            });
+            if (this.subResults) {
+                this.subResults = this.subResults.filter(result => {
+                    return !result.isSuccessful;
+                });
+            }
         }
     }
 
     export class ValidationResult extends Result {
         constructor(
             public message: string,
-            public fieldName?: string) {
+            public fieldName?: string,
+            public msgParams?: any[]) {
             super(-8000, message, MessageType.error);
         }
     }

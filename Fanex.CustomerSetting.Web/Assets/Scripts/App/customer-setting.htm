@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="customerSetting" data-ng-init="rootUrl='{{rootUrl}}'; debug='{{debug}}'">
+<html data-ng-app="customerSetting" data-ng-init="rootUrl='{{rootUrl}}'; debug='{{debug}}'; scriptVersion='{{version}}'">
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -9,7 +9,7 @@
     <setting-result data-result="ctrl.requestMsgResult"></setting-result>
     <div class="customer-setting" data-ng-show="ctrl.setting">
         <customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></customer-info>
-        <setting-type-loader dât-upline-level="uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
+        <setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
         <button class="update-btn" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
     </div>
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>

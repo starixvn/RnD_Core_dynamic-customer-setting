@@ -8,6 +8,7 @@ module CustomerSetting {
 
         private rootUrl: string;
         private debug: boolean;
+        private version: string;
 
         constructor(private $rootScope: ng.IRootScopeService) { }
 
@@ -25,6 +26,14 @@ module CustomerSetting {
             }
 
             return this.debug;
+        }
+
+        public scriptVersion(): string {
+            if (!this.version) {
+                this.version = this.$rootScope["scriptVersion"];
+            }
+
+            return this.version;
         }
     }
 
@@ -95,7 +104,7 @@ module CustomerSetting {
                 this.isMultiple = params.isMultiple || false;
                 this.lang = params.language;
                 this.custNames = params.customerNames;
-                this.uplineLvl = params.uplineLevel;
+                this.uplineLvl = parseInt(params.uplineLevel);
             } else {
                 this.params = undefined;
             }
@@ -113,24 +122,24 @@ module CustomerSetting {
     ModuleRegister.filter("naValue", NAValue);
 
     export class ValueRangeGenerator {
-        public generateRanges(value: number, min: number, max: number, step: number, divider: number): Array<KeyValuePair<string, number>> {
-            var ranges: Array<KeyValuePair<string, number>> = new Array<KeyValuePair<string, number>>();
+        public generateRanges(value: number, min: number, max: number, step: number, divider: number): Array<KeyValuePair<number, number>> {
+            var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();
 
             min = Math.max(0, min);
             max = Math.max(0, max);
 
             if (value > max) {
-                ranges.push(new KeyValuePair<string, number>(value.toString(), value));
+                ranges.push(new KeyValuePair<number, number>(value, value));
             }
 
             while (max >= min) {
-                ranges.push(new KeyValuePair<string, number>(max.toString(), max));
+                ranges.push(new KeyValuePair<number, number>(max, max));
                 max -= step;
                 max = Math.round(max * divider) / divider;
             }
 
             if (value < min) {
-                ranges.push(new KeyValuePair<string, number>(value.toString(), value));
+                ranges.push(new KeyValuePair<number, number>(value, value));
             }
 
             return ranges;

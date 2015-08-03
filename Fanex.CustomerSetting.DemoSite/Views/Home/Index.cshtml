@@ -50,7 +50,13 @@
                 <select class="form-control"
                         data-ng-options="item.key as item.value for item in ctrl.targetRoles"
                         data-ng-model="ctrl.target.role"
-                        data-ng-change="ctrl.getTarget()"></select>
+                        data-ng-change="ctrl.getTarget(ctrl.actor.role)"></select>
+            </div>
+            <div class="form-group" data-ng-if="ctrl.uplineRoles">
+                <label class="control-label">Upline Role</label>
+                <select class="form-control"
+                        data-ng-options="item.key as item.value for item in ctrl.uplineRoles"
+                        data-ng-model="ctrl.target.uplineRole"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">Product ID</label>
@@ -64,22 +70,22 @@
                 <input type="checkbox"
                        class="form-control checkbox"
                        data-ng-model="ctrl.isMultipleUpdates"
-                       data-ng-change="ctrl.getTarget()" />
+                       data-ng-change="ctrl.getTarget(ctrl.actor.role)" />
             </div>
-            <div class="form-group" data-ng-hide="ctrl.isMultipleUpdates">
+            <div class="form-group" data-ng-if="!ctrl.isMultipleUpdates">
                 <label class="control-label">Customer ID</label>
                 <input type="number"
                        class="form-control"
                        maxlength="15"
                        data-ng-model="ctrl.target.customerId" />
             </div>
-            <div class="form-group" data-ng-hide="!ctrl.isMultipleUpdates">
+            <div class="form-group" data-ng-if="ctrl.isMultipleUpdates">
                 <label class="control-label">Customer IDs</label>
                 <input type="text"
                        class="form-control"
                        data-ng-model="ctrl.target.customerIds" />
             </div>
-            <div class="form-group" data-ng-hide="!ctrl.isMultipleUpdates">
+            <div class="form-group" data-ng-if="ctrl.isMultipleUpdates">
                 <label class="control-label">Customer Names</label>
                 <input type="text"
                        class="form-control"

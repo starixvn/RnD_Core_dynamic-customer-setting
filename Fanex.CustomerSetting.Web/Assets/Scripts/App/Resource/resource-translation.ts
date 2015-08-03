@@ -64,12 +64,14 @@ module CustomerSetting {
             return msg;
         }
 
-        public getFormattedMessage(key: string, ...args: string[]): string {
+        public getFormattedMessage(key: string, ...args: any[]): string {
             var msg: string = this.getMessage(key);
 
-            msg = msg.replace(/{(\d+)}/g, (match, index) => {
-                return args[index] === (undefined || null) ? match : args[index];
-            });
+            if (angular.isDefined(msg)) {
+                msg = msg.replace(/{(\d+)}/g, (match, index) => {
+                    return args[index] === (undefined || null) ? match : args[index];
+                });
+            }
 
             return msg;
         }
@@ -87,7 +89,7 @@ module CustomerSetting {
     ModuleRegister.filter("label", LabelFilter);
 
     export function MessageFilter(resourceService: ResourceService) {
-        return (name: string, ...replacements: string[]) => {
+        return (name: string, ...replacements: any[]) => {
             return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
         }
     }

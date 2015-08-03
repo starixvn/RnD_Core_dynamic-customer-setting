@@ -11,6 +11,7 @@ module DemoFrom {
         public languages: KeyValuePair<string, string>[];
         public target: Target;
         public targetRoles: KeyValuePair<number, string>[];
+        public uplineRoles: KeyValuePair<number, string>[];
         public isMultipleUpdates: boolean;
         public preventSavingSession: boolean;
         public preventShowingData: boolean;
@@ -36,17 +37,34 @@ module DemoFrom {
             this.targetRoles = Target.getAvailableRoles(selectedRole);
             this.isMultipleUpdates = false;
 
-            this.getTarget();
+            this.getTarget(selectedRole);
             this.switchForm(false);
         }
 
-        public getTarget(): void {
+        public changeUplineLevel(): void {
+        }
+
+        public getTarget(actorRole: Role): void {
             var selectedRole = angular.isDefined(this.target) ? this.target.role : this.targetRoles[0].key;
+            var uplineRole = actorRole;
+
+            this.uplineRoles = undefined;
+            
+            if (selectedRole === Role.member) {
+                if (actorRole === Role.company) {
+                    this.uplineRoles = Target.getUplineRoles(selectedRole);
+                    uplineRole = this.uplineRoles[0].key;
+                } else {
+                    uplineRole = actorRole;
+                }
+            } else {
+                uplineRole = undefined;
+            }
 
             if (this.isMultipleUpdates) {
-                this.target = SampleDataFactory.getMultipleTarget(selectedRole);
+                this.target = SampleDataFactory.getMultipleTarget(selectedRole, uplineRole);
             } else {
-                this.target = SampleDataFactory.getSingleTarget(selectedRole);
+                this.target = SampleDataFactory.getSingleTarget(selectedRole, uplineRole);
             }
         }
 
@@ -60,13 +78,10 @@ module DemoFrom {
             var params: any = {
                 language: this.actor.language,
                 productId: this.target.productId,
-                customerLevel: this.target.role
+                customerLevel: this.target.role,
+                uplineLevel: this.target.uplineRole
             };
-
-            if (this.actor.role !== Role.company) {
-                params.uplineLevel = this.actor.role;
-            }
-
+            
             if (this.isMultipleUpdates) {
                 params.isMultiple = true;
                 params.customerIds = (<MultipleTargets>this.target).customerIds;
@@ -133,7 +148,7 @@ module DemoFrom {
             return this.createActor(actorId, name, selectedRole, subAccId);
         }
 
-        public static getSingleTarget(role: Role): SingleTarget {
+        public static getSingleTarget(role: Role, uplineRole: Role): SingleTarget {
             var id: number = 0;
 
             switch (role) {
@@ -154,10 +169,10 @@ module DemoFrom {
                     break;
             }
 
-            return this.createSingleTarget(id, role);
+            return this.createSingleTarget(id, role, uplineRole);
         }
 
-        public static getMultipleTarget(role: Role): MultipleTargets {
+        public static getMultipleTarget(role: Role, uplineRole: Role): MultipleTargets {
             var ids: string = "";
             var names: string = "";
 
@@ -183,19 +198,19 @@ module DemoFrom {
                     break;
             }
 
-            return this.createMultipleTargetInfo(ids, names, role);
+            return this.createMultipleTargetInfo(ids, names, role, uplineRole);
         }
 
         private static createActor(id: number, name: string, role: Role, subAccId: number): Actor {
             return new Actor(id, name, role, subAccId, this.defaultLanguage);
         }
 
-        private static createSingleTarget(id: number, role: Role): SingleTarget {
-            return new SingleTarget(id, role, this.defaultProductId);
+        private static createSingleTarget(id: number, role: Role, uplineRole: Role): SingleTarget {
+            return new SingleTarget(id, role, uplineRole, this.defaultProductId);
         }
 
-        private static createMultipleTargetInfo(ids: string, names: string, role: Role): MultipleTargets {
-            return new MultipleTargets(ids, names, role, this.defaultProductId);
+        private static createMultipleTargetInfo(ids: string, names: string, role: Role, uplineRole: Role): MultipleTargets {
+            return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         }
     }
 
@@ -237,15 +252,30 @@ module DemoFrom {
     class Target {
         constructor(
             public productId: number,
-            public role: Role) { }
+            public role: Role,
+            public uplineRole: Role) { }
 
-        public static getAvailableRoles(actorRole: Role): KeyValuePair<number, string>[] {
+        public static getAvailableRoles(uplineRole: Role): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
                 var roleId: number = parseInt(item);
 
-                if (!isNaN(roleId) && roleId < actorRole) {
+                if (!isNaN(roleId) && roleId < uplineRole) {
+                    roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                }
+            }
+
+            return roles.sort((num1, num2) => num2.key - num1.key);
+        }
+
+        public static getUplineRoles(downlineRole: Role): KeyValuePair<number, string>[] {
+            var roles = new Array<KeyValuePair<number, string>>();
+
+            for (var item in Role) {
+                var roleId: number = parseInt(item);
+
+                if (!isNaN(roleId) && roleId > downlineRole && roleId < Role.company) {
                     roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                 }
             }
@@ -257,8 +287,8 @@ module DemoFrom {
     class SingleTarget extends Target {
         public customerId: number;
 
-        constructor(customerId: number, role: Role, productId: number) {
-            super(productId, role);
+        constructor(customerId: number, role: Role, uplineRole: Role, productId: number) {
+            super(productId, role, uplineRole);
             this.customerId = customerId;
         }
     }
@@ -267,8 +297,8 @@ module DemoFrom {
         public customerIds: string;
         public customerNames: string;
 
-        constructor(customerIds: string, customerNames: string, role: Role, productId: number) {
-            super(productId, role);
+        constructor(customerIds: string, customerNames: string, role: Role, uplineRole: Role, productId: number) {
+            super(productId, role, uplineRole);
             this.customerIds = customerIds;
             this.customerNames = customerNames;
         }

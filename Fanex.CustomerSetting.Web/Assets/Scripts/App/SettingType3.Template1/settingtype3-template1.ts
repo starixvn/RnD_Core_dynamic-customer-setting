@@ -34,6 +34,17 @@ module CustomerSetting {
                 || this.commRate !== oldSetting.commRate;
         }
 
+        public validate(): boolean {
+            if (this.commRate > this.upline.commRate) {
+                this.validationState = new ValidationResult("CommRateCannotBeExceedMaxValue", "commRate", [this.upline.commRate]);
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
         private settingType3Template1Backup(): void {
             var oldSetting: Settingtype3Template1Item;
 
@@ -68,7 +79,7 @@ module CustomerSetting {
 
     interface SettingType3Template1ItemScope extends ng.IScope {
         settingItem: Settingtype3Template1Item;
-        range: Array<KeyValuePair<string, number>>;
+        range: Array<KeyValuePair<number, number>>;
     }
 
     class CommRateDirective implements ng.IDirective {

@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
     class Settingtype2Template1Item extends DefaultSettingItem {
@@ -40,6 +41,96 @@ module CustomerSetting {
                 || this.maxPerMatch !== oldSetting.maxPerMatch;
         }
 
+        public validate(): boolean {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+
+            if (!this.validateMinBet()) {
+                return false;
+            }
+
+            if (!this.validateMaxBet()) {
+                return false;
+            }
+
+            if (!this.validateMaxPerMatch()) {
+                return false;
+            }
+
+            this.validationState = <ValidationResult> Result.normal;
+
+            return true;
+        }
+
+        public validateSpecialCase(): boolean {
+            if (this.minBet === this.maxBet && this.maxBet === this.maxPerMatch && this.maxPerMatch === 0) {
+                this.validationState = <ValidationResult>Result.normal;
+
+                return true;
+            }
+        }
+
+        public validateMinBet(): boolean {
+            if (this.minBet < this.upline.minBet) {
+                this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
+
+                return false;
+            }
+
+            if (this.minBet > this.maxBet) {
+                this.validationState = new ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        public validateMaxBet(): boolean {
+            if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+                this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
+
+                return false;
+            }
+
+            if (this.maxBet > this.maxPerMatch) {
+                this.validationState = new ValidationResult("MaxBetLessThanOrEqualMaxPerMatch", "maxBet");
+
+                return false;
+            }
+
+            if (this.maxBet < this.minBet) {
+                this.validationState = new ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        public validateMaxPerMatch(): boolean {
+            if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
+                this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
+
+                return false;
+            }
+
+            if (this.maxBet > this.maxPerMatch) {
+                this.validationState = new ValidationResult("MaxPerMatchMoreThanOrEqualMaxBet", "maxPerMatch");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
         private settingType2Template1Backup(): void {
             var oldSetting: Settingtype2Template1Item;
 
@@ -73,5 +164,138 @@ module CustomerSetting {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType2Template1Directive, args));
+    }]);
+
+    interface BetSettingInputScope extends ng.IScope {
+        settingItem: Settingtype2Template1Item;
+        customerLevel: Level;
+        uplineLevel: Level;
+        fieldName: string;
+        validationError: string;
+        updateValue(): void;
+    }
+
+    class BetSettingInputDirective implements ng.IDirective {
+        public replace: boolean = true;
+        public templateUrl: string = "bet-setting-input.html";
+
+        public get scope(): any {
+            return {
+                settingItem: "=",
+                customerLevel: "=",
+                uplineLevel: "=",
+                fieldName: "="
+            }
+        }
+
+        public link: ng.IDirectiveLinkFn = (scope: BetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+            var element = angular.element(wrapElement.children()[0]);
+            var modelCtrl: any;
+            var constraintNode = "";
+
+            element.attr("data-ng-model", "settingItem." + scope.fieldName);
+            element.attr("data-ng-change", "updateValue()");
+            element.attr("data-ng-class", "{ 'invalid': validationError }");
+            element.attr("data-tooltip", "");
+            element.attr("data-message", "validationError");
+            //element.attr("data-show-on-focus", "true");
+
+            if (scope.customerLevel === Level.member && scope.uplineLevel !== Level.agent) {
+                element.attr("readonly", "true");
+            }
+
+            if (scope.fieldName === "minBet") {
+                if (scope.settingItem.upline.minBet > 0) {
+                    element.addClass("has-constraint");
+                    wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + "}}</span>");
+                }
+            } else {
+                if (scope.customerLevel !== Level.super) {
+                    element.addClass("has-constraint");
+                    wrapElement.append("<span> <={{settingItem.upline." + scope.fieldName + "}}</span>");
+                }
+            }
+
+            this.$compile(wrapElement)(scope);
+            modelCtrl = element.controller("ngModel");
+
+            scope.$watch("settingItem.validationState", () => {
+                if (scope.fieldName === scope.settingItem.validationState.fieldName && !scope.settingItem.validationState.isSuccessful) {
+                    scope.validationError = this.resourceService.getFormattedMessage(
+                        scope.settingItem.validationState.message,
+                        scope.settingItem.validationState.msgParams);
+                } else {
+                    scope.validationError = undefined;
+                }
+            });
+
+            scope.updateValue = () => {
+                if (scope.fieldName === "minBet") {
+                    scope.settingItem.validateMinBet();
+                } else if (scope.fieldName === "maxBet") {
+                    scope.settingItem.validateMaxBet();
+                } else if (scope.fieldName === "maxPerMatch") {
+                    scope.settingItem.validateMaxPerMatch();
+                }
+            };
+
+            element.on("mouseup", () => {
+                var input: HTMLInputElement = <HTMLInputElement>element[0];
+                var length = input.value.length;
+
+                input.setSelectionRange(0, length);
+            });
+
+            element.on("keydown", function (event: JQueryEventObject) {
+                if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
+                    event.preventDefault();
+
+                    return;
+                }
+
+                if ([46, 8, 9, 27, 13, 110].indexOf(event.keyCode) >= 0 // Allow: backspace, delete, tab, escape, enter
+                    || (event.keyCode === 65 && event.ctrlKey === true) // Allow: Ctrl+A
+                    || (event.keyCode >= 35 && event.keyCode <= 40)) { // Allow: home, end, left, right, down, up
+                    // let it happen, don't do anything
+                    return;
+                }
+
+                if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57))
+                    && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+
+                    return;
+                }
+            });
+
+            modelCtrl.$formatters.unshift(() => {
+                return this.$filter("number")(modelCtrl.$modelValue);
+            });
+
+            modelCtrl.$parsers.unshift((viewValue: string) => {
+                var value: number = 0;
+
+                if (viewValue) {
+                    var plainNumber = viewValue.replace(/[\,\.]/g, "");
+
+                    value = parseInt(plainNumber);
+                }
+
+                element.val(this.$filter("number")(value));
+
+                return value;
+            });
+        }
+
+        constructor(
+            private $compile: ng.ICompileService,
+            private $filter: ng.IFilterService,
+            private resourceService: ResourceService) { }
+    }
+
+    angular.module("customerSetting").directive("betSettingInput", ["$compile", "$filter", "resourceService", function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(BetSettingInputDirective, args));
     }]);
 }

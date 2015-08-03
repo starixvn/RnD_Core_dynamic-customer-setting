@@ -1,14 +1,17 @@
 ﻿<div>
-    <default-setting-type-block data-upline-level="uplineLevel"
-                                data-customer-level="customerLevel"
-                                data-product-id="productId"
-                                data-product-name="productName"
-                                data-setting-type="settingType"
-                                data-update="update({ settingTypeId: settingTypeId })"
-                                data-value-template-url="valueTemplateUrl">
-    </default-setting-type-block>
+    <default-setting-type-grouping data-upline-level="uplineLevel"
+                                   data-customer-level="customerLevel"
+                                   data-product-id="productId"
+                                   data-product-name="productName"
+                                   data-setting-type="settingType"
+                                   data-update="update({ settingTypeId: settingTypeId })"
+                                   data-value-template-url="valueTemplateUrl"
+                                   data-avai-customer-levels="avaiCustomerLevels">
+    </default-setting-type-grouping>
     <script type="text/ng-template" id="settingtyp4-template1-value.html">
-        <status-checkbox data-setting-item="item"></status-checkbox>
+        <status-checkbox data-setting-item="item"
+                         data-customer-level="customerLevel"
+                         data-avai-customer-levels="avaiCustomerLevels"></status-checkbox>
     </script>
     <script type="text/ng-template" id="status-checkbox.html">
         <div>
@@ -19,10 +22,10 @@
                        data-ng-change="change()" />
                 {{'Enable' | label}}
             </label>
-            <label class="status-checkbox">
+            <label class="status-checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
                 <input type="checkbox"
                        data-tooltip
-                       data-message="settingItem.validation.message | message"
+                       data-message="settingItem.validationState.message | message"
                        data-ng-model="isDownlineChecked"
                        data-ng-disabled="isDownlineDisabled"
                        data-ng-change="changeDownline()" />

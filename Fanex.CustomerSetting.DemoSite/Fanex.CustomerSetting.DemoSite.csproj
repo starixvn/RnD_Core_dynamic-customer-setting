@@ -298,6 +298,7 @@
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>
