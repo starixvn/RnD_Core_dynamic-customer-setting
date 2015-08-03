@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".readme", ".readme", "{5697E4DC-4C04-474A-83C0-5B24B1344DB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -69,6 +69,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Experiments", "Fanex.CustomerSetting.Experiments\Fanex.CustomerSetting.Experiments.csproj", "{066C8F93-4AA3-4CD6-AF7B-8C7160778B79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.Tests", "Fanex.CustomerSetting.Matrix.Tests\Fanex.CustomerSetting.Matrix.Tests.csproj", "{183E8744-85E2-4F7C-902F-1DFEC955323E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI", "Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj", "{9B52485B-6CAC-4B70-994B-5D8CF74B3380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI.Tests", "Fanex.CustomerSetting.WebAPI.Tests\Fanex.CustomerSetting.WebAPI.Tests.csproj", "{3697334F-BBA4-41CB-9610-F73C80293271}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +156,14 @@ Global
 		{183E8744-85E2-4F7C-902F-1DFEC955323E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{183E8744-85E2-4F7C-902F-1DFEC955323E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{183E8744-85E2-4F7C-902F-1DFEC955323E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3697334F-BBA4-41CB-9610-F73C80293271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3697334F-BBA4-41CB-9610-F73C80293271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,5 +190,7 @@ Global
 		{2747B4D9-3CB5-44BA-AEB1-B210E92D8617} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 		{3E059FA6-3822-475F-9694-F3DBB15ACF98} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{183E8744-85E2-4F7C-902F-1DFEC955323E} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
+		{9B52485B-6CAC-4B70-994B-5D8CF74B3380} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
+		{3697334F-BBA4-41CB-9610-F73C80293271} = {09967616-74BB-44FA-918B-819B7AA63F26}
 	EndGlobalSection
 EndGlobal
