@@ -172,9 +172,29 @@ module CustomerSetting {
                 settingItem: "=",
                 customerLevel: "=",
                 uplineLevel: "=",
-                fieldName: "="
+                fieldName: "@"
             }
         }
+
+        public controller: any = ["$scope", "resourceService", ($scope: BetSettingInputScope, resourceService: ResourceService) => {
+            $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
+                if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
+                    $scope.validationError = resourceService.getFormattedMessage(validationState.message, validationState.msgParams);
+                } else {
+                    $scope.validationError = undefined;
+                }
+            });
+
+            $scope.updateValue = () => {
+                if ($scope.fieldName === "minBet") {
+                    $scope.settingItem.validateMinBet();
+                } else if ($scope.fieldName === "maxBet") {
+                    $scope.settingItem.validateMaxBet();
+                } else if ($scope.fieldName === "maxPerMatch") {
+                    $scope.settingItem.validateMaxPerMatch();
+                }
+            };
+        }];
 
         public link: ng.IDirectiveLinkFn = (scope: BetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             var element = angular.element(wrapElement.children()[0]);
@@ -202,26 +222,6 @@ module CustomerSetting {
 
             this.$compile(wrapElement)(scope);
             modelCtrl = element.controller("ngModel");
-
-            scope.$watch("settingItem.validationState", () => {
-                if (scope.fieldName === scope.settingItem.validationState.fieldName && !scope.settingItem.validationState.isSuccessful) {
-                    scope.validationError = this.resourceService.getFormattedMessage(
-                        scope.settingItem.validationState.message,
-                        scope.settingItem.validationState.msgParams);
-                } else {
-                    scope.validationError = undefined;
-                }
-            });
-
-            scope.updateValue = () => {
-                if (scope.fieldName === "minBet") {
-                    scope.settingItem.validateMinBet();
-                } else if (scope.fieldName === "maxBet") {
-                    scope.settingItem.validateMaxBet();
-                } else if (scope.fieldName === "maxPerMatch") {
-                    scope.settingItem.validateMaxPerMatch();
-                }
-            };
 
             element.on("mouseup", () => {
                 var input: HTMLInputElement = <HTMLInputElement>element[0];
@@ -273,8 +273,7 @@ module CustomerSetting {
 
         constructor(
             private $compile: ng.ICompileService,
-            private $filter: ng.IFilterService,
-            private resourceService: ResourceService) { }
+            private $filter: ng.IFilterService) { }
     }
 
     angular.module("customerSetting").directive("betSettingInput", ["$compile", "$filter", "resourceService", function () {

@@ -39,59 +39,149 @@
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.super">
             <div class="w25-percent">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="'s4'"
-                                        data-min="0"
-                                        data-max="item.defaultMaxPT"></position-taking-select>
+                                        data-field-name="s4"
+                                        data-min="{{0}}"
+                                        data-max="{{item.defaultMaxPT}}">
+                </position-taking-select>
             </div>
             <div class="w25-percent">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="'m4'"
-                                        data-min="0"
-                                        data-max="item.s4"></position-taking-select>
+                                        data-field-name="m4"
+                                        data-min="{{0}}"
+                                        data-max="{{item.s4}}">
+                </position-taking-select>
             </div>
             <div class="w25-percent">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="'a4'"
-                                        data-min="0"
-                                        data-max="item.m4"></position-taking-select>
+                                        data-field-name="a4"
+                                        data-min="{{0}}"
+                                        data-max="{{item.m4}}">
+                </position-taking-select>
             </div>
             <div class="w25-percent last">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="'n4'"
-                                        data-min="0"
-                                        data-max="item.m4"></position-taking-select>
+                                        data-field-name="n4"
+                                        data-min="{{0}}"
+                                        data-max="{{item.m4}}">
+                </position-taking-select>
             </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.master">
-            <div class="w28-percent"></div>
-            <div class="w16-percent"></div>
-            <div class="w28-percent"></div>
-            <div class="w28-percent last"></div>
+            <div class="w28-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="{{item.iS3 ? 'uS3' : 's3'}}"
+                                        data-min="{{item.iM2 ? 0 : math.max(0, item.n4 - item.m4)}}"
+                                        data-max="{{item.s4}}">
+                </position-taking-select>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-member-pt-modal
+                           data-member-pt=""
+                           data-show-modal="{{item.iS3}}"
+                           data-ng-model="item.iS3" />
+                </label>
+            </div>
+            <div class="w28-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="m3"
+                                        data-min="{{item.iM2 ? item.n4 - item.uS3 : math.max(0, item.n4 - item.s3)}}"
+                                        data-max="{{item.iM2 ? math.min(item.s4, item.m4) : math.min(item.s4 - item.s3, item.m4)}}">
+                </position-taking-select>
+            </div>
+            <div class="w28-percent last">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="n3"
+                                        data-min="{{0}}"
+                                        data-max="{{item.m3}}">
+                </position-taking-select>
+            </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-            <div class="w28-percent"></div>
-            <div class="w16-percent"></div>
-            <div class="w28-percent"></div>
-            <div class="w28-percent last"></div>
+            <div class="w28-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="{{item.iM2 ? 'uM2' : 'm2'}}"
+                                        data-min="{{item.iM2 ? 0 : math.max(0, item.n3 - item.a4)}}"
+                                        data-max="{{item.m3}}">
+                </position-taking-select>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-member-pt-modal
+                           data-member-pt=""
+                           data-show-modal="{{item.iM2}}"
+                           data-ng-model="item.iM2" />
+                </label>
+            </div>
+            <div class="w28-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="a2"
+                                        data-min="{{item.iM2 ? item.n3 - item.uM2 : math.max(0, item.n3 - item.m2)}}"
+                                        data-max="{{item.iM2 ? math.min(item.m3, item.a4) : math.min(item.m3 - item.m2, item.a4)}}">
+                </position-taking-select>
+            </div>
+            <div class="w28-percent last">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="n2"
+                                        data-min="{{0}}"
+                                        data-max="{{item.a2}}">
+                </position-taking-select>
+            </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
-            <div class="w28-percent"></div>
-            <div class="w16-percent"></div>
-            <div class="w28-percent"></div>
-            <div class="w28-percent last"></div>
+            <div class="w28-percent" data-ng-disabled="!item.iS1 && item.iS3">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="{{item.iS1 ? 'uS1' : 's1'}}"
+                                        data-min="{{math.max(0, item.n4 - item.m1 - item.a1)}}"
+                                        data-max="{{item.iS1 ? item.s4 : math.max(item.n4 - item.m1 - item.a1, item.s4 - item.m3)}}">
+                </position-taking-select>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-member-pt-modal
+                           data-member-pt=""
+                           data-show-modal="{{item.iS1}}"
+                           data-ng-model="item.iS1" />
+                </label>
+            </div>
+            <div class="w28-percent">{{item.m1}}</div>
+            <div class="w28-percent last">{{item.a1}}</div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
-            <div class="w42-percent"></div>
-            <div class="w16-percent"></div>
-            <div class="w42-percent last"></div>
+            <div class="w42-percent" data-ng-disabled="!item.iM1 && item.iM2">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="{{item.iM1 ? 'uM1' : 'm1'}}"
+                                        data-min="{{math.max(0, item.n3 - item.a1)}}"
+                                        data-max="{{item.iM1 ? item.m3 : item.m3 - item.a1}}">
+                </position-taking-select>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-member-pt-modal
+                           data-member-pt=""
+                           data-show-modal="{{item.iM1}}"
+                           data-ng-model="item.iM1" />
+                </label>
+            </div>
+            <div class="w42-percent last">{{item.a1}}</div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
-            <div></div>
+            <div>
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="a1"
+                                        data-min="{{item.n2}}"
+                                        data-max="{{item.a2}}">
+                </position-taking-select>
+            </div>
         </div>
     </script>
     <script type="text/ng-template" id="settingtype1-template1-select.html">
         <div>
-            <div class="select-wrapper" data-tooltip data-message="item.validationState.message">
+            <div class="select-wrapper">
                 <select data-ng-options="item.key as item.value / divisor for item in range"></select>
             </div>
         </div>

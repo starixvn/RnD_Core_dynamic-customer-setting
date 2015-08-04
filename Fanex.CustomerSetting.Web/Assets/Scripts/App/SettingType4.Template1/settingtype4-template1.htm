@@ -7,14 +7,14 @@
     </script>
     <script type="text/ng-template" id="status-checkbox.html">
         <div>
-            <label class="status-checkbox">
+            <label class="checkbox">
                 <input type="checkbox"
                        data-ng-model="isChecked"
                        data-ng-disabled="isDisabled"
                        data-ng-change="change()" />
                 {{'Enable' | label}}
             </label>
-            <label class="status-checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
+            <label class="checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
                 <input type="checkbox"
                        data-tooltip
                        data-message="settingItem.validationState.message | message"

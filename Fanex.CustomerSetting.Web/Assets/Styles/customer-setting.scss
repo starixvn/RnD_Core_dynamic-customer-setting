@@ -68,6 +68,21 @@ select {
     display: inline-block;
 }
 
+.checkbox {
+    cursor: pointer;
+    margin-right: 10px;
+
+    input {
+        cursor: pointer;
+        height: 13px;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        top: 2px;
+        width: 13px;
+    }
+}
+
 .align-center {
     text-align: center;
 }
@@ -551,23 +566,5 @@ select {
             padding: 0;
             width: 80%;
         }
-    }
-}
-
-/*********************************************************/
-/*                  Setting Type 3 & 4                   */
-/*********************************************************/
-.status-checkbox {
-    cursor: pointer;
-    margin-right: 10px;
-
-    input {
-        cursor: pointer;
-        height: 13px;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        top: 2px;
-        width: 13px;
     }
 }
