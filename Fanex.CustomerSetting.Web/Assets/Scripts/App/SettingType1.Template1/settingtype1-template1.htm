@@ -62,7 +62,7 @@
                 <position-taking-select data-setting-item="item"
                                         data-field-name="n4"
                                         data-min="{{0}}"
-                                        data-max="{{item.m4}}">
+                                        data-max="{{item.s4}}">
                 </position-taking-select>
             </div>
         </div>
@@ -70,7 +70,7 @@
             <div class="w28-percent">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="{{item.iS3 ? 'uS3' : 's3'}}"
-                                        data-min="{{item.iM2 ? 0 : math.max(0, item.n4 - item.m4)}}"
+                                        data-min="{{item.iM2 ? 0 : ([0, item.n4 - item.m4] | maxValue)}}"
                                         data-max="{{item.s4}}">
                 </position-taking-select>
             </div>
@@ -86,8 +86,8 @@
             <div class="w28-percent">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="m3"
-                                        data-min="{{item.iM2 ? item.n4 - item.uS3 : math.max(0, item.n4 - item.s3)}}"
-                                        data-max="{{item.iM2 ? math.min(item.s4, item.m4) : math.min(item.s4 - item.s3, item.m4)}}">
+                                        data-min="{{item.iM2 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}"
+                                        data-max="{{item.iM2 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}">
                 </position-taking-select>
             </div>
             <div class="w28-percent last">
@@ -102,7 +102,7 @@
             <div class="w28-percent">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="{{item.iM2 ? 'uM2' : 'm2'}}"
-                                        data-min="{{item.iM2 ? 0 : math.max(0, item.n3 - item.a4)}}"
+                                        data-min="{{item.iM2 ? 0 : ([0, item.n3 - item.a4] | maxValue)}}"
                                         data-max="{{item.m3}}">
                 </position-taking-select>
             </div>
@@ -118,8 +118,8 @@
             <div class="w28-percent">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="a2"
-                                        data-min="{{item.iM2 ? item.n3 - item.uM2 : math.max(0, item.n3 - item.m2)}}"
-                                        data-max="{{item.iM2 ? math.min(item.m3, item.a4) : math.min(item.m3 - item.m2, item.a4)}}">
+                                        data-min="{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}"
+                                        data-max="{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}">
                 </position-taking-select>
             </div>
             <div class="w28-percent last">

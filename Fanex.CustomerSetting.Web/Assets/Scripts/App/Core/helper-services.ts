@@ -121,6 +121,22 @@ module CustomerSetting {
 
     ModuleRegister.filter("naValue", NAValue);
 
+    export function MinValue() {
+        return (numbers: number[]) => {
+            return Math.min.apply(Math, numbers);
+        }
+    }
+
+    ModuleRegister.filter("minValue", MinValue);
+
+    export function MaxValue() {
+        return (numbers: number[]) => {
+            return Math.max.apply(Math, numbers);
+        }
+    }
+
+    ModuleRegister.filter("maxValue", MaxValue);
+
     export class ValueRangeGenerator {
         public generateRanges(value: number, min: number, max: number, step: number, roundingFactor: number): Array<KeyValuePair<number, number>> {
             var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();
