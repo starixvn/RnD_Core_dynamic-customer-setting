@@ -11,7 +11,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
     using Fanex.Data;
 
-    public class DataAccess : BaseDataAccess, IDataAccess
+    internal class DataAccess : BaseDataAccess, IDataAccess
     {
         private static readonly Dictionary<byte, string> QueryBetLimitSpKeys = new Dictionary<byte, string>
         {

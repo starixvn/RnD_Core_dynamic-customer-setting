@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
 
-    public class SettingTypeServiceFactory : ISettingTypeServiceFactory
+    internal class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {
         private const string AssemblyNameFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
         private const string TypeNameFormat = "{0}.Services.SettingTypeService";

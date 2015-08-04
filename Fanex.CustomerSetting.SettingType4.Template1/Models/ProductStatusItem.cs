@@ -15,7 +15,7 @@
         {
         }
 
-        public ProductStatusItem(ProductStatusItemDto productStatusItemDto)
+        internal ProductStatusItem(ProductStatusItemDto productStatusItemDto)
         {
             Check.Argument.IsNotNull(productStatusItemDto, "productStatusItemDto");
 

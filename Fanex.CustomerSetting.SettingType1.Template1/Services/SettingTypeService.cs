@@ -23,7 +23,7 @@
         {
         }
 
-        public SettingTypeService(
+        internal SettingTypeService(
             IMessageService messageService,
             IResourceService resourceService,
             ILogger logger,

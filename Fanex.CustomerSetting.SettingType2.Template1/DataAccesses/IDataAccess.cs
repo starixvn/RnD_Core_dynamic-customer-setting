@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
 
-    public interface IDataAccess
+    internal interface IDataAccess
     {
         IEnumerable<BetLimitItemDto> GetCustomerBetLimitItemsRawData(CustomerSettingQuery query);
 

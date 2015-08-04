@@ -3,7 +3,7 @@
     using System.Collections;
     using Fanex.CustomerSetting.Models.Results;
 
-    public class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
+    internal class ValidationDataAccess : BaseDataAccess, IValidationDataAccess
     {
         public IResult ValidatePermissionMultiple(int actorId, string memberIds)
         {

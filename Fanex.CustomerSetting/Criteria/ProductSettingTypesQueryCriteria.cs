@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class ProductSettingTypesQueryCriteria : CriteriaBase
+    internal class ProductSettingTypesQueryCriteria : CriteriaBase
     {
         public byte ProductId { get; set; }
 

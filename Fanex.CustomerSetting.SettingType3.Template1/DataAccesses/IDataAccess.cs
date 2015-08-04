@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
 
-    public interface IDataAccess
+    internal interface IDataAccess
     {
         IEnumerable<CommissionItemDto> GetCustomerCommissionItemsRawData(CustomerSettingQuery query);
 

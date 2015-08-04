@@ -15,7 +15,7 @@
         {
         }
 
-        public BetLimitItem(BetLimitItemDto betLimitItemDto)
+        internal BetLimitItem(BetLimitItemDto betLimitItemDto)
         {
             Check.Argument.IsNotNull(betLimitItemDto, "betLimitItemDto");
 

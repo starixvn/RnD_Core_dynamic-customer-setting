@@ -2,7 +2,7 @@
 {
     using RemotingRef;
 
-    public class RemotingRefService : IRemotingRefService
+    internal class RemotingRefService : IRemotingRefService
     {
         public string GetSportTypeName(string sportTypeId, string language)
         {

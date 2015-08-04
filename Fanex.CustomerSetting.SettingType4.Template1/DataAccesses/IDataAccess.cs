@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
 
-    public interface IDataAccess
+    internal interface IDataAccess
     {
         IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery query);
 

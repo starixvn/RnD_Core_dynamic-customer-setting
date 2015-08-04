@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class ActorStatusQueryCriteria : CriteriaBase
+    internal class ActorStatusQueryCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

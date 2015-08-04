@@ -105,7 +105,7 @@
             return new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel);
         }
 
-        public static Product CreateProduct(byte productId = 1)
+        internal static Product CreateProduct(byte productId = 1)
         {
             return new Product
             {

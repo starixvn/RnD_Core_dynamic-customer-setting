@@ -17,7 +17,7 @@
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
-    public class ValidationService : IValidationService
+    internal class ValidationService : IValidationService
     {
         private readonly ISettingContext _settingContext;
         private readonly IProductService _productService;

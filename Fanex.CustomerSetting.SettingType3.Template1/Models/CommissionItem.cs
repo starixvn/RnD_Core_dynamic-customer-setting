@@ -15,7 +15,7 @@
         {
         }
 
-        public CommissionItem(CommissionItemDto commItemDto)
+        internal CommissionItem(CommissionItemDto commItemDto)
         {
             Check.Argument.IsNotNull(commItemDto, "commItemDto");
 

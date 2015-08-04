@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Constants
 {
-    public static class MessageType
+    internal static class MessageType
     {
         public const int Exception = 100;
     }

@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class CheckBelongingCriteria : CriteriaBase
+    internal class CheckBelongingCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "CustId")]
         public int ActorId { get; set; }

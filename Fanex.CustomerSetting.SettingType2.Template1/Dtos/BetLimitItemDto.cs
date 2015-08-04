@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Dtos
 {
-    public class BetLimitItemDto
+    internal class BetLimitItemDto
     {
         public short SportTypeId { get; set; }
 

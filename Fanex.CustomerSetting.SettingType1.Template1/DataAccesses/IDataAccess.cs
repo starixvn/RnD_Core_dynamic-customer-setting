@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
 
-    public interface IDataAccess
+    internal interface IDataAccess
     {
         SettingType GetCustomerPT(CustomerSettingQuery query);
 

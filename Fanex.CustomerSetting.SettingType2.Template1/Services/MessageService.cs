@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.SettingType2.Template1.Constants;
     using Fanex.CustomerSetting.SettingType2.Template1.Resources;
 
-    public class MessageService : MessageServiceBase, IMessageService
+    internal class MessageService : MessageServiceBase, IMessageService
     {
         public MessageService(IResourceService resourceService = null)
             : base(resourceService)

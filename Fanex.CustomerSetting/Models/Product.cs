@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class Product : Entity<byte>
+    internal class Product : Entity<byte>
     {
         public string Name { get; set; }
 
