@@ -1,16 +1,99 @@
 ﻿<div>
     <default-setting-type-grouping class="setting-type-1"></default-setting-type-grouping>
-    <script type="text/ng-template" id="settingtyp1-template1-value.html">
-        <div class="w25-percent"></div>
-        <div class="w25-percent"></div>
-        <div class="w25-percent"></div>
-        <div class="w25-percent last"></div>
-    </script>
     <script type="text/ng-template" id="settingtyp1-template1-header.html">
         <div class="empty-cell"></div>
-        <div class="w20-percent">{{::('SuperMaxPT' | label)}}</div>
-        <div class="w20-percent">{{::('MasterMaxPT' | label)}}</div>
-        <div class="w20-percent">{{::('AgentMaxPT' | label)}}</div>
-        <div class="w20-percent last">{{::('SuperMinPT' | label)}}</div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.super">
+            <div class="w25-percent">{{::('SuperMaxPT' | label)}}</div>
+            <div class="w25-percent">{{::('MasterMaxPT' | label)}}</div>
+            <div class="w25-percent">{{::('AgentMaxPT' | label)}}</div>
+            <div class="w25-percent last">{{::('SuperMinPT' | label)}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.master">
+            <div class="w28-percent">{{::('SuperPT' | label)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
+            <div class="w28-percent">{{::('MasterMaxPT' | label)}}</div>
+            <div class="w28-percent last">{{::('MasterMinPT' | label)}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+            <div class="w28-percent">{{::('MasterPT' | label)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
+            <div class="w28-percent">{{::('AgentMaxPT' | label)}}</div>
+            <div class="w28-percent last">{{::('AgentMinPT' | label)}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
+            <div class="w28-percent">{{::('SuperPT' | label)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
+            <div class="w28-percent">{{::('MasterPT' | label)}}</div>
+            <div class="w28-percent last">{{::('AgentPT' | label)}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+            <div class="w42-percent">{{::('MasterPT' | label)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
+            <div class="w42-percent last">{{::('AgentPT' | label)}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+            <div>{{::('AgentPT' | label)}}</div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="settingtyp1-template1-value.html">
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.super">
+            <div class="w25-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="'s4'"
+                                        data-min="0"
+                                        data-max="item.defaultMaxPT"></position-taking-select>
+            </div>
+            <div class="w25-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="'m4'"
+                                        data-min="0"
+                                        data-max="item.s4"></position-taking-select>
+            </div>
+            <div class="w25-percent">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="'a4'"
+                                        data-min="0"
+                                        data-max="item.m4"></position-taking-select>
+            </div>
+            <div class="w25-percent last">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="'n4'"
+                                        data-min="0"
+                                        data-max="item.m4"></position-taking-select>
+            </div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.master">
+            <div class="w28-percent"></div>
+            <div class="w16-percent"></div>
+            <div class="w28-percent"></div>
+            <div class="w28-percent last"></div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+            <div class="w28-percent"></div>
+            <div class="w16-percent"></div>
+            <div class="w28-percent"></div>
+            <div class="w28-percent last"></div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
+            <div class="w28-percent"></div>
+            <div class="w16-percent"></div>
+            <div class="w28-percent"></div>
+            <div class="w28-percent last"></div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+            <div class="w42-percent"></div>
+            <div class="w16-percent"></div>
+            <div class="w42-percent last"></div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+            <div></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="settingtype1-template1-select.html">
+        <div>
+            <div class="select-wrapper" data-tooltip data-message="item.validationState.message">
+                <select data-ng-options="item.key as item.value / divisor for item in range"></select>
+            </div>
+        </div>
     </script>
 </div>

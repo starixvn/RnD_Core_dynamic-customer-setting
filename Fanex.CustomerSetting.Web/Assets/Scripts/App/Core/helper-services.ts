@@ -122,7 +122,7 @@ module CustomerSetting {
     ModuleRegister.filter("naValue", NAValue);
 
     export class ValueRangeGenerator {
-        public generateRanges(value: number, min: number, max: number, step: number, divider: number): Array<KeyValuePair<number, number>> {
+        public generateRanges(value: number, min: number, max: number, step: number, roundingFactor: number): Array<KeyValuePair<number, number>> {
             var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();
 
             min = Math.max(0, min);
@@ -135,7 +135,7 @@ module CustomerSetting {
             while (max >= min) {
                 ranges.push(new KeyValuePair<number, number>(max, max));
                 max -= step;
-                max = Math.round(max * divider) / divider;
+                max = Math.round(max * roundingFactor) / roundingFactor;
             }
 
             if (value < min) {

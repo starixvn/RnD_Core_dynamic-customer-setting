@@ -41,15 +41,7 @@ module CustomerSetting {
         public static get language(): string {
             return "en-US";
         }
-
-        public static get maxNumberValue(): number {
-            return 99999999999;
-        }
-
-        public static get maxFieldLength(): number {
-            return 14;
-        }
-
+        
         public static get percentageDivider(): number {
             return 100;
         }

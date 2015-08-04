@@ -410,6 +410,11 @@ select {
             }
         }
 
+        .w16-percent {
+            @extend %col;
+            width: 16%;
+        }
+
         .empty-cell,
         .w20-percent {
             @extend %col;
@@ -421,13 +426,9 @@ select {
             width: 25%;
         }
 
-        .w27-percent {
+        .w28-percent {
             @extend %col;
-            width: 27%;
-
-            &.last {
-                width: 26%;
-            }
+            width: 28%;
         }
 
         .w33-percent {
@@ -437,6 +438,11 @@ select {
             &.last {
                 width: 34%;
             }
+        }
+
+        .w42-percent {
+            @extend %col;
+            width: 42%;
         }
 
         .w80-percent {

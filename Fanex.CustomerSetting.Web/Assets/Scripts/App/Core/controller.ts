@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../resource/resource-translation.ts" />
 /// <reference path="common.ts" />
+/// <reference path="helper-services.ts" />
 /// <reference path="helpers.ts" />
 /// <reference path="models.ts" />
 /// <reference path="module-registrater.ts" />
@@ -99,7 +100,7 @@ module CustomerSetting {
 
             this.isUIblocked = true;
             this.$http.get(this.appConfigService.resolveRootUrl(this.queryPath + query.toParamString())).success((data: any) => {
-                //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data.json")).success((data: any) => {
+                //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).success((data: any) => {
                 this.setting = new Setting(data);
             }).error(() => {
                 var error: Result = Result.systemError;

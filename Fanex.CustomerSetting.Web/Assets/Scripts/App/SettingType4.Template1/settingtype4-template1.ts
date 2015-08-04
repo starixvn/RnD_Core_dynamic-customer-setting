@@ -99,7 +99,7 @@ module CustomerSetting {
 
         public templateUrl: string = "status-checkbox.html";
 
-        public controller: any = ["$scope", "$rootScope", ($scope: StatusCheckboxScope) => {
+        public controller: any = ["$scope", ($scope: StatusCheckboxScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;

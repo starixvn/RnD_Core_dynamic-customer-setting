@@ -85,17 +85,14 @@ module CustomerSetting {
 
         public templateUrl: string = "settingtyp3-template1-drop.html";
 
-        public controller: any = ["$scope", "$rootScope", ($scope: SettingType3Template1ItemScope) => {
-            var step: number = Settingtype3Template1Config.step;
-            var divisor: number = Settingtype3Template1Config.divisor;
-
+        public controller: any = ["$scope", ($scope: SettingType3Template1ItemScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.range = this.valueRangeGenerator.generateRanges(
                     $scope.settingItem.commRate,
                     0,
                     $scope.settingItem.upline.commRate,
-                    step,
-                    divisor);
+                    Settingtype3Template1Config.step,
+                    Settingtype3Template1Config.roundingFactor);
             });
         }];
 
@@ -113,7 +110,7 @@ module CustomerSetting {
             return 0.0005;
         }
 
-        public static get divisor(): number {
+        public static get roundingFactor(): number {
             return 10000;
         }
     }

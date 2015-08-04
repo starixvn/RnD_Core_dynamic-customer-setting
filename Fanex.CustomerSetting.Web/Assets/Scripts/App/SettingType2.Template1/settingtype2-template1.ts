@@ -84,7 +84,7 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.validationState = <ValidationResult> Result.normal;
 
             return true;
         }
@@ -108,7 +108,7 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.validationState = <ValidationResult> Result.normal;
 
             return true;
         }
@@ -126,7 +126,7 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.validationState = <ValidationResult> Result.normal;
 
             return true;
         }
@@ -187,10 +187,6 @@ module CustomerSetting {
             element.attr("data-tooltip", "");
             element.attr("data-message", "validationError");
             //element.attr("data-show-on-focus", "true");
-
-            if (scope.customerLevel === Level.member && scope.uplineLevel !== Level.agent) {
-                element.attr("readonly", "true");
-            }
 
             if (scope.fieldName === "minBet") {
                 if (scope.settingItem.upline.minBet > 0) {

@@ -379,8 +379,8 @@ select {
 .customer-setting .block .value-col.last {
   border-right: none;
 }
-.customer-setting .block .empty-cell,
-.customer-setting .block .w20-percent, .customer-setting .block .w25-percent, .customer-setting .block .w27-percent, .customer-setting .block .w33-percent, .customer-setting .block .w80-percent {
+.customer-setting .block .w16-percent, .customer-setting .block .empty-cell,
+.customer-setting .block .w20-percent, .customer-setting .block .w25-percent, .customer-setting .block .w28-percent, .customer-setting .block .w33-percent, .customer-setting .block .w42-percent, .customer-setting .block .w80-percent {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -389,9 +389,12 @@ select {
   height: 25px;
   padding: 0 3px;
 }
-.customer-setting .block .last.empty-cell,
-.customer-setting .block .last.w20-percent, .customer-setting .block .last.w25-percent, .customer-setting .block .last.w27-percent, .customer-setting .block .last.w33-percent, .customer-setting .block .last.w80-percent {
+.customer-setting .block .last.w16-percent, .customer-setting .block .last.empty-cell,
+.customer-setting .block .last.w20-percent, .customer-setting .block .last.w25-percent, .customer-setting .block .last.w28-percent, .customer-setting .block .last.w33-percent, .customer-setting .block .last.w42-percent, .customer-setting .block .last.w80-percent {
   border-right: none;
+}
+.customer-setting .block .w16-percent {
+  width: 16%;
 }
 .customer-setting .block .empty-cell,
 .customer-setting .block .w20-percent {
@@ -400,17 +403,17 @@ select {
 .customer-setting .block .w25-percent {
   width: 25%;
 }
-.customer-setting .block .w27-percent {
-  width: 27%;
-}
-.customer-setting .block .w27-percent.last {
-  width: 26%;
+.customer-setting .block .w28-percent {
+  width: 28%;
 }
 .customer-setting .block .w33-percent {
   width: 33%;
 }
 .customer-setting .block .w33-percent.last {
   width: 34%;
+}
+.customer-setting .block .w42-percent {
+  width: 42%;
 }
 .customer-setting .block .w80-percent {
   border-right: none;

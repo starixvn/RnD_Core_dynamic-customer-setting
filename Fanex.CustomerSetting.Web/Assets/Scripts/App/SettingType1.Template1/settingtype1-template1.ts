@@ -29,7 +29,7 @@ module CustomerSetting {
             var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
 
             if (rawData && settingItem) {
-                Object.keys(settingItem).filter(propName => {
+                Object.keys(rawData).filter(propName => {
                     return addedProperties.indexOf(propName) < 0 && rawData[propName];
                 }).forEach(prop => {
                     settingItem[prop] = rawData[prop];
@@ -40,7 +40,7 @@ module CustomerSetting {
         public static detechChanges(settingItem: any): boolean {
             if (settingItem) {
                 return Object.keys(settingItem).some(prop => {
-                    return settingItem[prop] !== settingItem.oldSetting[prop];
+                    return settingItem.oldSetting[prop] && settingItem[prop] !== settingItem.oldSetting[prop];
                 });
             }
 
@@ -60,8 +60,7 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-
-            Settingtype1Template1Item.fetch(settingItem, this);
+            Settingtype1Template1Item.fetch(settingItem, <SuperPositionTaking>this);
 
             if (backup) {
                 this.oldSetting = new SuperPositionTaking(this);
@@ -69,33 +68,11 @@ module CustomerSetting {
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
-
-            return isChanged;
+            return Settingtype1Template1Item.detechChanges(this);
         }
 
         public validate(): boolean {
-            if (this.s4 > Settingtype1Template1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s4");
-
-                return false;
-            }
-
-            if (this.m4 > Settingtype1Template1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m4");
-
-                return false;
-            }
-
-            if (this.a4 > Settingtype1Template1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a4");
-
-                return false;
-            }
-
-            if (this.n4 > Settingtype1Template1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n4");
-
+            if (!this.validateMaxValue()) {
                 return false;
             }
 
@@ -121,6 +98,34 @@ module CustomerSetting {
 
             return true;
         }
+
+        private validateMaxValue(): boolean {
+            if (this.s4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s4");
+
+                return false;
+            }
+
+            if (this.m4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m4");
+
+                return false;
+            }
+
+            if (this.a4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a4");
+
+                return false;
+            }
+
+            if (this.n4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n4");
+
+                return false;
+            }
+
+            return true;
+        }
     }
 
     class MasterPositionTaking extends DefaultSettingItem {
@@ -140,18 +145,15 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-
             Settingtype1Template1Item.fetch(settingItem, this);
 
             if (backup) {
-                this.oldSetting = new SuperPositionTaking(this);
+                this.oldSetting = new MasterPositionTaking(this);
             }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
-
-            return isChanged;
+            return Settingtype1Template1Item.detechChanges(this);
         }
 
         public validate(): boolean {
@@ -206,6 +208,8 @@ module CustomerSetting {
 
                 return false;
             }
+
+            return true;
         }
     }
 
@@ -226,12 +230,15 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new AgentPositionTaking(this);
+            }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
-
-            return isChanged;
+            return Settingtype1Template1Item.detechChanges(this);
         }
 
         public validate(): boolean {
@@ -286,6 +293,8 @@ module CustomerSetting {
 
                 return false;
             }
+
+            return true;
         }
     }
 
@@ -305,12 +314,15 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new SuperPositionTakingOnMember(this);
+            }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
-
-            return isChanged;
+            return Settingtype1Template1Item.detechChanges(this);
         }
 
         public validate(): boolean {
@@ -347,6 +359,8 @@ module CustomerSetting {
 
                 return false;
             }
+
+            return true;
         }
     }
 
@@ -364,10 +378,15 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new MasterPositionTakingOnMember(this);
+            }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = super.isChanged() || Settingtype1Template1Item.detechChanges(this);
 
             return isChanged;
         }
@@ -419,12 +438,15 @@ module CustomerSetting {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new AgentPositionTakingOnMember(this);
+            }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged() && Settingtype1Template1Item.detechChanges(this);
-
-            return isChanged;
+            return Settingtype1Template1Item.detechChanges(this);
         }
 
         public validate(): boolean {
@@ -440,20 +462,13 @@ module CustomerSetting {
         }
     }
 
-    interface SettingType1Template1Scope extends SettingTypeDirectiveSharedScope {
-        step: number;
-        divisor: number;
-    }
-
     class SettingType1Template1Directive extends SettingTypeDirective {
         public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype1.template1/settingtype1-template1.htm");
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingType1Template1Scope) => {
+        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp1-template1-header.html";
             scope.valueTemplateUrl = "settingtyp1-template1-value.html";
             scope.settingTypeName = this.resourceService.getLabel("PositionTaking");
-            scope.step = 0.0005;
-            scope.divisor = 10000;
         }
 
         constructor(
@@ -468,4 +483,69 @@ module CustomerSetting {
 
         return new (Function.prototype.bind.apply(SettingType1Template1Directive, args));
     }]);
+
+    interface PositionTakingSelectScope extends ng.IScope {
+        fieldName: number;
+        min: number;
+        max: number;
+        divisor: number;
+        range: Array<KeyValuePair<number, number>>;
+    }
+
+    class PositionTakingSelectDirective implements ng.IDirective {
+        public replace: boolean = true;
+
+        public get scope(): any {
+            return {
+                settingItem: "=",
+                fieldName: "=",
+                min: "=",
+                max: "="
+            }
+        }
+
+        public templateUrl: string = "settingtype1-template1-select.html";
+
+        public link: ng.IDirectiveLinkFn = (scope: PositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
+            var modelCtrl: any;
+            var select = element.find("select");
+
+            select.attr("data-ng-model", "settingItem." + scope.fieldName);
+            this.$compile(element)(scope);
+            modelCtrl = select.controller("ngModel");
+
+            scope.divisor = Settingtype1Template1Config.roundingFactor;
+            scope.$watchGroup(["min", "max"], () => {
+                modelCtrl.$setViewValue(Math.max(scope.min, Math.min(scope.max, modelCtrl.$modelValue)));
+
+                scope.range = this.valueRangeGenerator.generateRanges(
+                    modelCtrl.$modelValue,
+                    scope.min,
+                    scope.max,
+                    Settingtype1Template1Config.step,
+                    Settingtype1Template1Config.roundingFactor);
+            });
+        }
+
+        constructor(
+            private $compile: ng.ICompileService,
+            private valueRangeGenerator: ValueRangeGenerator,
+            private resourceService: ResourceService) { }
+    }
+
+    angular.module("customerSetting").directive("positionTakingSelect", ["$compile", "valueRangeGenerator", "resourceService", function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(PositionTakingSelectDirective, args));
+    }]);
+
+    class Settingtype1Template1Config {
+        public static get step(): number {
+            return 1;
+        }
+
+        public static get roundingFactor(): number {
+            return 100;
+        }
+    }
 }
