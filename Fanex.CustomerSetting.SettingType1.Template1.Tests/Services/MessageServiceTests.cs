@@ -67,7 +67,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PTMessage.Msg_20001, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -100,7 +100,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PTMessage.Msg_20029, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_20029, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -133,7 +133,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PTMessage.Msg_20028, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_20028, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -166,7 +166,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PTMessage.Msg_20033, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_20033, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
@@ -202,7 +202,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(PTMessage.Msg_20001, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_20001, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
     }

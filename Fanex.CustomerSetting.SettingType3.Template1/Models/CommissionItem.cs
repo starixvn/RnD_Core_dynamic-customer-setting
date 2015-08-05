@@ -43,14 +43,14 @@
             {
                 return new Result(
                     ErrorCode.CommissionRateExceedMaxValue,
-                    CommissionMessage.CommRateCannotBeExceedMaxValue);
+                    Message.CommRateCannotBeExceedMaxValue);
             }
 
             if (CommRate < 0)
             {
                 return new Result(
                     ErrorCode.CommRateIsNegative,
-                    CommissionMessage.CommRateCannotBeNegative);
+                    Message.CommRateCannotBeNegative);
             }
 
             return base.Validate();

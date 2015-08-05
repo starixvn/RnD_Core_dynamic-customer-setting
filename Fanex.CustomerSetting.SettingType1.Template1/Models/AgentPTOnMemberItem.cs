@@ -29,7 +29,7 @@
             {
                 return new Result(
                     ErrorCode.PTExceedMaxValue,
-                    PTMessage.PositionTakingCannotBeExceedMaxValue);
+                    Message.PositionTakingCannotBeExceedMaxValue);
             }
 
             return base.Validate();

@@ -126,14 +126,35 @@
   <data name="MaxBetCannotBeNegative" xml:space="preserve">
     <value>Max Bet cannot be negative</value>
   </data>
+  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>Max Bet must be less than or equal to Max Per Match</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
+    <value>Max Bet must be less than or equal to {0}</value>
+  </data>
+  <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
+    <value>Max Bet must be greater than or equal to Min Bet</value>
+  </data>
   <data name="MaxPerMatchCannotBeNegative" xml:space="preserve">
     <value>Max Per Match cannot be negative</value>
+  </data>
+  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
+    <value>Max Per Match must be less than or equal to {0}</value>
+  </data>
+  <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
+    <value>Max Per Match must be greater than or equal to Max Bet</value>
   </data>
   <data name="MinBetCannotBeGreaterThanMaxBet" xml:space="preserve">
     <value>Min Bet cannot be greater than Max Bet</value>
   </data>
   <data name="MinBetCannotBeNegative" xml:space="preserve">
     <value>Min Bet cannot be negative</value>
+  </data>
+  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
+    <value>Min Bet must be less than or equal to Max Bet</value>
+  </data>
+  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
+    <value>Min Bet must be greater than or equal to {0}</value>
   </data>
   <data name="Msg_10003" xml:space="preserve">
     <value>Wrong Min bet/ Max bet/ Max per match</value>
@@ -167,5 +188,8 @@
   </data>
   <data name="Msg_10021" xml:space="preserve">
     <value>Max Per Match must be equal to or less than Master Agent Max Per Match</value>
+  </data>
+  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
+    <value>Updated bet setting successfully.</value>
   </data>
 </root>

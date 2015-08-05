@@ -117,40 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
-    <value>最大投注额必须小于或等于最大单场比赛投注额</value>
-  </data>
-  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
-    <value>最大投注额必须小于或等于 {0}</value>
-  </data>
-  <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
-    <value>最大投注额必须大于或等于最小投注额</value>
-  </data>
-  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
-    <value>最大单场比赛投注额必须小于或等于 {0}</value>
-  </data>
-  <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
-    <value>最大单场比赛投注额必须大于或等于最大投注额</value>
-  </data>
-  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
-    <value>最小投注额必须小于或等于最大投注额</value>
-  </data>
-  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
-    <value>最大投注额必须大于或等于 {0}</value>
-  </data>
-  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
-    <value>成功更新投注设置。</value>
-  </data>
-  <data name="UpdateCommissionSuccessfully" xml:space="preserve">
-    <value>成功更新佣金设置</value>
-  </data>
-  <data name="UpdateMemberPtInfo" xml:space="preserve">
-    <value>您已更改您的占成数</value>
-  </data>
-  <data name="UpdateMemberPtQuestion" xml:space="preserve">
-    <value>您是否要把所有会员的占成数更改为:</value>
-  </data>
-  <data name="UpdateMemberPtTitle" xml:space="preserve">
-    <value>确认更新会员的占成数</value>
-  </data>
 </root>

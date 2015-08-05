@@ -18,7 +18,7 @@
             switch (msgType)
             {
                 case MessageType.ProductStatusViolation:
-                    return TranslateDefaultSettingTypeViolationMessage(ProductStatusMessage.ResourceManager, rawMessage, settingLevel, language);
+                    return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
 
                 default:
                     return base.TranslateMessage(msgType, rawMessage, settingLevel, language);

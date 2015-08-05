@@ -121,6 +121,8 @@
                 masterPTItem.US3 = 0;
             }
 
+            masterPTItem.N3 = (byte)(masterPTItem.N3 == 2 ? 1 : 2);
+
             return new ModifySettingTypeInfo
             {
                 SettingItem = masterPTItem,
@@ -151,6 +153,8 @@
                 agentPTItem.UM2 = 0;
             }
 
+            agentPTItem.N2 = (byte)(agentPTItem.N2 == 2 ? 1 : 2);
+
             return new ModifySettingTypeInfo
             {
                 SettingItem = agentPTItem,
@@ -164,7 +168,7 @@
 
             var agentPTOnMemberItem = settingType.SettingItems.ElementAt(0) as AgentPTOnMemberItem;
 
-            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 20 ? 21 : 20);
+            agentPTOnMemberItem.A1 = (byte)(agentPTOnMemberItem.A2 == 12 ? 13 : 12);
 
             return new ModifySettingTypeInfo
             {

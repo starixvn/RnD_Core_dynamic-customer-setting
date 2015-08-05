@@ -2,8 +2,8 @@
 {
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Models.Messages;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
 
     public class WrongPTSubMessage : DefaultSubMessage, ISubMessage
     {

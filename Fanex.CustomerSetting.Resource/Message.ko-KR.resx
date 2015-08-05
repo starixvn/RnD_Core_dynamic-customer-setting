@@ -117,13 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UpdateMemberPtInfo" xml:space="preserve">
-    <value>포지션테이킹(PT)이 변경되었습니다</value>
-  </data>
-  <data name="UpdateMemberPtQuestion" xml:space="preserve">
-    <value>모든회원의 거래조건을 바꾸기를 원하십니까:</value>
-  </data>
-  <data name="UpdateMemberPtTitle" xml:space="preserve">
-    <value>Confirm Update Members's PT</value>
-  </data>
 </root>

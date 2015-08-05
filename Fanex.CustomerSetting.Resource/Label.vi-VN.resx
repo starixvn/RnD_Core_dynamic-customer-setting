@@ -117,38 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AgentMaxPT" xml:space="preserve">
-    <value>PT lớn nhất của Agent</value>
-  </data>
-  <data name="AgentMinPT" xml:space="preserve">
-    <value>PT nhỏ nhất của Agent</value>
-  </data>
-  <data name="AgentPT" xml:space="preserve">
-    <value>PT của Agent</value>
-  </data>
   <data name="Agents" xml:space="preserve">
     <value>Agents</value>
-  </data>
-  <data name="BetSetting" xml:space="preserve">
-    <value>Tiền Cược</value>
-  </data>
-  <data name="Commission" xml:space="preserve">
-    <value>Hoa hồng</value>
-  </data>
-  <data name="CommissionForAgent" xml:space="preserve">
-    <value>Agent Comm</value>
-  </data>
-  <data name="CommissionForMaster" xml:space="preserve">
-    <value>Master Comm</value>
-  </data>
-  <data name="CommissionForMember" xml:space="preserve">
-    <value>Member Comm</value>
-  </data>
-  <data name="Enable" xml:space="preserve">
-    <value>Cho phép</value>
-  </data>
-  <data name="EnableDownline" xml:space="preserve">
-    <value>Enable Downline</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
@@ -159,71 +129,20 @@
   <data name="GeneralInformation" xml:space="preserve">
     <value>Thông tin Chung</value>
   </data>
-  <data name="IsAuto" xml:space="preserve">
-    <value>Auto PT</value>
-  </data>
   <data name="LastName" xml:space="preserve">
     <value>Họ</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>Trực Tuyến</value>
-  </data>
-  <data name="MasterMaxPT" xml:space="preserve">
-    <value>PT lớn nhất của Master</value>
-  </data>
-  <data name="MasterMinPT" xml:space="preserve">
-    <value>PT nhỏ nhất của Master</value>
-  </data>
-  <data name="MasterPT" xml:space="preserve">
-    <value>PT của Master</value>
   </data>
   <data name="Masters" xml:space="preserve">
     <value>Masters</value>
   </data>
-  <data name="Max" xml:space="preserve">
-    <value>Max</value>
-  </data>
-  <data name="MaxBet" xml:space="preserve">
-    <value>Cược lớn nhất</value>
-  </data>
-  <data name="MaxLive" xml:space="preserve">
-    <value>Max Live</value>
-  </data>
-  <data name="MaxPerMatch" xml:space="preserve">
-    <value>Cược tối đa cho 1 trận</value>
-  </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>
-  </data>
-  <data name="Min" xml:space="preserve">
-    <value>Nhỏ nhất</value>
-  </data>
-  <data name="MinBet" xml:space="preserve">
-    <value>Cược nhỏ nhất</value>
-  </data>
-  <data name="MinLive" xml:space="preserve">
-    <value>Min Live</value>
   </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>Điện thoại di động</value>
   </data>
   <data name="Nickname" xml:space="preserve">
     <value>Biệt danh</value>
-  </data>
-  <data name="PositionTaking" xml:space="preserve">
-    <value>PT</value>
-  </data>
-  <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
-  </data>
-  <data name="SuperMaxPT" xml:space="preserve">
-    <value>PT lớn nhất của Super</value>
-  </data>
-  <data name="SuperMinPT" xml:space="preserve">
-    <value>PT nhỏ nhất của Super</value>
-  </data>
-  <data name="SuperPT" xml:space="preserve">
-    <value>PT của Super</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Cập nhật</value>

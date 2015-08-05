@@ -48,42 +48,42 @@
             {
                 return new Result(
                     ErrorCode.BetLimitExceedMaxValue,
-                    BetLimitMessage.BetLimitCannotBeGreaterThanMaxValue);
+                    Message.BetLimitCannotBeGreaterThanMaxValue);
             }
 
             if (MinBet < 0)
             {
                 return new Result(
                     ErrorCode.MinBetIsNegative,
-                    BetLimitMessage.MinBetCannotBeNegative);
+                    Message.MinBetCannotBeNegative);
             }
 
             if (MaxBet < 0)
             {
                 return new Result(
                     ErrorCode.MaxBetIsNegative,
-                    BetLimitMessage.MaxBetCannotBeNegative);
+                    Message.MaxBetCannotBeNegative);
             }
 
             if (MaxPerMatch < 0)
             {
                 return new Result(
                     ErrorCode.MaxPerMatchIsNegative,
-                    BetLimitMessage.MaxPerMatchCannotBeNegative);
+                    Message.MaxPerMatchCannotBeNegative);
             }
 
             if (MinBet > MaxBet)
             {
                 return new Result(
                     ErrorCode.MinBetIsGreaterThanMaxBet,
-                    BetLimitMessage.MinBetCannotBeGreaterThanMaxBet);
+                    Message.MinBetCannotBeGreaterThanMaxBet);
             }
 
             if (MaxBet > MaxPerMatch)
             {
                 return new Result(
                     ErrorCode.MaxBetIsGreaterThanMaxPerMatch,
-                    BetLimitMessage.MaxBetCannotBeGreaterThanMaxPerMatch);
+                    Message.MaxBetCannotBeGreaterThanMaxPerMatch);
             }
 
             return base.Validate();

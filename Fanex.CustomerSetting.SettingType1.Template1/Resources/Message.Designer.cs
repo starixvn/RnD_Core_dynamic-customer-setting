@@ -22,24 +22,24 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PTMessage {
+    internal class Message {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PTMessage() {
+        internal Message() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType1.Template1.Resources.PTMessage", typeof(PTMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType1.Template1.Resources.Message", typeof(Message).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Agent Max PT cannot be greater than Master Max PT.
         /// </summary>
-        public static string AgentMaxPTCannotBeGreaterThanMasterMaxPT {
+        internal static string AgentMaxPTCannotBeGreaterThanMasterMaxPT {
             get {
                 return ResourceManager.GetString("AgentMaxPTCannotBeGreaterThanMasterMaxPT", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Agent Min PT cannot be greater than Agent Max PT.
         /// </summary>
-        public static string AgentMinPTCannotBeGreaterThanAgentMaxPT {
+        internal static string AgentMinPTCannotBeGreaterThanAgentMaxPT {
             get {
                 return ResourceManager.GetString("AgentMinPTCannotBeGreaterThanAgentMaxPT", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master Auto PT cannot be greater than zero when IsAuto is not set.
         /// </summary>
-        public static string MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+        internal static string MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
             get {
                 return ResourceManager.GetString("MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master Auto PT On Member cannot be greater than zero when IsAuto is not set.
         /// </summary>
-        public static string MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+        internal static string MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
             get {
                 return ResourceManager.GetString("MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master Max PT cannot be greater than Super Max PT.
         /// </summary>
-        public static string MasterMaxPTCannotBeGreaterThanSuperMaxPT {
+        internal static string MasterMaxPTCannotBeGreaterThanSuperMaxPT {
             get {
                 return ResourceManager.GetString("MasterMaxPTCannotBeGreaterThanSuperMaxPT", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master Min PT cannot be greater than Master Max PT.
         /// </summary>
-        public static string MasterMinPTCannotBeGreaterThanMasterMaxPT {
+        internal static string MasterMinPTCannotBeGreaterThanMasterMaxPT {
             get {
                 return ResourceManager.GetString("MasterMinPTCannotBeGreaterThanMasterMaxPT", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master PT cannot be greater than zero when IsAuto is set.
         /// </summary>
-        public static string MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
+        internal static string MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
             get {
                 return ResourceManager.GetString("MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Master PT On Member cannot be greater than zero when IsAuto is set.
         /// </summary>
-        public static string MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
+        internal static string MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
             get {
                 return ResourceManager.GetString("MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Wrong position taking.
         /// </summary>
-        public static string Msg_20001 {
+        internal static string Msg_20001 {
             get {
                 return ResourceManager.GetString("Msg_20001", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing masters exceeded new Super Max PT.
         /// </summary>
-        public static string Msg_20019 {
+        internal static string Msg_20019 {
             get {
                 return ResourceManager.GetString("Msg_20019", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing members exceeded new Super Max PT.
         /// </summary>
-        public static string Msg_20020 {
+        internal static string Msg_20020 {
             get {
                 return ResourceManager.GetString("Msg_20020", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing masters exceeded new Master Max PT.
         /// </summary>
-        public static string Msg_20021 {
+        internal static string Msg_20021 {
             get {
                 return ResourceManager.GetString("Msg_20021", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing members exceeded new Master Max PT.
         /// </summary>
-        public static string Msg_20022 {
+        internal static string Msg_20022 {
             get {
                 return ResourceManager.GetString("Msg_20022", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing agents exceeded new Agent Max PT.
         /// </summary>
-        public static string Msg_20023 {
+        internal static string Msg_20023 {
             get {
                 return ResourceManager.GetString("Msg_20023", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing members exceeded new Agent Max PT.
         /// </summary>
-        public static string Msg_20024 {
+        internal static string Msg_20024 {
             get {
                 return ResourceManager.GetString("Msg_20024", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Upline Min/Max PT.
         /// </summary>
-        public static string Msg_20025 {
+        internal static string Msg_20025 {
             get {
                 return ResourceManager.GetString("Msg_20025", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Existing agents exceeded new Master Max PT.
         /// </summary>
-        public static string Msg_20026 {
+        internal static string Msg_20026 {
             get {
                 return ResourceManager.GetString("Msg_20026", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Master Max PT set by company.
         /// </summary>
-        public static string Msg_20027 {
+        internal static string Msg_20027 {
             get {
                 return ResourceManager.GetString("Msg_20027", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Super Max PT.
         /// </summary>
-        public static string Msg_20028 {
+        internal static string Msg_20028 {
             get {
                 return ResourceManager.GetString("Msg_20028", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Super Min PT.
         /// </summary>
-        public static string Msg_20029 {
+        internal static string Msg_20029 {
             get {
                 return ResourceManager.GetString("Msg_20029", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The Agent Min PT violates Master Max PT.
         /// </summary>
-        public static string Msg_20030 {
+        internal static string Msg_20030 {
             get {
                 return ResourceManager.GetString("Msg_20030", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Master Max PT.
         /// </summary>
-        public static string Msg_20031 {
+        internal static string Msg_20031 {
             get {
                 return ResourceManager.GetString("Msg_20031", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Master Min PT.
         /// </summary>
-        public static string Msg_20032 {
+        internal static string Msg_20032 {
             get {
                 return ResourceManager.GetString("Msg_20032", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Agent Min/Max PT.
         /// </summary>
-        public static string Msg_20033 {
+        internal static string Msg_20033 {
             get {
                 return ResourceManager.GetString("Msg_20033", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The position taking violates Agent Max PT.
         /// </summary>
-        public static string Msg_20034 {
+        internal static string Msg_20034 {
             get {
                 return ResourceManager.GetString("Msg_20034", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Position Taking cannot be exceed Max Value.
         /// </summary>
-        public static string PositionTakingCannotBeExceedMaxValue {
+        internal static string PositionTakingCannotBeExceedMaxValue {
             get {
                 return ResourceManager.GetString("PositionTakingCannotBeExceedMaxValue", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Super Auto PT cannot be greater than zero when IsAuto is not set.
         /// </summary>
-        public static string SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+        internal static string SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
             get {
                 return ResourceManager.GetString("SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Super Auto PT On Member cannot be greater than zero when IsAuto is not set.
         /// </summary>
-        public static string SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
+        internal static string SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet {
             get {
                 return ResourceManager.GetString("SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Super Min PT cannot be greater than Super Max PT.
         /// </summary>
-        public static string SuperMinPTCannotBeGreaterThanSuperMaxPT {
+        internal static string SuperMinPTCannotBeGreaterThanSuperMaxPT {
             get {
                 return ResourceManager.GetString("SuperMinPTCannotBeGreaterThanSuperMaxPT", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Super PT cannot be greater than zero when IsAuto is set.
         /// </summary>
-        public static string SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
+        internal static string SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet {
             get {
                 return ResourceManager.GetString("SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
             }
@@ -333,9 +333,18 @@ namespace Fanex.CustomerSetting.SettingType1.Template1.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Super PT On Member cannot be greater than zero when IsAuto is set.
         /// </summary>
-        public static string SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
+        internal static string SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet {
             get {
                 return ResourceManager.GetString("SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated position taking successfully..
+        /// </summary>
+        internal static string UpdatePositionTakingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatePositionTakingSuccessfully", resourceCulture);
             }
         }
     }

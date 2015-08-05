@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
+namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProductStatusMessage {
+    internal class Label {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ProductStatusMessage() {
+        internal Label() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType4.Template1.Resources.ProductStatusMessage", typeof(ProductStatusMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType3.Template1.Resources.Label", typeof(Label).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,38 +61,38 @@ namespace Fanex.CustomerSetting.SettingType4.Template1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled.
+        ///   Looks up a localized string similar to Commission.
         /// </summary>
-        public static string DownlineCannotBeEnabledWhenUplineIsDisabled {
+        internal static string Commission {
             get {
-                return ResourceManager.GetString("DownlineCannotBeEnabledWhenUplineIsDisabled", resourceCulture);
+                return ResourceManager.GetString("Commission", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline Product Status cannot be null.
+        ///   Looks up a localized string similar to Agent Comm.
         /// </summary>
-        public static string DownlineProductStatusCannotBeNull {
+        internal static string CommissionForAgent {
             get {
-                return ResourceManager.GetString("DownlineProductStatusCannotBeNull", resourceCulture);
+                return ResourceManager.GetString("CommissionForAgent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
+        ///   Looks up a localized string similar to Master Comm.
         /// </summary>
-        public static string Msg_60031 {
+        internal static string CommissionForMaster {
             get {
-                return ResourceManager.GetString("Msg_60031", resourceCulture);
+                return ResourceManager.GetString("CommissionForMaster", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
+        ///   Looks up a localized string similar to Member Comm.
         /// </summary>
-        public static string Msg_60032 {
+        internal static string CommissionForMember {
             get {
-                return ResourceManager.GetString("Msg_60032", resourceCulture);
+                return ResourceManager.GetString("CommissionForMember", resourceCulture);
             }
         }
     }

@@ -50,21 +50,21 @@
             {
                 return new Result(
                     ErrorCode.PTExceedMaxValue,
-                    PTMessage.PositionTakingCannotBeExceedMaxValue);
+                    Message.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (!IM1 && UM1 > 0)
             {
                 return new Result(
                     ErrorCode.MasterAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    PTMessage.MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
+                    Message.MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (IM1 && M1 > 0)
             {
                 return new Result(
                     ErrorCode.MasterPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet,
-                    PTMessage.MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
+                    Message.MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             return base.Validate();

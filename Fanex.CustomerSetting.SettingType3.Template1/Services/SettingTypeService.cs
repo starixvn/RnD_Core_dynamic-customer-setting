@@ -6,12 +6,12 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.SettingType3.Template1.DataAccesses;
     using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
     using Fanex.CustomerSetting.SettingType3.Template1.Models;
+    using Fanex.CustomerSetting.SettingType3.Template1.Resources;
     using Fanex.Logging;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService

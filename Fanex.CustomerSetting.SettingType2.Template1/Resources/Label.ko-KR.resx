@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommRateCannotBeExceedMaxValue" xml:space="preserve">
-    <value>Commission Rate cannot be exceed Max Value</value>
+  <data name="BetSetting" xml:space="preserve">
+    <value>배팅 설정</value>
   </data>
-  <data name="CommRateCannotBeNegative" xml:space="preserve">
-    <value>Commission Rate cannot be negative</value>
+  <data name="MaxBet" xml:space="preserve">
+    <value>최대 배팅</value>
   </data>
-  <data name="Msg_1" xml:space="preserve">
-    <value>Invalid commission rate</value>
+  <data name="MaxPerMatch" xml:space="preserve">
+    <value>경기당 최대 값</value>
+  </data>
+  <data name="MinBet" xml:space="preserve">
+    <value>최소 배팅</value>
   </data>
 </root>

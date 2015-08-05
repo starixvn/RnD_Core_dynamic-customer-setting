@@ -60,7 +60,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(BetLimitMessage.Msg_10003, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_10003, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
     }

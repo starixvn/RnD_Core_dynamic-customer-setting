@@ -117,38 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AgentMaxPT" xml:space="preserve">
-    <value>แบ่งสู้สูงสุดของเอ</value>
-  </data>
-  <data name="AgentMinPT" xml:space="preserve">
-    <value>ค่าแบ่งสู้ต่ำสุดของ</value>
-  </data>
-  <data name="AgentPT" xml:space="preserve">
-    <value>ค่าแบ่งสู้ของเอเย่น</value>
-  </data>
   <data name="Agents" xml:space="preserve">
     <value>ตัวแทน</value>
-  </data>
-  <data name="BetSetting" xml:space="preserve">
-    <value>การกำหนดการวางเดิมพัน</value>
-  </data>
-  <data name="Commission" xml:space="preserve">
-    <value>คอมมิชชั่น</value>
-  </data>
-  <data name="CommissionForAgent" xml:space="preserve">
-    <value>คอมมิชชั่นของ Agent</value>
-  </data>
-  <data name="CommissionForMaster" xml:space="preserve">
-    <value>คอมมิชชั่นของ Master</value>
-  </data>
-  <data name="CommissionForMember" xml:space="preserve">
-    <value>คอมมิชชั่นของสมาชิก</value>
-  </data>
-  <data name="Enable" xml:space="preserve">
-    <value>เปิดใช้งาน</value>
-  </data>
-  <data name="EnableDownline" xml:space="preserve">
-    <value>เปิดใช้งาน ดาวไลน์</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>แฟกซ์</value>
@@ -159,44 +129,14 @@
   <data name="GeneralInformation" xml:space="preserve">
     <value>ข้อมูลทั่วไป</value>
   </data>
-  <data name="IsAuto" xml:space="preserve">
-    <value>คืออัตโนมัติ</value>
-  </data>
   <data name="LastName" xml:space="preserve">
     <value>นามสกุล</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>สด</value>
-  </data>
-  <data name="MasterMaxPT" xml:space="preserve">
-    <value>แบ่งสู้สูงสุดของ</value>
-  </data>
-  <data name="MasterMinPT" xml:space="preserve">
-    <value>แบ่งสู้ขั้นต่ำของมาสเตอร์</value>
-  </data>
-  <data name="MasterPT" xml:space="preserve">
-    <value>ค่าแบ่งสู้ของมาสเตอร์</value>
   </data>
   <data name="Masters" xml:space="preserve">
     <value>ตัวแทนหลัก</value>
   </data>
-  <data name="Max" xml:space="preserve">
-    <value>สูงสุด</value>
-  </data>
-  <data name="MaxBet" xml:space="preserve">
-    <value>ค่าเดิมพันสูงสุด</value>
-  </data>
-  <data name="MaxPerMatch" xml:space="preserve">
-    <value>ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน</value>
-  </data>
   <data name="Members" xml:space="preserve">
     <value>สมาชิก</value>
-  </data>
-  <data name="Min" xml:space="preserve">
-    <value>ต่ำสุด</value>
-  </data>
-  <data name="MinBet" xml:space="preserve">
-    <value>ค่าเดิมพันต้ำสุด</value>
   </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>โทรศัพท์มือถือ</value>
@@ -206,21 +146,6 @@
   </data>
   <data name="Phone" xml:space="preserve">
     <value>โทรศัพท์</value>
-  </data>
-  <data name="PositionTaking" xml:space="preserve">
-    <value>ค่าความเสี่ยง</value>
-  </data>
-  <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
-  </data>
-  <data name="SuperMaxPT" xml:space="preserve">
-    <value>แบ่งสู้สูงสุดของซุปเปรอ์</value>
-  </data>
-  <data name="SuperMinPT" xml:space="preserve">
-    <value>แบ่งสู้ต่ำสุดของซุปเปรอ์</value>
-  </data>
-  <data name="SuperPT" xml:space="preserve">
-    <value>ค่าแบ่งสู้ของซุปเปอร์</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>ล่าสุด</value>

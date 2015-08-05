@@ -117,13 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UpdateMemberPtInfo" xml:space="preserve">
-    <value>คุณมีการเปลี่ยนค่าแบ่งสู้ของคุณ</value>
-  </data>
-  <data name="UpdateMemberPtQuestion" xml:space="preserve">
-    <value>คุณต้องการจะอัพเดทแบ่งสู้บนสมาชิกทั้งหมกหรือไม่:</value>
-  </data>
-  <data name="UpdateMemberPtTitle" xml:space="preserve">
-    <value>ยืนยันการอัพเดทการตั้งค่าความเสี่ยง</value>
-  </data>
 </root>

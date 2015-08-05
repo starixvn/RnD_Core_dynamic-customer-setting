@@ -126,15 +126,6 @@
   <data name="LastName" xml:space="preserve">
     <value>氏</value>
   </data>
-  <data name="Live" xml:space="preserve">
-    <value>ライブ</value>
-  </data>
-  <data name="MaxBet" xml:space="preserve">
-    <value>最大ベット</value>
-  </data>
-  <data name="MaxPerMatch" xml:space="preserve">
-    <value>1 試合毎の最大</value>
-  </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>携帯電話番号</value>
   </data>

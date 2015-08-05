@@ -48,7 +48,7 @@
         private MessageContent GetMessageContent<T>(MainMessage<T> positionTakingMainMessage, byte settingLevel, string language) where T : ISubMessage
         {
             var subMessage = positionTakingMainMessage.TranslateSubMessages(ResourceService, language, settingLevel);
-            var mainMessage = GetMessage(PTMessage.ResourceManager, positionTakingMainMessage.MessageId);
+            var mainMessage = GetMessage(Message.ResourceManager, positionTakingMainMessage.MessageId);
 
             return new MessageContent(mainMessage, subMessage);
         }

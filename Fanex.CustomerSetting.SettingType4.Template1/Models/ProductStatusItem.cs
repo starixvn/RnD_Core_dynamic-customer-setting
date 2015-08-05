@@ -46,7 +46,7 @@
             {
                 return new Result(
                     ErrorCode.DownlineIsEnabledWhenUplineIsDisabled,
-                    ProductStatusMessage.DownlineCannotBeEnabledWhenUplineIsDisabled);
+                    Message.DownlineCannotBeEnabledWhenUplineIsDisabled);
             }
 
             return base.Validate();

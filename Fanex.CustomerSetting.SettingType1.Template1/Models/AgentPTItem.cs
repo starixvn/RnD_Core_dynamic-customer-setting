@@ -61,28 +61,28 @@
             {
                 return new Result(
                     ErrorCode.PTExceedMaxValue,
-                    PTMessage.PositionTakingCannotBeExceedMaxValue);
+                    Message.PositionTakingCannotBeExceedMaxValue);
             }
 
             if (IM2 && M2 > 0)
             {
                 return new Result(
                     ErrorCode.MasterPTIsGreaterThanZeroWhenIsAutoIsSet,
-                    PTMessage.MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
+                    Message.MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
             }
 
             if (!IM2 && UM2 > 0)
             {
                 return new Result(
                     ErrorCode.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    PTMessage.MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
+                    Message.MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
             }
 
             if (N2 > A2)
             {
                 return new Result(
                     ErrorCode.AgentMinPTIsGreaterThanAgentMaxPT,
-                    PTMessage.AgentMinPTCannotBeGreaterThanAgentMaxPT);
+                    Message.AgentMinPTCannotBeGreaterThanAgentMaxPT);
             }
 
             return base.Validate();

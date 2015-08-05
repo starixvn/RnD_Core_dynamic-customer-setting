@@ -117,38 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AgentMaxPT" xml:space="preserve">
-    <value>에이전트 최대 PT</value>
-  </data>
-  <data name="AgentMinPT" xml:space="preserve">
-    <value>에이전트 최소 PT</value>
-  </data>
-  <data name="AgentPT" xml:space="preserve">
-    <value>에이전트 PT</value>
-  </data>
   <data name="Agents" xml:space="preserve">
     <value>에이전트</value>
-  </data>
-  <data name="BetSetting" xml:space="preserve">
-    <value>배팅 설정</value>
-  </data>
-  <data name="Commission" xml:space="preserve">
-    <value>수수료</value>
-  </data>
-  <data name="CommissionForAgent" xml:space="preserve">
-    <value>에이전트 수수료</value>
-  </data>
-  <data name="CommissionForMaster" xml:space="preserve">
-    <value>마스터 수수료</value>
-  </data>
-  <data name="CommissionForMember" xml:space="preserve">
-    <value>회원 수수료</value>
-  </data>
-  <data name="Enable" xml:space="preserve">
-    <value>활성화</value>
-  </data>
-  <data name="EnableDownline" xml:space="preserve">
-    <value>다운라인 활성화하기</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>팩스</value>
@@ -156,44 +126,14 @@
   <data name="FirstName" xml:space="preserve">
     <value>이름</value>
   </data>
-  <data name="IsAuto" xml:space="preserve">
-    <value>자동</value>
-  </data>
   <data name="LastName" xml:space="preserve">
     <value>성</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>라이브</value>
-  </data>
-  <data name="MasterMaxPT" xml:space="preserve">
-    <value>마스터 최대 PT</value>
-  </data>
-  <data name="MasterMinPT" xml:space="preserve">
-    <value>마스터 최소PT</value>
-  </data>
-  <data name="MasterPT" xml:space="preserve">
-    <value>마스터 PT</value>
   </data>
   <data name="Masters" xml:space="preserve">
     <value>마스터</value>
   </data>
-  <data name="Max" xml:space="preserve">
-    <value>최대</value>
-  </data>
-  <data name="MaxBet" xml:space="preserve">
-    <value>최대 배팅</value>
-  </data>
-  <data name="MaxPerMatch" xml:space="preserve">
-    <value>경기당 최대 값</value>
-  </data>
   <data name="Members" xml:space="preserve">
     <value>회원</value>
-  </data>
-  <data name="Min" xml:space="preserve">
-    <value>최소</value>
-  </data>
-  <data name="MinBet" xml:space="preserve">
-    <value>최소 배팅</value>
   </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>핸드폰</value>
@@ -203,21 +143,6 @@
   </data>
   <data name="Phone" xml:space="preserve">
     <value>전화</value>
-  </data>
-  <data name="PositionTaking" xml:space="preserve">
-    <value>거래 조건</value>
-  </data>
-  <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
-  </data>
-  <data name="SuperMaxPT" xml:space="preserve">
-    <value>슈퍼 최대 PT</value>
-  </data>
-  <data name="SuperMinPT" xml:space="preserve">
-    <value>슈퍼 최소PT</value>
-  </data>
-  <data name="SuperPT" xml:space="preserve">
-    <value>슈퍼 PT</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>업데이트</value>

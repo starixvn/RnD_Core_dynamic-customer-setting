@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType3.Template1.Resources;
     using Fanex.CustomerSetting.SettingType3.Template1.Services;
@@ -62,7 +61,7 @@
             var actualMessageContent = MessageService.TranslateMessage(msgType, rawMessage, settingLevel, SettingContext.Language);
 
             //// Assert
-            Assert.AreEqual(CommissionMessage.Msg_1, actualMessageContent.MainMessage);
+            Assert.AreEqual(Message.Msg_1, actualMessageContent.MainMessage);
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
     }
