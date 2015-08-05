@@ -10,7 +10,7 @@
     <div class="customer-setting" data-ng-show="ctrl.setting">
         <customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></customer-info>
         <setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
-        <button class="update-btn" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
+        <button class="button" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
     </div>
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
     <script type="text/javascript" src="{{rootUrl}}scripts/libraries/angularjs/angular.min.js?v={{version}}"></script>

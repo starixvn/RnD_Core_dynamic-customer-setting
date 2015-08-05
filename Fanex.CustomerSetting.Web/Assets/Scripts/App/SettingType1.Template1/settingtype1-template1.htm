@@ -1,5 +1,6 @@
 ﻿<div>
     <default-setting-type-grouping class="setting-type-1"></default-setting-type-grouping>
+    <adjust-member-pt-modal></adjust-member-pt-modal>
     <script type="text/ng-template" id="settingtyp1-template1-header.html">
         <div class="empty-cell"></div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.super">
@@ -67,27 +68,33 @@
             </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.master">
-            <div class="w28-percent">
+            <div class="w28-percent" data-ng-show="item.iS3">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="{{item.iS3 ? 'uS3' : 's3'}}"
-                                        data-min="{{item.iM2 ? 0 : ([0, item.n4 - item.m4] | maxValue)}}"
+                                        data-field-name="uS3"
+                                        data-min="{{0}}"
+                                        data-max="{{item.s4}}">
+                </position-taking-select>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iS3">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="s3"
+                                        data-min="{{[0, item.n4 - item.m4] | maxValue}}"
                                         data-max="{{item.s4}}">
                 </position-taking-select>
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
                     <input type="checkbox"
-                           data-member-pt-modal
-                           data-member-pt=""
-                           data-show-modal="{{item.iS3}}"
-                           data-ng-model="item.iS3" />
+                           data-ng-model="item.iS3"
+                           data-auto-position-taking
+                           data-ng-change="confirmUpdatingMemberPt(!item.iS3 && item.iS3 !== item.oldSetting.iS3, item.s4 - item.m3, 'isUpdateSuperPTOnMembers', 'superPTOnMembers')" />
                 </label>
             </div>
             <div class="w28-percent">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="m3"
-                                        data-min="{{item.iM2 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}"
-                                        data-max="{{item.iM2 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}">
+                                        data-min="{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}"
+                                        data-max="{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}">
                 </position-taking-select>
             </div>
             <div class="w28-percent last">
@@ -99,20 +106,26 @@
             </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-            <div class="w28-percent">
+            <div class="w28-percent" data-ng-show="item.iM2">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="{{item.iM2 ? 'uM2' : 'm2'}}"
-                                        data-min="{{item.iM2 ? 0 : ([0, item.n3 - item.a4] | maxValue)}}"
+                                        data-field-name="uM2"
+                                        data-min="{{0}}"
+                                        data-max="{{item.m3}}">
+                </position-taking-select>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iM2">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="m2"
+                                        data-min="{{[0, item.n3 - item.a4] | maxValue}}"
                                         data-max="{{item.m3}}">
                 </position-taking-select>
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
                     <input type="checkbox"
-                           data-member-pt-modal
-                           data-member-pt=""
-                           data-show-modal="{{item.iM2}}"
-                           data-ng-model="item.iM2" />
+                           data-ng-model="item.iM2"
+                           data-auto-position-taking
+                           data-ng-change="confirmUpdatingMemberPt(!item.iM2 && item.iM2 !== item.oldSetting.iM2, item.m3 - item.a2, 'isUpdateMasterPTOnMembers', 'masterPTOnMembers')" />
                 </label>
             </div>
             <div class="w28-percent">
@@ -131,18 +144,23 @@
             </div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
-            <div class="w28-percent" data-ng-disabled="!item.iS1 && item.iS3">
+            <div class="w28-percent" data-ng-show="item.iS1">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="{{item.iS1 ? 'uS1' : 's1'}}"
-                                        data-min="{{math.max(0, item.n4 - item.m1 - item.a1)}}"
-                                        data-max="{{item.iS1 ? item.s4 : math.max(item.n4 - item.m1 - item.a1, item.s4 - item.m3)}}">
+                                        data-field-name="uS1"
+                                        data-min="{{[0, item.n4 - item.m1 - item.a1] | maxValue}}"
+                                        data-max="{{item.s4}}">
+                </position-taking-select>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iS1" data-ng-disabled="item.iS3">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="s1"
+                                        data-min="{{[0, item.n4 - item.m1 - item.a1] | maxValue}}"
+                                        data-max="{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}">
                 </position-taking-select>
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
                     <input type="checkbox"
-                           data-member-pt-modal
-                           data-member-pt=""
                            data-show-modal="{{item.iS1}}"
                            data-ng-model="item.iS1" />
                 </label>
@@ -151,18 +169,23 @@
             <div class="w28-percent last">{{item.a1}}</div>
         </div>
         <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
-            <div class="w42-percent" data-ng-disabled="!item.iM1 && item.iM2">
+            <div class="w42-percent" data-ng-show="item.iM1">
                 <position-taking-select data-setting-item="item"
-                                        data-field-name="{{item.iM1 ? 'uM1' : 'm1'}}"
-                                        data-min="{{math.max(0, item.n3 - item.a1)}}"
-                                        data-max="{{item.iM1 ? item.m3 : item.m3 - item.a1}}">
+                                        data-field-name="uM1"
+                                        data-min="{{[0, item.n3 - item.a1] | maxValue}}"
+                                        data-max="{{item.m3}}">
+                </position-taking-select>
+            </div>
+            <div class="w42-percent" data-ng-show="!item.iM1" data-ng-disabled="item.iM2">
+                <position-taking-select data-setting-item="item"
+                                        data-field-name="m1"
+                                        data-min="{{[0, item.n3 - item.a1] | maxValue}}"
+                                        data-max="{{item.m3 - item.a1}}">
                 </position-taking-select>
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
                     <input type="checkbox"
-                           data-member-pt-modal
-                           data-member-pt=""
                            data-show-modal="{{item.iM1}}"
                            data-ng-model="item.iM1" />
                 </label>
@@ -183,6 +206,24 @@
         <div>
             <div class="select-wrapper">
                 <select data-ng-options="item.key as item.value / divisor for item in range"></select>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="adjust-member-pt-modal.html">
+        <div class="modal-overlay" data-ng-show="isShown">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-title">{{'UpdateMemberPtInfo' | message}}</div>
+                </div>
+                <div class="modal-content">
+                    <span>{{'UpdateMemberPtQuestion' | message}}</span>
+                    <select data-ng-model="selectedValue"
+                            data-ng-options="item.key as item.value / divisor for item in range"></select>
+                </div>
+                <div class="modal-footer">
+                    <button data-ng-click="ok()">{{'Yes' | label}}</button>
+                    <button data-ng-click="cancel()">{{'No' | label}}</button>
+                </div>
             </div>
         </div>
     </script>

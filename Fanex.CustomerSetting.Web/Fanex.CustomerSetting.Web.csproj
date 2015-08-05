@@ -175,6 +175,7 @@
     <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingTypeDirectiveLoader\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.ts" />

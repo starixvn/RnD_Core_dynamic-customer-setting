@@ -157,38 +157,16 @@ module CustomerSetting {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
-            if (this.iS3 && this.s3 > 0) {
-                this.validationState = new ValidationResult("SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet", "s3");
-
-                return false;
-            }
-
-            if (!this.iS3 && this.uS3 > 0) {
-                this.validationState = new ValidationResult("SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", "uS3");
-
-                return false;
-            }
-
-            if (this.n3 > this.m3) {
-                this.validationState = new ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
-
-                return false;
-            }
-
-            this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
             if (this.s3 > Settingtype1Template1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s3");
 
@@ -213,7 +191,25 @@ module CustomerSetting {
                 return false;
             }
 
+            if (this.n3 > this.m3) {
+                this.validationState = new ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
             return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iS3 && this.s3 > 0) {
+                this.s3 = 0;
+            }
+
+            if (!this.iS3 && this.uS3 > 0) {
+                this.uS3 = 0;
+            }
         }
     }
 
@@ -242,38 +238,16 @@ module CustomerSetting {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
-            if (this.iM2 && this.m2 > 0) {
-                this.validationState = new ValidationResult("MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet", "m2");
-
-                return false;
-            }
-
-            if (!this.iM2 && this.uM2 > 0) {
-                this.validationState = new ValidationResult("MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet", "uM2");
-
-                return false;
-            }
-
-            if (this.n2 > this.a2) {
-                this.validationState = new ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
-
-                return false;
-            }
-
-            this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
             if (this.m2 > Settingtype1Template1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m2");
 
@@ -298,7 +272,25 @@ module CustomerSetting {
                 return false;
             }
 
+            if (this.n2 > this.a2) {
+                this.validationState = new ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
             return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iM2 && this.m2 > 0) {
+                this.m2 = 0;
+            }
+
+            if (!this.iM2 && this.uM2 > 0) {
+                this.uM2 = 0;
+            }
         }
     }
 
@@ -326,32 +318,16 @@ module CustomerSetting {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
-            if (!this.iS1 && this.uS1 > 0) {
-                this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", "uS1");
-
-                return false;
-            }
-
-            if (this.iS1 && this.s1 > 0) {
-                this.validationState = new ValidationResult("SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", "s1");
-
-                return false;
-            }
-
-            this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
             if (this.s1 > Settingtype1Template1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s1");
 
@@ -364,7 +340,19 @@ module CustomerSetting {
                 return false;
             }
 
+            this.validationState = <ValidationResult>Result.normal;
+
             return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iS1 && this.s1 > 0) {
+                this.s1 = 0;
+            }
+
+            if (!this.iS1 && this.uS1 > 0) {
+                this.uS1 = 0;
+            }
         }
     }
 
@@ -390,32 +378,16 @@ module CustomerSetting {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
-            if (!this.iM1 && this.uM1 > 0) {
-                this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet", "uM1");
-
-                return false;
-            }
-
-            if (this.iM1 && this.m1 > 0) {
-                this.validationState = new ValidationResult("MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet", "m1");
-
-                return false;
-            }
-
-            this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
             if (this.m1 > Settingtype1Template1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m1");
 
@@ -428,7 +400,19 @@ module CustomerSetting {
                 return false;
             }
 
+            this.validationState = <ValidationResult>Result.normal;
+
             return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iM1 && this.m1 > 0) {
+                this.m1 = 0;
+            }
+
+            if (!this.iM1 && this.uM1 > 0) {
+                this.uM1 = 0;
+            }
         }
     }
 
@@ -490,12 +474,12 @@ module CustomerSetting {
 
     interface PositionTakingSelectScope extends ng.IScope {
         settingItem: SettingItem;
-        fieldName: number;
+        fieldName: string;
         min: number;
         max: number;
         divisor: number;
         range: Array<KeyValuePair<number, number>>;
-        math: Math;
+        validationError: string;
     }
 
     class PositionTakingSelectDirective implements ng.IDirective {
@@ -512,51 +496,85 @@ module CustomerSetting {
 
         public templateUrl: string = "settingtype1-template1-select.html";
 
-        public controller: any = ["$scope", ($scope: PositionTakingSelectScope) => {
-            $scope.divisor = Settingtype1Template1Config.roundingFactor;
-            $scope.math = Math;
+        public controller: any = [
+            "$scope",
+            "valueRangeGenerator",
+            "resourceService",
+            ($scope: PositionTakingSelectScope, valueRangeGenerator: ValueRangeGenerator, resourceService: ResourceService) => {
+                $scope.divisor = Settingtype1Template1Config.roundingFactor;
 
-            $scope.$watchGroup(["min", "max"], (newData, oldData) => {
-                if ($scope.settingItem) {
-                    //$scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
-                    // If the PT loaded from database breaks the validation range, do not force it to get a valid value.
-                    // Need the confirmation from BA.
-                    if (!angular.equals(oldData, newData)) {
-                        $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
+                $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
+                    if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
+                        $scope.validationError = resourceService.getFormattedMessage(validationState.message, validationState.msgParams);
+                    } else {
+                        $scope.validationError = undefined;
                     }
+                });
 
-                    $scope.range = this.valueRangeGenerator.generateRanges(
-                        $scope.settingItem[$scope.fieldName],
-                        $scope.min,
-                        $scope.max,
-                        Settingtype1Template1Config.step,
-                        Settingtype1Template1Config.roundingFactor);
-                }
-            });
-        }];
+                $scope.$watchGroup(["min", "max"], (newData, oldData) => {
+                    if ($scope.settingItem) {
+                        if (!angular.equals(oldData, newData)) {
+                            $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
+                        }
+
+                        $scope.range = valueRangeGenerator.generateRanges(
+                            $scope.settingItem[$scope.fieldName],
+                            $scope.min,
+                            $scope.max,
+                            Settingtype1Template1Config.step,
+                            Settingtype1Template1Config.roundingFactor);
+                    }
+                });
+            }];
 
         public link: ng.IDirectiveLinkFn = (scope: PositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
             var select = element.find("select");
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-tooltip", "");
-            element.attr("data-message", "settingItem.validationState.message");
+            element.attr("data-message", "validationError");
             this.$compile(element)(scope);
         }
 
-        constructor(
-            private $compile: ng.ICompileService,
-            private valueRangeGenerator: ValueRangeGenerator,
-            private resourceService: ResourceService) { }
+        constructor(private $compile: ng.ICompileService) { }
     }
 
-    angular.module("customerSetting").directive("positionTakingSelect", ["$compile", "valueRangeGenerator", "resourceService", function () {
+    angular.module("customerSetting").directive("positionTakingSelect", ["$compile", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(PositionTakingSelectDirective, args));
     }]);
 
-    class Settingtype1Template1Config {
+    interface AutoPositionTakingScope extends ng.IScope {
+        item: SettingItem;
+        confirmUpdatingMemberPt: (isShown: boolean, max: number, updatingMarker: string, ptOnMemberField: string) => void;
+    }
+
+    class AutoPositionTakingDirective implements ng.IDirective {
+        public restrict: string = "A";
+
+        public controller: any = [
+            "$scope",
+            "adjustMemberPtModalService",
+            ($scope: AutoPositionTakingScope, adjustMemberPtModalService: AdjustMemberPtModalService) => {
+                $scope.confirmUpdatingMemberPt = (isShown: boolean, max: number, updatingMarker: string, ptOnMemberField: string) => {
+                    if (isShown) {
+                        adjustMemberPtModalService.show(max, (memberPt: number) => {
+                            $scope.item[updatingMarker] = true;
+                            $scope.item[ptOnMemberField] = memberPt;
+                        });
+                    }
+                }
+            }];
+    }
+
+    angular.module("customerSetting").directive("autoPositionTaking", [function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(AutoPositionTakingDirective, args));
+    }]);
+
+    export class Settingtype1Template1Config {
         public static get step(): number {
             return 1;
         }

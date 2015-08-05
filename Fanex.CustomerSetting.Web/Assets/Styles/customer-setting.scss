@@ -87,7 +87,7 @@ select {
     text-align: center;
 }
 
-.update-btn {
+button {
     @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
     @include border-radius(3px);
     background-repeat: no-repeat;
@@ -190,76 +190,6 @@ select {
     }
 }
 
-/*.dialog-container {
-    .dialog-overlay {
-        @include opacity(0.5);
-        background-color: #fff;
-        bottom: 0;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        z-index: 10008;
-    }
-
-    .dialog-scrollable {
-        bottom: 0;
-        left: 0;
-        overflow: auto;
-        position: fixed;
-        right: 0;
-        top: 0;
-        z-index: 10009;
-
-        .dialog-content {
-            @include box-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
-            margin: 100px auto auto;
-            width: 450px;
-
-            .dialog-header {
-                padding: 1px;
-
-                .dialog-title {
-                    background-color: #3c3c3c;
-                    color: #fff;
-                    font-weight: bold;
-                    padding: 5px;
-                }
-
-                .dialog-close {
-                    cursor: pointer;
-                    float: right;
-
-                    margin: {
-                        right: 5px;
-                        top: 3px;
-                    }
-                }
-            }
-
-            .dialog-body {
-                background-color: #ececec;
-                line-height: 20px;
-                padding: 5px 10px;
-                text-align: left;
-            }
-
-            .dialog-footer {
-                background-color: #ececec;
-                border-top: 1px solid #3c3c3c;
-                padding: 5px;
-                text-align: right;
-
-                button {
-                    cursor: pointer;
-                    min-width: 80px;
-                    padding: 1px 6px;
-                }
-            }
-        }
-    }
-}*/
-
 .block-overlay {
     @include opacity(0.5);
     background: #fff;
@@ -279,6 +209,61 @@ select {
     right: 0;
     top: 0;
     z-index: 101;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.modal {
+    @include box-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+    background-color: #fff;
+    border: 1px solid $border-color;
+    margin: 100px auto auto;
+    width: 450px;
+    z-index: 101;
+
+    .modal-header {
+        .modal-title {
+            background-color: $header-color;
+            border-bottom: 1px solid $border-color;
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+
+            margin: {
+                right: 5px;
+                top: 3px;
+            }
+        }
+    }
+
+    .modal-content {
+        line-height: 20px;
+        padding: 5px 10px;
+        text-align: left;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #ececec;
+        padding: 5px;
+        text-align: right;
+
+        button {
+            padding: 1px 6px;
+        }
+    }
 }
 
 .tooltip-container {
