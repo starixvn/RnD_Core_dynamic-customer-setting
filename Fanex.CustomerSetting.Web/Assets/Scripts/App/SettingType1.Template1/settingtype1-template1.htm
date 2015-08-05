@@ -4,36 +4,36 @@
     <script type="text/ng-template" id="settingtyp1-template1-header.html">
         <div class="empty-cell"></div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.super">
-            <div class="w25-percent">{{::('SuperMaxPT' | label)}}</div>
-            <div class="w25-percent">{{::('MasterMaxPT' | label)}}</div>
-            <div class="w25-percent">{{::('AgentMaxPT' | label)}}</div>
-            <div class="w25-percent last">{{::('SuperMinPT' | label)}}</div>
+            <div class="w25-percent">{{::('SuperMaxPT' | positionTakingLabel)}}</div>
+            <div class="w25-percent">{{::('MasterMaxPT' | positionTakingLabel)}}</div>
+            <div class="w25-percent">{{::('AgentMaxPT' | positionTakingLabel)}}</div>
+            <div class="w25-percent last">{{::('SuperMinPT' | positionTakingLabel)}}</div>
         </div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.master">
-            <div class="w28-percent">{{::('SuperPT' | label)}}</div>
-            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
-            <div class="w28-percent">{{::('MasterMaxPT' | label)}}</div>
-            <div class="w28-percent last">{{::('MasterMinPT' | label)}}</div>
+            <div class="w28-percent">{{::('SuperPT' | positionTakingLabel)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
+            <div class="w28-percent">{{::('MasterMaxPT' | positionTakingLabel)}}</div>
+            <div class="w28-percent last">{{::('MasterMinPT' | positionTakingLabel)}}</div>
         </div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-            <div class="w28-percent">{{::('MasterPT' | label)}}</div>
-            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
-            <div class="w28-percent">{{::('AgentMaxPT' | label)}}</div>
-            <div class="w28-percent last">{{::('AgentMinPT' | label)}}</div>
+            <div class="w28-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
+            <div class="w28-percent">{{::('AgentMaxPT' | positionTakingLabel)}}</div>
+            <div class="w28-percent last">{{::('AgentMinPT' | positionTakingLabel)}}</div>
         </div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
-            <div class="w28-percent">{{::('SuperPT' | label)}}</div>
-            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
-            <div class="w28-percent">{{::('MasterPT' | label)}}</div>
-            <div class="w28-percent last">{{::('AgentPT' | label)}}</div>
+            <div class="w28-percent">{{::('SuperPT' | positionTakingLabel)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
+            <div class="w28-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
+            <div class="w28-percent last">{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
-            <div class="w42-percent">{{::('MasterPT' | label)}}</div>
-            <div class="w16-percent">{{::('IsAuto' | label)}}</div>
-            <div class="w42-percent last">{{::('AgentPT' | label)}}</div>
+            <div class="w42-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
+            <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
+            <div class="w42-percent last">{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
         <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
-            <div>{{::('AgentPT' | label)}}</div>
+            <div>{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
     </script>
     <script type="text/ng-template" id="settingtyp1-template1-value.html">
@@ -213,10 +213,10 @@
         <div class="modal-overlay" data-ng-show="isShown">
             <div class="modal">
                 <div class="modal-header">
-                    <div class="modal-title">{{'UpdateMemberPtInfo' | message}}</div>
+                    <div class="modal-title">{{'UpdateMemberPtInfo' | positionTakingMessage}}</div>
                 </div>
                 <div class="modal-content">
-                    <span>{{'UpdateMemberPtQuestion' | message}}</span>
+                    <span>{{'UpdateMemberPtQuestion' | positionTakingLabel}}</span>
                     <select data-ng-model="selectedValue"
                             data-ng-options="item.key as item.value / divisor for item in range"></select>
                 </div>

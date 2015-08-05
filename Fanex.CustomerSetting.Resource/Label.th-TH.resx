@@ -132,6 +132,9 @@
   <data name="LastName" xml:space="preserve">
     <value>นามสกุล</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>สด</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>ตัวแทนหลัก</value>
   </data>

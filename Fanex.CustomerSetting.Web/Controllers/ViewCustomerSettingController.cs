@@ -22,7 +22,7 @@
         }
 
         [HttpGet]
-        ////[OutputCache(Duration = 14400)]
+        [OutputCache(Duration = 14400)]
         public ActionResult Index()
         {
             string filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");

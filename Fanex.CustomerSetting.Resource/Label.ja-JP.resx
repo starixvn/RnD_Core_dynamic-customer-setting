@@ -126,6 +126,9 @@
   <data name="LastName" xml:space="preserve">
     <value>氏</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>ライブ</value>
+  </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>携帯電話番号</value>
   </data>

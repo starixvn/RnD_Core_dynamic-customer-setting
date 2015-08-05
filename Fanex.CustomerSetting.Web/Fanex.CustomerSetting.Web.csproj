@@ -121,13 +121,7 @@
       <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Scripts\Specs\Core\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType1.Template1\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType2.Template1\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType3.Template1\" />
-    <Folder Include="Assets\Scripts\Specs\SettingType4.Template1\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
@@ -145,9 +139,45 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\position-taking-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>position-taking-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\position-taking-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>position-taking-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bet-setting-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bet-setting-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType3.Template1\commission-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>commission-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\App\SettingType3.Template1\commission-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commission-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType4.Template1\product-status-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>product-status-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\App\SettingType4.Template1\product-status-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>product-status-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
     <Content Include="Assets\Styles\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
@@ -176,10 +206,30 @@
     <TypeScriptCompile Include="Assets\Scripts\App\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\position-taking-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType3.Template1\commission-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType4.Template1\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\customer-info.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\setting-result.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Core\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\SettingType4.Template1\settingtype4-template1.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

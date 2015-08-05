@@ -138,6 +138,9 @@
   <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>Masters</value>
   </data>
@@ -150,6 +153,9 @@
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
   </data>
@@ -161,5 +167,8 @@
   </data>
   <data name="UserNames" xml:space="preserve">
     <value>UserNames</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

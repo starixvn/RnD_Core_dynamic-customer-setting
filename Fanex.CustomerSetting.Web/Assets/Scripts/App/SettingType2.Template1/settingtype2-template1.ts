@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
-/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="bet-setting-resources.ts" />
 
 module CustomerSetting {
     class Settingtype2Template1Item extends DefaultSettingItem {
@@ -138,17 +138,17 @@ module CustomerSetting {
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             scope.headerTemplateUrl = "settingtyp2-template1-header.html";
             scope.valueTemplateUrl = "settingtyp2-template1-value.html";
-            scope.settingTypeName = this.resourceService.getLabel("BetSetting");
+            scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
         }
 
         constructor(
             private appConfigService: AppConfigService,
-            private resourceService: ResourceService) {
+            private betSettingResourceService: BetSettingResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype2Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype2Template1", ["appConfigService", "resourceService", function () {
+    angular.module("customerSetting").directive("settingtype2Template1", ["appConfigService", "betSettingResourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType2Template1Directive, args));
@@ -176,25 +176,28 @@ module CustomerSetting {
             }
         }
 
-        public controller: any = ["$scope", "resourceService", ($scope: BetSettingInputScope, resourceService: ResourceService) => {
-            $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
-                if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
-                    $scope.validationError = resourceService.getFormattedMessage(validationState.message, validationState.msgParams);
-                } else {
-                    $scope.validationError = undefined;
-                }
-            });
+        public controller: any = [
+            "$scope",
+            "betSettingResourceService",
+            ($scope: BetSettingInputScope, betSettingResourceService: BetSettingResourceService) => {
+                $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
+                    if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
+                        $scope.validationError = betSettingResourceService.getFormattedMessage(validationState.message, validationState.msgParams);
+                    } else {
+                        $scope.validationError = undefined;
+                    }
+                });
 
-            $scope.updateValue = () => {
-                if ($scope.fieldName === "minBet") {
-                    $scope.settingItem.validateMinBet();
-                } else if ($scope.fieldName === "maxBet") {
-                    $scope.settingItem.validateMaxBet();
-                } else if ($scope.fieldName === "maxPerMatch") {
-                    $scope.settingItem.validateMaxPerMatch();
-                }
-            };
-        }];
+                $scope.updateValue = () => {
+                    if ($scope.fieldName === "minBet") {
+                        $scope.settingItem.validateMinBet();
+                    } else if ($scope.fieldName === "maxBet") {
+                        $scope.settingItem.validateMaxBet();
+                    } else if ($scope.fieldName === "maxPerMatch") {
+                        $scope.settingItem.validateMaxPerMatch();
+                    }
+                };
+            }];
 
         public link: ng.IDirectiveLinkFn = (scope: BetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             var element = angular.element(wrapElement.children()[0]);
@@ -276,7 +279,7 @@ module CustomerSetting {
             private $filter: ng.IFilterService) { }
     }
 
-    angular.module("customerSetting").directive("betSettingInput", ["$compile", "$filter", "resourceService", function () {
+    angular.module("customerSetting").directive("betSettingInput", ["$compile", "$filter", "betSettingResourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(BetSettingInputDirective, args));

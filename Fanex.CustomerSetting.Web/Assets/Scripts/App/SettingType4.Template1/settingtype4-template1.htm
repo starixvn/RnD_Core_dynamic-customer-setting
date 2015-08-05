@@ -12,7 +12,7 @@
                        data-ng-model="isChecked"
                        data-ng-disabled="isDisabled"
                        data-ng-change="change()" />
-                {{'Enable' | label}}
+                {{'Enable' | productStatusLabel}}
             </label>
             <label class="checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
                 <input type="checkbox"
@@ -21,7 +21,7 @@
                        data-ng-model="isDownlineChecked"
                        data-ng-disabled="isDownlineDisabled"
                        data-ng-change="changeDownline()" />
-                {{'EnableDownline' | label}}
+                {{'EnableDownline' | productStatusLabel}}
             </label>
         </div>
     </script>

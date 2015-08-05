@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
-/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="commission-resources.ts" />
 
 module CustomerSetting {
     class Settingtype3Template1Item extends DefaultSettingItem {
@@ -53,17 +53,17 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
-            scope.settingTypeName = this.resourceService.getLabel("Commission");
+            scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         }
 
         constructor(
             private appConfigService: AppConfigService,
-            private resourceService: ResourceService) {
+            private commissionResourceService: CommissionResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype3Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "resourceService", function () {
+    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "commissionResourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));

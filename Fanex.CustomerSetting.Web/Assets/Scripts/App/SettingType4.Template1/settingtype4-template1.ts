@@ -2,7 +2,7 @@
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
-/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="product-status-resources.ts" />
 
 module CustomerSetting {
     class Settingtype4Template1Item extends DefaultSettingItem {
@@ -60,17 +60,17 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp4-template1-value.html";
-            scope.settingTypeName = this.resourceService.getLabel("ProductStatus");
+            scope.settingTypeName = this.productStatusResourceService.getLabel("ProductStatus");
         }
 
         constructor(
             private appConfigService: AppConfigService,
-            private resourceService: ResourceService) {
+            private productStatusResourceService: ProductStatusResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype4Template1Item(settingItem, backup));
         }
     }
 
-    angular.module("customerSetting").directive("settingtype4Template1", ["appConfigService", "resourceService", function () {
+    angular.module("customerSetting").directive("settingtype4Template1", ["appConfigService", "productStatusResourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType4Template1Directive, args));

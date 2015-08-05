@@ -1,7 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
-/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="adjust-member-pt-modal.ts" />
+/// <reference path="position-taking-resources.ts" />
 
 module CustomerSetting {
     class Settingtype1Template1Item {
@@ -456,17 +457,17 @@ module CustomerSetting {
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp1-template1-header.html";
             scope.valueTemplateUrl = "settingtyp1-template1-value.html";
-            scope.settingTypeName = this.resourceService.getLabel("PositionTaking");
+            scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
         }
 
         constructor(
             private appConfigService: AppConfigService,
-            private resourceService: ResourceService) {
+            private positionTakingResourceService: PositionTakingResourceService) {
             super(Settingtype1Template1Item.factory);
         }
     }
 
-    angular.module("customerSetting").directive("settingtype1Template1", ["appConfigService", "resourceService", function () {
+    angular.module("customerSetting").directive("settingtype1Template1", ["appConfigService", "positionTakingResourceService", function () {
         var args = Array.prototype.concat.apply([null], arguments);
 
         return new (Function.prototype.bind.apply(SettingType1Template1Directive, args));
@@ -499,13 +500,13 @@ module CustomerSetting {
         public controller: any = [
             "$scope",
             "valueRangeGenerator",
-            "resourceService",
-            ($scope: PositionTakingSelectScope, valueRangeGenerator: ValueRangeGenerator, resourceService: ResourceService) => {
+            "positionTakingResourceService",
+            ($scope: PositionTakingSelectScope, valueRangeGenerator: ValueRangeGenerator, positionTakingResourceService: PositionTakingResourceService) => {
                 $scope.divisor = Settingtype1Template1Config.roundingFactor;
 
                 $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
                     if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
-                        $scope.validationError = resourceService.getFormattedMessage(validationState.message, validationState.msgParams);
+                        $scope.validationError = positionTakingResourceService.getFormattedMessage(validationState.message, validationState.msgParams);
                     } else {
                         $scope.validationError = undefined;
                     }

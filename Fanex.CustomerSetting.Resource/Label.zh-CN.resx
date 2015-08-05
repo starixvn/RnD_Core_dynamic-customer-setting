@@ -129,6 +129,9 @@
   <data name="LastName" xml:space="preserve">
     <value>姓</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>现场</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>会员</value>
   </data>

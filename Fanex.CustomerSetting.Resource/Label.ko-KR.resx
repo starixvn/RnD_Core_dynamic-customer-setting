@@ -129,6 +129,9 @@
   <data name="LastName" xml:space="preserve">
     <value>성</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>라이브</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>마스터</value>
   </data>

@@ -132,6 +132,9 @@
   <data name="LastName" xml:space="preserve">
     <value>姓</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>現場</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>會員</value>
   </data>

@@ -132,6 +132,9 @@
   <data name="LastName" xml:space="preserve">
     <value>Họ</value>
   </data>
+  <data name="Live" xml:space="preserve">
+    <value>Trực Tuyến</value>
+  </data>
   <data name="Masters" xml:space="preserve">
     <value>Masters</value>
   </data>
