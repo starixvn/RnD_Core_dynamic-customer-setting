@@ -113,7 +113,7 @@
             Level uplineLevel,
             string positionTakingXml)
         {
-            var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, positionTakingXml);
+            var parameters = GetSPParamsForUpdatingPT(settingContext, customerId, customerLevel, positionTakingXml);
             var settingKey = (customerLevel == Level.Member)
                 ? UpdateMemberPTSpKeys[uplineLevel.Value]
                 : UpdateSmaPTSpKeys[customerLevel.Value];
@@ -121,17 +121,21 @@
             return ExecuteNonQuery(settingKey, parameters);
         }
 
-        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, string positionTakingXml)
+        private Hashtable GetSPParamsForUpdatingPT(ISettingContext settingContext, int customerId, Level customerLevel, string positionTakingXml)
         {
             var param = new Hashtable();
             param.Add("userid", settingContext.Actor.Id);
-            param.Add("subaccid", settingContext.Actor.SubAccountId);
             param.Add("custid", customerId);
             param.Add("ip", settingContext.IP);
             param.Add("pt", positionTakingXml);
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
             param.Add("msgtype", 0);
+
+            if (customerLevel.IsNotSuperLevel())
+            {
+                param.Add("subaccid", settingContext.Actor.SubAccountId);
+            }
 
             return param;
         }
