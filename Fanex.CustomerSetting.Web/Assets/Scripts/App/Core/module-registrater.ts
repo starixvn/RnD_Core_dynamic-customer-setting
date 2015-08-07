@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="helper-services.ts" />
 
 module CustomerSetting {
     var app: ng.IModule = angular.module("customerSetting", ["oc.lazyLoad"]);
@@ -35,4 +36,8 @@ module CustomerSetting {
             app.value(name, target);
         }
     }
+
+    app.run(["$http", "appConfigService", ($http: ng.IHttpService, appConfigService: AppConfigService) => {
+        $http.defaults.headers.common['__RequestVerificationToken'] = appConfigService.requestVerificationToken();
+    }]);
 }

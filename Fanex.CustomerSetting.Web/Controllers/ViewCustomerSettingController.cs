@@ -37,7 +37,7 @@
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgery]
         public JsonResult QuerySetting(CustomerSettingQuery querySetting)
         {
             var customerSetting = _querySettingService.GetCustomerSetting(querySetting);

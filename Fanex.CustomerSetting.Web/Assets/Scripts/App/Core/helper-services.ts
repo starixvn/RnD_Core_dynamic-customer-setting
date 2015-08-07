@@ -9,6 +9,7 @@ module CustomerSetting {
         private rootUrl: string;
         private debug: boolean;
         private version: string;
+        private antiForgeryToken: string
 
         constructor(private $window: ng.IWindowService) {
             var appConfig: any = this.$window["appConfig"] || {};
@@ -17,6 +18,7 @@ module CustomerSetting {
                 this.rootUrl = appConfig.rootUrl;
                 this.debug = appConfig.isDebug;
                 this.version = appConfig.scriptVersion;
+                this.antiForgeryToken = appConfig.antiForgeryToken;
             }
         }
 
@@ -30,6 +32,10 @@ module CustomerSetting {
 
         public scriptVersion(): string {
             return this.version;
+        }
+
+        public requestVerificationToken(): string {
+            return this.antiForgeryToken;
         }
     }
 

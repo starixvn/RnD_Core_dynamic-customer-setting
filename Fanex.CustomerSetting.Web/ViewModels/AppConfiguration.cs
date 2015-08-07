@@ -14,6 +14,7 @@
             this.IsDebug = isDebug;
             this.ScriptVersion = isDebug ? "0.0.1" : Guid.NewGuid().ToString("N");
             this.RootUrl = appPath;
+            this.AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
         }
 
         public string RootUrl { get; set; }
@@ -21,5 +22,7 @@
         public bool IsDebug { get; set; }
 
         public string ScriptVersion { get; set; }
+
+        public string AntiForgeryToken { get; set; }
     }
 }

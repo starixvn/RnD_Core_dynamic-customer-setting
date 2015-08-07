@@ -236,11 +236,23 @@ module CustomerSetting {
             this.$compile(wrapElement)(scope);
             modelCtrl = element.controller("ngModel");
 
-            element.on("mouseup", () => {
-                var input: HTMLInputElement = <HTMLInputElement>element[0];
-                var length = input.value.length;
+            // Chrome has a weird behavior with the mouseup event on textboxes.
+            // The position of the cursor is set on this event so that once it is fired, the selection will be removed.
+            // We add some lines of code to trace the focus status as a hack for this issue.
+            element.on("focus", () => {
+                element.data("focused", true);
+            });
 
-                input.setSelectionRange(0, length);
+            element.on("focusout", () => {
+                element.data("focused", false);
+            });
+
+            element.on("mouseup", (event: JQueryEventObject) => {
+                if (element.data("focused")) {
+                    var input: HTMLInputElement = <HTMLInputElement>element[0];
+
+                    input.select();
+                }
             });
 
             element.on("keydown", function (event: JQueryEventObject) {
