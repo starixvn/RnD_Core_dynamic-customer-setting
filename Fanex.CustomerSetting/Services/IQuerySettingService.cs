@@ -5,6 +5,6 @@
 
     public interface IQuerySettingService
     {
-        ISetting GetCustomerSetting(CustomerSettingQuery query);
+        Setting GetCustomerSetting(CustomerSettingQuery query);
     }
 }

@@ -139,7 +139,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\JsonNetResult.cs" />
+    <Compile Include="JsonHelpers\JsonCreationConverter.cs" />
+    <Compile Include="JsonHelpers\LevelConverter.cs" />
+    <Compile Include="JsonHelpers\SettingItemConverter.cs" />
+    <Compile Include="Models\Request\QuerySettingRequest.cs" />
+    <Compile Include="Models\Request\SettingRequest.cs" />
+    <Compile Include="Models\Request\UpdateSettingRequest.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

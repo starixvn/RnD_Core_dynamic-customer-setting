@@ -42,7 +42,7 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public ISetting GetCustomerSetting(CustomerSettingQuery query)
+        public Setting GetCustomerSetting(CustomerSettingQuery query)
         {
             Validate(query);
 
@@ -50,7 +50,7 @@
             var product = GetProductInfo(query.ProductId);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
-            ISetting setting = new Setting(
+            var setting = new Setting(
                 query.CustomerId,
                 query.CustomerLevel,
                 customerInfo,

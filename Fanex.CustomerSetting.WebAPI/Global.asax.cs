@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Routing;
-
-namespace Fanex.CustomerSetting.WebAPI
+﻿namespace Fanex.CustomerSetting.WebAPI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Http;
+    using System.Web.Routing;
+
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()

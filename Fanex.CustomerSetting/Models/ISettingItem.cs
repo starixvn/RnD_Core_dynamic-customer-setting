@@ -5,7 +5,7 @@
     public interface ISettingItem
     {
         /// <summary>
-        /// For Controller create exactly concrete class when get json from client.
+        /// For Controller create exactly concrete instance when getting json from client.
         /// </summary>
         string TypeName { get; }
 

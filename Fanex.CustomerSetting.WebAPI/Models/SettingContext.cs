@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.CustomerSetting.WebAPI.Models
+﻿namespace Fanex.CustomerSetting.WebAPI.Models
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -7,9 +6,28 @@ namespace Fanex.CustomerSetting.WebAPI.Models
     using System.Net;
     using System.Web;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.WebAPI.Models.Request;
 
     public class SettingContext : ISettingContext
     {
+        internal SettingContext(SettingRequest request)
+        {
+            var actor = new User
+            {
+                Id = request.ActorId,
+                Name = request.ActorName,
+                Level = Enumeration.FromValue<Level>(request.ActorLevel),
+                SubAccountId = request.SubAccountId
+            };
+
+            this.Actor = actor;
+            this.Language = request.Language;
+            this.IP = request.ClientIp;
+            this.System = request.SystemId;
+            this.Domain = request.Domain;
+        }
+
         public User Actor
         {
             get;
@@ -24,63 +42,9 @@ namespace Fanex.CustomerSetting.WebAPI.Models
 
         public string IP
         {
-            get
-            {
-                return GetClientIp();
-            }
+            get;
+            set;
         }
-
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is a utlity function, not a property")]
-        private string GetClientIp()
-        {
-            var forwardHeader = GetForwardHeader();
-            if (!string.IsNullOrEmpty(forwardHeader))
-            {
-                return forwardHeader;
-            }
-
-            return GetInternalAddress();
-        }
-
-        private string GetForwardHeader()
-        {
-            var httpRequest = HttpContext.Current.Request;
-            var forwardHeader = httpRequest.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (forwardHeader != null)
-            {
-                return forwardHeader.Split(',').First().Trim();
-            }
-
-            return string.Empty;
-        }
-
-        private string GetInternalAddress()
-        {
-            var httpRequest = HttpContext.Current.Request;
-            string userHostAddress = httpRequest.UserHostAddress;
-            var internalIPAddress = GetInternalIPAddress(userHostAddress);
-            if (internalIPAddress == null)
-            {
-                var hostName = Dns.GetHostName();
-                internalIPAddress = GetInternalIPAddress(hostName);
-            }
-
-            return internalIPAddress != null ? internalIPAddress.ToString() : string.Empty;
-        }
-
-        private IPAddress GetInternalIPAddress(string hostAddress)
-        {
-            foreach (var itemIPA in Dns.GetHostAddresses(hostAddress))
-            {
-                if (itemIPA.AddressFamily.ToString().Equals("InterNetwork", StringComparison.OrdinalIgnoreCase))
-                {
-                    return itemIPA;
-                }
-            }
-
-            return null;
-        }
-
 
         public byte System
         {
@@ -90,10 +54,8 @@ namespace Fanex.CustomerSetting.WebAPI.Models
 
         public string Domain
         {
-            get
-            {
-                return HttpContext.Current.Request.Url.Host;
-            }
+            get;
+            set;
         }
     }
 }
