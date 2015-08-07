@@ -2,6 +2,8 @@
 /// <reference path="helper-services.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     var app: ng.IModule = angular.module("customerSetting", ["oc.lazyLoad"]);
 
     export class ModuleRegister {
@@ -26,7 +28,7 @@ module CustomerSetting {
                 var args = Array.prototype.concat.apply([null], arguments);
 
                 return new (Function.prototype.bind.apply(target, args));
-            }
+            };
 
             directiveFactory.$inject = target.$inject;
             app.directive(name, directiveFactory);
@@ -38,6 +40,6 @@ module CustomerSetting {
     }
 
     app.run(["$http", "appConfigService", ($http: ng.IHttpService, appConfigService: AppConfigService) => {
-        $http.defaults.headers.common['__RequestVerificationToken'] = appConfigService.requestVerificationToken();
+        $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
     }]);
 }

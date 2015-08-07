@@ -4,12 +4,14 @@
 /// <reference path="../core/module-registrater.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class ResourceService {
+        public static $inject: string[] = ["customerSettingResource", "parametersService"];
+
         private resource: any;
         private label: any;
         private message: any;
-
-        public static $inject: string[] = ["customerSettingResource", "parametersService"];
 
         constructor(customerSettingResource: any, parametersService: ParametersService) {
             this.resource = customerSettingResource;
@@ -42,7 +44,7 @@ module CustomerSetting {
             var msg: string = this.getMessage(key);
 
             if (angular.isDefined(msg)) {
-                msg = msg.replace(/{(\d+)}/g, (match, index) => {
+                msg = msg.replace(/{(\d+)}/g, (match: string, index: number) => {
                     return args[index] === (undefined || null) ? match : args[index];
                 });
             }
@@ -85,7 +87,7 @@ module CustomerSetting {
     export function LabelFilter(resourceService: ResourceService) {
         return (name: string) => {
             return resourceService.getLabel(name);
-        }
+        };
     }
 
     LabelFilter.$inject = ["resourceService"];
@@ -94,7 +96,7 @@ module CustomerSetting {
     export function MessageFilter(resourceService: ResourceService) {
         return (name: string, ...replacements: any[]) => {
             return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
-        }
+        };
     }
 
     LabelFilter.$inject = ["resourceService"];

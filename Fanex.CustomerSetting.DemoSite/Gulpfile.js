@@ -99,4 +99,14 @@
         gulp.watch(paths.source, ["copy-customer-setting-asset"]);
         gulp.watch(paths.demoForm + "*.{ts,htm}", ["compile-scripts"]);
     });
+
+    gulp.task("tslint", function () {
+        var tslint = require("gulp-tslint");
+
+        return gulp.src([assetPaths.app + "Core/**/*.ts*/", assetPaths.app + "**/*.ts"])
+                   .pipe(tslint({
+                       configuration: "tslint.json"
+                   }))
+                   .pipe(tslint.report("verbose"));
+    });
 })(require);

@@ -2,7 +2,9 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
-    interface TooltipScope extends ng.IScope {
+    "use strict";
+
+    interface ITooltipScope extends ng.IScope {
         message: string;
     }
 
@@ -15,17 +17,17 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 message: "="
-            }
+            };
         }
 
-        public link: ng.IDirectiveLinkFn = (scope: TooltipScope, element: ng.IAugmentedJQuery) => {
+        public link: ng.IDirectiveLinkFn = (scope: ITooltipScope, element: ng.IAugmentedJQuery) => {
             var template = this.$templateCache.get("Tooltip/tooltip.htm");
             var tooltip = angular.element(template);
 
             this.$compile(tooltip)(scope);
             element.parent().prepend(tooltip);
 
-            scope.$watch("message", message => {
+            scope.$watch("message", () => {
                 this.$timeout(() => {
                     var elementRect: ClientRect = element[0].getBoundingClientRect();
                     var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
@@ -40,14 +42,26 @@ module CustomerSetting {
                     });
                 });
             });
-        }
+        };
+
+        private $window: ng.IWindowService;
+        private $document: ng.IDocumentService;
+        private $compile: ng.ICompileService;
+        private $timeout: ng.ITimeoutService;
+        private $templateCache: ng.ITemplateCacheService;
 
         constructor(
-            private $window: ng.IWindowService,
-            private $document: ng.IDocumentService,
-            private $compile: ng.ICompileService,
-            private $timeout: ng.ITimeoutService,
-            private $templateCache: ng.ITemplateCacheService) { }
+            $window: ng.IWindowService,
+            $document: ng.IDocumentService,
+            $compile: ng.ICompileService,
+            $timeout: ng.ITimeoutService,
+            $templateCache: ng.ITemplateCacheService) {
+            this.$window = $window;
+            this.$document = $document;
+            this.$compile = $compile;
+            this.$timeout = $timeout;
+            this.$templateCache = $templateCache;
+        }
     }
 
     ModuleRegister.directive("tooltip", Tooltip);

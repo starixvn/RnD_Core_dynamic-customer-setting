@@ -5,6 +5,8 @@
 /// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class CommissionResourceService extends ResourceService {
         public static $inject: string[] = ["commissionResources", "parametersService"];
 
@@ -18,7 +20,7 @@ module CustomerSetting {
     export function CommissionLabelFilter(commissionResourceService: CommissionResourceService) {
         return (name: string) => {
             return commissionResourceService.getLabel(name);
-        }
+        };
     }
 
     LabelFilter.$inject = ["commissionResourceService"];
@@ -27,7 +29,7 @@ module CustomerSetting {
     export function CommissionMessageFilter(commissionResourceService: CommissionResourceService) {
         return (name: string, ...replacements: any[]) => {
             return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
-        }
+        };
     }
 
     LabelFilter.$inject = ["commissionResourceService"];

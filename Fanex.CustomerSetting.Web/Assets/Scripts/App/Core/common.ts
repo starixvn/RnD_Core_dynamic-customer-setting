@@ -2,6 +2,8 @@
 /// <reference path="helpers.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export enum SettingLevel {
         product = 1,
         sportType = 2,
@@ -41,7 +43,7 @@ module CustomerSetting {
         public static get language(): string {
             return "en-US";
         }
-        
+
         public static get percentageDivider(): number {
             return 100;
         }
@@ -52,8 +54,12 @@ module CustomerSetting {
     }
 
     export class KeyValuePair<T, K> {
-        constructor(
-            public key: T,
-            public value: K) { }
+        public key: T;
+        public value: K;
+
+        constructor(key: T, value: K) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }

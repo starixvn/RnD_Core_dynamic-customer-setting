@@ -6,6 +6,8 @@
 /// <reference path="commission-resources.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class Settingtype3Template1Item extends DefaultSettingItem {
         public commRate: number;
         public upline: Settingtype3Template1Item;
@@ -53,23 +55,29 @@ module CustomerSetting {
     class SettingType3Template1Directive extends SettingTypeDirective {
         public static $inject: string[] = ["appConfigService", "commissionResourceService"];
 
-        public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
+        public templateUrl: Function = () => {
+            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
+        };
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
-        }
+        };
 
-        constructor(
-            private appConfigService: AppConfigService,
-            private commissionResourceService: CommissionResourceService) {
+        private appConfigService: AppConfigService;
+        private commissionResourceService: CommissionResourceService;
+
+        constructor(appConfigService: AppConfigService, commissionResourceService: CommissionResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype3Template1Item(settingItem, backup));
+
+            this.appConfigService = appConfigService;
+            this.commissionResourceService = commissionResourceService;
         }
     }
 
     ModuleRegister.directive("settingtype3Template1", SettingType3Template1Directive);
 
-    interface SettingType3Template1ItemScope extends ng.IScope {
+    interface ISettingType3Template1ItemScope extends ng.IScope {
         settingItem: Settingtype3Template1Item;
         range: Array<KeyValuePair<number, number>>;
     }
@@ -82,12 +90,12 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 settingItem: "="
-            }
+            };
         }
 
         public templateUrl: string = "settingtyp3-template1-drop.html";
 
-        public controller: any = ["$scope", ($scope: SettingType3Template1ItemScope) => {
+        public controller: any = ["$scope", ($scope: ISettingType3Template1ItemScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.range = this.valueRangeGenerator.generateRanges(
                     $scope.settingItem.commRate,
@@ -98,7 +106,11 @@ module CustomerSetting {
             });
         }];
 
-        constructor(private valueRangeGenerator: ValueRangeGenerator) { }
+        private valueRangeGenerator: ValueRangeGenerator;
+
+        constructor(valueRangeGenerator: ValueRangeGenerator) {
+            this.valueRangeGenerator = valueRangeGenerator;
+        }
     }
 
     ModuleRegister.directive("commRate", CommRateDirective);

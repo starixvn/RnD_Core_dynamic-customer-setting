@@ -4,7 +4,9 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
-    interface SettingResultScope extends ng.IScope {
+    "use strict";
+
+    interface ISettingResultScope extends ng.IScope {
         result: Results;
     }
 
@@ -14,12 +16,12 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 result: "="
-            }
+            };
         }
 
         public templateUrl: string = "SettingResult/setting-result.htm";
 
-        public controller: any = ["$scope", "$window", ($scope: SettingResultScope, $window: ng.IWindowService) => {
+        public controller: any = ["$scope", "$window", ($scope: ISettingResultScope, $window: ng.IWindowService) => {
             $scope.$watch("result", (result: UpdatingSettingResult) => {
                 if (angular.isDefined(result)) {
                     $window.scrollTo(0, 0);
@@ -29,14 +31,14 @@ module CustomerSetting {
                             if (subResult.settingResults && angular.isArray(subResult.settingResults)) {
                                 angular.forEach(subResult.settingResults, (settingResult: SettingResult) => {
                                     settingResult.msgType = MessageType[settingResult.msgType.toString()];
-                                })
+                                });
                             }
                         });
                     } else {
                         result.msgType = MessageType[result.msgType.toString()];
                     }
                 }
-            })
+            });
         }];
     }
 

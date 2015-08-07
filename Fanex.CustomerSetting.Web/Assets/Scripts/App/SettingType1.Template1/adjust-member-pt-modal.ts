@@ -3,7 +3,9 @@
 /// <reference path="settingtype1-template1.ts" />
 
 module CustomerSetting {
-    interface AdjustMemberPtModalScope extends ng.IScope {
+    "use strict";
+
+    interface IAdjustMemberPtModalScope extends ng.IScope {
         isShown: boolean;
         divisor: number;
         selectedValue: number;
@@ -19,36 +21,45 @@ module CustomerSetting {
         public replace: boolean = true;
         public templateUrl: string = "adjust-member-pt-modal.html";
 
-        public link: ng.IDirectiveLinkFn = (scope: AdjustMemberPtModalScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: IAdjustMemberPtModalScope) => {
             this.adjustMemberPtModalService.setup(scope);
-        }
+        };
 
-        constructor(private adjustMemberPtModalService: AdjustMemberPtModalService) { }
+        private adjustMemberPtModalService: AdjustMemberPtModalService;
+
+        constructor(adjustMemberPtModalService: AdjustMemberPtModalService) {
+            this.adjustMemberPtModalService = adjustMemberPtModalService;
+        }
     }
 
     ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
 
     export class AdjustMemberPtModalService {
-        private modalScope: AdjustMemberPtModalScope;
-
         public static $inject: string[] = ["valueRangeGenerator"];
 
-        constructor(private valueRangeGenerator: ValueRangeGenerator) { }
+        private modalScope: IAdjustMemberPtModalScope;
+        private valueRangeGenerator: ValueRangeGenerator;
 
-        public setup(scope: AdjustMemberPtModalScope): void {
+        constructor(valueRangeGenerator: ValueRangeGenerator) {
+            this.valueRangeGenerator = valueRangeGenerator;
+        }
+
+        public setup(scope: IAdjustMemberPtModalScope): void {
             if (angular.isUndefined(scope)) {
                 throw "Scope of the modal must not be undefied";
             }
 
             this.modalScope = scope;
             this.modalScope.divisor = Settingtype1Template1Config.roundingFactor;
+
             this.modalScope.cancel = () => {
                 this.modalScope.isShown = false;
-            }
+            };
+
             this.modalScope.ok = () => {
                 this.modalScope.update(this.modalScope.selectedValue);
                 this.modalScope.isShown = false;
-            }
+            };
         }
 
         public show(max: number, update: (memberPt: number) => void): void {

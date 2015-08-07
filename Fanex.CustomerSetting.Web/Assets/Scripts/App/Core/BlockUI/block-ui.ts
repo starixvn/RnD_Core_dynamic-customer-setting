@@ -2,13 +2,15 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class BlockUiDirective implements ng.IDirective {
         public replace: boolean = true;
 
         public get scope(): any {
             return {
                 isLoading: "="
-            }
+            };
         }
 
         public templateUrl: string = "BlockUI/block-ui.htm";

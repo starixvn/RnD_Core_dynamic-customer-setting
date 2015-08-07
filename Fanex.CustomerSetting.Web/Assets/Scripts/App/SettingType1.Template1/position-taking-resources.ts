@@ -5,6 +5,8 @@
 /// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class PositionTakingResourceService extends ResourceService {
         public static $inject: string[] = ["positionTakingResources", "parametersService"];
 
@@ -18,7 +20,7 @@ module CustomerSetting {
     export function PositionTakingLabelFilter(positionTakingResourceService: PositionTakingResourceService) {
         return (name: string) => {
             return positionTakingResourceService.getLabel(name);
-        }
+        };
     }
 
     LabelFilter.$inject = ["positionTakingResourceService"];
@@ -27,7 +29,7 @@ module CustomerSetting {
     export function PositionTakingMessageFilter(positionTakingResourceService: PositionTakingResourceService) {
         return (name: string, ...replacements: any[]) => {
             return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, [name, replacements]);
-        }
+        };
     }
 
     LabelFilter.$inject = ["positionTakingResourceService"];

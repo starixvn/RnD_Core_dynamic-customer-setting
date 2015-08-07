@@ -3,16 +3,24 @@
 /// <reference path="parameters.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class AppConfigService {
         public static $inject: string[] = ["$window"];
+
+        private $window: ng.IWindowService;
 
         private rootUrl: string;
         private debug: boolean;
         private version: string;
-        private antiForgeryToken: string
+        private antiForgeryToken: string;
 
-        constructor(private $window: ng.IWindowService) {
-            var appConfig: any = this.$window["appConfig"] || {};
+        constructor($window: ng.IWindowService) {
+            var appConfig: any;
+
+            this.$window = $window;
+
+            appConfig = this.$window["appConfig"] || {};
 
             if (appConfig) {
                 this.rootUrl = appConfig.rootUrl;
@@ -42,10 +50,6 @@ module CustomerSetting {
     ModuleRegister.service("appConfigService", AppConfigService);
 
     export class ParametersService {
-        private query: SettingQuery | MultipleSettingQuery;
-        private lang: string;
-        private isMultipleUpdates: boolean;
-        
         public static $inject: string[] = ["$window"];
 
         public get language(): string {
@@ -60,7 +64,14 @@ module CustomerSetting {
             return this.query.uplineLevel;
         }
 
-        constructor(private $window: ng.IWindowService) {
+        private $window: ng.IWindowService;
+
+        private query: SettingQuery | MultipleSettingQuery;
+        private lang: string;
+        private isMultipleUpdates: boolean;
+
+        constructor($window: ng.IWindowService) {
+            this.$window = $window;
             this.fetchParams();
         }
 
@@ -129,7 +140,7 @@ module CustomerSetting {
     export function NAValue() {
         return (value: string) => {
             return value || "---";
-        }
+        };
     }
 
     ModuleRegister.filter("naValue", NAValue);
@@ -137,7 +148,7 @@ module CustomerSetting {
     export function MinValue() {
         return (numbers: number[]) => {
             return Math.min.apply(Math, numbers);
-        }
+        };
     }
 
     ModuleRegister.filter("minValue", MinValue);
@@ -145,7 +156,7 @@ module CustomerSetting {
     export function MaxValue() {
         return (numbers: number[]) => {
             return Math.max.apply(Math, numbers);
-        }
+        };
     }
 
     ModuleRegister.filter("maxValue", MaxValue);

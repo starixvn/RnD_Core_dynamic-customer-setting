@@ -6,6 +6,8 @@
 /// <reference path="bet-setting-resources.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class Settingtype2Template1Item extends DefaultSettingItem {
         public minBet: number;
         public maxBet: number;
@@ -145,24 +147,30 @@ module CustomerSetting {
     class SettingType2Template1Directive extends SettingTypeDirective {
         public static $inject: string[] = ["appConfigService", "betSettingResourceService"];
 
-        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype2.template1/settingtype2-template1.htm");
+        public templateUrl: Function = () => {
+            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype2.template1/settingtype2-template1.htm");
+        };
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             scope.headerTemplateUrl = "settingtyp2-template1-header.html";
             scope.valueTemplateUrl = "settingtyp2-template1-value.html";
             scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
-        }
+        };
 
-        constructor(
-            private appConfigService: AppConfigService,
-            private betSettingResourceService: BetSettingResourceService) {
+        private appConfigService: AppConfigService;
+        private betSettingResourceService: BetSettingResourceService;
+
+        constructor(appConfigService: AppConfigService, betSettingResourceService: BetSettingResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype2Template1Item(settingItem, backup));
+
+            this.appConfigService = appConfigService;
+            this.betSettingResourceService = betSettingResourceService;
         }
     }
 
     ModuleRegister.directive("settingtype2Template1", SettingType2Template1Directive);
 
-    interface BetSettingInputScope extends ng.IScope {
+    interface IBetSettingInputScope extends ng.IScope {
         settingItem: Settingtype2Template1Item;
         customerLevel: Level;
         uplineLevel: Level;
@@ -183,13 +191,13 @@ module CustomerSetting {
                 customerLevel: "=",
                 uplineLevel: "=",
                 fieldName: "@"
-            }
+            };
         }
 
         public controller: any = [
             "$scope",
             "betSettingResourceService",
-            ($scope: BetSettingInputScope, betSettingResourceService: BetSettingResourceService) => {
+            ($scope: IBetSettingInputScope, betSettingResourceService: BetSettingResourceService) => {
                 $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
                     if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
                         $scope.validationError = betSettingResourceService.getFormattedMessage(validationState.message, validationState.msgParams);
@@ -209,17 +217,16 @@ module CustomerSetting {
                 };
             }];
 
-        public link: ng.IDirectiveLinkFn = (scope: BetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             var element = angular.element(wrapElement.children()[0]);
             var modelCtrl: any;
-            var constraintNode = "";
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-ng-change", "updateValue()");
             element.attr("data-ng-class", "{ 'invalid': validationError }");
             element.attr("data-tooltip", "");
             element.attr("data-message", "validationError");
-            //element.attr("data-show-on-focus", "true");
+            ////element.attr("data-show-on-focus", "true");
 
             if (scope.fieldName === "minBet") {
                 if (scope.settingItem.upline.minBet > 0) {
@@ -287,18 +294,22 @@ module CustomerSetting {
                 if (viewValue) {
                     var plainNumber = viewValue.replace(/[\,\.]/g, "");
 
-                    value = parseInt(plainNumber);
+                    value = parseInt(plainNumber, 10);
                 }
 
                 element.val(this.$filter("number")(value));
 
                 return value;
             });
-        }
+        };
 
-        constructor(
-            private $compile: ng.ICompileService,
-            private $filter: ng.IFilterService) { }
+        private $compile: ng.ICompileService;
+        private $filter: ng.IFilterService;
+
+        constructor($compile: ng.ICompileService, $filter: ng.IFilterService) {
+            this.$compile = $compile;
+            this.$filter = $filter;
+        }
     }
 
     ModuleRegister.directive("betSettingInput", BetSettingInputDirective);

@@ -5,6 +5,8 @@
 /// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class ProductStatusResourceService extends ResourceService {
         public static $inject: string[] = ["productStatusResources", "parametersService"];
 
@@ -18,7 +20,7 @@ module CustomerSetting {
     export function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService) {
         return (name: string) => {
             return productStatusResourceService.getLabel(name);
-        }
+        };
     }
 
     LabelFilter.$inject = ["productStatusResourceService"];
@@ -27,7 +29,7 @@ module CustomerSetting {
     export function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService) {
         return (name: string, ...replacements: any[]) => {
             return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
-        }
+        };
     }
 
     LabelFilter.$inject = ["productStatusResourceService"];

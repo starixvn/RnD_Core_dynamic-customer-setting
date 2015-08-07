@@ -5,6 +5,8 @@
 /// <reference path="module-registrater.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class AbstractSettingQuery {
         private prodId: number;
         private uplineLv: Level;
@@ -82,7 +84,7 @@ module CustomerSetting {
                 customerId: this.customerId,
                 customerLevel: this.customerLevel,
                 productId: this.productId
-            }
+            };
 
             if (this.uplineLevel) {
                 params.uplineLevel = this.uplineLevel;
@@ -105,7 +107,7 @@ module CustomerSetting {
                 throw Exceptions.invalidParam("customerIds");
             }
 
-            this.custIds = custIds.split(",").map((custId: string) => parseInt(custId.trim()));
+            this.custIds = custIds.split(",").map((custId: string) => parseInt(custId.trim(), 10));
         }
 
         public getCustomerNames(): Array<string> {
@@ -146,9 +148,13 @@ module CustomerSetting {
     }
 
     export class SettingCommand {
-        constructor(
-            public uplineLevel: Level,
-            public setting: Setting) { }
+        public uplineLevel: Level;
+        public setting: Setting;
+
+        constructor(uplineLevel: Level, setting: Setting) {
+            this.uplineLevel = uplineLevel;
+            this.setting = setting;
+        }
 
         public validate(): Result {
             if (this.uplineLevel && (this.uplineLevel <= Level.member || this.uplineLevel >= Level.company)

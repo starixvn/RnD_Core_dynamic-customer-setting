@@ -1,9 +1,11 @@
 ﻿/// <reference path="common.ts" />
 
 module CustomerSetting {
-    export interface SettingItem {
+    "use strict";
+
+    export interface ISettingItem {
         typeName: string;
-        oldSetting: SettingItem;
+        oldSetting: ISettingItem;
         isChanged(): boolean;
         validate(): boolean;
     }
@@ -40,7 +42,7 @@ module CustomerSetting {
         }
     }
 
-    export class DefaultSettingItem implements SettingItem {
+    export class DefaultSettingItem implements ISettingItem {
         public sportTypeId: number;
         public sportTypeName: string;
         public betTypeId: number;
@@ -85,7 +87,7 @@ module CustomerSetting {
         public name: string;
         public settingTemplate: number;
         public settingLevel: number;
-        public settingItems: Array<SettingItem>;
+        public settingItems: Array<ISettingItem>;
         public typeName: string;
         public extraData: Array<KeyValuePair<string, any>>;
 
@@ -105,7 +107,7 @@ module CustomerSetting {
 
         public getChanges(): SettingType {
             var updatedSettingType: SettingType;
-            var changedSettingItems: Array<SettingItem> = this.settingItems.filter(item => {
+            var changedSettingItems: Array<ISettingItem> = this.settingItems.filter((item: ISettingItem) => {
                 if (item.isChanged) {
                     return item.isChanged();
                 } else {
@@ -126,7 +128,7 @@ module CustomerSetting {
                 // Workaround for the setting type that has some its own properties but we don't want to make new class for it.
                 // We use the dynamic aspect of JavaScript in this case to keep the process be simple.
                 if (this.extraData && this.extraData.length > 0) {
-                    this.extraData.forEach(extraItem => {
+                    this.extraData.forEach((extraItem: KeyValuePair<string, any>) => {
                         (<any>updatedSettingType)[extraItem.key] = extraItem.value;
                     });
                 }
@@ -136,7 +138,7 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            var validSettingItems: boolean = this.settingItems.every((item: SettingItem) => {
+            var validSettingItems: boolean = this.settingItems.every((item: ISettingItem) => {
                 return item.validate();
             });
 
@@ -234,14 +236,18 @@ module CustomerSetting {
     }
 
     export class Result {
+        public code: number;
+        public message: string;
+        public msgType: MessageType;
+
         public get isSuccessful(): boolean {
             return this.code === 0;
         }
 
-        constructor(
-            public code: number,
-            public message: string,
-            public msgType: MessageType) {
+        constructor(code: number, message: string, msgType: MessageType) {
+            this.code = code;
+            this.message = message;
+            this.msgType = msgType;
             this.msgType = this.code !== 0 ? MessageType.error : this.msgType;
         }
 
@@ -288,7 +294,7 @@ module CustomerSetting {
 
         public get isSuccessful(): boolean {
             return !this.settingResults
-                || this.settingResults.every(result => {
+                || this.settingResults.every((result: SettingResult) => {
                     return result.isSuccessful;
                 });
         }
@@ -365,7 +371,7 @@ module CustomerSetting {
 
                     result.subResults.forEach((subResult: any) => {
                         var existingCustomerResult: CustomerSettingResult = this.subResults.filter((item: CustomerSettingResult) => {
-                            return item.customerId === subResult.customerId
+                            return item.customerId === subResult.customerId;
                         })[0];
 
                         if (existingCustomerResult) {
@@ -394,7 +400,7 @@ module CustomerSetting {
     }
 
     export class Results extends Result {
-        public subResults: Array<Result>
+        public subResults: Array<Result>;
 
         public get isSuccessful(): boolean {
             return this.code === 0

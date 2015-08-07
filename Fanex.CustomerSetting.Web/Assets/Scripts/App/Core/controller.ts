@@ -8,21 +8,9 @@
 /// <reference path="parameters.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class CustomerSettingController {
-        private isMultipleUpdates: boolean;
-
-        private get queryPath(): string {
-            return "viewCustomerSetting/querySetting?";
-        }
-
-        private get updatePath(): string {
-            return "updateCustomerSetting/updateSetting";
-        }
-
-        private get updateMultiplePath(): string {
-            return "updateCustomerSetting/updateMultipleSetting";
-        }
-
         public static $inject: string[] = [
             "$http",
             "$timeout",
@@ -36,12 +24,36 @@ module CustomerSetting {
         public setting: Setting;
         public requestMsgResult: Result | UpdatingSettingResult;
 
+        private get queryPath(): string {
+            return "viewCustomerSetting/querySetting?";
+        }
+
+        private get updatePath(): string {
+            return "updateCustomerSetting/updateSetting";
+        }
+
+        private get updateMultiplePath(): string {
+            return "updateCustomerSetting/updateMultipleSetting";
+        }
+
+        private $http: ng.IHttpService;
+        private $timeout: ng.ITimeoutService;
+        private appConfigService: AppConfigService;
+        private parametersService: ParametersService;
+        private resourceService: ResourceService;
+
         constructor(
-            private $http: ng.IHttpService,
-            private $timeout: ng.ITimeoutService,
-            private appConfigService: AppConfigService,
-            private parametersService: ParametersService,
-            private resourceService: ResourceService) {
+            $http: ng.IHttpService,
+            $timeout: ng.ITimeoutService,
+            appConfigService: AppConfigService,
+            parametersService: ParametersService,
+            resourceService: ResourceService) {
+            this.$http = $http;
+            this.$timeout = $timeout;
+            this.appConfigService = appConfigService;
+            this.parametersService = parametersService;
+            this.resourceService = resourceService;
+
             this.customerNames = this.parametersService.customerNames;
             this.uplineLevel = this.parametersService.uplineLevel;
             this.querySetting();
@@ -99,7 +111,7 @@ module CustomerSetting {
 
             this.isUIblocked = true;
             this.$http.post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson()).then((response: ng.IHttpPromiseCallbackArg<any>) => {
-            //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                ////this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).then((response: ng.IHttpPromiseCallbackArg<any>) => {
                 this.setting = new Setting(response.data);
             }, () => {
                 var error: Result = Result.systemError;

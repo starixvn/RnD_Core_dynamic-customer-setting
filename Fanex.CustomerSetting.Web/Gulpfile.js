@@ -211,4 +211,14 @@
         gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
         gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
     });
+
+    gulp.task("tslint", function () {
+        var tslint = require("gulp-tslint");
+
+        return gulp.src([assetPaths.app + "Core/**/*.ts*/", assetPaths.app + "**/*.ts"])
+                   .pipe(tslint({
+                       configuration: "tslint.json"
+                   }))
+                   .pipe(tslint.report("verbose"));
+    });
 })(require);

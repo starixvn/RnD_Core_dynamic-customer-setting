@@ -4,7 +4,9 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
-    export interface SettingTypeDirectiveSharedScope extends ng.IScope {
+    "use strict";
+
+    export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
         uplineLevel: Level;
         customerLevel: Level;
         productId: number;
@@ -28,15 +30,15 @@ module CustomerSetting {
                 productName: "=",
                 settingType: "=",
                 update: "&"
-            }
+            };
         }
 
-        public controller: any = ["$scope", ($scope: SettingTypeDirectiveSharedScope) => {
+        public controller: any = ["$scope", ($scope: ISettingTypeDirectiveSharedScope) => {
             $scope.avaiCustomerLevels = Level;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    angular.forEach(settingType.settingItems, (item, index) => {
+                    angular.forEach(settingType.settingItems, (item: ISettingItem, index: number) => {
                         if (angular.isDefined(item)) {
                             settingType.settingItems[index] = this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel);
                         }
@@ -45,10 +47,14 @@ module CustomerSetting {
             });
         }];
 
-        constructor(private settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => SettingItem) { }
+        private settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => ISettingItem;
+
+        constructor(settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => ISettingItem) {
+            this.settingItemType = settingItemType;
+        }
     }
 
-    interface DefaultSettingTypeDirectiveScope extends SettingTypeDirectiveSharedScope {
+    interface IDefaultSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
         avaiSettingLevels: Object;
         sportGroups: DefaultSettingItem[][];
     }
@@ -57,7 +63,7 @@ module CustomerSetting {
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
-        public controller: any = ["$scope", ($scope: DefaultSettingTypeDirectiveScope) => {
+        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
@@ -71,12 +77,12 @@ module CustomerSetting {
             });
         }];
 
-        private groupSettingItemsBySportType(settingItems: SettingItem[]): DefaultSettingItem[][] {
+        private groupSettingItemsBySportType(settingItems: ISettingItem[]): DefaultSettingItem[][] {
             var currentSportTypeId: number = -1;
             var result: Array<Array<DefaultSettingItem>> = new Array<Array<DefaultSettingItem>>();
             var group: Array<DefaultSettingItem>;
 
-            angular.forEach(settingItems, (item: SettingItem, index: number) => {
+            angular.forEach(settingItems, (item: ISettingItem, index: number) => {
                 var settingItem = <DefaultSettingItem>item;
 
                 if (currentSportTypeId !== settingItem.sportTypeId) {

@@ -5,6 +5,8 @@
 /// <reference path="../resource/resource-translation.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     export class BetSettingResourceService extends ResourceService {
         public static $inject: string[] = ["betSettingResources", "parametersService"];
 
@@ -18,7 +20,7 @@ module CustomerSetting {
     export function BetSettingLabelFilter(betSettingResourceService: BetSettingResourceService) {
         return (name: string) => {
             return betSettingResourceService.getLabel(name);
-        }
+        };
     }
 
     LabelFilter.$inject = ["betSettingResourceService"];
@@ -27,7 +29,7 @@ module CustomerSetting {
     export function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService) {
         return (name: string, ...replacements: any[]) => {
             return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, [name, replacements]);
-        }
+        };
     }
 
     LabelFilter.$inject = ["betSettingResourceService"];

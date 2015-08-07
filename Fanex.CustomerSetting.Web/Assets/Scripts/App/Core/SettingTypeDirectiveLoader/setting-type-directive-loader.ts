@@ -7,15 +7,15 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
-    interface SettingTypeLoaderScope extends ng.IScope {
+    "use strict";
+
+    interface ISettingTypeLoaderScope extends ng.IScope {
         uplineLevel: Level;
         setting: Setting;
         update: (settingTypeId: { settingTypeId: number }) => void;
     }
 
     class SettingTypeDirectiveLoader implements ng.IDirective {
-        private loadedSettingTypes: Array<KeyValuePair<number, number>>;
-
         public static $inject: string[] = ["$compile", "$ocLazyLoad", "appConfigService"];
         public replace: boolean = true;
 
@@ -24,28 +24,33 @@ module CustomerSetting {
                 uplineLevel: "=",
                 setting: "=",
                 update: "&"
-            }
+            };
         }
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             scope.$watch("setting.settingTypes", () => {
                 this.generateNodes(scope, element);
             });
-        }
+        };
 
-        constructor(
-            private $compile: ng.ICompileService,
-            private $ocLazyLoad: oc.ILazyLoad,
-            private appConfigService: AppConfigService) {
+        private $compile: ng.ICompileService;
+        private $ocLazyLoad: oc.ILazyLoad;
+        private appConfigService: AppConfigService;
+        private loadedSettingTypes: Array<KeyValuePair<number, number>>;
+
+        constructor($compile: ng.ICompileService, $ocLazyLoad: oc.ILazyLoad, appConfigService: AppConfigService) {
+            this.$compile = $compile;
+            this.$ocLazyLoad = $ocLazyLoad;
+            this.appConfigService = appConfigService;
             this.loadedSettingTypes = new Array<KeyValuePair<number, number>>();
         }
 
-        private generateNodes(scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
+        private generateNodes(scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
             if (angular.isDefined(scope.setting)) {
                 angular.forEach(scope.setting.settingTypes, (settingType: SettingType, index: number) => {
                     var loaded = this.loadedSettingTypes.some((item: KeyValuePair<number, number>) => {
                         return item.key === settingType.id
-                            && item.value === settingType.settingTemplate
+                            && item.value === settingType.settingTemplate;
                     });
 
                     if (!loaded) {

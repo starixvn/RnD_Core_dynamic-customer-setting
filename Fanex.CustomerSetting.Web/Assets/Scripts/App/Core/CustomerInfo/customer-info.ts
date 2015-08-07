@@ -2,6 +2,8 @@
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class CustomerInfoDirective implements ng.IDirective {
         public replace: boolean = true;
 
@@ -9,7 +11,7 @@ module CustomerSetting {
             return {
                 info: "=",
                 names: "="
-            }
+            };
         }
 
         public templateUrl: string = "CustomerInfo/customer-info.htm";

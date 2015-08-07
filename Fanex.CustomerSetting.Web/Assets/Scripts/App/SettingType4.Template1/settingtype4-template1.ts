@@ -6,6 +6,8 @@
 /// <reference path="product-status-resources.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class Settingtype4Template1Item extends DefaultSettingItem {
         public isDisabled: boolean;
         public upline: Settingtype4Template1Item;
@@ -59,23 +61,29 @@ module CustomerSetting {
     class SettingType4Template1Directive extends SettingTypeDirective {
         public static $inject: string[] = ["appConfigService", "productStatusResourceService"];
 
-        public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
+        public templateUrl: Function = () => {
+            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
+        };
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp4-template1-value.html";
             scope.settingTypeName = this.productStatusResourceService.getLabel("ProductStatus");
-        }
+        };
 
-        constructor(
-            private appConfigService: AppConfigService,
-            private productStatusResourceService: ProductStatusResourceService) {
+        private appConfigService: AppConfigService;
+        private productStatusResourceService: ProductStatusResourceService;
+
+        constructor(appConfigService: AppConfigService, productStatusResourceService: ProductStatusResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype4Template1Item(settingItem, backup));
+
+            this.appConfigService = appConfigService;
+            this.productStatusResourceService = productStatusResourceService;
         }
     }
 
     ModuleRegister.directive("settingtype4Template1", SettingType4Template1Directive);
 
-    interface StatusCheckboxScope extends ng.IScope {
+    interface IStatusCheckboxScope extends ng.IScope {
         settingItem: Settingtype4Template1Item;
         isChecked: boolean;
         isDisabled: boolean;
@@ -93,12 +101,12 @@ module CustomerSetting {
                 customerLevel: "=",
                 settingItem: "=",
                 avaiCustomerLevels: "="
-            }
+            };
         }
 
         public templateUrl: string = "status-checkbox.html";
 
-        public controller: any = ["$scope", ($scope: StatusCheckboxScope) => {
+        public controller: any = ["$scope", ($scope: IStatusCheckboxScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;
@@ -120,11 +128,11 @@ module CustomerSetting {
                         $scope.settingItem.downline.isDisabled = true;
                     }
                 }
-            }
+            };
 
             $scope.changeDownline = () => {
                 $scope.settingItem.downline.isDisabled = !$scope.isDownlineChecked;
-            }
+            };
         }];
     }
 

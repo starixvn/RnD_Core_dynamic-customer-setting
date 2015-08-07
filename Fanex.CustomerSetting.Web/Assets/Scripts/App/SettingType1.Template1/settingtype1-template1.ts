@@ -7,12 +7,14 @@
 /// <reference path="position-taking-resources.ts" />
 
 module CustomerSetting {
+    "use strict";
+
     class Settingtype1Template1Item {
         public static get maxPTValue(): number {
             return 90;
         }
 
-        public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): SettingItem {
+        public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): ISettingItem {
             if (customerLevel === Level.super) {
                 return new SuperPositionTaking(settingItem, backup);
             } else if (customerLevel === Level.master) {
@@ -456,25 +458,31 @@ module CustomerSetting {
     class SettingType1Template1Directive extends SettingTypeDirective {
         public static $inject: string[] = ["appConfigService", "positionTakingResourceService"];
 
-        public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype1.template1/settingtype1-template1.htm");
+        public templateUrl: Function = () => {
+            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype1.template1/settingtype1-template1.htm");
+        };
 
-        public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp1-template1-header.html";
             scope.valueTemplateUrl = "settingtyp1-template1-value.html";
             scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
-        }
+        };
 
-        constructor(
-            private appConfigService: AppConfigService,
-            private positionTakingResourceService: PositionTakingResourceService) {
+        private appConfigService: AppConfigService;
+        private positionTakingResourceService: PositionTakingResourceService;
+
+        constructor(appConfigService: AppConfigService, positionTakingResourceService: PositionTakingResourceService) {
             super(Settingtype1Template1Item.factory);
+
+            this.appConfigService = appConfigService;
+            this.positionTakingResourceService = positionTakingResourceService;
         }
     }
 
     ModuleRegister.directive("settingtype1Template1", SettingType1Template1Directive);
 
-    interface PositionTakingSelectScope extends ng.IScope {
-        settingItem: SettingItem;
+    interface IPositionTakingSelectScope extends ng.IScope {
+        settingItem: ISettingItem;
         fieldName: string;
         min: number;
         max: number;
@@ -494,7 +502,7 @@ module CustomerSetting {
                 fieldName: "@",
                 min: "@",
                 max: "@"
-            }
+            };
         }
 
         public templateUrl: string = "settingtype1-template1-select.html";
@@ -503,7 +511,7 @@ module CustomerSetting {
             "$scope",
             "valueRangeGenerator",
             "positionTakingResourceService",
-            ($scope: PositionTakingSelectScope, valueRangeGenerator: ValueRangeGenerator, positionTakingResourceService: PositionTakingResourceService) => {
+            ($scope: IPositionTakingSelectScope, valueRangeGenerator: ValueRangeGenerator, positionTakingResourceService: PositionTakingResourceService) => {
                 $scope.divisor = Settingtype1Template1Config.roundingFactor;
 
                 $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
@@ -530,22 +538,26 @@ module CustomerSetting {
                 });
             }];
 
-        public link: ng.IDirectiveLinkFn = (scope: PositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
+        public link: ng.IDirectiveLinkFn = (scope: IPositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
             var select: ng.IAugmentedJQuery = element.find("select");
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-tooltip", "");
             element.attr("data-message", "validationError");
             this.$compile(element)(scope);
-        }
+        };
 
-        constructor(private $compile: ng.ICompileService) { }
+        private $compile: ng.ICompileService;
+
+        constructor($compile: ng.ICompileService) {
+            this.$compile = $compile;
+        }
     }
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
 
-    interface AutoPositionTakingScope extends ng.IScope {
-        item: SettingItem;
+    interface IAutoPositionTakingScope extends ng.IScope {
+        item: ISettingItem;
         confirmUpdatingMemberPt: (isShown: boolean, max: number, updatingMarker: string, ptOnMemberField: string) => void;
     }
 
@@ -555,7 +567,7 @@ module CustomerSetting {
         public controller: any = [
             "$scope",
             "adjustMemberPtModalService",
-            ($scope: AutoPositionTakingScope, adjustMemberPtModalService: AdjustMemberPtModalService) => {
+            ($scope: IAutoPositionTakingScope, adjustMemberPtModalService: AdjustMemberPtModalService) => {
                 $scope.confirmUpdatingMemberPt = (isShown: boolean, max: number, updatingMarker: string, ptOnMemberField: string) => {
                     if (isShown) {
                         adjustMemberPtModalService.show(max, (memberPt: number) => {
@@ -563,7 +575,7 @@ module CustomerSetting {
                             $scope.item[ptOnMemberField] = memberPt;
                         });
                     }
-                }
+                };
             }];
     }
 
