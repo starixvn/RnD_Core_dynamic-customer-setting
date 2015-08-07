@@ -194,5 +194,14 @@ namespace Fanex.CustomerSetting.Resource {
                 return ResourceManager.GetString("UplineLevelShouldBeNull", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized on this function!.
+        /// </summary>
+        public static string YouAreNotAuthorized {
+            get {
+                return ResourceManager.GetString("YouAreNotAuthorized", resourceCulture);
+            }
+        }
     }
 }

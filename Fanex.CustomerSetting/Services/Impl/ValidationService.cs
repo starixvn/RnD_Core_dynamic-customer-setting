@@ -224,7 +224,7 @@
             if (_settingContext.Actor.IsCompany 
                 && _settingContext.System == (byte)SystemType.Agency)
             {
-                throw new CustomerSettingException(Result.AccessDenied.Message);
+                throw new CustomerSettingException(Message.YouAreNotAuthorized);
             }
         }
 

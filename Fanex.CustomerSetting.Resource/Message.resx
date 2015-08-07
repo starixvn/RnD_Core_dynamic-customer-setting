@@ -162,4 +162,7 @@
   <data name="UplineLevelShouldBeNull" xml:space="preserve">
     <value>Upline Level should be null.</value>
   </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>You are not authorized on this function!</value>
+  </data>
 </root>
