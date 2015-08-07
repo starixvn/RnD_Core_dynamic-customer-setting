@@ -329,6 +329,28 @@ module CustomerSetting {
 
             return this.settingResults || new Array<SettingResult>();
         }
+
+        public removeDuplicatedMessages(): void {
+            var uniquedResults: Array<SettingResult> = new Array<SettingResult>();
+
+            this.settingResults.forEach((item: SettingResult) => {
+                if (!item.messages && uniquedResults.length > 0) {
+                    var isDuplicated = uniquedResults.some((anotherItem: SettingResult) => {
+                        return !anotherItem.messages
+                            && item.code === anotherItem.code
+                            && item.message === anotherItem.message;
+                    });
+
+                    if (!isDuplicated) {
+                        uniquedResults.push(item);
+                    }
+                } else {
+                    uniquedResults.push(item);
+                }
+            });
+
+            this.settingResults = uniquedResults;
+        }
     }
 
     export class UpdatingSettingResult extends Result {
@@ -351,6 +373,10 @@ module CustomerSetting {
                         } else {
                             this.subResults.push(new CustomerSettingResult(subResult));
                         }
+                    });
+
+                    this.subResults.forEach((subResult: CustomerSettingResult) => {
+                        subResult.removeDuplicatedMessages();
                     });
                 }
             }

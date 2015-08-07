@@ -4,7 +4,7 @@
         <div class="content">{{result.message}}</div>
     </div>
     <div data-ng-if="result.subResults" data-ng-repeat="subResult in result.subResults">
-        <div class="customer-name" data-ng-if="subResult.customerName">{{subResult.customerName}}</div>
+        <div class="customer-name" data-ng-if="subResult.settingResults && subResult.settingResults.length > 0">{{subResult.customerName}}</div>
         <div class="result"
              data-ng-if="!subResult.settingResults"
              data-ng-class="subResult.msgType">

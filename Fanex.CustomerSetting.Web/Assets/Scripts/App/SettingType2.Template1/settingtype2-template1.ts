@@ -44,10 +44,6 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.validateSpecialCase()) {
-                return true;
-            }
-
             if (!this.validateMinBet()) {
                 return false;
             }
@@ -74,6 +70,10 @@ module CustomerSetting {
         }
 
         public validateMinBet(): boolean {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+
             if (this.minBet < this.upline.minBet) {
                 this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
 
@@ -92,6 +92,10 @@ module CustomerSetting {
         }
 
         public validateMaxBet(): boolean {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+
             if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
                 this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
 
@@ -116,6 +120,10 @@ module CustomerSetting {
         }
 
         public validateMaxPerMatch(): boolean {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+
             if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
                 this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
 
