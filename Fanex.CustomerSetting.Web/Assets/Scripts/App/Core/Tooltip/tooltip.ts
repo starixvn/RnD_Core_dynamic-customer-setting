@@ -4,8 +4,6 @@
 module CustomerSetting {
     interface TooltipScope extends ng.IScope {
         message: string;
-        showOnFocus: boolean;
-        isShown: boolean;
     }
 
     class Tooltip implements ng.IDirective {
@@ -16,8 +14,7 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                message: "=",
-                showOnFocus: "="
+                message: "="
             }
         }
 
@@ -43,20 +40,6 @@ module CustomerSetting {
                     });
                 });
             });
-
-            if (scope.showOnFocus) {
-                element.on("focus", () => {
-                    scope.isShown = true;
-                    scope.$apply();
-                });
-
-                element.on("focusout", () => {
-                    scope.isShown = false;
-                    scope.$apply();
-                });
-            } else {
-                scope.isShown = true;
-            }
         }
 
         constructor(

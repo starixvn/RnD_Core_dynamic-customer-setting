@@ -37,6 +37,7 @@
                     {
                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                     });
+
                     var writer = new JsonTextWriter(response.Output)
                     {
                         Formatting = Formatting.Indented

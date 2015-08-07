@@ -10,10 +10,9 @@
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/Libraries/Modernizr/modernizr-2.8.3.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js2").Include(
-                        "~/Scripts/Libraries/JQuery/jquery.js",
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Scripts/Libraries/AngularJs/angular.js",
-                        "~/Scripts/demo-form.js"));
+                        "~/Scripts/DemoForm/demo-form.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css"));

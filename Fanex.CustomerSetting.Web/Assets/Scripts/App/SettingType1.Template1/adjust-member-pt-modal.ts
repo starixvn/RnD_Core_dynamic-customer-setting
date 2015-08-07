@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="settingtype1-template1.ts" />
 
 module CustomerSetting {
@@ -13,6 +14,8 @@ module CustomerSetting {
     }
 
     class AdjustMemberPtModalDirective implements ng.IDirective {
+        public static $inject: string[] = ["adjustMemberPtModalService"];
+
         public replace: boolean = true;
         public templateUrl: string = "adjust-member-pt-modal.html";
 
@@ -23,14 +26,12 @@ module CustomerSetting {
         constructor(private adjustMemberPtModalService: AdjustMemberPtModalService) { }
     }
 
-    angular.module("customerSetting").directive("adjustMemberPtModal", ["adjustMemberPtModalService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(AdjustMemberPtModalDirective, args));
-    }]);
+    ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
 
     export class AdjustMemberPtModalService {
         private modalScope: AdjustMemberPtModalScope;
+
+        public static $inject: string[] = ["valueRangeGenerator"];
 
         constructor(private valueRangeGenerator: ValueRangeGenerator) { }
 
@@ -71,5 +72,5 @@ module CustomerSetting {
         }
     }
 
-    angular.module("customerSetting").service("adjustMemberPtModalService", ["valueRangeGenerator", AdjustMemberPtModalService]);
+    ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
 }

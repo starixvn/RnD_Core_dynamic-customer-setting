@@ -42,8 +42,8 @@ module CustomerSetting {
 
         private generateNodes(scope: SettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
             if (angular.isDefined(scope.setting)) {
-                angular.forEach(scope.setting.settingTypes, (settingType, index) => {
-                    var loaded = this.loadedSettingTypes.some(item => {
+                angular.forEach(scope.setting.settingTypes, (settingType: SettingType, index: number) => {
+                    var loaded = this.loadedSettingTypes.some((item: KeyValuePair<number, number>) => {
                         return item.key === settingType.id
                             && item.value === settingType.settingTemplate
                     });

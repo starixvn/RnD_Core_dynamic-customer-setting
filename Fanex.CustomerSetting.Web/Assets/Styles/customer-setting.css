@@ -178,17 +178,23 @@ button {
   width: 14px;
   height: 13px;
 }
+.result-container .customer-name {
+  font-weight: bold;
+  margin-left: 5px;
+  margin-top: 5px;
+}
 
-.block-overlay {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
-  opacity: 0.5;
-  background: #fff;
+.block-overlay, .modal-overlay {
   bottom: 0;
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
   z-index: 100;
+}
+
+.block-overlay {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .block-loading {
@@ -203,12 +209,6 @@ button {
 
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 100;
 }
 
 .modal {
@@ -446,37 +446,6 @@ button {
   border-right: none;
 }
 
-/*********************************************************/
-/*                    Setting Type 1                     */
-/*********************************************************/
-/*.dialog-container > .dialog-scrollable > .dialog-content > .dialog-body .position-taking-group {
-    margin-left: 20px;
-}
-
-.position-taking-block .position-taking-item {
-    float: left;
-    width: 100%;
-
-    div {
-        @include box-sizing(border-box);
-        @include clearfix();
-
-        border: {
-            left: 1px solid #7c98a4;
-            top: 1px solid #7c98a4;
-        }
-
-        float: left;
-        height: 23px;
-        line-height: 23px;
-        padding: 0 3px;
-        text-align: center;
-
-        &.col-name {
-            text-align: left;
-        }
-    }
-}*/
 /*********************************************************/
 /*                  Setting Type 1 & 2                   */
 /*********************************************************/

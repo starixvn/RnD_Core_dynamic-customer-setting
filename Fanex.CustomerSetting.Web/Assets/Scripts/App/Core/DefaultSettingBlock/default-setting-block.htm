@@ -1,9 +1,9 @@
 ﻿<div class="block default-setting-block" data-ng-show="settingType">
-    <div class="header" data-ng-attr-setting-type="{{settingType.id}}">
+    <div class="header" data-setting-type="{{settingType.id}}">
         {{settingTypeName}}
         <div class="update">
             <span class="icon update-icon"
-                  data-ng-attr-title="{{'Update' | label}}"
+                  data-title="{{'Update' | label}}"
                   data-ng-click="update({ settingTypeId: settingType.id })"></span>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="header sport-group-header"
              data-ng-show="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
              data-ng-class="{ 'not-first': ($index > 0) }"
-             data-ng-attr-sport-type="{{group[0].sportTypeId}}">
+             data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
         </div>
         <div class="header" data-ng-include="headerTemplateUrl"></div>
@@ -19,9 +19,9 @@
              data-ng-repeat="item in group"
              data-ng-class="{ 'last': $last, 'near-last': ($index === group.length - 2) && ($index % 2 === 0), 'only-one': group.length === 1 }">
             <div class="name-col"
-                 data-ng-attr-product="{{productId}}"
-                 data-ng-attr-sport-type="{{item.sportTypeId}}"
-                 data-ng-attr-bet-type="{{item.betTypeId}}">
+                 data-product="{{productId}}"
+                 data-sport-type="{{item.sportTypeId}}"
+                 data-bet-type="{{item.betTypeId}}">
                 {{settingType.settingLevel === avaiSettingLevels.product ? productName : (settingType.settingLevel === avaiSettingLevels.sportType ? item.sportTypeName : item.betTypeName)}}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
             </div>

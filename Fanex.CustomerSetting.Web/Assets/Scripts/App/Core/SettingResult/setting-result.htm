@@ -1,13 +1,27 @@
 ﻿<div class="result-container" data-ng-show="result">
-    <div class="result" data-ng-show="!result.subResults" data-ng-class="result.msgType">
+    <div class="result" data-ng-if="!result.subResults" data-ng-class="result.msgType">
         <div class="message-icon"></div>
-        <div class="content" data-ng-bind="result.message"></div>
+        <div class="content">{{result.message}}</div>
     </div>
-    <div class="result"
-         data-ng-show="result.subResults"
-         data-ng-repeat="subResult in result.subResults"
-         data-ng-class="subResult.msgType">
-        <div class="message-icon"></div>
-        <div class="content" data-ng-bind="subResult.message"></div>
+    <div data-ng-if="result.subResults" data-ng-repeat="subResult in result.subResults">
+        <div class="customer-name" data-ng-if="subResult.customerName">{{subResult.customerName}}</div>
+        <div class="result"
+             data-ng-if="!subResult.settingResults"
+             data-ng-class="subResult.msgType">
+            <div class="message-icon"></div>
+            <div class="content">{{subResult.message}}</div>
+        </div>
+        <div class="result"
+             data-ng-if="subResult.settingResults"
+             data-ng-repeat="settingResult in subResult.settingResults"
+             data-ng-class="settingResult.msgType">
+            <div class="message-icon"></div>
+            <div class="content" data-ng-if="!settingResult.messages">{{settingResult.message}}</div>
+            <div class="content"
+                 data-ng-if="settingResult.messages"
+                 data-ng-repeat="message in settingResult.messages">
+                {{message}}
+            </div>
+        </div>
     </div>
 </div>

@@ -20,13 +20,17 @@ module CustomerSetting {
         public templateUrl: string = "SettingResult/setting-result.htm";
 
         public controller: any = ["$scope", "$window", ($scope: SettingResultScope, $window: ng.IWindowService) => {
-            $scope.$watch("result", (result: Results) => {
+            $scope.$watch("result", (result: UpdatingSettingResult) => {
                 if (angular.isDefined(result)) {
                     $window.scrollTo(0, 0);
 
                     if (angular.isDefined(result.subResults) && angular.isArray(result.subResults)) {
-                        angular.forEach(result.subResults, subResult => {
-                            subResult.msgType = MessageType[subResult.msgType.toString()];
+                        angular.forEach(result.subResults, (subResult: CustomerSettingResult) => {
+                            if (subResult.settingResults && angular.isArray(subResult.settingResults)) {
+                                angular.forEach(subResult.settingResults, (settingResult: SettingResult) => {
+                                    settingResult.msgType = MessageType[settingResult.msgType.toString()];
+                                })
+                            }
                         });
                     } else {
                         result.msgType = MessageType[result.msgType.toString()];

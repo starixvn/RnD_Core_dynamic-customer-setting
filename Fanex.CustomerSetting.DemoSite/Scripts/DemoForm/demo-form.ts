@@ -1,12 +1,13 @@
-﻿/// <reference path="typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../typings/angularjs/angular.d.ts" />
 
 module DemoFrom {
     var app = angular.module("actorForm", [])
 
-    export class DemoFormController {
-        public static $inject = ["$http", "$location"];
+    class DemoFormController {
+        public static $inject = ["$http", "$location", "postingToIframeService"];
 
         public actor: Actor
+        public systemTypes: KeyValuePair<number, string>[];
         public actorRoles: KeyValuePair<number, string>[];
         public languages: KeyValuePair<string, string>[];
         public target: Target;
@@ -15,9 +16,12 @@ module DemoFrom {
         public isMultipleUpdates: boolean;
         public preventSavingSession: boolean;
         public preventShowingData: boolean;
-        public settingPath: string;
 
-        constructor(private $http: ng.IHttpService, private $location: ng.ILocationService) {
+        constructor(
+            private $http: ng.IHttpService,
+            private $location: ng.ILocationService,
+            private postingToIframeService: PostingToIframeService) {
+            this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
             this.languages = SampleDataFactory.getLanuages();
 
@@ -30,9 +34,10 @@ module DemoFrom {
         }
 
         public changeActorRole(): void {
-            var selectedRole = angular.isDefined(this.actor) ? this.actor.role : Role.company;
+            var selectedRole: Role = angular.isDefined(this.actor) ? this.actor.role : Role.company;
+            var selectedSystemId: number = angular.isDefined(this.actor) ? this.actor.system : this.systemTypes[0].key;
 
-            this.actor = SampleDataFactory.getActor(selectedRole);
+            this.actor = SampleDataFactory.getActor(selectedRole, selectedSystemId);
             this.target = undefined;
             this.targetRoles = Target.getAvailableRoles(selectedRole);
             this.isMultipleUpdates = false;
@@ -41,15 +46,12 @@ module DemoFrom {
             this.switchForm(false);
         }
 
-        public changeUplineLevel(): void {
-        }
-
         public getTarget(actorRole: Role): void {
-            var selectedRole = angular.isDefined(this.target) ? this.target.role : this.targetRoles[0].key;
-            var uplineRole = actorRole;
+            var selectedRole: Role = angular.isDefined(this.target) ? this.target.role : this.targetRoles[0].key;
+            var uplineRole: Role = actorRole;
 
             this.uplineRoles = undefined;
-            
+
             if (selectedRole === Role.member) {
                 if (actorRole === Role.company) {
                     this.uplineRoles = Target.getUplineRoles(selectedRole);
@@ -69,7 +71,7 @@ module DemoFrom {
         }
 
         public saveSession(): void {
-            this.$http.post("home/saveSession", this.actor).success(() => {
+            this.$http.post("home/saveSession", this.actor).then(() => {
                 this.switchForm(true);
             });
         }
@@ -79,9 +81,11 @@ module DemoFrom {
                 language: this.actor.language,
                 productId: this.target.productId,
                 customerLevel: this.target.role,
-                uplineLevel: this.target.uplineRole
+                uplineLevel: this.target.uplineRole,
+                path: "ViewCustomerSetting",
+                frameName: "setting-page"
             };
-            
+
             if (this.isMultipleUpdates) {
                 params.isMultiple = true;
                 params.customerIds = (<MultipleTargets>this.target).customerIds;
@@ -90,18 +94,85 @@ module DemoFrom {
                 params.customerId = (<SingleTarget>this.target).customerId;
             }
 
-            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "/#?");
-
-            // Cheating step, force the iframe to reload. Because I don't want to create another super simple directive just for the demo page.
-            (<HTMLIFrameElement>document.getElementById("setting-page")).contentWindow.location.reload();
+            this.postingToIframeService.submitToIframe(params);
         }
     }
 
     app.controller("DemoFormController", DemoFormController);
 
+    interface PostingToIframeScope extends ng.IScope {
+        language: string;
+        productId: number;
+        customerLevel: Role;
+        uplineLevel: Role;
+        customerId: number;
+        isMultiple: boolean;
+        customerIds: Array<number>;
+        customerNames: Array<string>;
+        path: string;
+        frameName: string;
+        submitToIframe: () => void;
+    }
+
+    class PostingToIframeDirective implements ng.IDirective {
+        public replace: boolean = true;
+        public templateUrl: string = "posting-to-iframe.htm";
+
+        public link: ng.IDirectiveLinkFn = (scope: PostingToIframeScope, element: ng.IAugmentedJQuery) => {
+            var form: HTMLFormElement = <HTMLFormElement>element[0];
+
+            this.postingToIframeService.setup(scope);
+
+            scope.submitToIframe = () => {
+                form.submit();
+
+                return false;
+            }
+        }
+
+        constructor(private postingToIframeService: PostingToIframeService) { }
+    }
+
+    app.directive("postingToIframe", ["postingToIframeService", function () {
+        var args = Array.prototype.concat.apply([null], arguments);
+
+        return new (Function.prototype.bind.apply(PostingToIframeDirective, args));
+    }]);
+
+    class PostingToIframeService {
+        private scope: PostingToIframeScope;
+
+        public static $inject: string[] = ["$timeout"];
+
+        public setup(scope: PostingToIframeScope): void {
+            this.scope = scope;
+        }
+
+        public submitToIframe(params: any) {
+            Object.keys(params).forEach((prop: string) => {
+                this.scope[prop] = params[prop];
+            });
+
+            this.$timeout(() => {
+                this.scope.submitToIframe();
+            });
+        }
+
+        constructor(private $timeout: ng.ITimeoutService) { }
+    }
+
+    app.service("postingToIframeService", PostingToIframeService);
+
     class SampleDataFactory {
         private static defaultProductId: number = 255;
         private static defaultLanguage: string = "en-US";
+
+        public static getSystemTypes(): KeyValuePair<number, string>[] {
+            return new Array<KeyValuePair<number, string>>(
+                new KeyValuePair<number, string>(1, "accounting"),
+                new KeyValuePair<number, string>(2, "agency"),
+                new KeyValuePair<number, string>(3, "external accounting"));
+        }
 
         public static getLanuages(): KeyValuePair<string, string>[] {
             return new Array<KeyValuePair<string, string>>(
@@ -114,7 +185,7 @@ module DemoFrom {
                 new KeyValuePair<string, string>("vi-VN", "Tiếng Việt (vi-VN)"));
         }
 
-        public static getActor(selectedRole: Role): Actor {
+        public static getActor(selectedRole: Role, systemId: number): Actor {
             var actorId: number = 0;
             var name: string = "";
             var subAccId: number = 0;
@@ -145,7 +216,7 @@ module DemoFrom {
                     break;
             }
 
-            return this.createActor(actorId, name, selectedRole, subAccId);
+            return this.createActor(actorId, name, selectedRole, subAccId, systemId);
         }
 
         public static getSingleTarget(role: Role, uplineRole: Role): SingleTarget {
@@ -201,8 +272,8 @@ module DemoFrom {
             return this.createMultipleTargetInfo(ids, names, role, uplineRole);
         }
 
-        private static createActor(id: number, name: string, role: Role, subAccId: number): Actor {
-            return new Actor(id, name, role, subAccId, this.defaultLanguage);
+        private static createActor(id: number, name: string, role: Role, subAccId: number, systemId: number): Actor {
+            return new Actor(id, name, role, subAccId, this.defaultLanguage, systemId);
         }
 
         private static createSingleTarget(id: number, role: Role, uplineRole: Role): SingleTarget {
@@ -232,7 +303,8 @@ module DemoFrom {
             public actorName: string,
             public role: Role,
             public subAccountId: number,
-            public language: string) { }
+            public language: string,
+            public system: number) { }
 
         public static getAvailableRoles(): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
@@ -275,7 +347,7 @@ module DemoFrom {
             for (var item in Role) {
                 var roleId: number = parseInt(item);
 
-                if (!isNaN(roleId) && roleId > downlineRole && roleId < Role.company) {
+                if (!isNaN(roleId) && downlineRole < roleId && roleId < Role.company) {
                     roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                 }
             }
@@ -301,16 +373,6 @@ module DemoFrom {
             super(productId, role, uplineRole);
             this.customerIds = customerIds;
             this.customerNames = customerNames;
-        }
-
-        public getFirstCustomerId(): number {
-            var ids: string[] = this.customerIds.split(",");
-
-            if (ids !== null && ids.length > 0) {
-                return parseInt(ids[0]);
-            }
-
-            return 0;
         }
     }
 }

@@ -9,12 +9,11 @@ module CustomerSetting {
         public static $inject: string[] = ["commissionResources", "parametersService"];
 
         constructor(commissionResources: any, parametersService: ParametersService) {
-            super(commissionResources);
-            this.setLanguage(parametersService.language || Defaults.language);
+            super(commissionResources, parametersService);
         }
     }
 
-    angular.module("customerSetting").service("commissionResourceService", CommissionResourceService);
+    ModuleRegister.service("commissionResourceService", CommissionResourceService);
 
     export function CommissionLabelFilter(commissionResourceService: CommissionResourceService) {
         return (name: string) => {

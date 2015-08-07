@@ -34,7 +34,7 @@ module CustomerSetting {
         public customerNames: string;
         public uplineLevel: Level;
         public setting: Setting;
-        public requestMsgResult: Result | Results;
+        public requestMsgResult: Result | UpdatingSettingResult;
 
         constructor(
             private $http: ng.IHttpService,
@@ -42,7 +42,6 @@ module CustomerSetting {
             private appConfigService: AppConfigService,
             private parametersService: ParametersService,
             private resourceService: ResourceService) {
-            this.resourceService.setLanguage(this.parametersService.language);
             this.customerNames = this.parametersService.customerNames;
             this.uplineLevel = this.parametersService.uplineLevel;
             this.querySetting();
@@ -63,19 +62,19 @@ module CustomerSetting {
 
                     if (validationResult.isSuccessful) {
                         this.isUIblocked = true;
-                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).success((msg: any) => {
-                            this.requestMsgResult = new Results(msg.code, msg.message, msg.msgType, msg.subResults);
+                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                            this.requestMsgResult = new UpdatingSettingResult(response.data);
 
                             if (this.requestMsgResult.isSuccessful) {
                                 this.querySetting();
                             }
 
                             this.$timeout(() => {
-                                if ((<Results>this.requestMsgResult).removeSuccessResults().length === 0) {
+                                if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
                                     this.requestMsgResult = undefined;
                                 }
                             }, Defaults.displayingMsgTime);
-                        }).error(() => {
+                        }, () => {
                             var error: Result = Result.systemError;
 
                             error.message = this.resourceService.getMessage(error.message);
@@ -88,7 +87,7 @@ module CustomerSetting {
                     }
                 }
             } else {
-                var error: Result = Results.noChangeToUpdate;
+                var error: Result = Result.noChangeToUpdate;
 
                 error.message = this.resourceService.getMessage(error.message);
                 this.requestMsgResult = error;
@@ -99,10 +98,10 @@ module CustomerSetting {
             var query: SettingQuery = this.parametersService.getSettingQuery();
 
             this.isUIblocked = true;
-            this.$http.get(this.appConfigService.resolveRootUrl(this.queryPath + query.toParamString())).success((data: any) => {
-                //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).success((data: any) => {
-                this.setting = new Setting(data);
-            }).error(() => {
+            this.$http.post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson()).then((response: ng.IHttpPromiseCallbackArg<any>) => {
+            //this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                this.setting = new Setting(response.data);
+            }, () => {
                 var error: Result = Result.systemError;
 
                 error.message = this.resourceService.getMessage(error.message);

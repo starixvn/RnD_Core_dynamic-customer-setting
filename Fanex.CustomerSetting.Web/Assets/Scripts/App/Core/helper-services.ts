@@ -4,35 +4,31 @@
 
 module CustomerSetting {
     export class AppConfigService {
-        public static $inject: string[] = ["$rootScope"];
+        public static $inject: string[] = ["$window"];
 
         private rootUrl: string;
         private debug: boolean;
         private version: string;
 
-        constructor(private $rootScope: ng.IRootScopeService) { }
+        constructor(private $window: ng.IWindowService) {
+            var appConfig: any = this.$window["appConfig"] || {};
+
+            if (appConfig) {
+                this.rootUrl = appConfig.rootUrl;
+                this.debug = appConfig.isDebug;
+                this.version = appConfig.scriptVersion;
+            }
+        }
 
         public resolveRootUrl(url: string): string {
-            if (!this.rootUrl) {
-                this.rootUrl = this.$rootScope["rootUrl"];
-            }
-
             return this.rootUrl + url;
         }
 
         public debugMode(): boolean {
-            if (!this.debug) {
-                this.debug = this.$rootScope["debug"] === "true";
-            }
-
             return this.debug;
         }
 
         public scriptVersion(): string {
-            if (!this.version) {
-                this.version = this.$rootScope["scriptVersion"];
-            }
-
             return this.version;
         }
     }
@@ -40,33 +36,31 @@ module CustomerSetting {
     ModuleRegister.service("appConfigService", AppConfigService);
 
     export class ParametersService {
-        private params: AbstractSettingQuery;
-        private isMultiple: boolean;
+        private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
-        private custNames: string;
-        private uplineLvl: Level;
-
-        public static $inject: string[] = ["$location"];
+        private isMultipleUpdates: boolean;
+        
+        public static $inject: string[] = ["$window"];
 
         public get language(): string {
             return this.lang;
         }
 
         public get customerNames(): string {
-            return this.custNames;
+            return (<MultipleSettingQuery>this.query).customerNames;
         }
 
         public get uplineLevel(): Level {
-            return this.uplineLvl;
+            return this.query.uplineLevel;
         }
 
-        constructor(private $location: ng.ILocationService) {
-            this.searchForParams();
+        constructor(private $window: ng.IWindowService) {
+            this.fetchParams();
         }
 
         public getSettingQuery(): SettingQuery {
-            if (this.isMultiple) {
-                var multipleQuery: MultipleSettingQuery = new MultipleSettingQuery(this.params);
+            if (this.isMultipleUpdates) {
+                var multipleQuery: MultipleSettingQuery = <MultipleSettingQuery>this.query;
 
                 if (!multipleQuery.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
@@ -74,39 +68,52 @@ module CustomerSetting {
 
                 return multipleQuery.getFirstCustomerSettingQuery();
             } else {
-                return new SettingQuery(this.params);
+                return <SettingQuery>this.query;
             }
         }
 
         public createSettingCommand(setting: Setting): SettingCommand {
-            if (this.isMultiple) {
-                var query: MultipleSettingQuery = new MultipleSettingQuery(this.params);
+            if (this.isMultipleUpdates) {
+                var multipleQuery: MultipleSettingQuery = <MultipleSettingQuery>this.query;
 
-                if (!query.validate()) {
+                if (!multipleQuery.validate()) {
                     throw Exceptions.customerIdsNotMatchCustomerNames();
                 }
 
                 return new MultipleSettingCommand(
-                    query.getCustomerIds(),
-                    query.getCustomerNames(),
-                    query.uplineLevel,
+                    multipleQuery.getCustomerIds(),
+                    multipleQuery.getCustomerNames(),
+                    multipleQuery.uplineLevel,
                     setting);
             } else {
-                return new SettingCommand(this.params.uplineLevel, setting);
+                return new SettingCommand(this.query.uplineLevel, setting);
             }
         }
 
-        private searchForParams(): void {
-            var params: any = this.$location.search();
+        private fetchParams(): void {
+            var params: any = this.$window["params"];
 
             if (params) {
-                this.params = params;
-                this.isMultiple = params.isMultiple || false;
-                this.lang = params.language;
-                this.custNames = params.customerNames;
-                this.uplineLvl = parseInt(params.uplineLevel);
-            } else {
-                this.params = undefined;
+                var uplineLevel = params.uplineLevel ? params.uplineLevel.value : undefined;
+                var customerLevel = params.customerLevel ? params.customerLevel.value : undefined;
+
+                this.isMultipleUpdates = params.isMultiple || false;
+                this.lang = params.language || Defaults.language;
+
+                if (this.isMultipleUpdates) {
+                    this.query = new MultipleSettingQuery(
+                        params.productId,
+                        uplineLevel,
+                        customerLevel,
+                        params.customerIds,
+                        params.customerNames);
+                } else {
+                    this.query = new SettingQuery(
+                        params.productId,
+                        uplineLevel,
+                        customerLevel,
+                        params.customerId);
+                }
             }
         }
     }

@@ -9,12 +9,11 @@ module CustomerSetting {
         public static $inject: string[] = ["productStatusResources", "parametersService"];
 
         constructor(productStatusResources: any, parametersService: ParametersService) {
-            super(productStatusResources);
-            this.setLanguage(parametersService.language || Defaults.language);
+            super(productStatusResources, parametersService);
         }
     }
 
-    angular.module("customerSetting").service("productStatusResourceService", ProductStatusResourceService);
+    ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
 
     export function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService) {
         return (name: string) => {

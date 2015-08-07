@@ -42,6 +42,7 @@
                 if (HttpContext.Current != null)
                 {
                     var languageFromSession = Convert.ToString(HttpContext.Current.Session[LanguageSessionKey]);
+
                     if (!string.IsNullOrEmpty(languageFromSession))
                     {
                         return languageFromSession;
@@ -79,6 +80,7 @@
         private string GetClientIp()
         {
             var forwardHeader = GetForwardHeader();
+
             if (!string.IsNullOrEmpty(forwardHeader))
             {
                 return forwardHeader;
@@ -91,6 +93,7 @@
         {
             var httpRequest = HttpContext.Current.Request;
             var forwardHeader = httpRequest.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
             if (forwardHeader != null)
             {
                 return forwardHeader.Split(',').First().Trim();
@@ -104,9 +107,11 @@
             var httpRequest = HttpContext.Current.Request;
             string userHostAddress = httpRequest.UserHostAddress;
             var internalIPAddress = GetInternalIPAddress(userHostAddress);
+
             if (internalIPAddress == null)
             {
                 var hostName = Dns.GetHostName();
+
                 internalIPAddress = GetInternalIPAddress(hostName);
             }
 

@@ -1,45 +1,19 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/common.ts" />
+/// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/module-registrater.ts" />
 
 module CustomerSetting {
     export class ResourceService {
+        private resource: any;
         private label: any;
         private message: any;
 
-        public static $inject: string[] = ["customerSettingResource"];
+        public static $inject: string[] = ["customerSettingResource", "parametersService"];
 
-        constructor(private customerSettingResource: any) {
-            this.setLanguage(Defaults.language);
-        }
-
-        public setLanguage(language: string): void {
-            var defaultLanguage: string = Defaults.language.toLowerCase();
-
-            if (angular.isDefined(language)) {
-                language = language.toLowerCase();
-            } else {
-                language = defaultLanguage;
-            }
-
-            this.label = this.customerSettingResource["label"][language];
-            this.message = this.customerSettingResource["message"][language];
-
-            if (angular.isUndefined(this.label)) {
-                this.label = this.customerSettingResource["label"][defaultLanguage];
-            }
-
-            if (angular.isUndefined(this.label)) {
-                this.label = {};
-            }
-
-            if (angular.isUndefined(this.message)) {
-                this.message = this.customerSettingResource["message"][defaultLanguage];
-            }
-
-            if (angular.isUndefined(this.message)) {
-                this.message = {};
-            }
+        constructor(customerSettingResource: any, parametersService: ParametersService) {
+            this.resource = customerSettingResource;
+            this.setLanguage(parametersService.language || Defaults.language);
         }
 
         public getLabel(key: string): string {
@@ -74,6 +48,35 @@ module CustomerSetting {
             }
 
             return msg;
+        }
+
+        private setLanguage(language: string): void {
+            var defaultLanguage: string = Defaults.language.toLowerCase();
+
+            if (angular.isDefined(language)) {
+                language = language.toLowerCase();
+            } else {
+                language = defaultLanguage;
+            }
+
+            this.label = this.resource["label"][language];
+            this.message = this.resource["message"][language];
+
+            if (angular.isUndefined(this.label)) {
+                this.label = this.resource["label"][defaultLanguage];
+            }
+
+            if (angular.isUndefined(this.label)) {
+                this.label = {};
+            }
+
+            if (angular.isUndefined(this.message)) {
+                this.message = this.resource["message"][defaultLanguage];
+            }
+
+            if (angular.isUndefined(this.message)) {
+                this.message = {};
+            }
         }
     }
 

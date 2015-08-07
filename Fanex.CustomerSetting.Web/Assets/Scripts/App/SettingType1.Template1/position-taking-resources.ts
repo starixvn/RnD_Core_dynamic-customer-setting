@@ -9,8 +9,7 @@ module CustomerSetting {
         public static $inject: string[] = ["positionTakingResources", "parametersService"];
 
         constructor(positionTakingResources: any, parametersService: ParametersService) {
-            super(positionTakingResources);
-            this.setLanguage(parametersService.language || Defaults.language);
+            super(positionTakingResources, parametersService);
         }
     }
 

@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/models.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="bet-setting-resources.ts" />
 
 module CustomerSetting {
@@ -133,6 +135,8 @@ module CustomerSetting {
     }
 
     class SettingType2Template1Directive extends SettingTypeDirective {
+        public static $inject: string[] = ["appConfigService", "betSettingResourceService"];
+
         public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype2.template1/settingtype2-template1.htm");
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
@@ -148,11 +152,7 @@ module CustomerSetting {
         }
     }
 
-    angular.module("customerSetting").directive("settingtype2Template1", ["appConfigService", "betSettingResourceService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(SettingType2Template1Directive, args));
-    }]);
+    ModuleRegister.directive("settingtype2Template1", SettingType2Template1Directive);
 
     interface BetSettingInputScope extends ng.IScope {
         settingItem: Settingtype2Template1Item;
@@ -164,6 +164,8 @@ module CustomerSetting {
     }
 
     class BetSettingInputDirective implements ng.IDirective {
+        public static $inject: string[] = ["$compile", "$filter", "betSettingResourceService"];
+
         public replace: boolean = true;
         public templateUrl: string = "bet-setting-input.html";
 
@@ -279,9 +281,5 @@ module CustomerSetting {
             private $filter: ng.IFilterService) { }
     }
 
-    angular.module("customerSetting").directive("betSettingInput", ["$compile", "$filter", "betSettingResourceService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(BetSettingInputDirective, args));
-    }]);
+    ModuleRegister.directive("betSettingInput", BetSettingInputDirective);
 }

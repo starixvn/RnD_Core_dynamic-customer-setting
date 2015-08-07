@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/models.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="commission-resources.ts" />
 
 module CustomerSetting {
@@ -37,7 +39,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             if (this.commRate > this.upline.commRate) {
-                this.validationState = new ValidationResult("CommRateCannotBeExceedMaxValue", "commRate", [this.upline.commRate]);
+                this.validationState = new ValidationResult("CommRateCannotBeExceedMaxValue", "commRate");
 
                 return false;
             }
@@ -49,6 +51,8 @@ module CustomerSetting {
     }
 
     class SettingType3Template1Directive extends SettingTypeDirective {
+        public static $inject: string[] = ["appConfigService", "commissionResourceService"];
+
         public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
@@ -63,11 +67,7 @@ module CustomerSetting {
         }
     }
 
-    angular.module("customerSetting").directive("settingtype3Template1", ["appConfigService", "commissionResourceService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(SettingType3Template1Directive, args));
-    }]);
+    ModuleRegister.directive("settingtype3Template1", SettingType3Template1Directive);
 
     interface SettingType3Template1ItemScope extends ng.IScope {
         settingItem: Settingtype3Template1Item;
@@ -75,6 +75,8 @@ module CustomerSetting {
     }
 
     class CommRateDirective implements ng.IDirective {
+        public static $inject: string[] = ["valueRangeGenerator"];
+
         public replace: boolean = true;
 
         public get scope(): any {
@@ -99,11 +101,7 @@ module CustomerSetting {
         constructor(private valueRangeGenerator: ValueRangeGenerator) { }
     }
 
-    angular.module("customerSetting").directive("commRate", ["valueRangeGenerator", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(CommRateDirective, args));
-    }]);
+    ModuleRegister.directive("commRate", CommRateDirective);
 
     class Settingtype3Template1Config {
         public static get step(): number {

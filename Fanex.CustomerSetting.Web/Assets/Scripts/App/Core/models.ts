@@ -136,7 +136,7 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            var validSettingItems: boolean = this.settingItems.every(item => {
+            var validSettingItems: boolean = this.settingItems.every((item: SettingItem) => {
                 return item.validate();
             });
 
@@ -149,13 +149,13 @@ module CustomerSetting {
 
         private getExtraData(rawData: any): Array<KeyValuePair<string, any>> {
             var extraData: Array<KeyValuePair<string, any>> = new Array<KeyValuePair<string, any>>();
-            var addedProperties: string[] = Object.keys(this).filter(prop => {
+            var addedProperties: string[] = Object.keys(this).filter((prop: string) => {
                 return prop !== "extraData";
             });
 
-            extraData = Object.keys(rawData).filter(propName => {
+            extraData = Object.keys(rawData).filter((propName: string) => {
                 return addedProperties.indexOf(propName) < 0;
-            }).map(prop => {
+            }).map((prop: string) => {
                 return new KeyValuePair<string, any>(prop, rawData[prop]);
             });
 
@@ -180,7 +180,7 @@ module CustomerSetting {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
-                this.settingTypes = setting.settingTypes.map(settingType => new SettingType(settingType));
+                this.settingTypes = setting.settingTypes.map((settingType: any) => new SettingType(settingType));
             }
         }
 
@@ -190,7 +190,7 @@ module CustomerSetting {
             var changedSettingTypes: Array<SettingType> = new Array<SettingType>();
 
             if (settingTypeId) {
-                matchedSettingTypes = this.settingTypes.filter(item => {
+                matchedSettingTypes = this.settingTypes.filter((item: SettingType) => {
                     return item.id === settingTypeId;
                 });
             } else {
@@ -198,7 +198,7 @@ module CustomerSetting {
             }
 
             if (matchedSettingTypes && matchedSettingTypes.length > 0) {
-                matchedSettingTypes.forEach(settingType => {
+                matchedSettingTypes.forEach((settingType: SettingType) => {
                     var changedSettingType: SettingType = settingType.getChanges();
 
                     if (changedSettingType) {
@@ -222,7 +222,7 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            var validSettingTypes: boolean = this.settingTypes.every(item => {
+            var validSettingTypes: boolean = this.settingTypes.every((item: SettingType) => {
                 return item.validate();
             });
 
@@ -262,12 +262,117 @@ module CustomerSetting {
         }
     }
 
+    export class SettingResult extends Result {
+        public settingTypeId: number;
+        public settingTypeName: string;
+        public messages: Array<string>;
+
+        constructor(
+            code: number,
+            message: string,
+            msgType: MessageType,
+            settingTypeId: number,
+            settingTypeName: string,
+            messages: Array<string>) {
+            super(code, message, msgType);
+            this.settingTypeId = settingTypeId;
+            this.settingTypeName = settingTypeName;
+            this.messages = messages;
+        }
+    }
+
+    export class CustomerSettingResult {
+        public customerId: number;
+        public customerName: string;
+        public settingResults: Array<SettingResult>;
+
+        public get isSuccessful(): boolean {
+            return !this.settingResults
+                || this.settingResults.every(result => {
+                    return result.isSuccessful;
+                });
+        }
+
+        constructor(settingResult: any) {
+            if (settingResult) {
+                this.customerId = settingResult.customerId;
+                this.customerName = settingResult.customerName;
+                this.settingResults = new Array<SettingResult>();
+                this.settingResults.push(new SettingResult(
+                    settingResult.code,
+                    settingResult.message,
+                    settingResult.msgType,
+                    settingResult.settingTypeId,
+                    settingResult.settingTypeName,
+                    settingResult.subMessages));
+            }
+        }
+
+        public pushSettingResult(settingResult: any) {
+            if (settingResult) {
+                this.settingResults.push(new SettingResult(
+                    settingResult.code,
+                    settingResult.message,
+                    settingResult.msgType,
+                    settingResult.settingTypeId,
+                    settingResult.settingTypeName,
+                    settingResult.subMessages));
+            }
+        }
+
+        public removeSuccessResults(): Array<SettingResult> {
+            if (this.settingResults) {
+                this.settingResults = this.settingResults.filter((result: SettingResult) => {
+                    return !result.isSuccessful;
+                });
+            }
+
+            return this.settingResults || new Array<SettingResult>();
+        }
+    }
+
+    export class UpdatingSettingResult extends Result {
+        public subResults: Array<CustomerSettingResult>;
+
+        constructor(result: any) {
+            if (result) {
+                super(result.code, result.message, result.msgType);
+
+                if (result.subResults) {
+                    this.subResults = new Array<CustomerSettingResult>();
+
+                    result.subResults.forEach((subResult: any) => {
+                        var existingCustomerResult: CustomerSettingResult = this.subResults.filter((item: CustomerSettingResult) => {
+                            return item.customerId === subResult.customerId
+                        })[0];
+
+                        if (existingCustomerResult) {
+                            existingCustomerResult.pushSettingResult(subResult);
+                        } else {
+                            this.subResults.push(new CustomerSettingResult(subResult));
+                        }
+                    });
+                }
+            }
+        }
+
+        public removeSuccessResults(): Array<CustomerSettingResult> {
+            if (this.subResults) {
+                this.subResults = this.subResults.filter((result: CustomerSettingResult) => {
+                    return !result.isSuccessful && result.removeSuccessResults().length > 0;
+                });
+            }
+
+            return this.subResults || new Array<CustomerSettingResult>();
+        }
+    }
+
     export class Results extends Result {
         public subResults: Array<Result>
 
         public get isSuccessful(): boolean {
             return this.code === 0
-                && (!this.subResults || this.subResults.every(result => {
+                && (!this.subResults || this.subResults.every((result: Result) => {
                     return result.isSuccessful;
                 }));
         }
@@ -278,12 +383,12 @@ module CustomerSetting {
             msgType?: MessageType,
             subResults?: any[]) {
             super(code, message, msgType);
-            this.subResults = subResults.map(item => new Result(item.code, item.message, item.msgType));
+            this.subResults = subResults.map((item: any) => new Result(item.code, item.message, item.msgType));
         }
 
         public removeSuccessResults(): Array<Result> {
             if (this.subResults) {
-                this.subResults = this.subResults.filter(result => {
+                this.subResults = this.subResults.filter((result: Result) => {
                     return !result.isSuccessful;
                 });
             }
@@ -293,11 +398,13 @@ module CustomerSetting {
     }
 
     export class ValidationResult extends Result {
-        constructor(
-            public message: string,
-            public fieldName?: string,
-            public msgParams?: any[]) {
+        public fieldName: string;
+        public msgParams: any[];
+
+        constructor(message: string, fieldName?: string, msgParams?: any[]) {
             super(-8000, message, MessageType.error);
+            this.fieldName = fieldName;
+            this.msgParams = msgParams;
         }
     }
 }

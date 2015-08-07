@@ -2,6 +2,7 @@
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="product-status-resources.ts" />
 
 module CustomerSetting {
@@ -49,13 +50,15 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult> Result.normal;
+            this.validationState = <ValidationResult>Result.normal;
 
             return true;
         }
     }
 
     class SettingType4Template1Directive extends SettingTypeDirective {
+        public static $inject: string[] = ["appConfigService", "productStatusResourceService"];
+
         public templateUrl: string = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
@@ -70,11 +73,7 @@ module CustomerSetting {
         }
     }
 
-    angular.module("customerSetting").directive("settingtype4Template1", ["appConfigService", "productStatusResourceService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(SettingType4Template1Directive, args));
-    }]);
+    ModuleRegister.directive("settingtype4Template1", SettingType4Template1Directive);
 
     interface StatusCheckboxScope extends ng.IScope {
         settingItem: Settingtype4Template1Item;
@@ -129,9 +128,5 @@ module CustomerSetting {
         }];
     }
 
-    angular.module("customerSetting").directive("statusCheckbox", [function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(StatusCheckboxDirective, args));
-    }]);
+    ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
 }

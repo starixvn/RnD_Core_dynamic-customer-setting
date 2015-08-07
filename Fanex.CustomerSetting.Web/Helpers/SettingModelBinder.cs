@@ -10,10 +10,9 @@
         {
             if (bindingContext != null)
             {
-                var type = typeof(Setting);
-                var model = Activator.CreateInstance(type);
+                var model = new Setting();
 
-                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
+                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, typeof(Setting));
 
                 return model;
             }

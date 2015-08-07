@@ -57,6 +57,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -92,11 +93,14 @@
     <Compile Include="Controllers\Global.asax.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
+    <Compile Include="Helpers\JsonConverter.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Helpers\LevelModelBinder.cs" />
     <Compile Include="Helpers\SettingItemModelBinder.cs" />
     <Compile Include="Helpers\SettingModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AppConfiguration.cs" />
+    <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Styles\customer-setting.css.map">

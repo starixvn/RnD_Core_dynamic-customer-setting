@@ -27,7 +27,7 @@ module CustomerSetting {
                 return new (Function.prototype.bind.apply(target, args));
             }
 
-            directiveFactory.$inject = target.$inject
+            directiveFactory.$inject = target.$inject;
             app.directive(name, directiveFactory);
         }
 

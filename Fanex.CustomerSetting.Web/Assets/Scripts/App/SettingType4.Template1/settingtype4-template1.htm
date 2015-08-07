@@ -3,7 +3,8 @@
     <script type="text/ng-template" id="settingtyp4-template1-value.html">
         <status-checkbox data-setting-item="item"
                          data-customer-level="customerLevel"
-                         data-avai-customer-levels="avaiCustomerLevels"></status-checkbox>
+                         data-avai-customer-levels="avaiCustomerLevels">
+        </status-checkbox>
     </script>
     <script type="text/ng-template" id="status-checkbox.html">
         <div>
@@ -17,7 +18,7 @@
             <label class="checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
                 <input type="checkbox"
                        data-tooltip
-                       data-message="settingItem.validationState.message | message"
+                       data-message="settingItem.validationState.message | productStatusMessage"
                        data-ng-model="isDownlineChecked"
                        data-ng-disabled="isDownlineDisabled"
                        data-ng-change="changeDownline()" />

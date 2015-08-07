@@ -21,6 +21,7 @@
         }
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public JsonResult UpdateSetting(UpdateCustomerSettingCommand updateSetting)
         {
             var result = _customerSettingService.Update(updateSetting);
@@ -29,6 +30,7 @@
         }
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public JsonResult UpdateMultipleSetting(MultipleUpdateCustomerSettingCommand updateMulitpleSetting)
         {
             var result = _customerSettingService.Update(updateMulitpleSetting);

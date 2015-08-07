@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/models.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="adjust-member-pt-modal.ts" />
 /// <reference path="position-taking-resources.ts" />
 
@@ -30,10 +32,10 @@ module CustomerSetting {
             var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
 
             if (rawData && settingItem) {
-                Object.keys(rawData).filter(propName => {
+                Object.keys(rawData).filter((propName: string) => {
                     return addedProperties.indexOf(propName) < 0;
-                }).forEach(prop => {
-                    settingItem[prop] = rawData[prop];
+                }).forEach((propName: string) => {
+                    settingItem[propName] = rawData[propName];
                 });
             }
         }
@@ -42,7 +44,7 @@ module CustomerSetting {
             var reservedProperties: string[] = ["oldSetting", "validationState"];
 
             if (settingItem) {
-                return Object.keys(settingItem).some(prop => {
+                return Object.keys(settingItem).some((prop: string) => {
                     return reservedProperties.indexOf(prop) < 0
                         && settingItem.oldSetting[prop] !== undefined
                         && settingItem[prop] !== settingItem.oldSetting[prop];
@@ -452,6 +454,8 @@ module CustomerSetting {
     }
 
     class SettingType1Template1Directive extends SettingTypeDirective {
+        public static $inject: string[] = ["appConfigService", "positionTakingResourceService"];
+
         public templateUrl = this.appConfigService.resolveRootUrl("app/customerSetting/settingtype1.template1/settingtype1-template1.htm");
 
         public link: ng.IDirectiveLinkFn = (scope: SettingTypeDirectiveSharedScope) => {
@@ -467,11 +471,7 @@ module CustomerSetting {
         }
     }
 
-    angular.module("customerSetting").directive("settingtype1Template1", ["appConfigService", "positionTakingResourceService", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(SettingType1Template1Directive, args));
-    }]);
+    ModuleRegister.directive("settingtype1Template1", SettingType1Template1Directive);
 
     interface PositionTakingSelectScope extends ng.IScope {
         settingItem: SettingItem;
@@ -484,6 +484,8 @@ module CustomerSetting {
     }
 
     class PositionTakingSelectDirective implements ng.IDirective {
+        public static $inject: string[] = ["$compile"];
+
         public replace: boolean = true;
 
         public get scope(): any {
@@ -512,7 +514,7 @@ module CustomerSetting {
                     }
                 });
 
-                $scope.$watchGroup(["min", "max"], (newData, oldData) => {
+                $scope.$watchGroup(["min", "max"], (newData: number[], oldData: number[]) => {
                     if ($scope.settingItem) {
                         if (!angular.equals(oldData, newData)) {
                             $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
@@ -529,7 +531,7 @@ module CustomerSetting {
             }];
 
         public link: ng.IDirectiveLinkFn = (scope: PositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
-            var select = element.find("select");
+            var select: ng.IAugmentedJQuery = element.find("select");
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-tooltip", "");
@@ -540,11 +542,7 @@ module CustomerSetting {
         constructor(private $compile: ng.ICompileService) { }
     }
 
-    angular.module("customerSetting").directive("positionTakingSelect", ["$compile", function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(PositionTakingSelectDirective, args));
-    }]);
+    ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
 
     interface AutoPositionTakingScope extends ng.IScope {
         item: SettingItem;
@@ -569,11 +567,7 @@ module CustomerSetting {
             }];
     }
 
-    angular.module("customerSetting").directive("autoPositionTaking", [function () {
-        var args = Array.prototype.concat.apply([null], arguments);
-
-        return new (Function.prototype.bind.apply(AutoPositionTakingDirective, args));
-    }]);
+    ModuleRegister.directive("autoPositionTaking", AutoPositionTakingDirective);
 
     export class Settingtype1Template1Config {
         public static get step(): number {

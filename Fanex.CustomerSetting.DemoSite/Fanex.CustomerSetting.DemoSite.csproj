@@ -231,6 +231,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Gulpfile.js" />
+    <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -248,7 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\CustomerSetting\*.*" />
-	<Content Include="App\CustomerSetting\**\*.*" />
+    <Content Include="App\CustomerSetting\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -288,7 +289,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\demo-form.ts" />
+    <TypeScriptCompile Include="Scripts\DemoForm\demo-form.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />

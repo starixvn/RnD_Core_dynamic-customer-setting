@@ -50,14 +50,10 @@ module CustomerSetting {
             this.custLv = level;
         }
 
-        constructor();
-        constructor(param: any);
-        constructor(param?: any) {
-            if (param) {
-                this.productId = param.productId;
-                this.uplineLevel = param.uplineLevel;
-                this.customerLevel = param.customerLevel;
-            }
+        constructor(productId: number, uplineLevel: Level, customerLevel: Level) {
+            this.productId = productId;
+            this.uplineLevel = uplineLevel;
+            this.customerLevel = customerLevel;
         }
     }
 
@@ -76,25 +72,20 @@ module CustomerSetting {
             this.custId = custId;
         }
 
-        constructor();
-        constructor(param: any);
-        constructor(param?: any) {
-            super(param);
-
-            if (param) {
-                this.customerId = param.customerId;
-            }
+        constructor(productId: number, uplineLevel: Level, customerLevel: Level, customerId: number) {
+            super(productId, uplineLevel, customerLevel);
+            this.customerId = customerId;
         }
 
-        public toParamString(): string {
-            var params: string = StringFormater.format(
-                "customerId={0}&customerLevel={1}&productId={2}",
-                this.customerId,
-                this.customerLevel,
-                this.productId);
+        public toJson(): any {
+            var params: any = {
+                customerId: this.customerId,
+                customerLevel: this.customerLevel,
+                productId: this.productId
+            }
 
             if (this.uplineLevel) {
-                params += StringFormater.format("&uplineLevel={0}", this.uplineLevel);
+                params.uplineLevel = this.uplineLevel;
             }
 
             return params;
@@ -114,7 +105,7 @@ module CustomerSetting {
                 throw Exceptions.invalidParam("customerIds");
             }
 
-            this.custIds = custIds.split(",").map(custId => parseInt(custId.trim()));
+            this.custIds = custIds.split(",").map((custId: string) => parseInt(custId.trim()));
         }
 
         public getCustomerNames(): Array<string> {
@@ -126,30 +117,24 @@ module CustomerSetting {
                 throw Exceptions.invalidParam("customerNames");
             }
 
-            this.custNames = names.split(",").map(name => name.trim());
+            this.custNames = names.split(",").map((name: string) => name.trim());
         }
 
-        constructor();
-        constructor(param: any);
-        constructor(param?: any) {
-            super(param);
+        public get customerNames(): string {
+            return this.custNames.join();
+        }
 
-            if (param) {
-                this.customerIds = param.customerIds;
-                this.customerNames = param.customerNames;
-            }
+        constructor(productId: number, uplineLevel: Level, customerLevel: Level, customerIds: string, customerNames: string) {
+            super(productId, uplineLevel, customerLevel);
+            this.customerIds = customerIds;
+            this.customerNames = customerNames;
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
             var query: SettingQuery = undefined;
 
             if (this.custIds.length > 0 && this.validate()) {
-                query = new SettingQuery();
-
-                query.customerId = this.custIds[0];
-                query.customerLevel = this.customerLevel;
-                query.uplineLevel = this.uplineLevel;
-                query.productId = this.productId;
+                query = new SettingQuery(this.productId, this.uplineLevel, this.customerLevel, this.custIds[0]);
             }
 
             return query;

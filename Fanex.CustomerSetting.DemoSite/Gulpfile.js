@@ -8,7 +8,7 @@
         bower: "./bower_components/",
         content: "./Content/",
         compass: "./Content/Compass/",
-        script: "./Scripts/",
+        demoForm: "./Scripts/DemoForm/",
         library: "./Scripts/Libraries/"
     };
 
@@ -40,17 +40,10 @@
                    .pipe(gulp.dest(paths.compass));
     });
 
-    gulp.task("install-jquery", function () {
-        return gulp.src(paths.bower + "jquery/dist/**")
-                   .pipe(gulp.dest(paths.library + "JQuery"));
-    });
-
-    gulp.task("install-angular", function () {
+    gulp.task("install-jslibs", function () {
         return gulp.src(paths.bower + "Angular/angular*")
                    .pipe(gulp.dest(paths.library + "AngularJs"));
     });
-
-    gulp.task("install-jslibs", ["install-jquery", "install-angular"]);
 
     gulp.task("copy-customer-setting-asset", function () {
         return gulp.src(paths.source)
@@ -71,18 +64,25 @@
     });
 
     gulp.task("compile-scripts", function () {
+        var concat = require("gulp-concat");
+        var gulpif = require("gulp-if");
         var sourcemaps = require("gulp-sourcemaps");
+        var templateCache = require("gulp-angular-templatecache");
         var ts = require("gulp-typescript");
 
-        return gulp.src(paths.script + "*.ts")
-                   .pipe(ts({
-                       typescript: require("typescript"),
-                       target: "ES5",
-                       noImplicitAny: true,
-                       removeComments: true
-                   }))
-                   .pipe(sourcemaps.write("."))
-                   .pipe(gulp.dest(paths.script));
+        gulp.src(paths.demoForm + "**")
+            .pipe(gulpif(/[.]ts$/, ts({
+                typescript: require("typescript"),
+                target: "ES5",
+                noImplicitAny: false,
+                removeComments: true
+            })))
+            .pipe(gulpif(/[.]htm$/, templateCache({
+                module: "actorForm"
+            })))
+            .pipe(concat("demo-form.js"))
+            .pipe(sourcemaps.write("."))
+            .pipe(gulp.dest(paths.demoForm));
     });
 
     gulp.task("prebuild", function (done) {
@@ -97,6 +97,6 @@
 
     gulp.task("watch", ["compile-scripts", "copy-customer-setting-asset"], function () {
         gulp.watch(paths.source, ["copy-customer-setting-asset"]);
-        gulp.watch(paths.script + "*.ts", ["compile-scripts"]);
+        gulp.watch(paths.demoForm + "*.{ts,htm}", ["compile-scripts"]);
     });
 })(require);

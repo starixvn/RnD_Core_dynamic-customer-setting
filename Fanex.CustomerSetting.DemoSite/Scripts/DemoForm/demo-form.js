@@ -1,4 +1,4 @@
-/// <reference path="typings/angularjs/angular.d.ts" />
+/// <reference path="../typings/angularjs/angular.d.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -9,9 +9,11 @@ var DemoFrom;
 (function (DemoFrom) {
     var app = angular.module("actorForm", []);
     var DemoFormController = (function () {
-        function DemoFormController($http, $location) {
+        function DemoFormController($http, $location, postingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+            this.postingToIframeService = postingToIframeService;
+            this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
             this.languages = SampleDataFactory.getLanuages();
             this.changeActorRole();
@@ -22,14 +24,13 @@ var DemoFrom;
         };
         DemoFormController.prototype.changeActorRole = function () {
             var selectedRole = angular.isDefined(this.actor) ? this.actor.role : Role.company;
-            this.actor = SampleDataFactory.getActor(selectedRole);
+            var selectedSystemId = angular.isDefined(this.actor) ? this.actor.system : this.systemTypes[0].key;
+            this.actor = SampleDataFactory.getActor(selectedRole, selectedSystemId);
             this.target = undefined;
             this.targetRoles = Target.getAvailableRoles(selectedRole);
             this.isMultipleUpdates = false;
             this.getTarget(selectedRole);
             this.switchForm(false);
-        };
-        DemoFormController.prototype.changeUplineLevel = function () {
         };
         DemoFormController.prototype.getTarget = function (actorRole) {
             var selectedRole = angular.isDefined(this.target) ? this.target.role : this.targetRoles[0].key;
@@ -56,7 +57,7 @@ var DemoFrom;
         };
         DemoFormController.prototype.saveSession = function () {
             var _this = this;
-            this.$http.post("home/saveSession", this.actor).success(function () {
+            this.$http.post("home/saveSession", this.actor).then(function () {
                 _this.switchForm(true);
             });
         };
@@ -65,7 +66,9 @@ var DemoFrom;
                 language: this.actor.language,
                 productId: this.target.productId,
                 customerLevel: this.target.role,
-                uplineLevel: this.target.uplineRole
+                uplineLevel: this.target.uplineRole,
+                path: "ViewCustomerSetting",
+                frameName: "setting-page"
             };
             if (this.isMultipleUpdates) {
                 params.isMultiple = true;
@@ -75,21 +78,63 @@ var DemoFrom;
             else {
                 params.customerId = this.target.customerId;
             }
-            this.settingPath = this.$location.path("ViewCustomerSetting").search(params).url().replace("?", "/#?");
-            document.getElementById("setting-page").contentWindow.location.reload();
+            this.postingToIframeService.submitToIframe(params);
         };
-        DemoFormController.$inject = ["$http", "$location"];
+        DemoFormController.$inject = ["$http", "$location", "postingToIframeService"];
         return DemoFormController;
     })();
-    DemoFrom.DemoFormController = DemoFormController;
     app.controller("DemoFormController", DemoFormController);
+    var PostingToIframeDirective = (function () {
+        function PostingToIframeDirective(postingToIframeService) {
+            var _this = this;
+            this.postingToIframeService = postingToIframeService;
+            this.replace = true;
+            this.templateUrl = "posting-to-iframe.htm";
+            this.link = function (scope, element) {
+                var form = element[0];
+                _this.postingToIframeService.setup(scope);
+                scope.submitToIframe = function () {
+                    form.submit();
+                    return false;
+                };
+            };
+        }
+        return PostingToIframeDirective;
+    })();
+    app.directive("postingToIframe", ["postingToIframeService", function () {
+            var args = Array.prototype.concat.apply([null], arguments);
+            return new (Function.prototype.bind.apply(PostingToIframeDirective, args));
+        }]);
+    var PostingToIframeService = (function () {
+        function PostingToIframeService($timeout) {
+            this.$timeout = $timeout;
+        }
+        PostingToIframeService.prototype.setup = function (scope) {
+            this.scope = scope;
+        };
+        PostingToIframeService.prototype.submitToIframe = function (params) {
+            var _this = this;
+            Object.keys(params).forEach(function (prop) {
+                _this.scope[prop] = params[prop];
+            });
+            this.$timeout(function () {
+                _this.scope.submitToIframe();
+            });
+        };
+        PostingToIframeService.$inject = ["$timeout"];
+        return PostingToIframeService;
+    })();
+    app.service("postingToIframeService", PostingToIframeService);
     var SampleDataFactory = (function () {
         function SampleDataFactory() {
         }
+        SampleDataFactory.getSystemTypes = function () {
+            return new Array(new KeyValuePair(1, "accounting"), new KeyValuePair(2, "agency"), new KeyValuePair(3, "external accounting"));
+        };
         SampleDataFactory.getLanuages = function () {
             return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("ko-KR", "ภาษาไทย (th-TH)"), new KeyValuePair("zh-TW", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));
         };
-        SampleDataFactory.getActor = function (selectedRole) {
+        SampleDataFactory.getActor = function (selectedRole, systemId) {
             var actorId = 0;
             var name = "";
             var subAccId = 0;
@@ -115,7 +160,7 @@ var DemoFrom;
                     subAccId = 728498;
                     break;
             }
-            return this.createActor(actorId, name, selectedRole, subAccId);
+            return this.createActor(actorId, name, selectedRole, subAccId, systemId);
         };
         SampleDataFactory.getSingleTarget = function (role, uplineRole) {
             var id = 0;
@@ -158,8 +203,8 @@ var DemoFrom;
             }
             return this.createMultipleTargetInfo(ids, names, role, uplineRole);
         };
-        SampleDataFactory.createActor = function (id, name, role, subAccId) {
-            return new Actor(id, name, role, subAccId, this.defaultLanguage);
+        SampleDataFactory.createActor = function (id, name, role, subAccId, systemId) {
+            return new Actor(id, name, role, subAccId, this.defaultLanguage, systemId);
         };
         SampleDataFactory.createSingleTarget = function (id, role, uplineRole) {
             return new SingleTarget(id, role, uplineRole, this.defaultProductId);
@@ -187,12 +232,13 @@ var DemoFrom;
         return KeyValuePair;
     })();
     var Actor = (function () {
-        function Actor(actorId, actorName, role, subAccountId, language) {
+        function Actor(actorId, actorName, role, subAccountId, language, system) {
             this.actorId = actorId;
             this.actorName = actorName;
             this.role = role;
             this.subAccountId = subAccountId;
             this.language = language;
+            this.system = system;
         }
         Actor.getAvailableRoles = function () {
             var roles = new Array();
@@ -226,7 +272,7 @@ var DemoFrom;
             var roles = new Array();
             for (var item in Role) {
                 var roleId = parseInt(item);
-                if (!isNaN(roleId) && roleId > downlineRole && roleId < Role.company) {
+                if (!isNaN(roleId) && downlineRole < roleId && roleId < Role.company) {
                     roles.push(new KeyValuePair(roleId, Role[roleId]));
                 }
             }
@@ -249,13 +295,8 @@ var DemoFrom;
             this.customerIds = customerIds;
             this.customerNames = customerNames;
         }
-        MultipleTargets.prototype.getFirstCustomerId = function () {
-            var ids = this.customerIds.split(",");
-            if (ids !== null && ids.length > 0) {
-                return parseInt(ids[0]);
-            }
-            return 0;
-        };
         return MultipleTargets;
     })(Target);
 })(DemoFrom || (DemoFrom = {}));
+
+angular.module("actorForm").run(["$templateCache", function($templateCache) {$templateCache.put("posting-to-iframe.htm","<form action=\"{{path}}\" target=\"{{frameName}}\" method=\"post\" class=\"hide\">\r\n    <input type=\"hidden\" name=\"language\" value=\"{{language}}\" />\r\n    <input type=\"hidden\" name=\"productId\" value=\"{{productId}}\" />\r\n    <input type=\"hidden\" name=\"customerLevel\" value=\"{{customerLevel}}\" />\r\n    <input type=\"hidden\" name=\"uplineLevel\" value=\"{{uplineLevel}}\" data-ng-if=\"uplineLevel\" />\r\n    <input type=\"hidden\" name=\"customerId\" value=\"{{customerId}}\" data-ng-if=\"!isMultiple\" />\r\n    <input type=\"hidden\" name=\"isMultiple\" value=\"{{isMultiple}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerIds\" value=\"{{customerIds}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerNames\" value=\"{{customerNames}}\" data-ng-if=\"isMultiple\" />\r\n</form>");}]);
