@@ -15,10 +15,11 @@
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Xml.Linq" #>
 <#@ import namespace="System.Windows.Forms" #>
-"use strict";
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
+    "use strict";
+
     var productStatusResources = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");

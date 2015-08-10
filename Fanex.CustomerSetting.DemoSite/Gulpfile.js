@@ -103,7 +103,7 @@
     gulp.task("tslint", function () {
         var tslint = require("gulp-tslint");
 
-        return gulp.src([assetPaths.app + "Core/**/*.ts*/", assetPaths.app + "**/*.ts"])
+        return gulp.src(paths.demoForm + "*.ts")
                    .pipe(tslint({
                        configuration: "tslint.json"
                    }))

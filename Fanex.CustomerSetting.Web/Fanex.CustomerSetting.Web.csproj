@@ -195,6 +195,7 @@
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Controllers\Global.asax" />
     <Content Include="Gulpfile.js" />
+    <Content Include="karma.conf.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />

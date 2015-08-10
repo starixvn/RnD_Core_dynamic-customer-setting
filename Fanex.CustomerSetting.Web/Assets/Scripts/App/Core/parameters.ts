@@ -133,7 +133,7 @@ module CustomerSetting {
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
-            var query: SettingQuery = undefined;
+            var query: SettingQuery;
 
             if (this.custIds.length > 0 && this.validate()) {
                 query = new SettingQuery(this.productId, this.uplineLevel, this.customerLevel, this.custIds[0]);

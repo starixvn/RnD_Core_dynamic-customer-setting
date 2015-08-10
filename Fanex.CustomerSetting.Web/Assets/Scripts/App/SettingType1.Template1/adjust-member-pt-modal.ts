@@ -10,7 +10,7 @@ module CustomerSetting {
         divisor: number;
         selectedValue: number;
         range: Array<KeyValuePair<number, number>>;
-        update: (memberPt: number) => void;
+        updateMemberPt: (memberPt: number) => void;
         ok: () => void;
         cancel: () => void;
     }
@@ -57,7 +57,7 @@ module CustomerSetting {
             };
 
             this.modalScope.ok = () => {
-                this.modalScope.update(this.modalScope.selectedValue);
+                this.modalScope.updateMemberPt(this.modalScope.selectedValue);
                 this.modalScope.isShown = false;
             };
         }
@@ -70,7 +70,7 @@ module CustomerSetting {
             this.modalScope.selectedValue = 0;
             this.generateRange(max);
             this.modalScope.isShown = true;
-            this.modalScope.update = update;
+            this.modalScope.updateMemberPt = update;
         }
 
         private generateRange(max: number): void {
@@ -84,4 +84,13 @@ module CustomerSetting {
     }
 
     ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
+
+    function Unsafe($sce: ng.ISCEService) {
+        return (value: string) => {
+            return $sce.trustAsHtml(value);
+        };
+    }
+
+    Unsafe.$inject = ["$sce"];
+    ModuleRegister.filter("unsafe", Unsafe);
 }

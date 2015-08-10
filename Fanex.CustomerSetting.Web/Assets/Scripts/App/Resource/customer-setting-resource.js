@@ -1,7 +1,8 @@
-﻿"use strict";
-/*jshint -W101,-W106,-W044,-W098*/
+﻿/*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
+    "use strict";
+
     var resources = {};
     
     resources["label"] = resources["label"] || {};
@@ -137,7 +138,8 @@
         "SystemError": "Oops... you are here because of a system error, please notify your administrator.",
         "UplineLevelCannotBeNullIncaseOfEdittingMember": "Upline Level cannot be null incase of editting member.",
         "UplineLevelIsNotValid": "Upline Level is not valid.",
-        "UplineLevelShouldBeNull": "Upline Level should be null."
+        "UplineLevelShouldBeNull": "Upline Level should be null.",
+        "YouAreNotAuthorized": "You are not authorized on this function!"
     };
     
     resources["message"] = resources["message"] || {};

@@ -74,26 +74,30 @@ module CustomerSetting {
 
                     if (validationResult.isSuccessful) {
                         this.isUIblocked = true;
-                        this.$http.post(this.appConfigService.resolveRootUrl(path), command).then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                            this.requestMsgResult = new UpdatingSettingResult(response.data);
 
-                            if (this.requestMsgResult.isSuccessful) {
-                                this.querySetting();
-                            }
+                        this.$http
+                            .post(this.appConfigService.resolveRootUrl(path), command)
+                            .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                                this.requestMsgResult = new UpdatingSettingResult(response.data);
 
-                            this.$timeout(() => {
-                                if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
-                                    this.requestMsgResult = undefined;
+                                if (this.requestMsgResult.isSuccessful) {
+                                    this.querySetting();
                                 }
-                            }, Defaults.displayingMsgTime);
-                        }, () => {
-                            var error: Result = Result.systemError;
 
-                            error.message = this.resourceService.getMessage(error.message);
-                            this.requestMsgResult = error;
-                        }).finally(() => {
-                            this.isUIblocked = false;
-                        });
+                                this.$timeout(() => {
+                                    if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
+                                        this.requestMsgResult = undefined;
+                                    }
+                                }, Defaults.displayingMsgTime);
+                            }, () => {
+                                var error: Result = Result.systemError;
+
+                                error.message = this.resourceService.getMessage(error.message);
+                                this.requestMsgResult = error;
+                            })
+                            .finally(() => {
+                                this.isUIblocked = false;
+                            });
                     } else {
                         this.requestMsgResult = validationResult;
                     }
@@ -109,18 +113,24 @@ module CustomerSetting {
         private querySetting(): void {
             var query: SettingQuery = this.parametersService.getSettingQuery();
 
-            this.isUIblocked = true;
-            this.$http.post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson()).then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                ////this.$http.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json")).then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                this.setting = new Setting(response.data);
-            }, () => {
-                var error: Result = Result.systemError;
+            if (query) {
+                this.isUIblocked = true;
 
-                error.message = this.resourceService.getMessage(error.message);
-                this.requestMsgResult = error;
-            }).finally(() => {
-                this.isUIblocked = false;
-            });
+                this.$http
+                    .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
+                    ////.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json"))
+                    .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                        this.setting = new Setting(response.data);
+                    }, () => {
+                        var error: Result = Result.systemError;
+
+                        error.message = this.resourceService.getMessage(error.message);
+                        this.requestMsgResult = error;
+                    })
+                    .finally(() => {
+                        this.isUIblocked = false;
+                    });
+            }
         }
     }
 

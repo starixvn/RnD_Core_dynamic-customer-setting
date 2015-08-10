@@ -2,7 +2,9 @@
     "name": "fanex-customer-setting-demo-site",
     "private": true,
     "dependencies": {
-        "compass-mixins": "^1.0.2",
         "angular": "^1.4.3"
+    },
+    "devDependencies": {
+        "compass-mixins": "^1.0.2"
     }
 }

@@ -213,10 +213,10 @@
         <div class="modal-overlay" data-ng-show="isShown">
             <div class="modal">
                 <div class="modal-header">
-                    <div class="modal-title">{{'UpdateMemberPtInfo' | positionTakingMessage}}</div>
+                    <div class="modal-title">{{'UpdateMemberPtInfo' | positionTakingLabel}}</div>
                 </div>
                 <div class="modal-content">
-                    <span>{{'UpdateMemberPtQuestion' | positionTakingLabel}}</span>
+                    <span data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></span>
                     <select data-ng-model="selectedValue"
                             data-ng-options="item.key as item.value / divisor for item in range"></select>
                 </div>

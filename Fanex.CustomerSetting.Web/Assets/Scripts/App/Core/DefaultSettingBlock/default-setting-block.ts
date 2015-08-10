@@ -82,7 +82,7 @@ module CustomerSetting {
             var result: Array<Array<DefaultSettingItem>> = new Array<Array<DefaultSettingItem>>();
             var group: Array<DefaultSettingItem>;
 
-            angular.forEach(settingItems, (item: ISettingItem, index: number) => {
+            angular.forEach(settingItems, (item: ISettingItem) => {
                 var settingItem = <DefaultSettingItem>item;
 
                 if (currentSportTypeId !== settingItem.sportTypeId) {

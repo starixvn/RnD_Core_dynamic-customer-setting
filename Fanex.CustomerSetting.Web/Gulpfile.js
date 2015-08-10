@@ -100,7 +100,6 @@
         var sass = require("gulp-sass");
         var sourcemaps = require("gulp-sourcemaps");
         var minify = require("gulp-minify-css");
-        var pkg = require("./package.json");
 
         return gulp.src(assetPaths.style + "**")
                    .pipe(sourcemaps.init())
@@ -113,15 +112,11 @@
     });
 
     gulp.task("publish-images", function () {
-        var pkg = require("./package.json");
-
         return gulp.src(assetPaths.image + "*.*")
                    .pipe(gulp.dest(publishPaths.customerSetting + "Styles/Images"));
     });
 
     gulp.task("publish-styles", ["publish-images"], function () {
-        var pkg = require("./package.json");
-
         return gulp.src(assetPaths.style + "customer-setting*.{map,css}")
                    .pipe(gulp.dest(publishPaths.customerSetting + "Styles"));
     });
@@ -215,10 +210,10 @@
     gulp.task("tslint", function () {
         var tslint = require("gulp-tslint");
 
-        return gulp.src([assetPaths.app + "Core/**/*.ts*/", assetPaths.app + "**/*.ts"])
+        return gulp.src([assetPaths.app + "Core/**/*.ts", assetPaths.app + "**/*.ts"])
                    .pipe(tslint({
                        configuration: "tslint.json"
                    }))
-                   .pipe(tslint.report("verbose"));
+                   .pipe(tslint.report("prose"));
     });
 })(require);

@@ -151,7 +151,7 @@ module CustomerSetting {
             return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype2.template1/settingtype2-template1.htm");
         };
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp2-template1-header.html";
             scope.valueTemplateUrl = "settingtyp2-template1-value.html";
             scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
@@ -217,7 +217,7 @@ module CustomerSetting {
                 };
             }];
 
-        public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery) => {
             var element = angular.element(wrapElement.children()[0]);
             var modelCtrl: any;
 
@@ -254,7 +254,7 @@ module CustomerSetting {
                 element.data("focused", false);
             });
 
-            element.on("mouseup", (event: JQueryEventObject) => {
+            element.on("mouseup", () => {
                 if (element.data("focused")) {
                     var input: HTMLInputElement = <HTMLInputElement>element[0];
 

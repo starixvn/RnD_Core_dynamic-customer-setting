@@ -1,12 +1,14 @@
 ﻿/// <reference path="../typings/angularjs/angular.d.ts" />
 
 module DemoFrom {
-    var app = angular.module("actorForm", [])
+    "use strict";
+
+    var app = angular.module("actorForm", []);
 
     class DemoFormController {
         public static $inject = ["$http", "$location", "postingToIframeService"];
 
-        public actor: Actor
+        public actor: Actor;
         public systemTypes: KeyValuePair<number, string>[];
         public actorRoles: KeyValuePair<number, string>[];
         public languages: KeyValuePair<string, string>[];
@@ -17,10 +19,17 @@ module DemoFrom {
         public preventSavingSession: boolean;
         public preventShowingData: boolean;
 
+        private $http: ng.IHttpService;
+        private $location: ng.ILocationService;
+        private postingToIframeService: PostingToIframeService;
+
         constructor(
-            private $http: ng.IHttpService,
-            private $location: ng.ILocationService,
-            private postingToIframeService: PostingToIframeService) {
+            $http: ng.IHttpService,
+            $location: ng.ILocationService,
+            postingToIframeService: PostingToIframeService) {
+            this.$http = $http;
+            this.$location = $location;
+            this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
             this.languages = SampleDataFactory.getLanuages();
@@ -100,7 +109,7 @@ module DemoFrom {
 
     app.controller("DemoFormController", DemoFormController);
 
-    interface PostingToIframeScope extends ng.IScope {
+    interface IPostingToIframeScope extends ng.IScope {
         language: string;
         productId: number;
         customerLevel: Role;
@@ -118,7 +127,7 @@ module DemoFrom {
         public replace: boolean = true;
         public templateUrl: string = "posting-to-iframe.htm";
 
-        public link: ng.IDirectiveLinkFn = (scope: PostingToIframeScope, element: ng.IAugmentedJQuery) => {
+        public link: ng.IDirectiveLinkFn = (scope: IPostingToIframeScope, element: ng.IAugmentedJQuery) => {
             var form: HTMLFormElement = <HTMLFormElement>element[0];
 
             this.postingToIframeService.setup(scope);
@@ -127,10 +136,14 @@ module DemoFrom {
                 form.submit();
 
                 return false;
-            }
-        }
+            };
+        };
 
-        constructor(private postingToIframeService: PostingToIframeService) { }
+        private postingToIframeService: PostingToIframeService;
+
+        constructor(postingToIframeService: PostingToIframeService) {
+            this.postingToIframeService = postingToIframeService;
+        }
     }
 
     app.directive("postingToIframe", ["postingToIframeService", function () {
@@ -140,11 +153,16 @@ module DemoFrom {
     }]);
 
     class PostingToIframeService {
-        private scope: PostingToIframeScope;
-
         public static $inject: string[] = ["$timeout"];
 
-        public setup(scope: PostingToIframeScope): void {
+        private scope: IPostingToIframeScope;
+        private $timeout: ng.ITimeoutService;
+
+        constructor($timeout: ng.ITimeoutService) {
+            this.$timeout = $timeout;
+        }
+
+        public setup(scope: IPostingToIframeScope): void {
             this.scope = scope;
         }
 
@@ -157,8 +175,6 @@ module DemoFrom {
                 this.scope.submitToIframe();
             });
         }
-
-        constructor(private $timeout: ng.ITimeoutService) { }
     }
 
     app.service("postingToIframeService", PostingToIframeService);
@@ -294,65 +310,84 @@ module DemoFrom {
     }
 
     class KeyValuePair<T, K> {
-        constructor(public key: T, public value: K) { }
+        public key: T;
+        public value: K;
+
+        constructor(key: T, value: K) {
+            this.key = key;
+            this.value = value;
+        }
     }
 
     class Actor {
-        constructor(
-            public actorId: number,
-            public actorName: string,
-            public role: Role,
-            public subAccountId: number,
-            public language: string,
-            public system: number) { }
+        public actorId: number;
+        public actorName: string;
+        public role: Role;
+        public subAccountId: number;
+        public language: string;
+        public system: number;
+
+        constructor(actorId: number, actorName: string, role: Role, subAccountId: number, language: string, system: number) {
+            this.actorId = actorId;
+            this.actorName = actorName;
+            this.role = role;
+            this.subAccountId = subAccountId;
+            this.language = language;
+            this.system = system;
+        }
 
         public static getAvailableRoles(): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item);
+                var roleId: number = parseInt(item, 10);
 
                 if (!isNaN(roleId) && roleId !== Role.member) {
                     roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                 }
             }
 
-            return roles.sort((num1, num2) => num2.key - num1.key);
+            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
         }
     }
 
     class Target {
-        constructor(
-            public productId: number,
-            public role: Role,
-            public uplineRole: Role) { }
+        public productId: number;
+        public role: Role;
+        public uplineRole: Role;
+
+        constructor(productId: number, role: Role, uplineRole: Role) {
+            this.productId = productId;
+            this.role = role;
+            this.uplineRole = uplineRole;
+        }
 
         public static getAvailableRoles(uplineRole: Role): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item);
+                var roleId: number = parseInt(item, 10);
 
                 if (!isNaN(roleId) && roleId < uplineRole) {
                     roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                 }
             }
 
-            return roles.sort((num1, num2) => num2.key - num1.key);
+            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
         }
 
         public static getUplineRoles(downlineRole: Role): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item);
+                var roleId: number = parseInt(item, 10);
 
                 if (!isNaN(roleId) && downlineRole < roleId && roleId < Role.company) {
                     roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                 }
             }
 
-            return roles.sort((num1, num2) => num2.key - num1.key);
+            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
         }
     }
 

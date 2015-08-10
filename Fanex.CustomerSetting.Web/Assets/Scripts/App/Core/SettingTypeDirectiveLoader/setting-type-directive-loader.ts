@@ -27,7 +27,7 @@ module CustomerSetting {
             };
         }
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery) => {
             scope.$watch("setting.settingTypes", () => {
                 this.generateNodes(scope, element);
             });
