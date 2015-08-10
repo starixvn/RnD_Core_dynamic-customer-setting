@@ -173,6 +173,10 @@ button {
   line-height: 15px;
   padding-left: 20px;
 }
+.result-container .result .sub-message {
+  font-weight: normal;
+  margin-left: 25px;
+}
 .result-container .result .icon, .result-container .result.success .message-icon, .result-container .result.warning .message-icon, .result-container .result.error .message-icon {
   float: left;
   width: 14px;
