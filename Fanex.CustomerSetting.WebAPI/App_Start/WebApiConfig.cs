@@ -2,6 +2,10 @@
 {
     using System.Net.Http.Formatting;
     using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.ModelBinding.Binders;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig

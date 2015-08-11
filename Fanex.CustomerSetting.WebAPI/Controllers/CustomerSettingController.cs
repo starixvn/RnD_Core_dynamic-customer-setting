@@ -2,54 +2,58 @@
 {
     using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Formatting;
     using System.Web.Http;
-    using Fanex.CustomerSetting.Models;
+    using System.Web.Http.ModelBinding;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.WebAPI.JsonHelpers;
     using Fanex.CustomerSetting.WebAPI.Models;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     public class CustomerSettingController : ApiController
     {
-        public Setting Get([FromUri] QuerySettingRequest request)
+        public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
         {
-            var settingContext = new SettingContext(request);
+            if (request == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
+            }
 
-            IQuerySettingService querySettingService = new QuerySettingService(settingContext);
+            if (ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
+            }
 
-            var query = new CustomerSettingQuery(
-              request.CustomerId,
-              request.CustomerLevel,
-              request.ProductId,
-              request.UplineLevel);
+            var querySettingService = new QuerySettingService(request.GetSettingContext());
+            var customerSetting = querySettingService.GetCustomerSetting(request.GetCustomerSettingQuery());
 
-            var customerSetting = querySettingService.GetCustomerSetting(query);
-         
-            return customerSetting;
+            return Request.CreateResponse(HttpStatusCode.OK, customerSetting);
         }
 
-        public HttpResponseMessage Post(UpdateSettingRequest request)
+        public HttpResponseMessage Post(HttpRequestMessage request)
         {
-            //// var json = JsonConvert.SerializeObject(customerSetting, Formatting.Indented);
+            string jsonContent = request.Content.ReadAsStringAsync().Result;
 
-            ////Setting s = JsonConvert.DeserializeObject<Setting>(
-            ////    json,
-            ////    new SettingItemConverter(),
-            ////    new LevelConverter());
-            var settingContext = new SettingContext(request);
-            
-            IUpdateSettingService service = new UpdateSettingService(settingContext);
-            var result = service.Update(new UpdateCustomerSettingCommand
+            var updateSettingRequest = JsonConvert.DeserializeObject<UpdateSettingRequest>(
+                jsonContent,
+                new SettingItemConverter(),
+                new LevelConverter());
+
+            IUpdateSettingService service = new UpdateSettingService(updateSettingRequest.GetSettingContext());
+
+            var updateSettingResult = service.Update(new UpdateCustomerSettingCommand
             {
-                UplineLevel = Enumeration.FromValue<Level>(request.UplineLevel.Value),
-                Setting = request.Setting
+                Setting = updateSettingRequest.Setting,
+                UplineLevel = (updateSettingRequest.UplineLevel == null)
+                ? null
+                : Enumeration.FromValue<Level>(updateSettingRequest.UplineLevel.Value)
             });
 
-            return Request.CreateResponse(result);
+            return Request.CreateResponse(updateSettingResult);
         }
     }
 }

@@ -9,7 +9,7 @@
     {
         protected override Level Create(Type type, JObject obj)
         {
-            return Enumeration.FromValue<Level>(Convert.ToByte(obj["Value"]));
+            return Enumeration.FromValue<Level>(Convert.ToByte(obj["value"]));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

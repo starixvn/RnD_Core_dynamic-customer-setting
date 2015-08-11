@@ -8,7 +8,7 @@
     {
         protected override Type GetTargetType(Type type, JObject obj)
         {
-            return Type.GetType(obj.GetValue("TypeName").ToString());
+            return Type.GetType(obj.GetValue("typeName").ToString());
         }
     }
 }

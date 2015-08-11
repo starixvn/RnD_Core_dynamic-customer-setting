@@ -11,6 +11,10 @@
 
     public class SettingContext : ISettingContext
     {
+        public SettingContext()
+        {
+        }
+
         internal SettingContext(SettingRequest request)
         {
             var actor = new User
@@ -24,7 +28,7 @@
             this.Actor = actor;
             this.Language = request.Language;
             this.IP = request.ClientIp;
-            this.System = request.SystemId;
+            this.System = request.System;
             this.Domain = request.Domain;
         }
 
