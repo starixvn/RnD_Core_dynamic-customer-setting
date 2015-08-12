@@ -1,10 +1,8 @@
 ﻿<div class="block default-setting-block" data-ng-show="settingType">
     <div class="header" data-setting-type="{{settingType.id}}">
         {{settingTypeName}}
-        <div class="update">
-            <span class="icon update-icon"
-                  data-title="{{'Update' | label}}"
-                  data-ng-click="update({ settingTypeId: settingType.id })"></span>
+        <div class="update" data-title="{{'Update' | label}}" data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon update-icon"></span>
         </div>
     </div>
     <div class="setting-type-group" data-ng-repeat="group in sportGroups">
@@ -13,6 +11,7 @@
              data-ng-class="{ 'not-first': ($index > 0) }"
              data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
+            <copy-setting data-ng-if="$index === 0" data-setting-type-id="settingType.id" data-setting-items="sportGroups"></copy-setting>
         </div>
         <div class="header" data-ng-include="headerTemplateUrl"></div>
         <div class="setting-group"
@@ -22,8 +21,9 @@
                  data-product="{{productId}}"
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
-                {{settingType.settingLevel === avaiSettingLevels.product ? productName : (settingType.settingLevel === avaiSettingLevels.sportType ? item.sportTypeName : item.betTypeName)}}
+                {{item | showingName:settingType.settingLevel:productName }}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                <copy-setting data-ng-if="$index === 0" data-setting-type-id="settingType.id" data-setting-items="group"></copy-setting>
             </div>
             <div class="value-col"
                  data-ng-include="valueTemplateUrl"

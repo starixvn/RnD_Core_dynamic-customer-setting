@@ -1,8 +1,9 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
+/// <reference path="../core/helpers.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
 /// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="bet-setting-resources.ts" />
 
 module CustomerSetting {
@@ -43,6 +44,33 @@ module CustomerSetting {
                 || this.minBet !== oldSetting.minBet
                 || this.maxBet !== oldSetting.maxBet
                 || this.maxPerMatch !== oldSetting.maxPerMatch;
+        }
+
+        public copySettingFrom(source: Settingtype2Template1Item): boolean {
+            var isSuccessful: boolean = true;
+            var backupMinBet: number;
+            var backupMaxBet: number;
+            var backupMaxPerMatchBet: number;
+
+            if (source) {
+                backupMinBet = this.minBet;
+                backupMaxBet = this.maxBet;
+                backupMaxPerMatchBet = this.maxPerMatch;
+
+                this.minBet = source.minBet;
+                this.maxBet = source.maxBet;
+                this.maxPerMatch = source.maxPerMatch;
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.minBet = backupMinBet;
+                    this.maxBet = backupMaxBet;
+                    this.maxPerMatch = backupMaxPerMatchBet;
+                }
+            }
+
+            return isSuccessful;
         }
 
         public validate(): boolean {
@@ -175,7 +203,6 @@ module CustomerSetting {
         customerLevel: Level;
         uplineLevel: Level;
         fieldName: string;
-        validationError: string;
         updateValue(): void;
     }
 
@@ -194,39 +221,29 @@ module CustomerSetting {
             };
         }
 
-        public controller: any = [
-            "$scope",
-            "betSettingResourceService",
-            ($scope: IBetSettingInputScope, betSettingResourceService: BetSettingResourceService) => {
-                $scope.$watch("settingItem.validationState", (validationState: ValidationResult) => {
-                    if ($scope.fieldName === validationState.fieldName && !validationState.isSuccessful) {
-                        $scope.validationError = betSettingResourceService.getFormattedMessage(validationState.message, validationState.msgParams);
-                    } else {
-                        $scope.validationError = undefined;
-                    }
-                });
-
-                $scope.updateValue = () => {
-                    if ($scope.fieldName === "minBet") {
-                        $scope.settingItem.validateMinBet();
-                    } else if ($scope.fieldName === "maxBet") {
-                        $scope.settingItem.validateMaxBet();
-                    } else if ($scope.fieldName === "maxPerMatch") {
-                        $scope.settingItem.validateMaxPerMatch();
-                    }
-                };
-            }];
+        public controller: any = ["$scope", ($scope: IBetSettingInputScope) => {
+            $scope.updateValue = () => {
+                if ($scope.fieldName === "minBet") {
+                    $scope.settingItem.validateMinBet();
+                } else if ($scope.fieldName === "maxBet") {
+                    $scope.settingItem.validateMaxBet();
+                } else if ($scope.fieldName === "maxPerMatch") {
+                    $scope.settingItem.validateMaxPerMatch();
+                }
+            };
+        }];
 
         public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery) => {
-            var element = angular.element(wrapElement.children()[0]);
+            var element: ng.IAugmentedJQuery = angular.element(wrapElement.children()[0]);
             var modelCtrl: any;
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-ng-change", "updateValue()");
-            element.attr("data-ng-class", "{ 'invalid': validationError }");
+            element.attr("data-ng-class", StringFormater.format("{ 'invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
             element.attr("data-tooltip", "");
-            element.attr("data-message", "validationError");
-            ////element.attr("data-show-on-focus", "true");
+            element.attr(
+                "data-message",
+                StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
 
             if (scope.fieldName === "minBet") {
                 if (scope.settingItem.upline.minBet > 0) {

@@ -17,11 +17,7 @@
              data-ng-class="settingResult.msgType">
             <div class="message-icon"></div>
             <div class="content">{{settingResult.message}}</div>
-            <div class="sub-message"
-                 data-ng-if="settingResult.messages"
-                 data-ng-repeat="message in settingResult.messages">
-                {{message}}
-            </div>
+            <div class="sub-message" data-ng-if="settingResult.messages" data-ng-repeat="message in settingResult.messages">{{message}}</div>
         </div>
     </div>
 </div>

@@ -131,6 +131,7 @@
   <ItemGroup>
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
+    <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\copy-setting.htm" />
     <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.htm" />
     <Content Include="Assets\Scripts\App\Core\OcLazyLoad\ocLazyLoad.js" />
     <Content Include="Assets\Scripts\App\Core\SettingResult\setting-result.htm" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\DefaultSettingBlock\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\helper-services.ts" />
@@ -209,10 +211,12 @@
     <TypeScriptCompile Include="Assets\Scripts\App\Core\module-registrater.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\parameters.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingResult\setting-result.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingTypeDirectiveLoader\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingType\setting-type-base-directive.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\Core\SettingType\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\position-taking-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-resources.ts" />

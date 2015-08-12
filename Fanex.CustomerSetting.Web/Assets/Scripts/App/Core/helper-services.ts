@@ -8,12 +8,12 @@ module CustomerSetting {
     export class AppConfigService {
         public static $inject: string[] = ["$window"];
 
-        private $window: ng.IWindowService;
-
         private rootUrl: string;
         private debug: boolean;
         private version: string;
         private antiForgeryToken: string;
+
+        private $window: ng.IWindowService;
 
         constructor($window: ng.IWindowService) {
             var appConfig: any;
@@ -64,11 +64,11 @@ module CustomerSetting {
             return this.query.uplineLevel;
         }
 
-        private $window: ng.IWindowService;
-
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
         private isMultipleUpdates: boolean;
+
+        private $window: ng.IWindowService;
 
         constructor($window: ng.IWindowService) {
             this.$window = $window;
@@ -137,31 +137,7 @@ module CustomerSetting {
 
     ModuleRegister.service("parametersService", ParametersService);
 
-    export function NAValue() {
-        return (value: string) => {
-            return value || "---";
-        };
-    }
-
-    ModuleRegister.filter("naValue", NAValue);
-
-    export function MinValue() {
-        return (numbers: number[]) => {
-            return Math.min.apply(Math, numbers);
-        };
-    }
-
-    ModuleRegister.filter("minValue", MinValue);
-
-    export function MaxValue() {
-        return (numbers: number[]) => {
-            return Math.max.apply(Math, numbers);
-        };
-    }
-
-    ModuleRegister.filter("maxValue", MaxValue);
-
-    export class ValueRangeGenerator {
+    export class ValueRangeService {
         public generateRanges(value: number, min: number, max: number, step: number, roundingFactor: number): Array<KeyValuePair<number, number>> {
             var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();
 
@@ -186,5 +162,29 @@ module CustomerSetting {
         }
     }
 
-    ModuleRegister.service("valueRangeGenerator", ValueRangeGenerator);
+    ModuleRegister.service("valueRangeService", ValueRangeService);
+
+    function NAValue() {
+        return (value: string) => {
+            return value || "---";
+        };
+    }
+
+    ModuleRegister.filter("naValue", NAValue);
+
+    function MinValue() {
+        return (numbers: number[]) => {
+            return Math.min.apply(Math, numbers);
+        };
+    }
+
+    ModuleRegister.filter("minValue", MinValue);
+
+    function MaxValue() {
+        return (numbers: number[]) => {
+            return Math.max.apply(Math, numbers);
+        };
+    }
+
+    ModuleRegister.filter("maxValue", MaxValue);
 }

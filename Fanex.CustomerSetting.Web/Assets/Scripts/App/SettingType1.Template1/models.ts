@@ -1,0 +1,906 @@
+﻿/// <reference path="../core/models.ts" />
+
+module CustomerSetting {
+    "use strict";
+
+    export class Settingtype1Template1Config {
+        public static get step(): number {
+            return 1;
+        }
+
+        public static get roundingFactor(): number {
+            return 100;
+        }
+    }
+
+    export class Settingtype1Template1Item {
+        public static get maxPTValue(): number {
+            return 90;
+        }
+
+        public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): ISettingItem {
+            if (customerLevel === Level.super) {
+                return new SuperPositionTaking(settingItem, backup);
+            } else if (customerLevel === Level.master) {
+                return new MasterPositionTaking(settingItem, backup);
+            } else if (customerLevel === Level.agent) {
+                return new AgentPositionTaking(settingItem, backup);
+            } else if (customerLevel === Level.member && uplineLevel === Level.super) {
+                return new SuperPositionTakingOnMember(settingItem, backup);
+            } else if (customerLevel === Level.member && uplineLevel === Level.master) {
+                return new MasterPositionTakingOnMember(settingItem, backup);
+            } else if (customerLevel === Level.member && uplineLevel === Level.agent) {
+                return new AgentPositionTakingOnMember(settingItem, backup);
+            }
+        }
+
+        public static fetch(rawData: any, settingItem: any): void {
+            var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
+
+            if (rawData && settingItem) {
+                Object.keys(rawData).filter((propName: string) => {
+                    return addedProperties.indexOf(propName) < 0;
+                }).forEach((propName: string) => {
+                    settingItem[propName] = rawData[propName];
+                });
+            }
+        }
+
+        public static detechChanges(settingItem: any): boolean {
+            var reservedProperties: string[] = ["oldSetting", "validationState"];
+
+            if (settingItem) {
+                return Object.keys(settingItem).some((prop: string) => {
+                    return reservedProperties.indexOf(prop) < 0
+                        && settingItem.oldSetting[prop] !== undefined
+                        && settingItem[prop] !== settingItem.oldSetting[prop];
+                });
+            }
+
+            return false;
+        }
+    }
+
+    class SuperPositionTaking extends DefaultSettingItem {
+        public s4: number;
+        public m4: number;
+        public a4: number;
+        public n4: number;
+        public defaultMaxPT: number;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, <SuperPositionTaking>this);
+
+            if (backup) {
+                this.oldSetting = new SuperPositionTaking(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            return Settingtype1Template1Item.detechChanges(this);
+        }
+
+        public copySettingFrom(source: SuperPositionTaking): boolean {
+            var isSuccessful: boolean = true;
+            var backupS4: number;
+            var backupM4: number;
+            var backupA4: number;
+            var backupN4: number;
+
+            if (source) {
+                backupS4 = this.s4;
+                backupM4 = this.m4;
+                backupA4 = this.a4;
+                backupN4 = this.n4;
+
+                this.s4 = source.s4;
+                this.m4 = source.m4;
+                this.a4 = source.a4;
+                this.n4 = source.n4;
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.s4 = backupS4;
+                    this.m4 = backupM4;
+                    this.a4 = backupA4;
+                    this.n4 = backupN4;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (!this.validateMaxValue()) {
+                return false;
+            }
+
+            if (this.m4 > this.s4) {
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThanSuperMaxPT", "m4");
+
+                return false;
+            }
+
+            if (this.a4 > this.m4) {
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThanMasterMaxPT", "a4");
+
+                return false;
+            }
+
+            if (this.n4 > this.s4) {
+                this.validationState = new ValidationResult("SuperMinPTCannotBeGreaterThanSuperMaxPT", "n4");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        private validateMaxValue(): boolean {
+            if (this.s4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s4");
+
+                return false;
+            }
+
+            if (this.m4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m4");
+
+                return false;
+            }
+
+            if (this.a4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a4");
+
+                return false;
+            }
+
+            if (this.n4 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n4");
+
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    class MasterPositionTaking extends DefaultSettingItem {
+        public s3: number;
+        public uS3: number;
+        public iS3: boolean;
+        public m3: number;
+        public n3: number;
+        public s4: number;
+        public m4: number;
+        public n4: number;
+        public superPTOnMembers: number;
+        public isUpdateSuperPTOnMembers: boolean;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new MasterPositionTaking(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
+        }
+
+        public copySettingFrom(source: MasterPositionTaking): boolean {
+            var isSuccessful: boolean = true;
+            var backupIs3: boolean;
+            var backupN3: number;
+            var backupM3: number;
+            var backupUs3: number;
+            var backupS3: number;
+
+            if (source) {
+                backupIs3 = this.iS3;
+                backupN3 = this.n3;
+                backupM3 = this.m3;
+                backupUs3 = this.uS3;
+                backupS3 = this.s3;
+
+                this.iS3 = source.iS3;
+                this.n3 = source.n3;
+                this.m3 = source.m3;
+
+                if (this.iS3) {
+                    this.uS3 = source.uS3;
+                } else {
+                    this.s3 = source.s3;
+                }
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    // Cheating: force the validationState to point to [SuperPT] field when restoring the old data
+                    // in the case that the new [SuperAutoPT] violates the constraints.
+                    if (this.iS3 && !backupIs3 && this.validationState.fieldName === "uS3") {
+                        this.validationState.fieldName = "s3";
+                    } else if (!this.iS3 && backupIs3 && this.validationState.fieldName === "s3") {
+                        this.validationState.fieldName = "uS3";
+                    }
+
+                    this.iS3 = backupIs3;
+                    this.n3 = backupN3;
+                    this.m3 = backupM3;
+                    this.uS3 = backupUs3;
+                    this.s3 = backupS3;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (!this.validateMaxValue()) {
+                return false;
+            }
+
+            if (this.iS3) {
+                if (!this.validateAutoPt()) {
+                    return false;
+                }
+            } else {
+                if (!this.validateManualPt()) {
+                    return false;
+                }
+            }
+
+            if (this.n3 > this.m3) {
+                this.validationState = new ValidationResult("MasterMinPTCannotBeGreaterThanMasterMaxPT", "n3");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        private validateMaxValue(): boolean {
+            if (this.s3 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s3");
+
+                return false;
+            }
+
+            if (this.uS3 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS3");
+
+                return false;
+            }
+
+            if (this.n3 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n3");
+
+                return false;
+            }
+
+            if (this.m3 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m3");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private validateAutoPt(): boolean {
+            var minOfMasterMaxPt: number = this.n4 - this.uS3;
+            var maxOfMasterMaxPt: number = Math.min(this.s4, this.m4);
+
+            if (this.uS3 > this.s4) {
+                this.validationState = new ValidationResult("SuperAutoPTCannotBeGreaterThanSuperMaxPT", "uS3");
+
+                return false;
+            }
+
+            if (this.m3 < minOfMasterMaxPt) {
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt]);
+
+                return false;
+            }
+
+            if (this.m3 > maxOfMasterMaxPt) {
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt]);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private validateManualPt(): boolean {
+            var minOfSuperPt: number = Math.max(0, this.n4 - this.m4);
+            var minOfMasterMaxPt: number = Math.max(0, this.n4 - this.s3);
+            var maxOfMasterMaxPt: number = Math.min(this.s4 - this.s3, this.m4);
+
+            if (this.s3 < minOfSuperPt) {
+                this.validationState = new ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt]);
+
+                return false;
+            }
+
+            if (this.s3 > this.s4) {
+                this.validationState = new ValidationResult("SuperPTCannotBeGreaterThanSuperMaxPT", "s3");
+
+                return false;
+            }
+
+            if (this.m3 < minOfMasterMaxPt) {
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt]);
+
+                return false;
+            }
+
+            if (this.m3 > maxOfMasterMaxPt) {
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt]);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iS3 && this.s3 > 0) {
+                this.s3 = 0;
+            }
+
+            if (!this.iS3 && this.uS3 > 0) {
+                this.uS3 = 0;
+            }
+        }
+    }
+
+    class AgentPositionTaking extends DefaultSettingItem {
+        public m2: number;
+        public uM2: number;
+        public iM2: boolean;
+        public a2: number;
+        public n2: number;
+        public m3: number;
+        public n3: number;
+        public a4: number;
+        public masterPTOnMembers: number;
+        public isUpdateMasterPTOnMembers: boolean;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new AgentPositionTaking(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
+        }
+
+        public copySettingFrom(source: AgentPositionTaking): boolean {
+            var isSuccessful: boolean = true;
+            var backupIm2: boolean;
+            var backupN2: number;
+            var backupA2: number;
+            var backupUm2: number;
+            var backupM2: number;
+
+            if (source) {
+                backupIm2 = this.iM2;
+                backupN2 = this.n2;
+                backupA2 = this.a2;
+                backupUm2 = this.uM2;
+                backupM2 = this.m2;
+
+                this.iM2 = source.iM2;
+                this.n2 = source.n2;
+                this.a2 = source.a2;
+
+                if (this.iM2) {
+                    this.uM2 = source.uM2;
+                } else {
+                    this.m2 = source.m2;
+                }
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    // Cheating: force the validationState to point to [MasterPT] field when restoring the old data
+                    // in the case that the new [MasterAutoPT] violates the constraints.
+                    if (this.iM2 && !backupIm2 && this.validationState.fieldName === "uM2") {
+                        this.validationState.fieldName = "m2";
+                    } else if (!this.iM2 && backupIm2 && this.validationState.fieldName === "m2") {
+                        this.validationState.fieldName = "uM2";
+                    }
+
+                    this.iM2 = backupIm2;
+                    this.n2 = backupN2;
+                    this.a2 = backupA2;
+                    this.uM2 = backupUm2;
+                    this.m2 = backupM2;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (!this.validateMaxValue()) {
+                return false;
+            }
+
+            if (this.iM2) {
+                if (!this.validateAutoPt()) {
+                    return false;
+                }
+            } else {
+                if (!this.validateManualPt()) {
+                    return false;
+                }
+            }
+
+            if (this.n2 > this.a2) {
+                this.validationState = new ValidationResult("AgentMinPTCannotBeGreaterThanAgentMaxPT", "n2");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        private validateMaxValue(): boolean {
+            if (this.m2 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m2");
+
+                return false;
+            }
+
+            if (this.uM2 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM2");
+
+                return false;
+            }
+
+            if (this.n2 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n2");
+
+                return false;
+            }
+
+            if (this.a2 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a2");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private validateAutoPt(): boolean {
+            var minOfAgentMaxPt: number = this.n3 - this.uM2;
+            var maxOfAgentMaxPt: number = Math.min(this.m3, this.a4);
+
+            if (this.uM2 > this.m3) {
+                this.validationState = new ValidationResult("MasterAutoPTCannotBeGreaterThanMasterMaxPT", "uM2");
+
+                return false;
+            }
+
+            if (this.a2 < minOfAgentMaxPt) {
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt]);
+
+                return false;
+            }
+
+            if (this.a2 > maxOfAgentMaxPt) {
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt]);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private validateManualPt(): boolean {
+            var minOfMasterPt: number = Math.max(0, this.n3 - this.a4);
+            var minOfAgentMaxPt: number = Math.max(0, this.n3 - this.m2);
+            var maxOfAgentMaxPt: number = Math.min(this.m3 - this.m2, this.a4);
+
+            if (this.m2 < minOfMasterPt) {
+                this.validationState = new ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt]);
+
+                return false;
+            }
+
+            if (this.m2 > this.m3) {
+                this.validationState = new ValidationResult("MasterPTCannotBeGreaterThanMasterMaxPT", "m2");
+
+                return false;
+            }
+
+            if (this.a2 < minOfAgentMaxPt) {
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt]);
+
+                return false;
+            }
+
+            if (this.a2 > maxOfAgentMaxPt) {
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt]);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iM2 && this.m2 > 0) {
+                this.m2 = 0;
+            }
+
+            if (!this.iM2 && this.uM2 > 0) {
+                this.uM2 = 0;
+            }
+        }
+    }
+
+    class SuperPositionTakingOnMember extends DefaultSettingItem {
+        public a1: number;
+        public m1: number;
+        public s1: number;
+        public uS1: number;
+        public iS1: boolean;
+        public iS3: boolean;
+        public s4: number;
+        public n4: number;
+        public m3: number;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new SuperPositionTakingOnMember(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
+        }
+
+        public copySettingFrom(source: SuperPositionTakingOnMember): boolean {
+            var isSuccessful: boolean = true;
+            var backupIs1: boolean;
+            var backupUs1: number;
+            var backups1: number;
+
+            if (source) {
+                backupIs1 = this.iS1;
+                backupUs1 = this.uS1;
+                backups1 = this.s1;
+
+                this.iS1 = source.iS1;
+
+                if (this.iS1) {
+                    this.uS1 = source.uS1;
+                } else {
+                    this.s1 = source.s1;
+                }
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    // Cheating: force the validationState to point to [SuperPTOnMember] field when restoring the old data
+                    // in the case that the new [SuperAutoPTOnMember] violates the constraints.
+                    if (this.iS1 && !backupIs1 && this.validationState.fieldName === "uS1") {
+                        this.validationState.fieldName = "s1";
+                    } else if (!this.iS1 && backupIs1 && this.validationState.fieldName === "s1") {
+                        this.validationState.fieldName = "uS1";
+                    }
+
+                    this.iS1 = backupIs1;
+                    this.uS1 = backupUs1;
+                    this.s1 = backups1;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (this.iS1) {
+                var minOfSuperAutoPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
+
+                if (this.uS1 > Settingtype1Template1Item.maxPTValue) {
+                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS1");
+
+                    return false;
+                }
+
+                if (this.uS1 < minOfSuperAutoPtOnMember) {
+                    this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember]);
+
+                    return false;
+                }
+
+                if (this.uS1 > this.s4) {
+                    this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT", "uS1");
+
+                    return false;
+                }
+            } else {
+                var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
+                var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
+
+                if (this.s1 > Settingtype1Template1Item.maxPTValue) {
+                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s1");
+
+                    return false;
+                }
+
+                if (this.s1 < minOfSuperPtOnMember) {
+                    this.validationState = new ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember]);
+
+                    return false;
+                }
+
+                if (this.s1 > maxOfSuperPtOnMember) {
+                    this.validationState = new ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember]);
+
+                    return false;
+                }
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iS1 && this.s1 > 0) {
+                this.s1 = 0;
+            }
+
+            if (!this.iS1 && this.uS1 > 0) {
+                this.uS1 = 0;
+            }
+        }
+    }
+
+    class MasterPositionTakingOnMember extends DefaultSettingItem {
+        public a1: number;
+        public m1: number;
+        public iM1: boolean;
+        public uM1: number;
+        public iM2: boolean;
+        public m3: number;
+        public n3: number;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new MasterPositionTakingOnMember(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+
+            if (isChanged) {
+                this.correctAutoPtValues();
+            }
+
+            return isChanged;
+        }
+
+        public copySettingFrom(source: MasterPositionTakingOnMember): boolean {
+            var isSuccessful: boolean = true;
+            var backupIm1: boolean;
+            var backupUm1: number;
+            var backupM1: number;
+
+            if (source) {
+                backupIm1 = this.iM1;
+                backupUm1 = this.uM1;
+                backupM1 = this.m1;
+
+                this.iM1 = source.iM1;
+
+                if (this.iM1) {
+                    this.uM1 = source.uM1;
+                } else {
+                    this.m1 = source.m1;
+                }
+
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    // Cheating: force the validationState to point to [MasterPTOnMember] field when restoring the old data
+                    // in the case that the new [MasterAutoPTOnMember] violates the constraints.
+                    if (this.iM1 && !backupIm1 && this.validationState.fieldName === "uM1") {
+                        this.validationState.fieldName = "m1";
+                    } else if (!this.iM1 && backupIm1 && this.validationState.fieldName === "m1") {
+                        this.validationState.fieldName = "uM1";
+                    }
+
+                    this.iM1 = backupIm1;
+                    this.uM1 = backupUm1;
+                    this.m1 = backupM1;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (this.iM1) {
+                var minOfMasterAutoPtOnMember: number = Math.max(0, this.n3 - this.a1);
+
+                if (this.uM1 > Settingtype1Template1Item.maxPTValue) {
+                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM1");
+
+                    return false;
+                }
+
+                if (this.uM1 < minOfMasterAutoPtOnMember) {
+                    this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember]);
+
+                    return false;
+                }
+
+                if (this.uM1 > this.m3) {
+                    this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT", "uM1");
+
+                    return false;
+                }
+            } else {
+                var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
+                var maxOfMasterPtOnMember: number = this.m3 - this.a1;
+
+                if (this.m1 > Settingtype1Template1Item.maxPTValue) {
+                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m1");
+
+                    return false;
+                }
+
+                if (this.m1 < minOfMasterPtOnMember) {
+                    this.validationState = new ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember]);
+
+                    return false;
+                }
+
+                if (this.m1 > maxOfMasterPtOnMember) {
+                    this.validationState = new ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember]);
+
+                    return false;
+                }
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+
+        private correctAutoPtValues(): void {
+            if (this.iM1 && this.m1 > 0) {
+                this.m1 = 0;
+            }
+
+            if (!this.iM1 && this.uM1 > 0) {
+                this.uM1 = 0;
+            }
+        }
+    }
+
+    class AgentPositionTakingOnMember extends DefaultSettingItem {
+        public a1: number;
+        public a2: number;
+        public n2: number;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            super(settingItem);
+            Settingtype1Template1Item.fetch(settingItem, this);
+
+            if (backup) {
+                this.oldSetting = new AgentPositionTakingOnMember(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            return Settingtype1Template1Item.detechChanges(this);
+        }
+
+        public copySettingFrom(source: AgentPositionTakingOnMember): boolean {
+            var isSuccessful: boolean = true;
+            var backupA1: number;
+
+            if (source) {
+                backupA1 = this.a1;
+
+                this.a1 = source.a1;
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.a1 = backupA1;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (this.a1 > Settingtype1Template1Item.maxPTValue) {
+                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a1");
+
+                return false;
+            }
+
+            if (this.a1 < this.n2) {
+                this.validationState = new ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
+
+                return false;
+            }
+
+            if (this.a1 > this.a2) {
+                this.validationState = new ValidationResult("AgentPTCannotBeGreaterThanAgentMaxPT", "a1");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
+        }
+    }
+}

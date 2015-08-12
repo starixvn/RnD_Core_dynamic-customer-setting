@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
 /// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="commission-resources.ts" />
 
 module CustomerSetting {
@@ -39,6 +39,23 @@ module CustomerSetting {
                 || this.commRate !== oldSetting.commRate;
         }
 
+        public copySettingFrom(source: Settingtype3Template1Item): boolean {
+            var isSuccessful: boolean = true;
+            var backupCommRate: number;
+
+            if (source) {
+                backupCommRate = this.commRate;
+
+                this.commRate = source.commRate;
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.commRate = backupCommRate;
+                }
+            }
+
+            return isSuccessful;
+        }
         public validate(): boolean {
             if (this.commRate > this.upline.commRate) {
                 this.validationState = new ValidationResult("CommRateCannotBeExceedMaxValue", "commRate");
@@ -83,7 +100,7 @@ module CustomerSetting {
     }
 
     class CommRateDirective implements ng.IDirective {
-        public static $inject: string[] = ["valueRangeGenerator"];
+        public static $inject: string[] = ["valueRangeService"];
 
         public replace: boolean = true;
 
@@ -97,7 +114,7 @@ module CustomerSetting {
 
         public controller: any = ["$scope", ($scope: ISettingType3Template1ItemScope) => {
             $scope.$watch("settingItem", () => {
-                $scope.range = this.valueRangeGenerator.generateRanges(
+                $scope.range = this.valueRangeService.generateRanges(
                     $scope.settingItem.commRate,
                     0,
                     $scope.settingItem.upline.commRate,
@@ -106,10 +123,10 @@ module CustomerSetting {
             });
         }];
 
-        private valueRangeGenerator: ValueRangeGenerator;
+        private valueRangeService: ValueRangeService;
 
-        constructor(valueRangeGenerator: ValueRangeGenerator) {
-            this.valueRangeGenerator = valueRangeGenerator;
+        constructor(valueRangeService: ValueRangeService) {
+            this.valueRangeService = valueRangeService;
         }
     }
 

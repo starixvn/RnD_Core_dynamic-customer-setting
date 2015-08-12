@@ -5,6 +5,7 @@ $background-color: #e6e9f0;
 $header-color: #b5c4d0;
 $focus-border-color: #66afe9;
 $invalid-color: #e9322d;
+$invalid-border-color: rgba(233, 50, 45, 0.85);
 $success-color: #618e11;
 $warning-color: #c28f06;
 $error-color: $invalid-color; // #f40000;
@@ -129,14 +130,14 @@ button {
 
     &.copy-icon {
         background-position: -16px 0;
-        width: 20px;
         height: 20px;
+        width: 20px;
     }
 
     &.close-icon {
         background-position: -36px 0;
-        width: 15px;
         height: 15px;
+        width: 15px;
     }
 }
 
@@ -196,6 +197,7 @@ button {
 
     .customer-name {
         font-weight: bold;
+
         margin: {
             left: 5px;
             top: 5px;
@@ -278,6 +280,7 @@ button {
 }
 
 .tooltip-container {
+    left: 0;
     padding: 5px 0;
     position: absolute;
     top: 0;
@@ -296,7 +299,7 @@ button {
 
     &:after {
         border: {
-            color: $invalid-color transparent transparent transparent;
+            color: $invalid-border-color transparent transparent transparent;
             style: solid;
             width: 5px;
         }
@@ -305,6 +308,13 @@ button {
         display: block;
         margin: 0 auto;
         width: 0;
+    }
+
+    &.right {
+        &:after {
+            position: absolute;
+            right: 5px;
+        }
     }
 }
 /*********************************************************/
@@ -323,12 +333,22 @@ button {
         margin-bottom: 10px;
         width: 100%;
 
+        .right-button {
+            cursor: pointer;
+            float: right;
+            height: 100%;
+
+            .icon {
+                vertical-align: middle;
+            }
+        }
+
         .header {
             background-color: $header-color;
             border-bottom: 1px solid $border-color;
             font-weight: bold;
             height: 25px;
-            line-height: 25px;
+            line-height: 24px;
             text-align: center;
 
             &.customer-names-header {
@@ -346,15 +366,9 @@ button {
             }
 
             .update {
+                @extend .right-button;
                 border-left: 1px solid $border-color;
-                cursor: pointer;
-                float: right;
-                height: 100%;
                 width: 42px;
-
-                .icon {
-                    vertical-align: middle;
-                }
             }
         }
 

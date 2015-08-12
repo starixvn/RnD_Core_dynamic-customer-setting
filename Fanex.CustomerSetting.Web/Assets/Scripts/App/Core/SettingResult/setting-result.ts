@@ -7,7 +7,7 @@ module CustomerSetting {
     "use strict";
 
     interface ISettingResultScope extends ng.IScope {
-        result: Results;
+        result: UpdatingSettingResult;
     }
 
     class SettingResultDirective implements ng.IDirective {

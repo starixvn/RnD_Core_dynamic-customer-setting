@@ -8,6 +8,7 @@ module CustomerSetting {
         oldSetting: ISettingItem;
         isChanged(): boolean;
         validate(): boolean;
+        toJson(): {};
     }
 
     export enum Level {
@@ -77,8 +78,50 @@ module CustomerSetting {
                 || (this.betTypeName !== this.oldSetting.betTypeName);
         }
 
+        public copySettingTo(targets: Array<DefaultSettingItem>): boolean {
+            var isSuccessful = true;
+
+            if (targets) {
+                targets.forEach((item: DefaultSettingItem) => {
+                    var validItem: boolean = true;
+
+                    if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
+                        validItem = item.copySettingFrom(this);
+                        isSuccessful = isSuccessful ? validItem : isSuccessful;
+
+                        if (!validItem) {
+                            item.validationState.isWarning = true;
+                        }
+                    }
+                });
+            }
+
+            return isSuccessful;
+        }
+
+        public copySettingFrom(source: DefaultSettingItem): boolean {
+            throw Exceptions.notImplemented("copyFrom");
+        }
+
         public validate(): boolean {
             return true;
+        }
+
+        public toJson(): {} {
+            var settingItem: any = {};
+            var reservedProperties: string[] = ["oldSetting", "validationState"];
+
+            Object.keys(this).forEach((prop: string) => {
+                if (this[prop] && reservedProperties.indexOf(prop) < 0) {
+                    if (this[prop].toJson) {
+                        settingItem[prop] = this[prop].toJson();
+                    } else {
+                        settingItem[prop] = this[prop];
+                    }
+                }
+            });
+
+            return settingItem;
         }
     }
 
@@ -124,14 +167,7 @@ module CustomerSetting {
                 updatedSettingType.settingLevel = this.settingLevel;
                 updatedSettingType.settingItems = changedSettingItems;
                 updatedSettingType.typeName = this.typeName;
-
-                // Workaround for the setting type that has some its own properties but we don't want to make new class for it.
-                // We use the dynamic aspect of JavaScript in this case to keep the process be simple.
-                if (this.extraData && this.extraData.length > 0) {
-                    this.extraData.forEach((extraItem: KeyValuePair<string, any>) => {
-                        (<any>updatedSettingType)[extraItem.key] = extraItem.value;
-                    });
-                }
+                updatedSettingType.extraData = this.extraData;
             }
 
             return updatedSettingType;
@@ -147,6 +183,29 @@ module CustomerSetting {
                 && this.settingLevel > 0
                 && this.typeName !== undefined
                 && validSettingItems;
+        }
+
+        public toJson(): {} {
+            var settingType: any = {
+                id: this.id,
+                name: this.name,
+                settingTemplate: this.settingTemplate,
+                settingLevel: this.settingLevel,
+                settingItems: [],
+                typeName: this.typeName
+            };
+
+            this.settingItems.forEach((settingItem: ISettingItem) => {
+                settingType.settingItems.push(settingItem.toJson());
+            });
+
+            if (this.extraData && this.extraData.length > 0) {
+                this.extraData.forEach((extraItem: KeyValuePair<string, any>) => {
+                    settingType[extraItem.key] = extraItem.value;
+                });
+            }
+
+            return settingType;
         }
 
         private getExtraData(rawData: any): Array<KeyValuePair<string, any>> {
@@ -233,6 +292,23 @@ module CustomerSetting {
                 && this.productId > 0
                 && validSettingTypes;
         }
+
+        public toJson(): {} {
+            var setting: any = {
+                customerId: this.customerId,
+                customerInfo: this.customerInfo,
+                customerLevel: this.customerLevel,
+                productId: this.productId,
+                productName: this.productName,
+                settingTypes: []
+            };
+
+            this.settingTypes.forEach((settingType: SettingType) => {
+                setting.settingTypes.push(settingType.toJson());
+            });
+
+            return setting;
+        }
     }
 
     export class Result {
@@ -242,13 +318,6 @@ module CustomerSetting {
 
         public get isSuccessful(): boolean {
             return this.code === 0;
-        }
-
-        constructor(code: number, message: string, msgType: MessageType) {
-            this.code = code;
-            this.message = message;
-            this.msgType = msgType;
-            this.msgType = this.code !== 0 ? MessageType.error : this.msgType;
         }
 
         public static get normal(): Result {
@@ -265,6 +334,13 @@ module CustomerSetting {
 
         public static get invalidParameters(): Result {
             return new Result(-3, Exceptions.invalidParams(), MessageType.error);
+        }
+
+        constructor(code: number, message: string, msgType: MessageType) {
+            this.code = code;
+            this.message = message;
+            this.msgType = msgType;
+            this.msgType = this.code !== 0 ? MessageType.error : this.msgType;
         }
     }
 
@@ -362,6 +438,13 @@ module CustomerSetting {
     export class UpdatingSettingResult extends Result {
         public subResults: Array<CustomerSettingResult>;
 
+        public get isSuccessful(): boolean {
+            return !this.subResults
+                || this.subResults.every((result: CustomerSettingResult) => {
+                    return result.isSuccessful;
+                });
+        }
+
         constructor(result: any) {
             if (result) {
                 super(result.code, result.message, result.msgType);
@@ -399,44 +482,16 @@ module CustomerSetting {
         }
     }
 
-    export class Results extends Result {
-        public subResults: Array<Result>;
-
-        public get isSuccessful(): boolean {
-            return this.code === 0
-                && (!this.subResults || this.subResults.every((result: Result) => {
-                    return result.isSuccessful;
-                }));
-        }
-
-        constructor(
-            code?: number,
-            message?: string,
-            msgType?: MessageType,
-            subResults?: any[]) {
-            super(code, message, msgType);
-            this.subResults = subResults.map((item: any) => new Result(item.code, item.message, item.msgType));
-        }
-
-        public removeSuccessResults(): Array<Result> {
-            if (this.subResults) {
-                this.subResults = this.subResults.filter((result: Result) => {
-                    return !result.isSuccessful;
-                });
-            }
-
-            return this.subResults || new Array<Result>();
-        }
-    }
-
     export class ValidationResult extends Result {
         public fieldName: string;
         public msgParams: any[];
+        public isWarning: boolean;
 
-        constructor(message: string, fieldName?: string, msgParams?: any[]) {
+        constructor(message: string, fieldName?: string, msgParams?: any[], isWarning: boolean = false) {
             super(-8000, message, MessageType.error);
             this.fieldName = fieldName;
             this.msgParams = msgParams;
+            this.isWarning = isWarning;
         }
     }
 }

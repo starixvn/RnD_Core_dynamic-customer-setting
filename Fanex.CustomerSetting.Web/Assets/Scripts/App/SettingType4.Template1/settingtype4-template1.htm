@@ -18,9 +18,10 @@
             <label class="checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
                 <input type="checkbox"
                        data-tooltip
-                       data-message="settingItem.validationState.message | productStatusMessage"
+                       data-message="{{settingItem.validationState | tooltipMessage:'productStatusResourceService'}}"
                        data-ng-model="isDownlineChecked"
                        data-ng-disabled="isDownlineDisabled"
+                       data-ng-class="{ 'invalid': (settingItem.validationState | highlightingField) }"
                        data-ng-change="changeDownline()" />
                 {{'EnableDownline' | productStatusLabel}}
             </label>

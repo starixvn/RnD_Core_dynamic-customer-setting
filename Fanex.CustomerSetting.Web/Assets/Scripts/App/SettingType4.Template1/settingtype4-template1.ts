@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
 /// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="product-status-resources.ts" />
 
 module CustomerSetting {
@@ -45,9 +45,25 @@ module CustomerSetting {
                 || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
         }
 
+        public copySettingFrom(source: Settingtype4Template1Item): boolean {
+            var isSuccessful: boolean = true;
+
+            if (source) {
+                this.isDisabled = source.isDisabled;
+
+                if (this.downline && source.downline) {
+                    this.downline.isDisabled = source.downline.isDisabled;
+                }
+
+                isSuccessful = this.validate();
+            }
+
+            return isSuccessful;
+        }
+
         public validate(): boolean {
             if (this.isDisabled && !this.downline.isDisabled) {
-                this.validationState = new ValidationResult("DownlineStatusIsInvalid");
+                this.validationState = new ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
 
                 return false;
             }
@@ -107,27 +123,33 @@ module CustomerSetting {
         public templateUrl: string = "status-checkbox.html";
 
         public controller: any = ["$scope", ($scope: IStatusCheckboxScope) => {
-            $scope.$watch("settingItem", () => {
+            $scope.$watch("settingItem.isDisabled", () => {
                 $scope.isChecked = !$scope.settingItem.isDisabled;
                 $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;
 
-                if ($scope.settingItem.downline) {
-                    $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
+                if (!$scope.settingItem.isDisabled && (<Settingtype4Template1Item>$scope.settingItem.oldSetting).isDisabled) {
+                    $scope.isDownlineDisabled = false;
+                } else {
                     $scope.isDownlineDisabled = true;
                 }
-            });
 
-            $scope.change = () => {
-                $scope.settingItem.isDisabled = !$scope.isChecked;
-                $scope.isDownlineDisabled = !$scope.isChecked;
-
-                if (!$scope.isChecked && $scope.isDownlineChecked) {
+                if ($scope.settingItem.isDisabled && !$scope.settingItem.downline.isDisabled) {
                     $scope.isDownlineChecked = false;
 
                     if ($scope.settingItem.downline) {
                         $scope.settingItem.downline.isDisabled = true;
                     }
                 }
+            });
+
+            $scope.$watch("settingItem.downline.isDisabled", () => {
+                if ($scope.settingItem.downline) {
+                    $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
+                }
+            });
+
+            $scope.change = () => {
+                $scope.settingItem.isDisabled = !$scope.isChecked;
             };
 
             $scope.changeDownline = () => {

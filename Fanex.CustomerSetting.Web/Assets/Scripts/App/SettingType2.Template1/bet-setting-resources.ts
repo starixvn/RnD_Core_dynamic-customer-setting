@@ -17,7 +17,7 @@ module CustomerSetting {
 
     ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
 
-    export function BetSettingLabelFilter(betSettingResourceService: BetSettingResourceService) {
+    function BetSettingLabelFilter(betSettingResourceService: BetSettingResourceService) {
         return (name: string) => {
             return betSettingResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting {
     LabelFilter.$inject = ["betSettingResourceService"];
     ModuleRegister.filter("betSettingLabel", BetSettingLabelFilter);
 
-    export function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService) {
+    function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService) {
         return (name: string, ...replacements: any[]) => {
             return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, [name, replacements]);
         };

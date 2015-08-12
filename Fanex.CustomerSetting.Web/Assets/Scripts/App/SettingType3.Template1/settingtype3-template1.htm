@@ -5,9 +5,12 @@
     </script>
     <script type="text/ng-template" id="settingtyp3-template1-drop.html">
         <div>
-            <div class="select-wrapper" data-tooltip data-message="settingItem.validationState.message | commissionMessage">
+            <div class="select-wrapper"
+                 data-tooltip
+                 data-message="{{settingItem.validationState | tooltipMessage:'commissionResourceService'}}">
                 <select data-ng-model="settingItem.commRate"
-                        data-ng-options="item.value as item.key for item in range">
+                        data-ng-options="item.value as item.key for item in range"
+                        data-ng-class="{ 'invalid': (settingItem.validationState | highlightingField) }">
                 </select>
             </div>
         </div>

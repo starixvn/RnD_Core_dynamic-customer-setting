@@ -17,7 +17,7 @@ module CustomerSetting {
 
     ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
 
-    export function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService) {
+    function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService) {
         return (name: string) => {
             return productStatusResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting {
     LabelFilter.$inject = ["productStatusResourceService"];
     ModuleRegister.filter("productStatusLabel", ProductStatusLabelFilter);
 
-    export function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService) {
+    function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService) {
         return (name: string, ...replacements: any[]) => {
             return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
         };

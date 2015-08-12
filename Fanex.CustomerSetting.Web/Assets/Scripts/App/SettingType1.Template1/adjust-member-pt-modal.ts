@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/module-registrater.ts" />
-/// <reference path="settingtype1-template1.ts" />
+/// <reference path="models.ts" />
 
 module CustomerSetting {
     "use strict";
@@ -35,13 +35,13 @@ module CustomerSetting {
     ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
 
     export class AdjustMemberPtModalService {
-        public static $inject: string[] = ["valueRangeGenerator"];
+        public static $inject: string[] = ["valueRangeService"];
 
         private modalScope: IAdjustMemberPtModalScope;
-        private valueRangeGenerator: ValueRangeGenerator;
+        private valueRangeService: ValueRangeService;
 
-        constructor(valueRangeGenerator: ValueRangeGenerator) {
-            this.valueRangeGenerator = valueRangeGenerator;
+        constructor(valueRangeService: ValueRangeService) {
+            this.valueRangeService = valueRangeService;
         }
 
         public setup(scope: IAdjustMemberPtModalScope): void {
@@ -74,7 +74,7 @@ module CustomerSetting {
         }
 
         private generateRange(max: number): void {
-            this.modalScope.range = this.valueRangeGenerator.generateRanges(
+            this.modalScope.range = this.valueRangeService.generateRanges(
                 this.modalScope.selectedValue,
                 0,
                 max,

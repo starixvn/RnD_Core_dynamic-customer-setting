@@ -79,7 +79,7 @@ module CustomerSetting {
             this.customerId = customerId;
         }
 
-        public toJson(): any {
+        public toJson(): {} {
             var params: any = {
                 customerId: this.customerId,
                 customerLevel: this.customerLevel,
@@ -98,8 +98,8 @@ module CustomerSetting {
         private custIds: Array<number>;
         private custNames: Array<string>;
 
-        public getCustomerIds(): Array<number> {
-            return this.custIds;
+        public get customerIds(): string {
+            return this.custIds.join();
         }
 
         public set customerIds(custIds: string) {
@@ -110,8 +110,8 @@ module CustomerSetting {
             this.custIds = custIds.split(",").map((custId: string) => parseInt(custId.trim(), 10));
         }
 
-        public getCustomerNames(): Array<string> {
-            return this.custNames;
+        public get customerNames(): string {
+            return this.custNames.join();
         }
 
         public set customerNames(names: string) {
@@ -122,14 +122,18 @@ module CustomerSetting {
             this.custNames = names.split(",").map((name: string) => name.trim());
         }
 
-        public get customerNames(): string {
-            return this.custNames.join();
-        }
-
         constructor(productId: number, uplineLevel: Level, customerLevel: Level, customerIds: string, customerNames: string) {
             super(productId, uplineLevel, customerLevel);
             this.customerIds = customerIds;
             this.customerNames = customerNames;
+        }
+
+        public getCustomerIds(): Array<number> {
+            return this.custIds;
+        }
+
+        public getCustomerNames(): Array<string> {
+            return this.custNames;
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
@@ -157,12 +161,18 @@ module CustomerSetting {
         }
 
         public validate(): Result {
-            if (this.uplineLevel && (this.uplineLevel <= Level.member || this.uplineLevel >= Level.company)
-                || (!this.setting)) {
+            if ((this.uplineLevel && (this.uplineLevel <= Level.member || this.uplineLevel >= Level.company)) || !this.setting) {
                 return Result.invalidParameters;
             }
 
             return Result.normal;
+        }
+
+        public toJson(): {} {
+            return {
+                uplineLevel: this.uplineLevel,
+                setting: this.setting.toJson()
+            };
         }
     }
 
@@ -184,6 +194,15 @@ module CustomerSetting {
 
                 return Result.normal;
             })();
+        }
+
+        public toJson(): {} {
+            return {
+                uplineLevel: this.uplineLevel,
+                customerIds: this.customerIds,
+                customerNames: this.customerNames,
+                setting: this.setting.toJson()
+            };
         }
     }
 }

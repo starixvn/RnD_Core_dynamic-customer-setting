@@ -126,6 +126,7 @@
     resources["message"]["en-us"] = {
         "AccessDeniedMsg": "You do not have permission to access this page.",
         "AccountWasDisabled": "Account {0} was disabled.",
+        "CopyingFailed": "Unable to copy value to the hi-lighted field(s).",
         "CustomersAreNotSameLine": "Customers are not in the same line!",
         "DataIsNotValid": "Data is not valid.",
         "DuplicateValuesAlertMsg": "Out of range for highlighted values.",

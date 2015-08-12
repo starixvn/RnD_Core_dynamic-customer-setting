@@ -10,8 +10,9 @@
 module CustomerSetting {
     "use strict";
 
-    export class CustomerSettingController {
+    class CustomerSettingController {
         public static $inject: string[] = [
+            "$rootScope",
             "$http",
             "$timeout",
             "appConfigService",
@@ -36,6 +37,7 @@ module CustomerSetting {
             return "updateCustomerSetting/updateMultipleSetting";
         }
 
+        private $rootScope: ng.IRootScopeService;
         private $http: ng.IHttpService;
         private $timeout: ng.ITimeoutService;
         private appConfigService: AppConfigService;
@@ -43,11 +45,13 @@ module CustomerSetting {
         private resourceService: ResourceService;
 
         constructor(
+            $rootScope: ng.IRootScopeService,
             $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
             appConfigService: AppConfigService,
             parametersService: ParametersService,
             resourceService: ResourceService) {
+            this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
             this.appConfigService = appConfigService;
@@ -65,6 +69,7 @@ module CustomerSetting {
             var validationResult: Result;
             var command: SettingCommand;
 
+            this.$rootScope.$emit("updateSetting");
             this.requestMsgResult = undefined;
 
             if (setting) {
@@ -76,7 +81,7 @@ module CustomerSetting {
                         this.isUIblocked = true;
 
                         this.$http
-                            .post(this.appConfigService.resolveRootUrl(path), command)
+                            .post(this.appConfigService.resolveRootUrl(path), command.toJson())
                             .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                                 this.requestMsgResult = new UpdatingSettingResult(response.data);
 
@@ -118,7 +123,7 @@ module CustomerSetting {
 
                 this.$http
                     .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
-                    ////.get(this.appConfigService.resolveRootUrl("app/sample-data-1.json"))
+                    ////.get(this.appConfigService.resolveRootUrl("app/sample-data-4.json"))
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
                     }, () => {

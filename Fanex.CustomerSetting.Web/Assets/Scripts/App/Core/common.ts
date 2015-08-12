@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="helpers.ts" />
+﻿/// <reference path="helpers.ts" />
 
 module CustomerSetting {
     "use strict";
@@ -18,8 +17,12 @@ module CustomerSetting {
     }
 
     export class Exceptions {
+        public static notImplemented(funcName: string): string {
+            return StringFormater.format("{0} is not implemented", funcName);
+        }
+
         public static negativeParam(paramName: string): string {
-            return StringFormater.format(paramName, "{0} must be greater than zero.");
+            return StringFormater.format("{0} must be greater than zero.", paramName);
         }
 
         public static invalidParams(): string {
@@ -27,7 +30,7 @@ module CustomerSetting {
         }
 
         public static invalidParam(paramName: string): string {
-            return StringFormater.format(paramName, "{0} has taken an invalid value.");
+            return StringFormater.format("{0} has taken an invalid value.", paramName);
         }
 
         public static wrongCustomerLevel(): string {
