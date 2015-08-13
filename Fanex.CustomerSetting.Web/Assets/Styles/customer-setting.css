@@ -50,6 +50,10 @@ textarea.invalid:focus {
   border: 1px solid #e9322d;
 }
 
+input[type=checkbox].invalid {
+  outline: 1px solid #e9322d;
+}
+
 input[type=text] {
   width: 100%;
 }

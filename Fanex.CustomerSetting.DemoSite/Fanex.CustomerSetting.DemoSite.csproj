@@ -301,6 +301,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
+    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
   </ItemGroup>

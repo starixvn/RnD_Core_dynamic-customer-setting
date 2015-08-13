@@ -123,6 +123,9 @@
   <data name="DownlineProductStatusCannotBeNull" xml:space="preserve">
     <value>Downline Product Status cannot be null</value>
   </data>
+  <data name="DownlineStatusCannotBeChanged" xml:space="preserve">
+    <value>Downline status cannot be changed when the Upline has not been changed</value>
+  </data>
   <data name="DownlineStatusIsInvalid" xml:space="preserve">
     <value>The product is not offered for this line of customers</value>
   </data>

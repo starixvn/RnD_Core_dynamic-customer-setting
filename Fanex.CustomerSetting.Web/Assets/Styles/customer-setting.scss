@@ -47,6 +47,12 @@ textarea {
     }
 }
 
+input[type=checkbox] {
+    &.invalid {
+        outline: 1px solid $invalid-color;
+    }
+}
+
 input[type=text] {
     width: 100%;
 

@@ -84,10 +84,7 @@ module CustomerSetting {
                             .post(this.appConfigService.resolveRootUrl(path), command.toJson())
                             .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                                 this.requestMsgResult = new UpdatingSettingResult(response.data);
-
-                                if (this.requestMsgResult.isSuccessful) {
-                                    this.querySetting();
-                                }
+                                this.querySetting();
 
                                 this.$timeout(() => {
                                     if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {

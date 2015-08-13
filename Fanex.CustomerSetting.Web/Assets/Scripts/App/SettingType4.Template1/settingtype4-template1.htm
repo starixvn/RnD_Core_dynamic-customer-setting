@@ -1,30 +1,23 @@
 ﻿<div>
     <default-setting-type-grouping></default-setting-type-grouping>
     <script type="text/ng-template" id="settingtyp4-template1-value.html">
-        <status-checkbox data-setting-item="item"
-                         data-customer-level="customerLevel"
-                         data-avai-customer-levels="avaiCustomerLevels">
-        </status-checkbox>
-    </script>
-    <script type="text/ng-template" id="status-checkbox.html">
-        <div>
-            <label class="checkbox">
-                <input type="checkbox"
-                       data-ng-model="isChecked"
-                       data-ng-disabled="isDisabled"
-                       data-ng-change="change()" />
-                {{'Enable' | productStatusLabel}}
-            </label>
-            <label class="checkbox" data-ng-show="customerLevel > avaiCustomerLevels.member">
-                <input type="checkbox"
-                       data-tooltip
-                       data-message="{{settingItem.validationState | tooltipMessage:'productStatusResourceService'}}"
-                       data-ng-model="isDownlineChecked"
-                       data-ng-disabled="isDownlineDisabled"
-                       data-ng-class="{ 'invalid': (settingItem.validationState | highlightingField) }"
-                       data-ng-change="changeDownline()" />
-                {{'EnableDownline' | productStatusLabel}}
-            </label>
-        </div>
+        <label class="checkbox">
+            <input type="checkbox"
+                   data-tooltip
+                   data-message="{{item.validationState | tooltipMessage:'productStatusResourceService':'isDisabled'}}"
+                   data-ng-model="item.isChecked"
+                   data-ng-disabled="item.readonly"
+                   data-ng-class="{ 'invalid': (item.validationState | highlightingField:'isDisabled') }" />
+            {{'Enable' | productStatusLabel}}
+        </label>
+        <label class="checkbox" data-ng-show="item.downline && (customerLevel > avaiCustomerLevels.member)">
+            <input type="checkbox"
+                   data-tooltip
+                   data-message="{{item.validationState | tooltipMessage:'productStatusResourceService':'downline.isDisabled'}}"
+                   data-ng-model="item.downline.isChecked"
+                   data-ng-disabled="item.downline.readonly"
+                   data-ng-class="{ 'invalid': (item.validationState | highlightingField:'downline.isDisabled') }" />
+            {{'EnableDownline' | productStatusLabel}}
+        </label>
     </script>
 </div>

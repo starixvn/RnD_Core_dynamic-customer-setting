@@ -13,6 +13,26 @@ module CustomerSetting {
         public upline: Settingtype4Template1Item;
         public downline: Settingtype4Template1Item;
 
+        // Additional fields tracing the state of controls. I added those fields due to the state of controls can be cloned via copying function.
+        public readonly: boolean;
+
+        public get isChecked(): boolean {
+            return !this.isDisabled;
+        }
+
+        public set isChecked(isChecked: boolean) {
+            this.isDisabled = !isChecked;
+
+            if (this.downline) {
+                if (isChecked && !(<Settingtype4Template1Item>this.oldSetting).isChecked) {
+                    this.downline.readonly = false;
+                } else {
+                    this.downline.isChecked = this.isChecked;
+                    this.downline.readonly = true;
+                }
+            }
+        }
+
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean)
@@ -24,10 +44,14 @@ module CustomerSetting {
 
                 if (settingItem.upline) {
                     this.upline = new Settingtype4Template1Item(settingItem.upline);
+                    this.readonly = settingItem.upline.isDisabled;
+                } else {
+                    this.readonly = false;
                 }
 
                 if (settingItem.downline) {
                     this.downline = new Settingtype4Template1Item(settingItem.downline);
+                    this.downline.readonly = true;
                 }
             }
 
@@ -49,21 +73,54 @@ module CustomerSetting {
             var isSuccessful: boolean = true;
 
             if (source) {
+                var backupDisabled: boolean = this.isDisabled;
+                var backupReadonly: boolean = this.readonly;
+                var backupDisabledDownline: boolean;
+                var backupReadonlyDownline: boolean;
+
                 this.isDisabled = source.isDisabled;
+                this.readonly = source.readonly;
 
                 if (this.downline && source.downline) {
+                    backupDisabledDownline = this.downline.isDisabled;
+                    backupReadonlyDownline = this.downline.readonly;
                     this.downline.isDisabled = source.downline.isDisabled;
+                    this.downline.readonly = source.downline.readonly;
                 }
 
                 isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.isDisabled = backupDisabled;
+                    this.readonly = backupReadonly;
+
+                    if (this.downline && source.downline) {
+                        this.downline.isDisabled = backupDisabledDownline;
+                        this.downline.readonly = backupReadonlyDownline;
+                    }
+                }
             }
 
             return isSuccessful;
         }
 
         public validate(): boolean {
-            if (this.isDisabled && !this.downline.isDisabled) {
+            if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
+
+                return false;
+            }
+
+            if (this.downline
+                && this.isDisabled === (<Settingtype4Template1Item>this.oldSetting).isDisabled
+                && this.downline.isDisabled !== (<Settingtype4Template1Item>this.oldSetting).downline.isDisabled) {
+                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
+
+                return false;
+            }
+
+            if (this.upline && this.upline.isDisabled && !this.isDisabled) {
+                this.validationState = new ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
 
                 return false;
             }
@@ -71,6 +128,27 @@ module CustomerSetting {
             this.validationState = <ValidationResult>Result.normal;
 
             return true;
+        }
+
+        public toJson(): {} {
+            var settingItem: any = {
+                sportTypeId: this.sportTypeId,
+                sportTypeName: this.sportTypeName,
+                betTypeId: this.betTypeId,
+                betTypeName: this.betTypeName,
+                typeName: this.typeName,
+                isDisabled: this.isDisabled
+            };
+
+            if (this.upline) {
+                settingItem.upline = this.upline.toJson();
+            }
+
+            if (this.downline) {
+                settingItem.downline = this.downline.toJson();
+            }
+
+            return settingItem;
         }
     }
 
@@ -98,65 +176,4 @@ module CustomerSetting {
     }
 
     ModuleRegister.directive("settingtype4Template1", SettingType4Template1Directive);
-
-    interface IStatusCheckboxScope extends ng.IScope {
-        settingItem: Settingtype4Template1Item;
-        isChecked: boolean;
-        isDisabled: boolean;
-        isDownlineChecked: boolean;
-        isDownlineDisabled: boolean;
-        change(): void;
-        changeDownline(): void;
-    }
-
-    class StatusCheckboxDirective implements ng.IDirective {
-        public replace: boolean = true;
-
-        public get scope(): any {
-            return {
-                customerLevel: "=",
-                settingItem: "=",
-                avaiCustomerLevels: "="
-            };
-        }
-
-        public templateUrl: string = "status-checkbox.html";
-
-        public controller: any = ["$scope", ($scope: IStatusCheckboxScope) => {
-            $scope.$watch("settingItem.isDisabled", () => {
-                $scope.isChecked = !$scope.settingItem.isDisabled;
-                $scope.isDisabled = $scope.settingItem.upline && $scope.settingItem.upline.isDisabled;
-
-                if (!$scope.settingItem.isDisabled && (<Settingtype4Template1Item>$scope.settingItem.oldSetting).isDisabled) {
-                    $scope.isDownlineDisabled = false;
-                } else {
-                    $scope.isDownlineDisabled = true;
-                }
-
-                if ($scope.settingItem.isDisabled && !$scope.settingItem.downline.isDisabled) {
-                    $scope.isDownlineChecked = false;
-
-                    if ($scope.settingItem.downline) {
-                        $scope.settingItem.downline.isDisabled = true;
-                    }
-                }
-            });
-
-            $scope.$watch("settingItem.downline.isDisabled", () => {
-                if ($scope.settingItem.downline) {
-                    $scope.isDownlineChecked = !$scope.settingItem.downline.isDisabled;
-                }
-            });
-
-            $scope.change = () => {
-                $scope.settingItem.isDisabled = !$scope.isChecked;
-            };
-
-            $scope.changeDownline = () => {
-                $scope.settingItem.downline.isDisabled = !$scope.isDownlineChecked;
-            };
-        }];
-    }
-
-    ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
 }

@@ -112,7 +112,7 @@ module CustomerSetting {
             var reservedProperties: string[] = ["oldSetting", "validationState"];
 
             Object.keys(this).forEach((prop: string) => {
-                if (this[prop] && reservedProperties.indexOf(prop) < 0) {
+                if (this[prop] !== (undefined || null) && reservedProperties.indexOf(prop) < 0) {
                     if (this[prop].toJson) {
                         settingItem[prop] = this[prop].toJson();
                     } else {
