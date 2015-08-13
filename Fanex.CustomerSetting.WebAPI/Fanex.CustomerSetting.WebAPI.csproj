@@ -137,9 +137,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="JsonHelpers\JsonCreationConverter.cs" />
-    <Compile Include="JsonHelpers\LevelConverter.cs" />
-    <Compile Include="JsonHelpers\SettingItemConverter.cs" />
+    <Compile Include="Helpers\JsonCreationConverter.cs" />
+    <Compile Include="Helpers\LevelConverter.cs" />
+    <Compile Include="Helpers\SettingItemConverter.cs" />
+    <Compile Include="Helpers\LevelModelBinder.cs" />
+    <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />
     <Compile Include="Models\Request\UpdateSettingRequest.cs" />
@@ -157,9 +159,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>

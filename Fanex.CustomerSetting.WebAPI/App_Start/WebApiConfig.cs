@@ -6,6 +6,8 @@
     using System.Web.Http.ModelBinding.Binders;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.WebAPI.Helpers;
+    using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig

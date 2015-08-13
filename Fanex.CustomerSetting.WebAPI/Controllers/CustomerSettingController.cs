@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.WebAPI.JsonHelpers;
+    using Fanex.CustomerSetting.WebAPI.Helpers;
     using Fanex.CustomerSetting.WebAPI.Models;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json;
@@ -23,37 +23,29 @@
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
             }
 
-            if (ModelState.IsValid)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
-            }
-
             var querySettingService = new QuerySettingService(request.GetSettingContext());
             var customerSetting = querySettingService.GetCustomerSetting(request.GetCustomerSettingQuery());
 
             return Request.CreateResponse(HttpStatusCode.OK, customerSetting);
         }
 
-        public HttpResponseMessage Post(HttpRequestMessage request)
+        public HttpResponseMessage Post([ModelBinder(typeof(UpdateSettingRequestModelBinder))]UpdateSettingRequest request)
         {
-            string jsonContent = request.Content.ReadAsStringAsync().Result;
-
-            var updateSettingRequest = JsonConvert.DeserializeObject<UpdateSettingRequest>(
-                jsonContent,
-                new SettingItemConverter(),
-                new LevelConverter());
-
-            IUpdateSettingService service = new UpdateSettingService(updateSettingRequest.GetSettingContext());
-
-            var updateSettingResult = service.Update(new UpdateCustomerSettingCommand
+            if (request == null)
             {
-                Setting = updateSettingRequest.Setting,
-                UplineLevel = (updateSettingRequest.UplineLevel == null)
-                ? null
-                : Enumeration.FromValue<Level>(updateSettingRequest.UplineLevel.Value)
-            });
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
+            }
 
-            return Request.CreateResponse(updateSettingResult);
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
+            }
+
+            var updateSettingService = new UpdateSettingService(request.GetSettingContext());
+
+            var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
+
+            return Request.CreateResponse(result);
         }
     }
 }

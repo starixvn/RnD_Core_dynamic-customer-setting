@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.JsonHelpers
+﻿namespace Fanex.CustomerSetting.WebAPI.Helpers
 {
     using System;
     using Fanex.CustomerSetting.Models.Enumerations;
