@@ -4,15 +4,9 @@
     using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.WebAPI.Helpers;
-    using Fanex.CustomerSetting.WebAPI.Models;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
 
     public class CustomerSettingController : ApiController
     {

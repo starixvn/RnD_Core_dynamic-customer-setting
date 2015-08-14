@@ -74,6 +74,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI.Tests", "Fanex.CustomerSetting.WebAPI.Tests\Fanex.CustomerSetting.WebAPI.Tests.csproj", "{3697334F-BBA4-41CB-9610-F73C80293271}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Client", "Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj", "{F8419BD7-8CCE-4479-9FCD-35BB215AE955}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +166,10 @@ Global
 		{3697334F-BBA4-41CB-9610-F73C80293271}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8419BD7-8CCE-4479-9FCD-35BB215AE955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8419BD7-8CCE-4479-9FCD-35BB215AE955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8419BD7-8CCE-4479-9FCD-35BB215AE955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8419BD7-8CCE-4479-9FCD-35BB215AE955}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,5 +198,6 @@ Global
 		{183E8744-85E2-4F7C-902F-1DFEC955323E} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{9B52485B-6CAC-4B70-994B-5D8CF74B3380} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 		{3697334F-BBA4-41CB-9610-F73C80293271} = {09967616-74BB-44FA-918B-819B7AA63F26}
+		{F8419BD7-8CCE-4479-9FCD-35BB215AE955} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 	EndGlobalSection
 EndGlobal
