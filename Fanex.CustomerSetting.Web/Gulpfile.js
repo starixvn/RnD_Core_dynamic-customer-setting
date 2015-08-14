@@ -89,7 +89,10 @@
     });
 
     gulp.task("publish-template", function () {
+        var minifyHTML = require("gulp-minify-html");
+
         return gulp.src(assetPaths.app + "*.htm")
+                   .pipe(minifyHTML({ empty: true }))
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
@@ -124,6 +127,7 @@
     gulp.task("publish-core-script", function () {
         var concat = require("gulp-concat");
         var gulpif = require("gulp-if");
+        var minifyHTML = require("gulp-minify-html");
         var rename = require("gulp-rename");
         var sourcemaps = require("gulp-sourcemaps");
         var templateCache = require("gulp-angular-templatecache");
@@ -137,6 +141,7 @@
                 noImplicitAny: false,
                 removeComments: true
             })))
+            .pipe(gulpif(/[.]htm$/, minifyHTML({ empty: true })))
             .pipe(gulpif(/[.]htm$/, templateCache({
                 module: "customerSetting"
             })))
@@ -152,6 +157,7 @@
         var concat = require("gulp-concat");
         var fs = require("fs");
         var gulpif = require("gulp-if");
+        var minifyHTML = require("gulp-minify-html");
         var rename = require("gulp-rename");
         var sourcemaps = require("gulp-sourcemaps");
         var ts = require("gulp-typescript");
@@ -183,6 +189,7 @@
                 .pipe(gulp.dest(publishPaths.customerSetting + moduleName));
 
             gulp.src(assetPaths.app + moduleName + "/*.htm")
+                .pipe(minifyHTML({ empty: true }))
                 .pipe(gulp.dest(publishPaths.customerSetting + moduleName));
         }
 

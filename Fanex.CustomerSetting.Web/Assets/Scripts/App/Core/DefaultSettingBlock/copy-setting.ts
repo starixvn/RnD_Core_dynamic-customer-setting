@@ -93,15 +93,14 @@ module CustomerSetting {
 
         public hideSportCopyingError(scope: ICopySettingScope): void {
             var settingTypeId: number = scope.settingTypeId;
-            var sportTypeId: number = ArrayHelpers.join2DimensionalArray(scope.settingItems)[0].sportTypeId;
 
             this.scopes.forEach((registeredScope: ICopySettingScope) => {
                 if (registeredScope.showError) {
-                    var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
                     var registeredSettingTypeId: number = registeredScope.settingTypeId;
-                    var registerdSportTypeId: number = items[0].sportTypeId;
 
-                    if (registeredSettingTypeId === settingTypeId && registerdSportTypeId === sportTypeId) {
+                    if (registeredSettingTypeId === settingTypeId) {
+                        var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
+
                         registeredScope.showError = false;
                         items.forEach((item: DefaultSettingItem) => {
                             item.validationState = undefined;

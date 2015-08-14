@@ -11,7 +11,10 @@
              data-ng-class="{ 'not-first': ($index > 0) }"
              data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
-            <copy-setting data-ng-if="$index === 0" data-setting-type-id="settingType.id" data-setting-items="sportGroups"></copy-setting>
+            <copy-setting data-ng-if="$index === 0"
+                          data-setting-type-id="settingType.id"
+                          data-setting-items="sportGroups">
+            </copy-setting>
         </div>
         <div class="header" data-ng-include="headerTemplateUrl"></div>
         <div class="setting-group"
@@ -23,7 +26,10 @@
                  data-bet-type="{{item.betTypeId}}">
                 {{item | showingName:settingType.settingLevel:productName }}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
-                <copy-setting data-ng-if="$index === 0" data-setting-type-id="settingType.id" data-setting-items="group"></copy-setting>
+                <copy-setting data-ng-if="$index === 0"
+                              data-setting-type-id="settingType.id"
+                              data-setting-items="group">
+                </copy-setting>
             </div>
             <div class="value-col"
                  data-ng-include="valueTemplateUrl"

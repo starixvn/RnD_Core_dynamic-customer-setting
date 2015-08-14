@@ -23,6 +23,7 @@ input,
 button,
 select,
 textarea {
+    @include box-sizing(border-box);
     @include transition(border linear 0.2s, box-shadow linear 0.2s);
     background-color: #fff;
     border: 1px solid #aeaeae;
