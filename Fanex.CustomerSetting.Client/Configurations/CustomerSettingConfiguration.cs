@@ -1,14 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Client.Configurations
 {
-    using System;
-    using System.Collections.Generic;
     using System.Configuration;
-    using System.Linq;
-    using System.Text;
 
     public class CustomerSettingConfiguration : ConfigurationSection
     {
-        private static CustomerSettingConfiguration settings 
+        private static CustomerSettingConfiguration settings
             = ConfigurationManager.GetSection("CustomerSettingConfiguration") as CustomerSettingConfiguration;
 
         public static CustomerSettingConfiguration Settings
@@ -22,7 +18,7 @@
         [ConfigurationProperty("System", IsRequired = true)]
         public byte System
         {
-            get { return (string)this["System"]; }
+            get { return (byte)this["System"]; }
             set { this["System"] = value; }
         }
 

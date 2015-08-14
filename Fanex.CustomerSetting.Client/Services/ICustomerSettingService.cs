@@ -5,6 +5,8 @@
 
     public interface ICustomerSettingService
     {
-        RestResponse QueryCustomerSetting(QuerySettingRequest query);
+        IRestResponse QueryCustomerSetting(QuerySettingRequest query);
+
+        IRestResponse UpdateCustomerSetting(UpdateSettingRequest update);
     }
 }

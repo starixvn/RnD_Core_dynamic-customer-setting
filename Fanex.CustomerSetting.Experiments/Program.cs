@@ -3,12 +3,14 @@
     using System;
     using System.Threading.Tasks;
     using Fanex.CustomerSetting.Experiments.Concurrent;
+    using Fanex.CustomerSetting.Experiments.WebApi;
 
     internal class Program
     {
         private static void Main(string[] args)
         {
-            RunConcurrentExperiment();
+            ApiClient.Test();
+            //RunConcurrentExperiment();
         }
 
         private static void RunConcurrentExperiment()

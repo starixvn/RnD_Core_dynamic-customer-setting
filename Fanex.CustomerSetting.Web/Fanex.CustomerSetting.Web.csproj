@@ -260,7 +260,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
-    <Exec Command="npm install" />
-  </Target>
 </Project>

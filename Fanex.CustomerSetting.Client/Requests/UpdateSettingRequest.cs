@@ -7,6 +7,6 @@
 
     public class UpdateSettingRequest : SettingRequest
     {
-        public string JsonSettingContent { get; set; }
+        public string JsonSetting { get; set; }
     }
 }

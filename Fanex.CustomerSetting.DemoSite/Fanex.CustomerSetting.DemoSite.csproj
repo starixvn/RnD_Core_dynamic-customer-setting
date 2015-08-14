@@ -120,6 +120,10 @@
       <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
@@ -197,6 +201,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -255,6 +260,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj">
+      <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
+      <Name>Fanex.CustomerSetting.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj">
       <Project>{2747b4d9-3cb5-44ba-aeb1-b210e92d8617}</Project>
       <Name>Fanex.CustomerSetting.RemotingRefApi</Name>
@@ -346,7 +355,4 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-  <Target Name="BeforeBuild">
-    <Exec Command="npm install" />
-  </Target>
 </Project>
