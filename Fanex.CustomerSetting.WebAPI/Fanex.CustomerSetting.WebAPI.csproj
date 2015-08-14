@@ -147,7 +147,6 @@
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
-    <Compile Include="Helpers\LevelModelBinder.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />
