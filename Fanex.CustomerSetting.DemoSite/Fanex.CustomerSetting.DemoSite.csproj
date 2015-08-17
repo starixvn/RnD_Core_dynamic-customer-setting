@@ -268,37 +268,9 @@
       <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
       <Name>Fanex.CustomerSetting.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj">
-      <Project>{2747b4d9-3cb5-44ba-aeb1-b210e92d8617}</Project>
-      <Name>Fanex.CustomerSetting.RemotingRefApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
-      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
-      <Name>Fanex.CustomerSetting.Resource</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType1.Template1\Fanex.CustomerSetting.SettingType1.Template1.csproj">
-      <Project>{1f9436d3-f8aa-48c9-b1a7-7659eaa7bdcc}</Project>
-      <Name>Fanex.CustomerSetting.SettingType1.Template1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType2.Template1\Fanex.CustomerSetting.SettingType2.Template1.csproj">
-      <Project>{b4e5a53b-efbc-4d30-8b59-ed41236d3816}</Project>
-      <Name>Fanex.CustomerSetting.SettingType2.Template1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType3.Template1\Fanex.CustomerSetting.SettingType3.Template1.csproj">
-      <Project>{a41ab0a9-82a9-45a8-90f1-3bd30c1a3f93}</Project>
-      <Name>Fanex.CustomerSetting.SettingType3.Template1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType4.Template1\Fanex.CustomerSetting.SettingType4.Template1.csproj">
-      <Project>{17008f66-76c2-482c-b8e0-e838f809ee53}</Project>
-      <Name>Fanex.CustomerSetting.SettingType4.Template1</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Web\Fanex.CustomerSetting.Web.csproj">
       <Project>{f1196671-434d-4883-8fff-b53a1d526f3b}</Project>
       <Name>Fanex.CustomerSetting.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
-      <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
-      <Name>Fanex.CustomerSetting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

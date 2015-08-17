@@ -22,6 +22,8 @@
             request.AddParameter("ProductId", query.ProductId);
             request.AddParameter("CustomerId", query.CustomerId);
             request.AddParameter("CustomerLevel", query.CustomerLevel);
+            request.AddParameter("UplineLevel", query.UplineLevel);
+
             request.AddParameter("ActorId", query.ActorId);
             request.AddParameter("ActorName", query.ActorName);
             request.AddParameter("ActorLevel", query.ActorLevel);

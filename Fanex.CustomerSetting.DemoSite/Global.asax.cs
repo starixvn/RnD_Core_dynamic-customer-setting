@@ -4,8 +4,6 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Web;
     using Fanex.Data.Configuration;
 
