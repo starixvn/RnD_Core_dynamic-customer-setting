@@ -10,10 +10,6 @@
         private byte _productId;
         private Level _uplineLevel;
 
-        public CustomerSettingQuery()
-        {
-        }
-
         public CustomerSettingQuery(
           int customerId,
           Level customerLevel,

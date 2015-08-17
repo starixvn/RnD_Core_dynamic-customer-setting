@@ -4,9 +4,8 @@
     using System.Runtime.Caching;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.Client.Requests;
+    using Fanex.CustomerSetting.Client.Services;
     using Fanex.CustomerSetting.Web.Contexts;
     using Fanex.CustomerSetting.Web.ViewModels;
 
@@ -14,11 +13,11 @@
     {
         private const string TemplateCachingKey = "CustomerSettingTemplate";
         private const byte CachingHours = 4;
-        private readonly IQuerySettingService _querySettingService;
+        private readonly ICustomerSettingService _customerSettingService;
 
-        public ViewCustomerSettingController(IQuerySettingService querySettingService)
+        public ViewCustomerSettingController(ICustomerSettingService customerSettingService)
         {
-            _querySettingService = querySettingService ?? new QuerySettingService(SettingContextManager.SettingContext);
+            _customerSettingService = customerSettingService ?? new CustomerSettingService();
         }
 
         public ViewCustomerSettingController()
@@ -38,11 +37,19 @@
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QuerySetting(CustomerSettingQuery querySetting)
+        public JsonResult QuerySetting(QuerySettingRequest querySetting)
         {
-            var customerSetting = _querySettingService.GetCustomerSetting(querySetting);
+            var settingContext = SettingContextManager.SettingContext;
+            querySetting.ActorId = settingContext.ActorId;
+            querySetting.ActorLevel = settingContext.ActorLevel;
+            querySetting.ActorName = settingContext.ActorName;
+            querySetting.SubAccountId = settingContext.SubAccountId;
+            querySetting.Domain = settingContext.Domain;
+            querySetting.Language = settingContext.Language;
 
-            return new JsonNetResult(customerSetting, JsonRequestBehavior.AllowGet);
+            var customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
+
+            return new JsonNetResult(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
         }
 
         private string GetTemplate()

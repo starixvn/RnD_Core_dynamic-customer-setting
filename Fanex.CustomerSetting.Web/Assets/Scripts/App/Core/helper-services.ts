@@ -60,13 +60,18 @@ module CustomerSetting {
             return (<MultipleSettingQuery>this.query).customerNames;
         }
 
+        //// Jason please review here
+        public get customerIds(): string {
+            return (<MultipleSettingQuery>this.query).customerIds;
+        }
+
         public get uplineLevel(): Level {
             return this.query.uplineLevel;
         }
 
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
-        private isMultipleUpdates: boolean;
+        public isMultipleUpdates: boolean; //// Jason please review here
 
         private $window: ng.IWindowService;
 
@@ -111,8 +116,8 @@ module CustomerSetting {
             var params: any = this.$window["params"];
 
             if (params) {
-                var uplineLevel = params.uplineLevel ? params.uplineLevel.value : undefined;
-                var customerLevel = params.customerLevel ? params.customerLevel.value : undefined;
+                var uplineLevel = params.uplineLevel ? params.uplineLevel : undefined;
+                var customerLevel = params.customerLevel ? params.customerLevel : undefined;
 
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;

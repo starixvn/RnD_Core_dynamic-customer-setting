@@ -10,13 +10,11 @@
 
         internal UpdateCustomerSettingCommand GetUpdateCustomerSettingCommand()
         {
-            return new UpdateCustomerSettingCommand
-            {
-                Setting = this.Setting,
-                UplineLevel = (this.UplineLevel == null)
+            return new UpdateCustomerSettingCommand(
+                setting: this.Setting,
+                uplineLevel: (this.UplineLevel == null)
                 ? null
-                : Enumeration.FromValue<Level>(this.UplineLevel.Value)
-            };
+                : Enumeration.FromValue<Level>(this.UplineLevel.Value));
         }
     }
 }

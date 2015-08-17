@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebAPI.Models.Request
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Fanex.Common;
     using Fanex.CustomerSetting.Models.Requests;
@@ -14,13 +16,21 @@
         {
             UpdateCustomerSettingCommand updateSingleCommand = GetUpdateCustomerSettingCommand();
 
-            return new MultipleUpdateCustomerSettingCommand
+            if(string.IsNullOrWhiteSpace(CustomerIds))
             {
-                Setting = updateSingleCommand.Setting,
-                UplineLevel = updateSingleCommand.UplineLevel,
-                CustomerIds = CustomerIds.Split(',').Select(custId => Converter.ToInt(custId)),
-                CustomerNames = CustomerNames.Split(',').ToList()
-            };
+                throw new ArgumentNullException("CustomerIds", "CustomerIds cannot be null or empty");
+            }
+
+            if (string.IsNullOrWhiteSpace(CustomerNames))
+            {
+                throw new ArgumentNullException("CustomerNames", "CustomerNames cannot be null or empty");
+            }
+
+            return new MultipleUpdateCustomerSettingCommand(
+                setting: updateSingleCommand.Setting,
+                customerIds: CustomerIds.Split(',').Select(custId => Converter.ToInt(custId)),
+                customerNames: CustomerNames.Split(',').ToList(),
+                uplineLevel: updateSingleCommand.UplineLevel);
         }
     }
 }

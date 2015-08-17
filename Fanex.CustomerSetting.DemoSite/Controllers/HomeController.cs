@@ -25,8 +25,7 @@
                 subAccountId = 0;
             }
 
-            SettingContextManager.Init(actorId, actorname, role, system, subAccountId);
-            SettingContextManager.SetLanguage(language);
+            SettingContextManager.Init(actorId, actorname, role, subAccountId);
 
             return Json(Result.Success);
         }

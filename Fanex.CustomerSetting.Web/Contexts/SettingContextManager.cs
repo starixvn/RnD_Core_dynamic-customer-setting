@@ -2,9 +2,6 @@
 {
     using System;
     using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Resource;
 
     /// <summary>
     /// Setting context manager for providing
@@ -21,7 +18,7 @@
             SettingContext = new SettingContext();
         }
 
-        public static ISettingContext SettingContext { get; private set; }
+        public static SettingContext SettingContext { get; private set; }
 
         /// <summary>
         /// Call this function after user login to system,
@@ -35,38 +32,30 @@
             int loginUserId,
             string loginUserName,
             byte loginUserLevel,
-            byte system,
             int subAccountId = 0)
         {
-            ValidateSubAccountWithSystem(subAccountId, system);
-
-            SettingContext.Actor = new User
-            {
-                Id = loginUserId,
-                Name = loginUserName,
-                Level = Enumeration.FromValue<Level>(loginUserLevel),
-                SubAccountId = subAccountId
-            };
-
-            SettingContext.System = system;
+            SettingContext.ActorId = loginUserId;
+            SettingContext.ActorName = loginUserName;
+            SettingContext.ActorLevel = loginUserLevel;
+            SettingContext.SubAccountId = subAccountId;
         }
 
-        private static void ValidateSubAccountWithSystem(
-            int subAccountId,
-            byte system)
-        {
-            if (subAccountId > 0
-                && system != (byte)SystemType.Agency)
-            {
-                throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
-            }
-        }
+        ////private static void ValidateSubAccountWithSystem(
+        ////    int subAccountId,
+        ////    byte system)
+        ////{
+        ////    if (subAccountId > 0
+        ////        && system != (byte)SystemType.Agency)
+        ////    {
+        ////        throw new InvalidOperationException(Message.SubAccountIdShouldBeZeroWhenSystemIsNotAgency);
+        ////    }
+        ////}
 
-        public static void SetLanguage(string language)
-        {
-            Check.Argument.IsNotEmpty(language, "language");
+        ////public static void SetLanguage(string language)
+        ////{
+        ////    Check.Argument.IsNotEmpty(language, "language");
 
-            SettingContext.Language = language;
-        }
+        ////    SettingContext.Language = language;
+        ////}
     }
 }

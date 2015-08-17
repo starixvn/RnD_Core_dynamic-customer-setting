@@ -1,18 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Web.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.Client.Requests;
+    using Fanex.CustomerSetting.Client.Services;
     using Fanex.CustomerSetting.Web.Contexts;
 
     public class UpdateCustomerSettingController : Controller
     {
-        private readonly IUpdateSettingService _customerSettingService;
+        private readonly ICustomerSettingService _customerSettingService;
 
-        public UpdateCustomerSettingController(IUpdateSettingService customerSettingService)
+        public UpdateCustomerSettingController(ICustomerSettingService customerSettingService)
         {
-            _customerSettingService = customerSettingService ?? new UpdateSettingService(SettingContextManager.SettingContext);
+            _customerSettingService = customerSettingService ?? new CustomerSettingService();
         }
 
         public UpdateCustomerSettingController()
@@ -22,20 +21,37 @@
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult UpdateSetting(UpdateCustomerSettingCommand updateSetting)
+        public JsonResult UpdateSetting(UpdateSettingRequest updateSetting)
         {
-            var result = _customerSettingService.Update(updateSetting);
+            SetActorInformation(updateSetting);
 
-            return new JsonNetResult(result);
+            var updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
+
+            return new JsonNetResult(updateResult.Content);
         }
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult UpdateMultipleSetting(MultipleUpdateCustomerSettingCommand updateMulitpleSetting)
+        public JsonResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
         {
-            var result = _customerSettingService.Update(updateMulitpleSetting);
+            SetActorInformation(multipleUpdateSetting);
 
-            return new JsonNetResult(result);
+            var updateResult = _customerSettingService.MultipleUpdateCustomerSetting(multipleUpdateSetting);
+
+            return new JsonNetResult(updateResult.Content);
+        }
+
+        private static void SetActorInformation(UpdateSettingRequest updateSetting)
+        {
+            var settingContext = SettingContextManager.SettingContext;
+
+            updateSetting.ActorId = settingContext.ActorId;
+            updateSetting.ActorLevel = settingContext.ActorLevel;
+            updateSetting.ActorName = settingContext.ActorName;
+            updateSetting.SubAccountId = settingContext.SubAccountId;
+            updateSetting.Domain = settingContext.Domain;
+            updateSetting.Language = settingContext.Language;
+            updateSetting.ClientIP = settingContext.IP;
         }
     }
 }

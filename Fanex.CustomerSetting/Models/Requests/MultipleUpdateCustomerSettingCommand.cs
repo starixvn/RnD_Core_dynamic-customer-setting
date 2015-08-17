@@ -11,10 +11,6 @@
         private IEnumerable<int> _customerIds;
         private IEnumerable<string> _customerNames;
 
-        public MultipleUpdateCustomerSettingCommand()
-        {
-        }
-
         public MultipleUpdateCustomerSettingCommand(
             ISetting setting,
             IEnumerable<int> customerIds,

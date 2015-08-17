@@ -5,14 +5,15 @@
     using System.Linq;
     using System.Net;
     using System.Web;
-    using Fanex.CustomerSetting.Models;
 
-    internal class SettingContext : ISettingContext
+    public class SettingContext
     {
         #region Constant
 
-        private const string ActorSessionKey = "Fanex.CustomerSetting.Actor";
-        private const string SubAccountSessionKey = "Fanex.CustomerSetting.SubAccount";
+        private const string ActorIdSessionKey = "Fanex.CustomerSetting.ActorId";
+        private const string ActorNameSessionKey = "Fanex.CustomerSetting.ActorName";
+        private const string ActorLevelSessionKey = "Fanex.CustomerSetting.ActorLevel";
+        private const string SubAccountIdSessionKey = "Fanex.CustomerSetting.SubAccountId";
         private const string LanguageSessionKey = "Fanex.CustomerSetting.Language";
         private const string DefaultLanguage = "en-US";
 
@@ -22,16 +23,55 @@
         {
         }
 
-        public User Actor
+        public int ActorId
         {
             get
             {
-                return (User)HttpContext.Current.Session[ActorSessionKey];
+                return (int)HttpContext.Current.Session[ActorIdSessionKey];
             }
 
             set
             {
-                HttpContext.Current.Session[ActorSessionKey] = value;
+                HttpContext.Current.Session[ActorIdSessionKey] = value;
+            }
+        }
+
+        public string ActorName
+        {
+            get
+            {
+                return (string)HttpContext.Current.Session[ActorNameSessionKey];
+            }
+
+            set
+            {
+                HttpContext.Current.Session[ActorNameSessionKey] = value;
+            }
+        }
+
+        public byte ActorLevel
+        {
+            get
+            {
+                return (byte)HttpContext.Current.Session[ActorLevelSessionKey];
+            }
+
+            set
+            {
+                HttpContext.Current.Session[ActorLevelSessionKey] = value;
+            }
+        }
+
+        public int SubAccountId
+        {
+            get
+            {
+                return (int)HttpContext.Current.Session[SubAccountIdSessionKey];
+            }
+
+            set
+            {
+                HttpContext.Current.Session[SubAccountIdSessionKey] = value;
             }
         }
 
@@ -57,8 +97,6 @@
                 HttpContext.Current.Session[LanguageSessionKey] = !string.IsNullOrEmpty(value) ? value : DefaultLanguage;
             }
         }
-
-        public byte System { get; set; }
 
         public string Domain
         {

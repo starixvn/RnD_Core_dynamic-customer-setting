@@ -50,6 +50,10 @@
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -89,16 +93,11 @@
   <ItemGroup>
     <Compile Include="Contexts\SettingContext.cs" />
     <Compile Include="Contexts\SettingContextManager.cs" />
-    <Compile Include="Controllers\API\CustomerSettingController.cs" />
-    <Compile Include="Controllers\Global.asax.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="Helpers\AntiForgeryExtension.cs" />
     <Compile Include="Helpers\JsonConverter.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
-    <Compile Include="Helpers\LevelModelBinder.cs" />
-    <Compile Include="Helpers\SettingItemModelBinder.cs" />
-    <Compile Include="Helpers\SettingModelBinder.cs" />
     <Compile Include="Helpers\ValidateAntiForgery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppConfiguration.cs" />
@@ -118,16 +117,11 @@
     <None Include="tslint.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
-      <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
-      <Name>Fanex.CustomerSetting.Resource</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
-      <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
-      <Name>Fanex.CustomerSetting</Name>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj">
+      <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
+      <Name>Fanex.CustomerSetting.Client</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
@@ -194,7 +188,6 @@
     </Content>
     <Content Include="Assets\Styles\Images\loading.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
-    <Content Include="Controllers\Global.asax" />
     <Content Include="Gulpfile.js" />
     <Content Include="karma.conf.js" />
   </ItemGroup>
