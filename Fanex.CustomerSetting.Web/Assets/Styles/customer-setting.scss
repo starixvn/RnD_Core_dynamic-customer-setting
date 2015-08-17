@@ -1,11 +1,18 @@
 ﻿@import "Compass/_compass.scss";
 
-$border-color: #7c98a4;
 $background-color: #e6e9f0;
-$header-color: #b5c4d0;
+$block-background-color: #fff;
+$border-color: #7c98a4;
+$button-backround-color1: #8594a2;
+$button-backround-color2: #344d61;
+$button-backround-color3: #8594a2;
+$button-text-color: #fff;
 $focus-border-color: #66afe9;
-$invalid-color: #e9322d;
+$header-color: #b5c4d0;
+$input-border-color: #aeaeae;
 $invalid-border-color: rgba(233, 50, 45, 0.85);
+$invalid-color: #e9322d;
+$sub-group-background-color: #cadceb;
 $success-color: #618e11;
 $warning-color: #c28f06;
 $error-color: $invalid-color; // #f40000;
@@ -26,7 +33,7 @@ textarea {
     @include box-sizing(border-box);
     @include transition(border linear 0.2s, box-shadow linear 0.2s);
     background-color: #fff;
-    border: 1px solid #aeaeae;
+    border: 1px solid $input-border-color;
 
     font: {
         family: Tahoma, Arial, helvetica, sans-serif;
@@ -96,11 +103,12 @@ select {
 }
 
 button {
-    @include background-image(linear-gradient(#8594A2, #344d61, #849ba8));
+    @include background-image(linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3));
     @include border-radius(3px);
+    background-color: $button-backround-color2;
     background-repeat: no-repeat;
     border: 0;
-    color: #fff;
+    color: $button-text-color;
     cursor: pointer;
     font-weight: bold;
     font-size: 11px;
@@ -335,7 +343,7 @@ button {
     .block {
         @include box-sizing(border-box);
         @include clearfix();
-        background-color: #fff;
+        background-color: $block-background-color;
         border: 1px solid $border-color;
         margin-bottom: 10px;
         width: 100%;
@@ -362,8 +370,8 @@ button {
                 border-bottom: none;
             }
 
-            &.sport-group-header {
-                background-color: #cadceb;
+            &.sub-group-header {
+                background-color: $sub-group-background-color;
                 padding: 0 3px;
                 text-align: left;
 
@@ -422,7 +430,7 @@ button {
         }
 
         .value-col {
-            background-color: #fff;
+            background-color: $block-background-color;
             width: 60%;
 
             &.last {
