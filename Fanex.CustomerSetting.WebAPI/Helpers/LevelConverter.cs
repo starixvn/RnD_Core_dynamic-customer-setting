@@ -9,6 +9,11 @@
     {
         protected override Level Create(Type type, JObject obj)
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj", "object cannot be null");
+            }
+
             return Enumeration.FromValue<Level>(Convert.ToByte(obj["value"]));
         }
 

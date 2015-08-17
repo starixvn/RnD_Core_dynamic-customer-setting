@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client.Configurations
 {
     using System.Configuration;
+    using System.Diagnostics.CodeAnalysis;
 
     public class CustomerSettingConfiguration : ConfigurationSection
     {
@@ -22,7 +23,8 @@
             set { this["System"] = value; }
         }
 
-        [ConfigurationProperty("ServiceUri", IsRequired = true)]
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Reviewed !"),
+        ConfigurationProperty("ServiceUri", IsRequired = true)]
         public string ServiceUri
         {
             get { return (string)this["ServiceUri"]; }

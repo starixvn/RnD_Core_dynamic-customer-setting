@@ -6,7 +6,8 @@
     using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json;
 
-    public class UpdateSettingRequestModelBinder : IModelBinder
+    public class UpdateSettingRequestModelBinder<T> : IModelBinder 
+        where T : UpdateSettingRequest
     {
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
@@ -20,14 +21,14 @@
                 throw new ArgumentNullException("bindingContext");
             }
 
-            if (bindingContext.ModelType != typeof(UpdateSettingRequest))
+            if (bindingContext.ModelType != typeof(T))
             {
                 return false;
             }
 
             var jsonContent = actionContext.Request.Content.ReadAsStringAsync().Result;
 
-            var updateSettingRequest = JsonConvert.DeserializeObject<UpdateSettingRequest>(
+            var updateSettingRequest = JsonConvert.DeserializeObject<T>(
                 jsonContent,
                 new SettingItemConverter(),
                 new LevelConverter());

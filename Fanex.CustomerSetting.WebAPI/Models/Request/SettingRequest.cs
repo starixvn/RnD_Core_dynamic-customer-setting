@@ -8,15 +8,6 @@
     {
         private SettingContext _settingContext;
 
-        [Range(1, 255)]
-        public byte ProductId { get; set; }
-
-        [Range(1, int.MaxValue)]
-        public int CustomerId { get; set; }
-
-        [Range(1, 4)]
-        public byte CustomerLevel { get; set; }
-
         [Range(2, 4)]
         public byte? UplineLevel { get; set; }
 
@@ -37,7 +28,7 @@
 
         public string Domain { get; set; }
 
-        public string ClientIp { get; set; }
+        public string ClientIP { get; set; }
 
         public string Language { get; set; }
 
@@ -57,7 +48,7 @@
                 {
                     Actor = actor,
                     Language = this.Language,
-                    IP = this.ClientIp,
+                    IP = this.ClientIP,
                     System = this.System,
                     Domain = this.Domain
                 };

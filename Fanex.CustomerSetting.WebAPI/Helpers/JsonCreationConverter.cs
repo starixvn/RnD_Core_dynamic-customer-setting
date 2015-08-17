@@ -20,14 +20,14 @@
             return type;
         }
 
-        public override bool CanConvert(Type type)
+        public override bool CanConvert(Type objectType)
         {
-            return typeof(T).IsAssignableFrom(type);
+            return typeof(T).IsAssignableFrom(objectType);
         }
 
-        public override object ReadJson(JsonReader reader, Type type, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            ValidateInputParams(reader, type, serializer);
+            ValidateInputParams(reader, objectType, serializer);
 
             if (reader.TokenType == JsonToken.Null)
             {
@@ -35,7 +35,7 @@
             }
 
             JObject obj = JObject.Load(reader);
-            T target = Create(type, obj);
+            T target = Create(objectType, obj);
             JsonReader jsonReader = obj.CreateReader();
             jsonReader.FloatParseHandling = reader.FloatParseHandling;
             serializer.Populate(jsonReader, target);
@@ -52,17 +52,17 @@
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException("reader", "Reader cannot be null");
             }
 
             if (type == null)
             {
-                throw new ArgumentNullException("objectType");
+                throw new ArgumentNullException("type", "type cannot be null");
             }
 
             if (serializer == null)
             {
-                throw new ArgumentNullException("serializer");
+                throw new ArgumentNullException("serializer", "serializer cannot be null");
             }
         }
     }

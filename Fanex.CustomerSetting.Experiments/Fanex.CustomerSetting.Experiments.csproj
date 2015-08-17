@@ -51,7 +51,7 @@
     <Compile Include="Concurrent\SettingTypeServiceFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebApi\ApiClient.cs" />
+    <Compile Include="WebApi\CustomerSettingClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj">

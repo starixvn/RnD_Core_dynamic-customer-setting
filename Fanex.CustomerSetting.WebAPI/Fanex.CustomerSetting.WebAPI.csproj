@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -144,12 +145,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />
+    <Compile Include="Models\Request\MultipleUpdateSettingRequest.cs" />
     <Compile Include="Models\Request\UpdateSettingRequest.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
