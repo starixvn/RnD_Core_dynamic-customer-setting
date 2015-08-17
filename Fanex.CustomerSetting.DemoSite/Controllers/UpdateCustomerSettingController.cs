@@ -1,9 +1,10 @@
-﻿namespace Fanex.CustomerSetting.Web.Controllers
+﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client.Requests;
     using Fanex.CustomerSetting.Client.Services;
-    using Fanex.CustomerSetting.Web.Contexts;
+    using Fanex.CustomerSetting.DemoSite.Contexts;
+    using Fanex.CustomerSetting.Web;
 
     public class UpdateCustomerSettingController : Controller
     {

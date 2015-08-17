@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class AppConfiguration
+    public class AppConfiguration
     {
         public AppConfiguration()
             : this(true, "/")

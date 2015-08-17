@@ -91,10 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\SettingContext.cs" />
-    <Compile Include="Contexts\SettingContextManager.cs" />
-    <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
-    <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="Helpers\AntiForgeryExtension.cs" />
     <Compile Include="Helpers\JsonConverter.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />

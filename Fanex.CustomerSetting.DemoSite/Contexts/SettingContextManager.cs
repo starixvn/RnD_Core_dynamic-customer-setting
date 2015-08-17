@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Web.Contexts
+﻿namespace Fanex.CustomerSetting.DemoSite.Contexts
 {
     using System;
     using Fanex.Common.Helper;

@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.DemoSite.Contexts;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Web.Contexts;
 
     public class HomeController : Controller
     {

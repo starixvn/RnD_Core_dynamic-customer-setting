@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Web.Controllers
+﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System;
     using System.Runtime.Caching;
@@ -6,7 +6,8 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client.Requests;
     using Fanex.CustomerSetting.Client.Services;
-    using Fanex.CustomerSetting.Web.Contexts;
+    using Fanex.CustomerSetting.DemoSite.Contexts;
+    using Fanex.CustomerSetting.Web;
     using Fanex.CustomerSetting.Web.ViewModels;
 
     public class ViewCustomerSettingController : Controller
