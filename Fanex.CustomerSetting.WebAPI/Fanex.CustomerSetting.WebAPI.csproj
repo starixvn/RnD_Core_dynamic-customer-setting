@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\WEBAPI.pubxml" />
     <None Include="Web.AppSettings.config" />
     <None Include="Web.ConnectionStrings.config" />
     <None Include="Web.Debug.config">
