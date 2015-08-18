@@ -34,7 +34,7 @@
                 return null;
             }
 
-            JObject obj = JObject.Load(reader);
+            JObject obj = CreateJObject(reader);
             T target = Create(objectType, obj);
             JsonReader jsonReader = obj.CreateReader();
             jsonReader.FloatParseHandling = reader.FloatParseHandling;
@@ -48,7 +48,12 @@
             serializer.Serialize(writer, value);
         }
 
-        private void ValidateInputParams(JsonReader reader, Type type, JsonSerializer serializer)
+        protected virtual JObject CreateJObject(JsonReader reader)
+        {
+            return JObject.Load(reader);
+        }
+
+        protected void ValidateInputParams(JsonReader reader, Type type, JsonSerializer serializer)
         {
             if (reader == null)
             {

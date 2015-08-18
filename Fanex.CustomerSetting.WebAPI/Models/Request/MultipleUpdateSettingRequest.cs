@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.WebAPI.Models.Request
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Fanex.Common;
     using Fanex.CustomerSetting.Models.Requests;
@@ -16,7 +15,7 @@
         {
             UpdateCustomerSettingCommand updateSingleCommand = GetUpdateCustomerSettingCommand();
 
-            if(string.IsNullOrWhiteSpace(CustomerIds))
+            if (string.IsNullOrWhiteSpace(CustomerIds))
             {
                 throw new ArgumentNullException("CustomerIds", "CustomerIds cannot be null or empty");
             }

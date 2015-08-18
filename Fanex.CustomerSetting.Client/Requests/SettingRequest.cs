@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client.Requests
 {
     using System.ComponentModel.DataAnnotations;
+    using Fanex.CustomerSetting.Client.Configurations;
 
     public abstract class SettingRequest
     {
@@ -24,5 +25,13 @@
         public string Language { get; set; }
 
         public string ClientIP { get; set; }
+
+        public byte System
+        {
+            get
+            {
+                return CustomerSettingConfiguration.Settings.System;
+            }
+        }
     }
 }

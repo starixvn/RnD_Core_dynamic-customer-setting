@@ -35,7 +35,7 @@
             var updateRequest = new UpdateSettingRequest
             {
                 UplineLevel = queryRequest.UplineLevel,
-                JsonSetting = customerSetting.Content,
+                Setting = customerSetting.Content,
 
                 ActorId = queryRequest.ActorId,
                 ActorLevel = queryRequest.ActorLevel,
@@ -81,7 +81,7 @@
                 CustomerIds = customerIds,
                 CustomerNames = customerNames,
                 UplineLevel = queryRequest.UplineLevel,
-                JsonSetting = customerSetting.Content,
+                Setting = customerSetting.Content,
 
                 ActorId = queryRequest.ActorId,
                 ActorLevel = queryRequest.ActorLevel,

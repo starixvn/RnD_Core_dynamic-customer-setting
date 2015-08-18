@@ -12,9 +12,7 @@
         {
             return new UpdateCustomerSettingCommand(
                 setting: this.Setting,
-                uplineLevel: (this.UplineLevel == null)
-                ? null
-                : Enumeration.FromValue<Level>(this.UplineLevel.Value));
+                uplineLevel: this.UplineLevel == null ? null : Enumeration.FromValue<Level>(this.UplineLevel.Value));
         }
     }
 }

@@ -148,6 +148,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />
+    <Compile Include="Helpers\SettingConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
