@@ -233,6 +233,9 @@
     <Content Include="karma.conf.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Assets\NodeModules\embeded-template.ts" />
+    <TypeScriptCompile Include="Assets\NodeModules\js-string-escape.d.ts" />
+    <TypeScriptCompile Include="Assets\NodeModules\minimize.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\DefaultSettingBlock\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.ts" />

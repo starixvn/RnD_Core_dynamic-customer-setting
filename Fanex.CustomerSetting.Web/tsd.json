@@ -6,31 +6,49 @@
     "bundle": "./Assets/Typings/tsd.d.ts",
     "installed": {
         "jquery/jquery.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-animate.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-cookies.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-route.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-sanitize.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-mocks.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "angularjs/angular-resource.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         },
         "oclazyload/oclazyload.d.ts": {
-            "commit": "38fb591c6eba840e0b53d1110302b8e4fb04651c"
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "node/node.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "through2/through2.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "htmlparser2/htmlparser2.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "gulp-util/gulp-util.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "vinyl/vinyl.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
+        },
+        "chalk/chalk.d.ts": {
+            "commit": "832c51db815c766fa42a2e995a7b3136ec6d15c2"
         }
     }
 }
