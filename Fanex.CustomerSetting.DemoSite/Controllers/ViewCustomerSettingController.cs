@@ -50,7 +50,7 @@
 
             var customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
 
-            return new JsonNetResult(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
+            return Json(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
         }
 
         private string GetTemplate()

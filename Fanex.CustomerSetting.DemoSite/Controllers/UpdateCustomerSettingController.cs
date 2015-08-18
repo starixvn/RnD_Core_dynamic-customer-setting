@@ -28,7 +28,7 @@
 
             var updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
 
-            return new JsonNetResult(updateResult.Content);
+            return Json(updateResult.Content);
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@
 
             var updateResult = _customerSettingService.MultipleUpdateCustomerSetting(multipleUpdateSetting);
 
-            return new JsonNetResult(updateResult.Content);
+            return Json(updateResult.Content);
         }
 
         private static void SetActorInformation(UpdateSettingRequest updateSetting)
