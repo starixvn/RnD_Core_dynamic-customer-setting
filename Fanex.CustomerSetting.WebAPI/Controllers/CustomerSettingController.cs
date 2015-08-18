@@ -5,9 +5,11 @@
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.WebAPI.Filters;
     using Fanex.CustomerSetting.WebAPI.Helpers;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
 
+    [SetLanguage]
     public class CustomerSettingController : ApiController
     {
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)

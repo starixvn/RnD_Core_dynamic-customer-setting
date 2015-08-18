@@ -7,7 +7,7 @@
 
     public class CustomerSettingService : ICustomerSettingService
     {
-        private static readonly RestClient Client =
+        private static readonly IRestClient Client =
             new RestClient(CustomerSettingConfiguration.Settings.ServiceUri);
 
         public IRestResponse QueryCustomerSetting(QuerySettingRequest query)
