@@ -88,7 +88,7 @@ module CustomerSetting {
                         if (this.parametersService.isMultipleUpdates) {
                             commandJson =
                             {
-                                jsonSetting: jsonSetting,
+                                setting: jsonSetting,
                                 uplineLevel: uplineLevel,
                                 customerIds: this.parametersService.customerIds,
                                 customerNames: this.parametersService.customerNames
@@ -97,7 +97,7 @@ module CustomerSetting {
                         else {
                             commandJson =
                             {
-                                jsonSetting: jsonSetting,
+                                setting: jsonSetting,
                                 uplineLevel: uplineLevel
                             };
                         }
