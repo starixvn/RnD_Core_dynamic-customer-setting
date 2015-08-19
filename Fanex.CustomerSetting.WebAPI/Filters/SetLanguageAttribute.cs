@@ -21,7 +21,8 @@
             {
                 var request = actionContext.ActionArguments[ActionArgumentName] as SettingRequest;
 
-                if (request != null)
+                if (request != null
+                    && !string.IsNullOrWhiteSpace(request.Language))
                 {
                     currentLanguage = request.Language;
                 }

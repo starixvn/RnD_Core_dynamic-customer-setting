@@ -9,7 +9,7 @@
     using Fanex.CustomerSetting.WebAPI.Helpers;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
 
-    [SetLanguage]
+    [Authorize, SetLanguage]
     public class CustomerSettingController : ApiController
     {
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
