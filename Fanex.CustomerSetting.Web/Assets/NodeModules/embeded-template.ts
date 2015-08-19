@@ -4,6 +4,8 @@
 /// <reference path="js-string-escape.d.ts" />
 /// <reference path="minimize.d.ts" />
 
+"use strict";
+
 import fs = require("fs");
 import gulpUtil = require("gulp-util");
 import path = require("path");
