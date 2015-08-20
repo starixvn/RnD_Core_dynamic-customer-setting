@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/module-registrater.ts" />
 /// <reference path="models.ts" />
 
@@ -19,7 +19,7 @@ module CustomerSetting {
         public static $inject: string[] = ["adjustMemberPtModalService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "adjust-member-pt-modal.html";
+        public templateUrl: string = "adjust-member-pt-modal.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: IAdjustMemberPtModalScope) => {
             this.adjustMemberPtModalService.setup(scope);

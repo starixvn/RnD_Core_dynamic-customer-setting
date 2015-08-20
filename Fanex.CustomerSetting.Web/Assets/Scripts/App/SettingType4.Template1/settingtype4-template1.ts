@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
 /// <reference path="../core/module-registrater.ts" />
@@ -153,24 +153,20 @@ module CustomerSetting {
     }
 
     class SettingType4Template1Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["appConfigService", "productStatusResourceService"];
+        public static $inject: string[] = ["productStatusResourceService"];
 
-        public templateUrl: Function = () => {
-            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype4.template1/settingtype4-template1.htm");
-        };
+        public templateUrl: string = "settingtype4-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp4-template1-value.html";
             scope.settingTypeName = this.productStatusResourceService.getLabel("ProductStatus");
         };
 
-        private appConfigService: AppConfigService;
         private productStatusResourceService: ProductStatusResourceService;
 
-        constructor(appConfigService: AppConfigService, productStatusResourceService: ProductStatusResourceService) {
+        constructor(productStatusResourceService: ProductStatusResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype4Template1Item(settingItem, backup));
 
-            this.appConfigService = appConfigService;
             this.productStatusResourceService = productStatusResourceService;
         }
     }

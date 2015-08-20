@@ -6,28 +6,28 @@
     "bundle": "./Scripts/Typings/tsd.d.ts",
     "installed": {
         "jquery/jquery.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-animate.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-cookies.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-route.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-sanitize.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-mocks.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         },
         "angularjs/angular-resource.d.ts": {
-            "commit": "efa0c1196d7280640e624ac1e7fa604502e7bd63"
+            "commit": "bb45306d0fd8ce0852a8d24c023fd787f4151e65"
         }
     }
 }

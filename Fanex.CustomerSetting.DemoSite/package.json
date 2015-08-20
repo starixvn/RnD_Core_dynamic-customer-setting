@@ -1,26 +1,19 @@
-{
-    "name": "fanex-customer-setting-demo-site",
-    "description": "Front-end code of customer setting module",
-    "author": "jason.ly",
+﻿{
+    "name": "customer-setting-demo-site",
     "version": "0.0.1",
-    "license": "Nexcel Solution Ltd.",
+    "description": "Install Node.js packages to run the demostration site",
+    "author": "jason.ly",
+    "license": "Nexcel Solution",
+    "scripts": {
+        "publish": "publish"
+    },
     "devDependencies": {
         "gulp": "^3.9.0",
-        "gulp-angular-templatecache": "^1.7.0",
         "gulp-bower": "^0.0.10",
-        "gulp-clean": "^0.3.1",
-        "gulp-concat": "^2.6.0",
-        "gulp-if": "^1.2.5",
-        "gulp-sass": "^2.0.4",
-        "gulp-sourcemaps": "^1.5.2",
         "gulp-tsd": "^0.0.4",
-        "gulp-tslint": "^3.1.2",
-        "gulp-typescript": "^2.7.8",
-        "run-sequence": "^1.1.1",
-        "tslint": "^2.4.2",
+        "gulp-tslint": "^3.2.0",
+        "gulp-typescript": "^2.8.1",
+        "rimraf": "^2.4.2",
         "typescript": "^1.5.3"
-    },
-    "scripts": {
-        "prepublish": "gulp prebuild"
     }
 }

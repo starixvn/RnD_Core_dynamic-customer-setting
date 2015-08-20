@@ -1,5 +1,5 @@
-﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/oclazyload/oclazyload.d.ts" />
+﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../typings/oclazyload/oclazyload.d.ts" />
 /// <reference path="../common.ts" />
 /// <reference path="../helper-services.ts" />
 /// <reference path="../helpers.ts" />

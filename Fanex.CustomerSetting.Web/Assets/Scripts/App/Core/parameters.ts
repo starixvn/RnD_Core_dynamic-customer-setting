@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="common.ts" />
 /// <reference path="helpers.ts" />
 /// <reference path="models.ts" />

@@ -359,8 +359,11 @@ button {
   width: 50%;
   float: left;
 }
-.customer-setting .block .setting-group:hover div {
+.customer-setting .block .setting-group:hover {
   background-color: #e2f3d1;
+}
+.customer-setting .block .setting-group:hover .value-col {
+  background-color: transparent;
 }
 .customer-setting .block .setting-group:hover input,
 .customer-setting .block .setting-group:hover select {

@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
 /// <reference path="../core/module-registrater.ts" />
@@ -70,24 +70,20 @@ module CustomerSetting {
     }
 
     class SettingType3Template1Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["appConfigService", "commissionResourceService"];
+        public static $inject: string[] = ["commissionResourceService"];
 
-        public templateUrl: Function = () => {
-            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype3.template1/settingtype3-template1.htm");
-        };
+        public templateUrl: string = "settingtype3-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.valueTemplateUrl = "settingtyp3-template1-value.html";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         };
 
-        private appConfigService: AppConfigService;
         private commissionResourceService: CommissionResourceService;
 
-        constructor(appConfigService: AppConfigService, commissionResourceService: CommissionResourceService) {
+        constructor(commissionResourceService: CommissionResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype3Template1Item(settingItem, backup));
 
-            this.appConfigService = appConfigService;
             this.commissionResourceService = commissionResourceService;
         }
     }
@@ -110,7 +106,7 @@ module CustomerSetting {
             };
         }
 
-        public templateUrl: string = "settingtyp3-template1-drop.html";
+        public templateUrl: string = "settingtyp3-template1-drop.htm";
 
         public controller: any = ["$scope", ($scope: ISettingType3Template1ItemScope) => {
             $scope.$watch("settingItem", () => {

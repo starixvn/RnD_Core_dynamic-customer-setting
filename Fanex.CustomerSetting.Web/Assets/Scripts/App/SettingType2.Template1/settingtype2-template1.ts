@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/helpers.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
@@ -173,11 +173,9 @@ module CustomerSetting {
     }
 
     class SettingType2Template1Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["appConfigService", "betSettingResourceService"];
+        public static $inject: string[] = ["betSettingResourceService"];
 
-        public templateUrl: Function = () => {
-            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype2.template1/settingtype2-template1.htm");
-        };
+        public templateUrl: string = "settingtype2-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp2-template1-header.html";
@@ -185,13 +183,11 @@ module CustomerSetting {
             scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
         };
 
-        private appConfigService: AppConfigService;
         private betSettingResourceService: BetSettingResourceService;
 
-        constructor(appConfigService: AppConfigService, betSettingResourceService: BetSettingResourceService) {
+        constructor(betSettingResourceService: BetSettingResourceService) {
             super((settingItem: any, backup?: boolean) => new Settingtype2Template1Item(settingItem, backup));
 
-            this.appConfigService = appConfigService;
             this.betSettingResourceService = betSettingResourceService;
         }
     }
@@ -210,7 +206,7 @@ module CustomerSetting {
         public static $inject: string[] = ["$compile", "$filter", "betSettingResourceService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "bet-setting-input.html";
+        public templateUrl: string = "bet-setting-input.htm";
 
         public get scope(): any {
             return {

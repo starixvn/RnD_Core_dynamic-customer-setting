@@ -202,29 +202,4 @@
             </div>
         </div>
     </script>
-    <script type="text/ng-template" id="settingtype1-template1-select.html">
-        <div>
-            <div class="select-wrapper">
-                <select data-ng-options="item.key as item.value / divisor for item in range"></select>
-            </div>
-        </div>
-    </script>
-    <script type="text/ng-template" id="adjust-member-pt-modal.html">
-        <div class="modal-overlay" data-ng-show="isShown">
-            <div class="modal">
-                <div class="modal-header">
-                    <div class="modal-title">{{'UpdateMemberPtInfo' | positionTakingLabel}}</div>
-                </div>
-                <div class="modal-content">
-                    <span data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></span>
-                    <select data-ng-model="selectedValue"
-                            data-ng-options="item.key as item.value / divisor for item in range"></select>
-                </div>
-                <div class="modal-footer">
-                    <button data-ng-click="ok()">{{'Yes' | label}}</button>
-                    <button data-ng-click="cancel()">{{'No' | label}}</button>
-                </div>
-            </div>
-        </div>
-    </script>
 </div>

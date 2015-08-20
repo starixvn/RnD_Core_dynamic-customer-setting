@@ -223,6 +223,7 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="abc.js" />
     <Content Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm\demo-form.js" />
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
@@ -266,12 +267,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />
-    <Content Include="package.json" />
+    <Content Include="abc.json" />
     <Content Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="package.json" />
     <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />

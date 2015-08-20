@@ -132,18 +132,23 @@
     </None>
     <None Include="Assets\Styles\customer-setting.scss" />
     <None Include="bower.json" />
+    <None Include="Gulp\gulp-tsd.json" />
     <None Include="package.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="tsd.json" />
-    <None Include="tslint.json" />
+    <None Include="Gulp\tsd.json" />
+    <None Include="Gulp\tslint.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj">
       <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
       <Name>Fanex.CustomerSetting.Client</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\App.IE8\" />
+    <Folder Include="Assets\Scripts\Specs.IE8\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
@@ -163,6 +168,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\adjust-member-pt-modal.htm" />
     <Content Include="Assets\Scripts\App\SettingType1.Template1\position-taking-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,7 +178,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>position-taking-resources.js</LastGenOutput>
     </Content>
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1-select.htm" />
     <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\App\SettingType2.Template1\bet-setting-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -192,6 +200,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>commission-resources.js</LastGenOutput>
     </Content>
+    <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtyp3-template1-drop.htm" />
     <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtype3-template1.htm" />
     <Content Include="Assets\Scripts\App\SettingType4.Template1\product-status-resources.js">
       <AutoGen>True</AutoGen>
@@ -203,6 +212,9 @@
       <LastGenOutput>product-status-resources.js</LastGenOutput>
     </Content>
     <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Scripts\NodeModules\embeded-template.js">
+      <DependentUpon>embeded-template.ts</DependentUpon>
+    </Content>
     <Content Include="Assets\Scripts\SettingMatrixApp\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -230,12 +242,18 @@
     <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
-    <Content Include="karma.conf.js" />
+    <Content Include="Gulp\libraries.js" />
+    <Content Include="Gulp\node-module.js" />
+    <Content Include="Gulp\scripts.js" />
+    <Content Include="Gulp\styles.js" />
+    <Content Include="Gulp\tsd.js" />
+    <Content Include="Gulp\tslint.js" />
+    <Content Include="Gulp\watch.js" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Assets\NodeModules\embeded-template.ts" />
-    <TypeScriptCompile Include="Assets\NodeModules\js-string-escape.d.ts" />
-    <TypeScriptCompile Include="Assets\NodeModules\minimize.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\DefaultSettingBlock\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.ts" />

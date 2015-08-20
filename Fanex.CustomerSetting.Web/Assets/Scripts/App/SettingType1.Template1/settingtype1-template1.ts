@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/models.ts" />
@@ -11,11 +11,9 @@ module CustomerSetting {
     "use strict";
 
     class SettingType1Template1Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["appConfigService", "positionTakingResourceService"];
+        public static $inject: string[] = ["positionTakingResourceService"];
 
-        public templateUrl: Function = () => {
-            return this.appConfigService.resolveRootUrl("app/customerSetting/settingtype1.template1/settingtype1-template1.htm");
-        };
+        public templateUrl: string = "settingtype1-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
             scope.headerTemplateUrl = "settingtyp1-template1-header.html";
@@ -23,13 +21,11 @@ module CustomerSetting {
             scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
         };
 
-        private appConfigService: AppConfigService;
         private positionTakingResourceService: PositionTakingResourceService;
 
-        constructor(appConfigService: AppConfigService, positionTakingResourceService: PositionTakingResourceService) {
+        constructor(positionTakingResourceService: PositionTakingResourceService) {
             super(Settingtype1Template1Item.factory);
 
-            this.appConfigService = appConfigService;
             this.positionTakingResourceService = positionTakingResourceService;
         }
     }
@@ -59,7 +55,7 @@ module CustomerSetting {
             };
         }
 
-        public templateUrl: string = "settingtype1-template1-select.html";
+        public templateUrl: string = "settingtype1-template1-select.htm";
 
         public controller: any = [
             "$scope",
