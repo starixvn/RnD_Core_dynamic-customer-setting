@@ -142,6 +142,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
+    <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Filters\SetLanguageAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,6 +154,7 @@
     <Compile Include="Helpers\SettingConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
+    <Compile Include="Models\Request\QuerySettingMatrixRequest.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />
     <Compile Include="Models\Request\MultipleUpdateSettingRequest.cs" />
@@ -162,8 +165,8 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\WEBAPI.pubxml" />
-    <None Include="Web.AppSettings.config" />
-    <None Include="Web.ConnectionStrings.config" />
+    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.ConnectionStrings.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -173,6 +176,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Matrix\Fanex.CustomerSetting.Matrix.csproj">
+      <Project>{3e059fa6-3822-475f-9694-f3dbb15acf98}</Project>
+      <Name>Fanex.CustomerSetting.Matrix</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>

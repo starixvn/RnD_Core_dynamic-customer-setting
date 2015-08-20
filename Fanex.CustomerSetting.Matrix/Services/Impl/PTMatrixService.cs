@@ -14,7 +14,7 @@
     using Fanex.NAP.Framework.Data;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
-    public class PTMatrixService : IPTMatrixService
+    internal class PTMatrixService : IPTMatrixService
     {
         private const string DefaultLanguage = "en-US";
         private const byte SettingTypeId = 1;
@@ -34,9 +34,6 @@
 
         public PTMatrix GetPTMatrix(byte productId, string customerName)
         {
-            Check.Argument.IsNotNegativeOrZero(productId, "productId");
-            Check.Argument.IsNotEmpty(customerName, "customerName");
-
             var settingType = GetSettingType(productId);
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(customerName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(customerName, productId);

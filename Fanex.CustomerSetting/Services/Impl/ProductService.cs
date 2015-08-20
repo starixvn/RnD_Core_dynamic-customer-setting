@@ -10,8 +10,9 @@
 
     public class ProductService : IProductService
     {
-        private const int SettingTypeCacheDuration = 1; //// 1 hour
+        private const int CacheDuration = 1; //// 1 hour
         private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}";
+        private const string AllProductNamesCacheKey = "Fanex.CustomerSetting.AllProductNamesCacheKey";
 
         private readonly IDynamicRepository _productRepository;
         private readonly ICachingService _cachingService;
@@ -36,7 +37,7 @@
                            ProductId = productId
                        });
                    },
-                   new TimeSpan(SettingTypeCacheDuration, 0, 0));
+                   new TimeSpan(CacheDuration, 0, 0));
 
             return settingTypes;
         }
@@ -51,6 +52,19 @@
             }
 
             return productSettingTypes.FirstOrDefault(settingType => settingType.Id == settingTypeId);
+        }
+
+        public IEnumerable<ProductName> GetAllProductNames()
+        {
+            var productNames = _cachingService.GetOrAdd(
+                  AllProductNamesCacheKey,
+                  () =>
+                  {
+                      return _productRepository.Fetch<ProductName>(new ProductNamesQueryCriteria());
+                  },
+                  new TimeSpan(CacheDuration, 0, 0));
+
+            return productNames;
         }
     }
 }

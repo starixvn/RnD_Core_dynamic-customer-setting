@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.NAP.Framework.Data;
 
-    public class CustomerService : ICustomerService
+    internal class CustomerService : ICustomerService
     {
         private readonly IDynamicRepository _dynamicRepository;
 
@@ -55,7 +55,7 @@
                 Id = customerLineDto.SuperId.GetValueOrDefault(0),
                 Name = customerLineDto.SuperName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = Level.Super
+                Level = Level.Super
             };
 
             return super;
@@ -68,7 +68,7 @@
                 Id = customerLineDto.MasterId.GetValueOrDefault(0),
                 Name = customerLineDto.MasterName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = Level.Master
+                Level = Level.Master
             };
 
             return master;
@@ -81,7 +81,7 @@
                 Id = customerLineDto.AgentId.GetValueOrDefault(0),
                 Name = customerLineDto.AgentName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = Level.Agent
+                Level = Level.Agent
             };
 
             return agent;
@@ -94,7 +94,7 @@
                 Id = customerLineDto.CustId.GetValueOrDefault(0),
                 Name = customerLineDto.UserName,
                 Currency = customerLineDto.Currency.GetValueOrDefault(0),
-                CustomerLevel = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue)
+                Level = Enumeration.FromValue<Level>((byte)customerLineDto.LevelValue)
             };
 
             return customer;

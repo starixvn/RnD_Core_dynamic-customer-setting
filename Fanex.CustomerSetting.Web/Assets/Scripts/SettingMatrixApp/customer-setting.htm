@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="customerSetting">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/customerSetting/styles/customer-setting.min.css?v={{version}}" />
+</head>
+<body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
+    <setting-result data-result="ctrl.requestMsgResult"></setting-result>
+    <div class="customer-setting" data-ng-show="ctrl.setting">
+        <customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></customer-info>
+        <setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
+        <button class="button" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
+    </div>
+    <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
+    <script type="text/javascript">
+        var appConfig = {{appConfig}};
+        var params = {{params}};
+    </script>
+    <script type="text/javascript" src="{{rootUrl}}scripts/libraries/angularjs/angular.min.js?v={{version}}"></script>
+    <script type="text/javascript" src="{{rootUrl}}app/customersetting/core{{min}}.js?v={{version}}"></script>
+    <script type="text/javascript" src="{{rootUrl}}app/customersetting/resource/resource{{min}}.js?v={{version}}"></script>
+</body>
+</html>

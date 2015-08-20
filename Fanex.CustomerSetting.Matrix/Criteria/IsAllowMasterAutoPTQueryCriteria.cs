@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class IsAllowMasterAutoPTQueryCriteria : CriteriaBase
+    internal class IsAllowMasterAutoPTQueryCriteria : CriteriaBase
     {
         public string UserName { get; set; }
 

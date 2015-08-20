@@ -7,15 +7,6 @@
 
     public class CustomerSettingService : ICustomerSettingService
     {
-        private static readonly IRestClient Client = new RestClient(CustomerSettingConfiguration.Settings.ServiceUri);
-        private static readonly IAuthenticator Authenticator = new NtlmAuthenticator();
-        private static readonly object AuthenticatorCreatingLockObject = new object();
-
-        public CustomerSettingService()
-        {
-            SetAuthenticator();
-        }
-
         public IRestResponse QueryCustomerSetting(QuerySettingRequest query)
         {
             if (query == null)
@@ -27,7 +18,7 @@
 
             request.AddObject(query);
 
-            return Client.Execute(request);
+            return ApiClient.Client.Execute(request);
         }
 
         public IRestResponse UpdateCustomerSetting(UpdateSettingRequest update)
@@ -41,7 +32,7 @@
 
             request.AddJsonBody(update);
 
-            return Client.Execute(request);
+            return ApiClient.Client.Execute(request);
         }
 
         public IRestResponse MultipleUpdateCustomerSetting(MultipleUpdateSettingRequest multipleUpdate)
@@ -55,21 +46,7 @@
 
             request.AddJsonBody(multipleUpdate);
 
-            return Client.Execute(request);
-        }
-
-        private void SetAuthenticator()
-        {
-            if (Client.Authenticator == null)
-            {
-                lock (AuthenticatorCreatingLockObject)
-                {
-                    if (Client.Authenticator == null)
-                    {
-                        Client.Authenticator = Authenticator;
-                    }
-                }
-            }
+            return ApiClient.Client.Execute(request);
         }
     }
 }

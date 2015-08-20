@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    public class PTItemMatrixDto
+    internal class PTItemMatrixDto
     {
         public short SportType { get; set; }
 

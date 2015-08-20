@@ -12,7 +12,7 @@
         }
 
         [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
-        public PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
+        internal PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
         {
             if (pTMatrixDto == null)
             {

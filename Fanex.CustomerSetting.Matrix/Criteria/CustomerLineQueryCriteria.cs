@@ -6,7 +6,7 @@
     using System.Text;
     using Fanex.NAP.Framework.Data;
 
-    public class CustomerLineQueryCriteria : CriteriaBase
+    internal class CustomerLineQueryCriteria : CriteriaBase
     {
         public string UserName { get; set; }
 

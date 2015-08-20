@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class PTMatrixQueryCriteria : CriteriaBase
+    internal class PTMatrixQueryCriteria : CriteriaBase
     {
         public byte ProductId { get; set; }
 

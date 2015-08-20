@@ -87,6 +87,8 @@
     <Compile Include="Dtos\PTItemMatrixDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CommissionMatrix.cs" />
+    <Compile Include="Models\CustomerSettingMatrix.cs" />
+    <Compile Include="Models\Enumerations\SettingType.cs" />
     <Compile Include="Models\SettingItemMatrix.cs" />
     <Compile Include="Models\CommissionItemMatrix.cs" />
     <Compile Include="Models\CommissionItemMatrixRow.cs" />
@@ -98,8 +100,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ICommissionMatrixService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
+    <Compile Include="Services\ICustomerSettingMatrixService.cs" />
     <Compile Include="Services\Impl\CommissionMatrixService.cs" />
     <Compile Include="Services\Impl\CustomerService.cs" />
+    <Compile Include="Services\Impl\CustomerSettingMatrixService.cs" />
     <Compile Include="Services\Impl\PTMatrixService.cs" />
     <Compile Include="Services\IPTMatrixService.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.NAP.Framework.Data;
 
-    public class CommissionMatrixService : ICommissionMatrixService
+    internal class CommissionMatrixService : ICommissionMatrixService
     {
         private const string DefaultLanguage = "en-US";
         private const byte SettingTypeId = 3;
@@ -32,9 +32,6 @@
 
         public CommissionMatrix GetCommissionMatrix(byte productId, string customerName)
         {
-            Check.Argument.IsNotNegativeOrZero(productId, "productId");
-            Check.Argument.IsNotEmpty(customerName, "customerName");
-
             var settingType = GetSettingType(productId);
             var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName);
             var commissionItemMatrices = GetCommissionItemMatricesFromDto(commissionItemMaxtrixDtos);

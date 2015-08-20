@@ -287,8 +287,8 @@
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
-    <None Include="Web.AppSettings.config" />
-    <None Include="Web.ConnectionStrings.config" />
+    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.ConnectionStrings.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    public class CommissionItemMatrixDto
+    internal class CommissionItemMatrixDto
     {
         public byte LevelValue { get; set; }
 

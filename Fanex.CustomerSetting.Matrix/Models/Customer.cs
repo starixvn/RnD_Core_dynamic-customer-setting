@@ -9,6 +9,6 @@
 
         public byte Currency { get; set; }
 
-        public Level CustomerLevel { get; set; }
+        public Level Level { get; set; }
     }
 }

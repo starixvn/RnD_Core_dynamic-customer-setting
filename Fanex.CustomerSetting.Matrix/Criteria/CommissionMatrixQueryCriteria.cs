@@ -3,7 +3,7 @@
     using System;
     using Fanex.NAP.Framework.Data;
 
-    public class CommissionMatrixQueryCriteria : CriteriaBase
+    internal class CommissionMatrixQueryCriteria : CriteriaBase
     {
         public byte ProductId { get; set; }
 

@@ -10,7 +10,7 @@
         {
         }
 
-        public CommissionItemMatrixRow(CommissionItemMatrixDto commissionItemMatrixDto)
+        internal CommissionItemMatrixRow(CommissionItemMatrixDto commissionItemMatrixDto)
         {
             if (commissionItemMatrixDto == null)
             {
