@@ -1,6 +1,4 @@
-﻿
-
-module CustomerSettingMatrix {
+﻿module CustomerSettingMatrix {
     export enum Level {
         company = 5,
         super = 4,
@@ -9,12 +7,24 @@ module CustomerSettingMatrix {
         member = 1
     }
 
+    export class ProductName {
+        public productId: number;
+        public name: string;
+
+        constructor(product: any) {
+            this.productId = product.productId;
+            this.name = product.name;
+        }
+    }
+
     export class Customer {
+        public id: number;
         public name: string;
         public currency: number;
         public level: Level;
 
-        constructor(customer: any){
+        constructor(customer: any) {
+            this.id = customer.id;
             this.name = customer.name;
             this.currency = customer.currency;
             this.level = customer.level.value;
@@ -40,6 +50,16 @@ module CustomerSettingMatrix {
 
         constructor(settingTypeMatrix: any) {
             this.settingLevel = settingTypeMatrix.settingLevel;
+        }
+    }
+
+    export class SettingType {
+        public id: number;
+        public name: string;
+
+        constructor(settingTypeId: number, settingTypeName: string) {
+            this.id = settingTypeId;
+            this.name = settingTypeName;
         }
     }
 

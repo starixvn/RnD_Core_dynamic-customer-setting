@@ -4,7 +4,9 @@
     var gulp = require("gulp");
     var paths = {
         source: "../Fanex.CustomerSetting.Web/Assets/Publish/App/CustomerSetting/**",
+        matrixSource: "../Fanex.CustomerSetting.Web/Assets/Publish/App/CustomerSettingMatrix/**",
         app: "./App/CustomerSetting",
+        matrixApp: "./App/CustomerSettingMatrix",
         bower: "./bower_components/",
         content: "./Content/",
         compass: "./Content/Compass/",
@@ -14,6 +16,9 @@
 
     gulp.task("clean", function () {
         var clean = require("gulp-clean");
+
+        gulp.src(paths.matrixApp + "**", { read: false })
+                   .pipe(clean())
 
         return gulp.src(paths.app + "**", { read: false })
                    .pipe(clean());
@@ -48,6 +53,11 @@
     gulp.task("copy-customer-setting-asset", function () {
         return gulp.src(paths.source)
                    .pipe(gulp.dest(paths.app));
+    });
+
+    gulp.task("copy-customer-setting-matrix-asset", function () {
+        return gulp.src(paths.matrixSource)
+                   .pipe(gulp.dest(paths.matrixApp));
     });
 
     // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
@@ -90,13 +100,14 @@
 
         runSequence(
             ["clean", "install-tsd", "install-bower"],
-            ["install-compass", "install-jslibs", "copy-customer-setting-asset"],
+            ["install-compass", "install-jslibs", "copy-customer-setting-asset", "copy-customer-setting-matrix-asset"],
             ["compile-scripts"],
             done);
     });
 
-    gulp.task("watch", ["compile-scripts", "copy-customer-setting-asset"], function () {
+    gulp.task("watch", ["compile-scripts", "copy-customer-setting-asset", "copy-customer-setting-matrix-asset"], function () {
         gulp.watch(paths.source, ["copy-customer-setting-asset"]);
+        gulp.watch(paths.matrixSource, ["copy-customer-setting-matrix-asset"]);
         gulp.watch(paths.demoForm + "*.{ts,htm}", ["compile-scripts"]);
     });
 

@@ -27,23 +27,29 @@
         {
         }
 
-        [HttpPost]
-        public ContentResult Index(SettingFormQuery query)
+        public ContentResult Index()
         {
             string htmlContent = GetTemplate();
-
-            htmlContent = htmlContent.Replace("{{params}}", JsonConverter.ToJson(query));
 
             return Content(htmlContent, "text/HTML");
         }
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QuerySetting(QuerySettingMatrixRequest querySettingMatrix)
+        public JsonResult QuerySettingMatrix(QuerySettingMatrixRequest querySettingMatrix)
         {
             var customerSettingResponse = _customerSettingMatrixService.QueryCustomerSettingMatrix(querySettingMatrix);
 
             return Json(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgery]
+        public JsonResult QueryProductNames()
+        {
+            var productNamesReponse = _customerSettingMatrixService.QueryAllProductNames();
+
+            return Json(productNamesReponse.Content, JsonRequestBehavior.AllowGet);
         }
 
         private string GetTemplate()
@@ -63,7 +69,7 @@
                 htmlContent = htmlContent.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
                 htmlContent = htmlContent.Replace("{{appConfig}}", JsonConverter.ToJson(appConfig));
 
-                cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
+                //cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
             }
 
             return htmlContent;

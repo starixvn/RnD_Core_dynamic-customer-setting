@@ -10,6 +10,7 @@ module CustomerSettingMatrix {
         private rootUrl: string;
         private debug: boolean;
         private version: string;
+        private antiForgeryToken: string;
 
         private $window: ng.IWindowService;
 
@@ -24,6 +25,7 @@ module CustomerSettingMatrix {
                 this.rootUrl = appConfig.rootUrl;
                 this.debug = appConfig.isDebug;
                 this.version = appConfig.scriptVersion;
+                this.antiForgeryToken = appConfig.antiForgeryToken;
             }
         }
 
@@ -37,6 +39,10 @@ module CustomerSettingMatrix {
 
         public scriptVersion(): string {
             return this.version;
+        }
+
+        public requestVerificationToken(): string {
+            return this.antiForgeryToken;
         }
     }
 

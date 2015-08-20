@@ -176,10 +176,10 @@
       <LastGenOutput>product-status-resources.js</LastGenOutput>
     </Content>
     <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
-    <Content Include="Assets\Scripts\SettingMatrixApp\customer-setting.htm" />
-    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.html" />
-    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.html" />
-    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.html" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\customer-setting-matrix.htm" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.htm" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.htm" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.htm" />
     <Content Include="Assets\Styles\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
     </Content>
@@ -221,6 +221,7 @@
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\parameters.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\models.ts" />

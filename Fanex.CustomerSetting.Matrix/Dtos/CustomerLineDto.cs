@@ -2,7 +2,7 @@
 {
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    internal class CustomerLineDto
+    public class CustomerLineDto
     {
         public int? CustId { get; set; }
 

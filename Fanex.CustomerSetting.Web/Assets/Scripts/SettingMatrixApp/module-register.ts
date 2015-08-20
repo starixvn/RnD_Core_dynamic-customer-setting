@@ -4,7 +4,7 @@
 module CustomerSettingMatrix {
     "use strict";
 
-    var app: ng.IModule = angular.module("customerSettingMaxtrix");
+    var app: ng.IModule = angular.module("customerSettingMatrix", []);
 
     export class ModuleRegister {
         public static controller(name: string, target: Function) {
@@ -37,5 +37,11 @@ module CustomerSettingMatrix {
         public static value(name: string, target: Object) {
             app.value(name, target);
         }
+
+
     }
+
+    app.run(["$http", "appConfigService", ($http: ng.IHttpService, appConfigService: AppConfigService) => {
+        $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
+    }]);
 }

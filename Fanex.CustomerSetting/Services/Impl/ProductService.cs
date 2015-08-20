@@ -60,7 +60,7 @@
                   AllProductNamesCacheKey,
                   () =>
                   {
-                      return _productRepository.Fetch<ProductName>(new ProductNamesQueryCriteria());
+                      return _productRepository.Fetch<ProductName>(new ProductNamesQueryCriteria { LanguageKey = LanguageNameConverter.GetRefLanguageName() });
                   },
                   new TimeSpan(CacheDuration, 0, 0));
 

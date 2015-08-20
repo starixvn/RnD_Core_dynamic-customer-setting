@@ -20,7 +20,7 @@
                 throw new ArgumentNullException("query");
             }
 
-            var request = new RestRequest("/customersettingmaxtrix/", Method.GET);
+            var request = new RestRequest("/customersettingmatrix/", Method.GET);
 
             request.AddObject(query);
 

@@ -5,6 +5,7 @@
     var assetPaths = {
         bower: "./bower_components/",
         app: "./Assets/Scripts/App/",
+        settingMatrixApp: "./Assets/Scripts/SettingMatrixApp/",
         style: "./Assets/Styles/",
         image: "./Assets/Styles/Images/",
         compass: "./Assets/Styles/Compass/"
@@ -12,6 +13,7 @@
     var publishPaths = {
         root: "./Asset/Publish/",
         customerSetting: "./Assets/Publish/App/CustomerSetting/",
+        customerSettingMatrix: "./Assets/Publish/App/CustomerSettingMatrix/",
         image: "./Assets/Publish/App/CustomerSetting/Images/",
         library: "./Assets/Publish/Libraries/"
     };
@@ -94,6 +96,18 @@
         return gulp.src(assetPaths.app + "*.htm")
                    .pipe(minifyHTML({ empty: true }))
                    .pipe(gulp.dest(publishPaths.customerSetting));
+    });
+
+    gulp.task("publish-matrix-template", function () {
+        var minifyHTML = require("gulp-minify-html");
+
+        gulp.src(assetPaths.settingMatrixApp + "/**/*.htm")
+                   .pipe(minifyHTML({ empty: true }))
+                   .pipe(gulp.dest(publishPaths.customerSettingMatrix));
+
+        return gulp.src(assetPaths.settingMatrixApp + "*.htm")
+                   .pipe(minifyHTML({ empty: true }))
+                   .pipe(gulp.dest(publishPaths.customerSettingMatrix));
     });
 
     // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
@@ -196,7 +210,38 @@
         callback.call();
     });
 
+    gulp.task("publish-matrix-script", function () {
+        var concat = require("gulp-concat");
+        var gulpif = require("gulp-if");
+        var minifyHTML = require("gulp-minify-html");
+        var rename = require("gulp-rename");
+        var sourcemaps = require("gulp-sourcemaps");
+        var templateCache = require("gulp-angular-templatecache");
+        var ts = require("gulp-typescript");
+        var uglify = require("gulp-uglify");
+
+        gulp.src(assetPaths.settingMatrixApp + "**")
+            .pipe(gulpif(/[.]ts$/, ts({
+                typescript: require("typescript"),
+                target: "ES5",
+                noImplicitAny: false,
+                removeComments: true
+            })))
+            .pipe(gulpif(/[.]htm$/, minifyHTML({ empty: true })))
+            .pipe(gulpif(/[.]htm$/, templateCache({
+                module: "customerSettingMatrix"
+            })))
+            .pipe(concat("customer-setting-matrix.js"))
+            .pipe(sourcemaps.write("."))
+            .pipe(gulp.dest(publishPaths.customerSettingMatrix))
+            .pipe(uglify())
+            .pipe(rename({ suffix: ".min" }))
+            .pipe(gulp.dest(publishPaths.customerSettingMatrix));
+    });
+
     gulp.task("publish-script", ["publish-core-script", "publish-modules-script"]);
+
+    gulp.task("publish-matrix", ["publish-matrix-template", "publish-matrix-script"]);
 
     gulp.task("prebuild", function (done) {
         var runSequence = require("run-sequence");
@@ -205,12 +250,15 @@
             ["clean", "install-tsd", "install-bower"],
             "install-compass",
             ["publish-template", "publish-styles", "publish-script"],
+            "publish-matrix",
             done);
     });
 
-    gulp.task("watch", ["publish-script", "publish-template", "publish-styles"], function () {
+    gulp.task("watch", ["publish-script", "publish-template", "publish-styles", "publish-matrix"], function () {
         gulp.watch(assetPaths.app + "**/*.{ts,htm}", ["publish-script"]);
         gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
+        gulp.watch(assetPaths.settingMatrixApp + "**/*.{ts,htm}", ["publish-matrix"]);
+        gulp.watch(assetPaths.settingMatrixApp + "*.htm", ["publish-matrix"]);
         gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
     });
 

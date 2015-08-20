@@ -207,12 +207,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
+    <Compile Include="Controllers\ViewCustomerSettingMatrixController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.htm" />
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.js" />
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.min.js" />
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Matrix.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

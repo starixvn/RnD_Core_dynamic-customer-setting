@@ -8,54 +8,87 @@ module CustomerSettingMatrix {
 
     class CustomerSettingMaxtrixController {
         public static $inject: string[] = [
-            "$rootScope",
+            "$scope",
             "$http",
             "$timeout",
             "appConfigService"];
 
         public isUIblocked: boolean;
-        public customerNames: string;
-        public uplineLevel: Level;
 
-        private get queryPath(): string {
+        
+        public productName: ProductName;
+        public customerName: string;
+        public settingTypeId: number;
+
+        public productNames: Array<ProductName>;
+        public settingTypes: Array<SettingType>;
+
+        public customerLine: Array<Customer>;
+        
+
+        private get querySettingMatrixPath(): string {
             return "ViewCustomerSettingMatrix/QuerySettingMatrix?";
         }
 
-        private $rootScope: ng.IRootScopeService;
+        private get queryProductNamesPath(): string {
+            return "ViewCustomerSettingMatrix/QueryProductNames";
+        }
+
+        private $scope: ng.IScope;
         private $http: ng.IHttpService;
         private $timeout: ng.ITimeoutService;
         private appConfigService: AppConfigService;
 
+
         constructor(
-            $rootScope: ng.IRootScopeService,
+            $scope: ng.IScope,
             $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
             appConfigService: AppConfigService) {
-            this.$rootScope = $rootScope;
+
+            this.$scope = $scope;
             this.$http = $http;
             this.$timeout = $timeout;
             this.appConfigService = appConfigService;
-
-            this.querySettingMatrix();
+            this.settingTypes = [new SettingType(1, "PT Matrix"), new SettingType(3, "Commission Matrix")];
+            this.settingTypeId = this.settingTypes[0].id;
+            this.queryProductNames();
         }
 
-        private querySettingMatrix(): void {
-            var queryParams: any;
+        public queryProductNames(): void {
+            this.isUIblocked = true;
 
-            if (queryParams) {
-                this.isUIblocked = true;
+            this.$http
+                .post(this.appConfigService.resolveRootUrl(this.queryProductNamesPath), {})
+                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                var productNames = JSON.parse(response.data);
 
-                this.$http
-                    .post(this.appConfigService.resolveRootUrl(this.queryPath), queryParams.toJson())
-                ////.get(this.appConfigService.resolveRootUrl("app/sample-data-4.json"))
-                    .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                    var settingJsonObject = JSON.parse(response.data);
-                    
-                    })
-                    .finally(() => {
-                    this.isUIblocked = false;
-                });
-            }
+                this.productNames = productNames.map((productName: any) => new ProductName(productName));
+                this.productName = this.productNames[0];
+            })
+                .finally(() => {
+                this.isUIblocked = false;
+            });
+        }
+
+        public querySettingMatrix(): void {
+            var querySettingMatrix = new QuerySettingMatrix(
+                this.settingTypeId,
+                this.productName.productId,
+                this.customerName);
+
+            this.isUIblocked = true;
+
+            this.$http
+                .post(this.appConfigService.resolveRootUrl(this.querySettingMatrixPath), querySettingMatrix)
+                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                var customerSettingMatrix = JSON.parse(response.data);
+
+                this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
+            })
+                .finally(() => {
+                this.isUIblocked = false;
+            });
         }
     }
 
