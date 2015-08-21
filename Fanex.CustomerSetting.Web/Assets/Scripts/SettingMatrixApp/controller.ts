@@ -81,6 +81,7 @@ module CustomerSettingMatrix {
 
                 this.productNames = productNames.map((productName: any) => new ProductName(productName));
                 this.productName = this.productNames[3];
+                this.querySettingMatrix();
             })
                 .finally(() => {
                 this.isUIblocked = false;

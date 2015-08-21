@@ -12,7 +12,8 @@ module CustomerSettingMatrix {
         public templateUrl: string;
         public scope =
         {
-            ptMatrix: '=settingTypeMatrix'
+            ptMatrix: '=settingTypeMatrix',
+            productName: '='
         };
 
         private appConfigService: AppConfigService;
@@ -29,6 +30,7 @@ module CustomerSettingMatrix {
     export class PTMatrix extends SettingTypeMatrix {
         public isAllowMasterAutoPT: boolean;
         public ptItemMatrices: Array<PTItemMatrix>;
+        public ptItemMatrixGroups: Array<PTItemMatrixGroup>;
 
         constructor(ptMatrix: any) {
             super(ptMatrix);
@@ -36,6 +38,44 @@ module CustomerSettingMatrix {
             this.isAllowMasterAutoPT = ptMatrix.isAllowMasterAutoPT;
             this.ptItemMatrices = ptMatrix.ptItemMatrices.map((itemMatrix: any) => new PTItemMatrix(itemMatrix));
         }
+
+        public convertToDisplay() {
+            this.ptItemMatrixGroups = new Array<PTItemMatrixGroup>();
+
+            switch (this.settingLevel) {
+                case SettingLevel.product:
+                case SettingLevel.sportType:
+                case SettingLevel.betType:
+                    var ptItemMatrixGroup = new PTItemMatrixGroup();
+                    ptItemMatrixGroup.ptItemMatrices = this.ptItemMatrices;
+                    ptItemMatrixGroup.settingLevel = this.settingLevel;
+                    this.ptItemMatrixGroups.push(ptItemMatrixGroup);
+                    break;
+
+                case SettingLevel.sportTypeBetType:
+                    var sportId: number = 0;
+                    var ptItemLength = this.ptItemMatrices.length;
+                    var currentPTMatrixGroup: PTItemMatrixGroup;
+                    for (var i = 0; i < ptItemLength; i++) {
+                        var ptItem = this.ptItemMatrices[i];
+                        if (ptItem.sportTypeId != sportId) {
+                            currentPTMatrixGroup = new PTItemMatrixGroup();
+                            currentPTMatrixGroup.id = ptItem.sportTypeId;
+                            currentPTMatrixGroup.ptItemMatrices = new Array<PTItemMatrix>();
+                            currentPTMatrixGroup.name = ptItem.sportTypeName;
+                            currentPTMatrixGroup.settingLevel = this.settingLevel;
+                            sportId = ptItem.sportTypeId;
+                            this.ptItemMatrixGroups.push(currentPTMatrixGroup);
+                        }
+
+                        currentPTMatrixGroup.ptItemMatrices.push(ptItem);
+                    }
+
+                    break;
+            }
+        }
+
+        
     }
 
     export class PTItemMatrix extends SettingItemMatrix {
@@ -47,6 +87,20 @@ module CustomerSettingMatrix {
 
             this.ptItemMatrixRows = ptItemMatrix.ptItemMatrixRows.map((itemMatrixRow: any) => new PTItemMaxtrixRow(itemMatrixRow));
             this.isLive = ptItemMatrix.isLive;
+        }
+
+        public getItemMatrixName(settingLevel: number, productName: ProductName) {
+            switch (settingLevel) {
+                case SettingLevel.product:
+                    return productName.name + (this.isLive ? "(Live)" : "");
+                case SettingLevel.sportType:
+                    return this.sportTypeName;
+                case SettingLevel.betType:
+                case SettingLevel.sportTypeBetType:
+                    return this.betTypeName;
+            }
+
+            return "";
         }
     }
 
@@ -80,5 +134,12 @@ module CustomerSettingMatrix {
 
             this.minPT = ptItemMaxtrixRow.minPT;
         }
+    }
+
+    export class PTItemMatrixGroup {
+        public id: number;
+        public name: string;
+        public settingLevel: number;
+        public ptItemMatrices: Array<PTItemMatrix>;
     }
 }

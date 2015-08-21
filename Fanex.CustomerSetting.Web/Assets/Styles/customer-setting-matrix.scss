@@ -1,0 +1,171 @@
+﻿@import "Compass/_compass.scss";
+
+$background-color: #e6e9f0;
+$block-background-color: #fff;
+$border-color: #7c98a4;
+$button-backround-color1: #8594a2;
+$button-backround-color2: #344d61;
+$table-head-background-color: #cadceb;
+$button-backround-color3: #8594a2;
+$button-text-color: #fff;
+$item-background-color: #66afe9;
+$header-color: #b5c4d0;
+$input-border-color: #aeaeae;
+$invalid-border-color: rgba(233, 50, 45, 0.85);
+$invalid-color: #e9322d;
+$sub-group-background-color: #cadceb;
+$success-color: #618e11;
+$warning-color: #c28f06;
+$error-color: $invalid-color; // #f40000;
+
+body {
+    font: {
+        family: Tahoma, Arial, helvetica, sans-serif;
+        size: 11px;
+    }
+
+    position: relative;
+}
+
+input[type=checkbox] {
+    &.invalid {
+        outline: 1px solid $invalid-color;
+    }
+}
+
+
+
+input[type=text] {
+    width: 100%;
+
+    &.has-constraint {
+        display: inline-block;
+        width: 50%;
+    }
+
+    &.number {
+        text-align: right;
+    }
+}
+
+
+button {
+    @include background-image(linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3));
+    @include border-radius(3px);
+    background-color: $button-backround-color2;
+    background-repeat: no-repeat;
+    border: 0;
+    color: $button-text-color;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 16px;
+    min-width: 70px;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+        list-style: none;
+        display: inline;
+    }
+}
+
+.container {
+
+    .header {
+        border: 1px solid $border-color;
+        background-color: $background-color;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        ul {
+            padding: 0;
+            margin: 0 0 10px 0;
+
+            li {
+                margin-right: 10px;
+                font-weight: bold;
+            }
+        }
+
+        .matrix-form {
+            @include clearfix();
+
+
+            .form-control {
+                @include inline-block();
+                margin: 0 10px 0 0;
+
+                label {
+                    margin: 0 10px 0 0;
+                }
+
+                input {
+                    width: 60%;
+                }
+            }
+        }
+    }
+
+    .main-content {
+        border: 1px solid $border-color;
+        background-color: $block-background-color;
+        padding: 10px;
+
+        .customer-line {
+            margin: 0 0 10px 0;
+
+            ul {
+                li {
+
+                    a {
+                        margin: 0 5px 0 0;
+                    }
+                }
+            }
+        }
+
+        .group-matrix {
+
+            .group-name {
+                padding: 5px 10px;
+                background-color: $item-background-color;
+            }
+
+            .item-matrix {
+                margin: 5px 0;
+                border: 1px solid $border-color;
+
+                .item-name {
+                    padding: 5px;
+                    background-color: $item-background-color;
+                }
+
+                table, tr, td, th {
+                    border: 1px solid $border-color;
+                    border-collapse: collapse;
+                    text-align: center;
+                }
+
+                table {
+                    margin: 10px;
+
+                    th {
+                        background-color: $table-head-background-color;
+                        text-align: center;
+                    }
+
+                    .customer-level {
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+}

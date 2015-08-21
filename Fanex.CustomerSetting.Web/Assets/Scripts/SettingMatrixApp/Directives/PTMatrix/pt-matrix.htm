@@ -1,10 +1,10 @@
-﻿<div class="group" data-ng-repeat="ptItemMatrix in ptMatrix.ptItemMatrices">
-    <div class="group-name">
-        {{ptItemMatrix.sportName}} 
+﻿<div class="group-matrix" data-ng-repeat="ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups">
+    <div class="group-name" data-ng-show="ptItemMatrixGroup.name">
+        {{ptItemMatrixGroup.name}}
     </div>
-    <div class="table">
-        <div class="table-name">
-            {{ptItemMatrix.betTypeName}}
+    <div class="item-matrix" data-ng-repeat="ptItemMatrix in ptItemMatrixGroup.ptItemMatrices">
+        <div class="item-name">
+            {{ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, productName)}}
         </div>
         <table>
             <colgroup>
@@ -50,8 +50,8 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="ptItemMatrixRow in ptItemMatrix.ptItemMatrixRows">
-                    <td>
-                        {{ptItemMatrixRow.customerLevel}}
+                    <td class="customer-level">
+                        {{ptItemMatrixRow.customerLevel.displayName}}
                     </td>
                     <td>
                         {{ptItemMatrixRow.superPT}}

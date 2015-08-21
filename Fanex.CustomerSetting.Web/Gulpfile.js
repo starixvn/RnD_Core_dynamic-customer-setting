@@ -7,6 +7,7 @@
         app: "./Assets/Scripts/App/",
         settingMatrixApp: "./Assets/Scripts/SettingMatrixApp/",
         style: "./Assets/Styles/",
+        settingMatrixAppStyle: "./Assets/Styles/",
         image: "./Assets/Styles/Images/",
         compass: "./Assets/Styles/Compass/"
     };
@@ -134,6 +135,7 @@
     });
 
     gulp.task("publish-styles", ["publish-images"], function () {
+
         return gulp.src(assetPaths.style + "customer-setting*.{map,css}")
                    .pipe(gulp.dest(publishPaths.customerSetting + "Styles"));
     });
@@ -241,7 +243,13 @@
 
     gulp.task("publish-script", ["publish-core-script", "publish-modules-script"]);
 
-    gulp.task("publish-matrix", ["publish-matrix-template", "publish-matrix-script"]);
+    gulp.task("publish-matrix", ["publish-matrix-template", "publish-matrix-script", "publish-matrix-styles"]);
+
+    gulp.task("publish-matrix-styles", ["publish-images"], function () {
+
+        return gulp.src(assetPaths.settingMatrixAppStyle + "customer-setting-matrix*.{map,css}")
+                   .pipe(gulp.dest(publishPaths.customerSettingMatrix + "Styles"));
+    });
 
     gulp.task("prebuild", function (done) {
         var runSequence = require("run-sequence");
@@ -257,9 +265,11 @@
     gulp.task("watch", ["publish-script", "publish-template", "publish-styles", "publish-matrix"], function () {
         gulp.watch(assetPaths.app + "**/*.{ts,htm}", ["publish-script"]);
         gulp.watch(assetPaths.app + "*.htm", ["publish-template"]);
+        gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
+
         gulp.watch(assetPaths.settingMatrixApp + "**/*.{ts,htm}", ["publish-matrix"]);
         gulp.watch(assetPaths.settingMatrixApp + "*.htm", ["publish-matrix"]);
-        gulp.watch(assetPaths.style + "customer-setting*.{map,css}", ["publish-styles"]);
+        gulp.watch(assetPaths.settingMatrixAppStyle + "customer-setting-matrix*.scss", ["publish-matrix"]);
     });
 
     gulp.task("tslint", function () {

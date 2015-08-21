@@ -3,6 +3,7 @@
   <Function Name="Customer_Setting_Maxtrix">
     <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
+      <Mapping DataField="Discount" ObjectProperty="CommRate" />
     </Setting>
     <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />

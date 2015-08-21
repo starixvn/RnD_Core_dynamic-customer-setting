@@ -6,51 +6,53 @@
     <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/CustomerSettingMatrix/styles/customer-setting-matrix.min.css?v={{version}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingMatrixController as ctrl">
+    <div class="container">
+        <div class="header">
+            <ul class="setting-type-nav">
+                <li data-ng-repeat="settingType in ctrl.settingTypes" data-ng-click="ctrl.updateSettingTypeView(settingType.id)" data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
+                    <a href="#">{{settingType.name}}</a>
+                </li>
+            </ul>
 
-    <div class="header-container">
-        <ul class="navigation">
-            <li data-ng-repeat="settingType in ctrl.settingTypes" data-ng-click="ctrl.updateSettingTypeView(settingType.id)" data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
-                <a href="#">{{settingType.name}}</a>
-            </li>
-        </ul>
-    </div>
-    
-    <div class="form-container">
-        <div class="controls">
-            <label for="product">
-                Product
-            </label>
-            <select name="product" data-ng-model="ctrl.productName" data-ng-options="product.name for product in ctrl.productNames"></select>
+            <div class="matrix-form">
+                <div class="form-control">
+                    <label for="product">
+                        Product
+                    </label>
+                    <select name="product" data-ng-model="ctrl.productName" data-ng-options="product.name for product in ctrl.productNames"></select>
+                </div>
+                <div class="form-control">
+                    <label for="userName">
+                        Username
+                    </label>
+                    <input name="userName" type="text" data-ng-model="ctrl.customerName" />
+
+                </div>
+                <div class="form-control">
+                    <button data-ng-click="ctrl.querySettingMatrix()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+
+            <div class="message-container" data-ng-show="message" data-ng-bind="message">
+            </div>
+
         </div>
-        <div class="controls">
-            <label for="userName">
-                Username
-            </label>
-            <input name="userName" type="text" data-ng-model="ctrl.customerName"/>
 
+        <div class="main-content">
+            <div data-ng-show="ctrl.customerLine.length > 0" customer-line="ctrl.customerLine" data-customer-line-directive>
+            </div>
+
+            <div class="matrix-container" data-ng-show="ctrl.settingTypeMatrix" data-ng-switch="ctrl.settingTypeId">
+                <div data-ng-switch-when="1" product-name="ctrl.productName" setting-type-matrix="ctrl.settingTypeMatrix" data-pt-matrix>
+                </div>
+                <div data-ng-switch-when="3" setting-type-matrix="ctrl.settingTypeMatrix" data-commission-matrix>
+                </div>
+            </div>
         </div>
-        <div class="controls">
-            <button data-ng-click="ctrl.querySettingMatrix()">
-                Submit
-            </button>
-        </div>
+
     </div>
-
-    <div class="message-container" data-ng-show="message" data-ng-bind="message">
-    </div>
-
-    <div data-ng-show="ctrl.customerLine.length > 0" customer-line="ctrl.customerLine" data-customer-line-directive>
-    </div>
-
-    <div class="matrix-container" data-ng-show="ctrl.settingTypeMatrix" data-ng-switch="ctrl.settingTypeId">
-        <div data-ng-switch-when="1" setting-type-matrix="ctrl.settingTypeMatrix" data-pt-matrix>
-        </div>
-        <div data-ng-switch-when="3" setting-type-matrix="ctrl.settingTypeMatrix" data-commission-matrix>
-        </div>
-    </div>
-
-
-
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
     <script type="text/javascript">
         var appConfig = {{appConfig}};

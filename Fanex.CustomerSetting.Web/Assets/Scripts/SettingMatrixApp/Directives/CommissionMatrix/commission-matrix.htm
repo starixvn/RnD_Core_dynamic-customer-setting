@@ -1,16 +1,19 @@
-﻿<div class="group" data-ng-repeat="commissionItemMatrix in commissionMatrix.commissionItemMatrices">
-    <div data-ng-show="table.Name" class="group-name">
-        {{commissionItemMatrix.sportType}}
+﻿<div class="group" data-ng-repeat="commissionItemMatrixGroup in commissionMatrix.commissionItemMatrixGroups">
+    <div data-ng-show="commissionItemMatrixGroup.name" class="group-name">
+        {{commissionItemMatrixGroup.name}}
     </div>
     <div class="table">
         <table>
             <colgroup>
                 <col width="80" />
-                <col width="50"/>
+                <col width="120" data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices" />
             </colgroup>
             <thead>
                 <tr>
                     <th>
+                    </th>
+                    <th data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
+                        {{commissionItemMatrix.getHeaderName(commissionItemMatrixGroup.settingLevel)}}
                     </th>
                 </tr>
             </thead>
@@ -18,6 +21,9 @@
                 <tr data-ng-repeat="customerLevel in commissionMatrix.customerLevels">
                     <td>
                         {{customerLevel.displayName}} ({{customerLevel.value}})
+                    </td>
+                    <td data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
+                        {{commissionItemMatrix.commissionItemMatrixRows[$parent.$index].commRate | number: 4}}
                     </td>
                 </tr>
             </tbody>
