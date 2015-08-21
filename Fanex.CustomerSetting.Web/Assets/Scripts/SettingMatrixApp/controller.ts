@@ -2,6 +2,10 @@
 /// <reference path="helper-services.ts" />
 /// <reference path="models.ts" />
 /// <reference path="module-register.ts" />
+/// <reference path="parameters.ts" />
+/// <reference path="directives/ptmatrix/pt-matrix.ts" />
+/// <reference path="directives/commissionmatrix/commission-matrix.ts" />
+
 
 module CustomerSettingMatrix {
     "use strict";
@@ -11,6 +15,7 @@ module CustomerSettingMatrix {
             "$scope",
             "$http",
             "$timeout",
+            "$window",
             "appConfigService"];
 
         public isUIblocked: boolean;
@@ -24,6 +29,7 @@ module CustomerSettingMatrix {
         public settingTypes: Array<SettingType>;
 
         public customerLine: Array<Customer>;
+        public settingTypeMatrix: SettingTypeMatrix;
         
 
         private get querySettingMatrixPath(): string {
@@ -38,21 +44,31 @@ module CustomerSettingMatrix {
         private $http: ng.IHttpService;
         private $timeout: ng.ITimeoutService;
         private appConfigService: AppConfigService;
+        private $window: ng.IWindowService;
 
 
         constructor(
             $scope: ng.IScope,
             $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
+            $window: ng.IWindowService,
             appConfigService: AppConfigService) {
 
             this.$scope = $scope;
             this.$http = $http;
             this.$timeout = $timeout;
+            this.$window = $window;
+
             this.appConfigService = appConfigService;
             this.settingTypes = [new SettingType(1, "PT Matrix"), new SettingType(3, "Commission Matrix")];
             this.settingTypeId = this.settingTypes[0].id;
+            this.customerName = this.$window["customerName"];
             this.queryProductNames();
+        }
+
+        public updateSettingTypeView(settingTypeId: number) {
+            this.settingTypeId = settingTypeId;
+            this.customerLine = [];
         }
 
         public queryProductNames(): void {
@@ -64,7 +80,7 @@ module CustomerSettingMatrix {
                 var productNames = JSON.parse(response.data);
 
                 this.productNames = productNames.map((productName: any) => new ProductName(productName));
-                this.productName = this.productNames[0];
+                this.productName = this.productNames[3];
             })
                 .finally(() => {
                 this.isUIblocked = false;
@@ -85,6 +101,15 @@ module CustomerSettingMatrix {
                 var customerSettingMatrix = JSON.parse(response.data);
 
                 this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
+                switch (this.settingTypeId) {
+                    case 1:
+                        this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
+                        break;
+                    case 3:
+                        this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
+                        break;
+                }
+                this.settingTypeMatrix.convertToDisplay();
             })
                 .finally(() => {
                 this.isUIblocked = false;

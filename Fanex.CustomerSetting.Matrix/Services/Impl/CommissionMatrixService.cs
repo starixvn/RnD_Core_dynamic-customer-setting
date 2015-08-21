@@ -68,7 +68,7 @@
 
             if (commissionSettingType == null)
             {
-                throw new InvalidOperationException("Position Taking Setting Type information cannot be null");
+                throw new InvalidOperationException("This product does not have commission setting.");
             }
 
             return commissionSettingType;

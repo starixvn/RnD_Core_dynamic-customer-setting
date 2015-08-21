@@ -1,10 +1,27 @@
 ﻿module CustomerSettingMatrix {
-    export enum Level {
+    export enum LevelValue {
         company = 5,
         super = 4,
         master = 3,
         agent = 2,
         member = 1
+    }
+
+    export enum SettingLevel {
+        product = 1,
+        sportType = 2,
+        betType = 3,
+        sportTypeBetType = 4
+    }
+
+    export class Level {
+        public displayName: string;
+        public value: number;
+
+        constructor(level: any) {
+            this.displayName = level.displayName;
+            this.value = level.value;
+        }
     }
 
     export class ProductName {
@@ -21,7 +38,7 @@
         public id: number;
         public name: string;
         public currency: number;
-        public level: Level;
+        public level: LevelValue;
 
         constructor(customer: any) {
             this.id = customer.id;
@@ -51,6 +68,8 @@
         constructor(settingTypeMatrix: any) {
             this.settingLevel = settingTypeMatrix.settingLevel;
         }
+
+        public convertToDisplay() { }
     }
 
     export class SettingType {
@@ -63,92 +82,4 @@
         }
     }
 
-    /*Commssion Matrix Models*/
-    export class CommissionItemMatrixRow {
-        public customerLevel: Level;
-        public commRate: number;
-
-        constructor(commissionItemMatrixRow) {
-            this.customerLevel = commissionItemMatrixRow.customerLevel.value;
-            this.commRate = commissionItemMatrixRow.commRate;
-        }
-    }
-
-    export class CommissionItemMatrix extends SettingItemMatrix {
-        public commissionItemMatrixRows: Array<CommissionItemMatrixRow>;
-
-        constructor(commissionItemMatrix: any) {
-            super(commissionItemMatrix);
-
-            this.commissionItemMatrixRows = commissionItemMatrix.commissionItemMatrixRows;
-        }
-    }
-
-    export class CommissionMatrix extends SettingTypeMatrix {
-        public commissionItemMatrices: Array<CommissionItemMatrix>;
-
-        constructor(commissionMatrix) {
-            super(commissionMatrix);
-
-            this.commissionItemMatrices = commissionMatrix.commissionItemMatrices;
-        }
-    }
-
-    /*Position Taking Matrix Models*/
-
-    export class PTMatrix extends SettingTypeMatrix {
-        public isAllowMasterAutoPT: boolean;
-        public pTItemMatrices: Array<PTItemMatrix>;
-
-        constructor(pTMatrix: any) {
-            super(pTMatrix);
-
-            this.isAllowMasterAutoPT = pTMatrix.isAllowMasterAutoPT;
-            this.pTItemMatrices = pTMatrix.pTItemMatrices;
-        }
-    }
-
-    export class PTItemMatrix extends SettingItemMatrix {
-        public pTItemMatrixRows: Array<PTItemMaxtrixRow>;
-        public isLive: boolean;
-
-        constructor(pTItemMatrix: any) {
-            super(pTItemMatrix);
-
-            this.pTItemMatrixRows = pTItemMatrix.pTItemMatrixRows;
-            this.isLive = pTItemMatrix.isLive;
-        }
-    }
-
-    export class PTItemMaxtrixRow {
-        public customerLevel: Level;
-
-        public superPT: number;
-        public autoSuperPT: number;
-        public isAutoSuperPT: boolean;
-
-        public masterPT: number;
-        public autoMasterPT: number;
-        public isAutoMasterPT: boolean;
-
-        public agentPT: number;
-
-        public minPT: number;
-
-        constructor(pTItemMaxtrixRow) {
-            this.customerLevel = pTItemMaxtrixRow.customerLevel.value;
-
-            this.superPT = pTItemMaxtrixRow.superPT;
-            this.autoSuperPT = pTItemMaxtrixRow.autoSuperPT;
-            this.isAutoSuperPT = pTItemMaxtrixRow.isAutoSuperPT;
-
-            this.masterPT = pTItemMaxtrixRow.masterPT;
-            this.autoMasterPT = pTItemMaxtrixRow.autoMasterPT;
-            this.isAutoMasterPT = pTItemMaxtrixRow.isAutoMasterPT;
-
-            this.agentPT = pTItemMaxtrixRow.agentPT;
-
-            this.minPT = pTItemMaxtrixRow.minPT;
-        }
-    }
 }

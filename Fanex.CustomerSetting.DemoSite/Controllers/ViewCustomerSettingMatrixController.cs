@@ -27,9 +27,11 @@
         {
         }
 
-        public ContentResult Index()
+        public ContentResult Index(string customerName = "428RM")
         {
             string htmlContent = GetTemplate();
+
+            htmlContent = htmlContent.Replace("{{customerName}}", JsonConverter.ToJson(customerName));
 
             return Content(htmlContent, "text/HTML");
         }

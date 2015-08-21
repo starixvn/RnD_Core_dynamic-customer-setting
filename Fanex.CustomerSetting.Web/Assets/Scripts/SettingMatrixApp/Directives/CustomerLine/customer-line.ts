@@ -15,10 +15,6 @@ module CustomerSettingMatrix {
             customerLine: '='
         };
 
-        ////public link: ng.IDirectiveLinkFn = (scope: ng.IScope) => {
-            
-        ////};
-
         private appConfigService: AppConfigService;
 
         constructor(appConfigService: AppConfigService) {

@@ -1,10 +1,10 @@
-﻿<div class="group" data-ng-repeat="group in groups">
+﻿<div class="group" data-ng-repeat="ptItemMatrix in ptMatrix.ptItemMatrices">
     <div class="group-name">
-        {{group.Name}}
+        {{ptItemMatrix.sportName}} 
     </div>
-    <div class="table" data-ng-repeat="table in group.Tables">
+    <div class="table">
         <div class="table-name">
-            {{table.Name}}
+            {{ptItemMatrix.betTypeName}}
         </div>
         <table>
             <colgroup>
@@ -49,43 +49,44 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="row in table.Rows">
+                <tr data-ng-repeat="ptItemMatrixRow in ptItemMatrix.ptItemMatrixRows">
                     <td>
-                        {{row.RoleId | fanexRoleFormat}}
-                    </td>
-                    <td>
-                        {{row.SuperPT | fanexPtFormat}}
+                        {{ptItemMatrixRow.customerLevel}}
                     </td>
                     <td>
-                        {{row.MasterPT | fanexPtFormat}}
+                        {{ptItemMatrixRow.superPT}}
                     </td>
                     <td>
-                        {{row.AgentPT | fanexPtFormat}}
+                        {{ptItemMatrixRow.masterPT}}
                     </td>
                     <td>
-                        {{row.AutoSuperPT | fanexPtFormat}}
+                        {{ptItemMatrixRow.agentPT}}
                     </td>
-                    <td data-ng-switch="row.IsAutoSuperPT !== undefined">
-                        <input data-ng-switch-when="true" type="checkbox" value="row.IsAutoSuperPT" disabled="disabled" />
+                    <td>
+                        {{ptItemMatrixRow.autoSuperPT}}
                     </td>
-                    <td data-ng-switch="row.RoleId==3 && !disableAutoMPT">
+                    <td data-ng-switch="ptItemMatrixRow.isAutoSuperPT !== undefined">
+                        <input data-ng-switch-when="true" type="checkbox" value="ptItemMatrixRow.isAutoSuperPT" disabled="disabled" />
+                    </td>
+                    <td data-ng-switch="ptItemMatrixRow.customerLevel=='Master' && ptMatrix.isAllowMasterAutoPT">
                         <div data-ng-switch-when="true">
                             <div class="icon-auto-pt">
                             </div>
                         </div>
                         <div data-ng-switch-when="false">
-                            {{row.AutoMasterPT | fanexPtFormat}}
+                            {{ptItemMatrixRow.autoMasterPT}}
                         </div>
                     </td>
-                    <td data-ng-switch="row.RoleId==3 && !disableAutoMPT" data-ng-class="{'auto-pt': row.RoleId==3 && !disableAutoMPT}">
+                    <td data-ng-switch="ptItemMatrixRow.customerLevel==3 && ptMatrix.isAllowMasterAutoPT"
+                        data-ng-class="{'auto-pt': ptItemMatrixRow.customerLevel==3 && ptMatrix.isAllowMasterAutoPT}">
                         <div data-ng-switch-when="false">
-                            <div data-ng-switch="row.IsAutoMasterPT !== undefined">
-                                <input data-ng-switch-when="true" type="checkbox" value="row.IsAutoMasterPT" disabled="disabled" />
+                            <div data-ng-switch="ptItemMatrixRow.isAutoMasterPT !== undefined">
+                                <input data-ng-switch-when="true" type="checkbox" value="ptItemMatrixRow.isAutoMasterPT" disabled="disabled" />
                             </div>
                         </div>
                     </td>
                     <td>
-                        {{row.MinPT | fanexPtFormat}}
+                        {{ptItemMatrixRow.minPT}}
                     </td>
                 </tr>
             </tbody>

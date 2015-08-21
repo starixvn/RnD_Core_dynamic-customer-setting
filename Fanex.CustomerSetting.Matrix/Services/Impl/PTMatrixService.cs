@@ -53,7 +53,7 @@
 
             if (ptSettingType == null)
             {
-                throw new InvalidOperationException("Position Taking Setting Type information cannot be null");
+                throw new InvalidOperationException("This product does not have position taking setting.");
             }
 
             return ptSettingType;

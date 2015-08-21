@@ -1,29 +1,23 @@
-﻿<div class="group" data-ng-repeat="table in tables">
+﻿<div class="group" data-ng-repeat="commissionItemMatrix in commissionMatrix.commissionItemMatrices">
     <div data-ng-show="table.Name" class="group-name">
-        {{table.Name}}
+        {{commissionItemMatrix.sportType}}
     </div>
     <div class="table">
         <table>
             <colgroup>
                 <col width="80" />
-                <col width="50" data-ng-repeat="column in table.TotalOfColumn" />
+                <col width="50"/>
             </colgroup>
             <thead>
                 <tr>
                     <th>
                     </th>
-                    <th data-ng-repeat="column in table.Columns">
-                        {{column.Name}}
-                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="row in table.Rows">
+                <tr data-ng-repeat="customerLevel in commissionMatrix.customerLevels">
                     <td>
-                        {{row.Name}}
-                    </td>
-                    <td data-ng-repeat="column in row.Columns">
-                        {{column.Value}}
+                        {{customerLevel.displayName}} ({{customerLevel.value}})
                     </td>
                 </tr>
             </tbody>
