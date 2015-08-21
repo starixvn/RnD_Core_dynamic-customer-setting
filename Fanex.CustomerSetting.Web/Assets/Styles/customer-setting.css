@@ -33,6 +33,8 @@ textarea {
   font-family: Tahoma, Arial, helvetica, sans-serif;
   font-size: 11px;
   outline: none;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 input:focus,
 button:focus,
@@ -351,10 +353,21 @@ button {
   *zoom: 1;
 }
 .customer-setting .block .setting-group {
+  background-color: #b5c4d0;
   border-bottom: 1px solid #7c98a4;
   display: inline-block;
   width: 50%;
   float: left;
+}
+.customer-setting .block .setting-group:hover {
+  background-color: #e2f3d1;
+}
+.customer-setting .block .setting-group:hover .value-col {
+  background-color: transparent;
+}
+.customer-setting .block .setting-group:hover input,
+.customer-setting .block .setting-group:hover select {
+  border-color: #7c98a4;
 }
 .customer-setting .block .setting-group.last, .customer-setting .block .setting-group.near-last {
   border-bottom: none;
@@ -374,7 +387,6 @@ button {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #b5c4d0;
   display: inline-block;
   border-right: 1px solid #7c98a4;
   float: left;

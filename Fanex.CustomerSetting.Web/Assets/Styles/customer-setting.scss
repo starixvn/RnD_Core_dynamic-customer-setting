@@ -42,6 +42,11 @@ textarea {
 
     outline: none;
 
+    padding: {
+        left: 2px;
+        right: 2px;
+    }
+
     &:focus {
         border-color: $focus-border-color;
     }
@@ -392,10 +397,24 @@ button {
         }
 
         .setting-group {
+            background-color: $header-color;
             border-bottom: 1px solid $border-color;
             display: inline-block;
             width: 50%;
             float: left;
+
+            &:hover {
+                background-color: #e2f3d1;
+
+                .value-col {
+                    background-color: transparent;
+                }
+
+                input,
+                select {
+                    border-color: $border-color;
+                }
+            }
 
             &.last,
             &.near-last {
@@ -419,7 +438,6 @@ button {
         .name-col,
         .value-col {
             @include box-sizing(border-box);
-            background-color: $header-color;
             display: inline-block;
             border-right: 1px solid $border-color;
             float: left;

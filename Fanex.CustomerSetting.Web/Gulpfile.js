@@ -148,7 +148,7 @@
         var ts = require("gulp-typescript");
         var uglify = require("gulp-uglify");
 
-        gulp.src(assetPaths.app + "Core/**")
+        return gulp.src(assetPaths.app + "Core/**")
             .pipe(gulpif(/[.]ts$/, ts({
                 typescript: require("typescript"),
                 target: "ES5",
@@ -160,11 +160,11 @@
                 module: "customerSetting"
             })))
             .pipe(concat("core.js"))
-            .pipe(sourcemaps.write("."))
             .pipe(gulp.dest(publishPaths.customerSetting))
             .pipe(uglify())
             .pipe(rename({ suffix: ".min" }))
-            .pipe(gulp.dest(publishPaths.customerSetting));
+            .pipe(gulp.dest(publishPaths.customerSetting))
+            .pipe(sourcemaps.write("."));
     });
 
     gulp.task("publish-modules-script", function (callback) {

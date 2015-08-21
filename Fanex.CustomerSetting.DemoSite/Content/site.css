@@ -131,6 +131,7 @@ body {
 }
 .container .left-panel .form .form-group.submit button:disabled {
   background-image: none;
+  background-color: #8594A2;
   cursor: default;
 }
 .container .content {
