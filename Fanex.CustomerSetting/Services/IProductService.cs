@@ -9,6 +9,6 @@
 
         SettingType GetProductSettingType(byte productId, short settingTypeId);
 
-        IEnumerable<ProductName> GetAllProductNames();
+        IEnumerable<Product> GetAllProducts();
     }
 }

@@ -13,7 +13,7 @@ module CustomerSettingMatrix {
         public scope =
         {
             ptMatrix: '=settingTypeMatrix',
-            productName: '='
+            product: '='
         };
 
         private appConfigService: AppConfigService;
@@ -89,10 +89,10 @@ module CustomerSettingMatrix {
             this.isLive = ptItemMatrix.isLive;
         }
 
-        public getItemMatrixName(settingLevel: number, productName: ProductName) {
+        public getItemMatrixName(settingLevel: number, product: Product) {
             switch (settingLevel) {
                 case SettingLevel.product:
-                    return productName.name + (this.isLive ? " (Live)" : "");
+                    return product.name + (this.isLive ? " (Live)" : "");
                 case SettingLevel.sportType:
                     return this.sportTypeName;
                 case SettingLevel.betType:

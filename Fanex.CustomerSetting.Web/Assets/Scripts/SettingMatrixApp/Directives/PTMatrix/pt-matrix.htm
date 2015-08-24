@@ -1,10 +1,13 @@
-﻿<div class="group-matrix" data-ng-repeat="ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups">
+﻿<div class="group-matrix" data-ng-repeat="ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups"
+     data-ng-class="{'group-matrix-setting-level-4': ptMatrix.settingLevel == 4}">
     <div class="group-name" data-ng-show="ptItemMatrixGroup.name">
         {{::ptItemMatrixGroup.name}}
     </div>
-    <div class="item-matrix" data-ng-repeat="ptItemMatrix in ptItemMatrixGroup.ptItemMatrices">
+    <div class="item-matrix"
+         data-ng-repeat="ptItemMatrix in ptItemMatrixGroup.ptItemMatrices"
+         data-ng-class="{'item-matrix-setting-level-4': ptMatrix.settingLevel == 4}">
         <div class="item-name">
-            {{::ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, productName)}}
+            {{::ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, product)}}
         </div>
         <table>
             <colgroup>

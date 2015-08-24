@@ -13,7 +13,7 @@
                     <th>
                     </th>
                     <th data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
-                        {{commissionItemMatrix.getHeaderName(commissionItemMatrixGroup.settingLevel)}}
+                        {{::commissionItemMatrix.getHeaderName(commissionItemMatrixGroup.settingLevel)}}
                     </th>
                 </tr>
             </thead>
@@ -23,7 +23,7 @@
                         {{::customerLevel.displayName}} ({{::customerLevel.value}})
                     </td>
                     <td data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
-                        {{commissionItemMatrix.commissionItemMatrixRows[$parent.$index].commRate | number: 4}}
+                        {{::commissionItemMatrix.commissionItemMatrixRows[$parent.$index].commRate | number: 4}}
                     </td>
                 </tr>
             </tbody>

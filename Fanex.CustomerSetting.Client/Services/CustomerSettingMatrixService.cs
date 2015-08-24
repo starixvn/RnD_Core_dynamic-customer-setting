@@ -6,7 +6,7 @@
 
     public class CustomerSettingMatrixService : ICustomerSettingMatrixService
     {
-        public IRestResponse QueryAllProductNames()
+        public IRestResponse QueryAllProducts()
         {
             var request = new RestRequest("/product/", Method.GET);
 

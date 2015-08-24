@@ -9,7 +9,9 @@
     <div class="container">
         <div class="header">
             <ul class="setting-type-nav">
-                <li data-ng-repeat="settingType in ctrl.settingTypes" data-ng-click="ctrl.updateSettingTypeView(settingType.id)" data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
+                <li data-ng-repeat="settingType in ctrl.settingTypes" 
+                    data-ng-click="ctrl.updateSettingTypeView(settingType.id)" 
+                    data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
                     <label>
                         <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{settingType.id}}">
                         {{settingType.name}}
@@ -22,7 +24,7 @@
                     <label for="product">
                         Product
                     </label>
-                    <select name="product" data-ng-model="ctrl.productName" data-ng-options="product.name for product in ctrl.productNames"></select>
+                    <select name="product" data-ng-model="ctrl.product" data-ng-options="product.name for product in ctrl.products"></select>
                 </div>
                 <div class="form-control">
                     <label for="userName">
@@ -51,7 +53,7 @@
             </div>
 
             <div class="matrix-container" data-ng-show="ctrl.settingTypeMatrix" data-ng-switch="ctrl.settingTypeId">
-                <div data-ng-switch-when="1" product-name="ctrl.productName" setting-type-matrix="ctrl.settingTypeMatrix" data-pt-matrix>
+                <div data-ng-switch-when="1" product="ctrl.product" setting-type-matrix="ctrl.settingTypeMatrix" data-pt-matrix>
                 </div>
                 <div data-ng-switch-when="3" setting-type-matrix="ctrl.settingTypeMatrix" data-commission-matrix>
                 </div>

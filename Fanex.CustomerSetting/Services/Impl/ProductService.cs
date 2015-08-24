@@ -54,17 +54,19 @@
             return productSettingTypes.FirstOrDefault(settingType => settingType.Id == settingTypeId);
         }
 
-        public IEnumerable<ProductName> GetAllProductNames()
+        public IEnumerable<Product> GetAllProducts()
         {
-            var productNames = _cachingService.GetOrAdd(
+            var products = _cachingService.GetOrAdd(
                   AllProductNamesCacheKey,
                   () =>
                   {
-                      return _productRepository.Fetch<ProductName>(new ProductNamesQueryCriteria { LanguageKey = LanguageNameConverter.GetRefLanguageName() });
+                      return _productRepository
+                          .Fetch<ProductName>(new ProductNamesQueryCriteria { LanguageKey = LanguageNameConverter.GetRefLanguageName() })
+                          .Select<ProductName, Product>(productName => new Product { Id = productName.ProductId, Name = productName.Name});
                   },
                   new TimeSpan(CacheDuration, 0, 0));
 
-            return productNames;
+            return products;
         }
     }
 }

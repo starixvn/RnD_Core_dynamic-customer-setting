@@ -5,7 +5,7 @@
 
     public interface ICustomerSettingMatrixService
     {
-        IRestResponse QueryAllProductNames();
+        IRestResponse QueryAllProducts();
 
         IRestResponse QueryCustomerSettingMatrix(QuerySettingMatrixRequest query);
     }

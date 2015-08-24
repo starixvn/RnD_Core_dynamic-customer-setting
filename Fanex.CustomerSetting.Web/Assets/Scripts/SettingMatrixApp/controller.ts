@@ -21,11 +21,11 @@ module CustomerSettingMatrix {
         public isUIblocked: boolean;
 
         
-        public productName: ProductName;
+        public product: Product;
         public customerName: string;
         public settingTypeId: number;
 
-        public productNames: Array<ProductName>;
+        public products: Array<Product>;
         public settingTypes: Array<SettingType>;
 
         public customerLine: Array<Customer>;
@@ -36,8 +36,8 @@ module CustomerSettingMatrix {
             return "ViewCustomerSettingMatrix/QuerySettingMatrix?";
         }
 
-        private get queryProductNamesPath(): string {
-            return "ViewCustomerSettingMatrix/QueryProductNames";
+        private get queryAllProducts(): string {
+            return "ViewCustomerSettingMatrix/QueryAllProducts";
         }
 
         private $scope: ng.IScope;
@@ -77,12 +77,12 @@ module CustomerSettingMatrix {
             this.isUIblocked = true;
 
             this.$http
-                .post(this.appConfigService.resolveRootUrl(this.queryProductNamesPath), {})
+                .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                var productNames = JSON.parse(response.data);
+                var products = JSON.parse(response.data);
 
-                this.productNames = productNames.map((productName: any) => new ProductName(productName));
-                this.productName = this.productNames[3];
+                this.products = products.map((product: any) => new Product(product));
+                this.product = this.products[3];
                 this.querySettingMatrix(this.customerName);
             })
                 .finally(() => {
@@ -93,7 +93,7 @@ module CustomerSettingMatrix {
         public querySettingMatrix(customerName: string): void {
             var querySettingMatrix = new QuerySettingMatrix(
                 this.settingTypeId,
-                this.productName.productId,
+                this.product.id,
                 customerName);
 
             this.isUIblocked = true;

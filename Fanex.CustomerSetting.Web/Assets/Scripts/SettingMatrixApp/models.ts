@@ -24,12 +24,12 @@
         }
     }
 
-    export class ProductName {
-        public productId: number;
+    export class Product {
+        public id: number;
         public name: string;
 
         constructor(product: any) {
-            this.productId = product.productId;
+            this.id = product.id;
             this.name = product.name;
         }
     }

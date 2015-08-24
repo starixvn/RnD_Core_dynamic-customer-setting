@@ -20,9 +20,9 @@
             _productService = productService ?? new ProductService();
         }
 
-        public HttpResponseMessage GetAllProductNames()
+        public HttpResponseMessage GetAll()
         {
-            var productNames = _productService.GetAllProductNames();
+            var productNames = _productService.GetAllProducts();
 
             return Request.CreateResponse(HttpStatusCode.OK, productNames);
         }

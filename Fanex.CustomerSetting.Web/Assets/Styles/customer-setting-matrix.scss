@@ -128,20 +128,39 @@ ul {
         }
 
         .group-matrix {
+            margin: 5px 0;
 
+            &.group-matrix-setting-level-4
+            {
+                border: 1px solid $border-color;
+            }
+            
             .group-name {
                 padding: 5px 10px;
+                font-weight: bold;
                 background-color: $item-background-color;
+                border: 1px solid $border-color;
+                border-width: 1px 1px 0 1px;
             }
 
             .item-matrix {
-                margin: 5px 0;
                 border: 1px solid $border-color;
+
+                &.item-matrix-setting-level-4
+                {
+                    margin: 20px;
+
+                    .item-name
+                    {
+                        background-color: #eeecee;
+                    }
+                }
 
                 .item-name {
                     padding: 5px;
                     background-color: $item-background-color;
                     font-weight: bold;
+                    border-bottom: 1px solid $border-color;
                 }
 
                 .pt-icon {
@@ -176,7 +195,7 @@ ul {
                 }
 
                 table {
-                    margin: 10px;
+                    margin: 20px;
 
                     th {
                         background-color: $table-head-background-color;

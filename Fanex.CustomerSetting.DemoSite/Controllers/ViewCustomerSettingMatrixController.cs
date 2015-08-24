@@ -47,9 +47,9 @@
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QueryProductNames()
+        public JsonResult QueryAllProducts()
         {
-            var productNamesReponse = _customerSettingMatrixService.QueryAllProductNames();
+            var productNamesReponse = _customerSettingMatrixService.QueryAllProducts();
 
             return Json(productNamesReponse.Content, JsonRequestBehavior.AllowGet);
         }
