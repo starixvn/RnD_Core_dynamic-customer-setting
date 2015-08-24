@@ -245,7 +245,9 @@
 
     gulp.task("publish-matrix", ["publish-matrix-template", "publish-matrix-script", "publish-matrix-styles"]);
 
-    gulp.task("publish-matrix-styles", ["publish-images"], function () {
+    gulp.task("publish-matrix-styles", function () {
+        gulp.src(assetPaths.image + "*.*")
+                   .pipe(gulp.dest(publishPaths.customerSettingMatrix + "Styles/Images"));
 
         return gulp.src(assetPaths.settingMatrixAppStyle + "customer-setting-matrix*.{map,css}")
                    .pipe(gulp.dest(publishPaths.customerSettingMatrix + "Styles"));

@@ -196,7 +196,9 @@
     <Content Include="Assets\Styles\customer-setting.min.css">
       <DependentUpon>customer-setting.css</DependentUpon>
     </Content>
+    <Content Include="Assets\Styles\Images\auto-pt.gif" />
     <Content Include="Assets\Styles\Images\loading.gif" />
+    <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="karma.conf.js" />

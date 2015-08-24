@@ -16,21 +16,17 @@ body {
   position: relative;
 }
 
-input[type=checkbox].invalid {
-  outline: 1px solid #e9322d;
+input[type=text], select {
+  font-size: 11px;
 }
 
-input[type=text] {
-  width: 100%;
-}
-
-input[type=text].has-constraint {
-  display: inline-block;
-  width: 50%;
-}
-
-input[type=text].number {
-  text-align: right;
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
 }
 
 button {
@@ -51,9 +47,9 @@ button {
   cursor: pointer;
   font-weight: bold;
   font-size: 11px;
-  line-height: 16px;
+  line-height: 14px;
   min-width: 70px;
-  padding: 4px 12px;
+  padding: 4px 10px;
   text-align: center;
   vertical-align: middle;
 }
@@ -83,6 +79,16 @@ ul li {
 .container .header ul li {
   margin-right: 10px;
   font-weight: bold;
+}
+
+.container .header ul li label {
+  cursor: pointer;
+}
+
+.container .header ul li label input {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
 }
 
 .container .header .matrix-form {
@@ -115,11 +121,12 @@ ul li {
 }
 
 .container .main-content .customer-line {
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
 }
 
-.container .main-content .customer-line ul li a {
-  margin: 0 5px 0 0;
+.container .main-content .customer-line ul li + li:before {
+  padding: 0 5px;
+  content: ">";
 }
 
 .container .main-content .group-matrix .group-name {
@@ -135,6 +142,29 @@ ul li {
 .container .main-content .group-matrix .item-matrix .item-name {
   padding: 5px;
   background-color: #66afe9;
+  font-weight: bold;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon {
+  background: #EEECEE;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon.not-allow {
+  background: #fce9fb;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon .icon-auto-pt {
+  background: url("images/auto-pt.gif") no-repeat center #EEECEE;
+  width: 15px;
+  height: 14px;
+  margin: 0 auto;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon .icon-not-auto-pt {
+  background: url("images/not-allow-auto-pt.gif") no-repeat center #fce9fb;
+  width: 8px;
+  height: 14px;
+  margin: 0 auto;
 }
 
 .container .main-content .group-matrix .item-matrix table, .container .main-content .group-matrix .item-matrix tr, .container .main-content .group-matrix .item-matrix td, .container .main-content .group-matrix .item-matrix th {
@@ -148,12 +178,22 @@ ul li {
 }
 
 .container .main-content .group-matrix .item-matrix table th {
-  background-color: #cadceb;
+  background-color: #b5c4d0;
   text-align: center;
+}
+
+.container .main-content .group-matrix .item-matrix table th, .container .main-content .group-matrix .item-matrix table td {
+  height: 25px;
+}
+
+.container .main-content .group-matrix .item-matrix table tr:hover, .container .main-content .group-matrix .item-matrix table tr:hover td {
+  background-color: #e2f3d1;
 }
 
 .container .main-content .group-matrix .item-matrix table .customer-level {
   text-align: left;
+  font-weight: bold;
+  background-color: #b5c4d0;
 }
 
 /*# sourceMappingURL=customer-setting-matrix.css.map */

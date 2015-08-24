@@ -47,4 +47,18 @@ module CustomerSettingMatrix {
     }
 
     ModuleRegister.service("appConfigService", AppConfigService);
+
+    
+    function PTValue() {
+        return (numberValue: number) => {
+            if (numberValue != null) {
+                return (numberValue / 100).toFixed(2);
+            }
+
+            return '';
+        };
+    }
+
+    ModuleRegister.filter("ptValue", PTValue);
+
 }

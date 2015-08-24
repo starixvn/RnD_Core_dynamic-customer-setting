@@ -92,7 +92,7 @@ module CustomerSettingMatrix {
         public getItemMatrixName(settingLevel: number, productName: ProductName) {
             switch (settingLevel) {
                 case SettingLevel.product:
-                    return productName.name + (this.isLive ? "(Live)" : "");
+                    return productName.name + (this.isLive ? " (Live)" : "");
                 case SettingLevel.sportType:
                     return this.sportTypeName;
                 case SettingLevel.betType:
@@ -114,6 +114,7 @@ module CustomerSettingMatrix {
         public masterPT: number;
         public autoMasterPT: number;
         public isAutoMasterPT: boolean;
+        public isMasterLevel: boolean;
 
         public agentPT: number;
 
@@ -129,6 +130,7 @@ module CustomerSettingMatrix {
             this.masterPT = ptItemMaxtrixRow.masterPT;
             this.autoMasterPT = ptItemMaxtrixRow.autoMasterPT;
             this.isAutoMasterPT = ptItemMaxtrixRow.isAutoMasterPT;
+            this.isMasterLevel = this.customerLevel.value == LevelValue.master;
 
             this.agentPT = ptItemMaxtrixRow.agentPT;
 

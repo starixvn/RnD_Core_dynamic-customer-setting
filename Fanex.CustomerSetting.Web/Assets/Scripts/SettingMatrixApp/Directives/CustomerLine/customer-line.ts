@@ -12,7 +12,9 @@ module CustomerSettingMatrix {
         public templateUrl: string;
         public scope =
         {
-            customerLine: '='
+            customerLine: '=',
+            customerName: '=',
+            querySettingMatrix: '&'
         };
 
         private appConfigService: AppConfigService;

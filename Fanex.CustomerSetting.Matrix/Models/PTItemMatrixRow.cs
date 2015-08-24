@@ -20,14 +20,42 @@
             }
 
             CustomerLevel = Enumeration.FromValue<Level>(pTMatrixDto.LevelValue);
-            SuperPT = pTMatrixDto.SuperPT;
-            MasterPT = pTMatrixDto.MasterPT;
-            AgentPT = pTMatrixDto.AgentPT;
-            AutoSuperPT = pTMatrixDto.AutoSuperPT;
-            IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
-            AutoMasterPT = pTMatrixDto.AutoMasterPT;
-            IsAutoMasterPT = pTMatrixDto.IsAutoMasterPT;
+
+            SetSuperPT(pTMatrixDto);
+
+            SetMasterPT(pTMatrixDto);
+
+            AgentPT =  CustomerLevel.IsMasterLevel() ? null : pTMatrixDto.AgentPT;
+            
             MinPT = pTMatrixDto.MinPT;
+        }
+
+        private void SetMasterPT(PTItemMatrixDto pTMatrixDto)
+        {
+            if (CustomerLevel.IsAgentLevel() || CustomerLevel.IsMemberLevel())
+            {
+                IsAutoMasterPT = pTMatrixDto.IsAutoMasterPT;
+                AutoMasterPT = IsAutoMasterPT.Value ? pTMatrixDto.AutoMasterPT : 0;
+                MasterPT = IsAutoMasterPT.Value ? 0 : pTMatrixDto.MasterPT;
+            }
+            else
+            {
+                MasterPT = pTMatrixDto.MasterPT;
+            }
+        }
+
+        private void SetSuperPT(PTItemMatrixDto pTMatrixDto)
+        {
+            if (CustomerLevel.IsMasterLevel() || CustomerLevel.IsMemberLevel())
+            {
+                IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
+                AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;
+                SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;
+            }
+            else if(CustomerLevel.IsSuperLevel())
+            {
+                SuperPT = pTMatrixDto.SuperPT;
+            }
         }
 
         public Level CustomerLevel { get; set; }

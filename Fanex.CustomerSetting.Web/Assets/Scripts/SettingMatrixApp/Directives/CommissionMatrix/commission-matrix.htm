@@ -1,8 +1,8 @@
-﻿<div class="group" data-ng-repeat="commissionItemMatrixGroup in commissionMatrix.commissionItemMatrixGroups">
+﻿<div class="group-matrix" data-ng-repeat="commissionItemMatrixGroup in commissionMatrix.commissionItemMatrixGroups">
     <div data-ng-show="commissionItemMatrixGroup.name" class="group-name">
-        {{commissionItemMatrixGroup.name}}
+        {{::commissionItemMatrixGroup.name}}
     </div>
-    <div class="table">
+    <div class="item-matrix">
         <table>
             <colgroup>
                 <col width="80" />
@@ -19,8 +19,8 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="customerLevel in commissionMatrix.customerLevels">
-                    <td>
-                        {{customerLevel.displayName}} ({{customerLevel.value}})
+                    <td class="customer-level">
+                        {{::customerLevel.displayName}} ({{::customerLevel.value}})
                     </td>
                     <td data-ng-repeat="commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices">
                         {{commissionItemMatrix.commissionItemMatrixRows[$parent.$index].commRate | number: 4}}

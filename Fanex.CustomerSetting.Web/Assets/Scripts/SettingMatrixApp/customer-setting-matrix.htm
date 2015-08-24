@@ -10,7 +10,10 @@
         <div class="header">
             <ul class="setting-type-nav">
                 <li data-ng-repeat="settingType in ctrl.settingTypes" data-ng-click="ctrl.updateSettingTypeView(settingType.id)" data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
-                    <a href="#">{{settingType.name}}</a>
+                    <label>
+                        <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{settingType.id}}">
+                        {{settingType.name}}
+                    </label>
                 </li>
             </ul>
 
@@ -29,7 +32,7 @@
 
                 </div>
                 <div class="form-control">
-                    <button data-ng-click="ctrl.querySettingMatrix()">
+                    <button type="button" data-ng-click="ctrl.querySettingMatrix(ctrl.customerName)">
                         Submit
                     </button>
                 </div>
@@ -40,8 +43,11 @@
 
         </div>
 
-        <div class="main-content">
-            <div data-ng-show="ctrl.customerLine.length > 0" customer-line="ctrl.customerLine" data-customer-line-directive>
+        <div class="main-content" data-ng-show="ctrl.customerLine.length > 0">
+            <div customer-line="ctrl.customerLine"
+                 customer-name="ctrl.customerName"
+                 query-setting-matrix="ctrl.querySettingMatrix(customerName)"
+                 data-customer-line-directive>
             </div>
 
             <div class="matrix-container" data-ng-show="ctrl.settingTypeMatrix" data-ng-switch="ctrl.settingTypeId">

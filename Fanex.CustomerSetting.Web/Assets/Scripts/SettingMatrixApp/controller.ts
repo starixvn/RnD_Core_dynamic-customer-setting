@@ -67,8 +67,10 @@ module CustomerSettingMatrix {
         }
 
         public updateSettingTypeView(settingTypeId: number) {
-            this.settingTypeId = settingTypeId;
-            this.customerLine = [];
+            if (this.settingTypeId != settingTypeId) {
+                this.settingTypeId = settingTypeId;
+                this.customerLine = [];
+            }
         }
 
         public queryProductNames(): void {
@@ -81,18 +83,18 @@ module CustomerSettingMatrix {
 
                 this.productNames = productNames.map((productName: any) => new ProductName(productName));
                 this.productName = this.productNames[3];
-                this.querySettingMatrix();
+                this.querySettingMatrix(this.customerName);
             })
                 .finally(() => {
                 this.isUIblocked = false;
             });
         }
 
-        public querySettingMatrix(): void {
+        public querySettingMatrix(customerName: string): void {
             var querySettingMatrix = new QuerySettingMatrix(
                 this.settingTypeId,
                 this.productName.productId,
-                this.customerName);
+                customerName);
 
             this.isUIblocked = true;
 

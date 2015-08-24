@@ -1,10 +1,10 @@
 ﻿<div class="group-matrix" data-ng-repeat="ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups">
     <div class="group-name" data-ng-show="ptItemMatrixGroup.name">
-        {{ptItemMatrixGroup.name}}
+        {{::ptItemMatrixGroup.name}}
     </div>
     <div class="item-matrix" data-ng-repeat="ptItemMatrix in ptItemMatrixGroup.ptItemMatrices">
         <div class="item-name">
-            {{ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, productName)}}
+            {{::ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, productName)}}
         </div>
         <table>
             <colgroup>
@@ -51,42 +51,45 @@
             <tbody>
                 <tr data-ng-repeat="ptItemMatrixRow in ptItemMatrix.ptItemMatrixRows">
                     <td class="customer-level">
-                        {{ptItemMatrixRow.customerLevel.displayName}}
+                        {{::ptItemMatrixRow.customerLevel.displayName}} ({{ptItemMatrixRow.customerLevel.value}})
                     </td>
                     <td>
-                        {{ptItemMatrixRow.superPT}}
+                        {{::ptItemMatrixRow.superPT | ptValue}}
                     </td>
                     <td>
-                        {{ptItemMatrixRow.masterPT}}
+                        {{::ptItemMatrixRow.masterPT | ptValue}}
                     </td>
                     <td>
-                        {{ptItemMatrixRow.agentPT}}
+                        {{::ptItemMatrixRow.agentPT | ptValue}}
                     </td>
                     <td>
-                        {{ptItemMatrixRow.autoSuperPT}}
+                        {{::ptItemMatrixRow.autoSuperPT | ptValue}}
                     </td>
-                    <td data-ng-switch="ptItemMatrixRow.isAutoSuperPT !== undefined">
-                        <input data-ng-switch-when="true" type="checkbox" value="ptItemMatrixRow.isAutoSuperPT" disabled="disabled" />
+                    <td>
+                        <input data-ng-show="ptItemMatrixRow.isAutoSuperPT != null" type="checkbox" data-ng-model="ptItemMatrixRow.isAutoSuperPT" disabled="disabled" />
                     </td>
-                    <td data-ng-switch="ptItemMatrixRow.customerLevel=='Master' && ptMatrix.isAllowMasterAutoPT">
+                    <td data-ng-switch="ptItemMatrixRow.isMasterLevel"
+                        data-ng-class="{'pt-icon': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT}">
                         <div data-ng-switch-when="true">
-                            <div class="icon-auto-pt">
+                            <div data-ng-class="{'icon-auto-pt': ptMatrix.isAllowMasterAutoPT, 'icon-not-auto-pt': !ptMatrix.isAllowMasterAutoPT}">
                             </div>
                         </div>
                         <div data-ng-switch-when="false">
-                            {{ptItemMatrixRow.autoMasterPT}}
+                            {{::ptItemMatrixRow.autoMasterPT | ptValue}}
                         </div>
                     </td>
-                    <td data-ng-switch="ptItemMatrixRow.customerLevel==3 && ptMatrix.isAllowMasterAutoPT"
-                        data-ng-class="{'auto-pt': ptItemMatrixRow.customerLevel==3 && ptMatrix.isAllowMasterAutoPT}">
-                        <div data-ng-switch-when="false">
-                            <div data-ng-switch="ptItemMatrixRow.isAutoMasterPT !== undefined">
-                                <input data-ng-switch-when="true" type="checkbox" value="ptItemMatrixRow.isAutoMasterPT" disabled="disabled" />
+                    <td data-ng-switch="ptItemMatrixRow.isMasterLevel"
+                        data-ng-class="{'pt-icon': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, 'pt-icon not-allow': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT}">
+                        <div data-ng-switch-when="true">
+                            <div data-ng-class="{'icon-auto-pt': ptMatrix.isAllowMasterAutoPT, 'icon-not-auto-pt': !ptMatrix.isAllowMasterAutoPT}">
                             </div>
+                        </div>
+                        <div data-ng-switch-when="false">
+                            <input data-ng-show="ptItemMatrixRow.isAutoMasterPT != null" type="checkbox" data-ng-model="ptItemMatrixRow.isAutoMasterPT" disabled="disabled" />
                         </div>
                     </td>
                     <td>
-                        {{ptItemMatrixRow.minPT}}
+                        {{::ptItemMatrixRow.minPT | ptValue}}
                     </td>
                 </tr>
             </tbody>

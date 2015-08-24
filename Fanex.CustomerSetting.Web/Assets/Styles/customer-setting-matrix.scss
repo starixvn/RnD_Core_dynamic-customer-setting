@@ -3,20 +3,13 @@
 $background-color: #e6e9f0;
 $block-background-color: #fff;
 $border-color: #7c98a4;
-$button-backround-color1: #8594a2;
-$button-backround-color2: #344d61;
-$table-head-background-color: #cadceb;
-$button-backround-color3: #8594a2;
+$table-head-background-color: #b5c4d0;
 $button-text-color: #fff;
 $item-background-color: #66afe9;
-$header-color: #b5c4d0;
-$input-border-color: #aeaeae;
-$invalid-border-color: rgba(233, 50, 45, 0.85);
-$invalid-color: #e9322d;
-$sub-group-background-color: #cadceb;
-$success-color: #618e11;
-$warning-color: #c28f06;
-$error-color: $invalid-color; // #f40000;
+$button-backround-color1: #8594a2;
+$button-backround-color2: #344d61;
+$button-backround-color3: #8594a2;
+$hover-background-color: #e2f3d1;
 
 body {
     font: {
@@ -27,25 +20,18 @@ body {
     position: relative;
 }
 
-input[type=checkbox] {
-    &.invalid {
-        outline: 1px solid $invalid-color;
-    }
+
+input[type=text], select {
+    font-size: 11px;
 }
 
-
-
-input[type=text] {
-    width: 100%;
-
-    &.has-constraint {
-        display: inline-block;
-        width: 50%;
-    }
-
-    &.number {
-        text-align: right;
-    }
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
 }
 
 
@@ -59,9 +45,9 @@ button {
     cursor: pointer;
     font-weight: bold;
     font-size: 11px;
-    line-height: 16px;
+    line-height: 14px;
     min-width: 70px;
-    padding: 4px 12px;
+    padding: 4px 10px;
     text-align: center;
     vertical-align: middle;
 }
@@ -91,6 +77,16 @@ ul {
             li {
                 margin-right: 10px;
                 font-weight: bold;
+
+                label {
+                    cursor: pointer;
+
+                    input {
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin: 0 5px 0 0;
+                    }
+                }
             }
         }
 
@@ -119,13 +115,13 @@ ul {
         padding: 10px;
 
         .customer-line {
-            margin: 0 0 10px 0;
+            margin: 0 0 20px 0;
 
             ul {
                 li {
-
-                    a {
-                        margin: 0 5px 0 0;
+                    & + li:before {
+                        padding: 0 5px;
+                        content: ">";
                     }
                 }
             }
@@ -145,7 +141,33 @@ ul {
                 .item-name {
                     padding: 5px;
                     background-color: $item-background-color;
+                    font-weight: bold;
                 }
+
+                .pt-icon {
+                    background: #EEECEE;
+
+                    &.not-allow {
+                        background: #fce9fb;
+                    }
+
+
+                    .icon-auto-pt {
+                        background: url("images/auto-pt.gif") no-repeat center #EEECEE;
+                        width: 15px;
+                        height: 14px;
+                        margin: 0 auto;
+                    }
+
+                    .icon-not-auto-pt {
+                        background: url("images/not-allow-auto-pt.gif") no-repeat center #fce9fb;
+                        width: 8px;
+                        height: 14px;
+                        margin: 0 auto;
+                    }
+                }
+
+
 
                 table, tr, td, th {
                     border: 1px solid $border-color;
@@ -161,8 +183,18 @@ ul {
                         text-align: center;
                     }
 
+                    th, td {
+                        height: 25px;
+                    }
+
+                    tr:hover, tr:hover td {
+                        background-color: $hover-background-color;
+                    }
+
                     .customer-level {
                         text-align: left;
+                        font-weight: bold;
+                        background-color: $table-head-background-color;
                     }
                 }
             }
