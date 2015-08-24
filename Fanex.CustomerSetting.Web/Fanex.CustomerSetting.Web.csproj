@@ -181,6 +181,7 @@
     </Content>
     <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\customer-setting-matrix.htm" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.htm" />
@@ -231,6 +232,7 @@
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType4.Template1\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\App\SettingType4.Template1\settingtype4-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\parameters.ts" />

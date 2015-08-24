@@ -147,6 +147,10 @@ ul li {
   margin: 0 0 20px 0;
 }
 
+.container .main-content .customer-line ul li {
+  font-weight: bold;
+}
+
 .container .main-content .customer-line ul li + li:before {
   padding: 0 5px;
   content: ">";

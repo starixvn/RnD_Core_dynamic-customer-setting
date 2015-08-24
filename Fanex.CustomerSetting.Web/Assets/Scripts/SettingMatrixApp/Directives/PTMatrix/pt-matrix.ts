@@ -21,7 +21,7 @@ module CustomerSettingMatrix {
         constructor(appConfigService: AppConfigService) {
             this.appConfigService = appConfigService;
             this.restrict = "A";
-            this.templateUrl = this.appConfigService.resolveRootUrl("app/customerSettingMatrix/directives/ptmatrix/pt-matrix.htm");
+            this.templateUrl = "Directives/PTMatrix/pt-matrix.htm";
         }
     }
 

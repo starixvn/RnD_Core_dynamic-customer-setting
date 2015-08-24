@@ -99,17 +99,6 @@
                    .pipe(gulp.dest(publishPaths.customerSetting));
     });
 
-    gulp.task("publish-matrix-template", function () {
-        var minifyHTML = require("gulp-minify-html");
-
-        return gulp.src([
-                            assetPaths.settingMatrixApp + "*.htm",
-                            assetPaths.settingMatrixApp + "/**/*.htm"
-                        ])
-                   .pipe(minifyHTML({ empty: true }))
-                   .pipe(gulp.dest(publishPaths.customerSettingMatrix));
-    });
-
     // When using gulp-sass to compile scss, it will use libSasss which will make the compass' functions in wrong results.
     // We can fix it by gulp-ruby-sass, which uses Ruby as runtime compiler but it needs the Ruby gem be installed on the building machine.
     gulp.task("publish-styles2", function () {
@@ -211,6 +200,9 @@
         callback.call();
     });
 
+
+    gulp.task("publish-script", ["publish-core-script", "publish-modules-script"]);
+
     gulp.task("publish-matrix-script", function () {
         var concat = require("gulp-concat");
         var gulpif = require("gulp-if");
@@ -243,7 +235,15 @@
             .pipe(gulp.dest(publishPaths.customerSettingMatrix));
     });
 
-    gulp.task("publish-script", ["publish-core-script", "publish-modules-script"]);
+    gulp.task("publish-matrix-template", function () {
+        var minifyHTML = require("gulp-minify-html");
+
+        return gulp.src([
+                            assetPaths.settingMatrixApp + "*.htm"
+        ])
+                   .pipe(minifyHTML({ empty: true }))
+                   .pipe(gulp.dest(publishPaths.customerSettingMatrix));
+    });
 
     gulp.task("publish-matrix", ["publish-matrix-template", "publish-matrix-script", "publish-matrix-styles"]);
 

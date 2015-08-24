@@ -20,7 +20,7 @@ module CustomerSettingMatrix {
         constructor(appConfigService: AppConfigService) {
             this.appConfigService = appConfigService;
             this.restrict = "A";
-            this.templateUrl = this.appConfigService.resolveRootUrl("app/customerSettingMatrix/directives/commissionmatrix/commission-matrix.htm");
+            this.templateUrl = "Directives/CommissionMatrix/commission-matrix.htm";
         }
     }
 

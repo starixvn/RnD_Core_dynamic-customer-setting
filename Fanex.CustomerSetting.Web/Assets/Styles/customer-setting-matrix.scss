@@ -142,6 +142,8 @@ ul {
 
             ul {
                 li {
+                    font-weight: bold;
+
                     & + li:before {
                         padding: 0 5px;
                         content: ">";

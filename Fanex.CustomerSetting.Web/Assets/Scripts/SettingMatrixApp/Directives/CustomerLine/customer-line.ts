@@ -23,7 +23,7 @@ module CustomerSettingMatrix {
 
             this.appConfigService = appConfigService;
             this.restrict = "A";
-            this.templateUrl = this.appConfigService.resolveRootUrl("app/customerSettingMatrix/directives/customerline/customer-line.htm");
+            this.templateUrl = "Directives/CustomerLine/customer-line.htm";
         }
     }
 

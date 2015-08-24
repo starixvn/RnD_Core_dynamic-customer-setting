@@ -15,7 +15,7 @@ module CustomerSettingMatrix {
             };
         }
 
-        public templateUrl: string = "app/customerSettingMatrix/directives/BlockUI/block-ui.htm";
+        public templateUrl: string = "Directives/BlockUI/block-ui.htm";
     }
 
 
