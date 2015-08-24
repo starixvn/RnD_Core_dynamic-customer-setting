@@ -47,10 +47,10 @@ module CustomerSettingMatrix {
             this.commissionItemMatrixRows = commissionItemMatrix.commissionItemMatrixRows.map((itemMatrixRow: any) => new CommissionItemMatrixRow(itemMatrixRow));
         }
 
-        public getHeaderName(settingLevel: number) {
+        public getItemMatrixName(settingLevel: number) {
             switch (settingLevel) {
                 case SettingLevel.product:
-                    return "Commission";
+                    return SettingType.Commission.name;
                 case SettingLevel.sportType:
                     return this.sportTypeName;
                 case SettingLevel.betType:
@@ -73,7 +73,7 @@ module CustomerSettingMatrix {
             this.commissionItemMatrices = commissionMatrix.commissionItemMatrices.map((itemMatrix: any) => new CommissionItemMatrix(itemMatrix));
         }
 
-        public convertToDisplay() {
+        public groupDataBySettingLevel() {
             this.customerLevels = this.commissionItemMatrices[0].commissionItemMatrixRows.map((row: CommissionItemMatrixRow) => row.customerLevel);
             this.commissionItemMatrixGroups = new Array<CommissionItemMatrixGroup>();
 

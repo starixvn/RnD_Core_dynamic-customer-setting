@@ -69,12 +69,18 @@
             this.settingLevel = settingTypeMatrix.settingLevel;
         }
 
-        public convertToDisplay() { }
+        public get isSportTypeBetTypeSettingLevel(): boolean {
+            return this.settingLevel === SettingLevel.sportTypeBetType;
+        }
+
+        public groupDataBySettingLevel() { }
     }
 
     export class SettingType {
         public id: number;
         public name: string;
+        static PositionTaking = new SettingType(1, "Position Taking");
+        static Commission = new SettingType(3, "Commission");
 
         constructor(settingTypeId: number, settingTypeName: string) {
             this.id = settingTypeId;
@@ -82,4 +88,5 @@
         }
     }
 
+     
 }

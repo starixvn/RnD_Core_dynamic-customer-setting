@@ -39,7 +39,7 @@ module CustomerSettingMatrix {
             this.ptItemMatrices = ptMatrix.ptItemMatrices.map((itemMatrix: any) => new PTItemMatrix(itemMatrix));
         }
 
-        public convertToDisplay() {
+        public groupDataBySettingLevel() {
             this.ptItemMatrixGroups = new Array<PTItemMatrixGroup>();
 
             switch (this.settingLevel) {
@@ -57,18 +57,18 @@ module CustomerSettingMatrix {
                     var ptItemLength = this.ptItemMatrices.length;
                     var currentPTMatrixGroup: PTItemMatrixGroup;
                     for (var i = 0; i < ptItemLength; i++) {
-                        var ptItem = this.ptItemMatrices[i];
-                        if (ptItem.sportTypeId != sportId) {
+                        var ptItemMatrix = this.ptItemMatrices[i];
+                        if (ptItemMatrix.sportTypeId != sportId) {
                             currentPTMatrixGroup = new PTItemMatrixGroup();
-                            currentPTMatrixGroup.id = ptItem.sportTypeId;
+                            currentPTMatrixGroup.id = ptItemMatrix.sportTypeId;
                             currentPTMatrixGroup.ptItemMatrices = new Array<PTItemMatrix>();
-                            currentPTMatrixGroup.name = ptItem.sportTypeName;
+                            currentPTMatrixGroup.name = ptItemMatrix.sportTypeName;
                             currentPTMatrixGroup.settingLevel = this.settingLevel;
-                            sportId = ptItem.sportTypeId;
+                            sportId = ptItemMatrix.sportTypeId;
                             this.ptItemMatrixGroups.push(currentPTMatrixGroup);
                         }
 
-                        currentPTMatrixGroup.ptItemMatrices.push(ptItem);
+                        currentPTMatrixGroup.ptItemMatrices.push(ptItemMatrix);
                     }
 
                     break;
@@ -90,17 +90,19 @@ module CustomerSettingMatrix {
         }
 
         public getItemMatrixName(settingLevel: number, product: Product) {
+            var itemMatrixName: string = "";
+
             switch (settingLevel) {
                 case SettingLevel.product:
-                    return product.name + (this.isLive ? " (Live)" : "");
+                    itemMatrixName = product.name;
                 case SettingLevel.sportType:
-                    return this.sportTypeName;
+                    itemMatrixName = this.sportTypeName;
                 case SettingLevel.betType:
                 case SettingLevel.sportTypeBetType:
-                    return this.betTypeName;
+                    itemMatrixName = this.betTypeName;
             }
 
-            return "";
+            return itemMatrixName + (this.isLive ? " (Live)" : "");
         }
     }
 

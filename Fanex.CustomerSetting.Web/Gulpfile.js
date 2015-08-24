@@ -102,11 +102,10 @@
     gulp.task("publish-matrix-template", function () {
         var minifyHTML = require("gulp-minify-html");
 
-        gulp.src(assetPaths.settingMatrixApp + "/**/*.htm")
-                   .pipe(minifyHTML({ empty: true }))
-                   .pipe(gulp.dest(publishPaths.customerSettingMatrix));
-
-        return gulp.src(assetPaths.settingMatrixApp + "*.htm")
+        return gulp.src([
+                            assetPaths.settingMatrixApp + "*.htm",
+                            assetPaths.settingMatrixApp + "/**/*.htm"
+                        ])
                    .pipe(minifyHTML({ empty: true }))
                    .pipe(gulp.dest(publishPaths.customerSettingMatrix));
     });
@@ -222,7 +221,10 @@
         var ts = require("gulp-typescript");
         var uglify = require("gulp-uglify");
 
-        gulp.src(assetPaths.settingMatrixApp + "**")
+        gulp.src(
+            [
+                assetPaths.settingMatrixApp + "**"
+            ])
             .pipe(gulpif(/[.]ts$/, ts({
                 typescript: require("typescript"),
                 target: "ES5",

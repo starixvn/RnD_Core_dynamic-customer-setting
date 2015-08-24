@@ -34,6 +34,29 @@ input[type=text], select {
     display: none !important;
 }
 
+%overlay {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.block-overlay {
+    @extend %overlay;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.block-loading {
+    background: url(images/loading.gif) no-repeat center center;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 101;
+}
 
 button {
     @include background-image(linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3));

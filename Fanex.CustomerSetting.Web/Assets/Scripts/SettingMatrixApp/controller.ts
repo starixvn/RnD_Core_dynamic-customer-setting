@@ -46,7 +46,6 @@ module CustomerSettingMatrix {
         private appConfigService: AppConfigService;
         private $window: ng.IWindowService;
 
-
         constructor(
             $scope: ng.IScope,
             $http: ng.IHttpService,
@@ -60,8 +59,8 @@ module CustomerSettingMatrix {
             this.$window = $window;
 
             this.appConfigService = appConfigService;
-            this.settingTypes = [new SettingType(1, "PT Matrix"), new SettingType(3, "Commission Matrix")];
-            this.settingTypeId = this.settingTypes[0].id;
+            this.settingTypes = [SettingType.PositionTaking, SettingType.Commission];
+            this.settingTypeId = SettingType.PositionTaking.id;
             this.customerName = this.$window["customerName"];
             this.queryProductNames();
         }
@@ -105,14 +104,14 @@ module CustomerSettingMatrix {
 
                 this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
                 switch (this.settingTypeId) {
-                    case 1:
+                    case SettingType.PositionTaking.id:
                         this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
                         break;
-                    case 3:
+                    case SettingType.Commission.id:
                         this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
                         break;
                 }
-                this.settingTypeMatrix.convertToDisplay();
+                this.settingTypeMatrix.groupDataBySettingLevel();
             })
                 .finally(() => {
                 this.isUIblocked = false;
