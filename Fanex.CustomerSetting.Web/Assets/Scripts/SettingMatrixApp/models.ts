@@ -79,7 +79,7 @@
     export class SettingType {
         public id: number;
         public name: string;
-        static PositionTaking = new SettingType(1, "Position Taking");
+        static PositionTaking = new SettingType(1, "PositionTaking");
         static Commission = new SettingType(3, "Commission");
 
         constructor(settingTypeId: number, settingTypeName: string) {

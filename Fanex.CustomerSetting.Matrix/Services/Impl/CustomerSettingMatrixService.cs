@@ -5,6 +5,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Models.Enumerations;
+    using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.NAP.Framework.Data;
@@ -62,7 +63,7 @@
                     return _commissionMatrixService.GetCommissionMatrix(productId, customerName);
 
                 default:
-                    throw new InvalidOperationException("Invalid setting type id");
+                    throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
         }
     }

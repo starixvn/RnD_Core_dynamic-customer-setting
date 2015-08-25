@@ -6,8 +6,6 @@
 module CustomerSettingMatrix {
 
     export class CommissionMatrixDirective implements ng.IDirective {
-        public static $inject: string[] = ["appConfigService"];
-
         public restrict: string;
         public templateUrl: string;
         public scope =
@@ -15,10 +13,7 @@ module CustomerSettingMatrix {
             commissionMatrix: '=settingTypeMatrix'
         };
 
-        private appConfigService: AppConfigService;
-
-        constructor(appConfigService: AppConfigService) {
-            this.appConfigService = appConfigService;
+        constructor() {
             this.restrict = "A";
             this.templateUrl = "Directives/CommissionMatrix/commission-matrix.htm";
         }

@@ -215,7 +215,7 @@
 
         gulp.src(
             [
-                assetPaths.settingMatrixApp + "**"
+                assetPaths.settingMatrixApp + "**/**.{ts,js,htm}"
             ])
             .pipe(gulpif(/[.]ts$/, ts({
                 typescript: require("typescript"),

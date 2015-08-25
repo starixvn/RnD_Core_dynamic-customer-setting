@@ -2,7 +2,7 @@
 <html data-ng-app="customerSettingMatrix">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Setting Matrix</title>
     <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/CustomerSettingMatrix/styles/customer-setting-matrix.min.css?v={{version}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingMatrixController as ctrl">
@@ -10,11 +10,10 @@
         <div class="header">
             <ul class="setting-type-nav">
                 <li data-ng-repeat="settingType in ctrl.settingTypes"
-                    data-ng-click="ctrl.updateSettingTypeView(settingType.id)"
-                    data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
+                    data-ng-click="ctrl.updateSettingTypeView(settingType.id)">
                     <label>
-                        <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{settingType.id}}">
-                        {{settingType.name}}
+                        <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{::settingType.id}}">
+                        {{::settingType.name | label}}
                     </label>
                 </li>
             </ul>
@@ -22,20 +21,20 @@
             <div class="matrix-form">
                 <div class="form-control">
                     <label for="product">
-                        Product
+                        {{'Product' | label}}
                     </label>
                     <select name="product" data-ng-model="ctrl.product" data-ng-options="product.name for product in ctrl.products"></select>
                 </div>
                 <div class="form-control">
                     <label for="userName">
-                        Username
+                        {{'Username' | label}}
                     </label>
                     <input name="userName" type="text" data-ng-model="ctrl.customerName" />
 
                 </div>
                 <div class="form-control">
                     <button type="button" data-ng-click="ctrl.querySettingMatrix(ctrl.customerName)">
-                        Submit
+                        {{'Submit' | label}}
                     </button>
                 </div>
             </div>

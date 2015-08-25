@@ -18,6 +18,5 @@ module CustomerSettingMatrix {
         public templateUrl: string = "Directives/BlockUI/block-ui.htm";
     }
 
-
     ModuleRegister.directive("blockUi", BlockUiDirective);
 }

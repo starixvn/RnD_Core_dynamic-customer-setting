@@ -6,8 +6,6 @@
 module CustomerSettingMatrix {
 
     export class CustomerLineDirective implements ng.IDirective {
-        public static $inject: string[] = ["appConfigService"];
-
         public restrict: string;
         public templateUrl: string;
         public scope =
@@ -17,11 +15,7 @@ module CustomerSettingMatrix {
             querySettingMatrix: '&'
         };
 
-        private appConfigService: AppConfigService;
-
-        constructor(appConfigService: AppConfigService) {
-
-            this.appConfigService = appConfigService;
+        constructor() {
             this.restrict = "A";
             this.templateUrl = "Directives/CustomerLine/customer-line.htm";
         }

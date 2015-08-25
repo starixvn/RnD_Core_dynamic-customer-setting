@@ -58,7 +58,7 @@
             byte productId = 1;
 
             //// Act
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
                     () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
         }

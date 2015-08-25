@@ -6,8 +6,6 @@
 module CustomerSettingMatrix {
 
     export class PtMatrix implements ng.IDirective {
-        public static $inject: string[] = ["appConfigService"];
-
         public restrict: string;
         public templateUrl: string;
         public scope =
@@ -16,10 +14,7 @@ module CustomerSettingMatrix {
             product: '='
         };
 
-        private appConfigService: AppConfigService;
-
-        constructor(appConfigService: AppConfigService) {
-            this.appConfigService = appConfigService;
+        constructor() {
             this.restrict = "A";
             this.templateUrl = "Directives/PTMatrix/pt-matrix.htm";
         }

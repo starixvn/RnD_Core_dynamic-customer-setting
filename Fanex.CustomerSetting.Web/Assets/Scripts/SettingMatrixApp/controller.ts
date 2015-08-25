@@ -16,7 +16,8 @@ module CustomerSettingMatrix {
             "$http",
             "$timeout",
             "$window",
-            "appConfigService"];
+            "appConfigService",
+            "resourceService"];
 
         public isUIblocked: boolean;
         public errorMessage: string;
@@ -45,20 +46,23 @@ module CustomerSettingMatrix {
         private $timeout: ng.ITimeoutService;
         private appConfigService: AppConfigService;
         private $window: ng.IWindowService;
+        private resourceService: ResourceService;
 
         constructor(
             $scope: ng.IScope,
             $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
             $window: ng.IWindowService,
-            appConfigService: AppConfigService) {
+            appConfigService: AppConfigService,
+            resourceService: ResourceService) {
 
             this.$scope = $scope;
             this.$http = $http;
             this.$timeout = $timeout;
             this.$window = $window;
-
             this.appConfigService = appConfigService;
+            this.resourceService = resourceService;
+
             this.settingTypes = [SettingType.PositionTaking, SettingType.Commission];
             this.settingTypeId = SettingType.PositionTaking.id;
             this.customerName = this.$window["customerName"];
@@ -92,6 +96,10 @@ module CustomerSettingMatrix {
         }
 
         public querySettingMatrix(customerName: string): void {
+            if (customerName == "") {
+                return;
+            }
+
             var querySettingMatrix = new QuerySettingMatrix(
                 this.settingTypeId,
                 this.product.id,
@@ -124,7 +132,7 @@ module CustomerSettingMatrix {
                     this.settingTypeMatrix.groupDataBySettingLevel();
                 }
                 catch (e) {
-                    this.handleError("This setting type matrix is error, please notify your administrator.");
+                    this.handleError(this.resourceService.getMessage("SettingMatrixIsError"));
                 }
             })
                 .finally(() => {

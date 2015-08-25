@@ -1,10 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
+    using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.NAP.Framework.Data;
 
@@ -107,6 +109,11 @@
                 {
                     UserName = customerName
                 });
+
+            if(!customerLineDto.CustId.HasValue)
+            {
+                throw new InvalidOperationException(Message.UsernameDoesNotExist);
+            }
 
             return customerLineDto;
         }

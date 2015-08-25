@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
+    using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -68,7 +69,7 @@
 
             if (commissionSettingType == null)
             {
-                throw new InvalidOperationException("This product does not have commission setting.");
+                throw new InvalidOperationException(Message.ProductDoesNotHaveCommissionSetting);
             }
 
             return commissionSettingType;

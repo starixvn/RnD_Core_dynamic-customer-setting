@@ -53,11 +53,7 @@ input[type=text], select {
 }
 
 button {
-  background-image: -owg(compact(linear-gradient(#8594a2, #344d61, #8594a2), false, false, false, false, false, false, false, false, false));
-  background-image: -webkit(compact(linear-gradient(#8594a2, #344d61, #8594a2), false, false, false, false, false, false, false, false, false));
-  background-image: -moz(compact(linear-gradient(#8594a2, #344d61, #8594a2), false, false, false, false, false, false, false, false, false));
-  background-image: -o(compact(linear-gradient(#8594a2, #344d61, #8594a2), false, false, false, false, false, false, false, false, false));
-  background-image: compact(linear-gradient(#8594a2, #344d61, #8594a2), false, false, false, false, false, false, false, false, false);
+  background-image: linear-gradient(#8594a2, #344d61, #849ba8);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -68,11 +64,12 @@ button {
   border: 0;
   color: #fff;
   cursor: pointer;
+  float: right;
   font-weight: bold;
   font-size: 11px;
-  line-height: 14px;
+  line-height: 16px;
   min-width: 70px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   text-align: center;
   vertical-align: middle;
 }
@@ -161,7 +158,7 @@ ul li {
   display: inline-block;
   line-height: 15px;
   padding-left: 10px;
-  color: #c28f06;
+  color: #e9322d;
 }
 
 .container .main-content {
@@ -191,6 +188,10 @@ ul li {
   border: 1px solid #7c98a4;
 }
 
+.container .main-content .group-matrix.group-matrix-setting-level-4 .group-name {
+  border-width: 0 0 1px 0;
+}
+
 .container .main-content .group-matrix .group-name {
   padding: 5px 10px;
   font-weight: bold;
@@ -207,8 +208,7 @@ ul li {
   margin: 20px;
 }
 
-.container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4
-.item-name {
+.container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4 .item-name {
   background-color: #eeecee;
 }
 

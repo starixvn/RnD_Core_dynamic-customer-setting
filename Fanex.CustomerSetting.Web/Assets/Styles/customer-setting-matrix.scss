@@ -8,9 +8,9 @@ $button-text-color: #fff;
 $item-background-color: #66afe9;
 $button-backround-color1: #8594a2;
 $button-backround-color2: #344d61;
-$button-backround-color3: #8594a2;
+$button-backround-color3: #849ba8;
 $hover-background-color: #e2f3d1;
-$warning-color: #c28f06;
+$invalid-color: #e9322d;
 
 body {
     font: {
@@ -60,20 +60,25 @@ input[type=text], select {
 }
 
 button {
-    @include background-image(linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3));
-    @include border-radius(3px);
-    background-color: $button-backround-color2;
-    background-repeat: no-repeat;
-    border: 0;
-    color: $button-text-color;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 11px;
-    line-height: 14px;
-    min-width: 70px;
-    padding: 4px 10px;
-    text-align: center;
-    vertical-align: middle;
+  background-image: linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background-color: $button-backround-color2;
+  background-repeat: no-repeat;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 16px;
+  min-width: 70px;
+  padding: 4px 12px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 ul {
@@ -134,32 +139,32 @@ ul {
     }
 
     .error-message-container {
-            @include box-sizing(border-box);
-            border: solid 1px $border-color;
-            background-color: #f6f5f2;
-            font-weight: bold;
-            margin-bottom: 10px;
+        @include box-sizing(border-box);
+        border: solid 1px $border-color;
+        background-color: #f6f5f2;
+        font-weight: bold;
+        margin-bottom: 10px;
 
-            .error-icon {
-                background: {
-                    image: url("Images/sprite.png");
-                    position: -51px 0;
-                    repeat: no-repeat;
-                }
-
-                display: inline-block;
-                height: 16px;
-                width: 13px;
-                vertical-align: middle;
+        .error-icon {
+            background: {
+                image: url("Images/sprite.png");
+                position: -51px 0;
+                repeat: no-repeat;
             }
 
-            .content {
-                display: inline-block;
-                line-height: 15px;
-                padding-left: 10px;
-                color: $warning-color;
-            }
+            display: inline-block;
+            height: 16px;
+            width: 13px;
+            vertical-align: middle;
         }
+
+        .content {
+            display: inline-block;
+            line-height: 15px;
+            padding-left: 10px;
+            color: $invalid-color;
+        }
+    }
 
     .main-content {
         border: 1px solid $border-color;
@@ -184,11 +189,14 @@ ul {
         .group-matrix {
             margin: 5px 0;
 
-            &.group-matrix-setting-level-4
-            {
+            &.group-matrix-setting-level-4 {
                 border: 1px solid $border-color;
+
+                .group-name {
+                    border-width: 0 0 1px 0;
+                }
             }
-            
+
             .group-name {
                 padding: 5px 10px;
                 font-weight: bold;
@@ -200,12 +208,10 @@ ul {
             .item-matrix {
                 border: 1px solid $border-color;
 
-                &.item-matrix-setting-level-4
-                {
+                &.item-matrix-setting-level-4 {
                     margin: 20px;
 
-                    .item-name
-                    {
+                    .item-name {
                         background-color: #eeecee;
                     }
                 }

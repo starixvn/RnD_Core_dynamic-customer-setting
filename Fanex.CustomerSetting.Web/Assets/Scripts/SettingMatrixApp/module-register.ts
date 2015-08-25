@@ -15,10 +15,6 @@ module CustomerSettingMatrix {
             app.service(name, target);
         }
 
-        public static factory(name: string, target: Function) {
-            app.factory(name, target);
-        }
-
         public static filter(name: string, target: Function) {
             app.filter(name, target);
         }
@@ -33,11 +29,6 @@ module CustomerSettingMatrix {
             directiveFactory.$inject = target.$inject;
             app.directive(name, directiveFactory);
         }
-
-        public static value(name: string, target: Object) {
-            app.value(name, target);
-        }
-
 
     }
 

@@ -48,7 +48,6 @@ module CustomerSettingMatrix {
 
     ModuleRegister.service("appConfigService", AppConfigService);
 
-    
     function PTValue() {
         return (numberValue: number) => {
             if (numberValue != null) {

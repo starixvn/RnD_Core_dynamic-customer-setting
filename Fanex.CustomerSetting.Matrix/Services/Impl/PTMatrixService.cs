@@ -8,6 +8,7 @@
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
+    using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
@@ -53,7 +54,7 @@
 
             if (ptSettingType == null)
             {
-                throw new InvalidOperationException("This product does not have position taking setting.");
+                throw new InvalidOperationException(Message.ProductDoesNotHavePTSetting);
             }
 
             return ptSettingType;
