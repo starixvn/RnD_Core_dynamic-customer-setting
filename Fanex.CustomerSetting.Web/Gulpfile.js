@@ -1,10 +1,11 @@
-﻿/// <vs BeforeBuild='publish' SolutionOpened='modules:compile' />
+/// <vs SolutionOpened='modules:compile, clean' />
 (function (require) {
     "use strict";
 
     var gulp = require("gulp");
     var path = require("path");
     var rimraf = require("rimraf");
+    var runSequence = require("run-sequence");
     var util = require("gulp-util");
     var wrench = require("wrench");
 
@@ -15,9 +16,14 @@
         scripts: "Scripts",
         styles: "Styles",
         publish: "Publish",
+        packages: [
+            "CustomerSetting",
+            "CustomerSetting.IE8"
+        ],
         apps: [
             "App",
-            "App.IE8"
+            "App.IE8",
+            "SettingMatrixApp"
         ],
         specs: [
             "Specs",
@@ -27,11 +33,6 @@
             bower: "bower.json",
             tslint: "tslint.json",
             tsd: "gulp-tsd.json"
-        },
-        publishModules: {
-            ie8: "IE8",
-            modernBrowsers: "ModernBrowsers",
-            styles: "Styles"
         },
         errorHandler: function (title) {
             return function (error) {
@@ -54,8 +55,7 @@
     gulp.task("install", ["libraries:install", "tsd:install"]);
 
     gulp.task("publish", ["clean"], function () {
-        gulp.start("styles:publish");
-        gulp.start("scripts:publish");
+        runSequence(["styles:publish", "scripts:publish", "ie8:scripts:publish"], "matrix:publish");
     });
 
     gulp.task("default", ["install"], function () {

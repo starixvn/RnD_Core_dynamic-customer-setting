@@ -1,8 +1,6 @@
 ﻿"use strict";
 
 module.exports = function (configs) {
-    //require("typescript-require");
-
     var concat = require("gulp-concat");
     var embedTemplate = require("../Assets/Scripts/NodeModules/embeded-template.js");
     var fs = require("fs");
@@ -18,21 +16,45 @@ module.exports = function (configs) {
 
     var tsCompilingConfig = {
         typescript: require("typescript"),
-        target: "ES5",
+        target: "ES3",
         noImplicitAny: false,
         removeComments: true
     };
 
-    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "App/");
-    var destinationDir = path.join(process.cwd(), configs.root, configs.publish);
-    var tempDir = path.join(destinationDir, "Core/Temp");
+    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "App.IE8/");
+    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, "CustomerSetting.IE8");
+    var tempDir = path.join(sourceDir, "Core/Temp");
 
-    gulp.task("scripts:core:build", function (callback) {
+    gulp.task("ie8:libraries:combine", function () {
+        var libs = [
+            path.join(process.cwd(), configs.bower, "jquery/jquery.min.js"),
+            path.join(process.cwd(), configs.bower, "underscore/underscore-min.js"),
+            path.join(process.cwd(), configs.bower, "angular-legacy/angular.min.js"),
+            path.join(process.cwd(), configs.bower, "oclazyload/dist/ocLazyLoad.min.js")
+        ];
+
+        gulp.src(libs)
+            .pipe(concat("libraries.js"))
+            .pipe(gulp.dest(path.join(destinationDir, "Libraries")));
+    });
+
+    gulp.task("ie8:tricks:combine", function () {
+        var libs = [
+            path.join(process.cwd(), configs.bower, "es5-shim/es5-shim.min.js"),
+            path.join(process.cwd(), configs.bower, "html5shiv/dist/html5shiv.min.js")
+        ];
+
+        gulp.src(libs)
+            .pipe(concat("ie8tricks.js"))
+            .pipe(gulp.dest(path.join(destinationDir, "Libraries")));
+    });
+
+    gulp.task("ie8:scripts:core:build", function () {
         var source = path.join(sourceDir, "Core/**/*.{htm,js,ts}");
 
         return gulp.src(source)
                    .pipe(gulpif(/[.]ts$/, ts(tsCompilingConfig)))
-                   .pipe(gulpif(/[.]htm$/, minifyHTML({ empty: true })))
+                   .pipe(gulpif(/[.]htm$/, minifyHTML({ empty: true, quotes: true })))
                    .pipe(gulpif(/[.]htm$/, templateCache({
                        module: "customerSetting"
                    })))
@@ -40,7 +62,7 @@ module.exports = function (configs) {
                    .pipe(gulp.dest(tempDir));
     });
 
-    gulp.task("scripts:resource:build", function (callback) {
+    gulp.task("ie8:scripts:resource:build", function () {
         var source = path.join(sourceDir, "Resource/*.{js,ts}");
 
         return gulp.src(source)
@@ -49,7 +71,7 @@ module.exports = function (configs) {
                    .pipe(gulp.dest(tempDir));
     });
 
-    gulp.task("scripts:core:publish", ["scripts:core:build", "scripts:resource:build"], function () {
+    gulp.task("ie8:scripts:core:publish", ["ie8:scripts:core:build", "ie8:scripts:resource:build"], function () {
         var destination = path.join(destinationDir, "Core");
 
         return gulp.src(path.join(tempDir, "*.js"))
@@ -60,7 +82,7 @@ module.exports = function (configs) {
                    .pipe(gulp.dest(destination));
     });
 
-    gulp.task("scripts:modules:publish", function (callback) {
+    gulp.task("ie8:scripts:modules:publish", function (callback) {
         var modules = [];
         var reservedDirs = ["Core", "Resource"];
 
@@ -89,13 +111,22 @@ module.exports = function (configs) {
         callback.call();
     });
 
-    gulp.task("template:publish", function () {
+    gulp.task("ie8:template:publish", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
-                   .pipe(minifyHTML({ empty: true }))
+                   .pipe(minifyHTML({ empty: true, quotes: true }))
                    .pipe(gulp.dest(destinationDir));
     });
 
-    gulp.task("scripts:publish", ["scripts:core:publish", "scripts:modules:publish", "template:publish"], function (callback) {
-        rimraf(tempDir, callback);
-    });
+    gulp.task(
+        "ie8:scripts:publish",
+        [
+            "ie8:libraries:combine",
+            "ie8:tricks:combine",
+            "ie8:scripts:core:publish",
+            "ie8:scripts:modules:publish",
+            "ie8:template:publish"
+        ],
+        function (callback) {
+            rimraf(tempDir, callback);
+        });
 };

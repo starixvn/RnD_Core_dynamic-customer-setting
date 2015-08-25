@@ -56,6 +56,7 @@ module CustomerSetting {
 
             return isSuccessful;
         }
+
         public validate(): boolean {
             if (this.commRate > this.upline.commRate) {
                 this.validationState = new ValidationResult("CommRateCannotBeExceedMaxValue", "commRate");

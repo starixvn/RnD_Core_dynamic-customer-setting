@@ -57,11 +57,7 @@ module CustomerSetting {
 
         public templateUrl: string = "settingtype1-template1-select.htm";
 
-        public controller: any = [
-            "$scope",
-            "valueRangeService",
-            "positionTakingResourceService",
-            ($scope: IPositionTakingSelectScope, valueRangeService: ValueRangeService, positionTakingResourceService: PositionTakingResourceService) => {
+        public controller: any = ["$scope", "valueRangeService", ($scope: IPositionTakingSelectScope, valueRangeService: ValueRangeService) => {
                 $scope.divisor = Settingtype1Template1Config.roundingFactor;
 
                 $scope.$watchGroup(["min", "max"], (newData: number[], oldData: number[]) => {

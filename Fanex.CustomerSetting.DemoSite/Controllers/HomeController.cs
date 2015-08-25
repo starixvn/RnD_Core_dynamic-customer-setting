@@ -10,7 +10,14 @@
 
         public ActionResult Index()
         {
-            return View();
+            if (this.Request.Browser.Browser == "IE" && (this.Request.Browser.MajorVersion < 9))
+            {
+                return View("Index-IE8");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public JsonResult SaveSession(

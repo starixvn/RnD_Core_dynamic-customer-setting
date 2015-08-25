@@ -20,7 +20,9 @@ module CustomerSetting {
 
             this.$window = $window;
 
+            /* tslint:disable:no-string-literal */
             appConfig = this.$window["appConfig"] || {};
+            /* tslint:enable:no-string-literal */
 
             if (appConfig) {
                 this.rootUrl = appConfig.rootUrl;
@@ -113,7 +115,9 @@ module CustomerSetting {
         }
 
         private fetchParams(): void {
+            /* tslint:disable:no-string-literal */
             var params: any = this.$window["params"];
+            /* tslint:enable:no-string-literal */
 
             if (params) {
                 var uplineLevel = params.uplineLevel ? params.uplineLevel : undefined;

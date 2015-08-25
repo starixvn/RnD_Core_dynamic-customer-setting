@@ -206,15 +206,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.htm" />
-    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.js" />
-    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.min.js" />
-    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css" />
-    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.min.css" />
-    <Content Include="App\CustomerSettingMatrix\Styles\Images\auto-pt.gif" />
-    <Content Include="App\CustomerSettingMatrix\Styles\Images\loading.gif" />
-    <Content Include="App\CustomerSettingMatrix\Styles\Images\not-allow-auto-pt.gif" />
-    <Content Include="App\CustomerSettingMatrix\Styles\Images\sprite.png" />
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
@@ -223,13 +214,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="abc.js" />
     <Content Include="Gulpfile.js" />
-    <Content Include="Scripts\DemoForm\demo-form.js" />
+    <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
-    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -246,10 +233,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\CustomerSetting\*.*" />
-    <Content Include="App\CustomerSetting\**\*.*" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -263,25 +246,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\DemoForm.IE8\demo-form.ts" />
     <TypeScriptCompile Include="Scripts\DemoForm\demo-form.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />
-    <Content Include="abc.json" />
     <Content Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="package.json" />
-    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
+    <Content Include="Scripts\sample-data.json" />
+    <Content Include="Views\Home\Index-IE8.cshtml" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

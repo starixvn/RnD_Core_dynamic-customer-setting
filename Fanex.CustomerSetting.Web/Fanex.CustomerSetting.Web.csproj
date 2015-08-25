@@ -147,15 +147,73 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\App.IE8\" />
     <Folder Include="Assets\Scripts\Specs.IE8\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Scripts\App.IE8\Core\BlockUI\block-ui.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Core\CustomerInfo\customer-info.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Core\DefaultSettingBlock\copy-setting.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Core\SettingResult\setting-result.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Core\Tooltip\tooltip.htm" />
+    <Content Include="Assets\Scripts\App.IE8\customer-setting.htm" />
+    <Content Include="Assets\Scripts\App.IE8\Resource\customer-setting-resource.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-resource.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\Resource\customer-setting-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-resource.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\position-taking-resources.js">
+      <DependentUpon>position-taking-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\position-taking-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>position-taking-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtype1-template1-select.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\bet-setting-input.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\bet-setting-resources.js">
+      <DependentUpon>bet-setting-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\bet-setting-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bet-setting-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\settingtype2-template1.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType3.Template1\commission-resources.js">
+      <DependentUpon>commission-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType3.Template1\commission-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commission-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType3.Template1\settingtyp3-template1-drop.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType3.Template1\settingtype3-template1.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType4.Template1\product-status-resources.js">
+      <DependentUpon>product-status-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType4.Template1\product-status-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>product-status-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\App.IE8\SettingType4.Template1\settingtype4-template1.htm" />
     <Content Include="Assets\Scripts\App\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\App\Core\CustomerInfo\customer-info.htm" />
     <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\copy-setting.htm" />
     <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.htm" />
-    <Content Include="Assets\Scripts\App\Core\OcLazyLoad\ocLazyLoad.js" />
     <Content Include="Assets\Scripts\App\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\App\Core\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\App\customer-setting.htm" />
@@ -242,15 +300,43 @@
     <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
+    <Content Include="Gulp\build.ie8.js" />
     <Content Include="Gulp\libraries.js" />
     <Content Include="Gulp\node-module.js" />
-    <Content Include="Gulp\scripts.js" />
+    <Content Include="Gulp\build.js" />
+    <Content Include="Gulp\matrix.js" />
     <Content Include="Gulp\styles.js" />
     <Content Include="Gulp\tsd.js" />
     <Content Include="Gulp\tslint.js" />
     <Content Include="Gulp\watch.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\common.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\CustomerInfo\customer-info.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\DefaultSettingBlock\copy-setting.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\DefaultSettingBlock\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\module-registrater.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\SettingResult\setting-result.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\SettingType\setting-type-base-directive.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\SettingType\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Core\Tooltip\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType1.Template1\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType1.Template1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType2.Template1\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType3.Template1\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType4.Template1\product-status-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\App.IE8\SettingType4.Template1\settingtype4-template1.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />

@@ -1,0 +1,222 @@
+﻿<div>
+    <div data-default-setting-type-grouping class="setting-type-1"></div>
+    <div data-adjust-member-pt-modal></div>
+    <script type="text/ng-template" id="settingtyp1-template1-header.html">
+        <div class="empty-cell"></div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
+            <div class="w25-percent">{{'SuperMaxPT' | positionTakingLabel}}</div>
+            <div class="w25-percent">{{'MasterMaxPT' | positionTakingLabel}}</div>
+            <div class="w25-percent">{{'AgentMaxPT' | positionTakingLabel}}</div>
+            <div class="w25-percent last">{{'SuperMinPT' | positionTakingLabel}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+            <div class="w28-percent">{{'SuperPT' | positionTakingLabel}}</div>
+            <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+            <div class="w28-percent">{{'MasterMaxPT' | positionTakingLabel}}</div>
+            <div class="w28-percent last">{{'MasterMinPT' | positionTakingLabel}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+            <div class="w28-percent">{{'MasterPT' | positionTakingLabel}}</div>
+            <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+            <div class="w28-percent">{{'AgentMaxPT' | positionTakingLabel}}</div>
+            <div class="w28-percent last">{{'AgentMinPT' | positionTakingLabel}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent">
+            <div class="w28-percent">{{'SuperPT' | positionTakingLabel}}</div>
+            <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+            <div class="w28-percent">{{'MasterPT' | positionTakingLabel}}</div>
+            <div class="w28-percent last">{{'AgentPT' | positionTakingLabel}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent">
+            <div class="w42-percent">{{'MasterPT' | positionTakingLabel}}</div>
+            <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+            <div class="w42-percent last">{{'AgentPT' | positionTakingLabel}}</div>
+        </div>
+        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+            <div>{{'AgentPT' | positionTakingLabel}}</div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="settingtyp1-template1-value.html">
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
+            <div class="w25-percent">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="s4"
+                     data-min="{{0}}"
+                     data-max="{{item.defaultMaxPT}}">
+                </div>
+            </div>
+            <div class="w25-percent">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="m4"
+                     data-min="{{0}}"
+                     data-max="{{item.s4}}">
+                </div>
+            </div>
+            <div class="w25-percent">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="a4"
+                     data-min="{{0}}"
+                     data-max="{{item.m4}}">
+                </div>
+            </div>
+            <div class="w25-percent last">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="n4"
+                     data-min="{{0}}"
+                     data-max="{{item.s4}}">
+                </div>
+            </div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+            <div class="w28-percent" data-ng-show="item.iS3">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="uS3"
+                     data-min="{{0}}"
+                     data-max="{{item.s4}}">
+                </div>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iS3">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="s3"
+                     data-min="{{[0, item.n4 - item.m4] | maxValue}}"
+                     data-max="{{item.s4}}">
+                </div>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-ng-model="item.iS3"
+                           data-auto-position-taking
+                           data-ng-change="confirmUpdatingMemberPt(!item.iS3 && item.iS3 !== item.oldSetting.iS3, item.s4 - item.m3, 'isUpdateSuperPTOnMembers', 'superPTOnMembers')" />
+                </label>
+            </div>
+            <div class="w28-percent">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="m3"
+                     data-min="{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}"
+                     data-max="{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}">
+                </div>
+            </div>
+            <div class="w28-percent last">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="n3"
+                     data-min="{{0}}"
+                     data-max="{{item.m3}}">
+                </div>
+            </div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+            <div class="w28-percent" data-ng-show="item.iM2">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="uM2"
+                     data-min="{{0}}"
+                     data-max="{{item.m3}}">
+                </div>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iM2">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="m2"
+                     data-min="{{[0, item.n3 - item.a4] | maxValue}}"
+                     data-max="{{item.m3}}">
+                </div>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-ng-model="item.iM2"
+                           data-auto-position-taking
+                           data-ng-change="confirmUpdatingMemberPt(!item.iM2 && item.iM2 !== item.oldSetting.iM2, item.m3 - item.a2, 'isUpdateMasterPTOnMembers', 'masterPTOnMembers')" />
+                </label>
+            </div>
+            <div class="w28-percent">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="a2"
+                     data-min="{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}"
+                     data-max="{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}">
+                </div>
+            </div>
+            <div class="w28-percent last">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="n2"
+                     data-min="{{0}}"
+                     data-max="{{item.a2}}">
+                </div>
+            </div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent">
+            <div class="w28-percent" data-ng-show="item.iS1">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="uS1"
+                     data-min="{{[0, item.n4 - item.m1 - item.a1] | maxValue}}"
+                     data-max="{{item.s4}}">
+                </div>
+            </div>
+            <div class="w28-percent" data-ng-show="!item.iS1" data-ng-disabled="item.iS3">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="s1"
+                     data-min="{{[0, item.n4 - item.m1 - item.a1] | maxValue}}"
+                     data-max="{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}">
+                </div>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-show-modal="{{item.iS1}}"
+                           data-ng-model="item.iS1" />
+                </label>
+            </div>
+            <div class="w28-percent">{{item.m1}}</div>
+            <div class="w28-percent last">{{item.a1}}</div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent">
+            <div class="w42-percent" data-ng-show="item.iM1">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="uM1"
+                     data-min="{{[0, item.n3 - item.a1] | maxValue}}"
+                     data-max="{{item.m3}}">
+                </div>
+            </div>
+            <div class="w42-percent" data-ng-show="!item.iM1" data-ng-disabled="item.iM2">
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="m1"
+                     data-min="{{[0, item.n3 - item.a1] | maxValue}}"
+                     data-max="{{item.m3 - item.a1}}">
+                </div>
+            </div>
+            <div class="w16-percent">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           data-show-modal="{{item.iM1}}"
+                           data-ng-model="item.iM1" />
+                </label>
+            </div>
+            <div class="w42-percent last">{{item.a1}}</div>
+        </div>
+        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+            <div>
+                <div data-position-taking-select
+                     data-setting-item="item"
+                     data-field-name="a1"
+                     data-min="{{item.n2}}"
+                     data-max="{{item.a2}}">
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

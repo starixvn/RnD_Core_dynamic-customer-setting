@@ -13,6 +13,7 @@
     public class ViewCustomerSettingController : Controller
     {
         private const string TemplateCachingKey = "CustomerSettingTemplate";
+        private const string IE8TemplateCachingKey = "CustomerSettingIE8Template";
         private const byte CachingHours = 4;
         private readonly ICustomerSettingService _customerSettingService;
 
@@ -60,8 +61,20 @@
 
             if (string.IsNullOrEmpty(htmlContent))
             {
-                string filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");
+                var filePath = string.Empty;
+                var cachedKey = string.Empty;
                 var appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
+
+                if (this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9)
+                {
+                    filePath = Server.MapPath("~/App/CustomerSetting.IE8/customer-setting.htm");
+                    cachedKey = IE8TemplateCachingKey;
+                }
+                else
+                {
+                    filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");
+                    cachedKey = TemplateCachingKey;
+                }
 
                 htmlContent = System.IO.File.ReadAllText(filePath);
                 htmlContent = htmlContent.Replace("{{rootUrl}}", appConfig.RootUrl);
@@ -70,7 +83,7 @@
                 htmlContent = htmlContent.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
                 htmlContent = htmlContent.Replace("{{appConfig}}", JsonConverter.ToJson(appConfig));
 
-                cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
+                cache.Set(cachedKey, htmlContent, DateTime.Now.AddHours(CachingHours));
             }
 
             return htmlContent;

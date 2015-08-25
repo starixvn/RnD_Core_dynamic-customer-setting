@@ -115,6 +115,9 @@
     </div>
     <posting-to-iframe></posting-to-iframe>
     <div class="content">
-        <iframe id="setting-page" name="setting-page" class="content-frame"></iframe>
+        <iframe id="setting-page" name="setting-page" class="content-frame" frameborder="0"></iframe>
     </div>
 </div>
+@section scripts {
+    @Scripts.Render("~/bundles/js")
+}

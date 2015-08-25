@@ -1,0 +1,32 @@
+﻿<div>
+    <div class="block" data-ng-if="names">
+        <div class="header customer-names-header">{{names}}</div>
+    </div>
+    <div class="block info-block" data-ng-if="!names" data-ng-show="info">
+        <div class="header">{{"GeneralInformation" | label}}</div>
+        <div class="row">
+            <div class="col-1">{{"UserName" | label}}</div>
+            <div class="col-2">{{info.userName | naValue}}</div>
+            <div class="col-3">{{"Nickname" | label}}</div>
+            <div class="col-4">{{info.userName2 | naValue}}</div>
+        </div>
+        <div class="row">
+            <div class="col-1">{{"FirstName" | label}}</div>
+            <div class="col-2">{{info.firstName | naValue}}</div>
+            <div class="col-3">{{"Phone" | label}}</div>
+            <div class="col-4">{{info.phone | naValue}}</div>
+        </div>
+        <div class="row">
+            <div class="col-1">{{"LastName" | label}}</div>
+            <div class="col-2">{{info.lastName | naValue}}</div>
+            <div class="col-3">{{"MobilePhone" | label}}</div>
+            <div class="col-4">{{info.mobilePhone | naValue}}</div>
+        </div>
+        <div class="row last-row">
+            <div class="col-1">{{"Fax" | label}}</div>
+            <div class="col-2">{{info.fax | naValue}}</div>
+            <div class="col-3"></div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+</div>

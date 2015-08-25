@@ -26,6 +26,6 @@ module.exports = function (configs) {
 
     gulp.task("libraries:install", ["bower:install"], function () {
         gulp.start("compass:copy");
-        gulp.start("mocks:copy");
+        ////gulp.start("mocks:copy");
     });
 };

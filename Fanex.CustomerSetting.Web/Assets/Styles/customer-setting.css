@@ -33,8 +33,6 @@ textarea {
   font-family: Tahoma, Arial, helvetica, sans-serif;
   font-size: 11px;
   outline: none;
-  padding-left: 2px;
-  padding-right: 2px;
 }
 input:focus,
 button:focus,

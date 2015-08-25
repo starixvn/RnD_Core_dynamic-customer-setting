@@ -36,7 +36,7 @@ module CustomerSetting {
 
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    angular.forEach(settingType.settingItems, (item: ISettingItem, index: number) => {
+                    settingType.settingItems.forEach((item: ISettingItem, index: number) => {
                         if (angular.isDefined(item)) {
                             settingType.settingItems[index] = this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel);
                         }

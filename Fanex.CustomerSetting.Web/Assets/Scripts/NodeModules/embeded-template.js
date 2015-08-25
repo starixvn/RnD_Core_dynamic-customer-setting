@@ -19,7 +19,10 @@ function embedTemplate(options) {
     var templateBegin = new Buffer("template = \"");
     var templateEnd = new Buffer("\"");
     var defaultOptions = {
-        minimizeOptions: {},
+        minimizeOptions: {
+            empty: true,
+            quotes: true
+        },
         skipErrors: false,
         jsEncoding: "utf-8",
         templateEncoding: "utf-8"

@@ -6,8 +6,9 @@ module.exports = function (configs) {
 
     var sourceDir = path.join(process.cwd(), configs.root);
 
-    gulp.task("watch", ["scripts:publish", "styles:publish"], function () {
-        gulp.watch(path.join(sourceDir, configs.scripts, "**/*.{js,ts,htm}"), ["scripts:publish"]);
+    gulp.task("watch", ["scripts:publish", "ie8:scripts:publish", "styles:publish"], function () {
+        gulp.watch(path.join(sourceDir, configs.scripts, "App/**/*.{js,ts,htm}"), ["scripts:publish"]);
+        gulp.watch(path.join(sourceDir, configs.scripts, "App.IE8/**/*.{js,ts,htm}"), ["ie8:scripts:publish"]);
         gulp.watch(path.join(sourceDir, configs.styles, "**/*.{map,css,gif,png}"), ["styles:publish"]);
     });
 };

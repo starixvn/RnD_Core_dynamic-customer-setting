@@ -52,6 +52,7 @@ module CustomerSetting {
             return msg;
         }
 
+        /* tslint:disable:no-string-literal */
         private setLanguage(language: string): void {
             var defaultLanguage: string = Defaults.language.toLowerCase();
 
@@ -80,6 +81,7 @@ module CustomerSetting {
                 this.message = {};
             }
         }
+        /* tslint:enable:no-string-literal */
     }
 
     ModuleRegister.service("resourceService", ResourceService);

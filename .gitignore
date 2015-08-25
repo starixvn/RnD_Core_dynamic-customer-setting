@@ -91,3 +91,6 @@ bower_components
 **/Libraries/**/
 **/Compass/**
 Fanex.CustomerSetting.DemoSite/App/
+Fanex.CustomerSetting.DemoSite/Scripts/DemoForm.IE8/demo-form.js
+Fanex.CustomerSetting.DemoSite/Scripts/DemoForm/demo-form.js
+Fanex.CustomerSetting.Web/Assets/Scripts/NodeModules/embeded-template.js

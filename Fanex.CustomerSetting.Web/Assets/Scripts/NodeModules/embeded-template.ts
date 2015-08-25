@@ -37,7 +37,10 @@ function embedTemplate(options: IEmbededTemplateOptions): NodeJS.ReadWriteStream
     const templateEnd: Buffer = new Buffer("\"");
 
     var defaultOptions = {
-        minimizeOptions: {},
+        minimizeOptions: {
+            empty: true,
+            quotes: true
+        },
         skipErrors: false,
         jsEncoding: "utf-8",
         templateEncoding: "utf-8"

@@ -1,0 +1,62 @@
+﻿/// <reference path="helpers.ts" />
+
+module CustomerSetting.IE8 {
+    "use strict";
+
+    export enum SettingLevel {
+        product = 1,
+        sportType = 2,
+        betType = 3,
+        sportTypeBetType = 4
+    }
+
+    export enum MessageType {
+        success = 0,
+        warning = 1,
+        error = 2
+    }
+
+    export class Exceptions {
+        public static notImplemented(funcName: string): string {
+            return StringFormater.format("{0} is not implemented", funcName);
+        }
+
+        public static negativeParam(paramName: string): string {
+            return StringFormater.format("{0} must be greater than zero.", paramName);
+        }
+
+        public static invalidParams(): string {
+            return "The request parameters have get some invalid values.";
+        }
+
+        public static invalidParam(paramName: string): string {
+            return StringFormater.format("{0} has taken an invalid value.", paramName);
+        }
+
+        public static wrongCustomerLevel(): string {
+            return "Wrong customer level.";
+        }
+
+        public static customerIdsNotMatchCustomerNames(): string {
+            return "The number of customer IDs does not match with the number of customer names.";
+        }
+    }
+
+    export class Defaults {
+        public static language: string = "en-US";
+
+        public static percentageDivider: number = 100;
+
+        public static displayingMsgTime: number = 3000;
+    }
+
+    export class KeyValuePair<T, K> {
+        public key: T;
+        public value: K;
+
+        constructor(key: T, value: K) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+}

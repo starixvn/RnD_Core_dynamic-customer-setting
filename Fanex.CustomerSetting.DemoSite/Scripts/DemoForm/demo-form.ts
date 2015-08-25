@@ -21,7 +21,7 @@ module DemoFrom {
 
         private $http: ng.IHttpService;
         private $location: ng.ILocationService;
-        private $window: ng.IWindowService; 
+        private $window: ng.IWindowService;
         private postingToIframeService: PostingToIframeService;
 
         constructor(
@@ -109,7 +109,7 @@ module DemoFrom {
 
             this.postingToIframeService.submitToIframe(params);
         }
-        
+
         public viewMatrix(): void {
             this.$window.open("/ViewCustomerSettingMatrix", "_bank");
         }
@@ -348,14 +348,16 @@ module DemoFrom {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item, 10);
+                if (!isNaN(item)) {
+                    var roleId: number = parseInt(item, 10);
 
-                if (!isNaN(roleId) && roleId !== Role.member) {
-                    roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    if (roleId !== Role.member) {
+                        roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    }
                 }
             }
 
-            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
+            return roles.reverse();
         }
     }
 
@@ -374,28 +376,32 @@ module DemoFrom {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item, 10);
+                if (!isNaN(item)) {
+                    var roleId: number = parseInt(item, 10);
 
-                if (!isNaN(roleId) && roleId < uplineRole) {
-                    roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    if (roleId < uplineRole) {
+                        roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    }
                 }
             }
 
-            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
+            return roles.reverse();
         }
 
         public static getUplineRoles(downlineRole: Role): KeyValuePair<number, string>[] {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                var roleId: number = parseInt(item, 10);
+                if (!isNaN(item)) {
+                    var roleId: number = parseInt(item, 10);
 
-                if (!isNaN(roleId) && downlineRole < roleId && roleId < Role.company) {
-                    roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    if (downlineRole < roleId && roleId < Role.company) {
+                        roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
+                    }
                 }
             }
 
-            return roles.sort((num1: KeyValuePair<number, string>, num2: KeyValuePair<number, string>) => num2.key - num1.key);
+            return roles.reverse();
         }
     }
 

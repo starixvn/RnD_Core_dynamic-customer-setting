@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../typings/angularjs/angular.d.ts" />
 /// <reference path="helper-services.ts" />
 
 module CustomerSettingMatrix {

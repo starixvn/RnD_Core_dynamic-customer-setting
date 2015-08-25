@@ -27,9 +27,9 @@ module CustomerSetting {
                     $window.scrollTo(0, 0);
 
                     if (angular.isDefined(result.subResults) && angular.isArray(result.subResults)) {
-                        angular.forEach(result.subResults, (subResult: CustomerSettingResult) => {
+                        result.subResults.forEach((subResult: CustomerSettingResult) => {
                             if (subResult.settingResults && angular.isArray(subResult.settingResults)) {
-                                angular.forEach(subResult.settingResults, (settingResult: SettingResult) => {
+                                subResult.settingResults.forEach((settingResult: SettingResult) => {
                                     settingResult.msgType = MessageType[settingResult.msgType.toString()];
                                 });
                             }
