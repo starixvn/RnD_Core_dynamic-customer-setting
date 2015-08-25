@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
     using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal class ProductSettingTypesQueryCriteria : CriteriaBase
     {

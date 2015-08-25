@@ -67,16 +67,8 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -217,24 +209,12 @@
     <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.js" />
     <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.min.js" />
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.Matrix.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.Template1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.Template1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.Template1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css" />
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.min.css" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\auto-pt.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\loading.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\sprite.png" />
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
@@ -244,7 +224,11 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Gulpfile.js" />
+    <Content Include="Scripts\DemoForm\demo-form.js" />
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
+    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -288,11 +272,17 @@
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

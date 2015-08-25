@@ -39,8 +39,25 @@
     <Reference Include="Fanex.Logging">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.NAP.Framework">
-      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -100,6 +117,12 @@
     <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Scripts\SettingMatrixApp\Resource\customer-setting-matrix-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-matrix-resource.js</LastGenOutput>
+      <LastOutputs>.\customer-setting-matrix-resource.cs</LastOutputs>
+    </Content>
+    <None Include="app.config" />
     <None Include="Assets\Styles\customer-setting-matrix.css.map">
       <DependentUpon>customer-setting-matrix.css</DependentUpon>
     </None>
@@ -185,6 +208,11 @@
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.htm" />
+    <Content Include="Assets\Scripts\SettingMatrixApp\Resource\customer-setting-matrix-resource.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-matrix-resource.tt</DependentUpon>
+    </Content>
     <Content Include="Assets\Styles\customer-setting-matrix.css">
       <DependentUpon>customer-setting-matrix.scss</DependentUpon>
     </Content>
@@ -240,6 +268,7 @@
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Directives\PTMatrix\pt-matrix.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\module-register.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\SettingMatrixApp\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Specs\Core\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Specs\Core\customer-info.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Specs\Core\default-setting-block.ts" />

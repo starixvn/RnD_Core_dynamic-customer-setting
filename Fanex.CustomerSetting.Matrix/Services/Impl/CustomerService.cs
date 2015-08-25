@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal class CustomerService : ICustomerService
     {

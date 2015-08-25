@@ -6,7 +6,7 @@
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class ProductService : IProductService
     {

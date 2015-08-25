@@ -11,7 +11,7 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Tests;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
 

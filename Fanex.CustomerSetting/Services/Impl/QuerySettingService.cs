@@ -8,8 +8,8 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.Data.Repository;
     using Fanex.Logging;
-    using Fanex.NAP.Framework.Data;
 
     public class QuerySettingService : IQuerySettingService
     {

@@ -5,6 +5,7 @@
 /// <reference path="parameters.ts" />
 /// <reference path="directives/ptmatrix/pt-matrix.ts" />
 /// <reference path="directives/commissionmatrix/commission-matrix.ts" />
+/// <reference path="resource/resource-translation.ts" />
 
 
 module CustomerSettingMatrix {

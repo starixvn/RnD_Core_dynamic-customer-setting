@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal class IsAllowMasterAutoPTQueryCriteria : CriteriaBase
     {

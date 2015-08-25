@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
 

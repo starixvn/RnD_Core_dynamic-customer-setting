@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal class CommissionMatrixQueryCriteria : CriteriaBase
     {

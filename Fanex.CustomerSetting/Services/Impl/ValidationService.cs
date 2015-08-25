@@ -14,8 +14,8 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Resource;
+    using Fanex.Data.Repository;
     using Fanex.Logging;
-    using Fanex.NAP.Framework.Data;
 
     internal class ValidationService : IValidationService
     {

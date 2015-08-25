@@ -6,7 +6,7 @@ module DemoFrom {
     var app = angular.module("actorForm", []);
 
     class DemoFormController {
-        public static $inject = ["$http", "$location", "postingToIframeService"];
+        public static $inject = ["$http", "$location", "$window", "postingToIframeService"];
 
         public actor: Actor;
         public systemTypes: KeyValuePair<number, string>[];
@@ -21,14 +21,18 @@ module DemoFrom {
 
         private $http: ng.IHttpService;
         private $location: ng.ILocationService;
+        private $window: ng.IWindowService; 
         private postingToIframeService: PostingToIframeService;
 
         constructor(
             $http: ng.IHttpService,
             $location: ng.ILocationService,
+            $window: ng.IWindowService,
             postingToIframeService: PostingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+            this.$window = $window;
+
             this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
@@ -104,6 +108,10 @@ module DemoFrom {
             }
 
             this.postingToIframeService.submitToIframe(params);
+        }
+        
+        public viewMatrix(): void {
+            this.$window.open("/ViewCustomerSettingMatrix", "_bank");
         }
     }
 
