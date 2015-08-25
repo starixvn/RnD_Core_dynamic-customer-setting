@@ -19,7 +19,7 @@ module CustomerSettingMatrix {
             "appConfigService"];
 
         public isUIblocked: boolean;
-
+        public errorMessage: string;
         
         public product: Product;
         public customerName: string;
@@ -80,9 +80,11 @@ module CustomerSettingMatrix {
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                 var products = JSON.parse(response.data);
 
-                this.products = products.map((product: any) => new Product(product));
-                this.product = this.products[3];
-                this.querySettingMatrix(this.customerName);
+                if (products && products.length > 0) {
+                    this.products = products.map((product: any) => new Product(product));
+                    this.product = this.products[0];
+                    this.querySettingMatrix(this.customerName);
+                }
             })
                 .finally(() => {
                 this.isUIblocked = false;
@@ -95,6 +97,7 @@ module CustomerSettingMatrix {
                 this.product.id,
                 customerName);
 
+            this.errorMessage = "";
             this.isUIblocked = true;
 
             this.$http
@@ -102,20 +105,36 @@ module CustomerSettingMatrix {
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                 var customerSettingMatrix = JSON.parse(response.data);
 
-                this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
-                switch (this.settingTypeId) {
-                    case SettingType.PositionTaking.id:
-                        this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
-                        break;
-                    case SettingType.Commission.id:
-                        this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
-                        break;
+                if (customerSettingMatrix.message != null) {
+                    this.handleError(customerSettingMatrix.message);
+                    return;
                 }
-                this.settingTypeMatrix.groupDataBySettingLevel();
+
+                try
+                {
+                    this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
+                    switch (this.settingTypeId) {
+                        case SettingType.PositionTaking.id:
+                            this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
+                            break;
+                        case SettingType.Commission.id:
+                            this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
+                            break;
+                    }
+                    this.settingTypeMatrix.groupDataBySettingLevel();
+                }
+                catch (e) {
+                    this.handleError("This setting type matrix is error, please notify your administrator.");
+                }
             })
                 .finally(() => {
                 this.isUIblocked = false;
             });
+        }
+
+        private handleError(errorMessage: string) {
+            this.errorMessage = errorMessage;
+            this.customerLine = [];
         }
     }
 

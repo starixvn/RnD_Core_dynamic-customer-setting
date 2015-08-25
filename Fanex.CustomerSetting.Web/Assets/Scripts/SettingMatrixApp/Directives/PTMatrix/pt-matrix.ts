@@ -95,11 +95,14 @@ module CustomerSettingMatrix {
             switch (settingLevel) {
                 case SettingLevel.product:
                     itemMatrixName = product.name;
+                    break;
                 case SettingLevel.sportType:
                     itemMatrixName = this.sportTypeName;
+                    break;
                 case SettingLevel.betType:
                 case SettingLevel.sportTypeBetType:
                     itemMatrixName = this.betTypeName;
+                    break;
             }
 
             return itemMatrixName + (this.isLive ? " (Live)" : "");

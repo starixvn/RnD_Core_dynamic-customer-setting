@@ -10,6 +10,7 @@ $button-backround-color1: #8594a2;
 $button-backround-color2: #344d61;
 $button-backround-color3: #8594a2;
 $hover-background-color: #e2f3d1;
+$warning-color: #c28f06;
 
 body {
     font: {
@@ -131,6 +132,34 @@ ul {
             }
         }
     }
+
+    .error-message-container {
+            @include box-sizing(border-box);
+            border: solid 1px $border-color;
+            background-color: #f6f5f2;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+            .error-icon {
+                background: {
+                    image: url("Images/sprite.png");
+                    position: -51px 0;
+                    repeat: no-repeat;
+                }
+
+                display: inline-block;
+                height: 16px;
+                width: 13px;
+                vertical-align: middle;
+            }
+
+            .content {
+                display: inline-block;
+                line-height: 15px;
+                padding-left: 10px;
+                color: $warning-color;
+            }
+        }
 
     .main-content {
         border: 1px solid $border-color;

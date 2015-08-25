@@ -58,7 +58,7 @@
             this.betTypeId = settingItemMatrix.betTypeId;
             this.betTypeName = settingItemMatrix.betTypeName;
             this.sportTypeId = settingItemMatrix.sportTypeId;
-            this.sportTypeName = settingItemMatrix.sportTypeId;
+            this.sportTypeName = settingItemMatrix.sportTypeName;
         }
     }
 

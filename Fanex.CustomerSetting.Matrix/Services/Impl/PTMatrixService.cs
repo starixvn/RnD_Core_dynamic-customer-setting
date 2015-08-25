@@ -79,7 +79,7 @@
                 BetTypeId = group.Key.BetType,
                 BetTypeName = _resourceService.GetBetTypeName(group.Key.BetType, DefaultLanguage),
                 SportTypeId = group.Key.SportType,
-                SportTypeName = _resourceService.GetSportTypeName(group.Key.BetType, DefaultLanguage),
+                SportTypeName = _resourceService.GetSportTypeName(group.Key.SportType, DefaultLanguage),
                 IsLive = group.Key.IsLive,
                 PTItemMatrixRows = group.ToList().Select(ptItemMatrixRowDto => new PTItemMatrixRow(ptItemMatrixRowDto))
             });

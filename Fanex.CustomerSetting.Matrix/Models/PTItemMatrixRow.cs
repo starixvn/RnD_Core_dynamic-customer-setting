@@ -5,13 +5,13 @@
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Models.Enumerations;
 
+    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
     public class PTItemMatrixRow
     {
         public PTItemMatrixRow()
         {
         }
 
-        [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
         internal PTItemMatrixRow(PTItemMatrixDto pTMatrixDto)
         {
             if (pTMatrixDto == null)
@@ -25,10 +25,28 @@
 
             SetMasterPT(pTMatrixDto);
 
-            AgentPT =  CustomerLevel.IsMasterLevel() ? null : pTMatrixDto.AgentPT;
-            
+            AgentPT = CustomerLevel.IsMasterLevel() ? null : pTMatrixDto.AgentPT;
+
             MinPT = pTMatrixDto.MinPT;
         }
+
+        public Level CustomerLevel { get; set; }
+
+        public byte? SuperPT { get; set; }
+
+        public byte? MasterPT { get; set; }
+
+        public byte? AgentPT { get; set; }
+
+        public byte? AutoSuperPT { get; set; }
+
+        public bool? IsAutoSuperPT { get; set; }
+
+        public byte? AutoMasterPT { get; set; }
+
+        public bool? IsAutoMasterPT { get; set; }
+
+        public byte? MinPT { get; set; }
 
         private void SetMasterPT(PTItemMatrixDto pTMatrixDto)
         {
@@ -52,28 +70,10 @@
                 AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;
                 SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;
             }
-            else if(CustomerLevel.IsSuperLevel())
+            else if (CustomerLevel.IsSuperLevel())
             {
                 SuperPT = pTMatrixDto.SuperPT;
             }
         }
-
-        public Level CustomerLevel { get; set; }
-
-        public byte? SuperPT { get; set; }
-
-        public byte? MasterPT { get; set; }
-
-        public byte? AgentPT { get; set; }
-
-        public byte? AutoSuperPT { get; set; }
-
-        public bool? IsAutoSuperPT { get; set; }
-
-        public byte? AutoMasterPT { get; set; }
-
-        public bool? IsAutoMasterPT { get; set; }
-
-        public byte? MinPT { get; set; }
     }
 }

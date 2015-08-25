@@ -8,6 +8,7 @@
     using System.Web.Http;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
+    using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
 
     public class CustomerSettingMatrixController : ApiController
@@ -30,12 +31,21 @@
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
             }
 
-            var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(
-                request.SettingTypeId,
-                request.ProductId,
-                request.CustomerName);
+            try
+            {
+                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(
+                    request.SettingTypeId,
+                    request.ProductId,
+                    request.CustomerName);
 
-            return Request.CreateResponse(HttpStatusCode.OK, customerSettingMatrix);
+                return Request.CreateResponse(HttpStatusCode.OK, customerSettingMatrix);
+            }
+            catch (InvalidOperationException invalidException)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    new Result(Result.DataError.Code, invalidException.Message));
+            }
         }
     }
 }

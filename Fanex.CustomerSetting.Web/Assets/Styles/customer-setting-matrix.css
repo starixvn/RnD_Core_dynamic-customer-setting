@@ -137,6 +137,33 @@ ul li {
   width: 60%;
 }
 
+.container .error-message-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid 1px #7c98a4;
+  background-color: #f6f5f2;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.container .error-message-container .error-icon {
+  background-image: url("Images/sprite.png");
+  background-position: -51px 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  width: 13px;
+  vertical-align: middle;
+}
+
+.container .error-message-container .content {
+  display: inline-block;
+  line-height: 15px;
+  padding-left: 10px;
+  color: #c28f06;
+}
+
 .container .main-content {
   border: 1px solid #7c98a4;
   background-color: #fff;

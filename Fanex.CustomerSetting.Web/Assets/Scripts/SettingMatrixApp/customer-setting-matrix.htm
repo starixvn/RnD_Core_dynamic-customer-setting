@@ -9,8 +9,8 @@
     <div class="container">
         <div class="header">
             <ul class="setting-type-nav">
-                <li data-ng-repeat="settingType in ctrl.settingTypes" 
-                    data-ng-click="ctrl.updateSettingTypeView(settingType.id)" 
+                <li data-ng-repeat="settingType in ctrl.settingTypes"
+                    data-ng-click="ctrl.updateSettingTypeView(settingType.id)"
                     data-ng-class="{'active': ctrl.settingTypeId == settingType.id}">
                     <label>
                         <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{settingType.id}}">
@@ -40,9 +40,13 @@
                 </div>
             </div>
 
-            <div class="message-container" data-ng-show="message" data-ng-bind="message">
-            </div>
 
+
+        </div>
+
+        <div class="error-message-container" data-ng-show="ctrl.errorMessage">
+            <div class="error-icon"></div>
+            <div class="content">{{ctrl.errorMessage}}</div>
         </div>
 
         <div class="main-content" data-ng-show="ctrl.customerLine.length > 0">
