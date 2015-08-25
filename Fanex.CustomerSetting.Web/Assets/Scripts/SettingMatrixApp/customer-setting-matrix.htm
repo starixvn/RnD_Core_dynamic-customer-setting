@@ -18,7 +18,8 @@
                 </li>
             </ul>
 
-            <div class="matrix-form">
+            <form class="matrix-form" data-ng-submit="ctrl.querySettingMatrix(ctrl.customerName)">
+
                 <div class="form-control">
                     <label for="product">
                         {{'Product' | label}}
@@ -33,11 +34,11 @@
 
                 </div>
                 <div class="form-control">
-                    <button type="button" data-ng-click="ctrl.querySettingMatrix(ctrl.customerName)">
+                    <button type="submit">
                         {{'Submit' | label}}
                     </button>
                 </div>
-            </div>
+            </form>
 
 
 
