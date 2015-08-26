@@ -80,33 +80,10 @@ module CustomerSetting {
                     if (validationResult.isSuccessful) {
                         this.isUIblocked = true;
 
-                        //// Jason please review here.
-                        var jsonSetting = JSON.stringify(command.setting.toJson());
-                        var uplineLevel = command.uplineLevel;
-
-                        var commandJson: any;
-                        if (this.parametersService.isMultipleUpdates) {
-                            commandJson =
-                            {
-                                setting: jsonSetting,
-                                uplineLevel: uplineLevel,
-                                customerIds: this.parametersService.customerIds,
-                                customerNames: this.parametersService.customerNames
-                            };
-                        }
-                        else {
-                            commandJson =
-                            {
-                                setting: jsonSetting,
-                                uplineLevel: uplineLevel
-                            };
-                        }
-
                         this.$http
-                            .post(this.appConfigService.resolveRootUrl(path), commandJson)
+                            .post(this.appConfigService.resolveRootUrl(path), command.toJson())
                             .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                                var responJsonObject = JSON.parse(response.data);
-                                this.requestMsgResult = new UpdatingSettingResult(responJsonObject);
+                                this.requestMsgResult = new UpdatingSettingResult(response.data);
                                 this.querySetting();
 
                                 this.$timeout(() => {
@@ -145,8 +122,7 @@ module CustomerSetting {
                     .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
                     ////.get(this.appConfigService.resolveRootUrl("app/sample-data-4.json"))
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                        var settingJsonObject = JSON.parse(response.data);
-                        this.setting = new Setting(settingJsonObject);
+                        this.setting = new Setting(response.data);
                     }, () => {
                         var error: Result = Result.systemError;
 

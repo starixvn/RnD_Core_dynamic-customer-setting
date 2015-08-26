@@ -22,24 +22,24 @@
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult UpdateSetting(UpdateSettingRequest updateSetting)
+        public ContentResult UpdateSetting(UpdateSettingRequest updateSetting)
         {
             SetActorInformation(updateSetting);
 
             var updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
 
-            return Json(updateResult.Content);
+            return Content(updateResult.Content);
         }
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
+        public ContentResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
         {
             SetActorInformation(multipleUpdateSetting);
 
             var updateResult = _customerSettingService.MultipleUpdateCustomerSetting(multipleUpdateSetting);
 
-            return Json(updateResult.Content);
+            return Content(updateResult.Content);
         }
 
         private static void SetActorInformation(UpdateSettingRequest updateSetting)

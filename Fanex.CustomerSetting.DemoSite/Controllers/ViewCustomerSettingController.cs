@@ -39,7 +39,7 @@
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QuerySetting(QuerySettingRequest querySetting)
+        public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
             var settingContext = SettingContextManager.SettingContext;
             querySetting.ActorId = settingContext.ActorId;
@@ -51,7 +51,7 @@
 
             var customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
 
-            return Json(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
+            return Content(customerSettingResponse.Content);
         }
 
         private string GetTemplate()

@@ -131,7 +131,7 @@ module CustomerSetting.IE8 {
         public toJson(): {} {
             return {
                 uplineLevel: this.uplineLevel,
-                setting: this.setting.toJson()
+                setting: JSON.stringify(this.setting.toJson())
             };
         }
     }
@@ -161,7 +161,7 @@ module CustomerSetting.IE8 {
                 uplineLevel: this.uplineLevel,
                 customerIds: this.customerIds,
                 customerNames: this.customerNames,
-                setting: this.setting.toJson()
+                setting: JSON.stringify(this.setting.toJson())
             };
         }
     }

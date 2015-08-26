@@ -89,9 +89,9 @@ module CustomerSetting.IE8 {
                                 error.message = this.resourceService.getMessage(error.message);
                                 this.requestMsgResult = error;
                             })
-                            ["finally"](() => {
-                                this.isUIblocked = false;
-                            });
+                        ["finally"](() => {
+                            this.isUIblocked = false;
+                        });
                     } else {
                         this.requestMsgResult = validationResult;
                     }
@@ -121,9 +121,9 @@ module CustomerSetting.IE8 {
                         error.message = this.resourceService.getMessage(error.message);
                         this.requestMsgResult = error;
                     })
-                    ["finally"](() => {
-                        this.isUIblocked = false;
-                    });
+                ["finally"](() => {
+                    this.isUIblocked = false;
+                });
             }
         }
     }

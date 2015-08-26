@@ -119,8 +119,8 @@ module CustomerSetting.IE8 {
             /* tslint:enable:no-string-literal */
 
             if (params) {
-                var uplineLevel = params.uplineLevel ? params.uplineLevel.value : undefined;
-                var customerLevel = params.customerLevel ? params.customerLevel.value : undefined;
+                var uplineLevel = params.uplineLevel ? params.uplineLevel : undefined;
+                var customerLevel = params.customerLevel ? params.customerLevel : undefined;
 
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;

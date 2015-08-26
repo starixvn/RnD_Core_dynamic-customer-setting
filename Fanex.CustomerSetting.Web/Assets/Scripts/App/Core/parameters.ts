@@ -171,7 +171,7 @@ module CustomerSetting {
         public toJson(): {} {
             return {
                 uplineLevel: this.uplineLevel,
-                setting: this.setting.toJson()
+                setting: JSON.stringify(this.setting.toJson())
             };
         }
     }
@@ -201,7 +201,7 @@ module CustomerSetting {
                 uplineLevel: this.uplineLevel,
                 customerIds: this.customerIds,
                 customerNames: this.customerNames,
-                setting: this.setting.toJson()
+                setting: JSON.stringify(this.setting.toJson())
             };
         }
     }
