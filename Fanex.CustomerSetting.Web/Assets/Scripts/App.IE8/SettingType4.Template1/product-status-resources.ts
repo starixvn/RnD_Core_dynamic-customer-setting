@@ -23,7 +23,7 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["productStatusResourceService"];
+    ProductStatusLabelFilter.$inject = ["productStatusResourceService"];
     ModuleRegister.filter("productStatusLabel", ProductStatusLabelFilter);
 
     function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService) {
@@ -32,6 +32,6 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["productStatusResourceService"];
+    ProductStatusMessageFilter.$inject = ["productStatusResourceService"];
     ModuleRegister.filter("productStatusMessage", ProductStatusMessageFilter);
 }

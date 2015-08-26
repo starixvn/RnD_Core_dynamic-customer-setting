@@ -23,7 +23,7 @@ module CustomerSetting {
         };
     }
 
-    LabelFilter.$inject = ["positionTakingResourceService"];
+    PositionTakingLabelFilter.$inject = ["positionTakingResourceService"];
     ModuleRegister.filter("positionTakingLabel", PositionTakingLabelFilter);
 
     export function PositionTakingMessageFilter(positionTakingResourceService: PositionTakingResourceService) {
@@ -32,6 +32,6 @@ module CustomerSetting {
         };
     }
 
-    LabelFilter.$inject = ["positionTakingResourceService"];
+    PositionTakingMessageFilter.$inject = ["positionTakingResourceService"];
     ModuleRegister.filter("positionTakingMessage", PositionTakingMessageFilter);
 }

@@ -23,7 +23,7 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["commissionResourceService"];
+    CommissionLabelFilter.$inject = ["commissionResourceService"];
     ModuleRegister.filter("commissionLabel", CommissionLabelFilter);
 
     function CommissionMessageFilter(commissionResourceService: CommissionResourceService) {
@@ -32,6 +32,6 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["commissionResourceService"];
+    CommissionMessageFilter.$inject = ["commissionResourceService"];
     ModuleRegister.filter("commissionMessage", CommissionMessageFilter);
 }

@@ -101,6 +101,6 @@ module CustomerSetting {
         };
     }
 
-    LabelFilter.$inject = ["resourceService"];
+    MessageFilter.$inject = ["resourceService"];
     ModuleRegister.filter("message", MessageFilter);
 }

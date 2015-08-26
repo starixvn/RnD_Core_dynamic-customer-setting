@@ -23,7 +23,7 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["betSettingResourceService"];
+    BetSettingLabelFilter.$inject = ["betSettingResourceService"];
     ModuleRegister.filter("betSettingLabel", BetSettingLabelFilter);
 
     function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService) {
@@ -32,6 +32,6 @@ module CustomerSetting.IE8 {
         };
     }
 
-    LabelFilter.$inject = ["betSettingResourceService"];
+    BetSettingMessageFilter.$inject = ["betSettingResourceService"];
     ModuleRegister.filter("betSettingMessage", BetSettingMessageFilter);
 }
