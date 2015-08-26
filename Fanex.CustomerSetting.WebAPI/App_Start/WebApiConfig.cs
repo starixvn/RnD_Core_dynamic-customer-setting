@@ -7,6 +7,7 @@
     using System.Web.Http.ModelBinding.Binders;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.WebAPI.Filters;
     using Fanex.CustomerSetting.WebAPI.Helpers;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json.Serialization;
@@ -39,6 +40,7 @@
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new GlobalExceptionFilterAttribute());
         }
     }
 }

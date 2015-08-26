@@ -147,6 +147,7 @@
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
     <Compile Include="Filters\SetLanguageAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
