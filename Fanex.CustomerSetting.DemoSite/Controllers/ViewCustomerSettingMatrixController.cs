@@ -33,25 +33,25 @@
 
             htmlContent = htmlContent.Replace("{{customerName}}", JsonConverter.ToJson(customerName));
 
-            return Content(htmlContent, "text/HTML");
+            return Content(htmlContent);
         }
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QuerySettingMatrix(QuerySettingMatrixRequest querySettingMatrix)
+        public ContentResult QuerySettingMatrix(QuerySettingMatrixRequest querySettingMatrix)
         {
             var customerSettingResponse = _customerSettingMatrixService.QueryCustomerSettingMatrix(querySettingMatrix);
 
-            return Json(customerSettingResponse.Content, JsonRequestBehavior.AllowGet);
+            return Content(customerSettingResponse.Content);
         }
 
         [HttpPost]
         [ValidateAntiForgery]
-        public JsonResult QueryAllProducts()
+        public ContentResult QueryAllProducts()
         {
             var productNamesReponse = _customerSettingMatrixService.QueryAllProducts();
 
-            return Json(productNamesReponse.Content, JsonRequestBehavior.AllowGet);
+            return Content(productNamesReponse.Content);
         }
 
         private string GetTemplate()

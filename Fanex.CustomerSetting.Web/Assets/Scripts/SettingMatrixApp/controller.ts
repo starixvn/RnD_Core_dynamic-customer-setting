@@ -83,7 +83,7 @@ module CustomerSettingMatrix {
             this.$http
                 .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                var products = JSON.parse(response.data);
+                var products = response.data;
 
                 if (products && products.length > 0) {
                     this.products = products.map((product: any) => new Product(product));
@@ -112,7 +112,7 @@ module CustomerSettingMatrix {
             this.$http
                 .post(this.appConfigService.resolveRootUrl(this.querySettingMatrixPath), querySettingMatrix)
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                var customerSettingMatrix = JSON.parse(response.data);
+                var customerSettingMatrix = response.data;
 
                 if (customerSettingMatrix.message != null) {
                     this.handleError(customerSettingMatrix.message);

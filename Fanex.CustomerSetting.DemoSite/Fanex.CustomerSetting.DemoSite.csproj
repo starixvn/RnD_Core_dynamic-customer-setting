@@ -206,6 +206,56 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\CustomerSetting.IE8\Core\core.js" />
+    <Content Include="App\CustomerSetting.IE8\Core\core.min.js" />
+    <Content Include="App\CustomerSetting.IE8\customer-setting.htm" />
+    <Content Include="App\CustomerSetting.IE8\Libraries\ie8tricks.js" />
+    <Content Include="App\CustomerSetting.IE8\Libraries\libraries.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.min.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.min.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.min.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.js" />
+    <Content Include="App\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.min.js" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.min.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.min.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\Images\auto-pt.gif" />
+    <Content Include="App\CustomerSetting.IE8\Styles\Images\loading.gif" />
+    <Content Include="App\CustomerSetting.IE8\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="App\CustomerSetting.IE8\Styles\Images\sprite.png" />
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.htm" />
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.js" />
+    <Content Include="App\CustomerSettingMatrix\customer-setting-matrix.min.js" />
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css" />
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.min.css" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\auto-pt.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\loading.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="App\CustomerSettingMatrix\Styles\Images\sprite.png" />
+    <Content Include="App\CustomerSetting\Core\core.js" />
+    <Content Include="App\CustomerSetting\Core\core.min.js" />
+    <Content Include="App\CustomerSetting\customer-setting.htm" />
+    <Content Include="App\CustomerSetting\Libraries\libraries.js" />
+    <Content Include="App\CustomerSetting\SettingType1.Template1\settingtype1-template1.js" />
+    <Content Include="App\CustomerSetting\SettingType1.Template1\settingtype1-template1.min.js" />
+    <Content Include="App\CustomerSetting\SettingType2.Template1\settingtype2-template1.js" />
+    <Content Include="App\CustomerSetting\SettingType2.Template1\settingtype2-template1.min.js" />
+    <Content Include="App\CustomerSetting\SettingType3.Template1\settingtype3-template1.js" />
+    <Content Include="App\CustomerSetting\SettingType3.Template1\settingtype3-template1.min.js" />
+    <Content Include="App\CustomerSetting\SettingType4.Template1\settingtype4-template1.js" />
+    <Content Include="App\CustomerSetting\SettingType4.Template1\settingtype4-template1.min.js" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.css" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.min.css" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting.css" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting.min.css" />
+    <Content Include="App\CustomerSetting\Styles\Images\auto-pt.gif" />
+    <Content Include="App\CustomerSetting\Styles\Images\loading.gif" />
+    <Content Include="App\CustomerSetting\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="App\CustomerSetting\Styles\Images\sprite.png" />
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
@@ -215,8 +265,28 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Gulpfile.js" />
+    <Content Include="Scripts\DemoForm.IE8\demo-form.js" />
     <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
+    <Content Include="Scripts\DemoForm\demo-form.js" />
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
+    <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
+    <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
+    <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
+    <Content Include="Scripts\Libraries\Angular\angular.js" />
+    <Content Include="Scripts\Libraries\Angular\angular.min.js" />
+    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.js" />
+    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.min.js" />
+    <Content Include="Scripts\Libraries\Html5shiv\html5shiv-printshiv.js" />
+    <Content Include="Scripts\Libraries\Html5shiv\html5shiv-printshiv.min.js" />
+    <Content Include="Scripts\Libraries\Html5shiv\html5shiv.js" />
+    <Content Include="Scripts\Libraries\Html5shiv\html5shiv.min.js" />
+    <Content Include="Scripts\Libraries\JQuery\jquery.js" />
+    <Content Include="Scripts\Libraries\JQuery\jquery.min.js" />
+    <Content Include="Scripts\Libraries\Underscore\underscore-min.js" />
+    <Content Include="Scripts\Libraries\Underscore\underscore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -257,6 +327,11 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="package.json" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.css.map" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.css.map" />
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.css.map" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
@@ -264,6 +339,13 @@
     <Content Include="Views\Home\Index-IE8.cshtml" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
+    <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js.map" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
+    <Content Include="Scripts\Libraries\Angular\angular.min.js.map" />
+    <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.map" />
+    <Content Include="Scripts\Libraries\JQuery\jquery.min.map" />
+    <Content Include="Scripts\Libraries\Underscore\underscore-min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
