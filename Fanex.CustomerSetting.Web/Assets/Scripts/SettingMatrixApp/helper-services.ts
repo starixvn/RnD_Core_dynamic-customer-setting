@@ -18,9 +18,9 @@ module CustomerSettingMatrix {
             var appConfig: any;
 
             this.$window = $window;
-
+            /* tslint:disable:no-string-literal */
             appConfig = this.$window["appConfig"] || {};
-
+            /* tslint:enable:no-string-literal */
             if (appConfig) {
                 this.rootUrl = appConfig.rootUrl;
                 this.debug = appConfig.isDebug;
@@ -54,10 +54,9 @@ module CustomerSettingMatrix {
                 return (numberValue / 100).toFixed(2);
             }
 
-            return '';
+            return "";
         };
     }
 
     ModuleRegister.filter("ptValue", PTValue);
-
 }

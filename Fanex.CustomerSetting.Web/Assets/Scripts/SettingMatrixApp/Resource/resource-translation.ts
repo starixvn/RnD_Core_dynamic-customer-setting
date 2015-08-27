@@ -12,12 +12,13 @@ module CustomerSettingMatrix {
         private resources: any;
         private label: any;
         private message: any;
-        private $window: ng.IWindowService;
 
         constructor($window: ng.IWindowService) {
+            /* tslint:disable:no-string-literal */
             this.resources = $window["resources"];
             this.label = this.resources["label"]["en-us"];
             this.message = this.resources["message"]["en-us"];
+            /* tslint:enable:no-string-literal */
         }
 
         public getLabel(key: string): string {

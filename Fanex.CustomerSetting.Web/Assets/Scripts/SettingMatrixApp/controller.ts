@@ -7,7 +7,6 @@
 /// <reference path="directives/commissionmatrix/commission-matrix.ts" />
 /// <reference path="resource/resource-translation.ts" />
 
-
 module CustomerSettingMatrix {
     "use strict";
 
@@ -22,7 +21,7 @@ module CustomerSettingMatrix {
 
         public isUIblocked: boolean;
         public errorMessage: string;
-        
+
         public product: Product;
         public customerName: string;
         public settingTypeId: number;
@@ -32,7 +31,6 @@ module CustomerSettingMatrix {
 
         public customerLine: Array<Customer>;
         public settingTypeMatrix: SettingTypeMatrix;
-        
 
         private get querySettingMatrixPath(): string {
             return "ViewCustomerSettingMatrix/QuerySettingMatrix?";
@@ -56,7 +54,6 @@ module CustomerSettingMatrix {
             $window: ng.IWindowService,
             appConfigService: AppConfigService,
             resourceService: ResourceService) {
-
             this.$scope = $scope;
             this.$http = $http;
             this.$timeout = $timeout;
@@ -66,12 +63,14 @@ module CustomerSettingMatrix {
 
             this.settingTypes = [SettingType.PositionTaking, SettingType.Commission];
             this.settingTypeId = SettingType.PositionTaking.id;
+            /* tslint:disable:no-string-literal */
             this.customerName = this.$window["customerName"];
+            /* tslint:enable:no-string-literal */
             this.queryProductNames();
         }
 
         public updateSettingTypeView(settingTypeId: number) {
-            if (this.settingTypeId != settingTypeId) {
+            if (this.settingTypeId !== settingTypeId) {
                 this.settingTypeId = settingTypeId;
                 this.customerLine = [];
             }
@@ -97,7 +96,7 @@ module CustomerSettingMatrix {
         }
 
         public querySettingMatrix(customerName: string): void {
-            if (customerName == "") {
+            if (customerName === "") {
                 return;
             }
 
@@ -119,8 +118,7 @@ module CustomerSettingMatrix {
                     return;
                 }
 
-                try
-                {
+                try {
                     this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
                     switch (this.settingTypeId) {
                         case SettingType.PositionTaking.id:
@@ -131,10 +129,12 @@ module CustomerSettingMatrix {
                             break;
                     }
                     this.settingTypeMatrix.groupDataBySettingLevel();
-                }
+                } /* tslint:disable:one-line */
                 catch (e) {
                     this.handleError(this.resourceService.getMessage("SettingMatrixIsError"));
+                    this.$window.console.log(e);
                 }
+                /* tslint:enable:one-line */
             })
                 .finally(() => {
                 this.isUIblocked = false;

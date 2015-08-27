@@ -4,14 +4,15 @@
 /// <reference path="../../module-register.ts" />
 
 module CustomerSettingMatrix {
+    "use strict";
 
     export class PtMatrix implements ng.IDirective {
         public restrict: string;
         public templateUrl: string;
         public scope =
         {
-            ptMatrix: '=settingTypeMatrix',
-            product: '='
+            ptMatrix: "=settingTypeMatrix",
+            product: "="
         };
 
         constructor() {
@@ -53,7 +54,7 @@ module CustomerSettingMatrix {
                     var currentPTMatrixGroup: PTItemMatrixGroup;
                     for (var i = 0; i < ptItemLength; i++) {
                         var ptItemMatrix = this.ptItemMatrices[i];
-                        if (ptItemMatrix.sportTypeId != sportId) {
+                        if (ptItemMatrix.sportTypeId !== sportId) {
                             currentPTMatrixGroup = new PTItemMatrixGroup();
                             currentPTMatrixGroup.id = ptItemMatrix.sportTypeId;
                             currentPTMatrixGroup.ptItemMatrices = new Array<PTItemMatrix>();
@@ -69,8 +70,6 @@ module CustomerSettingMatrix {
                     break;
             }
         }
-
-        
     }
 
     export class PTItemMatrix extends SettingItemMatrix {
@@ -120,7 +119,7 @@ module CustomerSettingMatrix {
 
         public minPT: number;
 
-        constructor(ptItemMaxtrixRow) {
+        constructor(ptItemMaxtrixRow: any) {
             this.customerLevel = new Level(ptItemMaxtrixRow.customerLevel);
 
             this.superPT = ptItemMaxtrixRow.superPT;
@@ -130,7 +129,7 @@ module CustomerSettingMatrix {
             this.masterPT = ptItemMaxtrixRow.masterPT;
             this.autoMasterPT = ptItemMaxtrixRow.autoMasterPT;
             this.isAutoMasterPT = ptItemMaxtrixRow.isAutoMasterPT;
-            this.isMasterLevel = this.customerLevel.value == LevelValue.master;
+            this.isMasterLevel = this.customerLevel.value === LevelValue.master;
 
             this.agentPT = ptItemMaxtrixRow.agentPT;
 

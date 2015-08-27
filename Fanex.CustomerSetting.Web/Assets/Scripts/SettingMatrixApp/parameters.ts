@@ -1,4 +1,6 @@
 ﻿module CustomerSettingMatrix {
+    "use strict";
+
     export class QuerySettingMatrix {
         public settingTypeId: number;
         public productId: number;

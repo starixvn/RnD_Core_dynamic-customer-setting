@@ -1,4 +1,6 @@
 ﻿module CustomerSettingMatrix {
+    "use strict";
+
     export enum LevelValue {
         company = 5,
         super = 4,
@@ -73,20 +75,20 @@
             return this.settingLevel === SettingLevel.sportTypeBetType;
         }
 
-        public groupDataBySettingLevel() { }
+        public groupDataBySettingLevel() {
+            throw new Error("groupDataBySettingLevel not implemented");
+        }
     }
 
     export class SettingType {
-        public id: number;
-        public name: string;
         static PositionTaking = new SettingType(1, "PositionTaking");
         static Commission = new SettingType(3, "Commission");
+        public id: number;
+        public name: string;
 
         constructor(settingTypeId: number, settingTypeName: string) {
             this.id = settingTypeId;
             this.name = settingTypeName;
         }
     }
-
-     
 }

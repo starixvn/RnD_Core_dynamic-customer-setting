@@ -4,15 +4,16 @@
 /// <reference path="../../module-register.ts" />
 
 module CustomerSettingMatrix {
+    "use strict";
 
     export class CustomerLineDirective implements ng.IDirective {
         public restrict: string;
         public templateUrl: string;
         public scope =
         {
-            customerLine: '=',
-            customerName: '=',
-            querySettingMatrix: '&'
+            customerLine: "=",
+            customerName: "=",
+            querySettingMatrix: "&"
         };
 
         constructor() {
@@ -22,5 +23,4 @@ module CustomerSettingMatrix {
     }
 
     ModuleRegister.directive("customerLineDirective", CustomerLineDirective);
-
 }

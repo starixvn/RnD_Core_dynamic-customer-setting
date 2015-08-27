@@ -4,13 +4,14 @@
 /// <reference path="../../module-register.ts" />
 
 module CustomerSettingMatrix {
+    "use strict";
 
     export class CommissionMatrixDirective implements ng.IDirective {
         public restrict: string;
         public templateUrl: string;
         public scope =
         {
-            commissionMatrix: '=settingTypeMatrix'
+            commissionMatrix: "=settingTypeMatrix"
         };
 
         constructor() {
@@ -27,7 +28,7 @@ module CustomerSettingMatrix {
         public customerLevel: Level;
         public commRate: number;
 
-        constructor(commissionItemMatrixRow) {
+        constructor(commissionItemMatrixRow: any) {
             this.customerLevel = new Level(commissionItemMatrixRow.customerLevel);
             this.commRate = commissionItemMatrixRow.commRate;
         }
@@ -62,7 +63,7 @@ module CustomerSettingMatrix {
         public customerLevels: Array<Level>;
         public commissionItemMatrixGroups: Array<CommissionItemMatrixGroup>;
 
-        constructor(commissionMatrix) {
+        constructor(commissionMatrix: any) {
             super(commissionMatrix);
 
             this.commissionItemMatrices = commissionMatrix.commissionItemMatrices.map((itemMatrix: any) => new CommissionItemMatrix(itemMatrix));
@@ -88,10 +89,10 @@ module CustomerSettingMatrix {
                     var currentCommissionMatrixGroup: CommissionItemMatrixGroup;
                     for (var i = 0; i < commissionItemLength; i++) {
                         var commissionItem = this.commissionItemMatrices[i];
-                        if (commissionItem.sportTypeId != sportId) {
+                        if (commissionItem.sportTypeId !== sportId) {
                             currentCommissionMatrixGroup = new CommissionItemMatrixGroup();
                             currentCommissionMatrixGroup.id = commissionItem.sportTypeId;
-                            currentCommissionMatrixGroup.commissionItemMatrices = new Array<CommissionItemMatrix>(); 
+                            currentCommissionMatrixGroup.commissionItemMatrices = new Array<CommissionItemMatrix>();
                             currentCommissionMatrixGroup.name = commissionItem.sportTypeName;
                             currentCommissionMatrixGroup.settingLevel = this.settingLevel;
                             sportId = commissionItem.sportTypeId;
@@ -112,5 +113,4 @@ module CustomerSettingMatrix {
         public settingLevel: number;
         public commissionItemMatrices: Array<CommissionItemMatrix>;
     }
-    
 }
