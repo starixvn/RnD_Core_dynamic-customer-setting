@@ -1,6 +1,10 @@
 ﻿@import "customer-setting.scss";
 
 .ie8 {
+    input[type=checkbox] {
+        border: none;
+    }
+
     .customer-setting {
         .block {
             .header {
@@ -8,7 +12,10 @@
             }
 
             .select-wrapper {
-                padding: 2px;
+                padding: {
+                    bottom: 1px;
+                    top: 1px;
+                }
             }
         }
 

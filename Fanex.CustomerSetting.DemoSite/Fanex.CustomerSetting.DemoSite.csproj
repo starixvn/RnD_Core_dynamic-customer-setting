@@ -260,16 +260,13 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Gulpfile.js" />
+    <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm.IE8\demo-form.js" />
     <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
     <Content Include="Scripts\DemoForm\demo-form.js" />
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
     <Content Include="Scripts\Libraries\Angular\angular.js" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js" />
@@ -316,26 +313,25 @@
     <TypeScriptCompile Include="Scripts\DemoForm\demo-form.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower.json" />
-    <Content Include="tsd.json" />
+    <None Include="bower.json" />
+    <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
-    <Content Include="package.json" />
+    <None Include="package.json" />
     <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
     <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
     <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
-    <Content Include="tslint.json" />
+    <None Include="tslint.json" />
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Scripts\sample-data.json" />
     <Content Include="Views\Home\Index-IE8.cshtml" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js.map" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js.map" />
     <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.map" />
     <Content Include="Scripts\Libraries\JQuery\jquery.min.map" />

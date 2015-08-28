@@ -57,24 +57,26 @@
         private string GetTemplate()
         {
             ObjectCache cache = MemoryCache.Default;
-            string htmlContent = cache.Get(TemplateCachingKey) as string;
+            var htmlContent = string.Empty;
+            var filePath = string.Empty;
+            var cachedKey = string.Empty;
+
+            if (this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9)
+            {
+                filePath = Server.MapPath("~/App/CustomerSetting.IE8/customer-setting.htm");
+                cachedKey = IE8TemplateCachingKey;
+            }
+            else
+            {
+                filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");
+                cachedKey = TemplateCachingKey;
+            }
+
+            htmlContent = cache.Get(cachedKey) as string;
 
             if (string.IsNullOrEmpty(htmlContent))
             {
-                var filePath = string.Empty;
-                var cachedKey = string.Empty;
                 var appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
-
-                if (this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9)
-                {
-                    filePath = Server.MapPath("~/App/CustomerSetting.IE8/customer-setting.htm");
-                    cachedKey = IE8TemplateCachingKey;
-                }
-                else
-                {
-                    filePath = Server.MapPath("~/App/CustomerSetting/customer-setting.htm");
-                    cachedKey = TemplateCachingKey;
-                }
 
                 htmlContent = System.IO.File.ReadAllText(filePath);
                 htmlContent = htmlContent.Replace("{{rootUrl}}", appConfig.RootUrl);

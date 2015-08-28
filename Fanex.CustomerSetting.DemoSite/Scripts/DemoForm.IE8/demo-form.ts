@@ -356,7 +356,7 @@ module DemoForm {
                 }
             }
 
-            return roles.reverse();
+            return roles;
         }
     }
 
@@ -384,7 +384,7 @@ module DemoForm {
                 }
             }
 
-            return roles.reverse();
+            return roles;
         }
 
         public static getUplineRoles(downlineRole: Role): KeyValuePair<number, string>[] {
@@ -400,7 +400,7 @@ module DemoForm {
                 }
             }
 
-            return roles.reverse();
+            return roles;
         }
     }
 

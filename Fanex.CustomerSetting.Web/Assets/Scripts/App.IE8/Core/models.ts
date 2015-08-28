@@ -298,7 +298,9 @@ module CustomerSetting.IE8 {
             var setting: any = {
                 customerId: this.customerId,
                 customerInfo: this.customerInfo,
-                customerLevel: this.customerLevel,
+                customerLevel: {
+                    value: this.customerLevel
+                },
                 productId: this.productId,
                 productName: this.productName,
                 settingTypes: []

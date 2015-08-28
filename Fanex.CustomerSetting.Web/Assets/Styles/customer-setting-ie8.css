@@ -505,11 +505,15 @@ button {
   width: 80%;
 }
 
+.ie8 input[type=checkbox] {
+  border: none;
+}
 .ie8 .customer-setting .block .header {
   line-height: 23px;
 }
 .ie8 .customer-setting .block .select-wrapper {
-  padding: 2px;
+  padding-bottom: 1px;
+  padding-top: 1px;
 }
 .ie8 .customer-setting .tooltip-container:after {
   content: none;

@@ -229,6 +229,7 @@ module CustomerSetting.IE8 {
 
         public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery) => {
             var element: ng.IAugmentedJQuery = angular.element(wrapElement.children()[0]);
+            var constraintElement: Node;
             var modelCtrl: any;
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
@@ -252,7 +253,12 @@ module CustomerSetting.IE8 {
             }
 
             this.$compile(element)(scope);
-            this.$compile(element.next())(scope);
+            constraintElement = element[0].nextSibling;
+
+            if (constraintElement) {
+                this.$compile(angular.element(constraintElement))(scope);
+            }
+
             modelCtrl = element.controller("ngModel");
 
             // Chrome has a weird behavior with the mouseup event on textboxes.
