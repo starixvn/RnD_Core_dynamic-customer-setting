@@ -165,4 +165,20 @@ module CustomerSetting.IE8 {
             };
         }
     }
+
+    export class SettingPartialCommand {
+        public uplineLevel: Level;
+        public customerLevel: Level;
+        public productId: number;
+        public productName: string;
+        public settingType: SettingType;
+
+        constructor(uplineLevel: Level, customerLevel: Level, productId: number, productName: string, settingType: SettingType) {
+            this.uplineLevel = uplineLevel;
+            this.customerLevel = customerLevel;
+            this.productId = productId;
+            this.productName = productName;
+            this.settingType = settingType;
+        }
+    }
 }

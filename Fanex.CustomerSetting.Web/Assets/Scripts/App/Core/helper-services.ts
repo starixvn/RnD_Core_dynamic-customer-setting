@@ -141,6 +141,76 @@ module CustomerSetting {
 
     ModuleRegister.service("parametersService", ParametersService);
 
+    export interface IUpdatingSettingTypePromise {
+        (settingPartialCommand: SettingPartialCommand): ng.IPromise<void>;
+    }
+
+    export class UpdatingSettingTypePromiseChain {
+        public static $inject: string[] = ["$q"];
+
+        private promises: Array<KeyValuePair<number, IUpdatingSettingTypePromise>>;
+
+        private $q: ng.IQService;
+
+        constructor($q: ng.IQService) {
+            this.$q = $q;
+            this.promises = new Array<KeyValuePair<number, IUpdatingSettingTypePromise>>();
+        }
+
+        public reset(): void {
+            this.promises = new Array<KeyValuePair<number, IUpdatingSettingTypePromise>>();
+        }
+
+        public register(settingTypeId: number, promise: IUpdatingSettingTypePromise): void {
+            var isNew: boolean = this.promises.filter((promise: KeyValuePair<number, IUpdatingSettingTypePromise>) => {
+                return settingTypeId === promise.key;
+            }).length <= 0;
+
+            if (isNew) {
+                this.promises.push(new KeyValuePair<number, IUpdatingSettingTypePromise>(settingTypeId, promise));
+            }
+        }
+
+        public execute(settingCommand: SettingCommand): ng.IPromise<void> {
+            var deferred: ng.IDeferred<void> = this.$q.defer<void>();
+
+            if (settingCommand) {
+                var current: ng.IPromise<void>;
+
+                this.promises.forEach((promise: KeyValuePair<number, IUpdatingSettingTypePromise>) => {
+                    var matchedSettingTypes: SettingType[] = settingCommand.setting.settingTypes.filter((settingType: SettingType) => {
+                        return promise.key === settingType.id;
+                    });
+
+                    if (matchedSettingTypes.length > 0) {
+                        var settingPartialCommand = new SettingPartialCommand(
+                            settingCommand.uplineLevel,
+                            settingCommand.setting.customerLevel,
+                            settingCommand.setting.productId,
+                            settingCommand.setting.productName,
+                            matchedSettingTypes[0]);
+
+                        if (!current) {
+                            current = promise.value(settingPartialCommand);
+                        } else {
+                            current = current.then<void>(() => promise.value(settingPartialCommand));
+                        }
+                    }
+                });
+
+                if (current) {
+                    return current;
+                }
+            }
+
+            deferred.resolve();
+
+            return deferred.promise;
+        }
+    }
+
+    ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
+
     export class ValueRangeService {
         public generateRanges(value: number, min: number, max: number, step: number, roundingFactor: number): Array<KeyValuePair<number, number>> {
             var ranges: Array<KeyValuePair<number, number>> = new Array<KeyValuePair<number, number>>();

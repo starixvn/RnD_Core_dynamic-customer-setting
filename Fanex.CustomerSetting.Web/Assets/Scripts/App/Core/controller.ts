@@ -17,7 +17,8 @@ module CustomerSetting {
             "$timeout",
             "appConfigService",
             "parametersService",
-            "resourceService"];
+            "resourceService",
+            "updatingSettingTypePromiseChain"];
 
         public isUIblocked: boolean;
         public customerNames: string;
@@ -43,6 +44,7 @@ module CustomerSetting {
         private appConfigService: AppConfigService;
         private parametersService: ParametersService;
         private resourceService: ResourceService;
+        private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
 
         constructor(
             $rootScope: ng.IRootScopeService,
@@ -50,13 +52,15 @@ module CustomerSetting {
             $timeout: ng.ITimeoutService,
             appConfigService: AppConfigService,
             parametersService: ParametersService,
-            resourceService: ResourceService) {
+            resourceService: ResourceService,
+            updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
             this.appConfigService = appConfigService;
             this.parametersService = parametersService;
             this.resourceService = resourceService;
+            this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
 
             this.customerNames = this.parametersService.customerNames;
             this.uplineLevel = this.parametersService.uplineLevel;
@@ -78,28 +82,9 @@ module CustomerSetting {
                     validationResult = command.validate();
 
                     if (validationResult.isSuccessful) {
-                        this.isUIblocked = true;
-
-                        this.$http
-                            .post(this.appConfigService.resolveRootUrl(path), command.toJson())
-                            .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                                this.requestMsgResult = new UpdatingSettingResult(response.data);
-                                this.querySetting();
-
-                                this.$timeout(() => {
-                                    if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
-                                        this.requestMsgResult = undefined;
-                                    }
-                                }, Defaults.displayingMsgTime);
-                            }, () => {
-                                var error: Result = Result.systemError;
-
-                                error.message = this.resourceService.getMessage(error.message);
-                                this.requestMsgResult = error;
-                            })
-                            .finally(() => {
-                                this.isUIblocked = false;
-                            });
+                        this.updatingSettingTypePromiseChain.execute(command).then(() => {
+                            this.updateSetting(path, command);
+                        });
                     } else {
                         this.requestMsgResult = validationResult;
                     }
@@ -110,6 +95,31 @@ module CustomerSetting {
                 error.message = this.resourceService.getMessage(error.message);
                 this.requestMsgResult = error;
             }
+        }
+
+        private updateSetting(path: string, command: SettingCommand): void {
+            this.isUIblocked = true;
+
+            this.$http
+                .post(this.appConfigService.resolveRootUrl(path), command.toJson())
+                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                    this.requestMsgResult = new UpdatingSettingResult(response.data);
+                    this.querySetting();
+
+                    this.$timeout(() => {
+                        if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
+                            this.requestMsgResult = undefined;
+                        }
+                    }, Defaults.displayingMsgTime);
+                }, () => {
+                    var error: Result = Result.systemError;
+
+                    error.message = this.resourceService.getMessage(error.message);
+                    this.requestMsgResult = error;
+                })
+                .finally(() => {
+                    this.isUIblocked = false;
+                });
         }
 
         private querySetting(): void {

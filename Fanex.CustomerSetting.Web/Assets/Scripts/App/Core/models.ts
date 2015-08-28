@@ -132,6 +132,7 @@ module CustomerSetting {
         public settingLevel: number;
         public settingItems: Array<ISettingItem>;
         public typeName: string;
+        public displayOrder: number;
         public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
@@ -144,6 +145,7 @@ module CustomerSetting {
                 this.settingLevel = settingType.settingLevel;
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
+                this.displayOrder = settingType.displayOrder;
                 this.extraData = this.getExtraData(settingType);
             }
         }
@@ -167,6 +169,7 @@ module CustomerSetting {
                 updatedSettingType.settingLevel = this.settingLevel;
                 updatedSettingType.settingItems = changedSettingItems;
                 updatedSettingType.typeName = this.typeName;
+                updatedSettingType.displayOrder = this.displayOrder;
                 updatedSettingType.extraData = this.extraData;
             }
 
@@ -192,7 +195,8 @@ module CustomerSetting {
                 settingTemplate: this.settingTemplate,
                 settingLevel: this.settingLevel,
                 settingItems: [],
-                typeName: this.typeName
+                typeName: this.typeName,
+                displayOrder: this.displayOrder
             };
 
             this.settingItems.forEach((settingItem: ISettingItem) => {

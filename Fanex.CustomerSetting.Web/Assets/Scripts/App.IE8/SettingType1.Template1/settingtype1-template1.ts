@@ -11,7 +11,7 @@ module CustomerSetting.IE8 {
     "use strict";
 
     class SettingType1Template1Directive extends SettingTypeDirective {
-        public static $inject: string[] = ["positionTakingResourceService"];
+        public static $inject: string[] = ["$q", "positionTakingResourceService", "updatingSettingTypePromiseChain"];
 
         public templateUrl: string = "settingtype1-template1.htm";
 
@@ -19,14 +19,36 @@ module CustomerSetting.IE8 {
             scope.headerTemplateUrl = "settingtyp1-template1-header.html";
             scope.valueTemplateUrl = "settingtyp1-template1-value.html";
             scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
+
+            this.updatingSettingTypePromiseChain.register(scope.settingType.id, (settingPartialCommand: SettingPartialCommand) => {
+                return this.updatePositionTakingOnMembers(settingPartialCommand);
+            });
         };
 
-        private positionTakingResourceService: PositionTakingResourceService;
+        private $q: ng.IQService;
 
-        constructor(positionTakingResourceService: PositionTakingResourceService) {
+        private positionTakingResourceService: PositionTakingResourceService;
+        private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
+
+        constructor(
+            $q: ng.IQService,
+            positionTakingResourceService: PositionTakingResourceService,
+            updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
             super(Settingtype1Template1Item.factory);
 
+            this.$q = $q;
             this.positionTakingResourceService = positionTakingResourceService;
+            this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+        }
+
+        public updatePositionTakingOnMembers(settingPartialCommand: SettingPartialCommand): ng.IPromise<void> {
+            var deferred: ng.IDeferred<void> = this.$q.defer<void>();
+            var testBool: boolean = confirm("I'm testing");
+
+            console.log(testBool);
+            deferred.resolve();
+
+            return deferred.promise;
         }
     }
 
