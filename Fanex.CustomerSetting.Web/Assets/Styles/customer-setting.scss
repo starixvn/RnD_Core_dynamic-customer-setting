@@ -9,6 +9,7 @@ $button-backround-color3: #8594a2;
 $button-text-color: #fff;
 $focus-border-color: #66afe9;
 $header-color: #b5c4d0;
+$hover-background-color: #e2f3d1;
 $input-border-color: #aeaeae;
 $invalid-border-color: rgba(233, 50, 45, 0.85);
 $invalid-color: #e9322d;
@@ -47,10 +48,10 @@ textarea {
     }
 
     &.invalid {
-        border: 1px solid $invalid-color;
+        border: 1px solid $invalid-color !important;
 
         &:focus {
-            border: 1px solid $invalid-color;
+            border: 1px solid $invalid-color !important;
         }
     }
 }
@@ -158,8 +159,8 @@ button {
 
 .result-container {
     @include box-sizing(border-box);
-    border: solid 1px $border-color;
     background-color: #f6f5f2;
+    border: solid 1px $border-color;
     font-weight: bold;
     margin-bottom: 10px;
 
@@ -295,6 +296,7 @@ button {
 }
 
 .tooltip-container {
+    @include box-sizing(border-box);
     left: 0;
     padding: 5px 0;
     position: absolute;
@@ -332,6 +334,172 @@ button {
         }
     }
 }
+
+.block {
+    @include box-sizing(border-box);
+    @include clearfix();
+    background-color: $block-background-color;
+    border: 1px solid $border-color;
+    margin-bottom: 10px;
+    width: 100%;
+
+    .right-button {
+        cursor: pointer;
+        float: right;
+        height: 100%;
+
+        .icon {
+            vertical-align: middle;
+        }
+    }
+
+    .header {
+        background-color: $header-color;
+        border-bottom: 1px solid $border-color;
+        font-weight: bold;
+        height: 25px;
+        line-height: 24px;
+        text-align: center;
+
+        &.customer-names-header {
+            border-bottom: none;
+        }
+
+        &.sub-group-header {
+            background-color: $sub-group-background-color;
+            padding: 0 3px;
+            text-align: left;
+
+            &.not-first {
+                border-top: 1px solid $border-color;
+            }
+        }
+
+        .update {
+            @extend .right-button;
+            border-left: 1px solid $border-color;
+            width: 42px;
+        }
+    }
+
+    .setting-type-group {
+        @include clearfix();
+    }
+
+    .setting-group {
+        background-color: $header-color;
+        border-bottom: 1px solid $border-color;
+        display: inline-block;
+        float: left;
+        width: 50%;
+
+        &:hover {
+            background-color: $hover-background-color;
+
+            .value-col {
+                background-color: transparent;
+            }
+
+            input,
+            select {
+                border-color: $border-color;
+            }
+        }
+
+        &.last,
+        &.near-last {
+            border-bottom: none;
+        }
+
+        &.only-one {
+            width: 100%;
+
+            .name-col {
+                width: 20%;
+            }
+
+            .value-col {
+                border-right: none;
+                width: 80%;
+            }
+        }
+    }
+
+    .name-col,
+    .value-col {
+        @include box-sizing(border-box);
+        border-right: 1px solid $border-color;
+        display: inline-block;
+        float: left;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 3px;
+        width: 40%;
+    }
+
+    .value-col {
+        background-color: $block-background-color;
+        width: 60%;
+
+        &.last {
+            border-right: none;
+        }
+    }
+
+    %col {
+        @include box-sizing(border-box);
+        border-right: 1px solid $border-color;
+        float: left;
+        height: 25px;
+        padding: 0 3px;
+
+        &.last {
+            border-right: none;
+        }
+    }
+
+    .w16-percent {
+        @extend %col;
+        width: 16%;
+    }
+
+    .empty-cell,
+    .w20-percent {
+        @extend %col;
+        width: 20%;
+    }
+
+    .w25-percent {
+        @extend %col;
+        width: 25%;
+    }
+
+    .w28-percent {
+        @extend %col;
+        width: 28%;
+    }
+
+    .w33-percent {
+        @extend %col;
+        width: 33%;
+
+        &.last {
+            width: 34%;
+        }
+    }
+
+    .w42-percent {
+        @extend %col;
+        width: 42%;
+    }
+
+    .w80-percent {
+        @extend %col;
+        border-right: none;
+        padding: 0;
+        width: 80%;
+    }
+}
 /*********************************************************/
 /*           Customer Info & Shared Styles               */
 /*********************************************************/
@@ -339,172 +507,6 @@ button {
     background-color: $background-color;
     border: 1px solid $border-color;
     padding: 2px;
-
-    .block {
-        @include box-sizing(border-box);
-        @include clearfix();
-        background-color: $block-background-color;
-        border: 1px solid $border-color;
-        margin-bottom: 10px;
-        width: 100%;
-
-        .right-button {
-            cursor: pointer;
-            float: right;
-            height: 100%;
-
-            .icon {
-                vertical-align: middle;
-            }
-        }
-
-        .header {
-            background-color: $header-color;
-            border-bottom: 1px solid $border-color;
-            font-weight: bold;
-            height: 25px;
-            line-height: 24px;
-            text-align: center;
-
-            &.customer-names-header {
-                border-bottom: none;
-            }
-
-            &.sub-group-header {
-                background-color: $sub-group-background-color;
-                padding: 0 3px;
-                text-align: left;
-
-                &.not-first {
-                    border-top: 1px solid $border-color;
-                }
-            }
-
-            .update {
-                @extend .right-button;
-                border-left: 1px solid $border-color;
-                width: 42px;
-            }
-        }
-
-        .setting-type-group {
-            @include clearfix();
-        }
-
-        .setting-group {
-            background-color: $header-color;
-            border-bottom: 1px solid $border-color;
-            display: inline-block;
-            width: 50%;
-            float: left;
-
-            &:hover {
-                background-color: #e2f3d1;
-
-                .value-col {
-                    background-color: transparent;
-                }
-
-                input,
-                select {
-                    border-color: $border-color;
-                }
-            }
-
-            &.last,
-            &.near-last {
-                border-bottom: none;
-            }
-
-            &.only-one {
-                width: 100%;
-
-                .name-col {
-                    width: 20%;
-                }
-
-                .value-col {
-                    border-right: none;
-                    width: 80%;
-                }
-            }
-        }
-
-        .name-col,
-        .value-col {
-            @include box-sizing(border-box);
-            display: inline-block;
-            border-right: 1px solid $border-color;
-            float: left;
-            height: 23px;
-            line-height: 23px;
-            padding: 0 3px;
-            width: 40%;
-        }
-
-        .value-col {
-            background-color: $block-background-color;
-            width: 60%;
-
-            &.last {
-                border-right: none;
-            }
-        }
-
-        %col {
-            @include box-sizing(border-box);
-            border-right: 1px solid $border-color;
-            float: left;
-            height: 25px;
-            padding: 0 3px;
-
-            &.last {
-                border-right: none;
-            }
-        }
-
-        .w16-percent {
-            @extend %col;
-            width: 16%;
-        }
-
-        .empty-cell,
-        .w20-percent {
-            @extend %col;
-            width: 20%;
-        }
-
-        .w25-percent {
-            @extend %col;
-            width: 25%;
-        }
-
-        .w28-percent {
-            @extend %col;
-            width: 28%;
-        }
-
-        .w33-percent {
-            @extend %col;
-            width: 33%;
-
-            &.last {
-                width: 34%;
-            }
-        }
-
-        .w42-percent {
-            @extend %col;
-            width: 42%;
-        }
-
-        .w80-percent {
-            @extend %col;
-            border-right: none;
-            padding: 0;
-            width: 80%;
-        }
-    }
 }
 
 .info-block .row {

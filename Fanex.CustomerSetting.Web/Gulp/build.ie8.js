@@ -129,4 +129,9 @@ module.exports = function (configs) {
         function (callback) {
             rimraf(tempDir, callback);
         });
+
+    gulp.task("ie8:styles:publish", ["images:publish"], function () {
+        return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "customer-setting-ie8*.{map,css}"))
+                   .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
+    });
 };

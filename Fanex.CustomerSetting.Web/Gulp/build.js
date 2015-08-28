@@ -109,4 +109,9 @@ module.exports = function (configs) {
     gulp.task("scripts:publish", ["libraries:combine", "scripts:core:publish", "scripts:modules:publish", "template:publish"], function (callback) {
         rimraf(tempDir, callback);
     });
+
+    gulp.task("styles:publish", ["images:publish"], function () {
+        return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "customer-setting.{*.map,css,*.css}"))
+                   .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
+    });
 };

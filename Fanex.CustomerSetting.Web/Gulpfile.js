@@ -55,7 +55,7 @@
     gulp.task("install", ["libraries:install", "tsd:install"]);
 
     gulp.task("publish", ["clean"], function () {
-        runSequence(["styles:publish", "scripts:publish", "ie8:scripts:publish"], "matrix:publish");
+        runSequence(["styles:publish", "scripts:publish", "ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish");
     });
 
     gulp.task("default", ["install"], function () {

@@ -219,10 +219,8 @@
     <Content Include="App\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.min.js" />
     <Content Include="App\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.js" />
     <Content Include="App\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.min.js" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.css" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.min.css" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.css" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.min.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.min.css" />
     <Content Include="App\CustomerSetting.IE8\Styles\Images\auto-pt.gif" />
     <Content Include="App\CustomerSetting.IE8\Styles\Images\loading.gif" />
     <Content Include="App\CustomerSetting.IE8\Styles\Images\not-allow-auto-pt.gif" />
@@ -248,8 +246,6 @@
     <Content Include="App\CustomerSetting\SettingType3.Template1\settingtype3-template1.min.js" />
     <Content Include="App\CustomerSetting\SettingType4.Template1\settingtype4-template1.js" />
     <Content Include="App\CustomerSetting\SettingType4.Template1\settingtype4-template1.min.js" />
-    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.css" />
-    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.min.css" />
     <Content Include="App\CustomerSetting\Styles\customer-setting.css" />
     <Content Include="App\CustomerSetting\Styles\customer-setting.min.css" />
     <Content Include="App\CustomerSetting\Styles\Images\auto-pt.gif" />
@@ -327,11 +323,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="package.json" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-matrix.css.map" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting.css.map" />
     <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
-    <Content Include="App\CustomerSetting\Styles\customer-setting-matrix.css.map" />
     <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css.map" />
     <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <Content Include="tslint.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />

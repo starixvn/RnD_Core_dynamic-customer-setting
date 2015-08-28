@@ -123,6 +123,10 @@
       <LastOutputs>.\customer-setting-matrix-resource.cs</LastOutputs>
     </Content>
     <None Include="app.config" />
+    <None Include="Assets\Styles\customer-setting-ie8.css.map">
+      <DependentUpon>customer-setting-ie8.css</DependentUpon>
+    </None>
+    <None Include="Assets\Styles\customer-setting-ie8.scss" />
     <None Include="Assets\Styles\customer-setting-matrix.css.map">
       <DependentUpon>customer-setting-matrix.css</DependentUpon>
     </None>
@@ -282,6 +286,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-matrix-resource.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting-ie8.css">
+      <DependentUpon>customer-setting-ie8.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting-ie8.min.css">
+      <DependentUpon>customer-setting-ie8.css</DependentUpon>
     </Content>
     <Content Include="Assets\Styles\customer-setting-matrix.css">
       <DependentUpon>customer-setting-matrix.scss</DependentUpon>

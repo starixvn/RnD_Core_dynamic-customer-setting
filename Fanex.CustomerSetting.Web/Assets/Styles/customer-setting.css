@@ -44,13 +44,13 @@ input.invalid,
 button.invalid,
 select.invalid,
 textarea.invalid {
-  border: 1px solid #e9322d;
+  border: 1px solid #e9322d !important;
 }
 input.invalid:focus,
 button.invalid:focus,
 select.invalid:focus,
 textarea.invalid:focus {
-  border: 1px solid #e9322d;
+  border: 1px solid #e9322d !important;
 }
 
 input[type=checkbox].invalid {
@@ -151,8 +151,8 @@ button {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border: solid 1px #7c98a4;
   background-color: #f6f5f2;
+  border: solid 1px #7c98a4;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -261,6 +261,9 @@ button {
 }
 
 .tooltip-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   left: 0;
   padding: 5px 0;
   position: absolute;
@@ -296,15 +299,7 @@ button {
   right: 5px;
 }
 
-/*********************************************************/
-/*           Customer Info & Shared Styles               */
-/*********************************************************/
-.customer-setting {
-  background-color: #e6e9f0;
-  border: 1px solid #7c98a4;
-  padding: 2px;
-}
-.customer-setting .block {
+.block {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -315,15 +310,15 @@ button {
   margin-bottom: 10px;
   width: 100%;
 }
-.customer-setting .block .right-button, .customer-setting .block .header .update {
+.block .right-button, .block .header .update {
   cursor: pointer;
   float: right;
   height: 100%;
 }
-.customer-setting .block .right-button .icon, .customer-setting .block .header .update .icon, .customer-setting .block .right-button .result-container .result.success .message-icon, .result-container .result.success .customer-setting .block .right-button .message-icon, .customer-setting .block .header .update .result-container .result.success .message-icon, .result-container .result.success .customer-setting .block .header .update .message-icon, .customer-setting .block .right-button .result-container .result.warning .message-icon, .result-container .result.warning .customer-setting .block .right-button .message-icon, .customer-setting .block .header .update .result-container .result.warning .message-icon, .result-container .result.warning .customer-setting .block .header .update .message-icon, .customer-setting .block .right-button .result-container .result.error .message-icon, .result-container .result.error .customer-setting .block .right-button .message-icon, .customer-setting .block .header .update .result-container .result.error .message-icon, .result-container .result.error .customer-setting .block .header .update .message-icon {
+.block .right-button .icon, .block .header .update .icon, .block .right-button .result-container .result.success .message-icon, .result-container .result.success .block .right-button .message-icon, .block .header .update .result-container .result.success .message-icon, .result-container .result.success .block .header .update .message-icon, .block .right-button .result-container .result.warning .message-icon, .result-container .result.warning .block .right-button .message-icon, .block .header .update .result-container .result.warning .message-icon, .result-container .result.warning .block .header .update .message-icon, .block .right-button .result-container .result.error .message-icon, .result-container .result.error .block .right-button .message-icon, .block .header .update .result-container .result.error .message-icon, .result-container .result.error .block .header .update .message-icon {
   vertical-align: middle;
 }
-.customer-setting .block .header {
+.block .header {
   background-color: #b5c4d0;
   border-bottom: 1px solid #7c98a4;
   font-weight: bold;
@@ -331,77 +326,77 @@ button {
   line-height: 24px;
   text-align: center;
 }
-.customer-setting .block .header.customer-names-header {
+.block .header.customer-names-header {
   border-bottom: none;
 }
-.customer-setting .block .header.sub-group-header {
+.block .header.sub-group-header {
   background-color: #cadceb;
   padding: 0 3px;
   text-align: left;
 }
-.customer-setting .block .header.sub-group-header.not-first {
+.block .header.sub-group-header.not-first {
   border-top: 1px solid #7c98a4;
 }
-.customer-setting .block .header .update {
+.block .header .update {
   border-left: 1px solid #7c98a4;
   width: 42px;
 }
-.customer-setting .block .setting-type-group {
+.block .setting-type-group {
   overflow: hidden;
   *zoom: 1;
 }
-.customer-setting .block .setting-group {
+.block .setting-group {
   background-color: #b5c4d0;
   border-bottom: 1px solid #7c98a4;
   display: inline-block;
-  width: 50%;
   float: left;
+  width: 50%;
 }
-.customer-setting .block .setting-group:hover {
+.block .setting-group:hover {
   background-color: #e2f3d1;
 }
-.customer-setting .block .setting-group:hover .value-col {
+.block .setting-group:hover .value-col {
   background-color: transparent;
 }
-.customer-setting .block .setting-group:hover input,
-.customer-setting .block .setting-group:hover select {
+.block .setting-group:hover input,
+.block .setting-group:hover select {
   border-color: #7c98a4;
 }
-.customer-setting .block .setting-group.last, .customer-setting .block .setting-group.near-last {
+.block .setting-group.last, .block .setting-group.near-last {
   border-bottom: none;
 }
-.customer-setting .block .setting-group.only-one {
+.block .setting-group.only-one {
   width: 100%;
 }
-.customer-setting .block .setting-group.only-one .name-col {
+.block .setting-group.only-one .name-col {
   width: 20%;
 }
-.customer-setting .block .setting-group.only-one .value-col {
+.block .setting-group.only-one .value-col {
   border-right: none;
   width: 80%;
 }
-.customer-setting .block .name-col,
-.customer-setting .block .value-col {
+.block .name-col,
+.block .value-col {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  display: inline-block;
   border-right: 1px solid #7c98a4;
+  display: inline-block;
   float: left;
   height: 23px;
   line-height: 23px;
   padding: 0 3px;
   width: 40%;
 }
-.customer-setting .block .value-col {
+.block .value-col {
   background-color: #fff;
   width: 60%;
 }
-.customer-setting .block .value-col.last {
+.block .value-col.last {
   border-right: none;
 }
-.customer-setting .block .w16-percent, .customer-setting .block .empty-cell,
-.customer-setting .block .w20-percent, .customer-setting .block .w25-percent, .customer-setting .block .w28-percent, .customer-setting .block .w33-percent, .customer-setting .block .w42-percent, .customer-setting .block .w80-percent {
+.block .w16-percent, .block .empty-cell,
+.block .w20-percent, .block .w25-percent, .block .w28-percent, .block .w33-percent, .block .w42-percent, .block .w80-percent {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -410,36 +405,45 @@ button {
   height: 25px;
   padding: 0 3px;
 }
-.customer-setting .block .last.w16-percent, .customer-setting .block .last.empty-cell,
-.customer-setting .block .last.w20-percent, .customer-setting .block .last.w25-percent, .customer-setting .block .last.w28-percent, .customer-setting .block .last.w33-percent, .customer-setting .block .last.w42-percent, .customer-setting .block .last.w80-percent {
+.block .last.w16-percent, .block .last.empty-cell,
+.block .last.w20-percent, .block .last.w25-percent, .block .last.w28-percent, .block .last.w33-percent, .block .last.w42-percent, .block .last.w80-percent {
   border-right: none;
 }
-.customer-setting .block .w16-percent {
+.block .w16-percent {
   width: 16%;
 }
-.customer-setting .block .empty-cell,
-.customer-setting .block .w20-percent {
+.block .empty-cell,
+.block .w20-percent {
   width: 20%;
 }
-.customer-setting .block .w25-percent {
+.block .w25-percent {
   width: 25%;
 }
-.customer-setting .block .w28-percent {
+.block .w28-percent {
   width: 28%;
 }
-.customer-setting .block .w33-percent {
+.block .w33-percent {
   width: 33%;
 }
-.customer-setting .block .w33-percent.last {
+.block .w33-percent.last {
   width: 34%;
 }
-.customer-setting .block .w42-percent {
+.block .w42-percent {
   width: 42%;
 }
-.customer-setting .block .w80-percent {
+.block .w80-percent {
   border-right: none;
   padding: 0;
   width: 80%;
+}
+
+/*********************************************************/
+/*           Customer Info & Shared Styles               */
+/*********************************************************/
+.customer-setting {
+  background-color: #e6e9f0;
+  border: 1px solid #7c98a4;
+  padding: 2px;
 }
 
 .info-block .row {

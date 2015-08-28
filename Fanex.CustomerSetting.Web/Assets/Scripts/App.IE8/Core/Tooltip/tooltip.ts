@@ -22,32 +22,22 @@ module CustomerSetting.IE8 {
         public link: ng.IDirectiveLinkFn = (scope: ITooltipScope, element: ng.IAugmentedJQuery) => {
             var template = this.$templateCache.get("Tooltip/tooltip.htm");
             var tooltip = angular.element(template);
+            var debounceResize = _.debounce(() => {
+                if (!tooltip.hasClass("ng-hide")) {
+                    this.calculatePosition(element, tooltip);
+                }
+            }, 100);
 
             this.$compile(tooltip)(scope);
             element.parent().prepend(tooltip);
 
             scope.$watch("message", (newMessage: string, oldMessage: string) => {
                 if (newMessage && newMessage !== oldMessage) {
-                    this.$timeout(() => {
-                        var elementRect: ClientRect = element[0].getBoundingClientRect();
-                        var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
-                        var scrollX: number = this.$window.pageXOffset;
-                        var scrollY: number = this.$window.pageYOffset;
-                        var top: number = Math.max(0, elementRect.top - tooltipRect.height + scrollY);
-                        var left: number = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX);
-
-                        if (this.$window.innerWidth < left + tooltipRect.width) {
-                            left = elementRect.left - tooltipRect.width + elementRect.width / 2;
-                            tooltip.addClass("right");
-                        }
-
-                        tooltip.css({
-                            "top": top + "px",
-                            "left": left + "px"
-                        });
-                    });
+                    this.calculatePosition(element, tooltip);
                 }
             });
+
+            angular.element(this.$window).on("resize", debounceResize);
         };
 
         private $window: ng.IWindowService;
@@ -68,6 +58,32 @@ module CustomerSetting.IE8 {
             this.$timeout = $timeout;
             this.$templateCache = $templateCache;
         }
+
+        private calculatePosition(element: ng.IAugmentedJQuery, tooltip: ng.IAugmentedJQuery): void {
+            this.$timeout(() => {
+                var elementRect: ClientRect = element[0].getBoundingClientRect();
+                var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
+                var scrollX: number = this.$window.pageXOffset || 0;
+                var scrollY: number = this.$window.pageYOffset || 0;
+                var elementWidth: number = elementRect.right - elementRect.left;
+                var tooltipWidth: number = tooltipRect.right - tooltipRect.left;
+                var tooltipHeight: number = tooltipRect.bottom - tooltipRect.top;
+                var top: number = Math.max(0, elementRect.top - tooltipHeight + scrollY - 5);
+                var left: number = Math.max(0, elementRect.left + (elementWidth - tooltipWidth) / 2 + scrollX);
+                var windowWidth: number = this.$document.find("body")[0].clientWidth;
+
+                if (windowWidth < left + tooltipWidth) {
+                    left = elementRect.left - tooltipWidth + elementWidth / 2;
+                    left = Math.min(left, windowWidth - tooltipWidth - 5);
+                    tooltip.addClass("right");
+                }
+
+                tooltip.css({
+                    "top": top + "px",
+                    "left": left + "px"
+                });
+            });
+        }
     }
 
     ModuleRegister.directive("tooltip", Tooltip);
@@ -77,7 +93,7 @@ module CustomerSetting.IE8 {
             var message: string = "";
 
             if (result
-                && !result.isSuccessful
+                && !result.isSuccessful()
                 && !result.isWarning
                 && (!fieldName || (fieldName && fieldName === result.fieldName))) {
                 var resourceService: ResourceService = $injector.get<ResourceService>(resourceServiceName);
@@ -99,7 +115,7 @@ module CustomerSetting.IE8 {
             var mustHighlighted: boolean = false;
 
             if (result
-                && !result.isSuccessful
+                && !result.isSuccessful()
                 && (!fieldName || (fieldName && fieldName === result.fieldName))) {
                 mustHighlighted = true;
             }

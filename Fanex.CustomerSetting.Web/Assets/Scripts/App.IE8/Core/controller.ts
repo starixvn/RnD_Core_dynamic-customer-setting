@@ -69,7 +69,7 @@ module CustomerSetting.IE8 {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
-                    if (validationResult.isSuccessful) {
+                    if (validationResult.isSuccessful()) {
                         this.isUIblocked = true;
 
                         this.$http
