@@ -1,10 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Exceptions
 {
     using System;
+    using System.Data.SqlClient;
     using System.Runtime.Serialization;
     using System.Text;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.Data;
 
     [Serializable]
     public class CustomerSettingException : Exception
@@ -229,7 +231,25 @@
             messageBuilder.AppendFormat("Setting Type Level: {0}", SettingTypeLevel).AppendLine();
             messageBuilder.AppendFormat("Setting Type Template: {0}", SettingTypeTemplate).AppendLine();
 
+            LogDatabaseException(messageBuilder);
+
             return messageBuilder.ToString();
+        }
+
+        private void LogDatabaseException(StringBuilder messageBuilder)
+        {
+            if (this.InnerException is ObjectDbException)
+            {
+                var objectDbException = this.InnerException as ObjectDbException;
+                messageBuilder.AppendFormat("Procedure: {0}", objectDbException.DbSetting.SpName).AppendLine();
+                messageBuilder.AppendFormat("Connection String: {0}", objectDbException.DbSetting.ConnectionString).AppendLine();
+
+                if (objectDbException.InnerException is SqlException)
+                {
+                    var innerSqlException = objectDbException.InnerException as SqlException;
+                    messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
+                }
+            }
         }
     }
 }

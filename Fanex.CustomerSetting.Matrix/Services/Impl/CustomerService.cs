@@ -110,7 +110,7 @@
                     UserName = customerName
                 });
 
-            if(!customerLineDto.CustId.HasValue)
+            if (!customerLineDto.CustId.HasValue)
             {
                 throw new InvalidOperationException(Message.UsernameDoesNotExist);
             }

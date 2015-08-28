@@ -27,7 +27,6 @@
             int subAccountId = 0,
             string language = "en-US")
         {
-
             if (AgencySystem != CustomerSettingConfiguration.Settings.System)
             {
                 subAccountId = 0;

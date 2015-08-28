@@ -62,7 +62,7 @@
                   {
                       return _productRepository
                           .Fetch<ProductName>(new ProductNamesQueryCriteria { LanguageKey = LanguageNameConverter.GetRefLanguageName() })
-                          .Select<ProductName, Product>(productName => new Product { Id = productName.ProductId, Name = productName.Name});
+                          .Select<ProductName, Product>(productName => new Product { Id = productName.ProductId, Name = productName.Name });
                   },
                   new TimeSpan(CacheDuration, 0, 0));
 

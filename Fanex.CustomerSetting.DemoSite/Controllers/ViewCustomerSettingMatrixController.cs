@@ -71,7 +71,7 @@
                 htmlContent = htmlContent.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
                 htmlContent = htmlContent.Replace("{{appConfig}}", JsonConverter.ToJson(appConfig));
 
-                //cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
+                ////cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
             }
 
             return htmlContent;

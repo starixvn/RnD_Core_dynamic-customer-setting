@@ -11,7 +11,7 @@
         {
             CustomerSettingClient.TestUpdate();
             CustomerSettingClient.TestMultipleUpdate();
-            //RunConcurrentExperiment();
+            ////RunConcurrentExperiment();
         }
 
         private static void RunConcurrentExperiment()
