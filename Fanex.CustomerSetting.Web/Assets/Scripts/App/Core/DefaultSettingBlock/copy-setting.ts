@@ -4,15 +4,15 @@
 module CustomerSetting {
     "use strict";
 
-    interface ICopySettingScope extends ng.IScope {
+    export interface ICopySettingScope extends ng.IScope {
         copy: () => void;
         showError: boolean;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
     }
 
-    class CopySettingDirective implements ng.IDirective {
-        public static $inject: string[] = ["copyingSettManagerService"];
+    export class CopySettingDirective implements ng.IDirective {
+        public static $inject: string[] = ["copyingSettingService"];
 
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/copy-setting.htm";
@@ -25,12 +25,12 @@ module CustomerSetting {
         }
 
         public controller: any = ["$scope", ($scope: ICopySettingScope) => {
-            this.copyingSettManagerService.register($scope);
+            this.copyingSettingService.register($scope);
 
             $scope.showError = false;
 
             $scope.copy = () => {
-                this.copyingSettManagerService.hideSportCopyingError($scope);
+                this.copyingSettingService.hideSportCopyingError($scope);
 
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
@@ -46,16 +46,16 @@ module CustomerSetting {
             };
         }];
 
-        private copyingSettManagerService: CopyingSettManagerService;
+        protected copyingSettingService: CopyingSettingService;
 
-        constructor(copyingSettManagerService: CopyingSettManagerService) {
-            this.copyingSettManagerService = copyingSettManagerService;
+        constructor(copyingSettingService: CopyingSettingService) {
+            this.copyingSettingService = copyingSettingService;
         }
     }
 
     ModuleRegister.directive("copySetting", CopySettingDirective);
 
-    class CopyingSettManagerService {
+    class CopyingSettingService {
         public static $inject: string[] = ["$rootScope"];
 
         private scopes: Array<ICopySettingScope>;
@@ -111,5 +111,5 @@ module CustomerSetting {
         }
     }
 
-    ModuleRegister.service("copyingSettManagerService", CopyingSettManagerService);
+    ModuleRegister.service("copyingSettingService", CopyingSettingService);
 }

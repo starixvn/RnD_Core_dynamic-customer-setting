@@ -68,8 +68,8 @@ module CustomerSetting.IE8 {
                 var elementWidth: number = elementRect.right - elementRect.left;
                 var tooltipWidth: number = tooltipRect.right - tooltipRect.left;
                 var tooltipHeight: number = tooltipRect.bottom - tooltipRect.top;
-                var top: number = Math.max(0, elementRect.top - tooltipHeight + scrollY - 5);
-                var left: number = Math.max(0, elementRect.left + (elementWidth - tooltipWidth) / 2 + scrollX - 8);
+                var top: number = Math.max(0, elementRect.top - tooltipHeight + scrollY);
+                var left: number = Math.max(0, elementRect.left + (elementWidth - tooltipWidth) / 2 + scrollX);
                 var windowWidth: number = this.$document.find("body")[0].clientWidth;
 
                 if (windowWidth < left + tooltipWidth) {

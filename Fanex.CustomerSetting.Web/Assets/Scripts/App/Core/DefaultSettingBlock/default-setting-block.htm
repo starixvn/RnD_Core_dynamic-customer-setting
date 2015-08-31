@@ -7,7 +7,7 @@
     </div>
     <div class="setting-type-group" data-ng-repeat="group in sportGroups">
         <div class="header sub-group-header"
-             data-ng-show="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
              data-ng-class="{ 'not-first': ($index > 0) }"
              data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}

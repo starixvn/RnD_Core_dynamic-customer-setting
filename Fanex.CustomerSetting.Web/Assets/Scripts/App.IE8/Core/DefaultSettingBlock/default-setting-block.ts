@@ -8,12 +8,12 @@
 module CustomerSetting.IE8 {
     "use strict";
 
-    interface IDefaultSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
+    export interface IDefaultSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
         avaiSettingLevels: Object;
         sportGroups: DefaultSettingItem[][];
     }
 
-    class DefaultSettingTypeGroupingDirective implements ng.IDirective {
+    export class DefaultSettingTypeGroupingDirective implements ng.IDirective {
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/default-setting-block.htm";
 
@@ -31,7 +31,7 @@ module CustomerSetting.IE8 {
             });
         }];
 
-        private groupSettingItemsBySportType(settingItems: ISettingItem[]): DefaultSettingItem[][] {
+        protected groupSettingItemsBySportType(settingItems: ISettingItem[]): DefaultSettingItem[][] {
             var currentSportTypeId: number = -1;
             var result: Array<Array<DefaultSettingItem>> = new Array<Array<DefaultSettingItem>>();
             var group: Array<DefaultSettingItem>;

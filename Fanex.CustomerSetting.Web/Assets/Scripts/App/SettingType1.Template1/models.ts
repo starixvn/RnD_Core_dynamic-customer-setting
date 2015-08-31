@@ -61,7 +61,7 @@ module CustomerSetting {
         }
     }
 
-    class SuperPositionTaking extends DefaultSettingItem {
+    export class SuperPositionTaking extends DefaultSettingItem {
         public s4: number;
         public m4: number;
         public a4: number;
@@ -172,7 +172,7 @@ module CustomerSetting {
         }
     }
 
-    class MasterPositionTaking extends DefaultSettingItem {
+    export class MasterPositionTaking extends DefaultSettingItem {
         public s3: number;
         public uS3: number;
         public iS3: boolean;
@@ -247,6 +247,24 @@ module CustomerSetting {
                     this.m3 = backupM3;
                     this.uS3 = backupUs3;
                     this.s3 = backupS3;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public copyPtOnMembersFrom(source: MasterPositionTaking): boolean {
+            var isSuccessful: boolean = true;
+            var backupSuperPTOnMembers: number;
+
+            if (source) {
+                backupSuperPTOnMembers = this.superPTOnMembers;
+                this.superPTOnMembers = source.superPTOnMembers;
+                isSuccessful = this.validatePtOnMembers();
+
+                if (!isSuccessful) {
+                    this.superPTOnMembers = backupSuperPTOnMembers;
+                    this.validationState.fieldName = "superPTOnMembers";
                 }
             }
 
@@ -364,6 +382,24 @@ module CustomerSetting {
             return true;
         }
 
+        private validatePtOnMembers(): boolean {
+            var maxOfSuperPtOnMembers: number = Math.max(0, this.s4 - this.m3);
+
+            if (this.superPTOnMembers < 0) {
+                this.validationState = new ValidationResult("SuperPTOnMemberCannotBeLessThan", "superPTOnMembers", [0]);
+
+                return false;
+            }
+
+            if (this.superPTOnMembers > maxOfSuperPtOnMembers) {
+                this.validationState = new ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "superPTOnMembers", [maxOfSuperPtOnMembers]);
+
+                return false;
+            }
+
+            return true;
+        }
+
         private correctAutoPtValues(): void {
             if (this.iS3 && this.s3 > 0) {
                 this.s3 = 0;
@@ -375,7 +411,7 @@ module CustomerSetting {
         }
     }
 
-    class AgentPositionTaking extends DefaultSettingItem {
+    export class AgentPositionTaking extends DefaultSettingItem {
         public m2: number;
         public uM2: number;
         public iM2: boolean;
@@ -450,6 +486,24 @@ module CustomerSetting {
                     this.a2 = backupA2;
                     this.uM2 = backupUm2;
                     this.m2 = backupM2;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public copyPtOnMembersFrom(source: AgentPositionTaking): boolean {
+            var isSuccessful: boolean = true;
+            var backupMasterPTOnMembers: number;
+
+            if (source) {
+                backupMasterPTOnMembers = this.masterPTOnMembers;
+                this.masterPTOnMembers = source.masterPTOnMembers;
+                isSuccessful = this.validatePtOnMembers();
+
+                if (!isSuccessful) {
+                    this.masterPTOnMembers = backupMasterPTOnMembers;
+                    this.validationState.fieldName = "masterPTOnMembers";
                 }
             }
 
@@ -567,6 +621,24 @@ module CustomerSetting {
             return true;
         }
 
+        private validatePtOnMembers(): boolean {
+            var maxOfMasterPtOnMembers: number = Math.max(0, this.m3 - this.a2);
+
+            if (this.masterPTOnMembers < 0) {
+                this.validationState = new ValidationResult("MasterPTOnMemberCannotBeLessThan", "masterPTOnMembers", [0]);
+
+                return false;
+            }
+
+            if (this.masterPTOnMembers > maxOfMasterPtOnMembers) {
+                this.validationState = new ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "masterPTOnMembers", [maxOfMasterPtOnMembers]);
+
+                return false;
+            }
+
+            return true;
+        }
+
         private correctAutoPtValues(): void {
             if (this.iM2 && this.m2 > 0) {
                 this.m2 = 0;
@@ -578,7 +650,7 @@ module CustomerSetting {
         }
     }
 
-    class SuperPositionTakingOnMember extends DefaultSettingItem {
+    export class SuperPositionTakingOnMember extends DefaultSettingItem {
         public a1: number;
         public m1: number;
         public s1: number;
@@ -710,7 +782,7 @@ module CustomerSetting {
         }
     }
 
-    class MasterPositionTakingOnMember extends DefaultSettingItem {
+    export class MasterPositionTakingOnMember extends DefaultSettingItem {
         public a1: number;
         public m1: number;
         public iM1: boolean;
@@ -840,7 +912,7 @@ module CustomerSetting {
         }
     }
 
-    class AgentPositionTakingOnMember extends DefaultSettingItem {
+    export class AgentPositionTakingOnMember extends DefaultSettingItem {
         public a1: number;
         public a2: number;
         public n2: number;

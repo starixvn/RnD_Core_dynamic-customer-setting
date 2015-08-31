@@ -13,7 +13,6 @@
 body {
   font-family: Tahoma, Arial, helvetica, sans-serif;
   font-size: 11px;
-  position: relative;
 }
 
 input,
@@ -265,7 +264,6 @@ button {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   left: 0;
-  padding: 5px 0;
   position: absolute;
   top: 0;
   z-index: 1;
@@ -396,7 +394,7 @@ button {
   border-right: none;
 }
 .block .w16-percent, .block .empty-cell,
-.block .w20-percent, .block .w25-percent, .block .w28-percent, .block .w33-percent, .block .w42-percent, .block .w80-percent {
+.block .w20-percent, .block .w25-percent, .block .w28-percent, .block .w33-percent, .block .w42-percent, .block .w80-percent, .block .w100-percent {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -406,7 +404,7 @@ button {
   padding: 0 3px;
 }
 .block .last.w16-percent, .block .last.empty-cell,
-.block .last.w20-percent, .block .last.w25-percent, .block .last.w28-percent, .block .last.w33-percent, .block .last.w42-percent, .block .last.w80-percent {
+.block .last.w20-percent, .block .last.w25-percent, .block .last.w28-percent, .block .last.w33-percent, .block .last.w42-percent, .block .last.w80-percent, .block .last.w100-percent {
   border-right: none;
 }
 .block .w16-percent {
@@ -432,9 +430,14 @@ button {
   width: 42%;
 }
 .block .w80-percent {
+  width: 80%;
+}
+.block .w100-percent {
+  width: 100%;
+}
+.block .no-right-border {
   border-right: none;
   padding: 0;
-  width: 80%;
 }
 
 /*********************************************************/
@@ -503,6 +506,21 @@ button {
   border-right: none;
   padding: 0;
   width: 80%;
+}
+.modal .modal-content .setting-type-2.block, .modal .modal-content
+.setting-type-1.block {
+  margin: 10px auto;
+  max-height: 500px;
+  overflow: auto;
+}
+.modal .modal-content .setting-type-2.block .setting-group .name-col, .modal .modal-content
+.setting-type-1.block .setting-group .name-col {
+  width: 50%;
+}
+.modal .modal-content .setting-type-2.block .setting-group .value-col, .modal .modal-content
+.setting-type-1.block .setting-group .value-col {
+  padding: 0 5px;
+  width: 50%;
 }
 
 /*# sourceMappingURL=customer-setting.css.map */

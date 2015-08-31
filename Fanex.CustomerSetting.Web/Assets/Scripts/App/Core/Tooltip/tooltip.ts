@@ -65,8 +65,8 @@ module CustomerSetting {
                 var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
                 var scrollX: number = this.$window.pageXOffset;
                 var scrollY: number = this.$window.pageYOffset;
-                var top: number = Math.max(0, elementRect.top - tooltipRect.height + scrollY - 5);
-                var left: number = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX - 8);
+                var top: number = Math.max(0, elementRect.top - tooltipRect.height + scrollY + 5);
+                var left: number = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX);
 
                 if (this.$window.innerWidth < left + tooltipRect.width) {
                     left = elementRect.left - tooltipRect.width + elementRect.width / 2;

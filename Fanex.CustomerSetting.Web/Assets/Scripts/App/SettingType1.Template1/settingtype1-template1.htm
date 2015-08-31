@@ -3,36 +3,39 @@
     <adjust-member-pt-modal></adjust-member-pt-modal>
     <script type="text/ng-template" id="settingtyp1-template1-header.html">
         <div class="empty-cell"></div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.super">
+        <div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.super">
             <div class="w25-percent">{{::('SuperMaxPT' | positionTakingLabel)}}</div>
             <div class="w25-percent">{{::('MasterMaxPT' | positionTakingLabel)}}</div>
             <div class="w25-percent">{{::('AgentMaxPT' | positionTakingLabel)}}</div>
             <div class="w25-percent last">{{::('SuperMinPT' | positionTakingLabel)}}</div>
         </div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.master">
+        <div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.master">
             <div class="w28-percent">{{::('SuperPT' | positionTakingLabel)}}</div>
             <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
             <div class="w28-percent">{{::('MasterMaxPT' | positionTakingLabel)}}</div>
             <div class="w28-percent last">{{::('MasterMinPT' | positionTakingLabel)}}</div>
         </div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+        <div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.agent">
             <div class="w28-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
             <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
             <div class="w28-percent">{{::('AgentMaxPT' | positionTakingLabel)}}</div>
             <div class="w28-percent last">{{::('AgentMinPT' | positionTakingLabel)}}</div>
         </div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
+        <div class="w80-percent no-right-border"
+             data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
             <div class="w28-percent">{{::('SuperPT' | positionTakingLabel)}}</div>
             <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
             <div class="w28-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
             <div class="w28-percent last">{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+        <div class="w80-percent no-right-border"
+             data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
             <div class="w42-percent">{{::('MasterPT' | positionTakingLabel)}}</div>
             <div class="w16-percent">{{::('IsAuto' | positionTakingLabel)}}</div>
             <div class="w42-percent last">{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
-        <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+        <div class="w80-percent no-right-border"
+             data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
             <div>{{::('AgentPT' | positionTakingLabel)}}</div>
         </div>
     </script>
@@ -67,7 +70,9 @@
                 </position-taking-select>
             </div>
         </div>
-        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.master">
+        <div class="align-center"
+             data-ng-if="customerLevel === avaiCustomerLevels.master"
+             data-position-taking-on-member>
             <div class="w28-percent" data-ng-show="item.iS3">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="uS3"
@@ -84,10 +89,7 @@
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
-                    <input type="checkbox"
-                           data-ng-model="item.iS3"
-                           data-auto-position-taking
-                           data-ng-change="confirmUpdatingMemberPt(!item.iS3 && item.iS3 !== item.oldSetting.iS3, item.s4 - item.m3, 'isUpdateSuperPTOnMembers', 'superPTOnMembers')" />
+                    <input type="checkbox" data-ng-model="item.iS3" />
                 </label>
             </div>
             <div class="w28-percent">
@@ -105,7 +107,9 @@
                 </position-taking-select>
             </div>
         </div>
-        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+        <div class="align-center"
+             data-ng-if="customerLevel === avaiCustomerLevels.agent"
+             data-position-taking-on-member>
             <div class="w28-percent" data-ng-show="item.iM2">
                 <position-taking-select data-setting-item="item"
                                         data-field-name="uM2"
@@ -122,10 +126,7 @@
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
-                    <input type="checkbox"
-                           data-ng-model="item.iM2"
-                           data-auto-position-taking
-                           data-ng-change="confirmUpdatingMemberPt(!item.iM2 && item.iM2 !== item.oldSetting.iM2, item.m3 - item.a2, 'isUpdateMasterPTOnMembers', 'masterPTOnMembers')" />
+                    <input type="checkbox" data-ng-model="item.iM2" />
                 </label>
             </div>
             <div class="w28-percent">
@@ -160,9 +161,7 @@
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
-                    <input type="checkbox"
-                           data-show-modal="{{item.iS1}}"
-                           data-ng-model="item.iS1" />
+                    <input type="checkbox" data-ng-model="item.iS1" />
                 </label>
             </div>
             <div class="w28-percent">{{item.m1}}</div>
@@ -185,9 +184,7 @@
             </div>
             <div class="w16-percent">
                 <label class="checkbox">
-                    <input type="checkbox"
-                           data-show-modal="{{item.iM1}}"
-                           data-ng-model="item.iM1" />
+                    <input type="checkbox" data-ng-model="item.iM1" />
                 </label>
             </div>
             <div class="w42-percent last">{{item.a1}}</div>

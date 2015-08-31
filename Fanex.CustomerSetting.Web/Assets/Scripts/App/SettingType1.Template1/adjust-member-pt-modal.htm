@@ -5,8 +5,48 @@
         </div>
         <div class="modal-content">
             <span data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></span>
-            <select data-ng-model="selectedValue"
-                    data-ng-options="item.key as item.value / divisor for item in range"></select>
+            <div class="block setting-type-1">
+                <div class="setting-type-group" data-ng-repeat="group in sportGroups">
+                    <div class="header sub-group-header"
+                         data-ng-if="settingLevel === avaiSettingLevels.sportTypeBetType"
+                         data-ng-class="{ 'not-first': ($index > 0) }"
+                         data-sport-type="{{group[0].sportTypeId}}">
+                        {{group[0].sportTypeName}}
+                        <copy-position-taking-on-member data-ng-if="sportGroups.length > 1 && $index === 0"
+                                                        data-customer-level="customerLevel"
+                                                        data-setting-type-id="settingTypeId"
+                                                        data-setting-items="sportGroups">
+                        </copy-position-taking-on-member>
+                    </div>
+                    <div class="setting-group"
+                         data-ng-repeat="item in group"
+                         data-ng-class="{ 'last': $last }">
+                        <div class="name-col"
+                             data-sport-type="{{item.sportTypeId}}"
+                             data-bet-type="{{item.betTypeId}}">
+                            {{item | showingName:settingLevel:productName }}
+                            {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                            <copy-position-taking-on-member data-ng-if="group.length > 1 && $index === 0"
+                                                            data-customer-level="customerLevel"
+                                                            data-setting-type-id="settingTypeId"
+                                                            data-setting-items="group">
+                            </copy-position-taking-on-member>
+                        </div>
+                        <div class="value-col">
+                            <div class="select-wrapper">
+                                <select data-ng-if="customerLevel === avaiCustomerLevels.master"
+                                        data-ng-model="item.superPTOnMembers"
+                                        data-ng-class="{ 'invalid': (item.validationState | highlightingField:'superPTOnMembers') }"
+                                        data-ng-options="item.key as item.value / divisor for item in ranges[$index]"></select>
+                                <select data-ng-if="customerLevel === avaiCustomerLevels.agent"
+                                        data-ng-model="item.masterPTOnMembers"
+                                        data-ng-class="{ 'invalid': (item.validationState | highlightingField:'masterPTOnMembers') }"
+                                        data-ng-options="item.key as item.value / divisor for item in ranges[$index]"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button data-ng-click="ok()">{{'Yes' | label}}</button>
