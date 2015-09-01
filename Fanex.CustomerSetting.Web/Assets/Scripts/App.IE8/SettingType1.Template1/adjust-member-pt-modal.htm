@@ -1,7 +1,12 @@
 ﻿<div class="modal-overlay" data-ng-show="isShown">
     <div class="modal">
         <div class="modal-header">
-            <div class="modal-title">{{'UpdateMemberPtInfo' | positionTakingLabel}}</div>
+            <div class="modal-title" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+                {{'DisableMasterAutoPt' | positionTakingLabel}}
+            </div>
+            <div class="modal-title" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+                {{'DisableAgentAutoPt' | positionTakingLabel}}
+            </div>
         </div>
         <div class="modal-content">
             <span data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></span>

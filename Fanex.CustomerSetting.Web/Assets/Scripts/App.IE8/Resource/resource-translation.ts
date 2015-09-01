@@ -21,7 +21,9 @@ module CustomerSetting.IE8 {
         public getLabel(key: string): string {
             var value: string = this.label[key];
 
-            if (angular.isUndefined(value)) {
+            if (angular.isDefined(value)) {
+                value = value.replace(/&apos;|&#x0*27;/g, "'");
+            } else {
                 value = key;
             }
 

@@ -31,9 +31,7 @@ module CustomerSetting {
         public getMessage(key: string): string {
             var msg: string = this.message[key];
 
-            if (angular.isDefined(msg)) {
-                msg = msg.replace(/&apos;|&#x0*27;/g, "'");
-            } else {
+            if (angular.isUndefined(msg)) {
                 msg = key;
             }
 

@@ -10,6 +10,8 @@
         "AgentMaxPT": "Agent Max PT",
         "AgentMinPT": "Agent Min PT",
         "AgentPT": "Agent PT",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking",
         "IsAuto": "Is Auto",
         "Live": "Live",
         "MasterMaxPT": "Master Max PT",
