@@ -137,6 +137,7 @@
     <None Include="Assets\Styles\customer-setting.scss" />
     <None Include="bower.json" />
     <None Include="Gulp\gulp-tsd.json" />
+    <None Include="Gulp\products-config.json" />
     <None Include="package.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -311,6 +312,8 @@
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="Gulp\build.ie8.js" />
+    <Content Include="Gulp\combine-scripts.js" />
+    <Content Include="Gulp\products-config.js" />
     <Content Include="Gulp\libraries.js" />
     <Content Include="Gulp\node-module.js" />
     <Content Include="Gulp\build.js" />

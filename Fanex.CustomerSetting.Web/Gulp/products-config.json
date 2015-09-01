@@ -1,0 +1,175 @@
+[
+    {
+        "productId": 247,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 248,
+        "settingTypes": [
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 249,
+        "settingTypes": [
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 250,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 251,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 252,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 253,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 254,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    },
+    {
+        "productId": 255,
+        "settingTypes": [
+            {
+                "settingType": 1,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 2,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 3,
+                "settingTemplate": 1
+            },
+            {
+                "settingType": 4,
+                "settingTemplate": 1
+            }
+        ]
+    }
+]
