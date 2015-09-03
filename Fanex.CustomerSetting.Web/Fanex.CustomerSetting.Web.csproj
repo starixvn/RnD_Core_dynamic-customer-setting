@@ -117,6 +117,18 @@
     <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtyp1-template1-header.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtyp1-template1-value.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\settingtyp2-template1-header.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType2.Template1\settingtyp2-template1-value.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType3.Template1\settingtyp3-template1-value.htm" />
+    <Content Include="Assets\Scripts\App.IE8\SettingType4.Template1\settingtyp4-template1-value.htm" />
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtyp1-template1-header.htm" />
+    <Content Include="Assets\Scripts\App\SettingType1.Template1\settingtyp1-template1-value.htm" />
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\settingtyp2-template1-header.htm" />
+    <Content Include="Assets\Scripts\App\SettingType2.Template1\settingtyp2-template1-value.htm" />
+    <Content Include="Assets\Scripts\App\SettingType3.Template1\settingtyp3-template1-value.htm" />
+    <Content Include="Assets\Scripts\App\SettingType4.Template1\settingtyp4-template1-value.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Resource\customer-setting-matrix-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>customer-setting-matrix-resource.js</LastGenOutput>
@@ -311,12 +323,11 @@
     <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="Assets\Styles\Images\sprite.png" />
     <Content Include="Gulpfile.js" />
-    <Content Include="Gulp\build.ie8.js" />
+    <Content Include="Gulp\combine-scripts.ie8.js" />
     <Content Include="Gulp\combine-scripts.js" />
     <Content Include="Gulp\products-config.js" />
     <Content Include="Gulp\libraries.js" />
     <Content Include="Gulp\node-module.js" />
-    <Content Include="Gulp\build.js" />
     <Content Include="Gulp\matrix.js" />
     <Content Include="Gulp\styles.js" />
     <Content Include="Gulp\tsd.js" />

@@ -33,6 +33,7 @@
             string htmlContent = GetTemplate();
 
             htmlContent = htmlContent.Replace("{{params}}", JsonConverter.ToJson(query));
+            htmlContent = htmlContent.Replace("{{productId}}", query.ProductId.ToString());
 
             return Content(htmlContent, "text/HTML");
         }

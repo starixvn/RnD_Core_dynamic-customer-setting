@@ -7,7 +7,6 @@
         "es5-shim": "^4.1.10",
         "html5shiv": "^3.7.3",
         "jquery": "1.11.3",
-        "oclazyload": "^1.0.4",
         "underscore": "^1.8.3"
     },
     "devDependencies": {

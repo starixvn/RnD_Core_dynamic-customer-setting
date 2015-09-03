@@ -1,38 +1,3 @@
 ﻿<div>
     <default-setting-type-grouping class="setting-type-2"></default-setting-type-grouping>
-    <script type="text/ng-template" id="settingtyp2-template1-header.html">
-        <div class="empty-cell"></div>
-        <div class="w80-percent no-right-border">
-            <div class="w33-percent">{{::('MinBet' | betSettingLabel)}}</div>
-            <div class="w33-percent">{{::('MaxBet' | betSettingLabel)}}</div>
-            <div class="w33-percent last">{{::('MaxPerMatch' | betSettingLabel)}}</div>
-        </div>
-    </script>
-    <script type="text/ng-template" id="settingtyp2-template1-value.html">
-        <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent">
-            <div class="w33-percent">{{item.minBet}}</div>
-            <div class="w33-percent">{{item.maxBet}}</div>
-            <div class="w33-percent last">{{item.maxPerMatch}}</div>
-        </div>
-        <div data-ng-if="customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent">
-            <bet-setting-input class="w33-percent"
-                               data-setting-item="item"
-                               data-upline-level="uplineLevel"
-                               data-customer-level="customerLevel"
-                               data-field-name="minBet">
-            </bet-setting-input>
-            <bet-setting-input class="w33-percent"
-                               data-setting-item="item"
-                               data-upline-level="uplineLevel"
-                               data-customer-level="customerLevel"
-                               data-field-name="maxBet">
-            </bet-setting-input>
-            <bet-setting-input class="w33-percent last"
-                               data-setting-item="item"
-                               data-upline-level="uplineLevel"
-                               data-customer-level="customerLevel"
-                               data-field-name="maxPerMatch">
-            </bet-setting-input>
-        </div>
-    </script>
 </div>

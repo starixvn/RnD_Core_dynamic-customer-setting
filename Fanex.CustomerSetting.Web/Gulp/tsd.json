@@ -6,52 +6,49 @@
     "bundle": "../Assets/Scripts/Typings/tsd.d.ts",
     "installed": {
         "jquery/jquery.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-animate.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-cookies.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-route.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-sanitize.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-mocks.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "angularjs/angular-resource.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
-        },
-        "oclazyload/oclazyload.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "node/node.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "through2/through2.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "htmlparser2/htmlparser2.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "gulp-util/gulp-util.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "vinyl/vinyl.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "chalk/chalk.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         },
         "underscore/underscore.d.ts": {
-            "commit": "a278148f0ec80f2aa9a2ec22f5089308f74dda47"
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
         }
     }
 }

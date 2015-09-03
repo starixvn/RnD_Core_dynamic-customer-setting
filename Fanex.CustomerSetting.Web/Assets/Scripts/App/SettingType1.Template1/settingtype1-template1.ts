@@ -16,8 +16,8 @@ module CustomerSetting {
         public templateUrl: string = "settingtype1-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.headerTemplateUrl = "settingtyp1-template1-header.html";
-            scope.valueTemplateUrl = "settingtyp1-template1-value.html";
+            scope.headerTemplateUrl = "settingtyp1-template1-header.htm";
+            scope.valueTemplateUrl = "settingtyp1-template1-value.htm";
             scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
         };
 

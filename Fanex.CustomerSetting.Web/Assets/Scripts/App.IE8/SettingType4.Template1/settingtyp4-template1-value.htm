@@ -1,0 +1,22 @@
+﻿<label class="checkbox">
+    <input type="checkbox"
+           data-tooltip
+           data-message="{{item.validationState | tooltipMessage:'productStatusResourceService':'isDisabled'}}"
+           data-status-checkbox
+           data-ng-change="change()"
+           data-ng-model="item.isChecked"
+           data-ng-disabled="item.readonly"
+           data-ng-class="{ 'invalid': (item.validationState | highlightingField:'isDisabled') }" />
+    {{'Enable' | productStatusLabel}}
+</label>
+<label class="checkbox" data-ng-show="item.downline && (customerLevel > avaiCustomerLevels.member)">
+    <input type="checkbox"
+           data-tooltip
+           data-message="{{item.validationState | tooltipMessage:'productStatusResourceService':'downline.isDisabled'}}"
+           data-status-checkbox
+           data-ng-change="change()"
+           data-ng-model="item.downline.isChecked"
+           data-ng-disabled="item.downline.readonly"
+           data-ng-class="{ 'invalid': (item.validationState | highlightingField:'downline.isDisabled') }" />
+    {{'EnableDownline' | productStatusLabel}}
+</label>

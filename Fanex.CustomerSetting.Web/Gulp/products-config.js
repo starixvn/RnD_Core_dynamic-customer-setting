@@ -6,7 +6,7 @@ module.exports = function (configs) {
     var mssql = require("mssql");
     var path = require("path");
 
-    gulp.task("product:configs:query", function () {
+    gulp.task("product:configs:query", function (callback) {
         var config = {
             user: "dbateam",
             password: "@bigboy#",
@@ -20,8 +20,10 @@ module.exports = function (configs) {
 
             if (error) {
                 console.log(error);
+            } else if (!request) {
+                console.log("Can't create request to", connection);
             } else {
-                request.query(query, function (error, recordSets, returnValue) {
+                request.query(query, function (error, recordSets) {
                     if (error) {
                         console.log(error);
                     } else {
@@ -50,7 +52,10 @@ module.exports = function (configs) {
                             productsConfig.push(currentProductConfig);
                         }
 
-                        fs.writeFile(path.join(process.cwd(), configs.gulpDir, configs.configFiles.productsConfig), JSON.stringify(productsConfig, null, 4));
+                        fs.writeFile(
+                            path.join(process.cwd(), configs.gulpDir, configs.configFiles.productsConfig),
+                            JSON.stringify(productsConfig, null, 4),
+                            callback);
                     }
                 });
             }

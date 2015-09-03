@@ -178,8 +178,8 @@ module CustomerSetting {
         public templateUrl: string = "settingtype2-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.headerTemplateUrl = "settingtyp2-template1-header.html";
-            scope.valueTemplateUrl = "settingtyp2-template1-value.html";
+            scope.headerTemplateUrl = "settingtyp2-template1-header.htm";
+            scope.valueTemplateUrl = "settingtyp2-template1-value.htm";
             scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
         };
 
@@ -244,12 +244,12 @@ module CustomerSetting {
             if (scope.fieldName === "minBet") {
                 if (scope.settingItem.upline.minBet > 0) {
                     element.addClass("has-constraint");
-                    wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + "}}</span>");
+                    wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + " | number}}</span>");
                 }
             } else {
                 if (scope.customerLevel !== Level.super) {
                     element.addClass("has-constraint");
-                    wrapElement.append("<span> <={{settingItem.upline." + scope.fieldName + "}}</span>");
+                    wrapElement.append("<span> <={{settingItem.upline." + scope.fieldName + " | number}}</span>");
                 }
             }
 

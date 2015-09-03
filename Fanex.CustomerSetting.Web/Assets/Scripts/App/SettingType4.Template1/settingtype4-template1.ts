@@ -158,7 +158,7 @@ module CustomerSetting {
         public templateUrl: string = "settingtype4-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.valueTemplateUrl = "settingtyp4-template1-value.html";
+            scope.valueTemplateUrl = "settingtyp4-template1-value.htm";
             scope.settingTypeName = this.productStatusResourceService.getLabel("ProductStatus");
         };
 

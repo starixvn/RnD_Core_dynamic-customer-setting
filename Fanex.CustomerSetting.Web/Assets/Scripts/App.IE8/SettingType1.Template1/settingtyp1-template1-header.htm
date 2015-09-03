@@ -1,0 +1,36 @@
+﻿<div class="empty-cell"></div>
+<div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
+    <div class="w25-percent">{{'SuperMaxPT' | positionTakingLabel}}</div>
+    <div class="w25-percent">{{'MasterMaxPT' | positionTakingLabel}}</div>
+    <div class="w25-percent">{{'AgentMaxPT' | positionTakingLabel}}</div>
+    <div class="w25-percent last">{{'SuperMinPT' | positionTakingLabel}}</div>
+</div>
+<div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+    <div class="w28-percent">{{'SuperPT' | positionTakingLabel}}</div>
+    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w28-percent">{{'MasterMaxPT' | positionTakingLabel}}</div>
+    <div class="w28-percent last">{{'MasterMinPT' | positionTakingLabel}}</div>
+</div>
+<div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+    <div class="w28-percent">{{'MasterPT' | positionTakingLabel}}</div>
+    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w28-percent">{{'AgentMaxPT' | positionTakingLabel}}</div>
+    <div class="w28-percent last">{{'AgentMinPT' | positionTakingLabel}}</div>
+</div>
+<div class="w80-percent no-right-border"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent">
+    <div class="w28-percent">{{'SuperPT' | positionTakingLabel}}</div>
+    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w28-percent">{{'MasterPT' | positionTakingLabel}}</div>
+    <div class="w28-percent last">{{'AgentPT' | positionTakingLabel}}</div>
+</div>
+<div class="w80-percent no-right-border"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent">
+    <div class="w42-percent">{{'MasterPT' | positionTakingLabel}}</div>
+    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w42-percent last">{{'AgentPT' | positionTakingLabel}}</div>
+</div>
+<div class="w80-percent no-right-border"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+    <div>{{'AgentPT' | positionTakingLabel}}</div>
+</div>

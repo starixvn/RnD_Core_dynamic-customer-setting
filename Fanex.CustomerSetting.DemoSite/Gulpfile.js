@@ -139,4 +139,8 @@
             "scripts:ie8:compile",
             "customer-setting:copy");
     });
+
+    gulp.task("config:update:packages:publish", function () {
+        runSequence("product:configs:query", "default");
+    });
 })(require);

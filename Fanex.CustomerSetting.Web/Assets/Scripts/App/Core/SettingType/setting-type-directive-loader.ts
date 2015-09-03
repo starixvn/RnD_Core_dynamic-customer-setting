@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/oclazyload/oclazyload.d.ts" />
 /// <reference path="../common.ts" />
 /// <reference path="../helper-services.ts" />
 /// <reference path="../helpers.ts" />
@@ -16,7 +15,7 @@ module CustomerSetting {
     }
 
     class SettingTypeDirectiveLoader implements ng.IDirective {
-        public static $inject: string[] = ["$compile", "$ocLazyLoad", "appConfigService"];
+        public static $inject: string[] = ["$compile", "appConfigService"];
         public replace: boolean = true;
 
         public get scope(): any {
@@ -34,13 +33,11 @@ module CustomerSetting {
         };
 
         private $compile: ng.ICompileService;
-        private $ocLazyLoad: oc.ILazyLoad;
         private appConfigService: AppConfigService;
         private loadedSettingTypes: Array<KeyValuePair<number, number>>;
 
-        constructor($compile: ng.ICompileService, $ocLazyLoad: oc.ILazyLoad, appConfigService: AppConfigService) {
+        constructor($compile: ng.ICompileService, appConfigService: AppConfigService) {
             this.$compile = $compile;
-            this.$ocLazyLoad = $ocLazyLoad;
             this.appConfigService = appConfigService;
             this.loadedSettingTypes = new Array<KeyValuePair<number, number>>();
         }
@@ -55,16 +52,7 @@ module CustomerSetting {
 
                     if (!loaded) {
                         var settingTypeName: string = StringFormater.format("settingtype{0}-template{1}", settingType.id, settingType.settingTemplate);
-                        var filePath: string = StringFormater.format(
-                            "app/customerSetting/{0}/{1}{2}.js?v={3}",
-                            settingTypeName.replace("-", "."),
-                            settingTypeName,
-                            this.appConfigService.debugMode() ? "" : ".min",
-                            this.appConfigService.debugMode() ? "0.0.1" : this.appConfigService.scriptVersion());
                         var newNodeParts = [
-                            "<div data-oc-lazy-load=\"{ files: ['",
-                            this.appConfigService.resolveRootUrl(filePath),
-                            "'], cache: true }\">",
                             "<",
                             settingTypeName,
                             " data-upline-level=\"uplineLevel\"",
@@ -77,7 +65,7 @@ module CustomerSetting {
                             "data-update=\"update({ settingTypeId: settingTypeId})\"",
                             "></",
                             settingTypeName,
-                            "></div>"
+                            ">"
                         ];
                         var settingTypeElement = angular.element(newNodeParts.join(""));
 

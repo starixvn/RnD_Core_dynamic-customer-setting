@@ -76,7 +76,7 @@ module CustomerSetting {
         public templateUrl: string = "settingtype3-template1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.valueTemplateUrl = "settingtyp3-template1-value.html";
+            scope.valueTemplateUrl = "settingtyp3-template1-value.htm";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         };
 

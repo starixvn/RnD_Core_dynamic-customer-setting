@@ -4,7 +4,7 @@
 module CustomerSetting {
     "use strict";
 
-    var app: ng.IModule = angular.module("customerSetting", ["oc.lazyLoad"]);
+    var app: ng.IModule = angular.module("customerSetting", []);
 
     export class ModuleRegister {
         public static controller(name: string, target: Function) {
