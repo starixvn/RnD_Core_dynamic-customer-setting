@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Web
+﻿namespace Fanex.CustomerSetting.DemoSite.Helpers
 {
     using System.Web.Helpers;
 

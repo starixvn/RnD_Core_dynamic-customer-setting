@@ -108,13 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\AntiForgeryExtension.cs" />
-    <Compile Include="Helpers\JsonConverter.cs" />
-    <Compile Include="Helpers\JsonNetResult.cs" />
-    <Compile Include="Helpers\ValidateAntiForgery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AppConfiguration.cs" />
-    <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Scripts\App.IE8\SettingType1.Template1\settingtyp1-template1-header.htm" />

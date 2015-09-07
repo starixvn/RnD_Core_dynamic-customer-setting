@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Client.Requests;
     using Fanex.CustomerSetting.Client.Services;
     using Fanex.CustomerSetting.DemoSite.Contexts;
-    using Fanex.CustomerSetting.Web;
+    using Fanex.CustomerSetting.DemoSite.Helpers;
 
     public class UpdateCustomerSettingController : Controller
     {

@@ -7,8 +7,8 @@
     using Fanex.CustomerSetting.Client.Requests;
     using Fanex.CustomerSetting.Client.Services;
     using Fanex.CustomerSetting.DemoSite.Contexts;
-    using Fanex.CustomerSetting.Web;
-    using Fanex.CustomerSetting.Web.ViewModels;
+    using Fanex.CustomerSetting.DemoSite.Helpers;
+    using Fanex.CustomerSetting.DemoSite.ViewModels;
 
     public class ViewCustomerSettingController : Controller
     {

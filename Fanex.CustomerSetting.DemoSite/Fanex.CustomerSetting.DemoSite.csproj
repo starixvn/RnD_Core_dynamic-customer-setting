@@ -203,7 +203,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AntiForgeryExtension.cs" />
+    <Compile Include="Helpers\JsonConverter.cs" />
+    <Compile Include="Helpers\ValidateAntiForgery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AppConfiguration.cs" />
+    <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\CustomerSetting.IE8\customer-setting.htm" />
@@ -281,6 +286,9 @@
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
     <Content Include="Scripts\Libraries\Angular\angular.js" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js" />
@@ -317,10 +325,6 @@
       <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
       <Name>Fanex.CustomerSetting.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Web\Fanex.CustomerSetting.Web.csproj">
-      <Project>{f1196671-434d-4883-8fff-b53a1d526f3b}</Project>
-      <Name>Fanex.CustomerSetting.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\DemoForm.IE8\demo-form.ts" />
@@ -328,6 +332,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bower.json" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
     <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
@@ -352,6 +358,8 @@
     <Content Include="Scripts\Libraries\Underscore\underscore-min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\CustomerSetting\Core\" />
+    <Folder Include="App\CustomerSetting\Libraries\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>

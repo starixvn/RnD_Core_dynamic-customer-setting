@@ -1,6 +1,7 @@
-﻿namespace Fanex.CustomerSetting.Web.ViewModels
+﻿namespace Fanex.CustomerSetting.DemoSite.ViewModels
 {
     using System;
+    using Fanex.CustomerSetting.DemoSite.Helpers;
 
     public class AppConfiguration
     {

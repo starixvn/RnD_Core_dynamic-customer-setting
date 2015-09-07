@@ -1,15 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Runtime.Caching;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client.Requests;
     using Fanex.CustomerSetting.Client.Services;
-    using Fanex.CustomerSetting.Web;
-    using Fanex.CustomerSetting.Web.ViewModels;
+    using Fanex.CustomerSetting.DemoSite.Helpers;
+    using Fanex.CustomerSetting.DemoSite.ViewModels;
 
     public class ViewCustomerSettingMatrixController : Controller
     {
