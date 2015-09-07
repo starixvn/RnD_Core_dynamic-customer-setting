@@ -88,12 +88,12 @@ module CustomerSetting.IE8 {
             this.customerNames = customerNames.split(",").map((name: string) => name.trim());
         }
 
-        public getCustomerIds(): Array<number> {
-            return this.customerIds;
+        public getCustomerIds(): string {
+            return this.customerIds.join();
         }
 
-        public getCustomerNames(): Array<string> {
-            return this.customerNames;
+        public getCustomerNames(): string {
+            return this.customerNames.join();
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
@@ -137,10 +137,10 @@ module CustomerSetting.IE8 {
     }
 
     export class MultipleSettingCommand extends SettingCommand {
-        public customerIds: Array<number>;
-        public customerNames: Array<string>;
+        public customerIds: string;
+        public customerNames: string;
 
-        constructor(customerIds: Array<number>, customerNames: Array<string>, uplineLevel: Level, setting: Setting) {
+        constructor(customerIds: string, customerNames: string, uplineLevel: Level, setting: Setting) {
             super(uplineLevel, setting);
             this.customerIds = customerIds;
             this.customerNames = customerNames;

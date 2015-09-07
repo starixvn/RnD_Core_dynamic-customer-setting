@@ -128,14 +128,6 @@ module CustomerSetting {
             this.customerNames = customerNames;
         }
 
-        public getCustomerIds(): Array<number> {
-            return this.custIds;
-        }
-
-        public getCustomerNames(): Array<string> {
-            return this.custNames;
-        }
-
         public getFirstCustomerSettingQuery(): SettingQuery {
             var query: SettingQuery;
 
@@ -177,10 +169,10 @@ module CustomerSetting {
     }
 
     export class MultipleSettingCommand extends SettingCommand {
-        public customerIds: Array<number>;
-        public customerNames: Array<string>;
+        public customerIds: string;
+        public customerNames: string;
 
-        constructor(customerIds: Array<number>, customerNames: Array<string>, uplineLevel: Level, setting: Setting) {
+        constructor(customerIds: string, customerNames: string, uplineLevel: Level, setting: Setting) {
             super(uplineLevel, setting);
             this.customerIds = customerIds;
             this.customerNames = customerNames;

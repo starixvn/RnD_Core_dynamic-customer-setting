@@ -72,7 +72,7 @@ module CustomerSetting.IE8 {
 
         public getCustomerNames(): string {
             if (this.isMultipleUpdates) {
-                return (<MultipleSettingQuery>this.query).getCustomerNames().join();
+                return (<MultipleSettingQuery>this.query).getCustomerNames();
             } else {
                 return undefined;
             }

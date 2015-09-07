@@ -100,8 +100,8 @@ module CustomerSetting {
                 }
 
                 return new MultipleSettingCommand(
-                    multipleQuery.getCustomerIds(),
-                    multipleQuery.getCustomerNames(),
+                    multipleQuery.customerIds,
+                    multipleQuery.customerNames,
                     multipleQuery.uplineLevel,
                     setting);
             } else {
