@@ -18,6 +18,8 @@
             this.AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
         }
 
+        public bool IsIe8 { get; set; }
+
         public string RootUrl { get; set; }
 
         public bool IsDebug { get; set; }

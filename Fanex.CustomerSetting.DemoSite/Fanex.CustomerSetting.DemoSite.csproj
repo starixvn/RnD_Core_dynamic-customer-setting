@@ -208,7 +208,6 @@
     <Compile Include="Helpers\ValidateAntiForgery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AppConfiguration.cs" />
-    <Compile Include="ViewModels\SettingFormQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\CustomerSetting.IE8\Scripts\ie8tricks.js" />

@@ -5,8 +5,8 @@
 
     public interface ITemplateService
     {
-        IRestResponse QueryCustomerSettingTemplate(QueryTemplateRequest query);
+        string QueryCustomerSettingTemplate(QuerySettingTemplateRequest query);
 
-        IRestResponse QueryCustomerSettingMatrixTemplate(QueryTemplateRequest query);
+        string QueryCustomerSettingMatrixTemplate(QuerySettingMatrixTemplateRequest query);
     }
 }

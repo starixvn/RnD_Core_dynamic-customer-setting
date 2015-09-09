@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.ViewModels
+﻿namespace Fanex.CustomerSetting.Client.Models
 {
     public class SettingFormQuery
     {
