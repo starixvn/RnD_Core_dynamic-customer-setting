@@ -11,8 +11,8 @@ module.exports = function (configs) {
     var ts = require("gulp-typescript");
     var uglify = require("gulp-uglify");
 
-    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "SettingMatrixApp/");
-    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, "CustomerSettingMatrix");
+    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSettingMatrix);
+    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSettingMatrix);
 
     gulp.task("matrix:script:publish", function () {
         gulp.src(path.join(sourceDir, "**/*.{htm,js,ts}"))

@@ -10,8 +10,8 @@ module.exports = function (configs) {
         module: "commonjs"
     };
 
-    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "NodeModules/*.ts");
-    var destinationDir = path.join(process.cwd(), configs.root, configs.scripts, "NodeModules/");
+    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.customNodeModules, "*.ts");
+    var destinationDir = path.join(process.cwd(), configs.root, configs.scripts, configs.customNodeModules);
 
     gulp.task("modules:compile", function () {
         return gulp.src(sourceDir)

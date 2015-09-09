@@ -23,8 +23,8 @@ module.exports = function (configs) {
         removeComments: true
     };
 
-    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "App.IE8/");
-    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, "CustomerSetting.IE8");
+    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSettingIe8);
+    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSettingIe8);
     var tempDir = path.join(sourceDir, "Temp");
 
     gulp.task("ie8:tricks:combine", function () {
@@ -113,7 +113,12 @@ module.exports = function (configs) {
         runSequence("ie8:tricks:combine", "ie8:product:js:combine", "ie8:template:copy", "ie8:product:temp:clean");
     });
 
-    gulp.task("ie8:styles:publish", ["images:publish"], function () {
+    gulp.task("ie8:images:publish", function () {
+        return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "Images/*.*"))
+                   .pipe(gulp.dest(path.join(destinationDir, configs.styles, "Images")));
+    });
+
+    gulp.task("ie8:styles:publish", ["ie8:images:publish"], function () {
         return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "customer-setting-ie8*.{map,css}"))
                    .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
     });

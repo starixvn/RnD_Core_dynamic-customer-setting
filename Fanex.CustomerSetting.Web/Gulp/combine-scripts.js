@@ -23,8 +23,8 @@ module.exports = function (configs) {
         removeComments: true
     };
 
-    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, "App/");
-    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, "CustomerSetting");
+    var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSetting);
+    var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSetting);
     var tempDir = path.join(sourceDir, "Temp");
 
     gulp.task("product:scripts:compile", function () {
@@ -67,7 +67,7 @@ module.exports = function (configs) {
                 path.join(sourceDir, "Core/**/*.js"),
                 path.join(sourceDir, "Resource/*.js")
             ];
-            var destination = path.join(destinationDir, "Scripts");
+            var destination = path.join(destinationDir, configs.scripts);
 
             if (prodConfig.settingTypes.length > 0) {
                 prodConfig.settingTypes.forEach(function (item) {
@@ -98,6 +98,11 @@ module.exports = function (configs) {
 
     gulp.task("scripts:publish", function () {
         runSequence("product:js:combine", "template:copy", "product:temp:clean");
+    });
+
+    gulp.task("images:publish", function () {
+        return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "Images/*.*"))
+                   .pipe(gulp.dest(path.join(destinationDir, configs.styles, "Images")));
     });
 
     gulp.task("styles:publish", ["images:publish"], function () {

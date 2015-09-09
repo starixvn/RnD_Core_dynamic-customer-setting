@@ -15,25 +15,21 @@
         root: "Assets",
         scripts: "Scripts",
         styles: "Styles",
+        apps: "Apps",
+        specs: "Specs",
         publish: "Publish",
-        packages: [
-            "CustomerSetting",
-            "CustomerSetting.IE8"
-        ],
-        apps: [
-            "App",
-            "App.IE8",
-            "SettingMatrixApp"
-        ],
-        specs: [
-            "Specs",
-            "Specs.IE8"
-        ],
+        customNodeModules: "NodeModules",
+        packages: {
+            customerSetting: "CustomerSetting",
+            customerSettingIe8: "CustomerSetting.IE8",
+            customerSettingMatrix: "CustomerSettingMatrix"
+        },
         configFiles: {
             bower: "bower.json",
             tslint: "tslint.json",
             tsd: "gulp-tsd.json",
-            productsConfig: "products-config.json"
+            productsConfig: "products-config.json",
+            karmaConfig: "karma-config.js"
         },
         errorHandler: function (title) {
             return function (error) {

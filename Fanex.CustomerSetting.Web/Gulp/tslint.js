@@ -6,11 +6,12 @@ module.exports = function (configs) {
     var tslint = require("gulp-tslint");
 
     gulp.task("tslint:check", function () {
+        var sourceDir = path.join(process.cwd(), configs.root, configs.scripts);
         var sources = [];
 
         if (configs.apps) {
-            configs.apps.forEach(function (app) {
-                sources.push(path.join(process.cwd(), configs.root, configs.scripts, app, "**/*.ts"));
+            Object.keys(configs.packages).forEach(function (app) {
+                sources.push(path.join(sourceDir, configs.packages[app], "**/*.ts"));
             });
         }
 
