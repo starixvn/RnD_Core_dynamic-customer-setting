@@ -167,7 +167,6 @@
     <Content Include="Assets\Scripts\App.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
     <Content Include="Assets\Scripts\App.IE8\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\App.IE8\Core\Tooltip\tooltip.htm" />
-    <Content Include="Assets\Scripts\App.IE8\customer-setting.htm" />
     <Content Include="Assets\Scripts\App.IE8\Resource\customer-setting-resource.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,7 +226,6 @@
     <Content Include="Assets\Scripts\App\Core\DefaultSettingBlock\default-setting-block.htm" />
     <Content Include="Assets\Scripts\App\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\App\Core\Tooltip\tooltip.htm" />
-    <Content Include="Assets\Scripts\App\customer-setting.htm" />
     <Content Include="Assets\Scripts\App\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>customer-setting-resource.js</LastGenOutput>
@@ -284,7 +282,6 @@
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js">
       <DependentUpon>embeded-template.ts</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\SettingMatrixApp\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CommissionMatrix\commission-matrix.htm" />
     <Content Include="Assets\Scripts\SettingMatrixApp\Directives\CustomerLine\customer-line.htm" />
