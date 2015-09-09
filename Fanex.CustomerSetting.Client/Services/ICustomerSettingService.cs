@@ -10,5 +10,7 @@
         IRestResponse UpdateCustomerSetting(UpdateSettingRequest update);
 
         IRestResponse MultipleUpdateCustomerSetting(MultipleUpdateSettingRequest multipleUpdate);
+
+        string QueryCustomerSettingTemplate(QuerySettingTemplateRequest query);
     }
 }

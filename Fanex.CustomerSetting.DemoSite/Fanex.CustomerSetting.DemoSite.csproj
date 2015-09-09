@@ -321,6 +321,10 @@
       <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
       <Name>Fanex.CustomerSetting.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.MatrixClient\Fanex.CustomerSetting.MatrixClient.csproj">
+      <Project>{995a61d3-dc81-4624-99f4-315cdc805096}</Project>
+      <Name>Fanex.CustomerSetting.MatrixClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\DemoForm.IE8\demo-form.ts" />

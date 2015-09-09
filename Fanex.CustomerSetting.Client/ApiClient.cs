@@ -7,7 +7,7 @@
     using Fanex.CustomerSetting.Client.Configurations;
     using RestSharp;
 
-    public static class ApiClient
+    internal class ApiClient
     {
         public static readonly IRestClient Client = new RestClient(CustomerSettingConfiguration.Settings.ServiceUri);
         private static readonly IAuthenticator Authenticator = new NtlmAuthenticator();

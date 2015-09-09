@@ -12,18 +12,15 @@
     public class ViewCustomerSettingController : Controller
     {
         private readonly ICustomerSettingService _customerSettingService;
-        private readonly ITemplateService _templateService;
 
         public ViewCustomerSettingController(
-            ICustomerSettingService customerSettingService,
-            ITemplateService templateService)
+            ICustomerSettingService customerSettingService)
         {
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
-            _templateService = templateService ?? new TemplateService();
         }
 
         public ViewCustomerSettingController()
-            : this(null, null)
+            : this(null)
         {
         }
 
@@ -33,7 +30,7 @@
             var isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
             var appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
 
-            var template = _templateService.QueryCustomerSettingTemplate(new QuerySettingTemplateRequest
+            var template = _customerSettingService.QueryCustomerSettingTemplate(new QuerySettingTemplateRequest
             {
                 SettingFormQuery = JsonConverter.ToJson(query),
                 ProductId = query.ProductId,

@@ -1,27 +1,35 @@
-﻿namespace Fanex.CustomerSetting.Client.Services
+﻿namespace Fanex.CustomerSetting.MatrixClient.Services
 {
     using System;
     using System.Net;
     using System.Runtime.Caching;
-    using Fanex.CustomerSetting.Client.Requests;
+    using Fanex.CustomerSetting.MatrixClient.Requests;
     using RestSharp;
 
-    public class TemplateService : ITemplateService
+    public class CustomerSettingMatrixService : ICustomerSettingMatrixService
     {
-        private const string SettingTemplateCachingKey = "CustomerSettingTemplate";
-        private const string SettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
         private const string SettingMatrixTemplateCachingKey = "CustomerSettingMatrixTemplate";
         private const byte CachingHours = 4;
 
-        public string QueryCustomerSettingTemplate(QuerySettingTemplateRequest query)
+        public IRestResponse QueryAllProducts()
         {
-            var cachedKey = query.IsIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;
-            var template = BuildTemplate("/Template/GetCustomerSettingTemplate", cachedKey, query);
+            var request = new RestRequest("/product/", Method.GET);
 
-            template = template.Replace("{{params}}", query.SettingFormQuery);
-            template = template.Replace("{{productId}}", query.ProductId.ToString());
+            return ApiClient.Client.Execute(request);
+        }
 
-            return template;
+        public IRestResponse QueryCustomerSettingMatrix(QuerySettingMatrixRequest query)
+        {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query");
+            }
+
+            var request = new RestRequest("/customersettingmatrix/", Method.GET);
+
+            request.AddObject(query);
+
+            return ApiClient.Client.Execute(request);
         }
 
         public string QueryCustomerSettingMatrixTemplate(QuerySettingMatrixTemplateRequest query)
@@ -33,7 +41,7 @@
             return template;
         }
 
-        private IRestResponse QueryTemplate(string queryUrl, SettingTemplateRequest query)
+        private IRestResponse QueryTemplate(string queryUrl, QuerySettingMatrixTemplateRequest query)
         {
             if (query == null)
             {
@@ -42,12 +50,15 @@
 
             var request = new RestRequest(queryUrl, Method.GET);
 
-            request.AddObject(query);
+            request.AddObject(new
+            {
+                IsDebug = query.IsDebug
+            });
 
             return ApiClient.Client.Execute(request);
         }
 
-        private string BuildTemplate(string queryUrl, string templateCacheKey, SettingTemplateRequest templateRequest)
+        private string BuildTemplate(string queryUrl, string templateCacheKey, QuerySettingMatrixTemplateRequest templateRequest)
         {
             ObjectCache cache = MemoryCache.Default;
             var template = cache.Get(templateCacheKey) as string;

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Client.Requests
+﻿namespace Fanex.CustomerSetting.MatrixClient.Requests
 {
     public class QuerySettingMatrixRequest
     {
