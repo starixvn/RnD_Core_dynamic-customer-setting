@@ -56,12 +56,15 @@
     <Compile Include="Requests\MultipleUpdateSettingRequest.cs" />
     <Compile Include="Requests\QuerySettingMatrixRequest.cs" />
     <Compile Include="Requests\QuerySettingRequest.cs" />
+    <Compile Include="Requests\QueryTemplateRequest.cs" />
     <Compile Include="Requests\SettingRequest.cs" />
     <Compile Include="Requests\UpdateSettingRequest.cs" />
     <Compile Include="Services\CustomerSettingMatrixService.cs" />
     <Compile Include="Services\CustomerSettingService.cs" />
     <Compile Include="Services\ICustomerSettingMatrixService.cs" />
     <Compile Include="Services\ICustomerSettingService.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

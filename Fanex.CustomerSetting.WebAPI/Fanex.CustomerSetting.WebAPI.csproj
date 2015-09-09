@@ -94,6 +94,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -137,6 +138,9 @@
     <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\Templates\customer-setting-matrix.htm" />
+    <Content Include="App_Data\Templates\customer-setting-ie8.htm" />
+    <Content Include="App_Data\Templates\customer-setting.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -147,6 +151,7 @@
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
     <Compile Include="Filters\SetLanguageAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +163,7 @@
     <Compile Include="Helpers\SettingConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
+    <Compile Include="Models\Request\QueryTemplateRequest.cs" />
     <Compile Include="Models\Request\QuerySettingMatrixRequest.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />

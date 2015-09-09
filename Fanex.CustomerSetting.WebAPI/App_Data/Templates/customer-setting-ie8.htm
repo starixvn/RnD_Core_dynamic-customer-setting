@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html class="ie8" data-ng-app="customerSetting">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/customerSetting.ie8/styles/customer-setting-ie8.min.css?v={{version}}" />
+    <script type="text/javascript" src="{{rootUrl}}app/customersetting.ie8/scripts/ie8tricks.js?v={{version}}"></script>
+</head>
+<body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
+    <div data-setting-result data-result="ctrl.requestMsgResult"></div>
+    <div class="customer-setting" data-ng-show="ctrl.setting">
+        <div data-customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></div>
+        <div data-setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></div>
+        <button class="button" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
+    </div>
+    <div data-block-ui data-is-loading="ctrl.isUIblocked"></div>
+    <script type="text/javascript">
+        var appConfig = {{appConfig}};
+        var params = {{params}};
+    </script>
+    <script type="text/javascript" src="{{rootUrl}}app/customersetting.ie8/scripts/product-{{productId}}{{min}}.js?v={{version}}"></script>
+</body>
+</html>

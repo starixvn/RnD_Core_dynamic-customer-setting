@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
+    using System;
+    using System.Net;
     using System.Runtime.Caching;
     using System.Web;
     using System.Web.Mvc;
@@ -13,24 +15,28 @@
         private const string TemplateCachingKey = "CustomerSettingMatrixTemplate";
         private const byte CachingHours = 4;
         private readonly ICustomerSettingMatrixService _customerSettingMatrixService;
+        private readonly ITemplateService _templateService;
 
-        public ViewCustomerSettingMatrixController(ICustomerSettingMatrixService customerSettingMatrixService)
+        public ViewCustomerSettingMatrixController(
+            ICustomerSettingMatrixService customerSettingMatrixService,
+            ITemplateService templateService)
         {
             _customerSettingMatrixService = customerSettingMatrixService ?? new CustomerSettingMatrixService();
+            _templateService = templateService ?? new TemplateService();
         }
 
         public ViewCustomerSettingMatrixController()
-            : this(null)
+            : this(null, null)
         {
         }
 
         public ContentResult Index(string customerName = "428RM")
         {
-            string htmlContent = GetTemplate();
+            string template = GetTemplate();
 
-            htmlContent = htmlContent.Replace("{{customerName}}", JsonConverter.ToJson(customerName));
+            template = template.Replace("{{customerName}}", JsonConverter.ToJson(customerName));
 
-            return Content(htmlContent);
+            return Content(template);
         }
 
         [HttpPost]
@@ -54,24 +60,30 @@
         private string GetTemplate()
         {
             ObjectCache cache = MemoryCache.Default;
-            string htmlContent = cache.Get(TemplateCachingKey) as string;
+            var template = cache.Get(TemplateCachingKey) as string;
 
-            if (string.IsNullOrEmpty(htmlContent))
+            if (string.IsNullOrEmpty(template))
             {
-                string filePath = Server.MapPath("~/App/CustomerSettingMatrix/customer-setting-matrix.htm");
                 var appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
 
-                htmlContent = System.IO.File.ReadAllText(filePath);
-                htmlContent = htmlContent.Replace("{{rootUrl}}", appConfig.RootUrl);
-                htmlContent = htmlContent.Replace("{{debug}}", appConfig.IsDebug.ToString().ToLowerInvariant());
-                htmlContent = htmlContent.Replace("{{version}}", appConfig.ScriptVersion);
-                htmlContent = htmlContent.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
-                htmlContent = htmlContent.Replace("{{appConfig}}", JsonConverter.ToJson(appConfig));
+                var response = _templateService.QueryCustomerSettingMatrixTemplate(new QueryTemplateRequest
+                {
+                    IsDebug = appConfig.IsDebug
+                });
 
-                ////cache.Set(TemplateCachingKey, htmlContent, DateTime.Now.AddHours(CachingHours));
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new InvalidOperationException(response.ErrorMessage);
+                }
+
+                template = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(response.Content);
+                template = template.Replace("{{rootUrl}}", appConfig.RootUrl);
+                template = template.Replace("{{appConfig}}", JsonConverter.ToJson(appConfig));
+
+                cache.Set(TemplateCachingKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
-            return htmlContent;
+            return template;
         }
     }
 }
