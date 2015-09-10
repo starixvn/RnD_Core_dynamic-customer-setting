@@ -13,6 +13,7 @@ module.exports = function (configs) {
 
     var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSettingMatrix);
     var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSettingMatrix);
+    var destTemplateDir = "../Fanex.CustomerSetting.Matrix.WebAPI/App_Data/Templates";
 
     gulp.task("matrix:script:publish", function () {
         gulp.src(path.join(sourceDir, "**/*.{htm,js,ts}"))
@@ -33,10 +34,10 @@ module.exports = function (configs) {
             .pipe(gulp.dest(destinationDir));
     });
 
-    gulp.task("matrix:template:publish", function () {
+    gulp.task("matrix:template:copy", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
                    .pipe(minifyHTML({ empty: true, quotes: true }))
-                   .pipe(gulp.dest(destinationDir));
+                   .pipe(gulp.dest(path.join(process.cwd(), destTemplateDir)));
     });
 
     gulp.task("matrix:images:publish", function () {
@@ -49,5 +50,5 @@ module.exports = function (configs) {
                    .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
     });
 
-    gulp.task("matrix:publish", ["matrix:script:publish", "matrix:template:publish", "matrix:styles:publish"]);
+    gulp.task("matrix:publish", ["matrix:script:publish", "matrix:template:copy", "matrix:styles:publish"]);
 };

@@ -1,21 +1,27 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Controllers
+﻿namespace Fanex.CustomerSetting.Matrix.WebApi.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Runtime.Caching;
+    using System.Web.Hosting;
     using System.Web.Http;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
+    using Fanex.CustomerSetting.Matrix.WebApi.Models.Request;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
 
     public class CustomerSettingMatrixController : ApiController
     {
+        private const string CustomerSettingMatrixTemplateCacheKey = "CustomerSettingMatrixTemplateCacheKey";
+        private const string CustomerSettingMatrixTemplateFilePath = "~/App_Data/Templates/customer-setting-matrix.htm";
+        private const byte CachingHours = 4;
+
         private ICustomerSettingMatrixService _customerSettingMatrixService;
 
-        public CustomerSettingMatrixController() : this(null)
+        public CustomerSettingMatrixController()
+            : this(null)
         {
         }
 
@@ -28,7 +34,7 @@
         {
             if (request == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameter cannot be null.");
             }
 
             try
@@ -46,6 +52,20 @@
                     HttpStatusCode.InternalServerError,
                     new Result(Result.DataError.Code, invalidException.Message));
             }
+        }
+
+        public HttpResponseMessage GetTemplate()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            var template = cache.Get(CustomerSettingMatrixTemplateCacheKey) as string;
+
+            if (string.IsNullOrEmpty(template))
+            {
+                template = File.ReadAllText(HostingEnvironment.MapPath(CustomerSettingMatrixTemplateFilePath));
+                cache.Set(CustomerSettingMatrixTemplateCacheKey, template, DateTime.Now.AddHours(CachingHours));
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, template);
         }
     }
 }

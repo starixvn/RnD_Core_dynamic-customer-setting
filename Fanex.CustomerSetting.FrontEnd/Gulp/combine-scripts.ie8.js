@@ -78,6 +78,7 @@ module.exports = function (configs) {
                 path.join(process.cwd(), configs.bower, "angular-legacy/angular.js"),
                 path.join(tempDir, "product-" + prodConfig.productId + ".js"),
                 path.join(sourceDir, "Core/**/*.js"),
+                path.join(sourceDir, "!customer-setting-ie8.htm"),
                 path.join(sourceDir, "Resource/*.js")
             ];
             var destination = path.join(destinationDir, "Scripts");
@@ -106,7 +107,7 @@ module.exports = function (configs) {
     gulp.task("ie8:template:copy", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
                    .pipe(minifyHTML({ empty: true, quotes: true }))
-                   .pipe(gulp.dest(destinationDir));
+                   .pipe(gulp.dest(path.join(process.cwd(), configs.templatesDir)));
     });
 
     gulp.task("ie8:scripts:publish", function () {

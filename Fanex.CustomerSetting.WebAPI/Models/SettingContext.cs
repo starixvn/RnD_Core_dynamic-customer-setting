@@ -1,8 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.WebAPI.Models
 {
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
 
     public class SettingContext : ISettingContext
     {

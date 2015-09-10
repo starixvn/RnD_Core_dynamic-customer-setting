@@ -3,13 +3,7 @@
     using System;
     using System.Net.Http.Formatting;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
-    using System.Web.Http.ModelBinding.Binders;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.WebAPI.Filters;
-    using Fanex.CustomerSetting.WebAPI.Helpers;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
     using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig

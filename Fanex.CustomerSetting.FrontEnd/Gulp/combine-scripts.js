@@ -34,6 +34,7 @@ module.exports = function (configs) {
         productsConfigs.forEach(function (prodConfig) {
             var sources = [
                 path.join(sourceDir, "Core/**/*.{htm,ts}"),
+                path.join(sourceDir, "!customer-setting.htm"),
                 path.join(sourceDir, "Resource/*.{htm,ts}")
             ];
 
@@ -93,7 +94,7 @@ module.exports = function (configs) {
     gulp.task("template:copy", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
                    .pipe(minifyHTML({ empty: true, quotes: true }))
-                   .pipe(gulp.dest(destinationDir));
+                   .pipe(gulp.dest(path.join(process.cwd(), configs.templatesDir)));
     });
 
     gulp.task("scripts:publish", function () {

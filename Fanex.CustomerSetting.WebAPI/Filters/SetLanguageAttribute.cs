@@ -6,7 +6,7 @@
     using System.Web.Http.Filters;
     using Fanex.CustomerSetting.WebAPI.Models.Request;
 
-    public class SetLanguageAttribute : ActionFilterAttribute
+    public sealed class SetLanguageAttribute : ActionFilterAttribute
     {
         private const string ActionArgumentName = "request";
         private const string DefaultLanguage = "en-US";

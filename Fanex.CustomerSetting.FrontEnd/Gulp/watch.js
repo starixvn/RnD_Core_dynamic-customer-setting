@@ -14,7 +14,7 @@ module.exports = function (configs) {
         gulp.watch(path.join(stylesDir, "customer-setting.{*.map,css,*.css}"), ["styles:publish"]);
         gulp.watch(path.join(scriptsDir, configs.packages.customerSettingIe8, "**/*.{js,ts,htm}"), ["ie8:scripts:publish"]);
         gulp.watch(path.join(stylesDir, "customer-setting-ie8*.{map,css}"), ["ie8:styles:publish"]);
-        gulp.watch(path.join(scriptsDir, configs.packages.customerSettingMatrix, "**/*.{js,ts,htm}"), ["matrix:script:publish", "matrix:template:publish"]);
+        gulp.watch(path.join(scriptsDir, configs.packages.customerSettingMatrix, "**/*.{js,ts,htm}"), ["matrix:script:publish", "matrix:template:copy"]);
         gulp.watch(path.join(stylesDir, "customer-setting-matrix*.{map,css}"), ["matrix:styles:publish"]);
     });
 };

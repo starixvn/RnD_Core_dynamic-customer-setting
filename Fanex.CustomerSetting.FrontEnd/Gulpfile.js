@@ -19,6 +19,7 @@
         specs: "Specs",
         publish: "Publish",
         customNodeModules: "NodeModules",
+        templatesDir: "../Fanex.CustomerSetting.WebAPI/App_Data/Templates",
         packages: {
             customerSetting: "CustomerSetting",
             customerSettingIe8: "CustomerSetting.IE8",

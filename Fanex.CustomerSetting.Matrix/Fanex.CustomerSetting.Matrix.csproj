@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>FanexRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -87,7 +87,6 @@
     <Compile Include="Dtos\CommissionItemMatrixDto.cs" />
     <Compile Include="Dtos\CustomerLineDto.cs" />
     <Compile Include="Dtos\PTItemMatrixDto.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CommissionMatrix.cs" />
     <Compile Include="Models\CustomerSettingMatrix.cs" />
     <Compile Include="Models\Enumerations\SettingType.cs" />
