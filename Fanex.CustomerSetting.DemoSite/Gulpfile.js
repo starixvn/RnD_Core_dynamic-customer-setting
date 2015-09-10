@@ -15,7 +15,7 @@
     var runSequence = require("run-sequence");
 
     var paths = {
-        source: "../Fanex.CustomerSetting.Web/Assets/Publish/**",
+        source: "../Fanex.CustomerSetting.FrontEnd/Assets/Publish/**",
         app: "./App/",
         bower: "./bower_components",
         content: "./Content",

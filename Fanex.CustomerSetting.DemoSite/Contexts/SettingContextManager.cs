@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Contexts
 {
-    using System;
-    using Fanex.Common.Helper;
-
     /// <summary>
     /// Setting context manager for providing
     /// + actor information when edit customer.
