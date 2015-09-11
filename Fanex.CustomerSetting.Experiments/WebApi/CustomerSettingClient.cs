@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Experiments.WebApi
 {
     using System;
-    using Fanex.CustomerSetting.Client.Requests;
-    using Fanex.CustomerSetting.Client.Services;
+    using Fanex.CustomerSetting.Client40.Models.Requests;
+    using Fanex.CustomerSetting.Client40.Services;
 
     public static class CustomerSettingClient
     {

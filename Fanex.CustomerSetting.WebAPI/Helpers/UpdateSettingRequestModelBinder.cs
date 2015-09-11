@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Helpers
+﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
+    using Fanex.CustomerSetting.WebApi.Models.Request;
     using Newtonsoft.Json;
 
     public class UpdateSettingRequestModelBinder<T> : IModelBinder 

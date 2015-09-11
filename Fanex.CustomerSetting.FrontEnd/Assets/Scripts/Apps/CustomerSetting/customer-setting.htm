@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/customerSetting/styles/customer-setting.min.css?v={{version}}" />
+    <link rel="stylesheet" type="text/css" href="{{cdnUri}}/customerSetting/styles/customer-setting.min.css?v={{version}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
     <setting-result data-result="ctrl.requestMsgResult"></setting-result>
@@ -17,6 +17,6 @@
         var appConfig = {{appConfig}};
         var params = {{params}};
     </script>
-    <script type="text/javascript" src="{{rootUrl}}app/customersetting/scripts/product-{{productId}}{{min}}.js?v={{version}}"></script>
+    <script type="text/javascript" src="{{cdnUri}}/customersetting/scripts/product-{{productId}}{{min}}.js?v={{version}}"></script>
 </body>
 </html>

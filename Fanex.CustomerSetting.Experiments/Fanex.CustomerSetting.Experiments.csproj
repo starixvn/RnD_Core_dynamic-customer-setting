@@ -55,14 +55,14 @@
     <Compile Include="WebApi\CustomerSettingClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Client\Fanex.CustomerSetting.Client.csproj">
-      <Project>{f8419bd7-8cce-4479-9fcd-35bb215ae955}</Project>
-      <Name>Fanex.CustomerSetting.Client</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Client40\Fanex.CustomerSetting.Client40.csproj">
+      <Project>{4522d0dc-716a-4113-b534-72c3078f1ec6}</Project>
+      <Name>Fanex.CustomerSetting.Client40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

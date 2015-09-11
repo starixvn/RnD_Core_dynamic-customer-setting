@@ -1,11 +1,13 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Filters
+﻿namespace Fanex.CustomerSetting.WebApi.Filters
 {
+    using System;
     using System.Globalization;
     using System.Threading;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
+    using Fanex.CustomerSetting.WebApi.Models.Request;
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public sealed class SetLanguageAttribute : ActionFilterAttribute
     {
         private const string ActionArgumentName = "request";
@@ -16,13 +18,13 @@
         {
             var currentLanguage = DefaultLanguage;
 
-            if (actionContext.Request.Method.Method.ToUpper().Contains("GET")
-                || actionContext.Request.Method.Method.ToUpper().Contains("POST"))
+            if (actionContext != null
+                && actionContext.ActionArguments.ContainsKey(ActionArgumentName)
+                && (actionContext.Request.Method.Method.ToUpper().Contains("GET") || actionContext.Request.Method.Method.ToUpper().Contains("POST")))
             {
                 var request = actionContext.ActionArguments[ActionArgumentName] as SettingRequest;
 
-                if (request != null
-                    && !string.IsNullOrWhiteSpace(request.Language))
+                if (request != null && !string.IsNullOrWhiteSpace(request.Language))
                 {
                     currentLanguage = request.Language;
                 }

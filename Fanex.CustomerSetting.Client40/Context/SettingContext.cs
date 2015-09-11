@@ -1,7 +1,6 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.Contexts
+﻿namespace Fanex.CustomerSetting.Client40.Context
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Net;
     using System.Web;
@@ -114,7 +113,6 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is a utlity function, not a property")]
         private string GetClientIp()
         {
             var forwardHeader = GetForwardHeader();

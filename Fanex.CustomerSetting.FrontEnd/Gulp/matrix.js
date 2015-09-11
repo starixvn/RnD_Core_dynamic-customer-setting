@@ -16,7 +16,12 @@ module.exports = function (configs) {
     var destTemplateDir = "../Fanex.CustomerSetting.Matrix.WebAPI/App_Data/Templates";
 
     gulp.task("matrix:script:publish", function () {
-        gulp.src(path.join(sourceDir, "**/*.{htm,js,ts}"))
+        var sources = [
+            path.join(process.cwd(), configs.bower, "angular/angular.js"),
+            path.join(sourceDir, "**/*.{htm,js,ts}")
+        ];
+
+        gulp.src(sources)
             .pipe(gulpif(/[.]ts$/, ts({
                 typescript: require("typescript"),
                 target: "ES5",

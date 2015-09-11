@@ -12,5 +12,9 @@
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
     </Setting>
     <Setting Key="CustSetting_AllowMasterPTSelect" SpName="Acc_CustSetting_AllowMasterPTSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="SettingType" ObjectProperty="Id" />
+    </Setting>
   </Function>
 </Functions>

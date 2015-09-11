@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Setting Matrix</title>
-    <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/CustomerSettingMatrix/styles/customer-setting-matrix.min.css?v={{version}}" />
+    <link rel="stylesheet" type="text/css" href="{{cdnUri}}/customersettingmatrix/styles/customer-setting-matrix.min.css?v={{version}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingMatrixController as ctrl">
     <div class="container">
@@ -70,7 +70,6 @@
         var appConfig = {{appConfig}};
         var customerName = "{{customerName}}";
     </script>
-    <script type="text/javascript" src="{{rootUrl}}scripts/libraries/angular/angular.min.js?v={{version}}"></script>
-    <script type="text/javascript" src="{{rootUrl}}app/customersettingmatrix/customer-setting-matrix{{min}}.js?v={{version}}"></script>
+    <script type="text/javascript" src="{{cdnUri}}/customersettingmatrix/customer-setting-matrix{{min}}.js?v={{version}}"></script>
 </body>
 </html>

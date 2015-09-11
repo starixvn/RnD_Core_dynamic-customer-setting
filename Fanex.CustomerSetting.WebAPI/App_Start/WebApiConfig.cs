@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.WebAPI
+﻿namespace Fanex.CustomerSetting.WebApi
 {
     using System;
     using System.Net.Http.Formatting;
     using System.Web.Http;
-    using Fanex.CustomerSetting.WebAPI.Filters;
+    using Fanex.CustomerSetting.WebApi.Filters;
     using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Controllers
+﻿namespace Fanex.CustomerSetting.WebApi.Controllers
 {
     using System;
     using System.IO;
@@ -9,9 +9,9 @@
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.WebAPI.Filters;
-    using Fanex.CustomerSetting.WebAPI.Helpers;
-    using Fanex.CustomerSetting.WebAPI.Models.Request;
+    using Fanex.CustomerSetting.WebApi.Filters;
+    using Fanex.CustomerSetting.WebApi.Helpers;
+    using Fanex.CustomerSetting.WebApi.Models.Request;
 
     [SetLanguage]
     public class CustomerSettingController : ApiController
@@ -26,7 +26,7 @@
         {
             if (request == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request param cannot be null.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
 
             var querySettingService = new QuerySettingService(request.GetSettingContext());
@@ -75,12 +75,12 @@
             return Request.CreateResponse(result);
         }
 
-        public HttpResponseMessage GetTemplate(bool isIe8)
+        public HttpResponseMessage GetTemplate([FromUri]bool isIe8)
         {
             ObjectCache cache = MemoryCache.Default;
-            var template = string.Empty;
-            var customerSettingTemplatePath = CustomerSettingTemplateFilePath;
-            var customerSettingTemplateCacheKey = CustomerSettingTemplateCachingKey;
+            string template = string.Empty;
+            string customerSettingTemplatePath = CustomerSettingTemplateFilePath;
+            string customerSettingTemplateCacheKey = CustomerSettingTemplateCachingKey;
 
             if (isIe8)
             {

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Controllers
+﻿namespace Fanex.CustomerSetting.WebApi.Controllers
 {
     using System.Net;
     using System.Net.Http;

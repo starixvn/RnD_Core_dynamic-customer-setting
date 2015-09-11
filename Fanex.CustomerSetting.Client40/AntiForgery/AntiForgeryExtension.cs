@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.Helpers
+﻿namespace Fanex.CustomerSetting.Client40.AntiForgery
 {
     using System.Web.Helpers;
 

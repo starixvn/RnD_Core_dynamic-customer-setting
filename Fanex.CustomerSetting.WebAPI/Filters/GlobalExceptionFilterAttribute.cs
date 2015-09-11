@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Filters
+﻿namespace Fanex.CustomerSetting.WebApi.Filters
 {
     using System;
     using System.Data.SqlClient;
@@ -10,31 +10,34 @@
     using Fanex.Data;
     using Fanex.Logging;
 
-    public class GlobalExceptionFilterAttribute : ExceptionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public sealed class GlobalExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        public override void OnException(HttpActionExecutedContext context)
+        public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            var exception = context.Exception;
-            var messageBuilder = new StringBuilder();
+            if (actionExecutedContext != null)
+            {
+                var exception = actionExecutedContext.Exception;
+                var messageBuilder = new StringBuilder();
 
-            messageBuilder.AppendFormat("Message: {0}", exception.Message).AppendLine();
-            messageBuilder.AppendFormat("Type: {0}", exception.GetType().ToString()).AppendLine();
-            messageBuilder.AppendFormat("Source: {0}", exception.Source).AppendLine();
-            messageBuilder.AppendFormat("Domain: {0}", context.Request.Headers.Host).AppendLine();
-            messageBuilder.AppendFormat("Query String:: {0}", context.Request.RequestUri.ToString()).AppendLine();
+                messageBuilder.AppendFormat("Message: {0}", exception.Message).AppendLine();
+                messageBuilder.AppendFormat("Type: {0}", exception.GetType().ToString()).AppendLine();
+                messageBuilder.AppendFormat("Source: {0}", exception.Source).AppendLine();
+                messageBuilder.AppendFormat("Domain: {0}", actionExecutedContext.Request.Headers.Host).AppendLine();
+                messageBuilder.AppendFormat("Query String:: {0}", actionExecutedContext.Request.RequestUri.ToString()).AppendLine();
 
-            LogDatabaseException(exception, messageBuilder);
-
-            LogService.Error(messageBuilder.ToString(), context.Exception);
-
-            context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
+                LogDatabaseException(exception, messageBuilder);
+                LogService.Error(messageBuilder.ToString(), actionExecutedContext.Exception);
+                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
+            }
         }
 
         private void LogDatabaseException(Exception exception, StringBuilder messageBuilder)
         {
-            if (exception is ObjectDbException)
+            var objectDbException = exception as ObjectDbException;
+
+            if (objectDbException != null)
             {
-                var objectDbException = exception as ObjectDbException;
                 messageBuilder.AppendFormat("Procedure: {0}", objectDbException.DbSetting.SpName).AppendLine();
                 messageBuilder.AppendFormat("Connection String: {0}", objectDbException.DbSetting.ConnectionString).AppendLine();
 

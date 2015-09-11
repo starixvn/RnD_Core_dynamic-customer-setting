@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Models
+﻿namespace Fanex.CustomerSetting.WebApi.Models
 {
     using Fanex.CustomerSetting.Models;
 

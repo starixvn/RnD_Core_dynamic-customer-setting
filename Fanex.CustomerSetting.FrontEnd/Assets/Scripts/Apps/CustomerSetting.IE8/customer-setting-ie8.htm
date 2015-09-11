@@ -4,8 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{{rootUrl}}app/customerSetting.ie8/styles/customer-setting-ie8.min.css?v={{version}}" />
-    <script type="text/javascript" src="{{rootUrl}}app/customersetting.ie8/scripts/ie8tricks.js?v={{version}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{cdnUri}}/customerSetting.ie8/styles/customer-setting-ie8.min.css?v={{version}}" />
+    <script type="text/javascript" src="{{cdnUri}}/customersetting.ie8/scripts/ie8tricks.js?v={{version}}"></script>
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
     <div data-setting-result data-result="ctrl.requestMsgResult"></div>
@@ -19,6 +19,6 @@
         var appConfig = {{appConfig}};
         var params = {{params}};
     </script>
-    <script type="text/javascript" src="{{rootUrl}}app/customersetting.ie8/scripts/product-{{productId}}{{min}}.js?v={{version}}"></script>
+    <script type="text/javascript" src="{{cdnUri}}/customersetting.ie8/scripts/product-{{productId}}{{min}}.js?v={{version}}"></script>
 </body>
 </html>

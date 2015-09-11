@@ -27,10 +27,8 @@
                 messageBuilder.AppendFormat("Query String:: {0}", actionExecutedContext.Request.RequestUri.ToString()).AppendLine();
 
                 LogDatabaseException(exception, messageBuilder);
-
                 LogService.Error(messageBuilder.ToString(), actionExecutedContext.Exception);
-
-                actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
+                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
             }
         }
 

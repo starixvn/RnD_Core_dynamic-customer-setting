@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Helpers
+﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
     using Fanex.CustomerSetting.Models;

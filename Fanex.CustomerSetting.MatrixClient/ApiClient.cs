@@ -2,8 +2,9 @@
 {
     using Fanex.CustomerSetting.MatrixClient.Configurations;
     using RestSharp;
+    using RestSharp.Authenticators;
 
-    internal class ApiClient
+    public class ApiClient
     {
         public static readonly IRestClient Client = new RestClient(SettingMatrixConfiguration.Settings.ServiceUri);
         private static readonly IAuthenticator Authenticator = new NtlmAuthenticator();

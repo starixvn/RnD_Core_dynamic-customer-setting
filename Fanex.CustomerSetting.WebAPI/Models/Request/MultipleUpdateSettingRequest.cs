@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Models.Request
+﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
     using System;
     using System.Linq;

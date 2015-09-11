@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Helpers
+﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
     using Fanex.CustomerSetting.Models;
@@ -8,7 +8,7 @@
     {
         protected override Type GetTargetType(Type type, JObject obj)
         {
-            return Type.GetType(obj.GetValue("typeName").ToString());
+            return Type.GetType(obj.GetValue("typeName", StringComparison.OrdinalIgnoreCase).ToString());
         }
     }
 }

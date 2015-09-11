@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5AB088EF-656F-4F09-A425-ED862A0CA2F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.CustomerSetting.FrontEnd</RootNamespace>
+    <AssemblyName>Fanex.CustomerSetting.FrontEnd</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Styles\customer-setting-ie8.css.map">
+      <DependentUpon>customer-setting-ie8.scss</DependentUpon>
+    </None>
+    <None Include="Assets\Styles\customer-setting-ie8.scss" />
+    <None Include="Assets\Styles\customer-setting-matrix.css.map">
+      <DependentUpon>customer-setting-matrix.scss</DependentUpon>
+    </None>
+    <None Include="Assets\Styles\customer-setting-matrix.scss" />
+    <None Include="Assets\Styles\customer-setting.css.map">
+      <DependentUpon>customer-setting.scss</DependentUpon>
+    </None>
+    <None Include="Assets\Styles\customer-setting.scss" />
+    <None Include="bower.json" />
+    <None Include="Gulp\gulp-tsd.json" />
+    <None Include="Gulp\products-config.json" />
+    <None Include="Gulp\tsd.json" />
+    <None Include="Gulp\tslint.json" />
+    <None Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\BlockUI\block-ui.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\copy-setting.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\customer-setting-ie8.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-resource1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-resource.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>position-taking-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>position-taking-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtyp1-template1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtyp1-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bet-setting-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtyp2-template1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtyp2-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commission-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>commission-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtyp3-template1-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtyp3-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>product-status-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>product-status-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtyp4-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CustomerLine\customer-line.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\PTMatrix\pt-matrix.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-matrix-resource1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-matrix-resource.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\BlockUI\block-ui.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\copy-setting.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\customer-setting.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>customer-setting-resource1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customer-setting-resource.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>position-taking-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>position-taking-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtyp1-template1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtyp1-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bet-setting-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtyp2-template1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtyp2-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtype2-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>commission-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>commission-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtyp3-template1-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtyp3-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtype3-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>product-status-resources1.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>product-status-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtyp4-template1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-247.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-248.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-249.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-250.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-251.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-252.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-253.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-254.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-255.js" />
+    <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
+    <Content Include="Assets\Styles\customer-setting-ie8.css">
+      <DependentUpon>customer-setting-ie8.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting-ie8.min.css">
+      <DependentUpon>customer-setting-ie8.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting-matrix.css">
+      <DependentUpon>customer-setting-matrix.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting-matrix.min.css">
+      <DependentUpon>customer-setting-matrix.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting.css">
+      <DependentUpon>customer-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\customer-setting.min.css">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\Images\auto-pt.gif" />
+    <Content Include="Assets\Styles\Images\loading.gif" />
+    <Content Include="Assets\Styles\Images\not-allow-auto-pt.gif" />
+    <Content Include="Assets\Styles\Images\sprite.png" />
+    <Content Include="Gulpfile.js" />
+    <Content Include="Gulp\combine-scripts.ie8.js" />
+    <Content Include="Gulp\combine-scripts.js" />
+    <Content Include="Gulp\libraries.js" />
+    <Content Include="Gulp\matrix.js" />
+    <Content Include="Gulp\node-module.js" />
+    <Content Include="Gulp\products-config.js" />
+    <Content Include="Gulp\tsd.js" />
+    <Content Include="Gulp\tslint.js" />
+    <Content Include="Gulp\watch.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\common.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\copy-setting.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\module-registrater.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-base-directive.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CustomerLine\customer-line.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\PTMatrix\pt-matrix.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\module-register.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\BlockUI\block-ui.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\common.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\copy-setting.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\module-registrater.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-base-directive.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\controller.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\customer-info.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\helper-services.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\helpers.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\setting-result.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\setting-type-directive-loader.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1.Template1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType2.Template1\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType3.Template1\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType4.Template1\settingtype4-template1.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

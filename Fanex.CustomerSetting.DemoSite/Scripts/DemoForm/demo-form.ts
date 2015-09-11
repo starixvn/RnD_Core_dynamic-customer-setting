@@ -111,7 +111,15 @@ module DemoFrom {
         }
 
         public viewMatrix(): void {
-            this.$window.open("/ViewCustomerSettingMatrix", "_bank");
+            var customerName: string = "";
+
+            if (this.isMultipleUpdates) {
+                customerName = (<MultipleTargets>this.target).firstCustomerName;
+            } else {
+                customerName = (<SingleTarget>this.target).customerName;
+            }
+
+            this.$window.open("/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
         }
     }
 
@@ -245,26 +253,31 @@ module DemoFrom {
 
         public static getSingleTarget(role: Role, uplineRole: Role): SingleTarget {
             var id: number = 0;
+            var name: string = "";
 
             switch (role) {
                 case Role.super:
                     id = 2;
+                    name = "SA-RM";
                     break;
 
                 case Role.master:
                     id = 4174;
+                    name = "mrm";
                     break;
 
                 case Role.agent:
                     id = 1262;
+                    name = "wsrm";
                     break;
 
                 case Role.member:
                     id = 1277;
+                    name = "428RM";
                     break;
             }
 
-            return this.createSingleTarget(id, role, uplineRole);
+            return this.createSingleTarget(id, name, role, uplineRole);
         }
 
         public static getMultipleTarget(role: Role, uplineRole: Role): MultipleTargets {
@@ -300,8 +313,8 @@ module DemoFrom {
             return new Actor(id, name, role, subAccId, this.defaultLanguage, systemId);
         }
 
-        private static createSingleTarget(id: number, role: Role, uplineRole: Role): SingleTarget {
-            return new SingleTarget(id, role, uplineRole, this.defaultProductId);
+        private static createSingleTarget(id: number, name: string, role: Role, uplineRole: Role): SingleTarget {
+            return new SingleTarget(id, name, role, uplineRole, this.defaultProductId);
         }
 
         private static createMultipleTargetInfo(ids: string, names: string, role: Role, uplineRole: Role): MultipleTargets {
@@ -407,16 +420,30 @@ module DemoFrom {
 
     class SingleTarget extends Target {
         public customerId: number;
+        public customerName: string;
 
-        constructor(customerId: number, role: Role, uplineRole: Role, productId: number) {
+        constructor(customerId: number, customerName: string, role: Role, uplineRole: Role, productId: number) {
             super(productId, role, uplineRole);
             this.customerId = customerId;
+            this.customerName = customerName;
         }
     }
 
     class MultipleTargets extends Target {
         public customerIds: string;
         public customerNames: string;
+
+        public get firstCustomerName(): string {
+            if (this.customerNames) {
+                var names: string[] = this.customerNames.split(",");
+
+                if (names.length > 0) {
+                    return names[0];
+                }
+            }
+
+            return null;
+        }
 
         constructor(customerIds: string, customerNames: string, role: Role, uplineRole: Role, productId: number) {
             super(productId, role, uplineRole);

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client.Configurations;
-    using Fanex.CustomerSetting.DemoSite.Contexts;
+    using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Context;
 
     public class HomeController : Controller
     {
@@ -22,7 +22,7 @@
 
         public JsonResult SaveSession(
             int actorId,
-            string actorname,
+            string actorName,
             byte role,
             int subAccountId = 0,
             string language = "en-US")
@@ -32,7 +32,17 @@
                 subAccountId = 0;
             }
 
-            SettingContextManager.Init(actorId, actorname, role, subAccountId);
+            SettingContextManager.Register(() =>
+            {
+                var settingContext = new SettingContext();
+
+                settingContext.ActorId = actorId;
+                settingContext.ActorName = actorName;
+                settingContext.ActorLevel = role;
+                settingContext.SubAccountId = subAccountId;
+
+                return settingContext;
+            });
 
             return Json(new
                 {

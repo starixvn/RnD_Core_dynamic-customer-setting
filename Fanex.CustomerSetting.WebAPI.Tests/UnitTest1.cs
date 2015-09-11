@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebAPI.Tests
+﻿namespace Fanex.CustomerSetting.WebApi.Tests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

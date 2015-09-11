@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Configurations
 {
+    using System;
     using System.Configuration;
-    using System.Diagnostics.CodeAnalysis;
 
     public class SettingMatrixConfiguration : ConfigurationSection
     {
@@ -16,12 +16,18 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Reviewed !"),
-        ConfigurationProperty("ServiceUri", IsRequired = true)]
-        public string ServiceUri
+        [ConfigurationProperty("ServiceUri", IsRequired = true)]
+        public Uri ServiceUri
         {
-            get { return (string)this["ServiceUri"]; }
+            get { return (Uri)this["ServiceUri"]; }
             set { this["ServiceUri"] = value; }
+        }
+
+        [ConfigurationProperty("CdnUri", IsRequired = true)]
+        public Uri CdnUri
+        {
+            get { return (Uri)this["CdnUri"]; }
+            set { this["CdnUri"] = value; }
         }
     }
 }
