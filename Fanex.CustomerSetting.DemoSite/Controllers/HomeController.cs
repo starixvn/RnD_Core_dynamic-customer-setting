@@ -2,11 +2,11 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Context;
+    using Fanex.CustomerSetting.DemoSite.Constants;
 
     public class HomeController : Controller
     {
-        public const byte AgencySystem = 2;
+        private const byte AgencySystem = 2;
 
         public ActionResult Index()
         {
@@ -32,17 +32,11 @@
                 subAccountId = 0;
             }
 
-            SettingContextManager.Register(() =>
-            {
-                var settingContext = new SettingContext();
-
-                settingContext.ActorId = actorId;
-                settingContext.ActorName = actorName;
-                settingContext.ActorLevel = role;
-                settingContext.SubAccountId = subAccountId;
-
-                return settingContext;
-            });
+            Session[SessionKeys.ActorIdSessionKey] = actorId;
+            Session[SessionKeys.ActorNameSessionKey] = actorName;
+            Session[SessionKeys.ActorLevelSessionKey] = role;
+            Session[SessionKeys.SubAccountIdSessionKey] = subAccountId;
+            Session[SessionKeys.LanguageSessionKey] = language;
 
             return Json(new
                 {

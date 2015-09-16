@@ -5,7 +5,6 @@
     using System.Runtime.Caching;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.AntiForgery;
-    using Fanex.CustomerSetting.Client40.Context;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using Fanex.CustomerSetting.Client40.Services;
@@ -70,12 +69,12 @@
         [ValidateAntiForgery]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
-            querySetting.ActorId = SettingContextManager.SettingContext.ActorId;
-            querySetting.ActorLevel = SettingContextManager.SettingContext.ActorLevel;
-            querySetting.ActorName = SettingContextManager.SettingContext.ActorName;
-            querySetting.SubAccountId = SettingContextManager.SettingContext.SubAccountId;
-            querySetting.Domain = SettingContextManager.SettingContext.Domain;
-            querySetting.Language = SettingContextManager.SettingContext.Language;
+            querySetting.ActorId = CustomerSettingRegistration.SettingContext.ActorId;
+            querySetting.ActorLevel = CustomerSettingRegistration.SettingContext.ActorLevel;
+            querySetting.ActorName = CustomerSettingRegistration.SettingContext.ActorName;
+            querySetting.SubAccountId = CustomerSettingRegistration.SettingContext.SubAccountId;
+            querySetting.Domain = CustomerSettingRegistration.SettingContext.Domain;
+            querySetting.Language = CustomerSettingRegistration.SettingContext.Language;
 
             var customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
 

@@ -2,7 +2,6 @@
 {
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.AntiForgery;
-    using Fanex.CustomerSetting.Client40.Context;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using Fanex.CustomerSetting.Client40.Services;
     using RestSharp;
@@ -49,13 +48,13 @@
         {
             if (updateSetting != null)
             {
-                updateSetting.ActorId = SettingContextManager.SettingContext.ActorId;
-                updateSetting.ActorLevel = SettingContextManager.SettingContext.ActorLevel;
-                updateSetting.ActorName = SettingContextManager.SettingContext.ActorName;
-                updateSetting.SubAccountId = SettingContextManager.SettingContext.SubAccountId;
-                updateSetting.Domain = SettingContextManager.SettingContext.Domain;
-                updateSetting.Language = SettingContextManager.SettingContext.Language;
-                updateSetting.ClientIP = SettingContextManager.SettingContext.IP;
+                updateSetting.ActorId = CustomerSettingRegistration.SettingContext.ActorId;
+                updateSetting.ActorLevel = CustomerSettingRegistration.SettingContext.ActorLevel;
+                updateSetting.ActorName = CustomerSettingRegistration.SettingContext.ActorName;
+                updateSetting.SubAccountId = CustomerSettingRegistration.SettingContext.SubAccountId;
+                updateSetting.Domain = CustomerSettingRegistration.SettingContext.Domain;
+                updateSetting.Language = CustomerSettingRegistration.SettingContext.Language;
+                updateSetting.ClientIP = CustomerSettingRegistration.SettingContext.IP;
             }
         }
     }

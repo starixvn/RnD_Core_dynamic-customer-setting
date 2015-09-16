@@ -95,7 +95,7 @@ module DemoFrom {
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "ViewCustomerSetting",
+                path: "DCS/ViewCustomerSetting",
                 frameName: "setting-page"
             };
 
@@ -119,7 +119,7 @@ module DemoFrom {
                 customerName = (<SingleTarget>this.target).customerName;
             }
 
-            this.$window.open("/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
+            this.$window.open("/DCS/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
         }
     }
 

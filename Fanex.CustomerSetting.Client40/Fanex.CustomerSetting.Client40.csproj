@@ -77,19 +77,21 @@
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
-    <Compile Include="Context\SettingContext.cs" />
-    <Compile Include="Context\SettingContextManager.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="AntiForgery\AntiForgeryExtension.cs" />
     <Compile Include="AntiForgery\ValidateAntiForgery.cs" />
+    <Compile Include="CustomerSettingRegistration.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\CheckingPermissionContext.cs" />
+    <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\SettingFormQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Requests\MultipleUpdateSettingRequest.cs" />
     <Compile Include="Models\Requests\QuerySettingRequest.cs" />
     <Compile Include="Models\Requests\SettingRequest.cs" />
     <Compile Include="Models\Requests\UpdateSettingRequest.cs" />
+    <Compile Include="Helpers\TypeDetection.cs" />
     <Compile Include="Services\CustomerSettingService.cs" />
     <Compile Include="Services\ICustomerSettingService.cs" />
   </ItemGroup>
