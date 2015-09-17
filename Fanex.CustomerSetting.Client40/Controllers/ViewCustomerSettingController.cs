@@ -32,9 +32,9 @@
         [HttpPost]
         public ContentResult Index(SettingFormQuery query)
         {
-            bool isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
             AppConfiguration appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
             ObjectCache cache = MemoryCache.Default;
+            bool isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
             string cachedKey = isIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;
             string template = cache.Get(cachedKey) as string;
 
@@ -69,14 +69,17 @@
         [ValidateAntiForgery]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
-            querySetting.ActorId = CustomerSettingRegistration.SettingContext.ActorId;
-            querySetting.ActorLevel = CustomerSettingRegistration.SettingContext.ActorLevel;
-            querySetting.ActorName = CustomerSettingRegistration.SettingContext.ActorName;
-            querySetting.SubAccountId = CustomerSettingRegistration.SettingContext.SubAccountId;
-            querySetting.Domain = CustomerSettingRegistration.SettingContext.Domain;
-            querySetting.Language = CustomerSettingRegistration.SettingContext.Language;
+            IRestResponse customerSettingResponse;
+            SettingContext settingContext = CustomerSettingRegistration.SettingContext;
 
-            var customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
+            querySetting.ActorId = settingContext.ActorId;
+            querySetting.ActorLevel = settingContext.ActorLevel;
+            querySetting.ActorName = settingContext.ActorName;
+            querySetting.SubAccountId = settingContext.SubAccountId;
+            querySetting.Domain = settingContext.Domain;
+            querySetting.Language = settingContext.Language;
+
+            customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
 
             return Content(customerSettingResponse.Content);
         }

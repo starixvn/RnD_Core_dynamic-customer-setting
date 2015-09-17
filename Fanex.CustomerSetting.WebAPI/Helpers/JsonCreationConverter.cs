@@ -1,8 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 

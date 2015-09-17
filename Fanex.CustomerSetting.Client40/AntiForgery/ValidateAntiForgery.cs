@@ -9,12 +9,14 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class ValidateAntiForgery : ActionFilterAttribute
     {
+        private const string AntiForgeryKey = "__RequestVerificationToken";
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (filterContext != null)
             {
                 NameValueCollection headers = filterContext.HttpContext.Request.Headers;
-                string requestVerificationToken = headers.GetValues("__RequestVerificationToken").FirstOrDefault();
+                string requestVerificationToken = headers.GetValues(AntiForgeryKey).FirstOrDefault();
                 string cookieToken = null;
                 string formToken = null;
 

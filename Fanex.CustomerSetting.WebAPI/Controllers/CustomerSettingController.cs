@@ -49,7 +49,6 @@
             }
 
             var updateSettingService = new UpdateSettingService(request.GetSettingContext());
-
             var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
 
             return Request.CreateResponse(result);
@@ -69,7 +68,6 @@
             }
 
             var updateSettingService = new UpdateSettingService(request.GetSettingContext());
-
             var result = updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
 
             return Request.CreateResponse(result);

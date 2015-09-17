@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.WebApi.Models.Request;
     using Newtonsoft.Json;
 
-    public class UpdateSettingRequestModelBinder<T> : IModelBinder 
+    public class UpdateSettingRequestModelBinder<T> : IModelBinder
         where T : UpdateSettingRequest
     {
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)

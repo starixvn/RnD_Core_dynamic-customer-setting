@@ -22,6 +22,6 @@
             JToken token = JToken.FromObject(value);
 
             token.WriteTo(writer);
-        } 
+        }
     }
 }

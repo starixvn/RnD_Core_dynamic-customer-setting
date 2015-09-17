@@ -130,7 +130,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Request\QuerySettingMatrixRequest.cs" />
-    <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
