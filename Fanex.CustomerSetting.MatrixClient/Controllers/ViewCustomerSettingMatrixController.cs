@@ -4,7 +4,8 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.MatrixClient.AntiForgery;
+    using Fanex.CustomerSetting.MatrixClient.Attributes;
+    using Fanex.CustomerSetting.MatrixClient.Configurations;
     using Fanex.CustomerSetting.MatrixClient.Models;
     using Fanex.CustomerSetting.MatrixClient.Models.Requests;
     using Fanex.CustomerSetting.MatrixClient.Services;
@@ -28,40 +29,28 @@
         {
         }
 
+        [CustomerSettingMatrixAuth]
         public ContentResult Index(string customerName)
         {
-            AppConfiguration appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
             ObjectCache cache = MemoryCache.Default;
             string template = cache.Get(SettingMatrixTemplateCachingKey) as string;
 
             if (string.IsNullOrEmpty(template))
             {
-                IRestResponse response = _customerSettingMatrixService.QueryCustomerSettingMatrixTemplate();
-
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    return Content(response.Content, "text/HTML");
-                }
-
-                template = SimpleJson.DeserializeObject<string>(response.Content);
-                template = template.Replace("{{cdnUri}}", appConfig.CdnUri.ToString());
-                template = template.Replace("{{version}}", appConfig.ScriptVersion);
-                template = template.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
-
+                template = BuildTemplate();
                 cache.Set(SettingMatrixTemplateCachingKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
             if (!string.IsNullOrEmpty(template))
             {
-                template = template.Replace("{{appConfig}}", appConfig.ToJson());
-                template = template.Replace("{{customerName}}", customerName);
+                template = ReplaceParameters(template, customerName);
             }
 
             return Content(template, "text/HTML");
         }
 
         [HttpPost]
-        [ValidateAntiForgery]
+        [ValidateAntiForgery, CustomerSettingMatrixAuth]
         public ContentResult QuerySettingMatrix(QuerySettingMatrixRequest querySettingMatrix)
         {
             var customerSettingResponse = _customerSettingMatrixService.QueryCustomerSettingMatrix(querySettingMatrix);
@@ -70,12 +59,50 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery]
+        [ValidateAntiForgery, CustomerSettingMatrixAuth]
         public ContentResult QueryAllProducts()
         {
             var productNamesReponse = _customerSettingMatrixService.QueryAllProducts();
 
             return Content(productNamesReponse.Content);
+        }
+
+        private string BuildTemplate()
+        {
+            IRestResponse response = _customerSettingMatrixService.QueryCustomerSettingMatrixTemplate();
+            bool isDebug = HttpContext.IsDebuggingEnabled;
+            string cdn = SettingMatrixConfiguration.Settings.CdnUri.ToString();
+            string customCss = SettingMatrixConfiguration.Settings.CustomCssUrl != null
+                ? SettingMatrixConfiguration.Settings.CustomCssUrl.ToString()
+                : string.Empty;
+            string template = string.Empty;
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return response.Content;
+            }
+
+            template = SimpleJson.DeserializeObject<string>(response.Content);
+            template = template.Replace("{{cdnUri}}", cdn);
+            template = template.Replace("{{customCss}}", customCss);
+            template = template.Replace("{{version}}", isDebug ? "0.0.1" : Guid.NewGuid().ToString("N"));
+            template = template.Replace("{{min}}", isDebug ? string.Empty : ".min");
+
+            return template;
+        }
+
+        private string ReplaceParameters(string template, string customerName)
+        {
+            string finalTemplate = template;
+            AppConfiguration appConfig = new AppConfiguration(Request.ApplicationPath);
+
+            if (!string.IsNullOrEmpty(finalTemplate))
+            {
+                finalTemplate = finalTemplate.Replace("{{appConfig}}", appConfig.ToJson());
+                template = template.Replace("{{customerName}}", customerName);
+            }
+
+            return finalTemplate;
         }
     }
 }

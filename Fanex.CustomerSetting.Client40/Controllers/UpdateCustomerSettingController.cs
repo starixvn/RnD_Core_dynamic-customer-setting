@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.AntiForgery;
+    using Fanex.CustomerSetting.Client40.Attributes;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using Fanex.CustomerSetting.Client40.Services;
@@ -22,25 +22,27 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery]
+        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
         public ContentResult UpdateSetting(UpdateSettingRequest updateSetting)
         {
             IRestResponse updateResult;
 
             SetActorInformation(updateSetting);
             updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
+            Response.StatusCode = (int)updateResult.StatusCode;
 
             return Content(updateResult.Content);
         }
 
         [HttpPost]
-        [ValidateAntiForgery]
+        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = true)]
         public ContentResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
         {
             IRestResponse updateResult;
 
             SetActorInformation(multipleUpdateSetting);
             updateResult = _customerSettingService.MultipleUpdateCustomerSetting(multipleUpdateSetting);
+            Response.StatusCode = (int)updateResult.StatusCode;
 
             return Content(updateResult.Content);
         }

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Client40.AntiForgery
+﻿namespace Fanex.CustomerSetting.MatrixClient.Attributes
 {
     using System.Web.Helpers;
 

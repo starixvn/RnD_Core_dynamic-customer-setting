@@ -5,6 +5,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Fanex.CustomerSetting.Client40;
+    using Fanex.CustomerSetting.MatrixClient;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -12,6 +13,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
+            SettingMatrixRegistration.Init();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -12,7 +12,17 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        public override bool CheckPermission(CheckingPermissionContext checkingPermissionContext)
+        public override bool VerifyQueryPermission(PermissionContext permissionContext)
+        {
+            return true;
+        }
+
+        public override bool VerifyUpdatePermission(PermissionContext permissionContext)
+        {
+            return true;
+        }
+
+        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
             return true;
         }

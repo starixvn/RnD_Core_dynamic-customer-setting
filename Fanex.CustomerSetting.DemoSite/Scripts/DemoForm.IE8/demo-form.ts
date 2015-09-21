@@ -101,6 +101,7 @@ module DemoForm {
                 params.customerIds = (<MultipleTargets>this.target).customerIds;
                 params.customerNames = (<MultipleTargets>this.target).customerNames;
             } else {
+                params.isMultiple = false;
                 params.customerId = (<SingleTarget>this.target).customerId;
             }
 

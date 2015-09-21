@@ -1,5 +1,4 @@
 ﻿{
     "command": "reinstall",
-    "latest": true,
     "config": "./Gulp/tsd.json"
 }

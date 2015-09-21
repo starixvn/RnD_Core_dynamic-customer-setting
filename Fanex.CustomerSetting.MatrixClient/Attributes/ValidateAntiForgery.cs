@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.MatrixClient.AntiForgery
+﻿namespace Fanex.CustomerSetting.MatrixClient.Attributes
 {
     using System;
     using System.Collections.Specialized;

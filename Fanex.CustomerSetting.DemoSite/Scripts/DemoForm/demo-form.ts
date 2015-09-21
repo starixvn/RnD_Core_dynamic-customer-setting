@@ -104,6 +104,7 @@ module DemoFrom {
                 params.customerIds = (<MultipleTargets>this.target).customerIds;
                 params.customerNames = (<MultipleTargets>this.target).customerNames;
             } else {
+                params.isMultiple = false;
                 params.customerId = (<SingleTarget>this.target).customerId;
             }
 
@@ -119,7 +120,7 @@ module DemoFrom {
                 customerName = (<SingleTarget>this.target).customerName;
             }
 
-            this.$window.open("/DCS/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
+            this.$window.open("/Matrix/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
         }
     }
 

@@ -29,7 +29,6 @@
     gulp.task("tsd:install", function (callback) {
         tsd({
             command: "reinstall",
-            latest: true,
             config: "tsd.json"
         }, callback);
     });

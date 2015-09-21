@@ -76,14 +76,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
+    <Compile Include="Attributes\AntiForgeryExtension.cs" />
+    <Compile Include="Attributes\CustomerSettingAuth.cs" />
+    <Compile Include="Attributes\ValidateAntiForgery.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
-    <Compile Include="AntiForgery\AntiForgeryExtension.cs" />
-    <Compile Include="AntiForgery\ValidateAntiForgery.cs" />
     <Compile Include="CustomerSettingRegistration.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
-    <Compile Include="Models\CheckingPermissionContext.cs" />
+    <Compile Include="Models\PermissionContext.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\SettingFormQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

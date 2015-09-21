@@ -4,7 +4,8 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.AntiForgery;
+    using Fanex.CustomerSetting.Client40.Attributes;
+    using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using Fanex.CustomerSetting.Client40.Services;
@@ -30,9 +31,9 @@
         }
 
         [HttpPost]
+        [CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult Index(SettingFormQuery query)
         {
-            AppConfiguration appConfig = new AppConfiguration(HttpContext.IsDebuggingEnabled, Request.ApplicationPath);
             ObjectCache cache = MemoryCache.Default;
             bool isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
             string cachedKey = isIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;
@@ -40,33 +41,20 @@
 
             if (string.IsNullOrEmpty(template))
             {
-                IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate(isIe8);
-
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    return Content(response.Content, "text/HTML");
-                }
-
-                template = SimpleJson.DeserializeObject<string>(response.Content);
-                template = template.Replace("{{cdnUri}}", appConfig.CdnUri.ToString());
-                template = template.Replace("{{version}}", appConfig.ScriptVersion);
-                template = template.Replace("{{min}}", appConfig.IsDebug ? string.Empty : ".min");
-
+                template = BuildTemplate(isIe8);
                 cache.Set(cachedKey, template, DateTime.Now.AddHours(CachingHours));
             }
 
             if (!string.IsNullOrEmpty(template))
             {
-                template = template.Replace("{{appConfig}}", appConfig.ToJson());
-                template = template.Replace("{{params}}", query.ToJson());
-                template = template.Replace("{{productId}}", query.ProductId.ToString());
+                template = ReplaceParameters(template, query);
             }
 
             return Content(template, "text/HTML");
         }
 
         [HttpPost]
-        [ValidateAntiForgery]
+        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
             IRestResponse customerSettingResponse;
@@ -80,8 +68,48 @@
             querySetting.Language = settingContext.Language;
 
             customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
+            Response.StatusCode = (int)customerSettingResponse.StatusCode;
 
             return Content(customerSettingResponse.Content);
+        }
+
+        private string BuildTemplate(bool isIe8)
+        {
+            IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate(isIe8);
+            bool isDebug = HttpContext.IsDebuggingEnabled;
+            string cdn = CustomerSettingConfiguration.Settings.CdnUri.ToString();
+            string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
+                ? CustomerSettingConfiguration.Settings.CustomCssUrl.ToString()
+                : string.Empty;
+            string template = string.Empty;
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return response.Content;
+            }
+
+            template = SimpleJson.DeserializeObject<string>(response.Content);
+            template = template.Replace("{{cdnUri}}", cdn);
+            template = template.Replace("{{customCss}}", customCss);
+            template = template.Replace("{{version}}", isDebug ? "0.0.1" : Guid.NewGuid().ToString("N"));
+            template = template.Replace("{{min}}", isDebug ? string.Empty : ".min");
+
+            return template;
+        }
+
+        private string ReplaceParameters(string template, SettingFormQuery query)
+        {
+            string finalTemplate = template;
+            AppConfiguration appConfig = new AppConfiguration(Request.ApplicationPath);
+
+            if (!string.IsNullOrEmpty(finalTemplate))
+            {
+                finalTemplate = finalTemplate.Replace("{{appConfig}}", appConfig.ToJson());
+                finalTemplate = finalTemplate.Replace("{{params}}", query.ToJson());
+                finalTemplate = finalTemplate.Replace("{{productId}}", query.ProductId.ToString());
+            }
+
+            return finalTemplate;
         }
     }
 }

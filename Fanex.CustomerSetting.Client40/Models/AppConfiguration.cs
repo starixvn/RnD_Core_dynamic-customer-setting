@@ -1,33 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
-    using System;
-    using Fanex.CustomerSetting.Client40.AntiForgery;
-    using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Attributes;
 
-    public class AppConfiguration
+    internal class AppConfiguration
     {
-        public AppConfiguration()
-            : this(true, "/")
+        public AppConfiguration(string appPath)
         {
-        }
-
-        public AppConfiguration(bool isDebug, string appPath)
-        {
-            this.IsDebug = isDebug;
-            this.ScriptVersion = isDebug ? "0.0.1" : Guid.NewGuid().ToString("N");
             this.ApplicationPath = appPath;
-            this.CdnUri = CustomerSettingConfiguration.Settings.CdnUri ?? new Uri(appPath);
         }
 
         public string ApplicationPath { get; set; }
 
-        public bool IsDebug { get; set; }
-
-        public string ScriptVersion { get; set; }
-
         public string AntiForgeryToken { get; set; }
-
-        public Uri CdnUri { get; set; }
 
         public string ToJson()
         {

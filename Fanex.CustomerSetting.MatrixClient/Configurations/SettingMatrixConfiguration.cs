@@ -29,5 +29,12 @@
             get { return (Uri)this["CdnUri"]; }
             set { this["CdnUri"] = value; }
         }
+
+        [ConfigurationProperty("CustomCssUrl")]
+        public Uri CustomCssUrl
+        {
+            get { return (Uri)this["CustomCssUrl"]; }
+            set { this["CustomCssUrl"] = value; }
+        }
     }
 }

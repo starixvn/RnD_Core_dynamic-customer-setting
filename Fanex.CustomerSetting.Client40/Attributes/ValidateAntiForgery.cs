@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Client40.AntiForgery
+﻿namespace Fanex.CustomerSetting.Client40.Attributes
 {
     using System;
     using System.Collections.Specialized;
