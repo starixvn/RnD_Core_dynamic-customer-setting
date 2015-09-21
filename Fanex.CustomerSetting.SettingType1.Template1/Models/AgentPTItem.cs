@@ -6,7 +6,7 @@
 
     public class AgentPTItem : PTItem
     {
-        private const string PTXmlFormat = "<PT {0} MasterPT=\"{1}\" IsAutoMasterPT=\"{2}\" AutoMasterPT=\"{3}\" AgentPT=\"{4}\" AgentMinPT=\"{5}\" UpdAllMems=\"{6}\" NewMasterPT=\"{7}\"/>";
+        private const string PTXmlFormat = "<PT {0} MasterPT=\"{1}\" IsAutoMasterPT=\"{2}\" AutoMasterPT=\"{3}\" AgentPT=\"{4}\" MinPT=\"{5}\" IsUpdAllMems=\"{6}\" UpdAllMems_Value=\"{7}\"/>";
 
         /// <summary>
         /// Master PT

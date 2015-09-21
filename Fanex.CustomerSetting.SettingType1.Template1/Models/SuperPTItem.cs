@@ -6,7 +6,7 @@
 
     public class SuperPTItem : PTItem
     {
-        private const string PTXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT=\"{2}\" AgentPT=\"{3}\" SuperMinPT=\"{4}\"/>";
+        private const string PTXmlFormat = "<PT {0} SuperPT=\"{1}\" MasterPT=\"{2}\" AgentPT=\"{3}\" MinPT=\"{4}\"/>";
 
         /// <summary>
         /// Super Max PT
