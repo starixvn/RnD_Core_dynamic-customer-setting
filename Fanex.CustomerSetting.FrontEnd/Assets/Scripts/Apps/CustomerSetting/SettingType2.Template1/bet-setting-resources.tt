@@ -23,7 +23,7 @@
     var betSettingResources = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-    var resourcePath = Path.Combine(solutionPath, "Fanex.CustomerSetting.SettingType2.Template1", "Resources");
+    var resourcePath = Path.Combine(solutionPath, "Fanex.CustomerSetting.SettingType2", "Resources");
     var fileNames = new string[]
     {
         "Label",

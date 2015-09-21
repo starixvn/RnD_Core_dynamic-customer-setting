@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Services
+﻿namespace Fanex.CustomerSetting.SettingType1.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,9 +9,9 @@
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType1.Template1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
-    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
+    using Fanex.CustomerSetting.SettingType1.Constants;
+    using Fanex.CustomerSetting.SettingType1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType1.Resources;
     using Fanex.Logging;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService

@@ -45,7 +45,6 @@
                 this.ProductId = info.GetInt32("ProductId");
                 this.SettingTypeId = info.GetInt16("SettingTypeId");
                 this.SettingTypeName = info.GetString("SettingTypeName");
-                this.SettingTypeTemplate = info.GetByte("SettingTypeId");
                 this.SettingTypeLevel = info.GetByte("SettingTypeLevel");
 
                 this.CustomerId = info.GetInt32("CustomerId");
@@ -95,8 +94,6 @@
 
         public byte SettingTypeLevel { get; set; }
 
-        public byte SettingTypeTemplate { get; set; }
-
         //// Customer information
 
         public int CustomerId { get; set; }
@@ -143,7 +140,6 @@
             {
                 SettingTypeId = settingType.Id;
                 SettingTypeName = settingType.Name;
-                SettingTypeTemplate = settingType.SettingTemplate;
                 SettingTypeLevel = settingType.SettingLevel;
             }
         }
@@ -193,7 +189,6 @@
                 info.AddValue("ProductId", this.ProductId);
                 info.AddValue("SettingTypeId", this.SettingTypeId);
                 info.AddValue("SettingTypeName", this.SettingTypeName);
-                info.AddValue("SettingTypeTemplate", this.SettingTypeTemplate);
                 info.AddValue("SettingTypeLevel", this.SettingTypeLevel);
 
                 info.AddValue("CustomerId", this.CustomerId);
@@ -229,7 +224,6 @@
             messageBuilder.AppendFormat("Setting Type Id: {0}", SettingTypeId).AppendLine();
             messageBuilder.AppendFormat("Setting Type Name: {0}", SettingTypeName).AppendLine();
             messageBuilder.AppendFormat("Setting Type Level: {0}", SettingTypeLevel).AppendLine();
-            messageBuilder.AppendFormat("Setting Type Template: {0}", SettingTypeTemplate).AppendLine();
 
             LogDatabaseException(messageBuilder);
 

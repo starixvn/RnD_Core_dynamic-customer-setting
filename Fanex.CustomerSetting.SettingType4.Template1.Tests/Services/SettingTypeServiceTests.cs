@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Tests.Services
+﻿namespace Fanex.CustomerSetting.SettingType4.Tests.Services
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -8,10 +8,10 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType4.Template1.DataAccesses;
-    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Template1.Models;
-    using Fanex.CustomerSetting.SettingType4.Template1.Services;
+    using Fanex.CustomerSetting.SettingType4.DataAccesses;
+    using Fanex.CustomerSetting.SettingType4.Dtos;
+    using Fanex.CustomerSetting.SettingType4.Models;
+    using Fanex.CustomerSetting.SettingType4.Services;
     using Fanex.CustomerSetting.Tests;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Logging;

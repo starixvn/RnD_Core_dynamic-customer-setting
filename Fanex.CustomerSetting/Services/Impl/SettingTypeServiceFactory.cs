@@ -8,7 +8,7 @@
 
     internal class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {
-        private const string AssemblyNameFormat = "Fanex.CustomerSetting.SettingType{0}.Template{1}";
+        private const string AssemblyNameFormat = "Fanex.CustomerSetting.SettingType{0}";
         private const string TypeNameFormat = "{0}.Services.SettingTypeService";
 
         private static ConcurrentDictionary<string, ISettingTypeService> serviceInstanceCached = new ConcurrentDictionary<string, ISettingTypeService>();
@@ -56,7 +56,7 @@
 
         private string GetFullTypeServiceName(SettingType settingType)
         {
-            var assemblyName = string.Format(AssemblyNameFormat, settingType.Id, settingType.SettingTemplate);
+            var assemblyName = string.Format(AssemblyNameFormat, settingType.Id);
             var typeName = string.Format(TypeNameFormat, assemblyName);
             return string.Join(", ", typeName, assemblyName);
         }

@@ -41,7 +41,6 @@
             return new SettingType
             {
                 Id = settingTypeId,
-                SettingTemplate = settingTemplate,
                 SettingLevel = 1,
                 SettingItems = new List<SettingItemStub>
                 {
@@ -58,7 +57,6 @@
             return new SettingType
             {
                 Id = settingTypeId,
-                SettingTemplate = settingTemplate,
                 SettingLevel = 1,
                 Name = "SettingTypeName"
             };

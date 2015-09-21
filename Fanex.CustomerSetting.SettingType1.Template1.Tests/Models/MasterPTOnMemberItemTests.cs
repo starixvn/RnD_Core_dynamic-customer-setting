@@ -1,6 +1,6 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Models
+﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType1.Template1.Models;
+    using Fanex.CustomerSetting.SettingType1.Models;
     using NUnit.Framework;
 
     [TestFixture]

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models
+﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
     using Fanex.CustomerSetting.Models;
 

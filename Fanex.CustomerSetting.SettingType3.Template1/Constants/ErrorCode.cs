@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Constants
+﻿namespace Fanex.CustomerSetting.SettingType3.Constants
 {
     internal static class ErrorCode
     {

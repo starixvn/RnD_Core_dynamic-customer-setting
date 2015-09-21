@@ -3,7 +3,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.SettingType4.Template1.Models;
+    using Fanex.CustomerSetting.SettingType4.Models;
     using NUnit.Framework;
 
     public class SettingType4

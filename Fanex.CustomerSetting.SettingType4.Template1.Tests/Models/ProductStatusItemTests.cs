@@ -1,7 +1,7 @@
-﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Tests.Models
+﻿namespace Fanex.CustomerSetting.SettingType4.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Template1.Models;
+    using Fanex.CustomerSetting.SettingType4.Dtos;
+    using Fanex.CustomerSetting.SettingType4.Models;
     using NUnit.Framework;
 
     [TestFixture]

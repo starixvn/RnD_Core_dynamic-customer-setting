@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Dtos
+﻿namespace Fanex.CustomerSetting.SettingType2.Dtos
 {
     internal class BetLimitItemDto
     {

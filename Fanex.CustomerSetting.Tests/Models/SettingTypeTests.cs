@@ -120,8 +120,7 @@
             byte template = 3;
             SettingType settingType = new SettingType
             {
-                Id = settingTypeId,
-                SettingTemplate = template
+                Id = settingTypeId
             };
 
             //// Act

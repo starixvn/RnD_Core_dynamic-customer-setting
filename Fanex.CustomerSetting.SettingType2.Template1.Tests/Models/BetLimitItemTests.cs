@@ -1,7 +1,7 @@
-﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Tests.Models
+﻿namespace Fanex.CustomerSetting.SettingType2.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType2.Template1.Models;
+    using Fanex.CustomerSetting.SettingType2.Dtos;
+    using Fanex.CustomerSetting.SettingType2.Models;
     using NUnit.Framework;
 
     [TestFixture]

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.CustomerSetting.SettingType3.Template1")]
+[assembly: AssemblyTitle("Fanex.CustomerSetting.SettingType3")]
 [assembly: AssemblyDescription("Commission Setting Type")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.CustomerSetting.SettingType3.Template1")]
+[assembly: AssemblyProduct("Fanex.CustomerSetting.SettingType3")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType3.Template1.Tests")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType3.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Dtos
+﻿namespace Fanex.CustomerSetting.SettingType3.Dtos
 {
     internal class CommissionItemDto
     {

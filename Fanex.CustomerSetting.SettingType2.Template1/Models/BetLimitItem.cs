@@ -1,11 +1,11 @@
-﻿namespace Fanex.CustomerSetting.SettingType2.Template1.Models
+﻿namespace Fanex.CustomerSetting.SettingType2.Models
 {
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType2.Template1.Constants;
-    using Fanex.CustomerSetting.SettingType2.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType2.Template1.Resources;
+    using Fanex.CustomerSetting.SettingType2.Constants;
+    using Fanex.CustomerSetting.SettingType2.Dtos;
+    using Fanex.CustomerSetting.SettingType2.Resources;
 
     public class BetLimitItem : SettingItemDefault
     {

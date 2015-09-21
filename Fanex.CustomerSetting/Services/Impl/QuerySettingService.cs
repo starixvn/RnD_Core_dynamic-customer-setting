@@ -139,7 +139,6 @@
 
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query);
                 customerSettingType.Id = productSettingType.Id;
-                customerSettingType.SettingTemplate = productSettingType.SettingTemplate;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
             }

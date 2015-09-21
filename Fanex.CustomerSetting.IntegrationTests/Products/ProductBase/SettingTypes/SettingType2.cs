@@ -6,7 +6,7 @@
     using System.Text;
     using Fanex.CustomerSetting.IntegrationTests.Models;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.SettingType2.Template1.Models;
+    using Fanex.CustomerSetting.SettingType2.Models;
     using NUnit.Framework;
 
     public static class SettingType2

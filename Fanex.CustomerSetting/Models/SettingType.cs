@@ -15,7 +15,10 @@
 
         public string Name { get; set; }
 
-        public byte SettingTemplate { get; set; }
+        public byte SettingTemplate
+        {
+            get { return 1; }
+        }
 
         public byte SettingLevel { get; set; }
 
@@ -48,11 +51,6 @@
             {
                 return this.GetType().AssemblyQualifiedName;
             }
-        }
-
-        public override string ToString()
-        {
-            return string.Join("_", this.Id, this.SettingTemplate);
         }
 
         public virtual string ToXml()

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Tests.Services
+﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,9 +7,9 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType1.Template1.DataAccesses;
-    using Fanex.CustomerSetting.SettingType1.Template1.Models;
-    using Fanex.CustomerSetting.SettingType1.Template1.Services;
+    using Fanex.CustomerSetting.SettingType1.DataAccesses;
+    using Fanex.CustomerSetting.SettingType1.Models;
+    using Fanex.CustomerSetting.SettingType1.Services;
     using Fanex.CustomerSetting.Tests;
     using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Logging;
@@ -62,7 +62,6 @@
             var customerPT = new SettingType
             {
                 Id = 1,
-                SettingTemplate = 1,
                 SettingLevel = 1,
                 SettingItems = new List<MasterPTOnMemberItem>
                 {

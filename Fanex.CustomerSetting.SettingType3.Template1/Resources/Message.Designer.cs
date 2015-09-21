@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
+namespace Fanex.CustomerSetting.SettingType3.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Fanex.CustomerSetting.SettingType3.Template1.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType3.Template1.Resources.Message", typeof(Message).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.SettingType3.Resources.Message", typeof(Message).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

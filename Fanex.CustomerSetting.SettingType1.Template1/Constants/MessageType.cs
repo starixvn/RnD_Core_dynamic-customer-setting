@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Constants
+﻿namespace Fanex.CustomerSetting.SettingType1.Constants
 {
     internal static class MessageType
     {

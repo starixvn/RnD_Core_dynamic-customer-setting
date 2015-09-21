@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Utilities
+﻿namespace Fanex.CustomerSetting.SettingType1.Utilities
 {
     using System.Globalization;
 

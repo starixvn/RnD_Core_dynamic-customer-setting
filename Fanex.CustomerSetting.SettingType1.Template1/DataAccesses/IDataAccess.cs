@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.DataAccesses
+﻿namespace Fanex.CustomerSetting.SettingType1.DataAccesses
 {
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models;

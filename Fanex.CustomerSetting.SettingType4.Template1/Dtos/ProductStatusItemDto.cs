@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType4.Template1.Dtos
+﻿namespace Fanex.CustomerSetting.SettingType4.Dtos
 {
     internal class ProductStatusItemDto
     {

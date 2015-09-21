@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType4.Template1.DataAccesses
+﻿namespace Fanex.CustomerSetting.SettingType4.DataAccesses
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType4.Template1.Constants;
-    using Fanex.CustomerSetting.SettingType4.Template1.Dtos;
+    using Fanex.CustomerSetting.SettingType4.Constants;
+    using Fanex.CustomerSetting.SettingType4.Dtos;
     using Fanex.Data;
 
     internal class DataAccess : BaseDataAccess, IDataAccess

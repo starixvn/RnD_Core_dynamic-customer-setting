@@ -1,11 +1,11 @@
-﻿namespace Fanex.CustomerSetting.SettingType3.Template1.Models
+﻿namespace Fanex.CustomerSetting.SettingType3.Models
 {
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType3.Template1.Constants;
-    using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
-    using Fanex.CustomerSetting.SettingType3.Template1.Resources;
+    using Fanex.CustomerSetting.SettingType3.Constants;
+    using Fanex.CustomerSetting.SettingType3.Dtos;
+    using Fanex.CustomerSetting.SettingType3.Resources;
 
     public class CommissionItem : SettingItemDefault
     {

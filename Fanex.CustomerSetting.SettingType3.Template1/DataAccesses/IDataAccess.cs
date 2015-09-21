@@ -1,11 +1,11 @@
-﻿namespace Fanex.CustomerSetting.SettingType3.Template1.DataAccesses
+﻿namespace Fanex.CustomerSetting.SettingType3.DataAccesses
 {
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType3.Template1.Dtos;
+    using Fanex.CustomerSetting.SettingType3.Dtos;
 
     internal interface IDataAccess
     {

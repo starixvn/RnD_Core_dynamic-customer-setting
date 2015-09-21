@@ -1,9 +1,9 @@
-﻿namespace Fanex.CustomerSetting.SettingType1.Template1.Models.Messages
+﻿namespace Fanex.CustomerSetting.SettingType1.Models.Messages
 {
     using System.Xml.Serialization;
     using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType1.Template1.Resources;
-    using Fanex.CustomerSetting.SettingType1.Template1.Utilities;
+    using Fanex.CustomerSetting.SettingType1.Resources;
+    using Fanex.CustomerSetting.SettingType1.Utilities;
 
     public class MaxPTViolationSubMessage : WrongPTSubMessage
     {
