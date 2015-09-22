@@ -1,0 +1,78 @@
+﻿namespace Fanex.CustomerSetting.SettingType2.Services
+{
+    using System.Linq;
+    using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.Services.Impl;
+    using Fanex.CustomerSetting.SettingType2.DataAccesses;
+    using Fanex.CustomerSetting.SettingType2.Dtos;
+    using Fanex.CustomerSetting.SettingType2.Models;
+    using Fanex.CustomerSetting.SettingType2.Resources;
+    using Fanex.Logging;
+
+    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
+    {
+        private readonly IDataAccess _betLimitDataAccess;
+
+        public SettingTypeService()
+            : this(null, null, null, null)
+        {
+        }
+
+        internal SettingTypeService(
+            IMessageService messageService,
+            IResourceService resourceService,
+            ILogger logger,
+            IDataAccess betLimitDataAccess)
+            : base(resourceService, logger)
+        {
+            MessageService = messageService ?? new MessageService(ResourceService);
+            _betLimitDataAccess = betLimitDataAccess ?? new DataAccess();
+        }
+
+        public override SettingType GetCustomerSettingType(
+            ISettingContext settingContext,
+            CustomerSettingQuery query)
+        {
+            var betLimitItemsRawData = _betLimitDataAccess.GetCustomerBetLimitItemsRawData(query);
+
+            var customerBetLimit = new SettingType
+            {
+                Name = Label.BetSetting,
+                SettingItems = betLimitItemsRawData.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
+            };
+
+            return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
+        }
+
+        public override SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext,
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
+            SettingType settingType)
+        {
+            Check.Argument.IsNotNull(settingType, "settingType");
+
+            var result = _betLimitDataAccess.UpdateCustomerBetLimit(
+                settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                settingType.ToXml());
+
+            var settingResult = CreateSettingResult(result, customerId, settingType);
+
+            return TranslateUpdateResultMessage(
+                settingResult,
+                Message.UpdateBetSettingSuccessfully,
+                settingType.SettingLevel,
+                settingContext.Language);
+        }
+    }
+}

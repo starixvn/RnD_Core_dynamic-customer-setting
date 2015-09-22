@@ -127,7 +127,7 @@
             {
                 return newLazyCacheItem.Value;
             }
-            catch 
+            catch
             {
                 // addItemFactory errored so do not cache the exception
                 cache.Remove(key);

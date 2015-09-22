@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
-
     public class CustomerInfo
     {
         public string UserName { get; set; }

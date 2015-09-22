@@ -1,8 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Enumerations
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Models.Constants;
 
     [Serializable]
     public class Level : Enumeration

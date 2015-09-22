@@ -54,10 +54,10 @@
         }
 
         private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
-            IEnumerable<int> customerIds, 
-            Level customerLevel, 
-            Level uplineLevel, 
-            byte productId, 
+            IEnumerable<int> customerIds,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
             SettingType settingType)
         {
             try
@@ -78,8 +78,8 @@
             {
                 WriteLog(customerIds, customerLevel, uplineLevel, productId, settingType, customerSettingException);
 
-                return new List<SettingResult> 
-                { 
+                return new List<SettingResult>
+                {
                     new SettingResult(Result.AccessDenied.Code, customerSettingException.OriginalMessage, 0, 0, settingType.Id, settingType.Name)
                 };
             }

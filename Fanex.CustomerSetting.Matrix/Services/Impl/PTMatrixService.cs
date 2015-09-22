@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
@@ -89,7 +88,7 @@
         }
 
         private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(
-            string customerName, 
+            string customerName,
             byte productId)
         {
             var pTItemMatrixDtos = _dynamicRepository.Fetch<PTItemMatrixDto>(

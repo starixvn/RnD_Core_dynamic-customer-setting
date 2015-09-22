@@ -85,10 +85,10 @@
         }
 
         private SettingResult UpdateCustomerSettingType(
-            int customerId, 
-            Level customerLevel, 
-            SettingType settingType, 
-            byte productId, 
+            int customerId,
+            Level customerLevel,
+            SettingType settingType,
+            byte productId,
             Level uplineLevel)
         {
             try

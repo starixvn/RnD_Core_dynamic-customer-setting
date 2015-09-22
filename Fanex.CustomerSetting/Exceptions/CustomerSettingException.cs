@@ -54,8 +54,8 @@
             }
         }
 
-        public string OriginalMessage 
-        { 
+        public string OriginalMessage
+        {
             get
             {
                 return base.Message;

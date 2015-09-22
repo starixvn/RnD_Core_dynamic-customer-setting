@@ -1,8 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Models.Results
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.CustomerSetting.Models.Constants;
     using Resource = Fanex.CustomerSetting.Resource;
 
@@ -44,12 +41,12 @@
 
         public virtual bool IsFailed
         {
-            get { return !IsSuccessful;  }
+            get { return !IsSuccessful; }
         }
 
         public bool IsOk
         {
-            get { return IsSuccessful;  }
+            get { return IsSuccessful; }
         }
 
         public bool IsNotOk

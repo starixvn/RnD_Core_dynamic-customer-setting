@@ -35,23 +35,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting", "Fa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tests", "Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj", "{ACBFCEA2-A3F7-4527-98FA-ABD1E7F451C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType1", "Fanex.CustomerSetting.SettingType1.Template1\Fanex.CustomerSetting.SettingType1.csproj", "{1F9436D3-F8AA-48C9-B1A7-7659EAA7BDCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType1", "Fanex.CustomerSetting.SettingType1\Fanex.CustomerSetting.SettingType1.csproj", "{1F9436D3-F8AA-48C9-B1A7-7659EAA7BDCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType1.Tests", "Fanex.CustomerSetting.SettingType1.Template1.Tests\Fanex.CustomerSetting.SettingType1.Tests.csproj", "{CE9918D0-67A4-4B5C-8E01-5F15A01E1130}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType1.Tests", "Fanex.CustomerSetting.SettingType1.Tests\Fanex.CustomerSetting.SettingType1.Tests.csproj", "{CE9918D0-67A4-4B5C-8E01-5F15A01E1130}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Resource", "Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj", "{419A565E-AF08-42E2-9114-765BACD79F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType2", "Fanex.CustomerSetting.SettingType2.Template1\Fanex.CustomerSetting.SettingType2.csproj", "{B4E5A53B-EFBC-4D30-8B59-ED41236D3816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType2", "Fanex.CustomerSetting.SettingType2\Fanex.CustomerSetting.SettingType2.csproj", "{B4E5A53B-EFBC-4D30-8B59-ED41236D3816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType2.Tests", "Fanex.CustomerSetting.SettingType2.Template1.Tests\Fanex.CustomerSetting.SettingType2.Tests.csproj", "{5F4DB691-FA74-40A9-9C92-211926760CE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType2.Tests", "Fanex.CustomerSetting.SettingType2.Tests\Fanex.CustomerSetting.SettingType2.Tests.csproj", "{5F4DB691-FA74-40A9-9C92-211926760CE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3", "Fanex.CustomerSetting.SettingType3.Template1\Fanex.CustomerSetting.SettingType3.csproj", "{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3", "Fanex.CustomerSetting.SettingType3\Fanex.CustomerSetting.SettingType3.csproj", "{A41AB0A9-82A9-45A8-90F1-3BD30C1A3F93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType4", "Fanex.CustomerSetting.SettingType4.Template1\Fanex.CustomerSetting.SettingType4.csproj", "{17008F66-76C2-482C-B8E0-E838F809EE53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType4", "Fanex.CustomerSetting.SettingType4\Fanex.CustomerSetting.SettingType4.csproj", "{17008F66-76C2-482C-B8E0-E838F809EE53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3.Tests", "Fanex.CustomerSetting.SettingType3.Template1.Tests\Fanex.CustomerSetting.SettingType3.Tests.csproj", "{015B1C0B-FF6B-4BBE-926E-9EDFE75BD4F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType3.Tests", "Fanex.CustomerSetting.SettingType3.Tests\Fanex.CustomerSetting.SettingType3.Tests.csproj", "{015B1C0B-FF6B-4BBE-926E-9EDFE75BD4F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType4.Tests", "Fanex.CustomerSetting.SettingType4.Template1.Tests\Fanex.CustomerSetting.SettingType4.Tests.csproj", "{1ED50D12-862D-4FF7-BB0C-A7D37B12BFFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType4.Tests", "Fanex.CustomerSetting.SettingType4.Tests\Fanex.CustomerSetting.SettingType4.Tests.csproj", "{1ED50D12-862D-4FF7-BB0C-A7D37B12BFFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.RemotingRefApi", "Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj", "{2747B4D9-3CB5-44BA-AEB1-B210E92D8617}"
 EndProject

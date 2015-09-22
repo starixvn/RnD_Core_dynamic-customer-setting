@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Commission_Template_1">
+    <Setting Key="CustSetting_SuperCommissionSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="SuperDiscount" ObjectProperty="CommRate" />
+      <Mapping DataField="DefaultMaxDiscount" ObjectProperty="UplineCommRate" />
+    </Setting>
+
+    <Setting Key="CustSetting_MasterCommissionSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="MasterDiscount" ObjectProperty="CommRate" />
+      <Mapping DataField="SuperDiscount" ObjectProperty="UplineCommRate" />
+    </Setting>
+
+    <Setting Key="CustSetting_AgentCommissionSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="AgentDiscount" ObjectProperty="CommRate" />
+      <Mapping DataField="MasterDiscount" ObjectProperty="UplineCommRate" />
+    </Setting>
+
+    <Setting Key="CustSetting_MemberCommissionSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="PlayerDiscount" ObjectProperty="CommRate" />
+      <Mapping DataField="AgentDiscount" ObjectProperty="UplineCommRate" />
+    </Setting>
+
+    <Setting Key="CustSetting_MemberCommissionSelectBySuper" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="PlayerDiscount" ObjectProperty="CommRate" />
+      <Mapping DataField="AgentDiscount" ObjectProperty="UplineCommRate" />
+      <Mapping DataField="MasterDiscount" ObjectProperty="UplineOfUplineCommRate" />
+    </Setting>
+
+    <Setting Key="CustSetting_DiscountUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
+</Functions>

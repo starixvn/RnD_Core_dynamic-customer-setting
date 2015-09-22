@@ -221,7 +221,7 @@
 
         private void CheckActorLevelHasUpdatePermissionInCurrentSystem()
         {
-            if (_settingContext.Actor.IsCompany 
+            if (_settingContext.Actor.IsCompany
                 && _settingContext.System == (byte)SystemType.Agency)
             {
                 throw new CustomerSettingException(Message.YouAreNotAuthorized);

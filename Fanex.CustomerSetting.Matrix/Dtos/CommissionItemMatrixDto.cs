@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Dtos
 {
-    using Fanex.CustomerSetting.Models.Enumerations;
-
     internal class CommissionItemMatrixDto
     {
         public byte LevelValue { get; set; }

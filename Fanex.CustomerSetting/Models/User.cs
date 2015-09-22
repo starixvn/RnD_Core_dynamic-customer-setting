@@ -87,7 +87,7 @@
                 _level = value;
             }
         }
-        
+
         public bool IsCompany
         {
             get

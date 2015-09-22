@@ -9,23 +9,23 @@
     public interface ISettingTypeService
     {
         SettingType GetCustomerSettingType(
-            ISettingContext settingContext, 
+            ISettingContext settingContext,
             CustomerSettingQuery query);
 
         SettingResult UpdateCustomerSettingType(
-            ISettingContext settingContext, 
-            int customerId, 
-            Level customerLevel, 
-            Level uplineLevel, 
-            byte productId, 
+            ISettingContext settingContext,
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
             SettingType settingType);
 
         IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(
             ISettingContext settingContext,
-            IEnumerable<int> customerIds, 
-            Level customerLevel, 
-            Level uplineLevel, 
-            byte productId, 
+            IEnumerable<int> customerIds,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
             SettingType settingType);
     }
 }

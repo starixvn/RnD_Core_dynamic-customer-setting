@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models.Constants;
 
     public class UpdateSettingResult : Result
     {

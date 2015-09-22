@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
@@ -76,7 +75,7 @@
         }
 
         private IEnumerable<CommissionItemMatrixDto> GetCommissionItemMaxtrixDtos(
-            byte productId, 
+            byte productId,
             string customerName)
         {
             var commissionItemMaxtrixDtos = _dynamicRepository.Fetch<CommissionItemMatrixDto>(

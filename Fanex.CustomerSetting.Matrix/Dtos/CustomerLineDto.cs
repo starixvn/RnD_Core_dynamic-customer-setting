@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Dtos
 {
-    using Fanex.CustomerSetting.Models.Enumerations;
-
     public class CustomerLineDto
     {
         public int? CustId { get; set; }

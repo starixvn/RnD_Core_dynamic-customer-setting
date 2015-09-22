@@ -103,32 +103,32 @@
         protected SettingResult CreateSettingResult(IResult result, int customerId, SettingType settingType)
         {
             return new SettingResult(
-                result.Code, 
-                result.Message, 
-                result.MsgType, 
-                customerId, 
-                settingType.Id, 
+                result.Code,
+                result.Message,
+                result.MsgType,
+                customerId,
+                settingType.Id,
                 settingType.Name);
         }
 
         public abstract SettingType GetCustomerSettingType(
-            ISettingContext settingContext, 
+            ISettingContext settingContext,
             CustomerSettingQuery query);
 
         public abstract SettingResult UpdateCustomerSettingType(
-            ISettingContext settingContext, 
-            int customerId, 
-            Level customerLevel, 
-            Level uplineLevel, 
-            byte productId, 
+            ISettingContext settingContext,
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
+            byte productId,
             SettingType settingType);
 
         public virtual IEnumerable<SettingResult> UpdateMultipleCustomerSettingType(
-            ISettingContext settingContext, 
-            IEnumerable<int> customerIds, 
+            ISettingContext settingContext,
+            IEnumerable<int> customerIds,
             Level customerLevel,
-            Level uplineLevel, 
-            byte productId, 
+            Level uplineLevel,
+            byte productId,
             SettingType settingType)
         {
             if (customerIds == null)
@@ -144,11 +144,11 @@
                 try
                 {
                     settingTypeResult = UpdateCustomerSettingType(
-                        settingContext, 
-                        customerId, 
-                        customerLevel, 
-                        uplineLevel, 
-                        productId, 
+                        settingContext,
+                        customerId,
+                        customerLevel,
+                        uplineLevel,
+                        productId,
                         settingType);
                 }
                 catch (Exception ex)

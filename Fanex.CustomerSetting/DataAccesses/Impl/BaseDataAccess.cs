@@ -56,7 +56,7 @@
             param.Add("custid", querySettingParam.CustomerId);
             param.Add("productid", querySettingParam.ProductId);
             param.Add("settingtype", settingType);
-            
+
             if (querySettingParam.CustomerLevel == Level.Member)
             {
                 param.Add("roleid", (byte)querySettingParam.UplineLevel.Value);

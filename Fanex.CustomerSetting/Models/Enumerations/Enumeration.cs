@@ -157,7 +157,7 @@
 
             return typeMatches && valueMatches;
         }
-        
+
         public override int GetHashCode()
         {
             return _value.GetHashCode();

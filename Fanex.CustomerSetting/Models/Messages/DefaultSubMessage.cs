@@ -2,7 +2,6 @@
 {
     using System;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
 
