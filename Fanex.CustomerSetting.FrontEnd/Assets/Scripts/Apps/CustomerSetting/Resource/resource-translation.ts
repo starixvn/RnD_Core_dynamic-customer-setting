@@ -84,7 +84,7 @@ module CustomerSetting {
 
     ModuleRegister.service("resourceService", ResourceService);
 
-    export function LabelFilter(resourceService: ResourceService) {
+    function LabelFilter(resourceService: ResourceService): Function {
         return (name: string) => {
             return resourceService.getLabel(name);
         };
@@ -93,7 +93,7 @@ module CustomerSetting {
     LabelFilter.$inject = ["resourceService"];
     ModuleRegister.filter("label", LabelFilter);
 
-    export function MessageFilter(resourceService: ResourceService) {
+    function MessageFilter(resourceService: ResourceService): Function {
         return (name: string, ...replacements: any[]) => {
             return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
         };

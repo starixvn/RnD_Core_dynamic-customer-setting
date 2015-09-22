@@ -17,7 +17,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
 
-    function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService) {
+    function ProductStatusLabelFilter(productStatusResourceService: ProductStatusResourceService): Function {
         return (name: string) => {
             return productStatusResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting.IE8 {
     ProductStatusLabelFilter.$inject = ["productStatusResourceService"];
     ModuleRegister.filter("productStatusLabel", ProductStatusLabelFilter);
 
-    function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService) {
+    function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService): Function {
         return (name: string, ...replacements: any[]) => {
             return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
         };

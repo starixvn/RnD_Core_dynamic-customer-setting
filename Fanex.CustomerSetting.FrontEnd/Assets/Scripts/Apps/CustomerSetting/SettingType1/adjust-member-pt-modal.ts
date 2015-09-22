@@ -291,7 +291,7 @@ module CustomerSetting {
 
     ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
 
-    function Unsafe($sce: ng.ISCEService) {
+    function Unsafe($sce: ng.ISCEService): Function {
         return (value: string) => {
             return $sce.trustAsHtml(value);
         };

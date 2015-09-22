@@ -240,7 +240,7 @@ module CustomerSetting.IE8 {
                 "data-message",
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
 
-            if (scope.fieldName === "minBet") {
+            if (scope.customerLevel !== Level.superAgent) {
                 if (scope.settingItem.upline.minBet > 0) {
                     element.addClass("has-constraint");
                     wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + " | number}}</span>");

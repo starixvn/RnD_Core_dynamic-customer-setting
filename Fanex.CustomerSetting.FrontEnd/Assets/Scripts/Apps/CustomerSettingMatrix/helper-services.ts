@@ -36,7 +36,7 @@ module CustomerSettingMatrix {
 
     ModuleRegister.service("appConfigService", AppConfigService);
 
-    function PTValue() {
+    function PTValue(): Function {
         return (numberValue: number) => {
             if (numberValue != null) {
                 return (numberValue / 100).toFixed(2);

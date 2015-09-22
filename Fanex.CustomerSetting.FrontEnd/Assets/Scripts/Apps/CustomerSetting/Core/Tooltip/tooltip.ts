@@ -117,7 +117,7 @@ module CustomerSetting {
 
     ModuleRegister.directive("tooltip", Tooltip);
 
-    function TooltipMessage($injector: ng.auto.IInjectorService) {
+    function TooltipMessage($injector: ng.auto.IInjectorService): Function {
         return (result: ValidationResult, resourceServiceName: string, fieldName: string) => {
             var message: string = "";
 
@@ -139,7 +139,7 @@ module CustomerSetting {
     TooltipMessage.$inject = ["$injector"];
     ModuleRegister.filter("tooltipMessage", TooltipMessage);
 
-    function HighlightingField() {
+    function HighlightingField(): Function {
         return (result: ValidationResult, fieldName: string) => {
             var mustHighlighted: boolean = false;
 

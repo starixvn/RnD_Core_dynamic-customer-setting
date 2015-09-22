@@ -490,6 +490,11 @@ button {
         width: 42%;
     }
 
+    .w50-percent {
+        @extend %col;
+        width: 50%;
+    }
+
     .w80-percent {
         @extend %col;
         width: 80%;

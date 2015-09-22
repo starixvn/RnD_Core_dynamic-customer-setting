@@ -17,7 +17,7 @@ module CustomerSetting {
 
     angular.module("customerSetting").service("positionTakingResourceService", PositionTakingResourceService);
 
-    export function PositionTakingLabelFilter(positionTakingResourceService: PositionTakingResourceService) {
+    function PositionTakingLabelFilter(positionTakingResourceService: PositionTakingResourceService): Function {
         return (name: string) => {
             return positionTakingResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting {
     PositionTakingLabelFilter.$inject = ["positionTakingResourceService"];
     ModuleRegister.filter("positionTakingLabel", PositionTakingLabelFilter);
 
-    export function PositionTakingMessageFilter(positionTakingResourceService: PositionTakingResourceService) {
+    function PositionTakingMessageFilter(positionTakingResourceService: PositionTakingResourceService): Function {
         return (name: string, ...replacements: any[]) => {
             return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, [name, replacements]);
         };

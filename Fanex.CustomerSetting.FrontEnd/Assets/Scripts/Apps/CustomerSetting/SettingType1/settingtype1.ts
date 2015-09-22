@@ -37,6 +37,7 @@ module CustomerSetting {
         fieldName: string;
         min: number;
         max: number;
+        disabled: string;
         divisor: number;
         range: Array<KeyValuePair<number, number>>;
     }
@@ -51,7 +52,8 @@ module CustomerSetting {
                 settingItem: "=",
                 fieldName: "@",
                 min: "@",
-                max: "@"
+                max: "@",
+                disabled: "@"
             };
         }
 
@@ -86,6 +88,10 @@ module CustomerSetting {
                 "data-message",
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':'{0}'}}", scope.fieldName));
 
+            if (scope.disabled === "true") {
+                select.attr("disabled", "disabled");
+            }
+
             this.$compile(element)(scope);
         };
 
@@ -97,4 +103,14 @@ module CustomerSetting {
     }
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
+
+    function HideIsAutoColumnFilter() {
+        return (settingType: SettingType) => {
+            return settingType.extraData.some((item: KeyValuePair<string, any>) => {
+                return item.key === "isDisableMasterAutoPT" && item.value;
+            });
+        };
+    }
+
+    ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 }

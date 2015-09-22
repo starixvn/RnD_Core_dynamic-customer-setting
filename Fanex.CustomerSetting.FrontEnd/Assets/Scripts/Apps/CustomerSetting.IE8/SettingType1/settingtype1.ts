@@ -36,6 +36,7 @@ module CustomerSetting.IE8 {
         fieldName: string;
         min: number;
         max: number;
+        disabled: string;
         divisor: number;
         range: Array<KeyValuePair<number, number>>;
     }
@@ -49,7 +50,8 @@ module CustomerSetting.IE8 {
             settingItem: "=",
             fieldName: "@",
             min: "@",
-            max: "@"
+            max: "@",
+            disabled: "@"
         };
 
         public templateUrl: string = "settingtype1-select.htm";
@@ -71,6 +73,10 @@ module CustomerSetting.IE8 {
             select.attr(
                 "data-message",
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':'{0}'}}", scope.fieldName));
+
+            if (scope.disabled === "true") {
+                select.attr("disabled", "disabled");
+            }
 
             this.$compile(select)(scope);
         };
@@ -100,4 +106,14 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
+
+    function HideIsAutoColumnFilter() {
+        return (settingType: SettingType) => {
+            return _.some(settingType.extraData, (item: KeyValuePair<string, any>) => {
+                return item.key === "isDisableMasterAutoPT" && item.value;
+            });
+        };
+    }
+
+    ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 }

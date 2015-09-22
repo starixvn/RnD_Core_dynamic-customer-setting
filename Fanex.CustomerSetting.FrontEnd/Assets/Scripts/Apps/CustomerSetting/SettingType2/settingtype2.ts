@@ -242,7 +242,7 @@ module CustomerSetting {
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
 
             if (scope.fieldName === "minBet") {
-                if (scope.settingItem.upline.minBet > 0) {
+                if (scope.customerLevel !== Level.super) {
                     element.addClass("has-constraint");
                     wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + " | number}}</span>");
                 }

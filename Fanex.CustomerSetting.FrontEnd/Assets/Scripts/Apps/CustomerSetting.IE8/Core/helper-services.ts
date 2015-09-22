@@ -231,7 +231,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.service("valueRangeService", ValueRangeService);
 
-    function NAValue() {
+    function NAValue(): Function {
         return (value: string) => {
             return value || "---";
         };
@@ -239,7 +239,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.filter("naValue", NAValue);
 
-    function MinValue() {
+    function MinValue(): Function {
         return (numbers: number[]) => {
             return Math.min.apply(Math, numbers);
         };
@@ -247,7 +247,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.filter("minValue", MinValue);
 
-    function MaxValue() {
+    function MaxValue(): Function {
         return (numbers: number[]) => {
             return Math.max.apply(Math, numbers);
         };

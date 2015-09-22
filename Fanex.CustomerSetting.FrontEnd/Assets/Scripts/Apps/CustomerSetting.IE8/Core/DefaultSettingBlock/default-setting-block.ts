@@ -61,7 +61,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
 
-    function ShowingName() {
+    function ShowingName(): Function {
         return (settingItem: DefaultSettingItem, settingLevel: SettingLevel, productName: string) => {
             return settingLevel === SettingLevel.product
                 ? productName

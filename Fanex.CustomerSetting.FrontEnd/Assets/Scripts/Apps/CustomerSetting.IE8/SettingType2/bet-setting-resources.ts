@@ -17,7 +17,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
 
-    function BetSettingLabelFilter(betSettingResourceService: BetSettingResourceService) {
+    function BetSettingLabelFilter(betSettingResourceService: BetSettingResourceService): Function {
         return (name: string) => {
             return betSettingResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting.IE8 {
     BetSettingLabelFilter.$inject = ["betSettingResourceService"];
     ModuleRegister.filter("betSettingLabel", BetSettingLabelFilter);
 
-    function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService) {
+    function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService): Function {
         return (name: string, ...replacements: any[]) => {
             return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, [name, replacements]);
         };

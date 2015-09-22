@@ -66,23 +66,21 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\customer-setting-ie8.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>customer-setting-resource1.js</LastGenOutput>
+      <LastGenOutput>customer-setting-resource.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>position-taking-resources1.js</LastGenOutput>
+      <LastGenOutput>position-taking-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>position-taking-resources.tt</DependentUpon>
@@ -92,12 +90,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
+      <LastGenOutput>bet-setting-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>bet-setting-resources.tt</DependentUpon>
@@ -105,12 +102,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>commission-resources1.js</LastGenOutput>
+      <LastGenOutput>commission-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
@@ -118,12 +114,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-drop.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>product-status-resources1.js</LastGenOutput>
+      <LastGenOutput>product-status-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>product-status-resources.tt</DependentUpon>
@@ -135,12 +130,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CustomerLine\customer-line.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\PTMatrix\pt-matrix.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>customer-setting-matrix-resource1.js</LastGenOutput>
+      <LastGenOutput>customer-setting-matrix-resource.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Resource\customer-setting-matrix-resource.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-matrix-resource.tt</DependentUpon>
@@ -152,23 +146,21 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\customer-setting.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>customer-setting-resource1.js</LastGenOutput>
+      <LastGenOutput>customer-setting-resource.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>position-taking-resources1.js</LastGenOutput>
+      <LastGenOutput>position-taking-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>position-taking-resources.tt</DependentUpon>
@@ -178,12 +170,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
+      <LastGenOutput>bet-setting-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>bet-setting-resources.tt</DependentUpon>
@@ -191,12 +182,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>commission-resources1.js</LastGenOutput>
+      <LastGenOutput>commission-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
@@ -204,12 +194,11 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-drop.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>product-status-resources1.js</LastGenOutput>
+      <LastGenOutput>product-status-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>product-status-resources.tt</DependentUpon>

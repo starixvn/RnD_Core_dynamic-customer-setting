@@ -88,7 +88,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.directive("tooltip", Tooltip);
 
-    function TooltipMessage($injector: ng.auto.IInjectorService) {
+    function TooltipMessage($injector: ng.auto.IInjectorService): Function {
         return (result: ValidationResult, resourceServiceName: string, fieldName: string) => {
             var message: string = "";
 
@@ -110,7 +110,7 @@ module CustomerSetting.IE8 {
     TooltipMessage.$inject = ["$injector"];
     ModuleRegister.filter("tooltipMessage", TooltipMessage);
 
-    function HighlightingField() {
+    function HighlightingField(): Function {
         return (result: ValidationResult, fieldName: string) => {
             var mustHighlighted: boolean = false;
 

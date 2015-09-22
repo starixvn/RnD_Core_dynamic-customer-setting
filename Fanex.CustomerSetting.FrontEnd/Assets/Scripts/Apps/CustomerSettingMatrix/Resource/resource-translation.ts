@@ -45,19 +45,21 @@ module CustomerSettingMatrix {
     }
     ModuleRegister.service("resourceService", ResourceService);
 
-    export function LabelFilter(resourceService: ResourceService) {
+    function LabelFilter(resourceService: ResourceService): Function {
         return (name: string) => {
             return resourceService.getLabel(name);
         };
     }
+
     LabelFilter.$inject = ["resourceService"];
     ModuleRegister.filter("label", LabelFilter);
 
-    export function MessageFilter(resourceService: ResourceService) {
+    function MessageFilter(resourceService: ResourceService): Function {
         return (name: string) => {
             return resourceService.getLabel(name);
         };
     }
+
     LabelFilter.$inject = ["resourceService"];
     ModuleRegister.filter("message", MessageFilter);
 }

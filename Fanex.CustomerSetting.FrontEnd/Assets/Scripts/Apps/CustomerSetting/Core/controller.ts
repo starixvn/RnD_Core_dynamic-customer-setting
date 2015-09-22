@@ -111,11 +111,15 @@ module CustomerSetting {
                             this.requestMsgResult = undefined;
                         }
                     }, Defaults.displayingMsgTime);
-                }, () => {
-                    var error: Result = Result.systemError;
+                }, (response: ng.IHttpPromiseCallbackArg<any>) => {
+                    var error: Result;
 
-                    error.message = this.resourceService.getMessage(error.message);
-                    this.requestMsgResult = error;
+                    if (response && response.data) {
+                        error = new Result(response.status, response.data.message, MessageType.error);
+                    } else {
+                        error = Result.systemError;
+                        error.message = this.resourceService.getMessage(error.message);
+                    }
                 })
                 .finally(() => {
                     this.isUIblocked = false;
@@ -130,13 +134,18 @@ module CustomerSetting {
 
                 this.$http
                     .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
-                    ////.get(this.appConfigService.resolveRootUrl("app/sample-data-4.json"))
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
-                    }, () => {
-                        var error: Result = Result.systemError;
+                    }, (response: ng.IHttpPromiseCallbackArg<any>) => {
+                        var error: Result;
 
-                        error.message = this.resourceService.getMessage(error.message);
+                        if (response && response.data) {
+                            error = new Result(response.status, response.data.message, MessageType.error);
+                        } else {
+                            error = Result.systemError;
+                            error.message = this.resourceService.getMessage(error.message);
+                        }
+
                         this.requestMsgResult = error;
                     })
                     .finally(() => {

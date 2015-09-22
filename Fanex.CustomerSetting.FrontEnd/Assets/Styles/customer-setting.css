@@ -394,7 +394,7 @@ button {
   border-right: none;
 }
 .block .w16-percent, .block .empty-cell,
-.block .w20-percent, .block .w25-percent, .block .w28-percent, .block .w33-percent, .block .w42-percent, .block .w80-percent, .block .w100-percent {
+.block .w20-percent, .block .w25-percent, .block .w28-percent, .block .w33-percent, .block .w42-percent, .block .w50-percent, .block .w80-percent, .block .w100-percent {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -404,7 +404,7 @@ button {
   padding: 0 3px;
 }
 .block .last.w16-percent, .block .last.empty-cell,
-.block .last.w20-percent, .block .last.w25-percent, .block .last.w28-percent, .block .last.w33-percent, .block .last.w42-percent, .block .last.w80-percent, .block .last.w100-percent {
+.block .last.w20-percent, .block .last.w25-percent, .block .last.w28-percent, .block .last.w33-percent, .block .last.w42-percent, .block .last.w50-percent, .block .last.w80-percent, .block .last.w100-percent {
   border-right: none;
 }
 .block .w16-percent {
@@ -428,6 +428,9 @@ button {
 }
 .block .w42-percent {
   width: 42%;
+}
+.block .w50-percent {
+  width: 50%;
 }
 .block .w80-percent {
   width: 80%;

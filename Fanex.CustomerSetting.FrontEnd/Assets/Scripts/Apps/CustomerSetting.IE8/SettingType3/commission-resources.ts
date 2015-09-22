@@ -17,7 +17,7 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.service("commissionResourceService", CommissionResourceService);
 
-    function CommissionLabelFilter(commissionResourceService: CommissionResourceService) {
+    function CommissionLabelFilter(commissionResourceService: CommissionResourceService): Function {
         return (name: string) => {
             return commissionResourceService.getLabel(name);
         };
@@ -26,7 +26,7 @@ module CustomerSetting.IE8 {
     CommissionLabelFilter.$inject = ["commissionResourceService"];
     ModuleRegister.filter("commissionLabel", CommissionLabelFilter);
 
-    function CommissionMessageFilter(commissionResourceService: CommissionResourceService) {
+    function CommissionMessageFilter(commissionResourceService: CommissionResourceService): Function {
         return (name: string, ...replacements: any[]) => {
             return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
         };

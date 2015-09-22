@@ -12,10 +12,10 @@
     <div class="w28-percent last">{{'MasterMinPT' | positionTakingLabel}}</div>
 </div>
 <div class="w80-percent no-right-border" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-    <div class="w28-percent">{{'MasterPT' | positionTakingLabel}}</div>
-    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
-    <div class="w28-percent">{{'AgentMaxPT' | positionTakingLabel}}</div>
-    <div class="w28-percent last">{{'AgentMinPT' | positionTakingLabel}}</div>
+    <div class="w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">{{'MasterPT' | positionTakingLabel}}</div>
+    <div class="w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">{{'AgentMaxPT' | positionTakingLabel}}</div>
+    <div class="w28-percent last" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">{{'AgentMinPT' | positionTakingLabel}}</div>
 </div>
 <div class="w80-percent no-right-border"
      data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent">
@@ -26,9 +26,9 @@
 </div>
 <div class="w80-percent no-right-border"
      data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent">
-    <div class="w42-percent">{{'MasterPT' | positionTakingLabel}}</div>
-    <div class="w16-percent">{{'IsAuto' | positionTakingLabel}}</div>
-    <div class="w42-percent last">{{'AgentPT' | positionTakingLabel}}</div>
+    <div class="w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{'MasterPT' | positionTakingLabel}}</div>
+    <div class="w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">{{'IsAuto' | positionTakingLabel}}</div>
+    <div class="w42-percent last" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{'AgentPT' | positionTakingLabel}}</div>
 </div>
 <div class="w80-percent no-right-border"
      data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
