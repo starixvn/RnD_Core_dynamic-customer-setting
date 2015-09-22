@@ -99,7 +99,7 @@
             if (!string.IsNullOrEmpty(finalTemplate))
             {
                 finalTemplate = finalTemplate.Replace("{{appConfig}}", appConfig.ToJson());
-                template = template.Replace("{{customerName}}", customerName);
+                finalTemplate = finalTemplate.Replace("{{customerName}}", customerName);
             }
 
             return finalTemplate;

@@ -260,9 +260,6 @@
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
     <Content Include="Scripts\Libraries\Angular\angular.js" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js" />
@@ -310,8 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bower.json" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
@@ -321,10 +317,7 @@
     <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
     <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
     <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css.map" />
-    <None Include="Properties\PublishProfiles\Deploy-Local.pubxml" />
     <None Include="tslint.json" />
-    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Scripts\sample-data.json" />
     <Content Include="Views\Home\Index-IE8.cshtml" />
     <Content Include="Web.AppSettings.config" />

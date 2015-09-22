@@ -162,10 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Server214.pubxml" />
-    <None Include="Properties\PublishProfiles\WEBAPI.pubxml" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
+    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

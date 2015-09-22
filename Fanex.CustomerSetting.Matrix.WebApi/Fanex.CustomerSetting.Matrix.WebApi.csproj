@@ -134,8 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Web.ConnectionStrings.config" />
-    <None Include="Web.AppSettings.config" />
+    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
+    <Content Include="Web.ConnectionStrings.config" />
+    <Content Include="Web.AppSettings.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
