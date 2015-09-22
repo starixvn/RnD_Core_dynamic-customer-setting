@@ -76,60 +76,60 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\adjust-member-pt-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>position-taking-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>position-taking-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtyp1-template1-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtyp1-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1-select.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>bet-setting-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtyp2-template1-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtyp2-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>commission-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtyp3-template1-drop.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtyp3-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>product-status-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>product-status-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtyp4-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -162,60 +162,60 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>position-taking-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>position-taking-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtyp1-template1-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtyp1-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1-select.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-input.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>bet-setting-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>bet-setting-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtyp2-template1-header.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtyp2-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtype2-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>commission-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtyp3-template1-drop.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtyp3-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtype3-template1.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.js" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>product-status-resources1.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources1.js">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources1.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>product-status-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtyp4-template1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtype4-template1.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-247.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-248.js" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-249.js" />
@@ -276,16 +276,16 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\resource-translation.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\adjust-member-pt-modal.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\models.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\position-taking-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1.Template1\settingtype1-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\bet-setting-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2.Template1\settingtype2-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\commission-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3.Template1\settingtype3-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\product-status-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />
@@ -312,16 +312,16 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Resource\resource-translation.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\models.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\position-taking-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1.Template1\settingtype1-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\bet-setting-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2.Template1\settingtype2-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\commission-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3.Template1\settingtype3-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\product-status-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />

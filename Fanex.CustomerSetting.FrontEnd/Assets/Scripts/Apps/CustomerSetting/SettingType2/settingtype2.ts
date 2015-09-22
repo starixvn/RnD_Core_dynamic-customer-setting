@@ -9,11 +9,11 @@
 module CustomerSetting {
     "use strict";
 
-    class Settingtype2Template1Item extends DefaultSettingItem {
+    class SettingType2Item extends DefaultSettingItem {
         public minBet: number;
         public maxBet: number;
         public maxPerMatch: number;
-        public upline: Settingtype2Template1Item;
+        public upline: SettingType2Item;
 
         constructor();
         constructor(settingItem: any);
@@ -27,18 +27,18 @@ module CustomerSetting {
                 this.maxPerMatch = settingItem.maxPerMatch;
 
                 if (settingItem.upline) {
-                    this.upline = new Settingtype2Template1Item(settingItem.upline);
+                    this.upline = new SettingType2Item(settingItem.upline);
                 }
             }
 
             if (backup) {
-                this.oldSetting = new Settingtype2Template1Item(this);
+                this.oldSetting = new SettingType2Item(this);
             }
         }
 
         public isChanged(): boolean {
             var isChanged: boolean = super.isChanged();
-            var oldSetting: Settingtype2Template1Item = <Settingtype2Template1Item>this.oldSetting;
+            var oldSetting: SettingType2Item = <SettingType2Item>this.oldSetting;
 
             return isChanged
                 || this.minBet !== oldSetting.minBet
@@ -46,7 +46,7 @@ module CustomerSetting {
                 || this.maxPerMatch !== oldSetting.maxPerMatch;
         }
 
-        public copySettingFrom(source: Settingtype2Template1Item): boolean {
+        public copySettingFrom(source: SettingType2Item): boolean {
             var isSuccessful: boolean = true;
             var backupMinBet: number;
             var backupMaxBet: number;
@@ -172,30 +172,30 @@ module CustomerSetting {
         }
     }
 
-    class SettingType2Template1Directive extends SettingTypeDirective {
+    class SettingType2Directive extends SettingTypeDirective {
         public static $inject: string[] = ["betSettingResourceService"];
 
-        public templateUrl: string = "settingtype2-template1.htm";
+        public templateUrl: string = "settingtype2.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.headerTemplateUrl = "settingtyp2-template1-header.htm";
-            scope.valueTemplateUrl = "settingtyp2-template1-value.htm";
+            scope.headerTemplateUrl = "settingtype2-header.htm";
+            scope.valueTemplateUrl = "settingtype2-value.htm";
             scope.settingTypeName = this.betSettingResourceService.getLabel("BetSetting");
         };
 
         private betSettingResourceService: BetSettingResourceService;
 
         constructor(betSettingResourceService: BetSettingResourceService) {
-            super((settingItem: any, backup?: boolean) => new Settingtype2Template1Item(settingItem, backup));
+            super((settingItem: any, backup?: boolean) => new SettingType2Item(settingItem, backup));
 
             this.betSettingResourceService = betSettingResourceService;
         }
     }
 
-    ModuleRegister.directive("settingtype2Template1", SettingType2Template1Directive);
+    ModuleRegister.directive("settingtype2", SettingType2Directive);
 
     interface IBetSettingInputScope extends ng.IScope {
-        settingItem: Settingtype2Template1Item;
+        settingItem: SettingType2Item;
         customerLevel: Level;
         uplineLevel: Level;
         fieldName: string;

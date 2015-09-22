@@ -34,24 +34,23 @@ module CustomerSetting {
 
         private $compile: ng.ICompileService;
         private appConfigService: AppConfigService;
-        private loadedSettingTypes: Array<KeyValuePair<number, number>>;
+        private loadedSettingTypes: Array<number>;
 
         constructor($compile: ng.ICompileService, appConfigService: AppConfigService) {
             this.$compile = $compile;
             this.appConfigService = appConfigService;
-            this.loadedSettingTypes = new Array<KeyValuePair<number, number>>();
+            this.loadedSettingTypes = new Array<number>();
         }
 
         private generateNodes(scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
             if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
                 scope.setting.settingTypes.forEach((settingType: SettingType, index: number) => {
-                    var loaded = this.loadedSettingTypes.some((item: KeyValuePair<number, number>) => {
-                        return item.key === settingType.id
-                            && item.value === settingType.settingTemplate;
+                    var loaded = this.loadedSettingTypes.some((item: number) => {
+                        return item === settingType.id;
                     });
 
                     if (!loaded) {
-                        var settingTypeName: string = StringFormater.format("settingtype{0}-template{1}", settingType.id, settingType.settingTemplate);
+                        var settingTypeName: string = StringFormater.format("settingtype{0}", settingType.id);
                         var newNodeParts = [
                             "<",
                             settingTypeName,
@@ -71,7 +70,7 @@ module CustomerSetting {
 
                         element.append(settingTypeElement);
                         this.$compile(settingTypeElement)(scope);
-                        this.loadedSettingTypes.push(new KeyValuePair<number, number>(settingType.id, settingType.settingTemplate));
+                        this.loadedSettingTypes.push(settingType.id);
                     }
                 });
             }

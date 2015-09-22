@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-  <Function Name="Bet_Limit_Template_1">
+  <Function Name="Bet_Limit">
     <Setting Key="CustSetting_SuperBetLimitSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />

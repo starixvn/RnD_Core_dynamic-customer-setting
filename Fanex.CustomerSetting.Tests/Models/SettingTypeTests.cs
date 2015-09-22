@@ -18,8 +18,8 @@
             var settingType = new SettingType();
 
             //// Act
-            settingType.SettingItems = null;    
-            
+            settingType.SettingItems = null;
+
             //// Assert
             settingType.SettingItems.Should().BeEmpty();
         }
@@ -112,12 +112,11 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [Test] 
+        [Test]
         public void ToStringMethod_Always_ReturnCombinationOfIdAndTemplate()
         {
             //// Arrange
             short settingTypeId = 1;
-            byte template = 3;
             SettingType settingType = new SettingType
             {
                 Id = settingTypeId
@@ -127,7 +126,7 @@
             var actual = settingType.ToString();
 
             //// Assert
-            Assert.AreEqual(string.Join("_", settingTypeId, template), actual);
+            Assert.AreEqual(string.Join(typeof(SettingType).ToString(), settingTypeId), actual);
         }
     }
 }

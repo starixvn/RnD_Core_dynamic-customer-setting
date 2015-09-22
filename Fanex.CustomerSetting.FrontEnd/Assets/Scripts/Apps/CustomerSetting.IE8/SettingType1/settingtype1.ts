@@ -10,26 +10,26 @@
 module CustomerSetting.IE8 {
     "use strict";
 
-    class SettingType1Template1Directive extends SettingTypeDirective {
+    class SettingType1Directive extends SettingTypeDirective {
         public static $inject: string[] = ["positionTakingResourceService"];
 
-        public templateUrl: string = "settingtype1-template1.htm";
+        public templateUrl: string = "settingtype1.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.headerTemplateUrl = "settingtyp1-template1-header.htm";
-            scope.valueTemplateUrl = "settingtyp1-template1-value.htm";
+            scope.headerTemplateUrl = "settingtype1-header.htm";
+            scope.valueTemplateUrl = "settingtype1-value.htm";
             scope.settingTypeName = this.positionTakingResourceService.getLabel("PositionTaking");
         };
 
         private positionTakingResourceService: PositionTakingResourceService;
         constructor(positionTakingResourceService: PositionTakingResourceService) {
-            super(Settingtype1Template1Item.factory);
+            super(SettingType1Item.factory);
 
             this.positionTakingResourceService = positionTakingResourceService;
         }
     }
 
-    ModuleRegister.directive("settingtype1Template1", SettingType1Template1Directive);
+    ModuleRegister.directive("settingtype1", SettingType1Directive);
 
     interface IPositionTakingSelectScope extends ng.IScope {
         settingItem: ISettingItem;
@@ -52,10 +52,10 @@ module CustomerSetting.IE8 {
             max: "@"
         };
 
-        public templateUrl: string = "settingtype1-template1-select.htm";
+        public templateUrl: string = "settingtype1-select.htm";
 
         public controller: any = ["$scope", ($scope: IPositionTakingSelectScope) => {
-            $scope.divisor = Settingtype1Template1Config.roundingFactor;
+            $scope.divisor = SettingType1Config.roundingFactor;
 
             $scope.$watch("min + max", (newValue: number, oldValue: number) => {
                 this.updatePositionTakingValues(newValue, oldValue, $scope);
@@ -93,8 +93,8 @@ module CustomerSetting.IE8 {
                     $scope.settingItem[$scope.fieldName],
                     $scope.min,
                     $scope.max,
-                    Settingtype1Template1Config.step,
-                    Settingtype1Template1Config.roundingFactor);
+                    SettingType1Config.step,
+                    SettingType1Config.roundingFactor);
             }
         }
     }

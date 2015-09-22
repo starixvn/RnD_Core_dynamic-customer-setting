@@ -15,11 +15,6 @@
 
         public string Name { get; set; }
 
-        public byte SettingTemplate
-        {
-            get { return 1; }
-        }
-
         public byte SettingLevel { get; set; }
 
         public byte DisplayOrder { get; set; }
@@ -51,6 +46,11 @@
             {
                 return this.GetType().AssemblyQualifiedName;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Join(base.ToString(), this.Id);
         }
 
         public virtual string ToXml()

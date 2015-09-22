@@ -5,12 +5,12 @@
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="commission-resources.ts" />
 
-module CustomerSetting.IE8 {
+module CustomerSetting {
     "use strict";
 
-    class Settingtype3Template1Item extends DefaultSettingItem {
+    class SettingType3Item extends DefaultSettingItem {
         public commRate: number;
-        public upline: Settingtype3Template1Item;
+        public upline: SettingType3Item;
 
         constructor();
         constructor(settingItem: any);
@@ -22,24 +22,24 @@ module CustomerSetting.IE8 {
                 this.commRate = settingItem.commRate;
 
                 if (settingItem.upline) {
-                    this.upline = new Settingtype3Template1Item(settingItem.upline);
+                    this.upline = new SettingType3Item(settingItem.upline);
                 }
             }
 
             if (backup) {
-                this.oldSetting = new Settingtype3Template1Item(this);
+                this.oldSetting = new SettingType3Item(this);
             }
         }
 
         public isChanged(): boolean {
             var isChanged: boolean = super.isChanged();
-            var oldSetting: Settingtype3Template1Item = <Settingtype3Template1Item>this.oldSetting;
+            var oldSetting: SettingType3Item = <SettingType3Item>this.oldSetting;
 
             return isChanged
                 || this.commRate !== oldSetting.commRate;
         }
 
-        public copySettingFrom(source: Settingtype3Template1Item): boolean {
+        public copySettingFrom(source: SettingType3Item): boolean {
             var isSuccessful: boolean = true;
             var backupCommRate: number;
 
@@ -70,29 +70,29 @@ module CustomerSetting.IE8 {
         }
     }
 
-    class SettingType3Template1Directive extends SettingTypeDirective {
+    class SettingType3Directive extends SettingTypeDirective {
         public static $inject: string[] = ["commissionResourceService"];
 
-        public templateUrl: string = "settingtype3-template1.htm";
+        public templateUrl: string = "settingtype3.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.valueTemplateUrl = "settingtyp3-template1-value.htm";
+            scope.valueTemplateUrl = "settingtype3-value.htm";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         };
 
         private commissionResourceService: CommissionResourceService;
 
         constructor(commissionResourceService: CommissionResourceService) {
-            super((settingItem: any, backup?: boolean) => new Settingtype3Template1Item(settingItem, backup));
+            super((settingItem: any, backup?: boolean) => new SettingType3Item(settingItem, backup));
 
             this.commissionResourceService = commissionResourceService;
         }
     }
 
-    ModuleRegister.directive("settingtype3Template1", SettingType3Template1Directive);
+    ModuleRegister.directive("settingtype3", SettingType3Directive);
 
-    interface ISettingType3Template1ItemScope extends ng.IScope {
-        settingItem: Settingtype3Template1Item;
+    interface ISettingType3ItemScope extends ng.IScope {
+        settingItem: SettingType3Item;
         range: Array<KeyValuePair<number, number>>;
     }
 
@@ -101,20 +101,22 @@ module CustomerSetting.IE8 {
 
         public replace: boolean = true;
 
-        public scope: any = {
-            settingItem: "="
-        };
+        public get scope(): any {
+            return {
+                settingItem: "="
+            };
+        }
 
-        public templateUrl: string = "settingtyp3-template1-drop.htm";
+        public templateUrl: string = "settingtype3-drop.htm";
 
-        public controller: any = ["$scope", ($scope: ISettingType3Template1ItemScope) => {
+        public controller: any = ["$scope", ($scope: ISettingType3ItemScope) => {
             $scope.$watch("settingItem", () => {
                 $scope.range = this.valueRangeService.generateRanges(
                     $scope.settingItem.commRate,
                     0,
                     $scope.settingItem.upline.commRate,
-                    Settingtype3Template1Config.step,
-                    Settingtype3Template1Config.roundingFactor);
+                    SettingType3Config.step,
+                    SettingType3Config.roundingFactor);
             });
         }];
 
@@ -127,8 +129,13 @@ module CustomerSetting.IE8 {
 
     ModuleRegister.directive("commRate", CommRateDirective);
 
-    class Settingtype3Template1Config {
-        public static step: number = 0.0005;
-        public static roundingFactor: number = 10000;
+    class SettingType3Config {
+        public static get step(): number {
+            return 0.0005;
+        }
+
+        public static get roundingFactor(): number {
+            return 10000;
+        }
     }
 }

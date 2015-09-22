@@ -28,15 +28,15 @@
 
             var settingTypes = new List<SettingType>
                     {
-                        InstanceFactory.CreateCustomerSettingType(1, 1),
-                        InstanceFactory.CreateCustomerSettingType(2, 1),
-                        InstanceFactory.CreateCustomerSettingType(3, 1),
-                        InstanceFactory.CreateCustomerSettingType(4, 1)
+                        InstanceFactory.CreateCustomerSettingType(1),
+                        InstanceFactory.CreateCustomerSettingType(2),
+                        InstanceFactory.CreateCustomerSettingType(3),
+                        InstanceFactory.CreateCustomerSettingType(4)
                     };
             return new Setting(customerId, customerLevel, productId, settingTypes);
         }
 
-        public static SettingType CreateCustomerSettingType(byte settingTypeId, byte settingTemplate = 1)
+        public static SettingType CreateCustomerSettingType(byte settingTypeId)
         {
             return new SettingType
             {
@@ -52,7 +52,7 @@
             };
         }
 
-        public static SettingType CreateProductSettingType(byte settingTypeId, byte settingTemplate = 1)
+        public static SettingType CreateProductSettingType(byte settingTypeId)
         {
             return new SettingType
             {
@@ -72,10 +72,10 @@
 
             var settingTypes = new List<SettingType>
                     {
-                        InstanceFactory.CreateCustomerSettingType(1, 1),
-                        InstanceFactory.CreateCustomerSettingType(2, 1),
-                        InstanceFactory.CreateCustomerSettingType(3, 1),
-                        InstanceFactory.CreateCustomerSettingType(4, 1)
+                        InstanceFactory.CreateCustomerSettingType(1),
+                        InstanceFactory.CreateCustomerSettingType(2),
+                        InstanceFactory.CreateCustomerSettingType(3),
+                        InstanceFactory.CreateCustomerSettingType(4)
                     };
 
             var updateMultipleParam = new MultipleUpdateCustomerSettingCommand(
@@ -110,10 +110,10 @@
                 Id = productId,
                 SettingTypes = new List<SettingType>
                 {
-                    InstanceFactory.CreateProductSettingType(1, 1),
-                    InstanceFactory.CreateProductSettingType(2, 1),
-                    InstanceFactory.CreateProductSettingType(3, 1),
-                    InstanceFactory.CreateProductSettingType(4, 1)
+                    InstanceFactory.CreateProductSettingType(1),
+                    InstanceFactory.CreateProductSettingType(2),
+                    InstanceFactory.CreateProductSettingType(3),
+                    InstanceFactory.CreateProductSettingType(4)
                 }
             };
         }

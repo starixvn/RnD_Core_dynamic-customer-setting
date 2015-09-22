@@ -129,7 +129,6 @@ module CustomerSetting.IE8 {
     export class SettingType {
         public id: number;
         public name: string;
-        public settingTemplate: number;
         public settingLevel: number;
         public settingItems: Array<ISettingItem>;
         public typeName: string;
@@ -142,7 +141,6 @@ module CustomerSetting.IE8 {
             if (settingType) {
                 this.id = settingType.id;
                 this.name = settingType.name;
-                this.settingTemplate = settingType.settingTemplate;
                 this.settingLevel = settingType.settingLevel;
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
@@ -166,7 +164,6 @@ module CustomerSetting.IE8 {
 
                 updatedSettingType.id = this.id;
                 updatedSettingType.name = this.name;
-                updatedSettingType.settingTemplate = this.settingTemplate;
                 updatedSettingType.settingLevel = this.settingLevel;
                 updatedSettingType.settingItems = changedSettingItems;
                 updatedSettingType.typeName = this.typeName;
@@ -183,7 +180,6 @@ module CustomerSetting.IE8 {
             });
 
             return this.id > 0
-                && this.settingTemplate > 0
                 && this.settingLevel > 0
                 && this.typeName !== undefined
                 && validSettingItems;
@@ -193,7 +189,6 @@ module CustomerSetting.IE8 {
             var settingType: any = {
                 id: this.id,
                 name: this.name,
-                settingTemplate: this.settingTemplate,
                 settingLevel: this.settingLevel,
                 settingItems: [],
                 typeName: this.typeName,

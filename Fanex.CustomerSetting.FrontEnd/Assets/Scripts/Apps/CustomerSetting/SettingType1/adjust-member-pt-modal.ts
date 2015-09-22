@@ -1,11 +1,10 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
 /// <reference path="../core/defaultsettingblock/copy-setting.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="../core/module-registrater.ts" />
 /// <reference path="models.ts" />
 
-module CustomerSetting.IE8 {
+module CustomerSetting {
     "use strict";
 
     class PositionTakingOnMemberDirective implements ng.IDirective {
@@ -68,7 +67,10 @@ module CustomerSetting.IE8 {
     class AdjustMemberPtModalDirective implements ng.IDirective {
         public static $inject: string[] = ["adjustMemberPtModalService"];
 
-        public scope: any = {};
+        public get scope(): any {
+            return {};
+        }
+
         public replace: boolean = true;
         public templateUrl: string = "adjust-member-pt-modal.htm";
 
@@ -100,7 +102,7 @@ module CustomerSetting.IE8 {
             var result: Array<Array<DefaultSettingItem>> = new Array<Array<DefaultSettingItem>>();
             var group: Array<DefaultSettingItem>;
 
-            _.forEach(settingItems, (settingItem: ISettingItem) => {
+            settingItems.forEach((settingItem: ISettingItem) => {
                 var item: DefaultSettingItem = <DefaultSettingItem>settingItem;
 
                 if (currentSportTypeId !== item.sportTypeId) {
@@ -143,7 +145,7 @@ module CustomerSetting.IE8 {
             }
 
             this.modalScope = scope;
-            this.modalScope.divisor = Settingtype1Template1Config.roundingFactor;
+            this.modalScope.divisor = SettingType1Config.roundingFactor;
 
             this.modalScope.cancel = () => {
                 this.modalScope.isShown = false;
@@ -153,12 +155,12 @@ module CustomerSetting.IE8 {
             this.modalScope.ok = () => {
                 this.modalScope.isShown = false;
 
-                if (this.modalScope.customerLevel === Level.masterAgent) {
-                    _.forEach(this.modalScope.settingItems, (item: ISettingItem) => {
+                if (this.modalScope.customerLevel === Level.master) {
+                    this.modalScope.settingItems.forEach((item: ISettingItem) => {
                         (<MasterPositionTaking>item).isUpdateSuperPTOnMembers = true;
                     });
                 } else if (this.modalScope.customerLevel === Level.agent) {
-                    _.forEach(this.modalScope.settingItems, (item: ISettingItem) => {
+                    this.modalScope.settingItems.forEach((item: ISettingItem) => {
                         (<AgentPositionTaking>item).isUpdateMasterPTOnMembers = true;
                     });
                 }
@@ -195,8 +197,8 @@ module CustomerSetting.IE8 {
 
             this.modalScope.ranges = new Array<Array<KeyValuePair<number, number>>>();
 
-            if (customerLevel === Level.masterAgent) {
-                _.forEach(settingItems, (settingItem: DefaultSettingItem) => {
+            if (customerLevel === Level.master) {
+                settingItems.forEach((settingItem: DefaultSettingItem) => {
                     var item: MasterPositionTaking = <MasterPositionTaking>settingItem;
 
                     if (!item.iS3 && item.iS3 !== (<MasterPositionTaking>item.oldSetting).iS3) {
@@ -205,12 +207,12 @@ module CustomerSetting.IE8 {
                             item.superPTOnMembers,
                             0,
                             item.s4 - item.m3,
-                            Settingtype1Template1Config.step,
-                            Settingtype1Template1Config.roundingFactor));
+                            SettingType1Config.step,
+                            SettingType1Config.roundingFactor));
                     }
                 });
             } else if (customerLevel === Level.agent) {
-                _.forEach(settingItems, (settingItem: DefaultSettingItem) => {
+                settingItems.forEach((settingItem: DefaultSettingItem) => {
                     var item: AgentPositionTaking = <AgentPositionTaking>settingItem;
 
                     if (!item.iM2 && item.iM2 !== (<AgentPositionTaking>item.oldSetting).iM2) {
@@ -219,8 +221,8 @@ module CustomerSetting.IE8 {
                             item.masterPTOnMembers,
                             0,
                             item.m3 - item.a2,
-                            Settingtype1Template1Config.step,
-                            Settingtype1Template1Config.roundingFactor));
+                            SettingType1Config.step,
+                            SettingType1Config.roundingFactor));
                     }
                 });
             }
@@ -249,11 +251,13 @@ module CustomerSetting.IE8 {
     }
 
     class CopyPositionTakingOnMemberDirective extends CopySettingDirective {
-        public scope: any = {
-            customerLevel: "=",
-            settingTypeId: "=",
-            settingItems: "="
-        };
+        public get scope(): any {
+            return {
+                customerLevel: "=",
+                settingTypeId: "=",
+                settingItems: "="
+            };
+        }
 
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
@@ -269,12 +273,12 @@ module CustomerSetting.IE8 {
                     var targets: DefaultSettingItem[] = items.slice(1);
                     var isSuccessful: boolean = true;
 
-                    if ($scope.customerLevel === Level.masterAgent) {
-                        isSuccessful = _.some(targets, (item: DefaultSettingItem) => {
+                    if ($scope.customerLevel === Level.master) {
+                        isSuccessful = targets.some((item: DefaultSettingItem) => {
                             return (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
                         });
                     } else if ($scope.customerLevel === Level.agent) {
-                        isSuccessful = _.some(targets, (item: DefaultSettingItem) => {
+                        isSuccessful = targets.some((item: DefaultSettingItem) => {
                             return (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
                         });
                     }

@@ -40,7 +40,7 @@ module.exports = function (configs) {
 
             if (prodConfig.settingTypes.length > 0) {
                 prodConfig.settingTypes.forEach(function (item) {
-                    sources.push(path.join(sourceDir, "SettingType" + item.settingType + ".Template" + item.settingTemplate, "*.{htm,ts}"));
+                    sources.push(path.join(sourceDir, "SettingType" + item, "*.{htm,ts}"));
                 });
             }
 
@@ -72,7 +72,7 @@ module.exports = function (configs) {
 
             if (prodConfig.settingTypes.length > 0) {
                 prodConfig.settingTypes.forEach(function (item) {
-                    sources.push(path.join(sourceDir, "SettingType" + item.settingType + ".Template" + item.settingTemplate, "*.js"));
+                    sources.push(path.join(sourceDir, "SettingType" + item, "*.js"));
                 });
             }
 

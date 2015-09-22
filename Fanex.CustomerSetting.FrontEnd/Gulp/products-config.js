@@ -16,7 +16,7 @@ module.exports = function (configs) {
 
         var connection = new mssql.Connection(config, function (error) {
             var request = new mssql.Request(connection);
-            var query = "SELECT DISTINCT [ProductId], [SettingType], [SettingTemplate] FROM [CustDB].[dbo].[ProductSettingDetail]";
+            var query = "SELECT DISTINCT [ProductId], [SettingType] FROM [CustDB].[dbo].[ProductSettingDetail]";
 
             if (error) {
                 console.log(error);
@@ -42,10 +42,7 @@ module.exports = function (configs) {
                                 };
                             }
 
-                            currentProductConfig.settingTypes.push({
-                                settingType: productProfile.SettingType,
-                                settingTemplate: productProfile.SettingTemplate
-                            });
+                            currentProductConfig.settingTypes.push(productProfile.SettingType);
                         });
 
                         if (currentProductConfig.productId) {

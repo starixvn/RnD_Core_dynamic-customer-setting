@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Functions>
-  <Function Name="Position_Taking_Template_1">
+  <Function Name="Position_Taking">
     <Setting Key="CustSetting_SuperPTSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />

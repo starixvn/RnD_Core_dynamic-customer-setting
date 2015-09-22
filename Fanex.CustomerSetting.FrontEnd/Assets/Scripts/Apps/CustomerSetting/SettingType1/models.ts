@@ -1,28 +1,33 @@
-﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../core/models.ts" />
+﻿/// <reference path="../core/models.ts" />
 
-module CustomerSetting.IE8 {
+module CustomerSetting {
     "use strict";
 
-    export class Settingtype1Template1Config {
-        public static step: number = 1;
+    export class SettingType1Config {
+        public static get step(): number {
+            return 1;
+        }
 
-        public static roundingFactor: number = 100;
+        public static get roundingFactor(): number {
+            return 100;
+        }
     }
 
-    export class Settingtype1Template1Item {
-        public static maxPTValue: number = 90;
+    export class SettingType1Item {
+        public static get maxPTValue(): number {
+            return 90;
+        }
 
         public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): ISettingItem {
-            if (customerLevel === Level.superAgent) {
+            if (customerLevel === Level.super) {
                 return new SuperPositionTaking(settingItem, backup);
-            } else if (customerLevel === Level.masterAgent) {
+            } else if (customerLevel === Level.master) {
                 return new MasterPositionTaking(settingItem, backup);
             } else if (customerLevel === Level.agent) {
                 return new AgentPositionTaking(settingItem, backup);
-            } else if (customerLevel === Level.member && uplineLevel === Level.superAgent) {
+            } else if (customerLevel === Level.member && uplineLevel === Level.super) {
                 return new SuperPositionTakingOnMember(settingItem, backup);
-            } else if (customerLevel === Level.member && uplineLevel === Level.masterAgent) {
+            } else if (customerLevel === Level.member && uplineLevel === Level.master) {
                 return new MasterPositionTakingOnMember(settingItem, backup);
             } else if (customerLevel === Level.member && uplineLevel === Level.agent) {
                 return new AgentPositionTakingOnMember(settingItem, backup);
@@ -33,8 +38,8 @@ module CustomerSetting.IE8 {
             var addedProperties: string[] = ["sportTypeId", "sportTypeName", "betTypeId", "betTypeName", "typeName", "isLive"];
 
             if (rawData && settingItem) {
-                _.chain(rawData).keys().filter((propName: string) => {
-                    return _.indexOf(addedProperties, propName) < 0;
+                Object.keys(rawData).filter((propName: string) => {
+                    return addedProperties.indexOf(propName) < 0;
                 }).forEach((propName: string) => {
                     settingItem[propName] = rawData[propName];
                 });
@@ -45,10 +50,8 @@ module CustomerSetting.IE8 {
             var reservedProperties: string[] = ["oldSetting", "validationState"];
 
             if (settingItem) {
-                var leftKeys: string[] = _.chain(settingItem).keys().value();
-
-                return _.some(leftKeys, (prop: string) => {
-                    return _.indexOf(reservedProperties, prop) < 0
+                return Object.keys(settingItem).some((prop: string) => {
+                    return reservedProperties.indexOf(prop) < 0
                         && settingItem.oldSetting[prop] !== undefined
                         && settingItem[prop] !== settingItem.oldSetting[prop];
                 });
@@ -70,7 +73,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, <SuperPositionTaking>this);
+            SettingType1Item.fetch(settingItem, <SuperPositionTaking>this);
 
             if (backup) {
                 this.oldSetting = new SuperPositionTaking(this);
@@ -78,7 +81,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            return SettingType1Item.detechChanges(this);
         }
 
         public copySettingFrom(source: SuperPositionTaking): boolean {
@@ -141,25 +144,25 @@ module CustomerSetting.IE8 {
         }
 
         private validateMaxValue(): boolean {
-            if (this.s4 > Settingtype1Template1Item.maxPTValue) {
+            if (this.s4 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s4");
 
                 return false;
             }
 
-            if (this.m4 > Settingtype1Template1Item.maxPTValue) {
+            if (this.m4 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m4");
 
                 return false;
             }
 
-            if (this.a4 > Settingtype1Template1Item.maxPTValue) {
+            if (this.a4 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a4");
 
                 return false;
             }
 
-            if (this.n4 > Settingtype1Template1Item.maxPTValue) {
+            if (this.n4 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n4");
 
                 return false;
@@ -186,7 +189,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, this);
+            SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new MasterPositionTaking(this);
@@ -194,7 +197,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = SettingType1Item.detechChanges(this);
 
             if (isChanged) {
                 this.correctAutoPtValues();
@@ -295,25 +298,25 @@ module CustomerSetting.IE8 {
         }
 
         private validateMaxValue(): boolean {
-            if (this.s3 > Settingtype1Template1Item.maxPTValue) {
+            if (this.s3 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s3");
 
                 return false;
             }
 
-            if (this.uS3 > Settingtype1Template1Item.maxPTValue) {
+            if (this.uS3 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS3");
 
                 return false;
             }
 
-            if (this.n3 > Settingtype1Template1Item.maxPTValue) {
+            if (this.n3 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n3");
 
                 return false;
             }
 
-            if (this.m3 > Settingtype1Template1Item.maxPTValue) {
+            if (this.m3 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m3");
 
                 return false;
@@ -425,7 +428,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, this);
+            SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new AgentPositionTaking(this);
@@ -433,7 +436,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = SettingType1Item.detechChanges(this);
 
             if (isChanged) {
                 this.correctAutoPtValues();
@@ -534,25 +537,25 @@ module CustomerSetting.IE8 {
         }
 
         private validateMaxValue(): boolean {
-            if (this.m2 > Settingtype1Template1Item.maxPTValue) {
+            if (this.m2 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m2");
 
                 return false;
             }
 
-            if (this.uM2 > Settingtype1Template1Item.maxPTValue) {
+            if (this.uM2 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM2");
 
                 return false;
             }
 
-            if (this.n2 > Settingtype1Template1Item.maxPTValue) {
+            if (this.n2 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n2");
 
                 return false;
             }
 
-            if (this.a2 > Settingtype1Template1Item.maxPTValue) {
+            if (this.a2 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a2");
 
                 return false;
@@ -663,7 +666,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, this);
+            SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new SuperPositionTakingOnMember(this);
@@ -671,7 +674,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = SettingType1Item.detechChanges(this);
 
             if (isChanged) {
                 this.correctAutoPtValues();
@@ -723,7 +726,7 @@ module CustomerSetting.IE8 {
             if (this.iS1) {
                 var minOfSuperAutoPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
 
-                if (this.uS1 > Settingtype1Template1Item.maxPTValue) {
+                if (this.uS1 > SettingType1Item.maxPTValue) {
                     this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS1");
 
                     return false;
@@ -744,7 +747,7 @@ module CustomerSetting.IE8 {
                 var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
                 var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
 
-                if (this.s1 > Settingtype1Template1Item.maxPTValue) {
+                if (this.s1 > SettingType1Item.maxPTValue) {
                     this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s1");
 
                     return false;
@@ -793,7 +796,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, this);
+            SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new MasterPositionTakingOnMember(this);
@@ -801,7 +804,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = Settingtype1Template1Item.detechChanges(this);
+            var isChanged: boolean = SettingType1Item.detechChanges(this);
 
             if (isChanged) {
                 this.correctAutoPtValues();
@@ -853,7 +856,7 @@ module CustomerSetting.IE8 {
             if (this.iM1) {
                 var minOfMasterAutoPtOnMember: number = Math.max(0, this.n3 - this.a1);
 
-                if (this.uM1 > Settingtype1Template1Item.maxPTValue) {
+                if (this.uM1 > SettingType1Item.maxPTValue) {
                     this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM1");
 
                     return false;
@@ -874,7 +877,7 @@ module CustomerSetting.IE8 {
                 var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
                 var maxOfMasterPtOnMember: number = this.m3 - this.a1;
 
-                if (this.m1 > Settingtype1Template1Item.maxPTValue) {
+                if (this.m1 > SettingType1Item.maxPTValue) {
                     this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m1");
 
                     return false;
@@ -919,7 +922,7 @@ module CustomerSetting.IE8 {
         constructor(settingItem: any, backup: boolean)
         constructor(settingItem?: any, backup: boolean = false) {
             super(settingItem);
-            Settingtype1Template1Item.fetch(settingItem, this);
+            SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new AgentPositionTakingOnMember(this);
@@ -927,7 +930,7 @@ module CustomerSetting.IE8 {
         }
 
         public isChanged(): boolean {
-            return Settingtype1Template1Item.detechChanges(this);
+            return SettingType1Item.detechChanges(this);
         }
 
         public copySettingFrom(source: AgentPositionTakingOnMember): boolean {
@@ -949,7 +952,7 @@ module CustomerSetting.IE8 {
         }
 
         public validate(): boolean {
-            if (this.a1 > Settingtype1Template1Item.maxPTValue) {
+            if (this.a1 > SettingType1Item.maxPTValue) {
                 this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a1");
 
                 return false;
