@@ -1,1 +1,2 @@
-﻿<comm-rate data-setting-item="item"></comm-rate>
+﻿<comm-rate data-ng-if="settingType.editable" data-setting-item="item"></comm-rate>
+<div data-ng-if="!settingType.editable">{{item.commRate}}</div>

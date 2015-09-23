@@ -132,6 +132,7 @@ module CustomerSetting {
         public settingItems: Array<ISettingItem>;
         public typeName: string;
         public displayOrder: number;
+        public editable: boolean;
         public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
@@ -144,6 +145,7 @@ module CustomerSetting {
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
                 this.displayOrder = settingType.displayOrder;
+                this.editable = true; //settingType.editable;
                 this.extraData = this.getExtraData(settingType);
             }
         }
