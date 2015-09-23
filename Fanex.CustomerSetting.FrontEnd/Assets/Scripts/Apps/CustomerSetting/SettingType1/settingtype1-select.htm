@@ -1,5 +1,5 @@
 ﻿<div>
     <div class="select-wrapper">
-        <select data-ng-options="item.key as item.value / divisor for item in range"></select>
+        <select data-ng-options="item.key as (item.value | ptFormat) for item in range"></select>
     </div>
 </div>

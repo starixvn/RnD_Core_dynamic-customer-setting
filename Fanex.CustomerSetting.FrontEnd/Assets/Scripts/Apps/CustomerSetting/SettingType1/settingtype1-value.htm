@@ -125,8 +125,8 @@
             <input type="checkbox" data-ng-model="item.iS1" />
         </label>
     </div>
-    <div class="w28-percent">{{item.m1}}</div>
-    <div class="w28-percent last">{{item.a1}}</div>
+    <div class="w28-percent">{{item.m1 | ptFormat}}</div>
+    <div class="w28-percent last">{{item.a1 | ptFormat}}</div>
 </div>
 <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
     <div class="w42-percent" data-ng-show="item.iM1 && !(settingType | hideIsAutoColumn)">
@@ -151,7 +151,7 @@
             <input type="checkbox" data-ng-model="item.iM1" />
         </label>
     </div>
-    <div class="w42-percent last" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1}}</div>
+    <div class="w42-percent last" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1 | ptFormat}}</div>
 </div>
 <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
     <div>

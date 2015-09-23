@@ -104,6 +104,14 @@ module CustomerSetting {
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
 
+    function PositionTakingFormatFilter() {
+        return (ptValue: number) => {
+            return ptValue / SettingType1Config.roundingFactor;
+        };
+    }
+
+    ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
+
     function HideIsAutoColumnFilter() {
         return (settingType: SettingType) => {
             return settingType.extraData.some((item: KeyValuePair<string, any>) => {

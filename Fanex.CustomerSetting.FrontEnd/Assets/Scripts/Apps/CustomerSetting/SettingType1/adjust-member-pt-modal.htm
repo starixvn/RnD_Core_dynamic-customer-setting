@@ -42,11 +42,11 @@
                                 <select data-ng-if="customerLevel === avaiCustomerLevels.master"
                                         data-ng-model="item.superPTOnMembers"
                                         data-ng-class="{ 'invalid': (item.validationState | highlightingField:'superPTOnMembers') }"
-                                        data-ng-options="item.key as item.value / divisor for item in ranges[$index]"></select>
+                                        data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                                 <select data-ng-if="customerLevel === avaiCustomerLevels.agent"
                                         data-ng-model="item.masterPTOnMembers"
                                         data-ng-class="{ 'invalid': (item.validationState | highlightingField:'masterPTOnMembers') }"
-                                        data-ng-options="item.key as item.value / divisor for item in ranges[$index]"></select>
+                                        data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                             </div>
                         </div>
                     </div>

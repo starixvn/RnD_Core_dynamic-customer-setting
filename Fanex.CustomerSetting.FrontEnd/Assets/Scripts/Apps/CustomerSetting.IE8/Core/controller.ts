@@ -69,7 +69,7 @@ module CustomerSetting.IE8 {
             this.requestMsgResult = undefined;
 
             if (setting) {
-                if (setting.validate()) {
+                if (this.setting.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
