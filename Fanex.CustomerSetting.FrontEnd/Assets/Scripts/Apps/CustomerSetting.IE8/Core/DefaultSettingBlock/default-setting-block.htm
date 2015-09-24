@@ -1,7 +1,10 @@
 ﻿<div class="block default-setting-block" data-ng-show="settingType">
     <div class="header" data-setting-type="{{settingType.id}}">
         {{settingTypeName}}
-        <div class="update" title="{{'Update' | label}}" data-ng-click="update({ settingTypeId: settingType.id })">
+        <div class="update"
+             title="{{'Update' | label}}"
+             data-ng-if="settingType.editable"
+             data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon update-icon"></span>
         </div>
     </div>
@@ -11,9 +14,10 @@
              data-ng-class="{ 'not-first': ($index > 0) }"
              data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
-            <div data-copy-setting data-ng-if="sportGroups.length > 1 && $index === 0"
-                          data-setting-type-id="settingType.id"
-                          data-setting-items="sportGroups">
+            <div data-copy-setting
+                 data-ng-if="settingType.editable && sportGroups.length > 1 && $index === 0"
+                 data-setting-type-id="settingType.id"
+                 data-setting-items="sportGroups">
             </div>
         </div>
         <div class="header" data-ng-include="headerTemplateUrl"></div>
@@ -26,9 +30,10 @@
                  data-bet-type="{{item.betTypeId}}">
                 {{item | showingName:settingType.settingLevel:productName }}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
-                <div data-copy-setting data-ng-if="group.length > 1 && $index === 0"
-                              data-setting-type-id="settingType.id"
-                              data-setting-items="group">
+                <div data-copy-setting
+                     data-ng-if="settingType.editable && group.length > 1 && $index === 0"
+                     data-setting-type-id="settingType.id"
+                     data-setting-items="group">
                 </div>
             </div>
             <div class="value-col"

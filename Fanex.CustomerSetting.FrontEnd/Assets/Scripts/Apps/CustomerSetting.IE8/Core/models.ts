@@ -233,6 +233,7 @@ module CustomerSetting.IE8 {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
+        public editable: boolean;
 
         constructor();
         constructor(setting: any)
@@ -243,7 +244,15 @@ module CustomerSetting.IE8 {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
-                this.settingTypes = _.map(setting.settingTypes, (settingType: any) => new SettingType(settingType));
+
+                if (setting.settingTypes) {
+                    this.settingTypes = _.map(setting.settingTypes, (settingType: any) => new SettingType(settingType));
+                    this.editable = _.some(this.settingTypes, (settingType: SettingType) => {
+                        return settingType.editable;
+                    });
+                } else {
+                    this.settingTypes = new Array<SettingType>();
+                }
             }
         }
 

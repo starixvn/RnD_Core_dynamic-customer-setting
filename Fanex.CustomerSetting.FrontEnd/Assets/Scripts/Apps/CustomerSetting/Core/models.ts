@@ -145,7 +145,7 @@ module CustomerSetting {
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
                 this.displayOrder = settingType.displayOrder;
-                this.editable = true; //settingType.editable;
+                this.editable = false; //settingType.editable;
                 this.extraData = this.getExtraData(settingType);
             }
         }
@@ -232,6 +232,7 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
+        public editable: boolean;
 
         constructor();
         constructor(setting: any)
@@ -242,7 +243,15 @@ module CustomerSetting {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
-                this.settingTypes = setting.settingTypes.map((settingType: any) => new SettingType(settingType));
+
+                if (setting.settingTypes) {
+                    this.settingTypes = setting.settingTypes.map((settingType: any) => new SettingType(settingType));
+                    this.editable = this.settingTypes.some((settingType: SettingType) => {
+                        return settingType.editable;
+                    });
+                } else {
+                    this.settingTypes = new Array<SettingType>();
+                }
             }
         }
 
