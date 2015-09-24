@@ -1,9 +1,4 @@
-﻿<div class="align-center" data-ng-if="(customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent) || !settingType.editable">
-    <div class="w33-percent">{{item.minBet}}</div>
-    <div class="w33-percent">{{item.maxBet}}</div>
-    <div class="w33-percent last">{{item.maxPerMatch}}</div>
-</div>
-<div data-ng-if="(customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent) && settingType.editable">
+﻿<div data-ng-if="(customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent) && settingType.editable">
     <div class="w33-percent"
          data-bet-setting-input
          data-setting-item="item"
@@ -25,4 +20,9 @@
          data-customer-level="customerLevel"
          data-field-name="maxPerMatch">
     </div>
+</div>
+<div class="align-center" data-ng-if="(customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent) || !settingType.editable">
+    <div class="w33-percent">{{item.minBet}}</div>
+    <div class="w33-percent">{{item.maxBet}}</div>
+    <div class="w33-percent last">{{item.maxPerMatch}}</div>
 </div>

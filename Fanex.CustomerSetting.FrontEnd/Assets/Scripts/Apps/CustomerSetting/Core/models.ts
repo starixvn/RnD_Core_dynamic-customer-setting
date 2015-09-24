@@ -145,7 +145,7 @@ module CustomerSetting {
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
                 this.displayOrder = settingType.displayOrder;
-                this.editable = false; //settingType.editable;
+                this.editable = true; //settingType.editable;
                 this.extraData = this.getExtraData(settingType);
             }
         }

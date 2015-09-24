@@ -241,16 +241,16 @@ module CustomerSetting {
                 "data-message",
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
 
+            if (scope.customerLevel !== Level.super || (scope.fieldName === "minBet" && scope.settingItem.minBet > 0)) {
+                element.addClass("has-constraint");
+            }
+
             if (scope.fieldName === "minBet") {
-                if (scope.customerLevel !== Level.super) {
-                    element.addClass("has-constraint");
-                    wrapElement.append("<span> >={{settingItem.upline." + scope.fieldName + " | number}}</span>");
-                }
+                wrapElement.append(
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
             } else {
-                if (scope.customerLevel !== Level.super) {
-                    element.addClass("has-constraint");
-                    wrapElement.append("<span> <={{settingItem.upline." + scope.fieldName + " | number}}</span>");
-                }
+                wrapElement.append(
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
             }
 
             this.$compile(wrapElement)(scope);

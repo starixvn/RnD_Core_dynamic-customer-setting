@@ -1,4 +1,4 @@
-﻿﻿<div data-ng-if="settingType.editable">
+﻿﻿<div data-ng-if="settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     <label class="checkbox">
         <input type="checkbox"
                data-tooltip
@@ -22,7 +22,7 @@
         {{'EnableDownline' | productStatusLabel}}
     </label>
 </div>
-<div data-ng-if="settingType.editable">
+<div data-ng-if="!settingType.editable || (customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent)">
     <label class="checkbox">
         <input type="checkbox" disabled="disabled" data-ng-model="item.isChecked" />
         {{'Enable' | productStatusLabel}}
