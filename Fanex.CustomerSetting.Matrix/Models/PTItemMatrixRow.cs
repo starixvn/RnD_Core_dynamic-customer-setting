@@ -50,15 +50,17 @@
 
         private void SetMasterPT(PTItemMatrixDto pTMatrixDto)
         {
+            MasterPT = pTMatrixDto.MasterPT;
+
             if (CustomerLevel.IsAgentLevel() || CustomerLevel.IsMemberLevel())
             {
                 IsAutoMasterPT = pTMatrixDto.IsAutoMasterPT;
                 AutoMasterPT = IsAutoMasterPT.Value ? pTMatrixDto.AutoMasterPT : 0;
-                MasterPT = IsAutoMasterPT.Value ? 0 : pTMatrixDto.MasterPT;
-            }
-            else
-            {
-                MasterPT = pTMatrixDto.MasterPT;
+
+                if (CustomerLevel.IsAgentLevel())
+                {
+                    MasterPT = IsAutoMasterPT.Value ? 0 : pTMatrixDto.MasterPT;
+                }
             }
         }
 
@@ -68,7 +70,15 @@
             {
                 IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
                 AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;
-                SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;
+                
+                if (CustomerLevel.IsMasterLevel())
+                {
+                    SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;
+                }
+                else
+                {
+                    SuperPT = pTMatrixDto.SuperPT;
+                }
             }
             else if (CustomerLevel.IsSuperLevel())
             {

@@ -38,13 +38,13 @@
         }
 
         [Test]
-        public void GetPTMatrix_ProductIdIsZero_ThrowArgumentOutOfRangeException()
+        public void GetPTMatrix_ProductIdIsZero_ThrowInvalidOperationException()
         {
             //// Arrange
             byte productId = 0;
 
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
                     () => _positionTakingMatrixService.GetPTMatrix(productId, "CustomerName")));
         }
@@ -52,13 +52,13 @@
         [TestCase("  ")]
         [TestCase("")]
         [TestCase(null)]
-        public void GetPTMatrix_CustomerNameIsNullOrEmpty_ThrowArgumentOutOfRangeException(string customerName)
+        public void GetPTMatrix_CustomerNameIsNullOrEmpty_ThrowInvalidOperationException(string customerName)
         {
             //// Arrange
             byte productId = 1;
 
             //// Act
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
                     () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
         }
