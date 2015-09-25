@@ -274,11 +274,11 @@ module CustomerSetting {
                     var isSuccessful: boolean = true;
 
                     if ($scope.customerLevel === Level.master) {
-                        isSuccessful = targets.some((item: DefaultSettingItem) => {
+                        isSuccessful = targets.every((item: DefaultSettingItem) => {
                             return (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
                         });
                     } else if ($scope.customerLevel === Level.agent) {
-                        isSuccessful = targets.some((item: DefaultSettingItem) => {
+                        isSuccessful = targets.every((item: DefaultSettingItem) => {
                             return (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
                         });
                     }

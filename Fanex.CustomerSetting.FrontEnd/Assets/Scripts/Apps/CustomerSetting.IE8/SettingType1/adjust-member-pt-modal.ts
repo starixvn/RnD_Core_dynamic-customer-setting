@@ -270,11 +270,11 @@ module CustomerSetting.IE8 {
                     var isSuccessful: boolean = true;
 
                     if ($scope.customerLevel === Level.masterAgent) {
-                        isSuccessful = _.some(targets, (item: DefaultSettingItem) => {
+                        isSuccessful = _.every(targets, (item: DefaultSettingItem) => {
                             return (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
                         });
                     } else if ($scope.customerLevel === Level.agent) {
-                        isSuccessful = _.some(targets, (item: DefaultSettingItem) => {
+                        isSuccessful = _.every(targets, (item: DefaultSettingItem) => {
                             return (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
                         });
                     }
