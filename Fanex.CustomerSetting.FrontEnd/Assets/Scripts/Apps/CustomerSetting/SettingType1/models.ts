@@ -336,13 +336,13 @@ module CustomerSetting {
             }
 
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
 
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -356,7 +356,7 @@ module CustomerSetting {
             var maxOfMasterMaxPt: number = Math.min(this.s4 - this.s3, this.m4);
 
             if (this.s3 < minOfSuperPt) {
-                this.validationState = new ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt]);
+                this.validationState = new ValidationResult("SuperPTCannotBeLessThan", "s3", [minOfSuperPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -368,13 +368,13 @@ module CustomerSetting {
             }
 
             if (this.m3 < minOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeLessThan", "m3", [minOfMasterMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
 
             if (this.m3 > maxOfMasterMaxPt) {
-                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt]);
+                this.validationState = new ValidationResult("MasterMaxPTCannotBeGreaterThan", "m3", [maxOfMasterMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -392,7 +392,10 @@ module CustomerSetting {
             }
 
             if (this.superPTOnMembers > maxOfSuperPtOnMembers) {
-                this.validationState = new ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "superPTOnMembers", [maxOfSuperPtOnMembers]);
+                this.validationState = new ValidationResult(
+                    "SuperPTOnMemberCannotBeGreaterThan",
+                    "superPTOnMembers",
+                    [maxOfSuperPtOnMembers / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -575,13 +578,13 @@ module CustomerSetting {
             }
 
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
 
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -595,7 +598,7 @@ module CustomerSetting {
             var maxOfAgentMaxPt: number = Math.min(this.m3 - this.m2, this.a4);
 
             if (this.m2 < minOfMasterPt) {
-                this.validationState = new ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt]);
+                this.validationState = new ValidationResult("MasterPTCannotBeLessThan", "m2", [minOfMasterPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -607,13 +610,13 @@ module CustomerSetting {
             }
 
             if (this.a2 < minOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeLessThan", "a2", [minOfAgentMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
 
             if (this.a2 > maxOfAgentMaxPt) {
-                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt]);
+                this.validationState = new ValidationResult("AgentMaxPTCannotBeGreaterThan", "a2", [maxOfAgentMaxPt / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -631,7 +634,10 @@ module CustomerSetting {
             }
 
             if (this.masterPTOnMembers > maxOfMasterPtOnMembers) {
-                this.validationState = new ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "masterPTOnMembers", [maxOfMasterPtOnMembers]);
+                this.validationState = new ValidationResult(
+                    "MasterPTOnMemberCannotBeGreaterThan",
+                    "masterPTOnMembers",
+                    [maxOfMasterPtOnMembers / SettingType1Config.roundingFactor]);
 
                 return false;
             }
@@ -733,7 +739,10 @@ module CustomerSetting {
                 }
 
                 if (this.uS1 < minOfSuperAutoPtOnMember) {
-                    this.validationState = new ValidationResult("SuperAutoPTOnMemberCannotBeLessThan", "uS1", [minOfSuperAutoPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "SuperAutoPTOnMemberCannotBeLessThan",
+                        "uS1",
+                        [minOfSuperAutoPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
@@ -754,13 +763,19 @@ module CustomerSetting {
                 }
 
                 if (this.s1 < minOfSuperPtOnMember) {
-                    this.validationState = new ValidationResult("SuperPTOnMemberCannotBeLessThan", "s1", [minOfSuperPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "SuperPTOnMemberCannotBeLessThan",
+                        "s1",
+                        [minOfSuperPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
 
                 if (this.s1 > maxOfSuperPtOnMember) {
-                    this.validationState = new ValidationResult("SuperPTOnMemberCannotBeGreaterThan", "s1", [maxOfSuperPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "SuperPTOnMemberCannotBeGreaterThan",
+                        "s1",
+                        [maxOfSuperPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
@@ -863,7 +878,10 @@ module CustomerSetting {
                 }
 
                 if (this.uM1 < minOfMasterAutoPtOnMember) {
-                    this.validationState = new ValidationResult("MasterAutoPTOnMemberCannotBeLessThan", "uM1", [minOfMasterAutoPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "MasterAutoPTOnMemberCannotBeLessThan",
+                        "uM1",
+                        [minOfMasterAutoPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
@@ -884,13 +902,19 @@ module CustomerSetting {
                 }
 
                 if (this.m1 < minOfMasterPtOnMember) {
-                    this.validationState = new ValidationResult("MasterPTOnMemberCannotBeLessThan", "m1", [minOfMasterPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "MasterPTOnMemberCannotBeLessThan",
+                        "m1",
+                        [minOfMasterPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
 
                 if (this.m1 > maxOfMasterPtOnMember) {
-                    this.validationState = new ValidationResult("MasterPTOnMemberCannotBeGreaterThan", "m1", [maxOfMasterPtOnMember]);
+                    this.validationState = new ValidationResult(
+                        "MasterPTOnMemberCannotBeGreaterThan",
+                        "m1",
+                        [maxOfMasterPtOnMember / SettingType1Config.roundingFactor]);
 
                     return false;
                 }
