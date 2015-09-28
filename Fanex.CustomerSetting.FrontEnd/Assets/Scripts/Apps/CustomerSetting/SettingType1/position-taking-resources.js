@@ -193,6 +193,7 @@
         "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT On Member cannot be greater than Super Max PT",
         "SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Super Auto PT On Member cannot be greater than zero when IsAuto is not set",
         "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT On Member cannot be less than {0}",
+        "SuperMaxPTCannotBeGreaterThan": "Super Max PT cannot be greater than {0}",
         "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT cannot be greater than Super Max PT",
         "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT cannot be greater than Super Max PT",
         "SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet": "Super PT cannot be greater than zero when IsAuto is set",

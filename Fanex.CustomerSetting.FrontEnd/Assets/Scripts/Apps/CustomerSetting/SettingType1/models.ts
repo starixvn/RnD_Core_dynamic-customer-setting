@@ -14,10 +14,6 @@ module CustomerSetting {
     }
 
     export class SettingType1Item {
-        public static get maxPTValue(): number {
-            return 90;
-        }
-
         public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): ISettingItem {
             if (customerLevel === Level.super) {
                 return new SuperPositionTaking(settingItem, backup);
@@ -116,7 +112,9 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
+            if (this.s4 > this.defaultMaxPT) {
+                this.validationState = new ValidationResult("SuperMaxPTCannotBeGreaterThan", "s4", [this.defaultMaxPT / SettingType1Config.roundingFactor]);
+
                 return false;
             }
 
@@ -139,34 +137,6 @@ module CustomerSetting {
             }
 
             this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
-            if (this.s4 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s4");
-
-                return false;
-            }
-
-            if (this.m4 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m4");
-
-                return false;
-            }
-
-            if (this.a4 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a4");
-
-                return false;
-            }
-
-            if (this.n4 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n4");
-
-                return false;
-            }
 
             return true;
         }
@@ -272,10 +242,6 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
             if (this.iS3) {
                 if (!this.validateAutoPt()) {
                     return false;
@@ -293,34 +259,6 @@ module CustomerSetting {
             }
 
             this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
-            if (this.s3 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s3");
-
-                return false;
-            }
-
-            if (this.uS3 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS3");
-
-                return false;
-            }
-
-            if (this.n3 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n3");
-
-                return false;
-            }
-
-            if (this.m3 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m3");
-
-                return false;
-            }
 
             return true;
         }
@@ -514,10 +452,6 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (!this.validateMaxValue()) {
-                return false;
-            }
-
             if (this.iM2) {
                 if (!this.validateAutoPt()) {
                     return false;
@@ -535,34 +469,6 @@ module CustomerSetting {
             }
 
             this.validationState = <ValidationResult>Result.normal;
-
-            return true;
-        }
-
-        private validateMaxValue(): boolean {
-            if (this.m2 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m2");
-
-                return false;
-            }
-
-            if (this.uM2 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM2");
-
-                return false;
-            }
-
-            if (this.n2 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "n2");
-
-                return false;
-            }
-
-            if (this.a2 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a2");
-
-                return false;
-            }
 
             return true;
         }
@@ -732,12 +638,6 @@ module CustomerSetting {
             if (this.iS1) {
                 var minOfSuperAutoPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
 
-                if (this.uS1 > SettingType1Item.maxPTValue) {
-                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uS1");
-
-                    return false;
-                }
-
                 if (this.uS1 < minOfSuperAutoPtOnMember) {
                     this.validationState = new ValidationResult(
                         "SuperAutoPTOnMemberCannotBeLessThan",
@@ -755,12 +655,6 @@ module CustomerSetting {
             } else {
                 var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
                 var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
-
-                if (this.s1 > SettingType1Item.maxPTValue) {
-                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "s1");
-
-                    return false;
-                }
 
                 if (this.s1 < minOfSuperPtOnMember) {
                     this.validationState = new ValidationResult(
@@ -871,12 +765,6 @@ module CustomerSetting {
             if (this.iM1) {
                 var minOfMasterAutoPtOnMember: number = Math.max(0, this.n3 - this.a1);
 
-                if (this.uM1 > SettingType1Item.maxPTValue) {
-                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "uM1");
-
-                    return false;
-                }
-
                 if (this.uM1 < minOfMasterAutoPtOnMember) {
                     this.validationState = new ValidationResult(
                         "MasterAutoPTOnMemberCannotBeLessThan",
@@ -894,12 +782,6 @@ module CustomerSetting {
             } else {
                 var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
                 var maxOfMasterPtOnMember: number = this.m3 - this.a1;
-
-                if (this.m1 > SettingType1Item.maxPTValue) {
-                    this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "m1");
-
-                    return false;
-                }
 
                 if (this.m1 < minOfMasterPtOnMember) {
                     this.validationState = new ValidationResult(
@@ -976,12 +858,6 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.a1 > SettingType1Item.maxPTValue) {
-                this.validationState = new ValidationResult("PositionTakingCannotBeExceedMaxValue", "a1");
-
-                return false;
-            }
-
             if (this.a1 < this.n2) {
                 this.validationState = new ValidationResult("AgentPTCannotBeLessThanAgentMinPT", "a1");
 

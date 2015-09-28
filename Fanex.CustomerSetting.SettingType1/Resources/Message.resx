@@ -249,6 +249,9 @@
   <data name="SuperAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
     <value>Super Auto PT On Member cannot be less than {0}</value>
   </data>
+  <data name="SuperMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>Super Max PT cannot be greater than {0}</value>
+  </data>
   <data name="SuperMinPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
     <value>Super Min PT cannot be greater than Super Max PT</value>
   </data>

@@ -205,15 +205,6 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-247.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-248.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-249.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-250.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-251.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-252.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-253.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-254.js" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Temp\product-255.js" />
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
     <Content Include="Assets\Styles\customer-setting-ie8.css">
       <DependentUpon>customer-setting-ie8.scss</DependentUpon>
