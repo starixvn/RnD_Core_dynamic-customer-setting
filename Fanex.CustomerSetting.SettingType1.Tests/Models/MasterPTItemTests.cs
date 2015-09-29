@@ -21,9 +21,6 @@
         [TestCase(10, true, 3, 4, 1, 1004)]
         [TestCase(10, false, 3, 4, 1, 1005)]
         [TestCase(0, true, 3, 4, 10, 1006)]
-        [TestCase(0, true, 120, 4, 10, 1014)]
-        [TestCase(0, true, 3, 100, 10, 1014)]
-        [TestCase(0, true, 3, 4, 100, 1014)]
         [TestCase(0, true, 3, 4, 1, 0)]
         public void Validate_InValidPT_ReturnErrorCode(
             byte s3,
@@ -69,7 +66,7 @@
             var actualXmlFormatted = _masterPTItem.ToXml();
 
             //// Assert
-            var expectedXmlFormatted = "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" SuperPT=\"0\" IsAutoSuperPT=\"1\" AutoSuperPT=\"10\" MasterPT=\"10\" MasterMinPT=\"4\" UpdAllMems=\"1\" NewSuperPT=\"10\"/>";
+            var expectedXmlFormatted = "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" SuperPT=\"0\" IsAutoSuperPT=\"1\" AutoSuperPT=\"10\" MasterPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>";
             Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
         }
     }

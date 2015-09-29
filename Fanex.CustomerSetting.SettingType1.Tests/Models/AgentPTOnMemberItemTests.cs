@@ -18,7 +18,6 @@
             };
         }
 
-        [TestCase(100, 1014)]
         [TestCase(10, 0)]
         public void Validate_InValidPT_ReturnErrorCode(
             byte a1,

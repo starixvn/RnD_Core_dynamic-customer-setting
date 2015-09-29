@@ -23,18 +23,6 @@
         /// </summary>
         public byte N2 { get; set; }
 
-        public override IResult Validate()
-        {
-            if (A1 > Constants.MaxPTValue)
-            {
-                return new Result(
-                    ErrorCode.PTExceedMaxValue,
-                    Message.PositionTakingCannotBeExceedMaxValue);
-            }
-
-            return base.Validate();
-        }
-
         public override string ToXml()
         {
             return string.Format(

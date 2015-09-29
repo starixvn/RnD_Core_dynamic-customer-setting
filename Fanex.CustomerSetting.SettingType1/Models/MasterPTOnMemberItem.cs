@@ -45,14 +45,6 @@
 
         public override IResult Validate()
         {
-            if (M1 > Constants.MaxPTValue
-                || UM1 > Constants.MaxPTValue)
-            {
-                return new Result(
-                    ErrorCode.PTExceedMaxValue,
-                    Message.PositionTakingCannotBeExceedMaxValue);
-            }
-
             if (!IM1 && UM1 > 0)
             {
                 return new Result(
