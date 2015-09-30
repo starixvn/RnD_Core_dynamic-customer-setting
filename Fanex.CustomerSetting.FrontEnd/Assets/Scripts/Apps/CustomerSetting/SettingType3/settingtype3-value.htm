@@ -4,8 +4,12 @@
 <div data-ng-if="!settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     {{item.commRate}}
 </div>
-<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent">
+<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
     <div class="w33-percent">{{item.masterCommRate}}</div>
     <div class="w33-percent">{{item.agentCommRate}}</div>
     <div class="w33-percent last">{{item.commRate}}</div>
+</div>
+<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+    <div class="w50-percent">{{item.agentCommRate}}</div>
+    <div class="w50-percent last">{{item.commRate}}</div>
 </div>

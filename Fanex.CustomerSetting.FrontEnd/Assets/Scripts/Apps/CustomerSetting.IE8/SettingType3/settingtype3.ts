@@ -76,7 +76,10 @@ module CustomerSetting.IE8 {
         public templateUrl: string = "settingtype3.htm";
 
         public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
-            scope.headerTemplateUrl = "settingtype3-header.htm";
+            if (scope.customerLevel === Level.member && scope.uplineLevel !== Level.agent) {
+                scope.headerTemplateUrl = "settingtype3-header.htm";
+            }
+
             scope.valueTemplateUrl = "settingtype3-value.htm";
             scope.settingTypeName = this.commissionResourceService.getLabel("Commission");
         };

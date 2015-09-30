@@ -488,39 +488,47 @@ button {
 /*********************************************************/
 /*                  Setting Type 1 & 2                   */
 /*********************************************************/
+.setting-type-3.block .setting-group,
 .setting-type-2.block .setting-group,
 .setting-type-1.block .setting-group {
   width: 100%;
 }
+.setting-type-3.block .setting-group.extended-setting-group,
 .setting-type-2.block .setting-group.extended-setting-group,
 .setting-type-1.block .setting-group.extended-setting-group {
   display: none;
 }
+.setting-type-3.block .setting-group.near-last,
 .setting-type-2.block .setting-group.near-last,
 .setting-type-1.block .setting-group.near-last {
   border-bottom: 1px solid #7c98a4;
 }
+.setting-type-3.block .setting-group .name-col,
 .setting-type-2.block .setting-group .name-col,
 .setting-type-1.block .setting-group .name-col {
   width: 20%;
 }
+.setting-type-3.block .setting-group .value-col,
 .setting-type-2.block .setting-group .value-col,
 .setting-type-1.block .setting-group .value-col {
   border-right: none;
   padding: 0;
   width: 80%;
 }
-.modal .modal-content .setting-type-2.block, .modal .modal-content
+.modal .modal-content .setting-type-3.block, .modal .modal-content
+.setting-type-2.block, .modal .modal-content
 .setting-type-1.block {
   margin: 10px auto;
   max-height: 500px;
   overflow: auto;
 }
-.modal .modal-content .setting-type-2.block .setting-group .name-col, .modal .modal-content
+.modal .modal-content .setting-type-3.block .setting-group .name-col, .modal .modal-content
+.setting-type-2.block .setting-group .name-col, .modal .modal-content
 .setting-type-1.block .setting-group .name-col {
   width: 50%;
 }
-.modal .modal-content .setting-type-2.block .setting-group .value-col, .modal .modal-content
+.modal .modal-content .setting-type-3.block .setting-group .value-col, .modal .modal-content
+.setting-type-2.block .setting-group .value-col, .modal .modal-content
 .setting-type-1.block .setting-group .value-col {
   padding: 0 5px;
   width: 50%;
