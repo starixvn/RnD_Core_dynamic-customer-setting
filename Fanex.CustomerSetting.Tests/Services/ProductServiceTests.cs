@@ -5,6 +5,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
@@ -35,7 +36,7 @@
             //// Act
             Assert.Throws<ArgumentOutOfRangeException>(
                 new TestDelegate(
-                    () => _productService.GetProductSettingTypes(productId)));
+                    () => _productService.GetProductSettingTypes(productId, Arg.Any<byte>())));
         }
 
         [Test]
@@ -51,7 +52,7 @@
               .Returns(settingTypes);
 
             //// Act
-            var actualSettingTypes = _productService.GetProductSettingTypes(productId);
+            var actualSettingTypes = _productService.GetProductSettingTypes(productId, (byte)SystemType.Accounting);
 
             //// Assert
             Assert.AreSame(settingTypes, actualSettingTypes);
@@ -68,7 +69,7 @@
             var productService = new ProductService(_dynamicRepository, cachingServiceStub);
 
             //// Act
-            productService.GetProductSettingTypes(productId);
+            productService.GetProductSettingTypes(productId, (byte)SystemType.Accounting);
 
             //// Assert
             _dynamicRepository.Received().Fetch<SettingType>(Arg.Is<ProductSettingTypesQueryCriteria>(
@@ -82,14 +83,14 @@
             byte productId = 1;
             IEnumerable<SettingType> settingTypesFromDatabase = new List<SettingType> { new SettingType() };
             var cachingServiceStub = new CachingService();
-            cachingServiceStub.Remove("Fanex.CustomerSetting.SettingTypesCacheKey_1");
+            cachingServiceStub.Remove("Fanex.CustomerSetting.SettingTypesCacheKey_1_1");
 
             var productService = new ProductService(_dynamicRepository, cachingServiceStub);
 
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingTypes = productService.GetProductSettingTypes(productId);
+            var actualSettingTypes = productService.GetProductSettingTypes(productId, (byte)SystemType.Accounting);
 
             //// Assert
             Assert.AreSame(settingTypesFromDatabase, actualSettingTypes);
@@ -112,7 +113,7 @@
                 .Returns(settingTypes);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, (byte)SystemType.Accounting);
 
             //// Assert
             Assert.AreSame(settingTypes.First(), actualSettingType);
@@ -133,7 +134,7 @@
             _dynamicRepository.Fetch<SettingType>(Arg.Any<ICriteria>()).Returns(settingTypesFromDatabase);
 
             //// Act
-            var actualSettingType = _productService.GetProductSettingType(productId, settingType);
+            var actualSettingType = _productService.GetProductSettingType(productId, settingType, (byte)SystemType.Accounting);
 
             //// Assert
             Assert.IsNull(actualSettingType);

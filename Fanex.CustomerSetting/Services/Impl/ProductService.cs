@@ -11,7 +11,7 @@
     public class ProductService : IProductService
     {
         private const int CacheDuration = 1; //// 1 hour
-        private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}";
+        private const string SettingTypesCacheKey = "Fanex.CustomerSetting.SettingTypesCacheKey_{0}_{1}";
         private const string AllProductNamesCacheKey = "Fanex.CustomerSetting.AllProductNamesCacheKey";
 
         private readonly IDynamicRepository _productRepository;
@@ -23,18 +23,20 @@
             _cachingService = cachingService ?? new CachingService();
         }
 
-        public IEnumerable<SettingType> GetProductSettingTypes(byte productId)
+        public IEnumerable<SettingType> GetProductSettingTypes(byte productId, byte systemId)
         {
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
+            Check.Argument.IsNotNegative(systemId, "systemId");
 
             var settingTypes = _cachingService.GetOrAdd(
-                   string.Format(SettingTypesCacheKey, productId),
+                   string.Format(SettingTypesCacheKey, productId, systemId),
                    () =>
                    {
                        return _productRepository.Fetch<SettingType>(
                            new ProductSettingTypesQueryCriteria
                        {
-                           ProductId = productId
+                           ProductId = productId,
+                           SystemId = systemId
                        });
                    },
                    new TimeSpan(CacheDuration, 0, 0));
@@ -42,9 +44,9 @@
             return settingTypes;
         }
 
-        public SettingType GetProductSettingType(byte productId, short settingTypeId)
+        public SettingType GetProductSettingType(byte productId, short settingTypeId, byte systemId)
         {
-            var productSettingTypes = GetProductSettingTypes(productId);
+            var productSettingTypes = GetProductSettingTypes(productId, systemId);
 
             if (productSettingTypes == null)
             {

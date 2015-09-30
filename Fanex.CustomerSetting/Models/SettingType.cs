@@ -19,6 +19,10 @@
 
         public byte DisplayOrder { get; set; }
 
+        public byte DisplayMode { get; set; }
+
+        public bool IsReadOnly { get; set; }
+
         public IEnumerable<ISettingItem> SettingItems
         {
             get

@@ -86,13 +86,14 @@
             _validationService.ValidateUpdateSettingAction(updateParam);
 
             //// Assert
-            _productService.Received().GetProductSettingTypes(Arg.Is<byte>(
-                productId => productId == updateParam.Setting.ProductId));
+            _productService.Received().GetProductSettingTypes(
+                Arg.Is<byte>(productId => productId == updateParam.Setting.ProductId),
+                Arg.Any<byte>());
         }
 
         private void AssumeCustomerSettingTypesAreValid(IEnumerable<SettingType> dummySettingTypes)
         {
-            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(dummySettingTypes);
+            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(dummySettingTypes);
         }
 
         [Test]
@@ -107,7 +108,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, (byte)SystemType.Accounting)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(2)
@@ -132,7 +133,7 @@
             {
                 InstanceFactory.CreateCustomerSettingType(1)
             };
-            _productService.GetProductSettingTypes(updateParam.Setting.ProductId)
+            _productService.GetProductSettingTypes(updateParam.Setting.ProductId, (byte)SystemType.Accounting)
                 .Returns(new List<SettingType>
                 {
                     InstanceFactory.CreateCustomerSettingType(1)
@@ -192,7 +193,7 @@
             AssumeValidateQuerySettingIsSuccessful();
 
             var expectedException = new Exception("Expected Exception");
-            _productService.GetProductSettingTypes(Arg.Any<byte>()).Returns(x => { throw expectedException; });
+            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(x => { throw expectedException; });
 
             //// Act
             _validationService.ValidateUpdateSettingAction(updateParam);

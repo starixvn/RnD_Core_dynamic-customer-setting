@@ -170,14 +170,14 @@
             Assert.AreEqual(expectedSubMessage, actualMessageContent.SubMessages.First());
         }
 
-        [TestCase(1, false, "", "", " - UserNames: username1, username2")]
-        [TestCase(1, true, "", "", " (Live) - UserNames: username1, username2")]
-        [TestCase(2, false, "SportType1", "", "SportType1 - UserNames: username1, username2")]
-        [TestCase(2, true, "SportType1", "", "SportType1 (Live) - UserNames: username1, username2")]
-        [TestCase(3, false, "", "BetType1", "BetType1 - UserNames: username1, username2")]
-        [TestCase(3, true, "", "BetType1", "BetType1 (Live) - UserNames: username1, username2")]
-        [TestCase(4, false, "SportType1", "BetType1", "SportType1 - BetType1 - UserNames: username1, username2")]
-        [TestCase(4, true, "SportType1", "BetType1", "SportType1 - BetType1 (Live) - UserNames: username1, username2")]
+        [TestCase(1, false, "", "", " - Usernames: username1, username2")]
+        [TestCase(1, true, "", "", " (Live) - Usernames: username1, username2")]
+        [TestCase(2, false, "SportType1", "", "SportType1 - Usernames: username1, username2")]
+        [TestCase(2, true, "SportType1", "", "SportType1 (Live) - Usernames: username1, username2")]
+        [TestCase(3, false, "", "BetType1", "BetType1 - Usernames: username1, username2")]
+        [TestCase(3, true, "", "BetType1", "BetType1 (Live) - Usernames: username1, username2")]
+        [TestCase(4, false, "SportType1", "BetType1", "SportType1 - BetType1 - Usernames: username1, username2")]
+        [TestCase(4, true, "SportType1", "BetType1", "SportType1 - BetType1 (Live) - Usernames: username1, username2")]
         public void TranslateMessage_MessageTypeIsDownlinePTViolation_ReturnMatchedMessageContent(
             byte settingLevel,
             bool isLive,

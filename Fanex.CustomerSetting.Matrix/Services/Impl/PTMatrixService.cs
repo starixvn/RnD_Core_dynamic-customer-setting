@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Resources;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
@@ -49,7 +50,7 @@
 
         private SettingType GetSettingType(byte productId)
         {
-            var ptSettingType = _productService.GetProductSettingType(productId, SettingTypeId);
+            var ptSettingType = _productService.GetProductSettingType(productId, SettingTypeId, (byte)SystemType.Accounting);
 
             if (ptSettingType == null)
             {

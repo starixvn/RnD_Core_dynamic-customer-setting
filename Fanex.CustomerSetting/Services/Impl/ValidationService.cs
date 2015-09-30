@@ -230,7 +230,7 @@
 
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId);
+            var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System);
 
             foreach (var customerSettingType in customerSettingTypes)
             {

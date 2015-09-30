@@ -27,13 +27,6 @@
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="PlayerDiscount" ObjectProperty="CommRate" />
       <Mapping DataField="AgentDiscount" ObjectProperty="UplineCommRate" />
-    </Setting>
-
-    <Setting Key="CustSetting_MemberCommissionSelectBySuper" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
-      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
-      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
-      <Mapping DataField="PlayerDiscount" ObjectProperty="CommRate" />
-      <Mapping DataField="AgentDiscount" ObjectProperty="UplineCommRate" />
       <Mapping DataField="MasterDiscount" ObjectProperty="UplineOfUplineCommRate" />
     </Setting>
 

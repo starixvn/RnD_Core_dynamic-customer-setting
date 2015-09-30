@@ -47,7 +47,7 @@
             Validate(query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
-            var product = GetProductInfo(query.ProductId);
+            var product = GetProductInfo(query.ProductId, _settingContext.System);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             var setting = new Setting(
@@ -81,9 +81,9 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        private Product GetProductInfo(byte productId)
+        private Product GetProductInfo(byte productId, byte systemId)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId);
+            var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId);
             var productName = _resourceService.GetProductName(productId, _settingContext.Language);
 
             return new Product
@@ -141,6 +141,7 @@
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
+                customerSettingType.DisplayMode = productSettingType.DisplayMode;
             }
             catch (Exception ex)
             {

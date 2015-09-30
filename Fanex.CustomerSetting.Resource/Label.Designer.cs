@@ -196,7 +196,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UserName.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UserName {
             get {
@@ -205,7 +205,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UserNames.
+        ///   Looks up a localized string similar to Usernames.
         /// </summary>
         public static string UserNames {
             get {

@@ -67,7 +67,7 @@
         {
             dummySettingType = dummySettingType ?? InstanceFactory.CreateProductSettingType(1);
 
-            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<short>()).Returns(dummySettingType);
+            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<short>(), Arg.Any<byte>()).Returns(dummySettingType);
 
             return dummySettingType;
         }
