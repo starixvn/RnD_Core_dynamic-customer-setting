@@ -71,7 +71,7 @@ module CustomerSetting {
                 if (this.$window.innerWidth < left + tooltipRect.width) {
                     left = elementRect.left - tooltipRect.width + elementRect.width / 2;
                     left = Math.min(left, this.$window.innerWidth - tooltipRect.width - 5);
-                    tooltip.addClass("right");
+                    tooltip.addClass("tooltip--right");
                 }
 
                 if (top !== tooltipRect.top || left !== tooltipRect.left) {

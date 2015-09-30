@@ -75,7 +75,7 @@ module CustomerSetting.IE8 {
                 if (windowWidth < left + tooltipWidth) {
                     left = elementRect.left - tooltipWidth + elementWidth / 2;
                     left = Math.min(left, windowWidth - tooltipWidth - 5);
-                    tooltip.addClass("right");
+                    tooltip.addClass("tooltip--right");
                 }
 
                 tooltip.css({

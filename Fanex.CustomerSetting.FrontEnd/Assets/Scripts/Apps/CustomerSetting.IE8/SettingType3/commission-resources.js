@@ -8,9 +8,9 @@
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["en-us"] = {
         "Commission": "Commission",
-        "CommissionForAgent": "Agent Comm",
-        "CommissionForMaster": "Master Comm",
-        "CommissionForMember": "Member Comm"
+        "CommissionForAgent": "Comm for Agent",
+        "CommissionForMaster": "Comm for Master",
+        "CommissionForMember": "Comm for Member"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};

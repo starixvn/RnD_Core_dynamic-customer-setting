@@ -1,15 +1,15 @@
 ﻿<comm-rate data-ng-if="settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)"
            data-setting-item="item">
 </comm-rate>
-<div data-ng-if="!settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
+<div class="align-center" data-ng-if="!settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     {{item.commRate}}
 </div>
-<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
-    <div class="w33-percent">{{item.masterCommRate}}</div>
-    <div class="w33-percent">{{item.agentCommRate}}</div>
-    <div class="w33-percent last">{{item.commRate}}</div>
+<div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
+    <div class="block__cell w33-percent">{{item.masterCommRate}}</div>
+    <div class="block__cell w33-percent">{{item.agentCommRate}}</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.commRate}}</div>
 </div>
-<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
-    <div class="w50-percent">{{item.agentCommRate}}</div>
-    <div class="w50-percent last">{{item.commRate}}</div>
+<div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
+    <div class="block__cell w50-percent">{{item.agentCommRate}}</div>
+    <div class="block__cell block__cell--no-border w50-percent">{{item.commRate}}</div>
 </div>

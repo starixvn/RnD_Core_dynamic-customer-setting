@@ -1,0 +1,400 @@
+﻿@import "Compass/_compass";
+@import "_variables";
+@import "_other";
+
+.setting-field-wrapper,
+.text-field-wrapper {
+    display: inline-block;
+    padding: 0 3px;
+}
+
+.setting-field {
+    @include border($color: $field-border-color);
+
+    &:focus {
+        border-color: $field-focus-border-color;
+    }
+
+    &--fullwidth {
+        width: 100%;
+    }
+
+    &--invalid {
+        border-color: $field-invalid-border-color !important;
+    }
+
+    &--has-constraint {
+        width: 50%;
+    }
+
+    &--number {
+        text-align: right;
+    }
+
+    &--checkfield {
+        cursor: pointer;
+        margin-right: 10px;
+
+        &__check-ctrl {
+            position: relative;
+            top: 2px;
+        }
+    }
+}
+
+.btn {
+    @include background-image(linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3));
+    @include border-radius($default-border-radius);
+    background-color: $button-backround-color2;
+    background-repeat: no-repeat;
+    border: 0;
+    color: $button-text-color;
+    font-weight: bold;
+    padding: 4px 12px;
+
+    &--small {
+        min-width: 60px;
+        padding: 2px 6px;
+    }
+}
+
+.icon {
+    background: {
+        image: url("Images/sprite.png");
+        position: 0 0;
+        repeat: no-repeat;
+    }
+
+    display: inline-block;
+
+    &--update {
+        background-position: 0 0;
+        height: 16px;
+        width: 16px;
+    }
+
+    &--copy {
+        background-position: -16px 0;
+        height: 20px;
+        width: 20px;
+    }
+
+    &--close {
+        background-position: -36px 0;
+        height: 15px;
+        width: 15px;
+    }
+}
+
+%overlay {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.block-ui-overlay {
+    @extend %overlay;
+    background-color: $block-ui-overlay;
+}
+
+.block-ui-loading {
+    background: url(images/loading.gif) no-repeat center center;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 101;
+}
+
+.modal-overlay {
+    @extend %overlay;
+    background-color: $modal-ovarlay;
+}
+
+.modal {
+    @include border();
+    @include box-shadow(0 5px 15px $modal-ovarlay);
+    background-color: $default-bg;
+    margin: 100px auto auto;
+    width: 450px;
+    z-index: 101;
+
+    &__title {
+        @include border(bottom);
+        background-color: $modal-header-bg;
+        font-weight: bold;
+        padding: 5px;
+    }
+
+    &__content {
+        padding: 5px 10px;
+        text-align: left;
+    }
+
+    &__footer {
+        @include border(top, $modal-footer-border-color);
+        padding: 5px;
+        text-align: right;
+    }
+}
+
+.tooltip {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+
+    &:after {
+        border: {
+            color: $invalid-tooltip-border-color transparent transparent transparent;
+            style: $border-style;
+            width: 5px;
+        }
+
+        content: " ";
+        display: block;
+        margin: 0 auto;
+        width: 0;
+    }
+
+    &__content {
+        @include border-radius($default-border-radius);
+        @include opacity(0.85);
+        background-color: $invalid-tooltip-bg;
+        color: $invalid-tooltip-text-color;
+        max-width: 300px;
+        padding: 4px 8px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    &--right:after {
+        position: absolute;
+        right: 5px;
+    }
+}
+
+.msg-container {
+    @include border();
+    background-color: $msg-container-bg;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.msg {
+    padding: 3px 5px;
+
+    &__content {
+        display: inline-block;
+        padding-left: 5px;
+    }
+
+    &__sub-message {
+        font-weight: normal;
+        margin-left: 25px;
+    }
+
+    &__icon {
+        height: 13px;
+        vertical-align: middle;
+        width: 14px;
+    }
+
+    &__customer-name {
+        font-weight: bold;
+
+        margin: {
+            left: 5px;
+            top: 5px;
+        }
+    }
+
+    &--success {
+        color: $success-color;
+
+        .msg__icon {
+            background-position: -65px 0;
+        }
+    }
+
+    &--warning {
+        color: $warning-color;
+
+        .msg__icon {
+            background-position: -51px 0;
+        }
+    }
+
+    &--error {
+        color: $error-color;
+
+        .msg__icon {
+            background-position: -51px 0;
+        }
+    }
+}
+
+.customer-setting {
+    @include border();
+    background-color: $container-bg;
+    padding: 2px;
+}
+
+.block {
+    @include border();
+    @include clearfix();
+    background-color: $default-bg;
+    margin-bottom: 10px;
+
+    &__header {
+        @include border(bottom);
+        background-color: $block-header-bg;
+        font-weight: bold;
+        line-height: 2.2rem;
+        text-align: center;
+
+        &--no-border {
+            border: none;
+        }
+    }
+
+    &__sub-header {
+        @include border(bottom);
+        background-color: $sub-header-bg;
+        font-weight: bold;
+        line-height: 2.2rem;
+        padding: 0 3px;
+        text-align: left;
+
+        &--border-top {
+            @include border(top);
+        }
+    }
+
+    &__item-group {
+        @include clearfix();
+    }
+
+    &__item {
+        @include col(50%);
+        @include border(bottom);
+        @include border(right);
+
+        &--even {
+            border-right: none;
+        }
+
+        &--near-last {
+            border-bottom: none;
+        }
+
+        &--last {
+            border-bottom: none;
+            border-right: none;
+        }
+
+        &--full-with {
+            @include col(100%);
+            border-right: none;
+
+            .block__lbl,
+            .block__lbl--white {
+                @include col(20%);
+            }
+
+            .block__value {
+                @include col(80%);
+            }
+
+            &.block__item--extended {
+                display: none;
+            }
+
+            &.block__item--near-last {
+                @include border(bottom);
+            }
+        }
+    }
+
+    &__cell {
+        @include border(right);
+        line-height: 2.1rem;
+        min-height: 2.1rem;
+
+        &--no-border {
+            border: none;
+        }
+    }
+
+    &__lbl {
+        @extend .block__cell;
+        @include col(40%);
+        background-color: $block-item-lbl-bg;
+        padding: 0 3px;
+
+        &--white {
+            background-color: $default-bg;
+        }
+
+        &--no-border {
+            border: none;
+        }
+    }
+
+    &__lbl-group {
+        @include border(bottom);
+        @include clearfix();
+        font-weight: bold;
+        line-height: 2.2rem;
+        text-align: center;
+    }
+
+    &__value {
+        @extend .block__cell;
+        @include col(60%);
+        border: none;
+    }
+}
+
+.full-width {
+    .block__item {
+        @include col(100%);
+        border-right: none;
+
+        &--extended {
+            display: none;
+        }
+
+        &--near-last {
+            @include border(bottom);
+        }
+    }
+
+    .block__lbl,
+    .block__lbl--white {
+        @include col(20%);
+    }
+
+    .block__value {
+        @include col(80%);
+    }
+}
+
+.right-btn-area {
+    cursor: pointer;
+    float: right;
+    height: 100%;
+
+    .icon {
+        vertical-align: middle;
+    }
+
+    &--seperate {
+        @include border(left);
+        width: 40px;
+    }
+}

@@ -1,28 +1,29 @@
-﻿@import "customer-setting.scss";
+﻿@import "_variables";
+@import "customer-setting";
 
-.ie8 {
-    input[type=checkbox] {
-        border: none;
+$ie8-font-size-base: $font-size-root !default;
+$ie8-line-height: 1.5 * $ie8-font-size-base;
+
+body {
+    font-size: $ie8-font-size-base;
+    line-height: $ie8-line-height;
+}
+
+.block {
+    &__header,
+    &__sub-header {
+        line-height: 2.2 * $ie8-font-size-base;
     }
 
-    .customer-setting {
-        .block {
-            .header {
-                line-height: 23px;
-            }
+    &__cell {
+        line-height: 2.1 * $ie8-font-size-base;
+        min-height: 2.1 * $ie8-font-size-base;
+    }
+}
 
-            .select-wrapper {
-                padding: {
-                    bottom: 1px;
-                    top: 1px;
-                }
-            }
-        }
-
-        .tooltip-container {
-            &:after {
-                content: none;
-            }
-        }
+.tooltip:after {
+    border: {
+        color: transparent;
+        width: 3px;
     }
 }

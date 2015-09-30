@@ -235,14 +235,16 @@ module CustomerSetting {
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-ng-change", "updateValue()");
-            element.attr("data-ng-class", StringFormater.format("{ 'invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
             element.attr("data-tooltip", "");
+            element.attr(
+                "data-ng-class",
+                StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
             element.attr(
                 "data-message",
                 StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
 
             if (scope.customerLevel !== Level.super || (scope.fieldName === "minBet" && scope.settingItem.minBet > 0)) {
-                element.addClass("has-constraint");
+                element.addClass("setting-field--has-constraint");
             }
 
             if (scope.fieldName === "minBet") {

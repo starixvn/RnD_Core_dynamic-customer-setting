@@ -48,9 +48,15 @@
     </None>
     <None Include="Assets\Styles\customer-setting-matrix.scss" />
     <None Include="Assets\Styles\customer-setting.css.map">
-      <DependentUpon>customer-setting.scss</DependentUpon>
+      <DependentUpon>customer-setting.css</DependentUpon>
     </None>
     <None Include="Assets\Styles\customer-setting.scss" />
+    <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
+    <None Include="Assets\Styles\_base.scss" />
+    <None Include="Assets\Styles\_customer-setting-core.scss" />
+    <None Include="Assets\Styles\_other.scss" />
+    <None Include="Assets\Styles\_shame.scss" />
+    <None Include="Assets\Styles\_variables.scss" />
     <None Include="bower.json" />
     <None Include="Gulp\gulp-tsd.json" />
     <None Include="Gulp\products-config.json" />

@@ -1,20 +1,18 @@
 ﻿<div class="modal-overlay" data-ng-show="isShown">
     <div class="modal">
-        <div class="modal-header">
-            <div class="modal-title" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
-                {{'DisableMasterAutoPt' | positionTakingLabel}}
-            </div>
-            <div class="modal-title" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-                {{'DisableAgentAutoPt' | positionTakingLabel}}
-            </div>
+        <div class="modal__title" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+            {{'DisableMasterAutoPt' | positionTakingLabel}}
         </div>
-        <div class="modal-content">
-            <span data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></span>
-            <div class="block setting-type-1">
-                <div class="setting-type-group" data-ng-repeat="group in sportGroups">
-                    <div class="header sub-group-header"
+        <div class="modal__title" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+            {{'DisableAgentAutoPt' | positionTakingLabel}}
+        </div>
+        <div class="modal__content">
+            <div class="question-block" data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></div>
+            <div class="block full-width">
+                <div class="block__item-group" data-ng-repeat="group in sportGroups">
+                    <div class="block__sub-header"
                          data-ng-if="settingLevel === avaiSettingLevels.sportTypeBetType"
-                         data-ng-class="{ 'not-first': ($index > 0) }"
+                         data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }"
                          data-sport-type="{{group[0].sportTypeId}}">
                         {{group[0].sportTypeName}}
                         <div data-copy-position-taking-on-member
@@ -24,10 +22,10 @@
                              data-setting-items="sportGroups">
                         </div>
                     </div>
-                    <div class="setting-group"
+                    <div class="block__item"
                          data-ng-repeat="item in group"
-                         data-ng-class="{ 'last': $last }">
-                        <div class="name-col"
+                         data-ng-class="{ 'block__item--last': $last }">
+                        <div class="block__lbl block__lbl--half-width"
                              data-sport-type="{{item.sportTypeId}}"
                              data-bet-type="{{item.betTypeId}}">
                             {{item | showingName:settingLevel:productName }}
@@ -39,15 +37,17 @@
                                  data-setting-items="group">
                             </div>
                         </div>
-                        <div class="value-col">
-                            <div class="select-wrapper">
-                                <select data-ng-if="customerLevel === avaiCustomerLevels.masterAgent"
+                        <div class="block__value block__value--half-width">
+                            <div class="setting-field-wrapper">
+                                <select class="setting-field"
+                                        data-ng-if="customerLevel === avaiCustomerLevels.masterAgent"
                                         data-ng-model="item.superPTOnMembers"
-                                        data-ng-class="{ 'invalid': (item.validationState | highlightingField:'superPTOnMembers') }"
+                                        data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField:'superPTOnMembers') }"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
-                                <select data-ng-if="customerLevel === avaiCustomerLevels.agent"
+                                <select class="setting-field"
+                                        data-ng-if="customerLevel === avaiCustomerLevels.agent"
                                         data-ng-model="item.masterPTOnMembers"
-                                        data-ng-class="{ 'invalid': (item.validationState | highlightingField:'masterPTOnMembers') }"
+                                        data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField:'masterPTOnMembers') }"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                             </div>
                         </div>
@@ -55,9 +55,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button data-ng-click="ok()">{{'Yes' | label}}</button>
-            <button data-ng-click="cancel()">{{'No' | label}}</button>
+        <div class="modal__footer">
+            <button class="btn btn--small" data-ng-click="ok()">{{'Yes' | label}}</button>
+            <button class="btn btn--small" data-ng-click="cancel()">{{'No' | label}}</button>
         </div>
     </div>
 </div>
