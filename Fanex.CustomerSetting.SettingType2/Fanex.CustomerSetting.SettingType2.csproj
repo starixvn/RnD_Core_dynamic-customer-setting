@@ -113,7 +113,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fanex.CustomerSetting.SettingType2.Template1.xml">
+    <Content Include="Fanex.CustomerSetting.SettingType2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

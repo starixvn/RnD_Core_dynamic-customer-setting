@@ -1,0 +1,8 @@
+﻿<div data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent">
+    <div class="empty-cell"></div>
+    <div class="w80-percent no-right-border">
+        <div class="w33-percent">{{::('CommissionForMaster' | commissionLabel)}}</div>
+        <div class="w33-percent">{{::('CommissionForAgent' | commissionLabel)}}</div>
+        <div class="w33-percent last">{{::('CommissionForMemeber' | commissionLabel)}}</div>
+    </div>
+</div>

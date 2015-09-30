@@ -256,7 +256,9 @@
     <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm.IE8\demo-form.js" />
     <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
-    <Content Include="Scripts\DemoForm\demo-form.js" />
+    <Content Include="Scripts\DemoForm\demo-form.js">
+      <DependentUpon>demo-form.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />

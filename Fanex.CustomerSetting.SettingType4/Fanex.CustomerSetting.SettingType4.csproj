@@ -135,7 +135,7 @@
     <EmbeddedResource Include="Resources\Message.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fanex.CustomerSetting.SettingType4.Template1.xml">
+    <Content Include="Fanex.CustomerSetting.SettingType4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

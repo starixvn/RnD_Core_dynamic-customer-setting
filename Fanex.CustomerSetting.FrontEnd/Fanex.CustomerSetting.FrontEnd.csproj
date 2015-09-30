@@ -112,6 +112,7 @@
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.tt">
@@ -192,6 +193,7 @@
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.tt">
@@ -316,11 +318,11 @@
     <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Core\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\Resource\resource-translation.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1.Template1\adjust-member-pt-modal.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1.Template1\settingtype1-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType2.Template1\settingtype2-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType3.Template1\settingtype3-template1.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType4.Template1\settingtype4-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1\adjust-member-pt-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType1\settingtype1-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType2\settingtype2-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType3\settingtype3-template1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Specs\CustomerSetting\SettingType4\settingtype4-template1.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

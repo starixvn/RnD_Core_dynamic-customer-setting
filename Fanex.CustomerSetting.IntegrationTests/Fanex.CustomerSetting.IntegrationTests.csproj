@@ -143,16 +143,16 @@
     <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.Matrix.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.Template1.xml">
+    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.Template1.xml">
+    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.Template1.xml">
+    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.Template1.xml">
+    <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="CustomerSettingSpNames\Fanex.CustomerSetting.xml">
