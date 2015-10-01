@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DownlineCannotBeEnabledWhenUplineIsDisabled" xml:space="preserve">
-    <value>Downline cannnot be enabled when Upline is disabled</value>
+    <value>Downline cannnot be enabled when Upline is disabled.</value>
   </data>
   <data name="DownlineProductStatusCannotBeNull" xml:space="preserve">
-    <value>Downline Product Status cannot be null</value>
+    <value>Downline Product Status cannot be null.</value>
   </data>
   <data name="DownlineStatusCannotBeChanged" xml:space="preserve">
-    <value>Downline status cannot be changed when the Upline has not been changed</value>
+    <value>Downline status cannot be changed when the Upline has not been changed.</value>
   </data>
   <data name="DownlineStatusIsInvalid" xml:space="preserve">
     <value>The product is not offered for this line of customers</value>
   </data>
   <data name="Msg_60031" xml:space="preserve">
-    <value>Account disabled for this product. Unable to edit downlines</value>
+    <value>Unable to edit downline's Product Status because the account disabled for this product.</value>
   </data>
   <data name="Msg_60032" xml:space="preserve">
-    <value>Cannot synchronize this product because this account's upline not synchronize setting</value>
+    <value>Unable to synchronize this product because the upline account setting is not synchronized.</value>
   </data>
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
     <value>Updated product status successfully.</value>

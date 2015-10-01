@@ -5,7 +5,7 @@
 
     public interface ISetting
     {
-        CustomerInfo CustomerInfo { get; }
+        CustomerInfo CustomerInfo { get; set; }
 
         int CustomerId { get; set; }
 

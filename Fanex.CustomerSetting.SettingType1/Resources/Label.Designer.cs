@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.SettingType1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have changed this agent not to take auto position taking.
+        ///   Looks up a localized string similar to You have changed this agent not to take auto position taking..
         /// </summary>
         internal static string DisableAgentAutoPt {
             get {
@@ -97,7 +97,7 @@ namespace Fanex.CustomerSetting.SettingType1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have changed this master not to take auto position taking.
+        ///   Looks up a localized string similar to You have changed this master not to take auto position taking..
         /// </summary>
         internal static string DisableMasterAutoPt {
             get {

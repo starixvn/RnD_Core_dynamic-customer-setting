@@ -76,7 +76,7 @@
 
             foreach (var settingType in settingTypes)
             {
-                updateSettingTypeResult = UpdateCustomerSettingType(customerId, customerLevel, settingType, productId, uplineLevel);
+                updateSettingTypeResult = UpdateCustomerSettingType(customerId, command.Setting.CustomerInfo, customerLevel, settingType, productId, uplineLevel);
 
                 settingTypeResults.Add(updateSettingTypeResult);
             }
@@ -86,6 +86,7 @@
 
         private SettingResult UpdateCustomerSettingType(
             int customerId,
+            CustomerInfo customerInfo,
             Level customerLevel,
             SettingType settingType,
             byte productId,
@@ -97,7 +98,11 @@
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
-                return settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+
+                AddCustomerNameToSettingResult(settingResult, customerInfo);
+
+                return settingResult;
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -140,6 +145,15 @@
             ex.SetProductInfo(productId, customerSettingType);
 
             _logger.Error(ex.Message, ex);
+        }
+
+        private void AddCustomerNameToSettingResult(SettingResult settingResult, CustomerInfo customerInfo)
+        {
+            if (settingResult != null
+                && settingResult.IsFailed)
+            {
+                settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
+            }
         }
     }
 }

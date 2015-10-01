@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType3.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commission Rate cannot be exceed Max Value.
+        ///   Looks up a localized string similar to Commission Rate cannot be exceed Max Value..
         /// </summary>
         internal static string CommRateCannotBeExceedMaxValue {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.SettingType3.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commission Rate cannot be negative.
+        ///   Looks up a localized string similar to Commission Rate cannot be negative..
         /// </summary>
         internal static string CommRateCannotBeNegative {
             get {
@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.SettingType3.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid commission rate.
+        ///   Looks up a localized string similar to Invalid Commission Rate..
         /// </summary>
         internal static string Msg_1 {
             get {

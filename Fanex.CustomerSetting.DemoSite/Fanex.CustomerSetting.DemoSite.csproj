@@ -253,6 +253,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css.map" />
+    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
+    <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
     <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm.IE8\demo-form.js" />
     <Content Include="Scripts\DemoForm.IE8\posting-to-iframe.htm" />
@@ -316,9 +319,6 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <None Include="package.json" />
-    <Content Include="App\CustomerSettingMatrix\Styles\customer-setting-matrix.css.map" />
-    <Content Include="App\CustomerSetting\Styles\customer-setting.css.map" />
-    <Content Include="App\CustomerSetting.IE8\Styles\customer-setting-ie8.css.map" />
     <None Include="tslint.json" />
     <Content Include="Scripts\sample-data.json" />
     <Content Include="Views\Home\Index-IE8.cshtml" />

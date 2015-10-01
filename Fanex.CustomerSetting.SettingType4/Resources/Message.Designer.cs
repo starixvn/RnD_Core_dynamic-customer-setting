@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled.
+        ///   Looks up a localized string similar to Downline cannnot be enabled when Upline is disabled..
         /// </summary>
         internal static string DownlineCannotBeEnabledWhenUplineIsDisabled {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline Product Status cannot be null.
+        ///   Looks up a localized string similar to Downline Product Status cannot be null..
         /// </summary>
         internal static string DownlineProductStatusCannotBeNull {
             get {
@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline status cannot be changed when the Upline has not been changed.
+        ///   Looks up a localized string similar to Downline status cannot be changed when the Upline has not been changed..
         /// </summary>
         internal static string DownlineStatusCannotBeChanged {
             get {
@@ -97,7 +97,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account disabled for this product. Unable to edit downlines.
+        ///   Looks up a localized string similar to Unable to edit downline&apos;s Product Status because the account disabled for this product..
         /// </summary>
         internal static string Msg_60031 {
             get {
@@ -106,7 +106,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot synchronize this product because this account&apos;s upline not synchronize setting.
+        ///   Looks up a localized string similar to Unable to synchronize this product because the upline account setting is not synchronized..
         /// </summary>
         internal static string Msg_60032 {
             get {

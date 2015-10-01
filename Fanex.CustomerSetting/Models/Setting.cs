@@ -102,7 +102,7 @@
             }
         }
 
-        public CustomerInfo CustomerInfo { get; private set; }
+        public CustomerInfo CustomerInfo { get; set; }
 
         public IEnumerable<SettingType> SettingTypes
         {
