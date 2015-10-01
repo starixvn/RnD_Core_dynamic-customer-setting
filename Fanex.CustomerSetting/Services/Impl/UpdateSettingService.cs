@@ -100,7 +100,7 @@
 
                 var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
 
-                AddCustomerNameToSettingResult(settingResult, customerInfo);
+                settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
 
                 return settingResult;
             }
@@ -145,15 +145,6 @@
             ex.SetProductInfo(productId, customerSettingType);
 
             _logger.Error(ex.Message, ex);
-        }
-
-        private void AddCustomerNameToSettingResult(SettingResult settingResult, CustomerInfo customerInfo)
-        {
-            if (settingResult != null
-                && settingResult.IsFailed)
-            {
-                settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
-            }
         }
     }
 }
