@@ -1,6 +1,6 @@
-﻿<comm-rate data-ng-if="settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)"
-           data-setting-item="item">
-</comm-rate>
+﻿<comm-rate-select data-ng-if="settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)"
+                  data-setting-item="item">
+</comm-rate-select>
 <div class="align-center" data-ng-if="!settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     {{item.commRate}}
 </div>

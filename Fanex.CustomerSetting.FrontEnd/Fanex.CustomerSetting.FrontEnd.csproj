@@ -93,7 +93,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.tt">
@@ -117,7 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\comm-rate-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.htm" />
@@ -174,7 +174,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.tt">
@@ -198,7 +198,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>commission-resources.tt</DependentUpon>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-drop.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\comm-rate-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-header.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.htm" />
@@ -267,11 +267,17 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\settingtype1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType2\settingtype2.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\comm-rate-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType3\settingtype3.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
@@ -303,13 +309,20 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\settingtype1.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\bet-setting-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType2\settingtype2.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\comm-rate-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\commission-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType3\settingtype3.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\status-checkbox.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />
@@ -334,6 +347,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\" />
     <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

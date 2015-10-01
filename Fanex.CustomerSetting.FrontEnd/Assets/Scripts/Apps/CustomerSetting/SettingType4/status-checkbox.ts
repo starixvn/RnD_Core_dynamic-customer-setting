@@ -1,0 +1,33 @@
+﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+
+module CustomerSetting.IE8 {
+    "use strict";
+
+    interface IStatusCheckboxScope extends ng.IScope {
+        item: SettingType4Item;
+        change: () => void;
+    }
+
+    class StatusCheckboxDirective implements ng.IDirective {
+        public restrict: string = "A";
+
+        public controller: any = ["$scope", ($scope: IStatusCheckboxScope) => {
+            $scope.change = () => {
+                $scope.item.isDisabled = !$scope.item.isChecked;
+
+                if ($scope.item.downline) {
+                    if ($scope.item.isChecked && !(<SettingType4Item>$scope.item.oldSetting).isChecked) {
+                        $scope.item.downline.readonly = false;
+                    } else {
+                        $scope.item.downline.isChecked = $scope.item.isChecked;
+                        $scope.item.downline.readonly = true;
+                    }
+                }
+            };
+        }];
+    }
+
+    ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
+}
