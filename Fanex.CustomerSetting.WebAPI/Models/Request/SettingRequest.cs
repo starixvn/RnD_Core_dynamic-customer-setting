@@ -20,7 +20,7 @@
         [Range(2, 5)]
         public byte ActorLevel { get; set; }
 
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int SubAccountId { get; set; }
 
         [Range(1, 3)]
