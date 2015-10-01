@@ -59,9 +59,9 @@
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["en-us"] = {
-        "CommRateCannotBeExceedMaxValue": "Commission Rate cannot be exceed Max Value",
-        "CommRateCannotBeNegative": "Commission Rate cannot be negative",
-        "Msg_1": "Invalid commission rate",
+        "CommRateCannotBeExceedMaxValue": "Commission Rate cannot be exceed Max Value.",
+        "CommRateCannotBeNegative": "Commission Rate cannot be negative.",
+        "Msg_1": "Invalid Commission Rate.",
         "UpdateCommissionSuccessfully": "Updated commission setting successfully."
     };
     

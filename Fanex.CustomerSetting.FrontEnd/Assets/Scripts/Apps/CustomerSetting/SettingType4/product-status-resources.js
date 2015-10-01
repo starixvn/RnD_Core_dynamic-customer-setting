@@ -53,12 +53,12 @@
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["en-us"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled",
-        "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null",
-        "DownlineStatusCannotBeChanged": "Downline status cannot be changed when the Upline has not been changed",
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
+        "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
+        "DownlineStatusCannotBeChanged": "Downline status cannot be changed when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
-        "Msg_60031": "Account disabled for this product. Unable to edit downlines",
-        "Msg_60032": "Cannot synchronize this product because this account&apos;s upline not synchronize setting",
+        "Msg_60031": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
+        "Msg_60032": "Unable to synchronize this product because the upline account setting is not synchronized.",
         "UpdateProductStatusSuccessfully": "Updated product status successfully."
     };
     

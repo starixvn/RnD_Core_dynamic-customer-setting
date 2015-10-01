@@ -22,8 +22,8 @@
         "No": "No",
         "Phone": "Phone",
         "Update": "Update",
-        "UserName": "UserName",
-        "UserNames": "UserNames",
+        "UserName": "Username",
+        "UserNames": "Usernames",
         "Yes": "Yes"
     };
     
