@@ -27,8 +27,10 @@
                 messageBuilder.AppendFormat("Query String:: {0}", actionExecutedContext.Request.RequestUri.ToString()).AppendLine();
 
                 LogDatabaseException(exception, messageBuilder);
+
                 LogService.Error(messageBuilder.ToString(), actionExecutedContext.Exception);
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
+
+                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, GetErrorMessage(exception));
             }
         }
 
@@ -47,6 +49,19 @@
                     messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
                 }
             }
+        }
+
+        private string GetErrorMessage(Exception ex)
+        {
+            if (ex != null 
+                && ex is AccessViolationException)
+            {
+                var accessViolationException = ex as AccessViolationException;
+
+                return accessViolationException.Message;
+            }
+
+            return Message.SystemError;
         }
     }
 }

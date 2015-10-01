@@ -51,7 +51,7 @@
 
             var validationResult = Validate(command);
 
-            if (!validationResult.IsSuccessful)
+            if (validationResult.IsNotOk)
             {
                 return validationResult;
             }

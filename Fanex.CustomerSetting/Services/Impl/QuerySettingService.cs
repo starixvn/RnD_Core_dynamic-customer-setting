@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Criteria;
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.Data.Repository;
     using Fanex.Logging;
@@ -72,6 +73,11 @@
 
             if (validationResult.IsNotOk)
             {
+                if (validationResult.Code == ResultValue.AccessDenied)
+                {
+                    throw new AccessViolationException(validationResult.Message);
+                }
+
                 throw new InvalidOperationException(validationResult.Message);
             }
         }
