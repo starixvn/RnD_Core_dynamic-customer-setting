@@ -12,10 +12,22 @@
     <div class="block__lbl block__lbl--no-border w28-percent">{{::('MasterMinPT' | positionTakingLabel)}}</div>
 </div>
 <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-    <div class="block__lbl w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">{{::('MasterPT' | positionTakingLabel)}}</div>
-    <div class="block__lbl w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">{{::('IsAuto' | positionTakingLabel)}}</div>
-    <div class="block__lbl w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">{{::('AgentMaxPT' | positionTakingLabel)}}</div>
-    <div class="block__lbl block__lbl--no-border w28-percent" data-ng-class="{ 'w33-percent--last': (settingType | hideIsAutoColumn) }">{{::('AgentMinPT' | positionTakingLabel)}}</div>
+    <div class="block__lbl w28-percent"
+         data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">
+        {{::('MasterPT' | positionTakingLabel)}}
+    </div>
+    <div class="block__lbl w16-percent"
+         data-ng-if="!(settingType | hideIsAutoColumn)">
+        {{::('IsAuto' | positionTakingLabel)}}
+    </div>
+    <div class="block__lbl w28-percent"
+         data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">
+        {{::('AgentMaxPT' | positionTakingLabel)}}
+    </div>
+    <div class="block__lbl block__lbl--no-border w28-percent"
+         data-ng-class="{ 'w33-percent--last': (settingType | hideIsAutoColumn) }">
+        {{::('AgentMinPT' | positionTakingLabel)}}
+    </div>
 </div>
 <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super">
     <div class="block__lbl w28-percent">{{::('SuperPT' | positionTakingLabel)}}</div>
@@ -24,10 +36,20 @@
     <div class="block__lbl block__lbl--no-border w28-percent">{{::('AgentPT' | positionTakingLabel)}}</div>
 </div>
 <div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master">
-    <div class="block__lbl w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{::('MasterPT' | positionTakingLabel)}}</div>
-    <div class="block__lbl w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">{{::('IsAuto' | positionTakingLabel)}}</div>
-    <div class="block__lbl block__lbl--no-border w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{::('AgentPT' | positionTakingLabel)}}</div>
+    <div class="block__lbl w42-percent"
+         data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+        {{::('MasterPT' | positionTakingLabel)}}
+    </div>
+    <div class="block__lbl w16-percent"
+         data-ng-if="!(settingType | hideIsAutoColumn)">
+        {{::('IsAuto' | positionTakingLabel)}}
+    </div>
+    <div class="block__lbl block__lbl--no-border w42-percent"
+         data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+        {{::('AgentPT' | positionTakingLabel)}}
+    </div>
 </div>
-<div class="block__lbl block__lbl--no-border w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
-    <div>{{::('AgentPT' | positionTakingLabel)}}</div>
+<div class="block__lbl block__lbl--no-border w80-percent"
+     data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+    {{::('AgentPT' | positionTakingLabel)}}
 </div>

@@ -2,7 +2,6 @@
 /// <reference path="../resource/resource-translation.ts" />
 /// <reference path="common.ts" />
 /// <reference path="helper-services.ts" />
-/// <reference path="helpers.ts" />
 /// <reference path="models.ts" />
 /// <reference path="module-registrater.ts" />
 /// <reference path="parameters.ts" />

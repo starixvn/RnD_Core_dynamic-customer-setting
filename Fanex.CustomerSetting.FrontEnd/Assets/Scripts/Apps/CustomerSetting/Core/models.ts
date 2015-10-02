@@ -132,7 +132,7 @@ module CustomerSetting {
         public settingItems: Array<ISettingItem>;
         public typeName: string;
         public displayOrder: number;
-        public editable: boolean;
+        public displayMode: number;
         public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
@@ -145,7 +145,7 @@ module CustomerSetting {
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
                 this.displayOrder = settingType.displayOrder;
-                this.editable = true; //settingType.editable;
+                this.displayMode = settingType.displayMode;
                 this.extraData = this.getExtraData(settingType);
             }
         }
@@ -232,7 +232,6 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
-        public editable: boolean;
 
         constructor();
         constructor(setting: any)
@@ -246,9 +245,6 @@ module CustomerSetting {
 
                 if (setting.settingTypes) {
                     this.settingTypes = setting.settingTypes.map((settingType: any) => new SettingType(settingType));
-                    this.editable = this.settingTypes.some((settingType: SettingType) => {
-                        return settingType.editable;
-                    });
                 } else {
                     this.settingTypes = new Array<SettingType>();
                 }

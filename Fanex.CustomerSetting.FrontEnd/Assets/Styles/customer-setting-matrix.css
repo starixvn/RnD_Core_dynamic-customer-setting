@@ -1,4 +1,4 @@
-﻿/*
+/*
  * A partial implementation of the Ruby list functions from Compass:
  * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/lists.rb
  */
@@ -78,7 +78,6 @@ ul {
   padding: 0;
   margin: 0;
 }
-
 ul li {
   list-style: none;
   display: inline;
@@ -90,32 +89,26 @@ ul li {
   padding: 10px;
   margin-bottom: 10px;
 }
-
 .container .header ul {
   padding: 0;
   margin: 0 0 10px 0;
 }
-
 .container .header ul li {
   margin-right: 10px;
   font-weight: bold;
 }
-
 .container .header ul li label {
   cursor: pointer;
 }
-
 .container .header ul li label input {
   display: inline-block;
   vertical-align: middle;
   margin: 0 5px 0 0;
 }
-
 .container .header .matrix-form {
   overflow: hidden;
   *zoom: 1;
 }
-
 .container .header .matrix-form .form-control {
   display: -moz-inline-stack;
   display: inline-block;
@@ -125,15 +118,12 @@ ul li {
   *display: inline;
   margin: 0 10px 0 0;
 }
-
 .container .header .matrix-form .form-control label {
   margin: 0 10px 0 0;
 }
-
 .container .header .matrix-form .form-control input {
   width: 60%;
 }
-
 .container .error-message-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -143,7 +133,6 @@ ul li {
   font-weight: bold;
   margin-bottom: 10px;
 }
-
 .container .error-message-container .error-icon {
   background-image: url("Images/sprite.png");
   background-position: -51px 0;
@@ -153,45 +142,36 @@ ul li {
   width: 13px;
   vertical-align: middle;
 }
-
 .container .error-message-container .content {
   display: inline-block;
   line-height: 15px;
   padding-left: 10px;
   color: #e9322d;
 }
-
 .container .main-content {
   border: 1px solid #7c98a4;
   background-color: #fff;
   padding: 10px;
 }
-
 .container .main-content .customer-line {
   margin: 0 0 20px 0;
 }
-
 .container .main-content .customer-line ul li {
   font-weight: bold;
 }
-
 .container .main-content .customer-line ul li + li:before {
   padding: 0 5px;
   content: ">";
 }
-
 .container .main-content .group-matrix {
   margin: 5px 0;
 }
-
 .container .main-content .group-matrix.group-matrix-setting-level-4 {
   border: 1px solid #7c98a4;
 }
-
 .container .main-content .group-matrix.group-matrix-setting-level-4 .group-name {
   border-width: 0 0 1px 0;
 }
-
 .container .main-content .group-matrix .group-name {
   padding: 5px 10px;
   font-weight: bold;
@@ -199,71 +179,57 @@ ul li {
   border: 1px solid #7c98a4;
   border-width: 1px 1px 0 1px;
 }
-
 .container .main-content .group-matrix .item-matrix {
   border: 1px solid #7c98a4;
 }
-
 .container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4 {
   margin: 20px;
 }
-
 .container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4 .item-name {
   background-color: #eeecee;
 }
-
 .container .main-content .group-matrix .item-matrix .item-name {
   padding: 5px;
   background-color: #66afe9;
   font-weight: bold;
   border-bottom: 1px solid #7c98a4;
 }
-
 .container .main-content .group-matrix .item-matrix .pt-icon {
   background: #EEECEE;
 }
-
 .container .main-content .group-matrix .item-matrix .pt-icon.not-allow {
   background: #fce9fb;
 }
-
 .container .main-content .group-matrix .item-matrix .pt-icon .icon-auto-pt {
   background: url("images/auto-pt.gif") no-repeat center #EEECEE;
   width: 15px;
   height: 14px;
   margin: 0 auto;
 }
-
 .container .main-content .group-matrix .item-matrix .pt-icon .icon-not-auto-pt {
   background: url("images/not-allow-auto-pt.gif") no-repeat center #fce9fb;
   width: 8px;
   height: 14px;
   margin: 0 auto;
 }
-
 .container .main-content .group-matrix .item-matrix table, .container .main-content .group-matrix .item-matrix tr, .container .main-content .group-matrix .item-matrix td, .container .main-content .group-matrix .item-matrix th {
   border: 1px solid #7c98a4;
   border-collapse: collapse;
   text-align: center;
 }
-
 .container .main-content .group-matrix .item-matrix table {
   margin: 20px;
 }
-
 .container .main-content .group-matrix .item-matrix table th {
   background-color: #b5c4d0;
   text-align: center;
 }
-
 .container .main-content .group-matrix .item-matrix table th, .container .main-content .group-matrix .item-matrix table td {
   height: 25px;
 }
-
 .container .main-content .group-matrix .item-matrix table tr:hover, .container .main-content .group-matrix .item-matrix table tr:hover td {
   background-color: #e2f3d1;
 }
-
 .container .main-content .group-matrix .item-matrix table .customer-level {
   text-align: left;
   font-weight: bold;

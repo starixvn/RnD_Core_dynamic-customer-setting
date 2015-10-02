@@ -1,4 +1,4 @@
-﻿<div data-ng-if="settingType.editable">
+﻿<div data-ng-if="settingType | editableSettingType">
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
         <div class="block__cell w25-percent">
             <div data-position-taking-select
@@ -52,7 +52,7 @@
         </div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS3" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS3" />
             </label>
         </div>
         <div class="block__cell w28-percent">
@@ -93,7 +93,7 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM2" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM2" />
             </label>
         </div>
         <div class="block__cell w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">
@@ -133,7 +133,7 @@
         </div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS1" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS1" />
             </label>
         </div>
         <div class="block__cell w28-percent">{{item.m1 | ptFormat}}</div>
@@ -161,10 +161,13 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM1" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM1" />
             </label>
         </div>
-        <div class="block__cell block__cell--no-border w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1 | ptFormat}}</div>
+        <div class="block__cell block__cell--no-border w42-percent"
+             data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+            {{item.a1 | ptFormat}}
+        </div>
     </div>
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
         <div>
@@ -177,7 +180,7 @@
         </div>
     </div>
 </div>
-<div data-ng-if="!settingType.editable">
+<div data-ng-if="!(settingType | editableSettingType)">
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.superAgent">
         <div class="block__cell w25-percent">{{item.s4 | ptFormat}}</div>
         <div class="block__cell w25-percent">{{item.m4 | ptFormat}}</div>
@@ -189,7 +192,7 @@
         <div class="block__cell w28-percent" data-ng-if="!item.iS3">{{item.s3 | ptFormat}}</div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iS3" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iS3" />
             </label>
         </div>
         <div class="block__cell w28-percent">{{item.m3 | ptFormat}}</div>
@@ -204,7 +207,7 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iM2" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iM2" />
             </label>
         </div>
         <div class="block__cell w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">
@@ -219,7 +222,7 @@
         <div class="block__cell w28-percent" data-ng-if="!item.iS1">{{item.s1 | ptFormat}}</div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iS1" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iS1" />
             </label>
         </div>
         <div class="block__cell w28-percent">{{item.m1 | ptFormat}}</div>
@@ -234,10 +237,13 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox"class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iM1" />
+                <input type="checkbox" class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iM1" />
             </label>
         </div>
-        <div class="block__cell block__cell--no-border w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1 | ptFormat}}</div>
+        <div class="block__cell block__cell--no-border w42-percent"
+             data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+            {{item.a1 | ptFormat}}
+        </div>
     </div>
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
         {{item.a1 | ptFormat}}

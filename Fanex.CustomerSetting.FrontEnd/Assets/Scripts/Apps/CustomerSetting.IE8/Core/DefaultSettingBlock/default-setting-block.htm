@@ -3,7 +3,7 @@
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
-             data-ng-if="settingType.editable"
+             data-ng-if="settingType | editableSettingType"
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
@@ -15,7 +15,7 @@
              data-sport-type="{{group[0].sportTypeId}}">
             {{group[0].sportTypeName}}
             <div data-copy-setting
-                 data-ng-if="settingType.editable && sportGroups.length > 1 && $index === 0"
+                 data-ng-if="(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0"
                  data-setting-type-id="settingType.id"
                  data-setting-items="sportGroups">
             </div>
@@ -31,7 +31,7 @@
                 {{item | showingName:settingType.settingLevel:productName }}
                 {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
                 <div data-copy-setting
-                     data-ng-if="settingType.editable && group.length > 1 && $index === 0"
+                     data-ng-if="(settingType | editableSettingType) && group.length > 1 && $index === 0"
                      data-setting-type-id="settingType.id"
                      data-setting-items="group">
                 </div>

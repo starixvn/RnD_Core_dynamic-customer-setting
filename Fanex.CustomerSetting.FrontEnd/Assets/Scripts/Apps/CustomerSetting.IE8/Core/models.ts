@@ -133,7 +133,7 @@ module CustomerSetting.IE8 {
         public settingItems: Array<ISettingItem>;
         public typeName: string;
         public displayOrder: number;
-        public editable: boolean;
+        public displayMode: number;
         public extraData: Array<KeyValuePair<string, any>>;
 
         constructor();
@@ -146,7 +146,7 @@ module CustomerSetting.IE8 {
                 this.settingItems = settingType.settingItems;
                 this.typeName = settingType.typeName;
                 this.displayOrder = settingType.displayOrder;
-                this.editable = true; //settingType.editable;
+                this.displayMode = settingType.displayMode;
                 this.extraData = this.getExtraData(settingType);
             }
         }
@@ -233,7 +233,6 @@ module CustomerSetting.IE8 {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
-        public editable: boolean;
 
         constructor();
         constructor(setting: any)
@@ -247,9 +246,6 @@ module CustomerSetting.IE8 {
 
                 if (setting.settingTypes) {
                     this.settingTypes = _.map(setting.settingTypes, (settingType: any) => new SettingType(settingType));
-                    this.editable = _.some(this.settingTypes, (settingType: SettingType) => {
-                        return settingType.editable;
-                    });
                 } else {
                     this.settingTypes = new Array<SettingType>();
                 }

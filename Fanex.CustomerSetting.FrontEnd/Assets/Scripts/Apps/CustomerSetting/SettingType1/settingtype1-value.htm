@@ -1,4 +1,4 @@
-﻿<div data-ng-if="settingType.editable">
+﻿<div data-ng-if="settingType | editableSettingType">
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.super">
         <div class="block__cell w25-percent">
             <position-taking-select data-setting-item="item"
@@ -152,7 +152,10 @@
                 <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM1" />
             </label>
         </div>
-        <div class="block__cell block__cell--no-border w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1 | ptFormat}}</div>
+        <div class="block__cell block__cell--no-border w42-percent"
+             data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+            {{item.a1 | ptFormat}}
+        </div>
     </div>
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
         <div>
@@ -164,7 +167,7 @@
         </div>
     </div>
 </div>
-<div data-ng-if="!settingType.editable">
+<div data-ng-if="!(settingType | editableSettingType)">
     <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.super">
         <div class="block__cell w25-percent">{{item.s4 | ptFormat}}</div>
         <div class="block__cell w25-percent">{{item.m4 | ptFormat}}</div>
@@ -224,9 +227,13 @@
                 <input type="checkbox" class="setting-field--checkfield__check-ctrl" disabled="disabled" data-ng-model="item.iM1" />
             </label>
         </div>
-        <div class="block__cell block__cell--no-border w42-percent" data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">{{item.a1 | ptFormat}}</div>
+        <div class="block__cell block__cell--no-border w42-percent"
+             data-ng-class="{ 'w50-percent': (settingType | hideIsAutoColumn) }">
+            {{item.a1 | ptFormat}}
+        </div>
     </div>
-    <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
+    <div class="align-center"
+         data-ng-if="customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent">
         {{item.a1 | ptFormat}}
     </div>
 </div>

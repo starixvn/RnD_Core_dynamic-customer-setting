@@ -16,6 +16,12 @@ module CustomerSetting {
         error = 2
     }
 
+    export enum DisplayMode {
+        editable = 1,
+        readOnly = 2,
+        hidden = 3
+    }
+
     export class Exceptions {
         public static notImplemented(funcName: string): string {
             return StringFormater.format("{0} is not implemented", funcName);

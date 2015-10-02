@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/common.ts" />
 /// <reference path="../core/helper-services.ts" />
 /// <reference path="../core/module-registrater.ts" />
 

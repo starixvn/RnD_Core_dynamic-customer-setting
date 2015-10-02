@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../resource/resource-translation.ts" />
-/// <reference path="../helpers.ts" />
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {

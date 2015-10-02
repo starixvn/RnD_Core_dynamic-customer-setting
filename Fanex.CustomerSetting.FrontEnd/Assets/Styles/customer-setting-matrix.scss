@@ -21,7 +21,6 @@ body {
     position: relative;
 }
 
-
 input[type=text], select {
     font-size: 11px;
 }
@@ -92,7 +91,6 @@ ul {
 }
 
 .container {
-
     .header {
         border: 1px solid $border-color;
         background-color: $background-color;
@@ -121,7 +119,6 @@ ul {
 
         .matrix-form {
             @include clearfix();
-
 
             .form-control {
                 @include inline-block();
@@ -230,7 +227,6 @@ ul {
                         background: #fce9fb;
                     }
 
-
                     .icon-auto-pt {
                         background: url("images/auto-pt.gif") no-repeat center #EEECEE;
                         width: 15px;
@@ -245,8 +241,6 @@ ul {
                         margin: 0 auto;
                     }
                 }
-
-
 
                 table, tr, td, th {
                     border: 1px solid $border-color;

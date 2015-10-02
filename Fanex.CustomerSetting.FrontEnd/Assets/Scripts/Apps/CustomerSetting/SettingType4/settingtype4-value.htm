@@ -1,5 +1,5 @@
 ﻿<div class="setting-field-wrapper"
-     data-ng-if="settingType.editable && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
+     data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     <label class="setting-field--checkfield">
         <input type="checkbox"
                class="setting-field--checkfield__check-ctrl"
@@ -22,7 +22,7 @@
     </label>
 </div>
 <div class="setting-field-wrapper"
-     data-ng-if="!settingType.editable || (customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent)">
+     data-ng-if="!(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent)">
     <label class="setting-field--checkfield">
         <input type="checkbox"
                class="setting-field--checkfield__check-ctrl"

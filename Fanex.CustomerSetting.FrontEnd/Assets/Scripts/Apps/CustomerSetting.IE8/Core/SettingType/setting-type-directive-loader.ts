@@ -1,8 +1,5 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../helper-services.ts" />
-/// <reference path="../helpers.ts" />
 /// <reference path="../models.ts" />
 /// <reference path="../module-registrater.ts" />
 
@@ -16,7 +13,7 @@ module CustomerSetting.IE8 {
     }
 
     class SettingTypeDirectiveLoader implements ng.IDirective {
-        public static $inject: string[] = ["$compile", "appConfigService"];
+        public static $inject: string[] = ["$compile"];
         public replace: boolean = true;
 
         public scope: any = {
@@ -32,12 +29,10 @@ module CustomerSetting.IE8 {
         };
 
         private $compile: ng.ICompileService;
-        private appConfigService: AppConfigService;
         private loadedSettingTypes: Array<number>;
 
-        constructor($compile: ng.ICompileService, appConfigService: AppConfigService) {
+        constructor($compile: ng.ICompileService) {
             this.$compile = $compile;
-            this.appConfigService = appConfigService;
             this.loadedSettingTypes = new Array<number>();
         }
 
@@ -64,6 +59,10 @@ module CustomerSetting.IE8 {
                             "></div>"
                         ];
                         var settingTypeElement = angular.element(newNodeParts.join(""));
+
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
 
                         element.append(settingTypeElement);
                         this.$compile(settingTypeElement)(scope);

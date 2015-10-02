@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference path="common.ts" />
 /// <reference path="module-registrater.ts" />
 /// <reference path="parameters.ts" />
 
@@ -11,6 +12,7 @@ module CustomerSetting.IE8 {
 
         private applicationPath: string;
         private antiForgeryToken: string;
+        private editable: boolean;
 
         private $window: ng.IWindowService;
 
@@ -26,6 +28,7 @@ module CustomerSetting.IE8 {
             if (appConfig) {
                 this.applicationPath = appConfig.applicationPath;
                 this.antiForgeryToken = appConfig.antiForgeryToken;
+                this.editable = appConfig.editable;
             }
         }
 
@@ -35,6 +38,10 @@ module CustomerSetting.IE8 {
 
         public requestVerificationToken(): string {
             return this.antiForgeryToken;
+        }
+
+        public canUpdate(): boolean {
+            return this.editable;
         }
     }
 
@@ -254,4 +261,32 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.filter("maxValue", MaxValue);
+
+    function EditableSettingTypeFilter(appConfigService: AppConfigService): Function {
+        return (item: { displayMode: number }) => {
+            return appConfigService.canUpdate()
+                && item
+                && item.displayMode === DisplayMode.editable;
+        };
+    }
+
+    EditableSettingTypeFilter.$inject = ["appConfigService"];
+    ModuleRegister.filter("editableSettingType", EditableSettingTypeFilter);
+
+    function EditableFormFilter(appConfigService: AppConfigService): Function {
+        return (setting: { settingTypes: Array<{ displayMode: number }> }) => {
+            var hasEditableSettingType: boolean = false;
+
+            if (setting && setting.settingTypes) {
+                hasEditableSettingType = _.some(setting.settingTypes, (item: { displayMode: number }) => {
+                    return item.displayMode === DisplayMode.editable;
+                });
+            }
+
+            return appConfigService.canUpdate() && hasEditableSettingType;
+        };
+    }
+
+    EditableFormFilter.$inject = ["appConfigService"];
+    ModuleRegister.filter("editableForm", EditableFormFilter);
 }

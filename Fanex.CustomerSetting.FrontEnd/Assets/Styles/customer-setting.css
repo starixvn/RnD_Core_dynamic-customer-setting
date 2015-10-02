@@ -351,6 +351,9 @@ th {
   min-width: 60px;
   padding: 2px 6px;
 }
+.btn--margin-top {
+  margin-top: 10px;
+}
 
 .icon {
   background-image: url("Images/sprite.png");
@@ -660,6 +663,10 @@ input[type=checkbox].setting-field--invalid {
 
 select.setting-field {
   min-width: 60px;
+}
+
+.last-setting-type .block {
+  margin-bottom: 0;
 }
 
 .setting-type-1 .block__lbl--half-width,

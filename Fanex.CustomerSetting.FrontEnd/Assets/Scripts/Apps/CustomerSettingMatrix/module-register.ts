@@ -29,7 +29,6 @@ module CustomerSettingMatrix {
             directiveFactory.$inject = target.$inject;
             app.directive(name, directiveFactory);
         }
-
     }
 
     app.run(["$http", "appConfigService", ($http: ng.IHttpService, appConfigService: AppConfigService) => {

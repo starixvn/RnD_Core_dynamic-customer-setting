@@ -213,6 +213,16 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\stake-level-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>stake-level-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\stake-level-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>stake-level-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
     <Content Include="Assets\Styles\customer-setting-ie8.css">
       <DependentUpon>customer-setting-ie8.scss</DependentUpon>
@@ -323,6 +333,9 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\status-checkbox.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\stake-level-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />
@@ -347,7 +360,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\" />
     <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

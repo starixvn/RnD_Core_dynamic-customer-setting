@@ -28,7 +28,6 @@ declare module "minimize" {
     export = Minimize;
 }
 
-
 interface IOptions {
     // Do not remove empty attributes
     empty?: boolean;

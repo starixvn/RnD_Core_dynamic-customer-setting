@@ -1,0 +1,42 @@
+﻿<div class="block full-width" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{'BetLimit': stackLevelLabel}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="settingType.displayMode"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-repeat="group in sportGroups">
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }"
+             data-sport-type="{{group[0].sportTypeId}}">
+            {{group[0].sportTypeName}}
+            <div class="checkall-field">
+                <input type="checkbox" data-checkall data-items>
+            </div>
+        </div>
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.betType"
+             data-sport-type="{{group[0].productId}}">
+            {{group[0].productName}}
+        </div>
+        <div class="block__lbl-group">
+        </div>
+        <div class="block__item"
+             data-ng-repeat="item in group"
+             data-ng-class="{ 'block__item--last': $last }">
+            <div class="block__lbl"
+                 data-product="{{productId}}"
+                 data-sport-type="{{item.sportTypeId}}"
+                 data-bet-type="{{item.betTypeId}}">
+                {{item | showingName:settingType.settingLevel:productName }}
+                {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+            </div>
+            <div class="block__value">
+            </div>
+        </div>
+    </div>
+</div>
