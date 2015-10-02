@@ -125,24 +125,24 @@
             _validationDataAccess.DidNotReceive().ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>());
         }
 
-        [Test]
-        public void ValidateUpdateMultipleSetting_RaisedException_AlwaysLogError()
-        {
-            //// Arrange
-            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
+        ////[Test]
+        ////public void ValidateUpdateMultipleSetting_RaisedException_AlwaysLogError()
+        ////{
+        ////    //// Arrange
+        ////    var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
 
-            AssumeValidateUpdateSettingIsSuccessful();
+        ////    AssumeValidateUpdateSettingIsSuccessful();
 
-            var expectedException = new Exception("Expected Exception");
-            _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(x => { throw expectedException; });
+        ////    var expectedException = new Exception("Expected Exception");
+        ////    _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(x => { throw expectedException; });
 
-            //// Act
-            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
+        ////    //// Act
+        ////    _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
 
-            //// Assert
-            _logger.Received().Error(
-                Arg.Is<string>(message => message.Contains(expectedException.Message)),
-                Arg.Any<CustomerSettingException>());
-        }
+        ////    //// Assert
+        ////    _logger.Received().Error(
+        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
+        ////        Arg.Any<CustomerSettingException>());
+        ////}
     }
 }

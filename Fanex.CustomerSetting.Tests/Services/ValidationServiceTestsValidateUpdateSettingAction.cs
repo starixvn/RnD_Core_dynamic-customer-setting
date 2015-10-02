@@ -146,62 +146,62 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        [Test]
-        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInAgencySystem_ReturnAccessDeniedResult()
-        {
-            //// Arrange
-            var updateParam = InstanceFactory.CreateUpdateSettingParam();
-            _settingContext.Actor.Level = Level.Company;
-            _settingContext.System = (byte)SystemType.Agency;
+        ////[Test]
+        ////public void ValidateUpdateSetting_CompanyPerformsUpdateActionInAgencySystem_ReturnAccessDeniedResult()
+        ////{
+        ////    //// Arrange
+        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
+        ////    _settingContext.Actor.Level = Level.Company;
+        ////    _settingContext.System = (byte)SystemType.Agency;
 
-            AssumeValidateQuerySettingIsSuccessful();
-            AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
+        ////    AssumeValidateQuerySettingIsSuccessful();
+        ////    AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
 
-            //// Act
-            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
+        ////    //// Act
+        ////    var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
-            //// Assert
-            Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
-        }
+        ////    //// Assert
+        ////    Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
+        ////}
 
-        [TestCase((byte)SystemType.Accounting)]
-        [TestCase((byte)SystemType.ExternalAccounting)]
-        public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte system)
-        {
-            //// Arrange
-            var updateParam = InstanceFactory.CreateUpdateSettingParam();
-            _settingContext.Actor.Level = Level.Company;
-            _settingContext.System = system;
+        ////[TestCase((byte)SystemType.Accounting)]
+        ////[TestCase((byte)SystemType.ExternalAccounting)]
+        ////public void ValidateUpdateSetting_CompanyPerformsUpdateActionInSystemIsNotAgency_ReturnSuccessResult(byte system)
+        ////{
+        ////    //// Arrange
+        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
+        ////    _settingContext.Actor.Level = Level.Company;
+        ////    _settingContext.System = system;
 
-            AssumeValidateQuerySettingIsSuccessful();
-            AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
+        ////    AssumeValidateQuerySettingIsSuccessful();
+        ////    AssumeCustomerSettingTypesAreValid(updateParam.Setting.SettingTypes);
 
-            //// Act
-            var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
+        ////    //// Act
+        ////    var actualResult = _validationService.ValidateUpdateSettingAction(updateParam);
 
-            //// Assert
-            Assert.IsTrue(actualResult.IsSuccessful);
-        }
+        ////    //// Assert
+        ////    Assert.IsTrue(actualResult.IsSuccessful);
+        ////}
 
-        [Test]
-        public void ValidateUpdateSetting_RaisedException_AlwaysLogError()
-        {
-            //// Arrange
-            var updateParam = InstanceFactory.CreateUpdateSettingParam();
-            _settingContext.Actor.Level = Level.Company;
+        ////[Test]
+        ////public void ValidateUpdateSetting_RaisedException_AlwaysLogError()
+        ////{
+        ////    //// Arrange
+        ////    var updateParam = InstanceFactory.CreateUpdateSettingParam();
+        ////    _settingContext.Actor.Level = Level.Company;
 
-            AssumeValidateQuerySettingIsSuccessful();
+        ////    AssumeValidateQuerySettingIsSuccessful();
 
-            var expectedException = new Exception("Expected Exception");
-            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(x => { throw expectedException; });
+        ////    var expectedException = new Exception("Expected Exception");
+        ////    _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(x => { throw expectedException; });
 
-            //// Act
-            _validationService.ValidateUpdateSettingAction(updateParam);
+        ////    //// Act
+        ////    _validationService.ValidateUpdateSettingAction(updateParam);
 
-            //// Assert
-            _logger.Received().Error(
-                Arg.Is<string>(message => message.Contains(expectedException.Message)),
-                Arg.Any<CustomerSettingException>());
-        }
+        ////    //// Assert
+        ////    _logger.Received().Error(
+        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
+        ////        Arg.Any<CustomerSettingException>());
+        ////}
     }
 }

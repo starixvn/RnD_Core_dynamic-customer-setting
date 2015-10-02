@@ -73,15 +73,9 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException, false);
+                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
-            }
-            catch (Exception ex)
-            {
-                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, new CustomerSettingException(ex.Message, ex));
-
-                return Result.SystemError;
             }
 
             return Result.Success;
@@ -159,12 +153,12 @@
             }
         }
 
-        private void WriteQuerySettingLog(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex, bool isError = true)
+        private void WriteQuerySettingLog(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Query Setting", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
 
-            WriteLog(ex, isError);
+            _logger.Warn(ex.Message, ex);
         }
 
         /// <summary>
@@ -192,15 +186,9 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateSettingLog(command, customerSettingException, false);
+                WriteUpdateSettingLog(command, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
-            }
-            catch (Exception ex)
-            {
-                WriteUpdateSettingLog(command, new CustomerSettingException(ex.Message, ex));
-
-                return Result.SystemError;
             }
 
             return Result.Success;
@@ -231,13 +219,13 @@
             }
         }
 
-        private void WriteUpdateSettingLog(UpdateCustomerSettingCommand command, CustomerSettingException ex, bool isError = true)
+        private void WriteUpdateSettingLog(UpdateCustomerSettingCommand command, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Setting", _settingContext);
             ex.SetCustomerInfo(command.Setting.CustomerId, command.Setting.CustomerLevel, command.UplineLevel);
             ex.SetProductInfo(command.Setting.ProductId);
 
-            WriteLog(ex, isError);
+            _logger.Warn(ex.Message, ex);
         }
 
         public IResult ValidateUpdateMultipleSettingAction(MultipleUpdateCustomerSettingCommand command)
@@ -255,15 +243,9 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateMultipleSettingLog(command, customerSettingException, false);
+                WriteUpdateMultipleSettingLog(command, customerSettingException);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
-            }
-            catch (Exception ex)
-            {
-                WriteUpdateMultipleSettingLog(command, new CustomerSettingException(ex.Message, ex));
-
-                return Result.SystemError;
             }
 
             return Result.Success;
@@ -292,7 +274,7 @@
             }
         }
 
-        private void WriteUpdateMultipleSettingLog(MultipleUpdateCustomerSettingCommand command, CustomerSettingException ex, bool isError = true)
+        private void WriteUpdateMultipleSettingLog(MultipleUpdateCustomerSettingCommand command, CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Validate Update Multiple Setting", _settingContext);
             ex.SetCustomerInfo(
@@ -301,19 +283,7 @@
                 command.UplineLevel);
             ex.SetProductInfo(command.Setting.ProductId);
 
-            WriteLog(ex, isError);
-        }
-
-        private void WriteLog(Exception ex, bool isError)
-        {
-            if (isError)
-            {
-                _logger.Error(ex.Message, ex);
-            }
-            else
-            {
-                _logger.Warn(ex.Message, ex);
-            }
+            _logger.Warn(ex.Message, ex);
         }
     }
 }

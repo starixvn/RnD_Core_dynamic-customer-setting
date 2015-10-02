@@ -74,12 +74,7 @@
 
             if (validationResult.IsNotOk)
             {
-                if (validationResult.Code == ResultValue.AccessDenied)
-                {
-                    throw new AccessViolationException(validationResult.Message);
-                }
-
-                throw new InvalidOperationException(validationResult.Message);
+                throw new AccessViolationException(validationResult.Message);
             }
         }
 

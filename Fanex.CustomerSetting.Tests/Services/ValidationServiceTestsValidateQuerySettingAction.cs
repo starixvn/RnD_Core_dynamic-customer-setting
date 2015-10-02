@@ -377,26 +377,26 @@
             Level.Super, Level.Master, Level.Agent
         };
 
-        [Test]
-        public void ValidateQuerySetting_RaisedException_AlwaysLogError()
-        {
-            //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
-                customerId: 1,
-                customerLevel: Level.Master,
-                productId: 1);
-            _settingContext.Actor.Level = Level.Company;
+        ////[Test]
+        ////public void ValidateQuerySetting_RaisedException_AlwaysLogError()
+        ////{
+        ////    //// Arrange
+        ////    CustomerSettingQuery query = new CustomerSettingQuery(
+        ////        customerId: 1,
+        ////        customerLevel: Level.Master,
+        ////        productId: 1);
+        ////    _settingContext.Actor.Level = Level.Company;
 
-            var expectedException = new Exception("Expected Exception");
-            _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
+        ////    var expectedException = new Exception("Expected Exception");
+        ////    _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
 
-            //// Act
-           _validationService.ValidateQuerySettingAction(query);
+        ////    //// Act
+        ////   _validationService.ValidateQuerySettingAction(query);
 
-            //// Assert
-            _logger.Received().Error(
-                Arg.Is<string>(message => message.Contains(expectedException.Message)),
-                Arg.Any<CustomerSettingException>());
-        }
+        ////    //// Assert
+        ////    _logger.Received().Error(
+        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
+        ////        Arg.Any<CustomerSettingException>());
+        ////}
     }
 }

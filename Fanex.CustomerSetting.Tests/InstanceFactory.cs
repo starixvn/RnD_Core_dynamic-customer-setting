@@ -42,6 +42,7 @@
             {
                 Id = settingTypeId,
                 SettingLevel = 1,
+                DisplayMode = 1,
                 SettingItems = new List<SettingItemStub>
                 {
                    new SettingItemStub
