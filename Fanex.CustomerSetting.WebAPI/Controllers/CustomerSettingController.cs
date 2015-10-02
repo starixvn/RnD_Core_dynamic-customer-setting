@@ -30,9 +30,17 @@
             }
 
             var querySettingService = new QuerySettingService(request.GetSettingContext());
-            var customerSetting = querySettingService.GetCustomerSetting(request.GetCustomerSettingQuery());
 
-            return Request.CreateResponse(HttpStatusCode.OK, customerSetting);
+            try
+            {
+                var customerSetting = querySettingService.GetCustomerSetting(request.GetCustomerSettingQuery());
+
+                return Request.CreateResponse(HttpStatusCode.OK, customerSetting);
+            }
+            catch (AccessViolationException accessViolationException)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, accessViolationException.Message);
+            }
         }
 
         public HttpResponseMessage Post(

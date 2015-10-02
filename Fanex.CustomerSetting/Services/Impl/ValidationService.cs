@@ -73,7 +73,7 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException);
+                WriteQuerySettingLog(customerId, customerLevel, uplineLevel, customerSettingException, false);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
@@ -159,12 +159,12 @@
             }
         }
 
-        private void WriteQuerySettingLog(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex)
+        private void WriteQuerySettingLog(int customerId, Level customerLevel, Level uplineLevel, CustomerSettingException ex, bool isError = true)
         {
             ex.SetSettingContextInfo("Validate Query Setting", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
 
-            _logger.Error(ex.Message, ex);
+            WriteLog(ex, isError);
         }
 
         /// <summary>
@@ -188,13 +188,11 @@
             {
                 CheckQueryPermission(customerId, customerLevel, productId, uplineLevel);
 
-                CheckActorLevelHasUpdatePermissionInCurrentSystem();
-
                 CheckCustomerSettingTypesIsValidWithProductProfile(productId, settingTypes);
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateSettingLog(command, customerSettingException);
+                WriteUpdateSettingLog(command, customerSettingException, false);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
@@ -219,15 +217,6 @@
             }
         }
 
-        private void CheckActorLevelHasUpdatePermissionInCurrentSystem()
-        {
-            if (_settingContext.Actor.IsCompany
-                && _settingContext.System == (byte)SystemType.Agency)
-            {
-                throw new CustomerSettingException(Message.YouAreNotAuthorized);
-            }
-        }
-
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System);
@@ -241,13 +230,13 @@
             }
         }
 
-        private void WriteUpdateSettingLog(UpdateCustomerSettingCommand command, CustomerSettingException ex)
+        private void WriteUpdateSettingLog(UpdateCustomerSettingCommand command, CustomerSettingException ex, bool isError = true)
         {
             ex.SetSettingContextInfo("Validate Update Setting", _settingContext);
             ex.SetCustomerInfo(command.Setting.CustomerId, command.Setting.CustomerLevel, command.UplineLevel);
             ex.SetProductInfo(command.Setting.ProductId);
 
-            _logger.Error(ex.Message, ex);
+            WriteLog(ex, isError);
         }
 
         public IResult ValidateUpdateMultipleSettingAction(MultipleUpdateCustomerSettingCommand command)
@@ -265,7 +254,7 @@
             }
             catch (CustomerSettingException customerSettingException)
             {
-                WriteUpdateMultipleSettingLog(command, customerSettingException);
+                WriteUpdateMultipleSettingLog(command, customerSettingException, false);
 
                 return new Result(ResultValue.AccessDenied, customerSettingException.OriginalMessage);
             }
@@ -302,7 +291,7 @@
             }
         }
 
-        private void WriteUpdateMultipleSettingLog(MultipleUpdateCustomerSettingCommand command, CustomerSettingException ex)
+        private void WriteUpdateMultipleSettingLog(MultipleUpdateCustomerSettingCommand command, CustomerSettingException ex, bool isError = true)
         {
             ex.SetSettingContextInfo("Validate Update Multiple Setting", _settingContext);
             ex.SetCustomerInfo(
@@ -311,7 +300,19 @@
                 command.UplineLevel);
             ex.SetProductInfo(command.Setting.ProductId);
 
-            _logger.Error(ex.Message, ex);
+            WriteLog(ex, isError);
+        }
+
+        private void WriteLog(Exception ex, bool isError)
+        {
+            if (isError)
+            {
+                _logger.Error(ex.Message, ex);
+            }
+            else
+            {
+                _logger.Warn(ex.Message, ex);
+            }
         }
     }
 }

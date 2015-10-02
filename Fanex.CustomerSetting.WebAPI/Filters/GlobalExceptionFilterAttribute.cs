@@ -30,7 +30,7 @@
 
                 LogService.Error(messageBuilder.ToString(), actionExecutedContext.Exception);
 
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, GetErrorMessage(exception));
+                actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, Message.SystemError);
             }
         }
 
@@ -49,19 +49,6 @@
                     messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
                 }
             }
-        }
-
-        private string GetErrorMessage(Exception ex)
-        {
-            if (ex != null 
-                && ex is AccessViolationException)
-            {
-                var accessViolationException = ex as AccessViolationException;
-
-                return accessViolationException.Message;
-            }
-
-            return Message.SystemError;
         }
     }
 }
