@@ -119,6 +119,8 @@ module CustomerSetting {
                         error = Result.systemError;
                         error.message = this.resourceService.getMessage(error.message);
                     }
+
+                    this.requestMsgResult = error;
                 })
                 .finally(() => {
                     this.isUIblocked = false;

@@ -585,7 +585,7 @@ th {
 .block__cell, .block__lbl, .block__value {
   border-right: 1px solid #7c98a4;
   line-height: 2.1rem;
-  min-height: 2.1rem;
+  min-height: 23px;
 }
 .block__cell--no-border {
   border: none;
