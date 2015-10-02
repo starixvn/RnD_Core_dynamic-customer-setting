@@ -91,7 +91,7 @@
         private Product GetProductInfo(byte productId, byte systemId)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId)
-                .Where(product => product.DisplayMode == DisplayMode.Editable);
+                .Where(product => product.DisplayMode != DisplayMode.Hidden);
             var productName = _resourceService.GetProductName(productId, _settingContext.Language);
 
             return new Product
