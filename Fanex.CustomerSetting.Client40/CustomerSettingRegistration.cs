@@ -90,5 +90,21 @@
                 throw new InvalidOperationException("The CustomerSettingRegistration.Init() method must be called once the web application is started.");
             }
         }
+
+        internal static PermissionContext GetPermissionContext()
+        {
+            SettingContext settingContext = CustomerSettingRegistration.SettingContext;
+            var context = new PermissionContext();
+
+            context.ActorId = settingContext.ActorId;
+            context.ActorLevel = settingContext.ActorLevel;
+            context.ActorName = settingContext.ActorName;
+            context.SubAccountId = settingContext.SubAccountId;
+            context.Domain = settingContext.Domain;
+            context.Language = settingContext.Language;
+            context.ClientIP = settingContext.IP;
+
+            return context;
+        }
     }
 }

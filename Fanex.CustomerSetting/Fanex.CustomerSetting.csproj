@@ -87,6 +87,7 @@
     <Compile Include="Criteria\ActorStatusQueryCriteria.cs" />
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
+    <Compile Include="Models\Constants\DisplayMode.cs" />
     <Compile Include="Models\Enumerations\Enumeration.cs" />
     <Compile Include="Models\Constants\MessageType.cs" />
     <Compile Include="Models\Constants\ResultValue.cs" />

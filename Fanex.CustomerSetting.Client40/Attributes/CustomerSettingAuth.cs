@@ -14,7 +14,7 @@
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            PermissionContext permissionContext = GetPermissionContext();
+            PermissionContext permissionContext = CustomerSettingRegistration.GetPermissionContext();
 
             permissionContext.AllowUpdate = IsUpdate;
 
@@ -33,22 +33,6 @@
                     return CustomerSettingRegistration.CheckQueryPermission(permissionContext);
                 }
             }
-        }
-
-        private PermissionContext GetPermissionContext()
-        {
-            SettingContext settingContext = CustomerSettingRegistration.SettingContext;
-            var context = new PermissionContext();
-
-            context.ActorId = settingContext.ActorId;
-            context.ActorLevel = settingContext.ActorLevel;
-            context.ActorName = settingContext.ActorName;
-            context.SubAccountId = settingContext.SubAccountId;
-            context.Domain = settingContext.Domain;
-            context.Language = settingContext.Language;
-            context.ClientIP = settingContext.IP;
-
-            return context;
         }
     }
 }

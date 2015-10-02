@@ -101,6 +101,7 @@
         {
             string finalTemplate = template;
             AppConfiguration appConfig = new AppConfiguration(Request.ApplicationPath);
+            appConfig.Editable = CustomerSettingRegistration.CheckUpdatePermission(CustomerSettingRegistration.GetPermissionContext()); 
 
             if (!string.IsNullOrEmpty(finalTemplate))
             {

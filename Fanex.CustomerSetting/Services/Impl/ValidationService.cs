@@ -219,7 +219,8 @@
 
         private void CheckCustomerSettingTypesIsValidWithProductProfile(byte productId, IEnumerable<SettingType> customerSettingTypes)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System);
+            var productSettingTypes = _productService.GetProductSettingTypes(productId, _settingContext.System)
+                .Where(product => product.DisplayMode == DisplayMode.Editable);
 
             foreach (var customerSettingType in customerSettingTypes)
             {

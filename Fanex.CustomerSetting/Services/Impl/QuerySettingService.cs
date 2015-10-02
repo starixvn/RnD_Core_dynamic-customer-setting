@@ -8,6 +8,7 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Constants;
+    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.Data.Repository;
     using Fanex.Logging;
@@ -89,7 +90,8 @@
         /// <returns></returns>
         private Product GetProductInfo(byte productId, byte systemId)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId);
+            var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId)
+                .Where(product => product.DisplayMode == DisplayMode.Editable);
             var productName = _resourceService.GetProductName(productId, _settingContext.Language);
 
             return new Product
