@@ -30,15 +30,40 @@ module CustomerSetting {
                             settingType.settingItems[index] = new SettingType5Item(item, true);
                         }
 
-                        if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                            $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
-                        } else {
-                            $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
-                        }
+                        $scope.sportGroups = this.groupAndAddEmptyItems($scope.settingType);
                     });
                 }
             });
         }];
+
+        private numberOfCellsOnEachRow: number = 5;
+
+        private groupAndAddEmptyItems(settingType: SettingType): DefaultSettingItem[][] {
+            var groups: DefaultSettingItem[][];
+
+            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                groups = this.groupSettingItemsBySportType(settingType.settingItems);
+            } else {
+                groups = <DefaultSettingItem[][]>[settingType.settingItems];
+            }
+
+            groups.forEach((group: DefaultSettingItem[]) => {
+                var mod: number = group.length % this.numberOfCellsOnEachRow;
+                var numberOfEmptyCells: number = 0;
+
+                if (mod !== 0) {
+                    numberOfEmptyCells = this.numberOfCellsOnEachRow - mod;
+                }
+
+                if (numberOfEmptyCells > 0) {
+                    for (var counter = 0; counter < numberOfEmptyCells; counter++) {
+                        group.push(new DefaultSettingItem());
+                    }
+                }
+            });
+
+            return groups;
+        }
     }
 
     ModuleRegister.directive("settingtype5", SettingType5Directive);

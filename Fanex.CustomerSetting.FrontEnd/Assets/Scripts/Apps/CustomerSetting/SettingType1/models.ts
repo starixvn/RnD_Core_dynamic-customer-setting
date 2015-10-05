@@ -194,12 +194,8 @@ module CustomerSetting {
                 this.iS3 = source.iS3;
                 this.n3 = source.n3;
                 this.m3 = source.m3;
-
-                if (this.iS3) {
-                    this.uS3 = source.uS3;
-                } else {
-                    this.s3 = source.s3;
-                }
+                this.uS3 = source.uS3;
+                this.s3 = source.s3;
 
                 isSuccessful = this.validate();
 
@@ -404,12 +400,8 @@ module CustomerSetting {
                 this.iM2 = source.iM2;
                 this.n2 = source.n2;
                 this.a2 = source.a2;
-
-                if (this.iM2) {
-                    this.uM2 = source.uM2;
-                } else {
-                    this.m2 = source.m2;
-                }
+                this.uM2 = source.uM2;
+                this.m2 = source.m2;
 
                 isSuccessful = this.validate();
 
@@ -607,12 +599,8 @@ module CustomerSetting {
                 backups1 = this.s1;
 
                 this.iS1 = source.iS1;
-
-                if (this.iS1) {
-                    this.uS1 = source.uS1;
-                } else {
-                    this.s1 = source.s1;
-                }
+                this.uS1 = source.uS1;
+                this.s1 = source.s1;
 
                 isSuccessful = this.validate();
 
@@ -734,12 +722,8 @@ module CustomerSetting {
                 backupM1 = this.m1;
 
                 this.iM1 = source.iM1;
-
-                if (this.iM1) {
-                    this.uM1 = source.uM1;
-                } else {
-                    this.m1 = source.m1;
-                }
+                this.uM1 = source.uM1;
+                this.m1 = source.m1;
 
                 isSuccessful = this.validate();
 
