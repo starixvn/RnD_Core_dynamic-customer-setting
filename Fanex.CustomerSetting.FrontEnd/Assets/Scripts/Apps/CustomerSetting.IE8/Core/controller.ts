@@ -59,8 +59,9 @@ module CustomerSetting.IE8 {
         }
 
         public update(settingTypeId?: number): void {
-            var path: string = this.customerNames ? this.updateMultiplePath : this.updatePath;
-            var setting: Setting = this.setting.getChanges(settingTypeId);
+            var isMultiple: boolean = !!this.customerNames;
+            var path: string = isMultiple ? this.updateMultiplePath : this.updatePath;
+            var setting: Setting = isMultiple ? this.setting : this.setting.getChanges(settingTypeId);
             var validationResult: Result;
             var command: SettingCommand;
 
