@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.MatrixClient.Attributes;
     using Fanex.CustomerSetting.MatrixClient.Configurations;
+    using Fanex.CustomerSetting.MatrixClient.Helpers;
     using Fanex.CustomerSetting.MatrixClient.Models;
     using Fanex.CustomerSetting.MatrixClient.Models.Requests;
     using Fanex.CustomerSetting.MatrixClient.Services;
@@ -71,7 +72,7 @@
         {
             IRestResponse response = _customerSettingMatrixService.QueryCustomerSettingMatrixTemplate();
             bool isDebug = HttpContext.IsDebuggingEnabled;
-            string cdn = SettingMatrixConfiguration.Settings.CdnUri.ToString();
+            string cdn = RandomHelper.GetRandomUri(SettingMatrixConfiguration.Settings.CdnUris).ToString();
             string customCss = SettingMatrixConfiguration.Settings.CustomCssUrl != null
                 ? SettingMatrixConfiguration.Settings.CustomCssUrl.ToString()
                 : string.Empty;

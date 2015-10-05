@@ -57,6 +57,7 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="Configurations\SettingMatrixConfiguration.cs" />
     <Compile Include="Controllers\ViewCustomerSettingMatrixController.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="SettingMatrixRegistration.cs" />
     <Compile Include="Helpers\TypeDetection.cs" />
     <Compile Include="Models\AppConfiguration.cs" />

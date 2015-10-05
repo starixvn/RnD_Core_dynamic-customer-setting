@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Attributes;
     using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using Fanex.CustomerSetting.Client40.Services;
@@ -77,7 +78,7 @@
         {
             IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate(isIe8);
             bool isDebug = HttpContext.IsDebuggingEnabled;
-            string cdn = CustomerSettingConfiguration.Settings.CdnUri.ToString();
+            string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris).ToString();
             string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
                 ? CustomerSettingConfiguration.Settings.CustomCssUrl.ToString()
                 : string.Empty;

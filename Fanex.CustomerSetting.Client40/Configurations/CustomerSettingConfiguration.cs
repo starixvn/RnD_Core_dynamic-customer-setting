@@ -23,11 +23,11 @@
             set { this["System"] = value; }
         }
 
-        [ConfigurationProperty("ServiceUri", IsRequired = true)]
-        public Uri ServiceUri
+        [ConfigurationProperty("ServiceUris", IsRequired = true)]
+        public string ServiceUris
         {
-            get { return (Uri)this["ServiceUri"]; }
-            set { this["ServiceUri"] = value; }
+            get { return (string)this["ServiceUris"]; }
+            set { this["ServiceUris"] = value; }
         }
 
         [ConfigurationProperty("SecrectKey", IsRequired = true)]
@@ -37,11 +37,11 @@
             set { this["SecrectKey"] = value; }
         }
 
-        [ConfigurationProperty("CdnUri", IsRequired = true)]
-        public Uri CdnUri
+        [ConfigurationProperty("CdnUris", IsRequired = true)]
+        public string CdnUris
         {
-            get { return (Uri)this["CdnUri"]; }
-            set { this["CdnUri"] = value; }
+            get { return (string)this["CdnUris"]; }
+            set { this["CdnUris"] = value; }
         }
 
         [ConfigurationProperty("CustomCssUrl")]

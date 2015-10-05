@@ -57,6 +57,7 @@
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="CustomerSettingRegistration.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\PermissionContext.cs" />
     <Compile Include="Models\SettingContext.cs" />
