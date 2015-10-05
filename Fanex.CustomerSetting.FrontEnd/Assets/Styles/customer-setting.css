@@ -565,6 +565,9 @@ th {
   border-bottom: none;
   border-right: none;
 }
+.block__item--before-extra-item {
+  border-right: 1px solid #7c98a4;
+}
 .block__item--full-width {
   width: 100%;
   border-right: none;
@@ -576,7 +579,7 @@ th {
 .block__item--full-width .block__value {
   width: 80%;
 }
-.block__item--full-width.block__item--extended {
+.block__item--full-width.block__item--extra {
   display: none;
 }
 .block__item--full-width.block__item--near-last {
@@ -618,7 +621,7 @@ th {
   width: 100%;
   border-right: none;
 }
-.full-width .block__item--extended {
+.full-width .block__item--extra {
   display: none;
 }
 .full-width .block__item--near-last {

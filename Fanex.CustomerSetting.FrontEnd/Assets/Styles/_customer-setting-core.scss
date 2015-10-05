@@ -301,6 +301,10 @@
             border-right: none;
         }
 
+        &--before-extra-item {
+            @include border(right);
+        }
+
         &--full-width {
             @include col(100%);
             border-right: none;
@@ -314,7 +318,7 @@
                 @include col(80%);
             }
 
-            &.block__item--extended {
+            &.block__item--extra {
                 display: none;
             }
 
@@ -369,7 +373,7 @@
         @include col(100%);
         border-right: none;
 
-        &--extended {
+        &--extra {
             display: none;
         }
 

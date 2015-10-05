@@ -23,7 +23,10 @@
         <div class="block__lbl-group" data-ng-include="headerTemplateUrl"></div>
         <div class="block__item"
              data-ng-repeat="item in group"
-             data-ng-class="{ 'block__item--last': $last && (group.length % 2 !== 1), 'block__item--near-last': ($index === group.length - 2) && ($index % 2 === 0), 'block__item--full-width': group.length === 1 }">
+             data-ng-class="{ 'block__item--last': $last,
+                              'block__item--near-last': $index === group.length - 2 && $index % 2 === 0,
+                              'block__item--before-extra-item': $last && group.length % 2 === 1 && group.length > 1,
+                              'block__item--full-width': group.length === 1 }">
             <div class="block__lbl"
                  data-product="{{productId}}"
                  data-sport-type="{{item.sportTypeId}}"
@@ -38,7 +41,7 @@
             </div>
             <div class="block__value" data-ng-include="valueTemplateUrl"></div>
         </div>
-        <div class="block__item block__item--last block__item--extended" data-ng-if="(group.length % 2 === 1) && (group.length > 1)">
+        <div class="block__item block__item--last block__item--extra" data-ng-if="group.length % 2 === 1 && group.length > 1">
             <div class="block__lbl"></div>
             <div class="block__value"></div>
         </div>
