@@ -289,4 +289,17 @@ module CustomerSetting.IE8 {
 
     EditableFormFilter.$inject = ["appConfigService"];
     ModuleRegister.filter("editableForm", EditableFormFilter);
+
+    function ValidSettingTypeFilter(): Function {
+        return (settingType: { settingItems: any[] }) => {
+            var invalidSettingType = settingType
+                && settingType.settingItems
+                && settingType.settingItems.length === 1
+                && settingType.settingItems[0].errorMessage;
+
+            return !invalidSettingType;
+        };
+    }
+
+    ModuleRegister.filter("validSettingType", ValidSettingTypeFilter);
 }

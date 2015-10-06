@@ -125,6 +125,36 @@ module CustomerSetting {
         }
     }
 
+    export class ErrorSettingItem implements ISettingItem {
+        public errorMessage: string;
+        public typeName: string;
+        public oldSetting: DefaultSettingItem;
+
+        constructor();
+        constructor(errorItem: any);
+        constructor(errorItem?: any) {
+            if (errorItem && errorItem.errorMessage) {
+                this.errorMessage = errorItem.errorMessage;
+                this.typeName = errorItem.typeName;
+            }
+        }
+
+        public isChanged(): boolean {
+            return false;
+        }
+
+        public validate(): boolean {
+            return true;
+        }
+
+        public toJson(): {} {
+            return {
+                errorMessage: this.errorMessage,
+                typeName: this.typeName
+            };
+        };
+    }
+
     export class SettingType {
         public id: number;
         public name: string;
