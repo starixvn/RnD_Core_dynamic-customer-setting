@@ -16,7 +16,7 @@ module.exports = function (configs) {
 
         var connection = new mssql.Connection(config, function (error) {
             var request = new mssql.Request(connection);
-            var query = "SELECT DISTINCT [ProductId], [SettingType] FROM [CustDB].[dbo].[ProductSettingDetail]";
+            var query = "SELECT DISTINCT [ProductId], [SettingType] FROM [CustDB].[dbo].[ProductSettingDetail] WHERE [SettingStatus] != 2";
 
             if (error) {
                 console.log(error);

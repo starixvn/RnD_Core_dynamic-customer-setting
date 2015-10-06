@@ -1,5 +1,13 @@
 [
     {
+        "productId": 16,
+        "settingTypes": [
+            1,
+            2,
+            4
+        ]
+    },
+    {
         "productId": 247,
         "settingTypes": [
             1,
@@ -62,7 +70,6 @@
         "productId": 254,
         "settingTypes": [
             1,
-            2,
             3,
             4
         ]
@@ -73,14 +80,6 @@
             1,
             2,
             3,
-            4
-        ]
-    },
-    {
-        "productId": 16,
-        "settingTypes": [
-            1,
-            2,
             4
         ]
     }

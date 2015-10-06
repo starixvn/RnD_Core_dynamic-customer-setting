@@ -4,10 +4,7 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType5Item extends DefaultSettingItem {
-        public stakeLevelId: number;
-        public min: number;
-        public max: number;
-        public selected: boolean;
+        public stakeLevels: Array<StakeLevel>;
 
         constructor();
         constructor(settingItem: any);
@@ -16,6 +13,43 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
+                this.stakeLevels = new Array<StakeLevel>();
+
+                if (settingItem.stakeLevels) {
+                    this.stakeLevels = settingItem.stakeLevels.map((stakeLevel: any) => {
+                        return new StakeLevel(stakeLevel, true);
+                    });
+                }
+            }
+
+            if (backup) {
+                this.oldSetting = new DefaultSettingItem(this);
+            }
+        }
+
+        public isChanged(): boolean {
+            var isChanged: boolean = super.isChanged();
+            var hasChange: boolean = this.stakeLevels.some((stakeLevel: StakeLevel) => {
+                return stakeLevel.isChanged();
+            });
+
+            return isChanged || hasChange;
+        }
+    }
+
+    export class StakeLevel {
+        public stakeLevelId: number;
+        public min: number;
+        public max: number;
+        public selected: boolean;
+
+        private oldStakeLevel: StakeLevel;
+
+        constructor();
+        constructor(settingItem: any);
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup: boolean = false) {
+            if (settingItem) {
                 this.stakeLevelId = settingItem.stakeLevelId;
                 this.min = settingItem.min;
                 this.max = settingItem.max;
@@ -23,16 +57,12 @@ module CustomerSetting {
             }
 
             if (backup) {
-                this.oldSetting = new SettingType5Item(this);
+                this.oldStakeLevel = new StakeLevel(this);
             }
         }
 
         public isChanged(): boolean {
-            var isChanged: boolean = super.isChanged();
-            var oldSetting: SettingType5Item = <SettingType5Item>this.oldSetting;
-
-            return isChanged
-                || this.selected !== oldSetting.selected;
+            return this.selected !== this.oldStakeLevel.selected;
         }
     }
 }
