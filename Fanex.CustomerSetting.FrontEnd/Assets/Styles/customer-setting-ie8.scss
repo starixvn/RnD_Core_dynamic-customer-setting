@@ -15,6 +15,10 @@ body {
         line-height: 2.2 * $ie8-font-size-base;
     }
 
+    &__item--error {
+        line-height: 2.1 * $ie8-font-size-base;
+    }
+
     &__cell {
         line-height: 2.1 * $ie8-font-size-base;
         min-height: 2.1 * $ie8-font-size-base;

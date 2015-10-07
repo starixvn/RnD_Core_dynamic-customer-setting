@@ -585,6 +585,13 @@ th {
 .block__item--full-width.block__item--near-last {
   border-bottom: 1px solid #7c98a4;
 }
+.block__item--error {
+  border: none;
+  color: #e9322d;
+  line-height: 2.1rem;
+  padding: 0 3px;
+  width: 100%;
+}
 .block__cell, .block__lbl, .block__value {
   border-right: 1px solid #7c98a4;
   line-height: 2.1rem;
