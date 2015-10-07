@@ -46,6 +46,8 @@
             <div class="block__lbl"></div>
             <div class="block__value"></div>
         </div>
-        <div class="block__item block__item--last" data-ng-if="!(settingtype | validSettingType)">{{item.errorMessage}}</div>
+        <div class="block__item block__item--full-width block__item--last" data-ng-if="!(settingType | validSettingType)">
+            <div class="block__value text-field-wrapper msg--error w100-percent">{{group[0].errorMessage}}</div>
+        </div>
     </div>
 </div>
