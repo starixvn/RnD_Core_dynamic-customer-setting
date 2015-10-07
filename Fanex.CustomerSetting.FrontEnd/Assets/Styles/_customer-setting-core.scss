@@ -254,6 +254,10 @@
     background-color: $default-bg;
     margin-bottom: 10px;
 
+    &--error {
+        border-color: $error-color;
+    }
+
     &__header {
         @include border(bottom);
         background-color: $block-header-bg;
@@ -263,6 +267,12 @@
 
         &--no-border {
             border: none;
+        }
+
+        &--error {
+            background-color: $error-block-header-bg;
+            border-bottom-color: $error-color;
+            color: $error-block-error-color;
         }
     }
 
@@ -330,8 +340,10 @@
         &--error {
             border: none;
             color: $error-color;
+            font-weight: bold;
             line-height: 2.1rem;
             padding: 0 3px;
+            text-align: center;
             width: 100%;
         }
     }

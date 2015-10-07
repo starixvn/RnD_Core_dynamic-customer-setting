@@ -145,7 +145,7 @@
     <value>Product Id {0} does not have name in {1}</value>
   </data>
   <data name="SettingTypeError" xml:space="preserve">
-    <value>This setting type is error, please notify your administrator.</value>
+    <value>Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!</value>
   </data>
   <data name="SportTypeOrBetTypeIsInvalid" xml:space="preserve">
     <value>Sport Type or Bet Type is invalid!</value>
@@ -154,7 +154,7 @@
     <value>Sub Account Id Should Be Zero When System Is Not Agency.</value>
   </data>
   <data name="SystemError" xml:space="preserve">
-    <value>Oops... you are here because of a system error, please notify your administrator.</value>
+    <value>Oops... you are here because of a system error, please notify system administrator.</value>
   </data>
   <data name="UplineLevelCannotBeNullIncaseOfEdittingMember" xml:space="preserve">
     <value>Upline Level cannot be null incase of editting member.</value>

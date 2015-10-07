@@ -563,6 +563,10 @@ th {
   margin-bottom: 10px;
 }
 
+.block--error {
+  border-color: #e9322d;
+}
+
 .block__header {
   border-bottom: 1px solid #7c98a4;
   background-color: #b5c4d0;
@@ -573,6 +577,12 @@ th {
 
 .block__header--no-border {
   border: none;
+}
+
+.block__header--error {
+  background-color: #ff6964;
+  border-bottom-color: #e9322d;
+  color: #fff;
 }
 
 .block__sub-header {
@@ -641,8 +651,10 @@ th {
 .block__item--error {
   border: none;
   color: #e9322d;
+  font-weight: bold;
   line-height: 2.1rem;
   padding: 0 3px;
+  text-align: center;
   width: 100%;
 }
 
