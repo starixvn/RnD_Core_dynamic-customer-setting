@@ -90,5 +90,7 @@
 
             return null;
         }
+
+        public bool IsError { get; set; }
     }
 }

@@ -150,6 +150,7 @@
             {
                 WriteLog(query, productSettingType, ex);
 
+                customerSettingType.IsError = true;
                 customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
             }
 
