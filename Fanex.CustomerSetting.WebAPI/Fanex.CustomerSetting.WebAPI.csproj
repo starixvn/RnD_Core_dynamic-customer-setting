@@ -165,11 +165,20 @@
     <Content Include="Web.AppSettings.config" />
     <Content Include="Web.ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
+    <None Include="Web.AppSettings.local.config"> 
+		<DependentUpon>Web.AppSettings.config</DependentUpon>
+	</None>
+    <None Include="Web.ConnectionStrings.local.config"> 
+		<DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+	</None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+    </None>
+	<None  Include="Web.local.config">
+       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup />
