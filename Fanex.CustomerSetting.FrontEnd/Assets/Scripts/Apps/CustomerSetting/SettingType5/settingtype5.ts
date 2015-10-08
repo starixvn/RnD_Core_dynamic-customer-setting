@@ -4,6 +4,10 @@
 /// <reference path="models.ts" />
 
 module CustomerSetting {
+    interface SettingType5Scope extends IDefaultSettingTypeDirectiveScope {
+        numberOfCellsOnEachRow: number;
+    }
+
     class SettingType5Directive extends DefaultSettingTypeGroupingDirective {
         public replace: boolean = true;
         public templateUrl: string = "settingtype5.htm";
@@ -19,9 +23,10 @@ module CustomerSetting {
             };
         }
 
-        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
+        public controller: any = ["$scope", ($scope: SettingType5Scope) => {
             $scope.avaiCustomerLevels = Level;
             $scope.avaiSettingLevels = SettingLevel;
+            $scope.numberOfCellsOnEachRow = this.numberOfCellsOnEachRow;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -41,26 +46,26 @@ module CustomerSetting {
         private groupAndAddEmptyItems(settingType: SettingType): DefaultSettingItem[][] {
             var groups: DefaultSettingItem[][];
 
-            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                groups = this.groupSettingItemsBySportType(settingType.settingItems);
-            } else {
-                groups = <DefaultSettingItem[][]>[settingType.settingItems];
-            }
+            if (settingType) {
+                settingType.settingItems.forEach((settingItem: SettingType5Item) => {
+                    var mod: number = settingItem.stakeLevels.length % this.numberOfCellsOnEachRow;
+                    var numberOfEmptyCells: number = 0;
 
-            groups.forEach((group: DefaultSettingItem[]) => {
-                var mod: number = group.length % this.numberOfCellsOnEachRow;
-                var numberOfEmptyCells: number = 0;
-
-                if (mod !== 0) {
-                    numberOfEmptyCells = this.numberOfCellsOnEachRow - mod;
-                }
-
-                if (numberOfEmptyCells > 0) {
-                    for (var counter = 0; counter < numberOfEmptyCells; counter++) {
-                        group.push(new DefaultSettingItem());
+                    if (mod !== 0 || settingItem.stakeLevels.length === 0) {
+                        numberOfEmptyCells = this.numberOfCellsOnEachRow - mod;
                     }
+
+                    for (var counter = 0; counter < numberOfEmptyCells; counter++) {
+                        settingItem.stakeLevels.push(new StakeLevel());
+                    }
+                });
+
+                if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                    groups = this.groupSettingItemsBySportType(settingType.settingItems);
+                } else {
+                    groups = <DefaultSettingItem[][]>[settingType.settingItems];
                 }
-            });
+            }
 
             return groups;
         }

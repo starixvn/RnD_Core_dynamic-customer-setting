@@ -35,6 +35,29 @@ module CustomerSetting {
 
             return isChanged || hasChange;
         }
+
+        public toJson(): {} {
+            var settingItem: any = {
+                sportTypeId: this.sportTypeId,
+                sportTypeName: this.sportTypeName,
+                betTypeId: this.betTypeId,
+                betTypeName: this.betTypeName,
+                typeName: this.typeName,
+                stakeLevels: []
+            };
+
+            if (this.isLive !== undefined) {
+                settingItem.isLive = this.isLive;
+            }
+
+            this.stakeLevels.forEach((stakeLevel: StakeLevel) => {
+                if (stakeLevel.stakeLevelId) {
+                    settingItem.stakeLevels.push(stakeLevel.toJson());
+                }
+            });
+
+            return settingItem;
+        }
     }
 
     export class StakeLevel {
@@ -63,6 +86,15 @@ module CustomerSetting {
 
         public isChanged(): boolean {
             return this.selected !== this.oldStakeLevel.selected;
+        }
+
+        public toJson(): {} {
+            return {
+                stakeLevelId: this.stakeLevelId,
+                min: this.min,
+                max: this.max,
+                selected: this.selected
+            };
         }
     }
 }

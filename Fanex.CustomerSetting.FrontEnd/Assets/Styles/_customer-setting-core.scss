@@ -356,6 +356,10 @@
         &--no-border {
             border: none;
         }
+
+        &--border-top {
+            @include border(top);
+        }
     }
 
     &__lbl {
@@ -366,6 +370,10 @@
 
         &--white {
             background-color: $default-bg;
+        }
+
+        &--transparent {
+            background-color: transparent;
         }
 
         &--no-border {

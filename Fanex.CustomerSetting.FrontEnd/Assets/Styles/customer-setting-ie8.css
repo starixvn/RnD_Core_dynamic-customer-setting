@@ -658,7 +658,7 @@ th {
   width: 100%;
 }
 
-.block__cell, .block__lbl, .block__value {
+.block__cell, .block__lbl, .block__value, .settingtype5 .block__sub-header__header-cell {
   border-right: 1px solid #7c98a4;
   line-height: 2.1rem;
   min-height: 23px;
@@ -666,6 +666,10 @@ th {
 
 .block__cell--no-border {
   border: none;
+}
+
+.block__cell--border-top {
+  border-top: 1px solid #7c98a4;
 }
 
 .block__lbl {
@@ -676,6 +680,10 @@ th {
 
 .block__lbl--white {
   background-color: #fff;
+}
+
+.block__lbl--transparent {
+  background-color: transparent;
 }
 
 .block__lbl--no-border {
@@ -766,6 +774,50 @@ select.setting-field {
   margin: 5px 0;
 }
 
+.settingtype5 .block__sub-header {
+  padding: 0;
+}
+
+.settingtype5 .block__sub-header__header-cell {
+  display: table;
+  padding-left: 3px;
+  width: 20%;
+}
+
+.settingtype5 .check-all-field-lbl {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.settingtype5 .check-all-field {
+  border-left: 1px solid #7c98a4;
+  display: table-cell;
+  padding: 0 3px;
+  vertical-align: middle;
+}
+
+.settingtype5 .block__item {
+  position: relative;
+}
+
+.settingtype5 .block__lbl {
+  bottom: 0;
+  padding-right: 0;
+  position: absolute;
+  top: 0;
+}
+
+.settingtype5 .block__lbl-wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.settingtype5 .block__value {
+  float: right;
+}
+
 body {
   font-size: 11px;
   line-height: 16.5px;
@@ -780,7 +832,7 @@ body {
   line-height: 23.1px;
 }
 
-.block__cell, .block__lbl, .block__value {
+.block__cell, .block__lbl, .block__value, .settingtype5 .block__sub-header__header-cell {
   line-height: 23.1px;
   min-height: 23.1px;
 }
