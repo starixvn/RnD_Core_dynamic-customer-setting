@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.CustomerSetting.MatrixClient.Helpers;
 
@@ -45,6 +46,11 @@
 
         public virtual void RegisterRouteConfig(RouteCollection routes)
         {
+            routes.MapRoute(
+                name: "DCSMatrix_default",
+                url: "DCSMatrix/{controller}/{action}/{id}",
+                defaults: new { controller = "ViewCustomerSettingMatrix", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "Fanex.CustomerSetting.MatrixClient.Controllers" });
         }
 
         private static bool IsCustomerSettingClient(Type type)

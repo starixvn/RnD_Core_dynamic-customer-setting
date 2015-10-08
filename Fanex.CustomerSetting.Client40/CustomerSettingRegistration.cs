@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models;
@@ -76,6 +77,11 @@
 
         public virtual void RegisterRouteConfig(RouteCollection routes)
         {
+            routes.MapRoute(
+                name: "DCS_default",
+                url: "DCS/{controller}/{action}/{id}",
+                defaults: new { controller = "ViewCustomerSetting", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "Fanex.CustomerSetting.Client40.Controllers" });
         }
 
         private static bool IsCustomerSettingClient(Type type)

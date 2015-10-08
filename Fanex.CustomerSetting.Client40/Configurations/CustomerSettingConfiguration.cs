@@ -30,7 +30,7 @@
             set { this["ServiceUris"] = value; }
         }
 
-        [ConfigurationProperty("SecrectKey", IsRequired = true)]
+        [ConfigurationProperty("SecrectKey", IsRequired = false)]
         public string SecrectKey
         {
             get { return (string)this["SecrectKey"]; }
