@@ -197,7 +197,7 @@ module DemoFrom {
     app.service("postingToIframeService", PostingToIframeService);
 
     class SampleDataFactory {
-        private static defaultProductId: number = 255;
+        private static defaultProductId: number = 16;
         private static defaultLanguage: string = "en-US";
 
         public static getSystemTypes(): KeyValuePair<number, string>[] {
