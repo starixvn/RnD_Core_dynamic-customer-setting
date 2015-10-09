@@ -80,7 +80,7 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                return response.Content;
+                throw new InvalidOperationException(response.Content);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);
@@ -95,7 +95,7 @@
         private string ReplaceParameters(string template, string customerName)
         {
             string finalTemplate = template;
-            AppConfiguration appConfig = new AppConfiguration(Request.ApplicationPath);
+            AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
 
             if (!string.IsNullOrEmpty(finalTemplate))
             {

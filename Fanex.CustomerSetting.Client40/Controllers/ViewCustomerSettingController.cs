@@ -86,7 +86,7 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                return response.Content;
+                throw new InvalidOperationException(response.Content);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);
@@ -101,7 +101,7 @@
         private string ReplaceParameters(string template, SettingFormQuery query)
         {
             string finalTemplate = template;
-            AppConfiguration appConfig = new AppConfiguration(Request.ApplicationPath);
+            AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
             appConfig.Editable = CustomerSettingRegistration.CheckUpdatePermission(CustomerSettingRegistration.GetPermissionContext()); 
 
             if (!string.IsNullOrEmpty(finalTemplate))
