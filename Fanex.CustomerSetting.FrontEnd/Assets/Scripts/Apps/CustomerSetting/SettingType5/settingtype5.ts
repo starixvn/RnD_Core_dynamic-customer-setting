@@ -4,7 +4,7 @@
 /// <reference path="models.ts" />
 
 module CustomerSetting {
-    interface SettingType5Scope extends IDefaultSettingTypeDirectiveScope {
+    interface ISettingType5Scope extends IDefaultSettingTypeDirectiveScope {
         numberOfCellsOnEachRow: number;
     }
 
@@ -23,7 +23,7 @@ module CustomerSetting {
             };
         }
 
-        public controller: any = ["$scope", ($scope: SettingType5Scope) => {
+        public controller: any = ["$scope", ($scope: ISettingType5Scope) => {
             $scope.avaiCustomerLevels = Level;
             $scope.avaiSettingLevels = SettingLevel;
             $scope.numberOfCellsOnEachRow = this.numberOfCellsOnEachRow;

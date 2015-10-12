@@ -61,7 +61,7 @@ module CustomerSetting.IE8 {
                         var settingTypeElement = angular.element(newNodeParts.join(""));
 
                         if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
+                            settingTypeElement.addClass("block--last");
                         }
 
                         element.append(settingTypeElement);

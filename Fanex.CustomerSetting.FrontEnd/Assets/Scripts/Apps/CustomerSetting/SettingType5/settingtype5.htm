@@ -17,9 +17,7 @@
                 <label class="check-all-field-lbl">
                     {{group[0].sportTypeName}}
                 </label>
-                <label class="check-all-field">
-                    <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-checkall data-items>
-                </label>
+                <checkbox-group data-items="group" />
             </div>
         </div>
         <div class="block__sub-header"
@@ -30,9 +28,7 @@
                 <label class="check-all-field-lbl">
                     {{group[0].productName}}
                 </label>
-                <label class="check-all-field">
-                    <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-checkall data-items>
-                </label>
+                <checkbox-group data-items="group" />
             </div>
         </div>
         <div class="block__item"
@@ -47,9 +43,7 @@
                         {{item | showingName:settingType.settingLevel:productName }}
                         {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
                     </label>
-                    <label class="check-all-field">
-                        <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-checkall data-items>
-                    </label>
+                    <checkbox-group data-items="item.stakeLevels" />
                 </div>
             </div>
             <div class="block__value">

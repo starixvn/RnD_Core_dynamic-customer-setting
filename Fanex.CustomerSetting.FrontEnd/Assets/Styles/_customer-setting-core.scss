@@ -1,4 +1,4 @@
-﻿@import "Compass/_compass";
+﻿@import "compass";
 @import "_variables";
 @import "_other";
 
@@ -256,6 +256,10 @@
 
     &--error {
         border-color: $error-color;
+    }
+
+    &--last {
+        margin-bottom: 0;
     }
 
     &__header {

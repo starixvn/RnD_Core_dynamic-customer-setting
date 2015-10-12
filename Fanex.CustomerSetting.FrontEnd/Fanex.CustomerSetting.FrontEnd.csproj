@@ -11,6 +11,7 @@
     <AssemblyName>Fanex.CustomerSetting.FrontEnd</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsCompassProject>True</IsCompassProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +60,7 @@
     <None Include="Assets\Styles\_shame.scss" />
     <None Include="Assets\Styles\_variables.scss" />
     <None Include="bower.json" />
+    <None Include="config.rb" />
     <None Include="Gulp\gulp-tsd.json" />
     <None Include="Gulp\products-config.json" />
     <None Include="Gulp\tsd.json" />
@@ -214,6 +216,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\checkbox-group.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\stake-level-resources.js">
       <AutoGen>True</AutoGen>
@@ -334,6 +337,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\status-checkbox.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\stake-level-resource.ts" />
