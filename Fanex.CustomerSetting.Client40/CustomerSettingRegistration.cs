@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.CustomerSetting.Client40.Exceptions;
     using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models;
 
@@ -31,7 +32,7 @@
 
             if (customerSettingClients.Count == 0)
             {
-                throw new InvalidOperationException("A class extending from CustomerSettingRegistration is required");
+                throw new CustomerSettingException("A class extending from CustomerSettingRegistration is required");
             }
             else if (customerSettingClients.Count == 1)
             {
@@ -42,7 +43,7 @@
             }
             else
             {
-                throw new InvalidOperationException("Only one class extending from CustomerSettingRegistration is allowed");
+                throw new CustomerSettingException("Only one class extending from CustomerSettingRegistration is allowed");
             }
         }
 
@@ -93,7 +94,7 @@
         {
             if (client == null)
             {
-                throw new InvalidOperationException("The CustomerSettingRegistration.Init() method must be called once the web application is started.");
+                throw new CustomerSettingException("The CustomerSettingRegistration.Init() method must be called once the web application is started.");
             }
         }
 

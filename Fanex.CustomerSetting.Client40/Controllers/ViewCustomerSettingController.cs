@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Attributes;
     using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Exceptions;
     using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Requests;
@@ -86,7 +87,7 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                throw new InvalidOperationException(response.Content);
+                throw new CustomerSettingException(response.Content);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);

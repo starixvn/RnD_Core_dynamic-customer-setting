@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.MatrixClient.Attributes;
     using Fanex.CustomerSetting.MatrixClient.Configurations;
+    using Fanex.CustomerSetting.MatrixClient.Exceptions;
     using Fanex.CustomerSetting.MatrixClient.Helpers;
     using Fanex.CustomerSetting.MatrixClient.Models;
     using Fanex.CustomerSetting.MatrixClient.Models.Requests;
@@ -80,7 +81,7 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                throw new InvalidOperationException(response.Content);
+                throw new SettingMatrixException(response.Content);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);

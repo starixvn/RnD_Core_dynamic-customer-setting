@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Fanex.CustomerSetting.Client40.Exceptions;
 
     internal static class RandomHelper
     {
@@ -11,7 +12,7 @@
         {
             if (string.IsNullOrWhiteSpace(sourceUris))
             {
-                throw new InvalidOperationException("Uris cannot be null or white space");
+                throw new CustomerSettingException("Uris cannot be null or white space");
             }
 
             var uris = sourceUris.Split(',');

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
     using System;
+    using Fanex.CustomerSetting.Client40.Exceptions;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using RestSharp;
 
@@ -10,7 +11,7 @@
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new CustomerSettingException("QuerySettingRequest cannot be null");
             }
 
             var request = new RestRequest("/customersetting/", Method.GET);
@@ -24,7 +25,7 @@
         {
             if (update == null)
             {
-                throw new ArgumentNullException("update", "UpdateSettingRequest cannot be null");
+                throw new CustomerSettingException("UpdateSettingRequest cannot be null");
             }
 
             var request = new RestRequest("/customersetting/post/", Method.POST);
@@ -38,7 +39,7 @@
         {
             if (multipleUpdate == null)
             {
-                throw new ArgumentNullException("multipleUpdate", "MultipleUpdateSettingRequest cannot be null");
+                throw new CustomerSettingException("MultipleUpdateSettingRequest cannot be null");
             }
 
             var request = new RestRequest("/customersetting/postmultiple/", Method.POST);

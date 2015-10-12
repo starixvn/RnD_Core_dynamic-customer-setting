@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.CustomerSetting.MatrixClient.Exceptions;
     using Fanex.CustomerSetting.MatrixClient.Helpers;
 
     public abstract class SettingMatrixRegistration
@@ -17,7 +18,7 @@
 
             if (customerSettingClients.Count == 0)
             {
-                throw new InvalidOperationException("A class extending from CustomerSettingMatrixRegistration is required");
+                throw new SettingMatrixException("A class extending from CustomerSettingMatrixRegistration is required");
             }
             else if (customerSettingClients.Count == 1)
             {
@@ -28,7 +29,7 @@
             }
             else
             {
-                throw new InvalidOperationException("Only one class extending from CustomerSettingMatrixRegistration is allowed");
+                throw new SettingMatrixException("Only one class extending from CustomerSettingMatrixRegistration is allowed");
             }
         }
 
@@ -36,7 +37,7 @@
         {
             if (client == null)
             {
-                throw new InvalidOperationException("The CustomerSettingMatrixRegistration.Init() method must be called once the web application is started.");
+                throw new SettingMatrixException("The CustomerSettingMatrixRegistration.Init() method must be called once the web application is started.");
             }
 
             return client.VerifyPermission();
