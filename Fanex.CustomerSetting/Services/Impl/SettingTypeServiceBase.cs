@@ -116,7 +116,7 @@
             if (query.CustomerLevel.IsMemberLevel()
                 && query.UplineLevel.IsNotAgentLevel())
             {
-                settingType.IsReadOnly = true;
+                settingType.DisplayMode = DisplayMode.ReadOnly;
             }
         }
 

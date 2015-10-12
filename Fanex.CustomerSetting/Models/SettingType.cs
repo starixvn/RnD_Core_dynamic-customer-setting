@@ -21,8 +21,6 @@
 
         public byte DisplayMode { get; set; }
 
-        public bool IsReadOnly { get; set; }
-
         public bool IsError { get; set; }
 
         public IEnumerable<ISettingItem> SettingItems

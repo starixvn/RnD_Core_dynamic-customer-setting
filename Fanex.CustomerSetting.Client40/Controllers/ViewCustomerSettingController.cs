@@ -81,7 +81,7 @@
             bool isDebug = HttpContext.IsDebuggingEnabled;
             string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris).ToString();
             string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
-                ? CustomerSettingConfiguration.Settings.CustomCssUrl.ToString()
+                ? Url.Content(CustomerSettingConfiguration.Settings.CustomCssUrl.ToString())
                 : string.Empty;
             string template = string.Empty;
 

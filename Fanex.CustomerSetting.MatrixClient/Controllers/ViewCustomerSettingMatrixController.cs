@@ -75,7 +75,7 @@
             bool isDebug = HttpContext.IsDebuggingEnabled;
             string cdn = RandomHelper.GetRandomUri(SettingMatrixConfiguration.Settings.CdnUris).ToString();
             string customCss = SettingMatrixConfiguration.Settings.CustomCssUrl != null
-                ? SettingMatrixConfiguration.Settings.CustomCssUrl.ToString()
+                ? Url.Content(SettingMatrixConfiguration.Settings.CustomCssUrl.ToString())
                 : string.Empty;
             string template = string.Empty;
 

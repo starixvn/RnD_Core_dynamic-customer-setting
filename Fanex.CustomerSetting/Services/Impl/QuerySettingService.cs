@@ -8,7 +8,6 @@
     using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.Data.Repository;
     using Fanex.Logging;
@@ -144,7 +143,10 @@
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
-                customerSettingType.DisplayMode = productSettingType.DisplayMode;
+                if (customerSettingType.DisplayMode != DisplayMode.ReadOnly)
+                {
+                    customerSettingType.DisplayMode = productSettingType.DisplayMode;
+                }
             }
             catch (Exception ex)
             {
