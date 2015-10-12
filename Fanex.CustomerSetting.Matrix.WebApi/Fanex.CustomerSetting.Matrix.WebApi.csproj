@@ -141,7 +141,13 @@
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+	<Content Include="Web.AppSettings.uat.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionStrings.local.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+	<Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -151,6 +157,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web.local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.uat.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>

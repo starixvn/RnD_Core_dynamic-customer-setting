@@ -111,6 +111,15 @@
                 settingType.Name);
         }
 
+        protected void SetSettingTypeReadOnlyWhenIndirectUplineEditMember(SettingType settingType, CustomerSettingQuery query)
+        {
+            if (query.CustomerLevel.IsMemberLevel()
+                && query.UplineLevel.IsNotAgentLevel())
+            {
+                settingType.IsReadOnly = true;
+            }
+        }
+
         public abstract SettingType GetCustomerSettingType(
             ISettingContext settingContext,
             CustomerSettingQuery query);

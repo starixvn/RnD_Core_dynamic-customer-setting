@@ -46,6 +46,8 @@
                 SettingItems = betLimitItemsRawData.Select<BetLimitItemDto, BetLimitItem>(betLimitDto => new BetLimitItem(betLimitDto))
             };
 
+            SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerBetLimit, query);
+
             return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
         }
 

@@ -46,6 +46,8 @@
                 SettingItems = commissionItemsRawData.Select<CommissionItemDto, CommissionItem>(commItemDto => new CommissionItem(commItemDto))
             };
 
+            SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerCommission, query);
+
             return SetSportTypeBetTypeName(customerCommission, settingContext.Language);
         }
 
