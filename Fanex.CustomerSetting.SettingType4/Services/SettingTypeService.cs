@@ -38,22 +38,18 @@
             ISettingContext settingContext,
             CustomerSettingQuery query)
         {
-            if (query.CustomerLevel.IsMemberLevel()
-                && query.UplineLevel.IsNotAgentLevel())
-            {
-                return new SettingType();
-            }
-
             var productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatusItemsRawData(query);
 
-            var customerBetLimit = new SettingType
+            var customerProductStatus = new SettingType
             {
                 Name = Label.ProductStatus,
                 SettingItems = productStatusItemsRawData
                 .Select<ProductStatusItemDto, ProductStatusItem>(productStatusItemDto => new ProductStatusItem(productStatusItemDto))
             };
 
-            return SetSportTypeBetTypeName(customerBetLimit, settingContext.Language);
+            SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerProductStatus, query);
+
+            return SetSportTypeBetTypeName(customerProductStatus, settingContext.Language);
         }
 
         public override SettingResult UpdateCustomerSettingType(
