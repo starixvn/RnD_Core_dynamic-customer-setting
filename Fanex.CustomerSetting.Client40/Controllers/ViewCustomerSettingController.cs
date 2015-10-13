@@ -32,7 +32,6 @@
         {
         }
 
-        [HttpPost]
         [CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult Index(SettingFormQuery query)
         {
