@@ -5,7 +5,6 @@ module CustomerSetting {
 
     export class SettingType5Item extends DefaultSettingItem {
         public stakeLevels: Array<StakeLevel>;
-        public selectedAll: boolean;
 
         constructor();
         constructor(settingItem: any);
@@ -19,10 +18,6 @@ module CustomerSetting {
                 if (settingItem.stakeLevels) {
                     this.stakeLevels = settingItem.stakeLevels.map((stakeLevel: any) => {
                         return new StakeLevel(stakeLevel, true);
-                    });
-
-                    this.selectedAll = this.stakeLevels.every((stakeLevel: StakeLevel) => {
-                        return stakeLevel.selected;
                     });
                 }
             }

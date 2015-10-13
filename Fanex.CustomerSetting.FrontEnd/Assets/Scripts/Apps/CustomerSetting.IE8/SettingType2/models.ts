@@ -80,7 +80,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult> Result.normal;
+            this.validationState = <ValidationResult>Result.normal;
 
             return true;
         }
@@ -110,7 +110,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult> Result.normal;
+            this.validationState = <ValidationResult>Result.normal;
 
             return true;
         }
@@ -138,7 +138,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult> Result.normal;
+            this.validationState = <ValidationResult>Result.normal;
 
             return true;
         }
@@ -160,7 +160,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult> Result.normal;
+            this.validationState = <ValidationResult>Result.normal;
 
             return true;
         }

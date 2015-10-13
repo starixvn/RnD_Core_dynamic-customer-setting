@@ -72,4 +72,26 @@ module CustomerSetting {
     }
 
     ModuleRegister.directive("settingtype5", SettingType5Directive);
+
+    function EmptyStakeLevelFilter(): Function {
+        return (items: Array<SettingType5Item | StakeLevel>) => {
+            var hasStakeLevel: boolean = false;
+
+            if (angular.isArray(items)) {
+                hasStakeLevel = items.some((item: SettingType5Item | StakeLevel) => {
+                    if (item instanceof SettingType5Item) {
+                        return item.stakeLevels.some((stakeLevel: StakeLevel) => {
+                            return !!stakeLevel.stakeLevelId;
+                        });
+                    } else {
+                        return !!(<StakeLevel>item).stakeLevelId;
+                    }
+                });
+            }
+
+            return !hasStakeLevel;
+        };
+    }
+
+    ModuleRegister.filter("emptyStakeLevel", EmptyStakeLevelFilter);
 }

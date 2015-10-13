@@ -288,7 +288,7 @@ module CustomerSetting {
         public getEditableSettingTypes(settingTypeId?: number): Setting {
             var newSetting: Setting;
             var editableSettingTypes: SettingType[];
-            
+
             if (settingTypeId) {
                 editableSettingTypes = this.settingTypes.filter((item: SettingType) => {
                     return item.id === settingTypeId && item.displayMode === DisplayMode.editable;

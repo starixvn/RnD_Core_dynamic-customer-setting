@@ -22,6 +22,8 @@ module CustomerSetting {
         }
 
         public controller: any = ["$scope", ($scope: ICheckboxGroupScope) => {
+            $scope.checked = this.checkItemsState($scope.items);
+
             $scope.checkAll = () => {
                 this.changeStateOfAllItems($scope.items, $scope.checked);
             };
@@ -35,7 +37,11 @@ module CustomerSetting {
             if (items) {
                 items.forEach((item: SettingType5Item | StakeLevel) => {
                     if (item instanceof SettingType5Item) {
-                        item.selectedAll = state;
+                        item.stakeLevels.forEach((stakeLevel: StakeLevel) => {
+                            if (stakeLevel.stakeLevelId) {
+                                stakeLevel.selected = state;
+                            }
+                        });
                     } else {
                         (<StakeLevel>item).selected = state;
                     }
@@ -44,23 +50,37 @@ module CustomerSetting {
         }
 
         private checkItemsState(items: Array<SettingType5Item | StakeLevel>): boolean {
-            var checked: boolean = false;
+            var allChecked: boolean = false;
 
             if (items) {
-                checked = items.every((item: SettingType5Item | StakeLevel) => {
-                    var allChecked: boolean = false;
-
-                    if (item instanceof SettingType5Item) {
-                        allChecked = item.selectedAll;
+                items = items.filter((item: SettingType5Item | StakeLevel) => {
+                    if (item instanceof StakeLevel) {
+                        return !!item.stakeLevelId;
                     } else {
-                        allChecked = (<StakeLevel>item).selected;
+                        return true;
                     }
-
-                    return allChecked;
                 });
+
+                if (items.length > 0) {
+                    allChecked = items.every((item: SettingType5Item | StakeLevel) => {
+                        var itemChecked: boolean = false;
+
+                        if (item && item instanceof SettingType5Item) {
+                            itemChecked = item.stakeLevels.filter((stakeLevel: StakeLevel) => {
+                                return !!stakeLevel.stakeLevelId;
+                            }).every((stakeLevel: StakeLevel) => {
+                                return stakeLevel.selected;
+                            });
+                        } else {
+                            itemChecked = (<StakeLevel>item).selected;
+                        }
+
+                        return itemChecked;
+                    });
+                }
             }
 
-            return checked;
+            return allChecked;
         }
     }
 
