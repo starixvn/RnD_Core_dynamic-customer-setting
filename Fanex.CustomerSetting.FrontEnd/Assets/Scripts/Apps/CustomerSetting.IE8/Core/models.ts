@@ -286,6 +286,32 @@ module CustomerSetting.IE8 {
             }
         }
 
+        public getEditableSettingTypes(settingTypeId?: number): Setting {
+            var newSetting: Setting;
+            var editableSettingTypes: SettingType[];
+
+            if (settingTypeId) {
+                editableSettingTypes = _.filter(this.settingTypes, (item: SettingType) => {
+                    return item.id === settingTypeId && item.displayMode === DisplayMode.editable;
+                });
+            } else {
+                editableSettingTypes = this.getListOfEditableSettingTypes();
+            }
+
+            if (editableSettingTypes && editableSettingTypes.length > 0) {
+                newSetting = new Setting();
+
+                newSetting.customerId = this.customerId;
+                newSetting.customerInfo = this.customerInfo;
+                newSetting.customerLevel = this.customerLevel;
+                newSetting.productId = this.productId;
+                newSetting.productName = this.productName;
+                newSetting.settingTypes = editableSettingTypes;
+            }
+
+            return newSetting;
+        }
+
         public getChanges(settingTypeId?: number): Setting {
             var newSetting: Setting;
             var matchedSettingTypes: Array<SettingType>;
@@ -296,7 +322,7 @@ module CustomerSetting.IE8 {
                     return item.id === settingTypeId;
                 });
             } else {
-                matchedSettingTypes = this.settingTypes;
+                matchedSettingTypes = this.getListOfEditableSettingTypes();
             }
 
             if (matchedSettingTypes && matchedSettingTypes.length > 0) {
@@ -324,7 +350,8 @@ module CustomerSetting.IE8 {
         }
 
         public validate(): boolean {
-            var validSettingTypes: boolean = _.every(this.settingTypes, (item: SettingType) => {
+            var editableSettingTypes = this.getListOfEditableSettingTypes();
+            var validSettingTypes: boolean = _.every(editableSettingTypes, (item: SettingType) => {
                 return item.validate();
             });
 
@@ -351,6 +378,12 @@ module CustomerSetting.IE8 {
             });
 
             return setting;
+        }
+
+        private getListOfEditableSettingTypes(): SettingType[] {
+            return _.filter(this.settingTypes, (settingType: SettingType) => {
+                return settingType.displayMode === DisplayMode.editable;
+            });
         }
     }
 

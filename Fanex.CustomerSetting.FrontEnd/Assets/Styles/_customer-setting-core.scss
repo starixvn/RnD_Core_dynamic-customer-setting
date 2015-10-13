@@ -258,10 +258,6 @@
         border-color: $error-color;
     }
 
-    &--last {
-        margin-bottom: 0;
-    }
-
     &__header {
         @include border(bottom);
         background-color: $block-header-bg;

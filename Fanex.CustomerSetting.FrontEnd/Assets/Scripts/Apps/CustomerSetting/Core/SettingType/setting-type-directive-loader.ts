@@ -64,7 +64,7 @@ module CustomerSetting {
                         var settingTypeElement = angular.element(newNodeParts.join(""));
 
                         if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("block--last");
+                            settingTypeElement.addClass("last-setting-type");
                         }
 
                         element.append(settingTypeElement);

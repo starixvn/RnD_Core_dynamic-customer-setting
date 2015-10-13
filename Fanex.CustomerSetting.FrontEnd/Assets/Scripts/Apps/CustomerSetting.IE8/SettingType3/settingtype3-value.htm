@@ -1,6 +1,4 @@
-﻿<div data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)"
-     data-comm-rate-select data-setting-item="item">
-</div>
+﻿<div data-ng-if="settingType | editableSettingType" data-comm-rate-select data-setting-item="item"></div>
 <div class="setting-field-wrapper"
      data-ng-if="!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
     {{item.commRate}}

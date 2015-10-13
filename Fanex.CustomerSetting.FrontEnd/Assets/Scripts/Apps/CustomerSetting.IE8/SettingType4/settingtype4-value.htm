@@ -1,5 +1,4 @@
-﻿﻿<div class="setting-field-wrapper"
-      data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)">
+﻿﻿<div class="setting-field-wrapper" data-ng-if="settingType | editableSettingType">
     <label class="setting-field--checkfield">
         <input type="checkbox"
                class="setting-field--checkfield__check-ctrl"
@@ -25,8 +24,7 @@
         {{'EnableDownline' | productStatusLabel}}
     </label>
 </div>
-<div class="setting-field-wrapper"
-     data-ng-if="!(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent)">
+<div class="setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
     <label class="setting-field--checkfield">
         <input type="checkbox"
                class="setting-field--checkfield__check-ctrl"
