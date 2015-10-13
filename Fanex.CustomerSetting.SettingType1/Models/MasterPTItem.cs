@@ -54,20 +54,6 @@
 
         public override IResult Validate()
         {
-            if (IS3 && S3 > 0)
-            {
-                return new Result(
-                    ErrorCode.SuperPTIsGreaterThanZeroWhenIsAutoIsSet,
-                    Message.SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
-            }
-
-            if (!IS3 && US3 > 0)
-            {
-                return new Result(
-                    ErrorCode.SuperAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    Message.SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
-            }
-
             if (N3 > M3)
             {
                 return new Result(
@@ -85,8 +71,8 @@
                 base.ToXml(),
                 S3,
                 IS3 ? 1 : 0,
-                US3,
-                M3,
+                IS3 ? US3 : 0,
+                IS3 ? 0 : M3,
                 N3,
                 IsUpdateSuperPTOnMembers ? 1 : 0,
                 SuperPTOnMembers);

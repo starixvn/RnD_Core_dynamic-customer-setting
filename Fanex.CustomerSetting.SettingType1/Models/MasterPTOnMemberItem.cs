@@ -43,32 +43,13 @@
         /// </summary>
         public byte N3 { get; set; }
 
-        public override IResult Validate()
-        {
-            if (!IM1 && UM1 > 0)
-            {
-                return new Result(
-                    ErrorCode.MasterAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    Message.MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
-            }
-
-            if (IM1 && M1 > 0)
-            {
-                return new Result(
-                    ErrorCode.MasterPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet,
-                    Message.MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
-            }
-
-            return base.Validate();
-        }
-
         public override string ToXml()
         {
             return string.Format(
                 PTXmlFormat,
                 base.ToXml(),
-                M1,
-                UM1,
+                IM1 ? 0 : M1,
+                IM1 ? UM1 : 0,
                 IM1 ? 1 : 0);
         }
     }

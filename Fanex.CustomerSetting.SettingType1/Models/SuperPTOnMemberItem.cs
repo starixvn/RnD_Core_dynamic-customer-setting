@@ -53,32 +53,13 @@
         /// </summary>
         public byte M3 { get; set; }
 
-        public override IResult Validate()
-        {
-            if (!IS1 && US1 > 0)
-            {
-                return new Result(
-                    ErrorCode.SuperAutoPTOnMemberIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    Message.SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
-            }
-
-            if (IS1 && S1 > 0)
-            {
-                return new Result(
-                    ErrorCode.SuperPTOnMemberIsGreaterThanZeroWhenIsAutoIsSet,
-                    Message.SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet);
-            }
-
-            return base.Validate();
-        }
-
         public override string ToXml()
         {
             return string.Format(
                 PTXmlFormat,
                 base.ToXml(),
-                S1,
-                US1,
+                IS1 ? 0 : S1,
+                IS1 ? US1 : 0,
                 IS1 ? 1 : 0);
         }
     }

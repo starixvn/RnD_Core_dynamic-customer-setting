@@ -54,20 +54,6 @@
 
         public override IResult Validate()
         {
-            if (IM2 && M2 > 0)
-            {
-                return new Result(
-                    ErrorCode.MasterPTIsGreaterThanZeroWhenIsAutoIsSet,
-                    Message.MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet);
-            }
-
-            if (!IM2 && UM2 > 0)
-            {
-                return new Result(
-                    ErrorCode.MasterAutoPTIsGreaterThanZeroWhenIsAutoIsNotSet,
-                    Message.MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet);
-            }
-
             if (N2 > A2)
             {
                 return new Result(
@@ -83,9 +69,9 @@
             return string.Format(
                 PTXmlFormat,
                 base.ToXml(),
-                M2,
+                IM2 ? 0 : M2,
                 IM2 ? 1 : 0,
-                UM2,
+                IM2 ? UM2 : 0,
                 A2,
                 N2,
                 IsUpdateMasterPTOnMembers ? 1 : 0,
