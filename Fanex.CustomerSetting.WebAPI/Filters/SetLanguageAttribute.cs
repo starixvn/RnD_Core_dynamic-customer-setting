@@ -32,8 +32,9 @@
 
             if (currentLanguage != DefaultLanguage)
             {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(currentLanguage);
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(currentLanguage);
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(currentLanguage);
+                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+
                 Thread.CurrentThread.CurrentCulture.DateTimeFormat = DefaultCulture.DateTimeFormat;
                 Thread.CurrentThread.CurrentCulture.NumberFormat = DefaultCulture.NumberFormat;
             }
