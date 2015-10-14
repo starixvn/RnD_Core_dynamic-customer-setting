@@ -69,10 +69,10 @@
             return string.Format(
                 PTXmlFormat,
                 base.ToXml(),
-                S3,
+                IS3 ? 0 : S3,
                 IS3 ? 1 : 0,
                 IS3 ? US3 : 0,
-                IS3 ? 0 : M3,
+                M3,
                 N3,
                 IsUpdateSuperPTOnMembers ? 1 : 0,
                 SuperPTOnMembers);
