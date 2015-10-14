@@ -189,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\CustomerSetting.IE8\Scripts\ie8tricks.js" />
+    <Content Include="App\CustomerSetting.IE8\Scripts\product-16.js" />
+    <Content Include="App\CustomerSetting.IE8\Scripts\product-16.min.js" />
     <Content Include="App\CustomerSetting.IE8\Scripts\product-247.js" />
     <Content Include="App\CustomerSetting.IE8\Scripts\product-247.min.js" />
     <Content Include="App\CustomerSetting.IE8\Scripts\product-248.js" />
@@ -221,6 +223,8 @@
     <Content Include="App\CustomerSettingMatrix\Styles\Images\loading.gif" />
     <Content Include="App\CustomerSettingMatrix\Styles\Images\not-allow-auto-pt.gif" />
     <Content Include="App\CustomerSettingMatrix\Styles\Images\sprite.png" />
+    <Content Include="App\CustomerSetting\Scripts\product-16.js" />
+    <Content Include="App\CustomerSetting\Scripts\product-16.min.js" />
     <Content Include="App\CustomerSetting\Scripts\product-247.js" />
     <Content Include="App\CustomerSetting\Scripts\product-247.min.js" />
     <Content Include="App\CustomerSetting\Scripts\product-248.js" />
@@ -265,6 +269,9 @@
     <Content Include="Scripts\DemoForm\posting-to-iframe.htm" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.js" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular-csp.css" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js" />
     <Content Include="Scripts\Libraries\Angular\angular-csp.css" />
     <Content Include="Scripts\Libraries\Angular\angular.js" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js" />
@@ -283,6 +290,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.uat.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
@@ -313,6 +326,8 @@
   <ItemGroup>
     <None Include="bower.json" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
+    <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
     <None Include="tsd.json" />
     <Content Include="Content\site.scss" />
     <Content Include="Content\site.css.map">
@@ -322,17 +337,13 @@
     <None Include="tslint.json" />
     <Content Include="Scripts\sample-data.json" />
     <Content Include="Views\Home\Index-IE8.cshtml" />
-    <Content Include="Web.AppSettings.config" />
-    <Content Include="Web.ConnectionStrings.config" />
     <Content Include="Scripts\Libraries\Angular-Legacy\angular.min.js.map" />
     <Content Include="Scripts\Libraries\Angular\angular.min.js.map" />
     <Content Include="Scripts\Libraries\Es5-Shim\es5-shim.map" />
     <Content Include="Scripts\Libraries\JQuery\jquery.min.map" />
     <Content Include="Scripts\Libraries\Underscore\underscore-min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
