@@ -10,6 +10,9 @@
 </head>
 <body>
     @RenderBody()
+    <script type="text/javascript">
+        var applicationPath = "@Url.Content("~")";
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

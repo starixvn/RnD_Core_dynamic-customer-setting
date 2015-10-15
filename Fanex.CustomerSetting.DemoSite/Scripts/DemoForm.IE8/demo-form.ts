@@ -22,7 +22,10 @@ module DemoForm {
 
         private $http: ng.IHttpService;
         private $location: ng.ILocationService;
+        private $window: ng.IWindowService;
         private postingToIframeService: PostingToIframeService;
+
+        private applicationPath: string;
 
         constructor(
             $http: ng.IHttpService,
@@ -30,6 +33,15 @@ module DemoForm {
             postingToIframeService: PostingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+
+            /* tslint:disable:no-string-literal */
+            this.applicationPath = this.$window["applicationPath"];
+            /* tslint:enable:no-string-literal */
+
+            if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                this.applicationPath += "/";
+            }
+
             this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
@@ -81,7 +93,7 @@ module DemoForm {
         }
 
         public saveSession(): void {
-            this.$http.post("/home/saveSession", this.actor).then(() => {
+            this.$http.post(this.resolveUrl("home/saveSession"), this.actor).then(() => {
                 this.switchForm(true);
             });
         }
@@ -92,7 +104,7 @@ module DemoForm {
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "/ViewCustomerSetting",
+                path: this.resolveUrl("ViewCustomerSetting"),
                 frameName: "setting-page"
             };
 
@@ -106,6 +118,10 @@ module DemoForm {
             }
 
             this.postingToIframeService.submitToIframe(params);
+        }
+
+        private resolveUrl(requestUrl: string): string {
+            return this.applicationPath + requestUrl;
         }
     }
 

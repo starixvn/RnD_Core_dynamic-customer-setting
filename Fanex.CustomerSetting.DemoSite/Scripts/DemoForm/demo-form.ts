@@ -24,6 +24,8 @@ module DemoFrom {
         private $window: ng.IWindowService;
         private postingToIframeService: PostingToIframeService;
 
+        private applicationPath: string;
+
         constructor(
             $http: ng.IHttpService,
             $location: ng.ILocationService,
@@ -32,6 +34,14 @@ module DemoFrom {
             this.$http = $http;
             this.$location = $location;
             this.$window = $window;
+
+            /* tslint:disable:no-string-literal */
+            this.applicationPath = this.$window["applicationPath"];
+            /* tslint:enable:no-string-literal */
+
+            if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                this.applicationPath += "/";
+            }
 
             this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
@@ -84,7 +94,7 @@ module DemoFrom {
         }
 
         public saveSession(): void {
-            this.$http.post("/home/saveSession", this.actor).then(() => {
+            this.$http.post(this.resolveUrl("home/saveSession"), this.actor).then(() => {
                 this.switchForm(true);
             });
         }
@@ -95,7 +105,7 @@ module DemoFrom {
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "/DCS/ViewCustomerSetting",
+                path: this.resolveUrl("DCS/ViewCustomerSetting"),
                 frameName: "setting-page"
             };
 
@@ -120,7 +130,11 @@ module DemoFrom {
                 customerName = (<SingleTarget>this.target).customerName;
             }
 
-            this.$window.open("/Matrix/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?customerName=" + customerName), "_bank");
+        }
+
+        private resolveUrl(requestUrl: string): string {
+            return this.applicationPath + requestUrl;
         }
     }
 
