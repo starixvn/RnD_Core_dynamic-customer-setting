@@ -14,6 +14,10 @@ var DemoFrom;
             this.$http = $http;
             this.$location = $location;
             this.$window = $window;
+            this.applicationPath = this.$window["applicationPath"];
+            if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                this.applicationPath += "/";
+            }
             this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
@@ -59,7 +63,7 @@ var DemoFrom;
         };
         DemoFormController.prototype.saveSession = function () {
             var _this = this;
-            this.$http.post("home/saveSession", this.actor).then(function () {
+            this.$http.post(this.resolveUrl("home/saveSession"), this.actor).then(function () {
                 _this.switchForm(true);
             });
         };
@@ -69,7 +73,7 @@ var DemoFrom;
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "DCS/ViewCustomerSetting",
+                path: this.resolveUrl("DCS/ViewCustomerSetting"),
                 frameName: "setting-page"
             };
             if (this.isMultipleUpdates) {
@@ -91,7 +95,10 @@ var DemoFrom;
             else {
                 customerName = this.target.customerName;
             }
-            this.$window.open("/Matrix/ViewCustomerSettingMatrix?customerName=" + customerName, "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?customerName=" + customerName), "_bank");
+        };
+        DemoFormController.prototype.resolveUrl = function (requestUrl) {
+            return this.applicationPath + requestUrl;
         };
         DemoFormController.$inject = ["$http", "$location", "$window", "postingToIframeService"];
         return DemoFormController;

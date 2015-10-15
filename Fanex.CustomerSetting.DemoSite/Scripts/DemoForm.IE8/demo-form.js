@@ -14,6 +14,10 @@ var DemoForm;
         function DemoFormController($http, $location, postingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+            this.applicationPath = this.$window["applicationPath"];
+            if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                this.applicationPath += "/";
+            }
             this.postingToIframeService = postingToIframeService;
             this.systemTypes = SampleDataFactory.getSystemTypes();
             this.actorRoles = Actor.getAvailableRoles();
@@ -59,7 +63,7 @@ var DemoForm;
         };
         DemoFormController.prototype.saveSession = function () {
             var _this = this;
-            this.$http.post("home/saveSession", this.actor).then(function () {
+            this.$http.post(this.resolveUrl("home/saveSession"), this.actor).then(function () {
                 _this.switchForm(true);
             });
         };
@@ -69,7 +73,7 @@ var DemoForm;
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "ViewCustomerSetting",
+                path: this.resolveUrl("ViewCustomerSetting"),
                 frameName: "setting-page"
             };
             if (this.isMultipleUpdates) {
@@ -82,6 +86,9 @@ var DemoForm;
                 params.customerId = this.target.customerId;
             }
             this.postingToIframeService.submitToIframe(params);
+        };
+        DemoFormController.prototype.resolveUrl = function (requestUrl) {
+            return this.applicationPath + requestUrl;
         };
         DemoFormController.$inject = ["$http", "$location", "postingToIframeService"];
         return DemoFormController;
