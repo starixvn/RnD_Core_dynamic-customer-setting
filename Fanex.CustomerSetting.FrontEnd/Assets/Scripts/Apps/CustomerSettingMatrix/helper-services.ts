@@ -22,6 +22,10 @@ module CustomerSettingMatrix {
             if (appConfig) {
                 this.applicationPath = appConfig.applicationPath;
                 this.antiForgeryToken = appConfig.antiForgeryToken;
+
+                if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                    this.applicationPath += "/";
+                }
             }
         }
 
