@@ -84,7 +84,7 @@ module DemoFrom {
         }
 
         public saveSession(): void {
-            this.$http.post("home/saveSession", this.actor).then(() => {
+            this.$http.post("/home/saveSession", this.actor).then(() => {
                 this.switchForm(true);
             });
         }
@@ -95,7 +95,7 @@ module DemoFrom {
                 productId: this.target.productId,
                 customerLevel: this.target.role,
                 uplineLevel: this.target.uplineRole,
-                path: "DCS/ViewCustomerSetting",
+                path: "/DCS/ViewCustomerSetting",
                 frameName: "setting-page"
             };
 

@@ -28,6 +28,10 @@ module CustomerSetting {
                 this.applicationPath = appConfig.applicationPath;
                 this.antiForgeryToken = appConfig.antiForgeryToken;
                 this.editable = appConfig.editable;
+
+                if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
+                    this.applicationPath += "/";
+                }
             }
         }
 
