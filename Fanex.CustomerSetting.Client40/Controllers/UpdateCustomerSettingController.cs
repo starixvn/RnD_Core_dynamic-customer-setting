@@ -7,6 +7,7 @@
     using Fanex.CustomerSetting.Client40.Services;
     using RestSharp;
 
+    [ExceptionHandlingAttribute]
     public class UpdateCustomerSettingController : Controller
     {
         private readonly ICustomerSettingService _customerSettingService;

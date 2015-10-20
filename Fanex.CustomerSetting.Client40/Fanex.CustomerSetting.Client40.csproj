@@ -76,6 +76,7 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="Attributes\AntiForgeryExtension.cs" />
     <Compile Include="Attributes\CustomerSettingAuth.cs" />
+    <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgery.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />

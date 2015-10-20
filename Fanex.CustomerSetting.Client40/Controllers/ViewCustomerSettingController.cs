@@ -13,6 +13,7 @@
     using Fanex.CustomerSetting.Client40.Services;
     using RestSharp;
 
+    [ExceptionHandlingAttribute]
     public class ViewCustomerSettingController : Controller
     {
         private const string SettingTemplateCachingKey = "CustomerSettingTemplate";

@@ -13,6 +13,7 @@
     using Fanex.CustomerSetting.MatrixClient.Services;
     using RestSharp;
 
+    [ExceptionHandlingAttribute]
     public class ViewCustomerSettingMatrixController : Controller
     {
         private const string SettingMatrixTemplateCachingKey = "CustomerSettingMatrixTemplate";

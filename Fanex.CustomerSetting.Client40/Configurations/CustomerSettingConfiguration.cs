@@ -51,7 +51,7 @@
             set { this["CustomCssUrl"] = value; }
         }
 
-        [ConfigurationProperty("ClientLogCategory", IsRequired = false, DefaultValue = "DCS-Client-Log")]
+        [ConfigurationProperty("ClientLogCategory", IsRequired = false, DefaultValue = "DCS-Setting-Client-Log")]
         public string ClientLogCategory
         {
             get { return (string)this["ClientLogCategory"]; }

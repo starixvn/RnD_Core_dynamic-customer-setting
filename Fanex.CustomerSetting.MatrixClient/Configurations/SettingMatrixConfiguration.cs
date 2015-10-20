@@ -36,5 +36,12 @@
             get { return (Uri)this["CustomCssUrl"]; }
             set { this["CustomCssUrl"] = value; }
         }
+
+        [ConfigurationProperty("ClientLogCategory", IsRequired = false, DefaultValue = "DCS-Matrix-Client-Log")]
+        public string ClientLogCategory
+        {
+            get { return (string)this["ClientLogCategory"]; }
+            set { this["ClientLogCategory"] = value; }
+        }
     }
 }
