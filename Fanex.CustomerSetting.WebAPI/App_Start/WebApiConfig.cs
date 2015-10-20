@@ -34,6 +34,7 @@
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new MaintenanceFilterAttribute());
             config.Filters.Add(new GlobalExceptionFilterAttribute());
         }
     }

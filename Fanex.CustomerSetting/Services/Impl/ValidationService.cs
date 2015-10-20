@@ -263,14 +263,11 @@
 
         private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, Level customerLevel)
         {
-            if (customerLevel.IsMemberLevel())
-            {
-                var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
+            var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 
-                if (result.IsNotOk)
-                {
-                    throw new CustomerSettingException(result.Message);
-                }
+            if (result.IsNotOk)
+            {
+                throw new CustomerSettingException(result.Message);
             }
         }
 

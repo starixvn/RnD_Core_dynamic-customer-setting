@@ -31,11 +31,7 @@
             CustomerId = customerId;
             CustomerLevel = Enumeration.FromValue<Level>(customerLevel);
             ProductId = productId;
-
-            if (uplineLevel.HasValue)
-            {
-                UplineLevel = Enumeration.FromValue<Level>(uplineLevel.Value);
-            }
+            UplineLevel = uplineLevel.HasValue ? Enumeration.FromValue<Level>(uplineLevel.Value) : null;
         }
 
         public int CustomerId

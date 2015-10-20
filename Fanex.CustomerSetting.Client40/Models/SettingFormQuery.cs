@@ -20,6 +20,8 @@
 
         public string CustomerNames { get; set; }
 
+        public bool IsReadOnly { get; set; }
+
         internal string ToJson()
         {
             var properties = new List<string>();
