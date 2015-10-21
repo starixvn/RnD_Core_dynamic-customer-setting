@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Security;
     using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.DemoSite.Constants;
 
@@ -10,6 +11,7 @@
 
         public ActionResult Index()
         {
+            FormsAuthentication.SetAuthCookie("demo username", true);
             if (this.Request.Browser.Browser == "IE" && (this.Request.Browser.MajorVersion < 9))
             {
                 return View("Index-IE8");
