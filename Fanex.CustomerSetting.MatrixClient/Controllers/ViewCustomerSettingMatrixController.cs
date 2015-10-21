@@ -33,7 +33,7 @@
         }
 
         [CustomerSettingMatrixAuth]
-        public ContentResult Index(string customerName)
+        public ContentResult Index(QuerySettingMatrixRequest querySettingMatrix)
         {
             ObjectCache cache = MemoryCache.Default;
             string template = cache.Get(SettingMatrixTemplateCachingKey) as string;
@@ -46,7 +46,7 @@
 
             if (!string.IsNullOrEmpty(template))
             {
-                template = ReplaceParameters(template, customerName);
+                template = ReplaceParameters(template, querySettingMatrix);
             }
 
             return Content(template, "text/HTML");
@@ -94,7 +94,7 @@
             return template;
         }
 
-        private string ReplaceParameters(string template, string customerName)
+        private string ReplaceParameters(string template, QuerySettingMatrixRequest querySettingMatrix)
         {
             string finalTemplate = template;
             AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
@@ -102,7 +102,7 @@
             if (!string.IsNullOrEmpty(finalTemplate))
             {
                 finalTemplate = finalTemplate.Replace("{{appConfig}}", appConfig.ToJson());
-                finalTemplate = finalTemplate.Replace("{{customerName}}", customerName);
+                finalTemplate = finalTemplate.Replace("{{customerName}}", querySettingMatrix.CustomerName);
             }
 
             return finalTemplate;

@@ -5,7 +5,7 @@
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using RestSharp;
 
-    public class CustomerSettingService : ICustomerSettingService
+    internal class CustomerSettingService : ICustomerSettingService
     {
         public IRestResponse QueryCustomerSetting(QuerySettingRequest query)
         {

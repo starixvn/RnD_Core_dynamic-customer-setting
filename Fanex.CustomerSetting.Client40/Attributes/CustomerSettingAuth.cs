@@ -3,35 +3,62 @@
     using System;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class CustomerSettingAuth : AuthorizeAttribute
+    internal sealed class CustomerSettingAuth : AuthorizeAttribute
     {
         public bool IsUpdate { get; set; }
 
         public bool IsMultipleUpdate { get; set; }
 
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            base.OnAuthorization(filterContext);
+
             PermissionContext permissionContext = CustomerSettingRegistration.GetPermissionContext();
 
             permissionContext.AllowUpdate = IsUpdate;
+            var isAuthorized = true;
 
             if (IsMultipleUpdate)
             {
-                return CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext);
+                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext);
             }
             else
             {
                 if (IsUpdate)
                 {
-                    return CustomerSettingRegistration.CheckUpdatePermission(permissionContext);
+                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext);
                 }
                 else
                 {
-                    return CustomerSettingRegistration.CheckQueryPermission(permissionContext);
+                    isAuthorized = CustomerSettingRegistration.CheckQueryPermission(permissionContext);
                 }
+            }
+
+            if (!isAuthorized)
+            {
+                UnAuthorizedAction(filterContext);
+            }
+        }
+
+        private void UnAuthorizedAction(AuthorizationContext filterContext)
+        {
+            HttpResponseBase response = filterContext.HttpContext.Response;
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                response.Clear();
+                response.Write("You are not authorized on this function!");
+                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                response.End();
+            }
+            else
+            {
+                filterContext.Result = new RedirectResult(CustomerSettingConfiguration.Settings.AccessDeniedAction);
             }
         }
     }

@@ -9,8 +9,8 @@
     {
         private static void Main(string[] args)
         {
-            CustomerSettingClient.TestUpdate();
-            CustomerSettingClient.TestMultipleUpdate();
+            ////CustomerSettingClient.TestUpdate();
+            ////CustomerSettingClient.TestMultipleUpdate();
             ////RunConcurrentExperiment();
         }
 

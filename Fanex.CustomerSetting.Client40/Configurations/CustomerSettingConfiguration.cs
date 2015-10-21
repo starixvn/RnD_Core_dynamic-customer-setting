@@ -57,5 +57,12 @@
             get { return (string)this["ClientLogCategory"]; }
             set { this["ClientLogCategory"] = value; }
         }
+
+        [ConfigurationProperty("AccessDeniedAction", IsRequired = false, DefaultValue = "~/User/AccessDenied")]
+        public string AccessDeniedAction
+        {
+            get { return (string)this["AccessDeniedAction"]; }
+            set { this["AccessDeniedAction"] = value; }
+        }
     }
 }

@@ -49,6 +49,10 @@
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -72,6 +76,10 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -98,6 +106,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml" />
+    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -123,9 +135,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configurations\SettingMatrixAPIConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingMatrixController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\MaintenanceFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,13 +155,13 @@
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-	<Content Include="Web.AppSettings.uat.config">
+    <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionStrings.uat.config">
+    <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -159,7 +173,7 @@
     <Content Include="Web.local.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-	<Content Include="Web.uat.config">
+    <Content Include="Web.uat.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>

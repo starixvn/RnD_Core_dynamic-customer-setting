@@ -7,7 +7,7 @@
     using System.Web.Mvc;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public sealed class ValidateAntiForgery : ActionFilterAttribute
+    internal sealed class ValidateAntiForgery : ActionFilterAttribute
     {
         private const string AntiForgeryKey = "__RequestVerificationToken";
 

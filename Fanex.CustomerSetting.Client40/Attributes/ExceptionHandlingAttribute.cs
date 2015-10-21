@@ -8,7 +8,7 @@
     using Fanex.Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class ExceptionHandlingAttribute : HandleErrorAttribute
+    internal sealed class ExceptionHandlingAttribute : HandleErrorAttribute
     {
         public override void OnException(ExceptionContext filterContext)
         {
