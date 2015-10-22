@@ -129,7 +129,13 @@
 
             foreach (int memberId in groupedMemberIds)
             {
-                var settingResult = new SettingResult(result.Code, result.Message, result.MsgType, memberId, Constants.SettingTypeId, Label.PositionTaking);
+                var settingResult = new SettingResult(
+                    result.Code,
+                    result.IsSuccessful ? Message.UpdatePositionTakingSuccessfully : result.Message, 
+                    result.MsgType,
+                    memberId, 
+                    Constants.SettingTypeId, 
+                    Label.PositionTaking);
 
                 settingResults.Add(settingResult);
             }

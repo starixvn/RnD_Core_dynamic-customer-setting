@@ -7,9 +7,9 @@
     using System.Runtime.Caching;
     using System.Web.Hosting;
     using System.Web.Http;
+    using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
-    using Fanex.CustomerSetting.Matrix.WebApi.Models.Request;
     using Fanex.CustomerSetting.Models.Results;
 
     public class CustomerSettingMatrixController : ApiController
@@ -30,7 +30,7 @@
             _customerSettingMatrixService = customerSettingMatrixService ?? new CustomerSettingMatrixService();
         }
 
-        public HttpResponseMessage Get([FromUri]QuerySettingMatrixRequest request)
+        public HttpResponseMessage Get([FromUri]SettingMatrixQuery request)
         {
             if (request == null)
             {
@@ -39,10 +39,7 @@
 
             try
             {
-                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(
-                    request.SettingTypeId,
-                    request.ProductId,
-                    request.CustomerName);
+                var customerSettingMatrix = _customerSettingMatrixService.GetCustomerSettingMatrix(request);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customerSettingMatrix);
             }

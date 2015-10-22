@@ -97,6 +97,7 @@
     <Compile Include="Models\PTItemMatrix.cs" />
     <Compile Include="Models\PTItemMatrixRow.cs" />
     <Compile Include="Models\PTMatrix.cs" />
+    <Compile Include="Models\SettingMatrixQuery.cs" />
     <Compile Include="Models\SettingTypeMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">

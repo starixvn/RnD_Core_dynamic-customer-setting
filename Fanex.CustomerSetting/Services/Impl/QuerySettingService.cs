@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.Data.Repository;
     using Fanex.Logging;
 
@@ -122,10 +123,14 @@
             {
                 SettingType customerSettingType = GetCustomerSettingType(query, productSettingType);
 
-                if (customerSettingType.SettingItems.Any())
+                if (!customerSettingType.SettingItems.Any())
                 {
-                    customerSettingTypes.Add(customerSettingType);
+                    customerSettingType.IsError = true;
+                    customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
+                    WriteLog(query, productSettingType, new Exception(string.Format(Message.SettingTypeHasNoSettingItem, customerSettingType.Name)));
                 }
+
+                customerSettingTypes.Add(customerSettingType);
             }
 
             return customerSettingTypes;

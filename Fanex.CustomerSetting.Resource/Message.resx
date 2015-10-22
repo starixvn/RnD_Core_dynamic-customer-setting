@@ -147,6 +147,9 @@
   <data name="SettingTypeError" xml:space="preserve">
     <value>Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!</value>
   </data>
+  <data name="SettingTypeHasNoSettingItem" xml:space="preserve">
+    <value>Setting Type {0} does not have any setting item.</value>
+  </data>
   <data name="SportTypeOrBetTypeIsInvalid" xml:space="preserve">
     <value>Sport Type or Bet Type is invalid!</value>
   </data>

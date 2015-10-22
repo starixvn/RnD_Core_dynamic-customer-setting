@@ -4,6 +4,6 @@
 
     public interface ICustomerSettingMatrixService
     {
-        CustomerSettingMatrix GetCustomerSettingMatrix(byte settingTypeId, byte productId, string customerName);
+        CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery);
     }
 }

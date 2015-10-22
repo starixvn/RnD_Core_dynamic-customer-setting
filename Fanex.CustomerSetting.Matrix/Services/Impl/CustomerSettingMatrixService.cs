@@ -37,16 +37,17 @@
             _commissionMatrixService = commissionMatrixService ?? new CommissionMatrixService(_resourceService, _productService, _dynamicRepository);
         }
 
-        public CustomerSettingMatrix GetCustomerSettingMatrix(byte settingTypeId, byte productId, string customerName)
+        public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery)
         {
-            Check.Argument.IsNotNegativeOrZero(settingTypeId, "settingTypeId");
-            Check.Argument.IsNotNegativeOrZero(productId, "productId");
-            Check.Argument.IsNotEmpty(customerName, "customerName");
+            Check.Argument.IsNotNull(settingMatrixQuery, "settingMatrixQuery");
+            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, "settingMatrixQuery.SettingTypeId");
+            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.ProductId, "settingMatrixQuery.ProductId");
+            Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, "settingMatrixQuery.CustomerName");
 
             var customerSettingMatrix = new CustomerSettingMatrix
             {
-                CustomerLine = _customerService.GetCustomerLine(customerName),
-                SettingTypeMatrix = GetCustomerSettingTypeMatrix(settingTypeId, productId, customerName)
+                CustomerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName),
+                SettingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery.SettingTypeId, settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName)
             };
 
             return customerSettingMatrix;
