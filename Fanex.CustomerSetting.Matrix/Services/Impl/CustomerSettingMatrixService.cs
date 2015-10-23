@@ -41,27 +41,26 @@
         {
             Check.Argument.IsNotNull(settingMatrixQuery, "settingMatrixQuery");
             Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, "settingMatrixQuery.SettingTypeId");
-            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.ProductId, "settingMatrixQuery.ProductId");
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, "settingMatrixQuery.CustomerName");
 
             var customerSettingMatrix = new CustomerSettingMatrix
             {
                 CustomerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName),
-                SettingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery.SettingTypeId, settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName)
+                SettingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery)
             };
 
             return customerSettingMatrix;
         }
 
-        private SettingTypeMatrix GetCustomerSettingTypeMatrix(byte settingTypeId, byte productId, string customerName)
+        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery)
         {
-            switch ((SettingType)settingTypeId)
+            switch ((SettingType)settingMatrixQuery.SettingTypeId)
             {
                 case SettingType.PositionTaking:
-                    return _pTMatrixService.GetPTMatrix(productId, customerName);
+                    return _pTMatrixService.GetPTMatrix(settingMatrixQuery);
 
                 case SettingType.Commission:
-                    return _commissionMatrixService.GetCommissionMatrix(productId, customerName);
+                    return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
 
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);

@@ -1,4 +1,4 @@
-﻿@import "compass";
+﻿@import "Compass/_compass.scss";
 
 $background-color: #e6e9f0;
 $block-background-color: #fff;
@@ -59,25 +59,25 @@ input[type=text], select {
 }
 
 button {
-  background-image: linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  background-color: $button-backround-color2;
-  background-repeat: no-repeat;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  float: right;
-  font-weight: bold;
-  font-size: 11px;
-  line-height: 16px;
-  min-width: 70px;
-  padding: 4px 12px;
-  text-align: center;
-  vertical-align: middle;
+    background-image: linear-gradient($button-backround-color1, $button-backround-color2, $button-backround-color3);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    background-color: $button-backround-color2;
+    background-repeat: no-repeat;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 16px;
+    min-width: 70px;
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 ul {
@@ -128,9 +128,13 @@ ul {
                     margin: 0 10px 0 0;
                 }
 
-                input {
+                input[type=text] {
                     width: 60%;
                 }
+            }
+
+            .check-box-control {
+                width: 80px;
             }
         }
     }
@@ -170,16 +174,15 @@ ul {
 
         .customer-line {
             margin: 0 0 20px 0;
+            font-size: 12px;
 
-            ul {
-                li {
-                    font-weight: bold;
+            .active {
+                font-weight: bold;
+            }
 
-                    & + li:before {
-                        padding: 0 5px;
-                        content: ">";
-                    }
-                }
+            .level-name {
+                width: 70px;
+                text-transform: uppercase;
             }
         }
 

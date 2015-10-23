@@ -130,7 +130,7 @@ module DemoFrom {
                 customerName = (<SingleTarget>this.target).customerName;
             }
 
-            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?customerName=" + customerName), "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&settingTypeId=1&sportTypeId=44&betTypeId=3&customerName=" + customerName), "_bank");
         }
 
         private resolveUrl(requestUrl: string): string {

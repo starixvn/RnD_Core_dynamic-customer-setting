@@ -129,6 +129,9 @@
   <data name="SettingMatrixIsError" xml:space="preserve">
     <value>This setting type matrix is error, please notify your administrator.</value>
   </data>
+  <data name="ThereIsNoData" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
   <data name="UsernameDoesNotExist" xml:space="preserve">
     <value>Username does not exist!</value>
   </data>

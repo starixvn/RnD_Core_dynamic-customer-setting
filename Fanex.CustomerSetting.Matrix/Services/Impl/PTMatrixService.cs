@@ -33,16 +33,16 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public PTMatrix GetPTMatrix(byte productId, string customerName)
+        public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery)
         {
-            var settingType = GetSettingType(productId);
-            var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(customerName);
-            var pTItemMatrixDtos = GetPTItemMatrixDtos(customerName, productId);
+            ////var settingType = GetSettingType(settingMatrixQuery.ProductId);
+            var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(settingMatrixQuery.CustomerName);
+            var pTItemMatrixDtos = GetPTItemMatrixDtos(settingMatrixQuery);
             var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
 
             return new PTMatrix
                 {
-                    SettingLevel = settingType.SettingLevel,
+                    SettingLevel = 4,
                     IsAllowMasterAutoPT = isAllowAutoMasterPT,
                     PTItemMatrices = pTItemMatrices
                 };
@@ -88,16 +88,22 @@
             return pTItemMatrices;
         }
 
-        private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(
-            string customerName,
-            byte productId)
+        private IEnumerable<PTItemMatrixDto> GetPTItemMatrixDtos(SettingMatrixQuery settingMatrixQuery)
         {
             var pTItemMatrixDtos = _dynamicRepository.Fetch<PTItemMatrixDto>(
                 new PTMatrixQueryCriteria
             {
-                ProductId = productId,
-                UserName = customerName
+                ProductId = settingMatrixQuery.ProductId,
+                UserName = settingMatrixQuery.CustomerName,
+                IsLive = settingMatrixQuery.IsLive,
+                SportType = settingMatrixQuery.SportTypeId,
+                BetType = settingMatrixQuery.BetTypeId
             });
+
+            if (!pTItemMatrixDtos.Any())
+            {
+                throw new InvalidOperationException(Message.ThereIsNoData);
+            }
 
             return pTItemMatrixDtos;
         }

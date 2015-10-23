@@ -41,12 +41,14 @@
         public name: string;
         public currency: number;
         public level: LevelValue;
+        public levelName: string;
 
         constructor(customer: any) {
             this.id = customer.id;
             this.name = customer.name;
             this.currency = customer.currency;
             this.level = customer.level.value;
+            this.levelName = customer.level.displayName;
         }
     }
 

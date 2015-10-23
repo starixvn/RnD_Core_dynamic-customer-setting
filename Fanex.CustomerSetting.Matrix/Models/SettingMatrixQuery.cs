@@ -11,5 +11,7 @@
         public short SportTypeId { get; set; }
 
         public short BetTypeId { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }

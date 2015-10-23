@@ -97,6 +97,15 @@ namespace Fanex.CustomerSetting.Matrix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no data..
+        /// </summary>
+        internal static string ThereIsNoData {
+            get {
+                return ResourceManager.GetString("ThereIsNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username does not exist!.
         /// </summary>
         internal static string UsernameDoesNotExist {

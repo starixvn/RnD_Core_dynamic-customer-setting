@@ -14,9 +14,11 @@
 
         public bool ShowFilter { get; set; }
 
+        public bool IsLive { get; set; }
+
         public string ToJson()
         {
-            string objTpl = "{{\"settingTypeId\": {0}, \"productId\": {1}, \"customerName\": \"{2}\", \"sportTypeId\": {3}, \"betTypeId\": {4}, \"showFilter\": {5} }}";
+            string objTpl = "{{\"settingTypeId\": {0}, \"productId\": {1}, \"customerName\": \"{2}\", \"sportTypeId\": {3}, \"betTypeId\": {4}, \"showFilter\": {5}, \"isLive\": {6} }}";
 
             return string.Format(
                 objTpl,
@@ -25,7 +27,8 @@
                 this.CustomerName,
                 this.SportTypeId,
                 this.BetTypeId,
-                this.ShowFilter ? "true" : "false");
+                this.ShowFilter ? "true" : "false",
+                this.IsLive ? "true" : "false");
         }
     }
 }

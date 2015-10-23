@@ -25,6 +25,7 @@ module CustomerSettingMatrix {
         public product: Product;
         public customerName: string;
         public settingTypeId: number;
+        public querySettingMatrix: QuerySettingMatrix;
 
         public products: Array<Product>;
         public settingTypes: Array<SettingType>;
@@ -65,51 +66,67 @@ module CustomerSettingMatrix {
             this.settingTypeId = SettingType.PositionTaking.id;
             /* tslint:disable:no-string-literal */
             this.customerName = this.$window["customerName"];
+            var querySettingMatrix: any = this.$window["querySettingMatrix"];
+            this.querySettingMatrix = new QuerySettingMatrix(
+                querySettingMatrix.settingTypeId,
+                querySettingMatrix.productId,
+                querySettingMatrix.customerName,
+                querySettingMatrix.sportTypeId,
+                querySettingMatrix.betTypeId,
+                querySettingMatrix.isLive,
+                querySettingMatrix.showFilter);
             /* tslint:enable:no-string-literal */
             this.queryProductNames();
         }
 
         public updateSettingTypeView(settingTypeId: number) {
-            if (this.settingTypeId !== settingTypeId) {
-                this.settingTypeId = settingTypeId;
+            if (this.querySettingMatrix.settingTypeId !== settingTypeId) {
+                this.querySettingMatrix.settingTypeId = settingTypeId;
                 this.customerLine = [];
+
+                this.queryProductNames();
             }
         }
 
         public queryProductNames(): void {
-            this.isUIblocked = true;
+            if (this.querySettingMatrix.settingTypeId == SettingType.Commission.id) {
+                this.isUIblocked = true;
 
-            this.$http
-                .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
-                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                var products = response.data;
+                this.$http
+                    .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
+                    .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                    var products = response.data;
 
-                if (products && products.length > 0) {
-                    this.products = products.map((product: any) => new Product(product));
-                    this.product = this.products[0];
-                    this.querySettingMatrix(this.customerName);
-                }
-            })
-                .finally(() => {
-                this.isUIblocked = false;
-            });
+                    if (products && products.length > 0) {
+                        this.products = products.map((product: any) => new Product(product));
+                        this.product = this.products[0];
+                        this.loadSettingMatrix();
+                    }
+                })
+                    .finally(() => {
+                    this.isUIblocked = false;
+                });
+            }
+            else {
+                this.product = new Product({
+                    id: 0,
+                    name: ""
+                });
+                this.loadSettingMatrix();
+            }
         }
 
-        public querySettingMatrix(customerName: string): void {
-            if (customerName === "") {
+        public loadSettingMatrix(): void {
+            if (this.querySettingMatrix.customerName === "") {
                 return;
             }
 
-            var querySettingMatrix = new QuerySettingMatrix(
-                this.settingTypeId,
-                this.product.id,
-                customerName);
-
+            this.querySettingMatrix.productId = this.product.id;
             this.errorMessage = "";
             this.isUIblocked = true;
 
             this.$http
-                .post(this.appConfigService.resolveRootUrl(this.querySettingMatrixPath), querySettingMatrix)
+                .post(this.appConfigService.resolveRootUrl(this.querySettingMatrixPath), this.querySettingMatrix)
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                 var customerSettingMatrix = response.data;
 
@@ -119,7 +136,7 @@ module CustomerSettingMatrix {
                 }
 
                 try {
-                    this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer));
+                    this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer)).reverse();
                     switch (this.settingTypeId) {
                         case SettingType.PositionTaking.id:
                             this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);

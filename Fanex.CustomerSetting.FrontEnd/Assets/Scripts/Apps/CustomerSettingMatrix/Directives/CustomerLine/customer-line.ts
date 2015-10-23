@@ -12,8 +12,6 @@ module CustomerSettingMatrix {
         public scope =
         {
             customerLine: "=",
-            customerName: "=",
-            querySettingMatrix: "&"
         };
 
         constructor() {

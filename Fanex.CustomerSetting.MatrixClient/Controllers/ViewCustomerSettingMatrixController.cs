@@ -102,7 +102,7 @@
             if (!string.IsNullOrEmpty(finalTemplate))
             {
                 finalTemplate = finalTemplate.Replace("{{appConfig}}", appConfig.ToJson());
-                finalTemplate = finalTemplate.Replace("{{customerName}}", querySettingMatrix.CustomerName);
+                finalTemplate = finalTemplate.Replace("{{querySettingMatrix}}", querySettingMatrix.ToJson());
             }
 
             return finalTemplate;

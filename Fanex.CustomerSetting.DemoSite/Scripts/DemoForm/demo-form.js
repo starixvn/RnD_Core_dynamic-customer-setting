@@ -95,7 +95,7 @@ var DemoFrom;
             else {
                 customerName = this.target.customerName;
             }
-            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?customerName=" + customerName), "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&settingTypeId=1&sportTypeId=44&betTypeId=3&customerName=" + customerName), "_bank");
         };
         DemoFormController.prototype.resolveUrl = function (requestUrl) {
             return this.applicationPath + requestUrl;

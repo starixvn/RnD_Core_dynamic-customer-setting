@@ -7,30 +7,49 @@
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingMatrixController as ctrl">
     <div class="container">
-        <div class="header">
+        <div class="header" data-ng-if="ctrl.querySettingMatrix.showFilter">
             <ul class="setting-type-nav">
                 <li data-ng-repeat="settingType in ctrl.settingTypes"
                     data-ng-click="ctrl.updateSettingTypeView(settingType.id)">
                     <label>
-                        <input type="radio" ng-model="ctrl.settingTypeId" ng-value="{{::settingType.id}}">
+                        <input type="radio" ng-model="ctrl.querySettingMatrix.settingTypeId" ng-value="{{::settingType.id}}">
                         {{::settingType.name | label}}
                     </label>
                 </li>
             </ul>
 
-            <form class="matrix-form" data-ng-submit="ctrl.querySettingMatrix(ctrl.customerName)">
+            <form class="matrix-form" data-ng-submit="ctrl.loadSettingMatrix()">
 
-                <div class="form-control">
+                <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==3">
                     <label for="product">
                         {{'Product' | label}}
                     </label>
                     <select name="product" data-ng-model="ctrl.product" data-ng-options="product.name for product in ctrl.products"></select>
                 </div>
+                <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
+                    <label for="sporTypeId">
+                        Sport Type Id
+                    </label>
+                    <input name="sporTypeId" type="text" data-ng-model="ctrl.querySettingMatrix.sportTypeId" />
+                </div>
+                <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
+                    <label for="betTypeId">
+                        Bet Type Id
+                    </label>
+                    <input name="betTypeId" type="text" data-ng-model="ctrl.querySettingMatrix.betTypeId" />
+                </div>
+                <div class="form-control check-box-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
+                    <label for="isLive">
+                        Is Live
+                        <input name="isLive" id="isLive" type="checkbox" data-ng-model="ctrl.querySettingMatrix.isLive" />
+                    </label>
+                    
+                </div>
                 <div class="form-control">
                     <label for="userName">
                         {{'Username' | label}}
                     </label>
-                    <input name="userName" type="text" data-ng-model="ctrl.customerName" />
+                    <input name="userName" type="text" data-ng-model="ctrl.querySettingMatrix.customerName" />
                 </div>
                 <div class="form-control">
                     <button type="submit">
@@ -47,8 +66,6 @@
 
         <div class="main-content" data-ng-show="ctrl.customerLine.length > 0">
             <div customer-line="ctrl.customerLine"
-                 customer-name="ctrl.customerName"
-                 query-setting-matrix="ctrl.querySettingMatrix(customerName)"
                  data-customer-line-directive>
             </div>
 
@@ -63,7 +80,7 @@
     <block-ui data-is-loading="ctrl.isUIblocked"></block-ui>
     <script type="text/javascript">
         var appConfig = {{appConfig}};
-        var customerName = "{{customerName}}";
+        var querySettingMatrix = {{querySettingMatrix}};
     </script>
     <script type="text/javascript" src="{{cdnUri}}/customersettingmatrix/customer-setting-matrix{{min}}.js?v={{version}}"></script>
 </body>

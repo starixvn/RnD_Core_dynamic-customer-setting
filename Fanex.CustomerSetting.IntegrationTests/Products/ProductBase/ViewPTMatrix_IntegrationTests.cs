@@ -22,28 +22,28 @@
             _positionTakingMatrixService = new PTMatrixService();
         }
 
-        protected void ViewSuperPTMatrix(
-            byte productId = Product255Constants.ProductId,
-            int superId = SettingInfo.SuperId,
-            string superName = SettingInfo.SuperUserName)
-        {
-            //// Act
-            var superLine = _customerService.GetCustomerLine(superName);
-            var superPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, superName);
+        ////protected void ViewSuperPTMatrix(
+        ////    byte productId = Product255Constants.ProductId,
+        ////    int superId = SettingInfo.SuperId,
+        ////    string superName = SettingInfo.SuperUserName)
+        ////{
+        ////    //// Act
+        ////    var superLine = _customerService.GetCustomerLine(superName);
+        ////    var superPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, superName);
 
-            //// Assert
-            //// Customer Line info
-            Assert.AreEqual(1, superLine.Count());
+        ////    //// Assert
+        ////    //// Customer Line info
+        ////    Assert.AreEqual(1, superLine.Count());
 
-            AssertSuperInfo(superId, superName, superLine);
+        ////    AssertSuperInfo(superId, superName, superLine);
 
-            //// PT Matrix
-            Assert.IsNotEmpty(superPTMatrix.PTItemMatrices);
-            Assert.Greater(superPTMatrix.SettingLevel, 0);
-            Assert.AreEqual(1, superPTMatrix.PTItemMatrices.First().PTItemMatrixRows.Count());
+        ////    //// PT Matrix
+        ////    Assert.IsNotEmpty(superPTMatrix.PTItemMatrices);
+        ////    Assert.Greater(superPTMatrix.SettingLevel, 0);
+        ////    Assert.AreEqual(1, superPTMatrix.PTItemMatrices.First().PTItemMatrixRows.Count());
 
-            AssertSuperPTMatrixRow(superPTMatrix);
-        }
+        ////    AssertSuperPTMatrixRow(superPTMatrix);
+        ////}
 
         private void AssertSuperPTMatrixRow(PTMatrix superPTMatrix)
         {
@@ -62,32 +62,32 @@
             Assert.AreEqual(superName, super.Name);
         }
 
-        protected void ViewMasterPTMatrix(
-            byte productId = Product255Constants.ProductId,
-            int superId = SettingInfo.SuperId,
-            string superName = SettingInfo.SuperUserName,
-            int masterId = SettingInfo.MasterId,
-            string masterName = SettingInfo.MasterUserName)
-        {
-            //// Act
-            var masterLine = _customerService.GetCustomerLine(masterName);
-            var masterPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, masterName);
+        ////protected void ViewMasterPTMatrix(
+        ////    byte productId = Product255Constants.ProductId,
+        ////    int superId = SettingInfo.SuperId,
+        ////    string superName = SettingInfo.SuperUserName,
+        ////    int masterId = SettingInfo.MasterId,
+        ////    string masterName = SettingInfo.MasterUserName)
+        ////{
+        ////    //// Act
+        ////    var masterLine = _customerService.GetCustomerLine(masterName);
+        ////    var masterPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, masterName);
 
-            //// Assert
-            //// Customer Line info
-            Assert.AreEqual(2, masterLine.Count());
+        ////    //// Assert
+        ////    //// Customer Line info
+        ////    Assert.AreEqual(2, masterLine.Count());
 
-            AssertSuperInfo(superId, superName, masterLine);
+        ////    AssertSuperInfo(superId, superName, masterLine);
 
-            AssertMasterInfo(masterId, masterName, masterLine);
+        ////    AssertMasterInfo(masterId, masterName, masterLine);
 
-            //// PT Matrix
-            Assert.IsNotEmpty(masterPTMatrix.PTItemMatrices);
+        ////    //// PT Matrix
+        ////    Assert.IsNotEmpty(masterPTMatrix.PTItemMatrices);
 
-            AssertSuperPTMatrixRow(masterPTMatrix);
+        ////    AssertSuperPTMatrixRow(masterPTMatrix);
 
-            AssertMasterPTMatrixRow(masterPTMatrix);
-        }
+        ////    AssertMasterPTMatrixRow(masterPTMatrix);
+        ////}
 
         private void AssertMasterPTMatrixRow(PTMatrix masterPTMatrix)
         {
@@ -125,7 +125,7 @@
         {
             //// Act
             var agentLine = _customerService.GetCustomerLine(agentName);
-            var agentPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, agentName);
+            ////var agentPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, agentName);
 
             //// Assert
             //// Customer Line info
@@ -138,13 +138,13 @@
             AssertAgentInfo(agentId, agentName, agentLine);
 
             //// PT Matrix
-            Assert.IsNotEmpty(agentPTMatrix.PTItemMatrices);
+            ////Assert.IsNotEmpty(agentPTMatrix.PTItemMatrices);
 
-            AssertSuperPTMatrixRow(agentPTMatrix);
+            ////AssertSuperPTMatrixRow(agentPTMatrix);
 
-            AssertMasterPTMatrixRow(agentPTMatrix);
+            ////AssertMasterPTMatrixRow(agentPTMatrix);
 
-            AssertAgentPTMatrixRow(agentPTMatrix);
+            ////AssertAgentPTMatrixRow(agentPTMatrix);
         }
 
         private void AssertAgentPTMatrixRow(PTMatrix agentPTMatrix)
@@ -184,7 +184,7 @@
         {
             //// Act
             var memberLine = _customerService.GetCustomerLine(memberName);
-            var memberPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, memberName);
+            ////var memberPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, memberName);
 
             //// Assert
             //// Customer Line info
@@ -199,15 +199,15 @@
             AssertMemberInfo(memberId, memberName, memberLine);
 
             //// PT Matrix
-            Assert.IsNotEmpty(memberPTMatrix.PTItemMatrices);
+            ////Assert.IsNotEmpty(memberPTMatrix.PTItemMatrices);
 
-            AssertSuperPTMatrixRow(memberPTMatrix);
+            ////AssertSuperPTMatrixRow(memberPTMatrix);
 
-            AssertMasterPTMatrixRow(memberPTMatrix);
+            ////AssertMasterPTMatrixRow(memberPTMatrix);
 
-            AssertAgentPTMatrixRow(memberPTMatrix);
+            ////AssertAgentPTMatrixRow(memberPTMatrix);
 
-            AssertMemberPTMatrixRow(memberPTMatrix);
+            ////AssertMemberPTMatrixRow(memberPTMatrix);
         }
 
         private void AssertMemberPTMatrixRow(PTMatrix memberPTMatrix)

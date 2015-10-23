@@ -10,10 +10,12 @@ module.exports = function (configs) {
     var templateCache = require("gulp-angular-templatecache");
     var ts = require("gulp-typescript");
     var uglify = require("gulp-uglify");
+    var runSequence = require("run-sequence");
 
     var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSettingMatrix);
     var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSettingMatrix);
     var destTemplateDir = "../Fanex.CustomerSetting.Matrix.WebAPI/App_Data/Templates";
+    var destScriptDir = "../Fanex.CustomerSetting.StaticResources/CustomerSettingMatrix";
 
     gulp.task("matrix:script:publish", function () {
         var sources = [
@@ -55,5 +57,14 @@ module.exports = function (configs) {
                    .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
     });
 
-    gulp.task("matrix:publish", ["matrix:script:publish", "matrix:template:copy", "matrix:styles:publish"]);
+    gulp.task("matrix:script:www", function () {
+        return gulp.src(path.join(destinationDir, "/**/*.*"))
+           .pipe(gulp.dest(path.join(process.cwd(), destScriptDir)));
+    });
+
+   
+    gulp.task("matrix:publish", function () {
+        runSequence("matrix:script:publish", "matrix:template:copy", "matrix:styles:publish");
+    });
+
 };

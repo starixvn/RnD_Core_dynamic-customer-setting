@@ -4,6 +4,6 @@
 
     public interface IPTMatrixService
     {
-        PTMatrix GetPTMatrix(byte productId, string customerName);
+        PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery);
     }
 }

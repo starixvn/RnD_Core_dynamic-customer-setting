@@ -5,6 +5,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Matrix.Criteria;
     using Fanex.CustomerSetting.Matrix.Dtos;
+    using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Services;
     using Fanex.CustomerSetting.Matrix.Services.Impl;
     using Fanex.CustomerSetting.Models;
@@ -23,6 +24,7 @@
         private IDynamicRepository _dynamicRepository;
 
         private IPTMatrixService _positionTakingMatrixService;
+        private SettingMatrixQuery _settingMatrixQuery;
 
         [SetUp]
         public void SetUp()
@@ -31,6 +33,14 @@
             _productService = Substitute.For<IProductService>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
 
+            _settingMatrixQuery = new SettingMatrixQuery
+            {
+                BetTypeId = 1,
+                CustomerName = "CustomerName",
+                SportTypeId = 1,
+                ProductId = 1
+            };
+
             _positionTakingMatrixService = new PTMatrixService(
                 _resourceService,
                 _productService,
@@ -38,15 +48,15 @@
         }
 
         [Test]
-        public void GetPTMatrix_ProductIdIsZero_ThrowInvalidOperationException()
+        public void GetPTMatrix_SportTypeIdIsZero_ThrowInvalidOperationException()
         {
             //// Arrange
-            byte productId = 0;
+            _settingMatrixQuery.SportTypeId = 0;
 
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _positionTakingMatrixService.GetPTMatrix(productId, "CustomerName")));
+                    () => _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery)));
         }
 
         [TestCase("  ")]
@@ -55,12 +65,12 @@
         public void GetPTMatrix_CustomerNameIsNullOrEmpty_ThrowInvalidOperationException(string customerName)
         {
             //// Arrange
-            byte productId = 1;
+            _settingMatrixQuery.CustomerName = customerName;
 
             //// Act
             Assert.Throws<InvalidOperationException>(
                 new TestDelegate(
-                    () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
+                    () => _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery)));
         }
 
         private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
@@ -76,28 +86,13 @@
         public void GetPTMatrix_Always_ReturnSettingLevel()
         {
             //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
             var dummySettingType = AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             Assert.AreEqual(dummySettingType.SettingLevel, actualPTMatrix.SettingLevel);
-        }
-
-        [Test]
-        public void GetPTMatrix_ProductDoesNotHavePTSettingType_ThrowInvalidOperationException()
-        {
-            //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
-
-            //// Act
-            Assert.Throws<InvalidOperationException>(
-                new TestDelegate(
-                    () => _positionTakingMatrixService.GetPTMatrix(productId, customerName)));
         }
 
         [Test]
@@ -106,10 +101,12 @@
             //// Arrange
             byte productId = 1;
             string customerName = "CustomerName";
+            _settingMatrixQuery.CustomerName = customerName;
+            _settingMatrixQuery.ProductId = productId;
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             _dynamicRepository.Received().Get<bool>(Arg.Is<IsAllowMasterAutoPTQueryCriteria>(
@@ -125,13 +122,11 @@
         public void GetPTMatrix_Always_ReturnIsAllowMasterAutoPT()
         {
             //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
             AssumeSettingTypeReturnFromDatabaseIsValid();
             AssumeMasterIsAllowedAutoPT();
 
             //// Act
-            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             Assert.IsTrue(actualPTMatrix.IsAllowMasterAutoPT);
@@ -141,33 +136,36 @@
         public void GetPTMatrix_Always_CallFetchPTItemMatrixDtoList()
         {
             //// Arrange
-            byte productId = 1;
+            short sportTypeId = 1;
+            short betTypeId = 1;
+            _settingMatrixQuery.SportTypeId = sportTypeId;
+            _settingMatrixQuery.BetTypeId = betTypeId;
             string customerName = "CustomerName";
+            _settingMatrixQuery.CustomerName = customerName;
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             //// Act
-            _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             _dynamicRepository.Received().Fetch<PTItemMatrixDto>(
                 Arg.Is<PTMatrixQueryCriteria>(
-                    criteria => criteria.ProductId == productId
-                    && criteria.UserName == customerName));
+                    criteria => criteria.SportType == sportTypeId
+                    && criteria.UserName == customerName
+                    && criteria.BetType == betTypeId));
         }
 
         [Test]
         public void GetPTMatrix_Always_ReturnGroupedPTItemMatrices()
         {
             //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
             _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
 
             //// Act
-            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             var numOfGrouped = 3;
@@ -182,8 +180,6 @@
         public void GetPTMatrix_Always_ReturnSportTypeName()
         {
             //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
@@ -193,7 +189,7 @@
             _resourceService.GetSportTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleSportName);
 
             //// Act
-            var actualResult = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            var actualResult = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             Assert.AreEqual(sampleSportName, actualResult.PTItemMatrices.First().SportTypeName);
@@ -203,8 +199,6 @@
         public void GetPTMatrix_Always_ReturnBetTypeName()
         {
             //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
             AssumeSettingTypeReturnFromDatabaseIsValid();
 
             var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
@@ -214,7 +208,7 @@
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleBetTypeName);
 
             //// Act
-            var actualResult = _positionTakingMatrixService.GetPTMatrix(productId, customerName);
+            var actualResult = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
             //// Assert
             Assert.AreEqual(sampleBetTypeName, actualResult.PTItemMatrices.First().BetTypeName);

@@ -5,7 +5,9 @@
     using System.Net;
     using System.Net.Http;
     using System.Text;
+    using System.Threading;
     using System.Web.Http.Filters;
+    using Fanex.CustomerSetting.Matrix.WebApi.Extensions;
     using Fanex.CustomerSetting.Resource;
     using Fanex.Data;
     using Fanex.Logging;
@@ -23,8 +25,10 @@
                 messageBuilder.AppendFormat("Message: {0}", exception.Message).AppendLine();
                 messageBuilder.AppendFormat("Type: {0}", exception.GetType().ToString()).AppendLine();
                 messageBuilder.AppendFormat("Source: {0}", exception.Source).AppendLine();
-                messageBuilder.AppendFormat("Domain: {0}", actionExecutedContext.Request.Headers.Host).AppendLine();
-                messageBuilder.AppendFormat("Query String:: {0}", actionExecutedContext.Request.RequestUri.ToString()).AppendLine();
+                messageBuilder.AppendFormat("Client IP: {0}", actionExecutedContext.Request.GetClientIpAddress()).AppendLine();
+                messageBuilder.AppendFormat("Culture: {0}", Thread.CurrentThread.CurrentUICulture).AppendLine();
+                messageBuilder.AppendFormat("Url: {0}", actionExecutedContext.Request.RequestUri.OriginalString).AppendLine();
+                messageBuilder.AppendFormat("Body: {0}", actionExecutedContext.Request.GetBodyForm()).AppendLine();
 
                 LogDatabaseException(exception, messageBuilder);
                 LogService.Error(messageBuilder.ToString(), actionExecutedContext.Exception);
