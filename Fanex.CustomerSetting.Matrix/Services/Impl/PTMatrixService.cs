@@ -8,8 +8,6 @@
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Resources;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
@@ -18,46 +16,28 @@
     internal class PTMatrixService : IPTMatrixService
     {
         private const string DefaultLanguage = "en-US";
-        private const byte SettingTypeId = 1;
         private readonly IResourceService _resourceService;
-        private readonly IProductService _productService;
         private readonly IDynamicRepository _dynamicRepository;
 
         public PTMatrixService(
             IResourceService resourceService = null,
-            IProductService productService = null,
             IDynamicRepository dynamicRepository = null)
         {
             _resourceService = resourceService ?? new ResourceService();
-            _productService = productService ?? new ProductService();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery)
         {
-            ////var settingType = GetSettingType(settingMatrixQuery.ProductId);
             var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(settingMatrixQuery.CustomerName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(settingMatrixQuery);
             var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
 
             return new PTMatrix
                 {
-                    SettingLevel = 4,
                     IsAllowMasterAutoPT = isAllowAutoMasterPT,
                     PTItemMatrices = pTItemMatrices
                 };
-        }
-
-        private SettingType GetSettingType(byte productId)
-        {
-            var ptSettingType = _productService.GetProductSettingType(productId, SettingTypeId, (byte)SystemType.Accounting);
-
-            if (ptSettingType == null)
-            {
-                throw new InvalidOperationException(Message.ProductDoesNotHavePTSetting);
-            }
-
-            return ptSettingType;
         }
 
         private bool GetIsAllowMasterAutoPT(string customerName)

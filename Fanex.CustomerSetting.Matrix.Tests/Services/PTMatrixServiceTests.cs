@@ -20,7 +20,6 @@
     public class PTMatrixServiceTests
     {
         private IResourceService _resourceService;
-        private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
 
         private IPTMatrixService _positionTakingMatrixService;
@@ -30,7 +29,6 @@
         public void SetUp()
         {
             _resourceService = Substitute.For<IResourceService>();
-            _productService = Substitute.For<IProductService>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
 
             _settingMatrixQuery = new SettingMatrixQuery
@@ -43,7 +41,6 @@
 
             _positionTakingMatrixService = new PTMatrixService(
                 _resourceService,
-                _productService,
                 _dynamicRepository);
         }
 
@@ -73,28 +70,6 @@
                     () => _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery)));
         }
 
-        private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
-        {
-            dummySettingType = dummySettingType ?? InstanceFactory.CreateProductSettingType(1);
-
-            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<short>(), Arg.Any<byte>()).Returns(dummySettingType);
-
-            return dummySettingType;
-        }
-
-        [Test]
-        public void GetPTMatrix_Always_ReturnSettingLevel()
-        {
-            //// Arrange
-            var dummySettingType = AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            //// Act
-            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
-
-            //// Assert
-            Assert.AreEqual(dummySettingType.SettingLevel, actualPTMatrix.SettingLevel);
-        }
-
         [Test]
         public void GetPTMatrix_Always_CallGetIsAllowMasterAutoPT()
         {
@@ -103,7 +78,7 @@
             string customerName = "CustomerName";
             _settingMatrixQuery.CustomerName = customerName;
             _settingMatrixQuery.ProductId = productId;
-            AssumeSettingTypeReturnFromDatabaseIsValid();
+            AssumeDatabaseReturnValidPT();
 
             //// Act
             _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
@@ -122,7 +97,7 @@
         public void GetPTMatrix_Always_ReturnIsAllowMasterAutoPT()
         {
             //// Arrange
-            AssumeSettingTypeReturnFromDatabaseIsValid();
+            AssumeDatabaseReturnValidPT();
             AssumeMasterIsAllowedAutoPT();
 
             //// Act
@@ -130,6 +105,12 @@
 
             //// Assert
             Assert.IsTrue(actualPTMatrix.IsAllowMasterAutoPT);
+        }
+
+        private void AssumeDatabaseReturnValidPT()
+        {
+            var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
+            _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
         }
 
         [Test]
@@ -142,7 +123,7 @@
             _settingMatrixQuery.BetTypeId = betTypeId;
             string customerName = "CustomerName";
             _settingMatrixQuery.CustomerName = customerName;
-            AssumeSettingTypeReturnFromDatabaseIsValid();
+            AssumeDatabaseReturnValidPT();
 
             //// Act
             _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
@@ -159,11 +140,8 @@
         public void GetPTMatrix_Always_ReturnGroupedPTItemMatrices()
         {
             //// Arrange
-            AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
-
+            AssumeDatabaseReturnValidPT();
+            
             //// Act
             var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 
@@ -180,10 +158,7 @@
         public void GetPTMatrix_Always_ReturnSportTypeName()
         {
             //// Arrange
-            AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
+            AssumeDatabaseReturnValidPT();
 
             var sampleSportName = "Sample SportName";
             _resourceService.GetSportTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleSportName);
@@ -199,10 +174,7 @@
         public void GetPTMatrix_Always_ReturnBetTypeName()
         {
             //// Arrange
-            AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            var getPTItemMatrixDtoDummyList = GetPTItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<PTItemMatrixDto>(Arg.Any<PTMatrixQueryCriteria>()).Returns(getPTItemMatrixDtoDummyList);
+            AssumeDatabaseReturnValidPT();
 
             var sampleBetTypeName = "Sample BetTypeName";
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleBetTypeName);

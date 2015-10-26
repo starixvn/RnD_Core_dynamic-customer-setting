@@ -19,7 +19,6 @@
     public class CommissionMatrixServiceTests
     {
         private IResourceService _resourceService;
-        private IProductService _productService;
         private IDynamicRepository _dynamicRepository;
 
         private ICommissionMatrixService _commissionMatrixService;
@@ -28,12 +27,10 @@
         public void SetUp()
         {
             _resourceService = Substitute.For<IResourceService>();
-            _productService = Substitute.For<IProductService>();
             _dynamicRepository = Substitute.For<IDynamicRepository>();
 
             _commissionMatrixService = new CommissionMatrixService(
                 _resourceService,
-                _productService,
                 _dynamicRepository);
         }
 
@@ -63,29 +60,6 @@
                     () => _commissionMatrixService.GetCommissionMatrix(productId, customerName)));
         }
 
-        private SettingType AssumeSettingTypeReturnFromDatabaseIsValid(SettingType dummySettingType = null)
-        {
-            dummySettingType = dummySettingType ?? InstanceFactory.CreateProductSettingType(3);
-            _productService.GetProductSettingType(Arg.Any<byte>(), Arg.Any<short>(), Arg.Any<byte>()).Returns(dummySettingType);
-
-            return dummySettingType;
-        }
-
-        [Test]
-        public void GetCommissionMatrix_Always_ReturnSettingLevel()
-        {
-            //// Arrange
-            byte productId = 1;
-            string customerName = "CustomerName";
-            var dummySettingType = AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            //// Act
-            var actualPTMatrix = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
-
-            //// Assert
-            Assert.AreEqual(dummySettingType.SettingLevel, actualPTMatrix.SettingLevel);
-        }
-
         [Test]
         public void GetCommissionMatrix_ProductDoesNotHaveCommissionSettingType_ThrowInvalidOperationException()
         {
@@ -99,13 +73,19 @@
                     () => _commissionMatrixService.GetCommissionMatrix(productId, customerName)));
         }
 
+        private void AssumeDatabaseReturnValidCommission()
+        {
+            var commissionItemMatrixDtoDummyList = GetCommissionItemMatrixDtoDummyList();
+            _dynamicRepository.Fetch<CommissionItemMatrixDto>(Arg.Any<CommissionMatrixQueryCriteria>()).Returns(commissionItemMatrixDtoDummyList);
+        }
+
         [Test]
         public void GetCommissionMatrix_Always_CallFetchCommissionItemMatrixDtoList()
         {
             //// Arrange
             byte productId = 1;
             string customerName = "CustomerName";
-            AssumeSettingTypeReturnFromDatabaseIsValid();
+            AssumeDatabaseReturnValidCommission();
 
             //// Act
             _commissionMatrixService.GetCommissionMatrix(productId, customerName);
@@ -123,11 +103,8 @@
             //// Arrange
             byte productId = 1;
             string customerName = "CustomerName";
-            AssumeSettingTypeReturnFromDatabaseIsValid();
-
-            var commissionItemMatrixDtoDummyList = GetCommissionItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<CommissionItemMatrixDto>(Arg.Any<CommissionMatrixQueryCriteria>()).Returns(commissionItemMatrixDtoDummyList);
-
+            AssumeDatabaseReturnValidCommission();
+            
             //// Act
             var actualCommissionMatrix = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
 
@@ -145,10 +122,8 @@
             //// Arrange
             byte productId = 1;
             string customerName = "CustomerName";
-            AssumeSettingTypeReturnFromDatabaseIsValid();
 
-            var commissionItemMatrixDtoDummyList = GetCommissionItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<CommissionItemMatrixDto>(Arg.Any<CommissionMatrixQueryCriteria>()).Returns(commissionItemMatrixDtoDummyList);
+            AssumeDatabaseReturnValidCommission();
 
             var sampleSportName = "Sample SportName";
             _resourceService.GetSportTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleSportName);
@@ -166,10 +141,8 @@
             //// Arrange
             byte productId = 1;
             string customerName = "CustomerName";
-            AssumeSettingTypeReturnFromDatabaseIsValid();
 
-            var commissionItemMatrixDtoDummyList = GetCommissionItemMatrixDtoDummyList();
-            _dynamicRepository.Fetch<CommissionItemMatrixDto>(Arg.Any<CommissionMatrixQueryCriteria>()).Returns(commissionItemMatrixDtoDummyList);
+            AssumeDatabaseReturnValidCommission();
 
             var sampleBetTypeName = "Sample BetTypeName";
             _resourceService.GetBetTypeName(Arg.Any<int>(), Arg.Any<string>()).Returns(sampleBetTypeName);

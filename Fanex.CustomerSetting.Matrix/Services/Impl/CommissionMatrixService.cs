@@ -7,8 +7,6 @@
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Matrix.Models;
     using Fanex.CustomerSetting.Matrix.Resources;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
@@ -16,31 +14,25 @@
     internal class CommissionMatrixService : ICommissionMatrixService
     {
         private const string DefaultLanguage = "en-US";
-        private const byte SettingTypeId = 3;
         private readonly IDynamicRepository _dynamicRepository;
         private readonly IResourceService _resourceService;
-        private readonly IProductService _productService;
 
         public CommissionMatrixService(
             IResourceService resourceService = null,
-            IProductService productService = null,
             IDynamicRepository dynamicRepository = null)
         {
             _resourceService = resourceService ?? new ResourceService();
-            _productService = productService ?? new ProductService();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public CommissionMatrix GetCommissionMatrix(byte productId, string customerName)
         {
-            var settingType = GetSettingType(productId);
             var commissionItemMaxtrixDtos = GetCommissionItemMaxtrixDtos(productId, customerName);
             var commissionItemMatrices = GetCommissionItemMatricesFromDto(commissionItemMaxtrixDtos);
 
             return new CommissionMatrix
             {
-                CommissionItemMatrices = commissionItemMatrices,
-                SettingLevel = settingType.SettingLevel
+                CommissionItemMatrices = commissionItemMatrices
             };
         }
 
@@ -63,18 +55,6 @@
             return commissionItemMatrices;
         }
 
-        private SettingType GetSettingType(byte productId)
-        {
-            var commissionSettingType = _productService.GetProductSettingType(productId, SettingTypeId, (byte)SystemType.Accounting);
-
-            if (commissionSettingType == null)
-            {
-                throw new InvalidOperationException(Message.ProductDoesNotHaveCommissionSetting);
-            }
-
-            return commissionSettingType;
-        }
-
         private IEnumerable<CommissionItemMatrixDto> GetCommissionItemMaxtrixDtos(
             byte productId,
             string customerName)
@@ -85,6 +65,11 @@
                     ProductId = productId,
                     UserName = customerName
                 });
+
+            if (!commissionItemMaxtrixDtos.Any())
+            {
+                throw new InvalidOperationException(Message.ThereIsNoData);
+            }
 
             return commissionItemMaxtrixDtos;
         }
