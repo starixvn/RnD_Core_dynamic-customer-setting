@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -41,6 +42,7 @@
             return target;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "Reviewed!")]
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value);

@@ -16,8 +16,8 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -156,9 +156,10 @@
     <Compile Include="Configurations\CustomerSettingAPIConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Filters\GlobalExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\SetLanguageAttribute.cs" />
-    <Compile Include="Filters\MaintenanceFilterAttribute.cs" />
+    <Compile Include="Filters\GlobalExceptionFilter.cs" />
+    <Compile Include="Filters\HmacAuthorizationFilter.cs" />
+    <Compile Include="Filters\SetLanguageFilter.cs" />
+    <Compile Include="Filters\MaintenanceFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

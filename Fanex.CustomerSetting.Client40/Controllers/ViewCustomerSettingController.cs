@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
@@ -55,10 +56,15 @@
             return Content(template, "text/HTML");
         }
 
-        [HttpPost]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
         [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
+            if (querySetting == null)
+            {
+                throw new ArgumentNullException("querySetting", "Query Setting cannot be null");
+            }
+
             IRestResponse customerSettingResponse;
             SettingContext settingContext = CustomerSettingRegistration.SettingContext;
 
@@ -104,7 +110,7 @@
             string finalTemplate = template;
             AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
 
-            appConfig.Editable = !query.IsReadOnly && CustomerSettingRegistration.CheckUpdatePermission(CustomerSettingRegistration.GetPermissionContext()); 
+            appConfig.Editable = !query.IsReadOnly && CustomerSettingRegistration.CheckUpdatePermission(CustomerSettingRegistration.GetPermissionContext());
 
             if (!string.IsNullOrEmpty(finalTemplate))
             {

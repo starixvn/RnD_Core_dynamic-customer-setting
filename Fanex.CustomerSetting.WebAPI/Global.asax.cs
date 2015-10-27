@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.SqlClient;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Http;
     using Fanex.Data.Configuration;
@@ -20,6 +21,7 @@
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Fanex.Logging.LogService.Error(System.String)", Justification = "Reviewed!")]
         protected void Application_Error(object sender, EventArgs e)
         {
             // Logging

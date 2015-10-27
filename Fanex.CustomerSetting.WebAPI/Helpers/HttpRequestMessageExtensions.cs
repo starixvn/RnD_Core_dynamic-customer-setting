@@ -1,14 +1,15 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Web;
 
     public static class HttpRequestMessageExtensions
     {
-        public static string GetClientIpAddress(this HttpRequestMessage request)
+        public static string GetClientIPAddress(this HttpRequestMessage request)
         {
-            if (request.Properties.ContainsKey("MS_HttpContext"))
+            if (request != null && request.Properties.ContainsKey("MS_HttpContext"))
             {
                 return IPAddress.Parse(((HttpContextBase)request.Properties["MS_HttpContext"]).Request.UserHostAddress).ToString();
             }
@@ -18,6 +19,11 @@
 
         public static string GetBodyForm(this HttpRequestMessage request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request", "Request cannot be null");
+            }
+
             string data;
 
             using (var stream = request.Content.ReadAsStreamAsync().Result)

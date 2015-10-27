@@ -8,6 +8,11 @@
     {
         protected override Type GetTargetType(Type type, JObject obj)
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj", "Object cannot be null");
+            }
+
             return Type.GetType(obj.GetValue("typeName", StringComparison.OrdinalIgnoreCase).ToString());
         }
     }

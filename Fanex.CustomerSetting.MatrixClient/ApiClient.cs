@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.MatrixClient.Configurations;
     using Fanex.CustomerSetting.MatrixClient.Helpers;
@@ -9,10 +10,9 @@
 
     public class ApiClient
     {
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Reviewed!")]
         public static readonly IRestClient Client;
-        private static readonly IAuthenticator Authenticator = new NtlmAuthenticator();
         private static readonly object RestClientCreatingLockObject = new object();
-        private static Random _randomHandler = new Random();
 
         static ApiClient()
         {
@@ -23,7 +23,7 @@
                     if (Client == null)
                     {
                         Client = new RestClient(RandomHelper.GetRandomUri(SettingMatrixConfiguration.Settings.ServiceUris));
-                        Client.Authenticator = Authenticator;
+                        Client.Authenticator = new HmacAuthenticator();
                     }
                 }
             }

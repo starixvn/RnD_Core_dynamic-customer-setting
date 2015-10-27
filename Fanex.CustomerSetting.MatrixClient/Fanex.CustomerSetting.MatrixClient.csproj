@@ -83,6 +83,7 @@
     <Compile Include="Configurations\SettingMatrixConfiguration.cs" />
     <Compile Include="Controllers\ViewCustomerSettingMatrixController.cs" />
     <Compile Include="Exceptions\SettingMatrixException.cs" />
+    <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="SettingMatrixRegistration.cs" />
     <Compile Include="Helpers\TypeDetection.cs" />

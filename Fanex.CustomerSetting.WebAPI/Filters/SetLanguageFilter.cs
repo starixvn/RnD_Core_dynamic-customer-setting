@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.WebApi.Models.Request;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public sealed class SetLanguageAttribute : ActionFilterAttribute
+    public sealed class SetLanguageFilter : ActionFilterAttribute
     {
         private const string ActionArgumentName = "request";
         private const string DefaultLanguage = "en-US";

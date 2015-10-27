@@ -1,7 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Configurations
 {
     using System.Configuration;
+    using System.Diagnostics.CodeAnalysis;
 
+    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "API", Justification = "Reviewed!")]
     public class CustomerSettingAPIConfiguration : ConfigurationSection
     {
         private static CustomerSettingAPIConfiguration settings
@@ -27,6 +29,13 @@
         {
             get { return (string)this["UMAddress"]; }
             set { this["UMAddress"] = value; }
+        }
+
+        [ConfigurationProperty("SecrectKey", IsRequired = true, DefaultValue = "U6BUFHtVcq5SPQcTl7tHLBG/LF6d5YVRKHrCHD9M+Vw=")]
+        public string SecrectKey
+        {
+            get { return (string)this["SecrectKey"]; }
+            set { this["SecrectKey"] = value; }
         }
     }
 }

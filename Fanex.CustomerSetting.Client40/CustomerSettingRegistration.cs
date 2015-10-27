@@ -32,7 +32,7 @@
 
             if (customerSettingClients.Count == 0)
             {
-                throw new CustomerSettingException("A class extending from CustomerSettingRegistration is required");
+                throw new CustomerSettingException("A class extending from Customer Setting Registration is required");
             }
             else if (customerSettingClients.Count == 1)
             {
@@ -43,7 +43,7 @@
             }
             else
             {
-                throw new CustomerSettingException("Only one class extending from CustomerSettingRegistration is allowed");
+                throw new CustomerSettingException("Only one class extending from Customer Setting Registration is allowed");
             }
         }
 
@@ -94,7 +94,7 @@
         {
             if (client == null)
             {
-                throw new CustomerSettingException("The CustomerSettingRegistration.Init() method must be called once the web application is started.");
+                throw new CustomerSettingException("The Customer Setting Registration Init method must be called once the web application is started.");
             }
         }
 

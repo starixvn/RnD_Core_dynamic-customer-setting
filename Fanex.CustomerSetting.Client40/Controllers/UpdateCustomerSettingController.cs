@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Attributes;
     using Fanex.CustomerSetting.Client40.Models;
@@ -22,14 +23,12 @@
         {
         }
 
-        [HttpPost]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
         [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
         public ContentResult UpdateSetting(UpdateSettingRequest updateSetting)
         {
-            IRestResponse updateResult;
-
             SetActorInformation(updateSetting);
-            updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
+            IRestResponse updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
             Response.StatusCode = (int)updateResult.StatusCode;
 
             return Content(updateResult.Content);

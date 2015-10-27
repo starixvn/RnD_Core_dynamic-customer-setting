@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Attributes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
@@ -12,16 +13,20 @@
     {
         public override void OnException(ExceptionContext filterContext)
         {
-            var exception = filterContext.Exception;
-
-            if (exception != null)
+            if (filterContext != null)
             {
-                Log(exception);
+                var exception = filterContext.Exception;
+
+                if (exception != null)
+                {
+                    Log(exception);
+                }
             }
 
             base.OnException(filterContext);
         }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)", Justification = "Reviewed!")]
         private void Log(Exception ex)
         {
             string message = string.Join(

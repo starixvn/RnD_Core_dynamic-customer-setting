@@ -31,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -83,6 +84,7 @@
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="CustomerSettingRegistration.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
+    <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\PermissionContext.cs" />

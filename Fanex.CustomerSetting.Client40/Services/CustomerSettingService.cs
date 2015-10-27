@@ -11,7 +11,7 @@
         {
             if (query == null)
             {
-                throw new CustomerSettingException("QuerySettingRequest cannot be null");
+                throw new CustomerSettingException("Query Setting Request cannot be null");
             }
 
             var request = new RestRequest("/customersetting/", Method.GET);
@@ -25,7 +25,7 @@
         {
             if (update == null)
             {
-                throw new CustomerSettingException("UpdateSettingRequest cannot be null");
+                throw new CustomerSettingException("Update Setting Request cannot be null");
             }
 
             var request = new RestRequest("/customersetting/post/", Method.POST);
@@ -39,7 +39,7 @@
         {
             if (multipleUpdate == null)
             {
-                throw new CustomerSettingException("MultipleUpdateSettingRequest cannot be null");
+                throw new CustomerSettingException("Multiple Update Setting Request cannot be null");
             }
 
             var request = new RestRequest("/customersetting/postmultiple/", Method.POST);

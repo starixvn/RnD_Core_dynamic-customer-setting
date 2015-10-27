@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Controllers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Net;
     using System.Net.Http;
@@ -13,7 +14,7 @@
     using Fanex.CustomerSetting.WebApi.Helpers;
     using Fanex.CustomerSetting.WebApi.Models.Request;
 
-    [SetLanguage]
+    [SetLanguageFilter]
     public class CustomerSettingController : ApiController
     {
         private const string CustomerSettingTemplateCachingKey = "CustomerSettingTemplate";
@@ -22,6 +23,7 @@
         private const string CustomerSettingTemplateIe8FilePath = "~/App_Data/Templates/customer-setting-ie8.htm";
         private const byte CachingHours = 4;
 
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
         {
             if (request == null)
@@ -43,6 +45,7 @@
             }
         }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
         public HttpResponseMessage Post(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<UpdateSettingRequest>))]UpdateSettingRequest request)
         {
@@ -62,6 +65,7 @@
             return Request.CreateResponse(result);
         }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
         public HttpResponseMessage PostMultiple(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<MultipleUpdateSettingRequest>))]MultipleUpdateSettingRequest request)
         {

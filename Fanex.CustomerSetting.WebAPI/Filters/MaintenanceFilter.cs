@@ -1,13 +1,15 @@
-﻿namespace Fanex.CustomerSetting.Matrix.WebApi.Filters
+﻿namespace Fanex.CustomerSetting.WebApi.Filters
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.Matrix.WebApi.Configurations;
+    using Fanex.CustomerSetting.WebApi.Configurations;
     using Sunplus.UMControllerLibrary;
 
-    public class MaintenanceFilterAttribute : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public sealed class MaintenanceFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
@@ -15,6 +17,11 @@
 
             if (IsDowntime())
             {
+                if (actionContext == null)
+                {
+                    throw new ArgumentNullException("actionContext", "Action Context cannot be null");
+                }
+
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Forbidden, "Service is under-maintenance.");
             }
         }
@@ -25,7 +32,7 @@
         /// <returns>Down time object.</returns>
         private bool IsDowntime()
         {
-            if (!SettingMatrixAPIConfiguration.Settings.EnableCheckUM)
+            if (!CustomerSettingAPIConfiguration.Settings.EnableCheckUM)
             {
                 return false;
             }
@@ -37,7 +44,7 @@
             // gets Agent Site UM Status.
             return umctrl.isUnderMaintainence(
                 Sites.AccountSite,
-                SettingMatrixAPIConfiguration.Settings.UMAddress,
+                CustomerSettingAPIConfiguration.Settings.UMAddress,
                 ref timeFrom,
                 ref timeTo);
         }
