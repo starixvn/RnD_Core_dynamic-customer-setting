@@ -2,8 +2,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var DemoFrom;
 (function (DemoFrom) {
@@ -343,5 +342,9 @@ var DemoFrom;
         return MultipleTargets;
     })(Target);
 })(DemoFrom || (DemoFrom = {}));
+function successfulUpdatingCallback() {
+    console.log("Be called after updating sucessfully!");
+}
+;
 
 angular.module("actorForm").run(["$templateCache", function($templateCache) {$templateCache.put("posting-to-iframe.htm","<form action=\"{{path}}\" target=\"{{frameName}}\" method=\"post\" class=\"hide\">\r\n    <input type=\"hidden\" name=\"language\" value=\"{{language}}\" />\r\n    <input type=\"hidden\" name=\"productId\" value=\"{{productId}}\" />\r\n    <input type=\"hidden\" name=\"customerLevel\" value=\"{{customerLevel}}\" />\r\n    <input type=\"hidden\" name=\"uplineLevel\" value=\"{{uplineLevel}}\" data-ng-if=\"uplineLevel\" />\r\n    <input type=\"hidden\" name=\"customerId\" value=\"{{customerId}}\" data-ng-if=\"!isMultiple\" />\r\n    <input type=\"hidden\" name=\"isMultiple\" value=\"{{isMultiple}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerIds\" value=\"{{customerIds}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerNames\" value=\"{{customerNames}}\" data-ng-if=\"isMultiple\" />\r\n</form>");}]);

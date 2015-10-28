@@ -24783,10 +24783,11 @@ var CustomerSetting;
     (function (IE8) {
         "use strict";
         var CustomerSettingController = (function () {
-            function CustomerSettingController($rootScope, $http, $timeout, appConfigService, parametersService, resourceService, updatingSettingTypePromiseChain) {
+            function CustomerSettingController($window, $rootScope, $http, $timeout, appConfigService, parametersService, resourceService, updatingSettingTypePromiseChain) {
                 this.queryPath = "viewCustomerSetting/querySetting?";
                 this.updatePath = "updateCustomerSetting/updateSetting";
                 this.updateMultiplePath = "updateCustomerSetting/updateMultipleSetting";
+                this.$window = $window;
                 this.$rootScope = $rootScope;
                 this.$http = $http;
                 this.$timeout = $timeout;
@@ -24794,6 +24795,7 @@ var CustomerSetting;
                 this.parametersService = parametersService;
                 this.resourceService = resourceService;
                 this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+                this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
                 this.customerNames = this.parametersService.getCustomerNames();
                 this.uplineLevel = this.parametersService.getUplineLevel();
                 this.querySetting();
@@ -24813,7 +24815,7 @@ var CustomerSetting;
                         validationResult = command.validate();
                         if (validationResult.isSuccessful()) {
                             this.updatingSettingTypePromiseChain.execute(command).then(function () {
-                                _this.updateSetting(path, command);
+                                _this.updateSetting(path, command, !!settingTypeId, isMultiple);
                             });
                         }
                         else {
@@ -24827,7 +24829,7 @@ var CustomerSetting;
                     this.requestMsgResult = error;
                 }
             };
-            CustomerSettingController.prototype.updateSetting = function (path, command) {
+            CustomerSettingController.prototype.updateSetting = function (path, command, isPartialUpdate, isMultipleUpdate) {
                 var _this = this;
                 this.isUIblocked = true;
                 this.$http
@@ -24838,6 +24840,9 @@ var CustomerSetting;
                     _this.$timeout(function () {
                         if (_this.requestMsgResult.removeSuccessResults().length === 0) {
                             _this.requestMsgResult = undefined;
+                            if (_this.successfulUpdatingCallback) {
+                                _this.successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate);
+                            }
                         }
                     }, IE8.Defaults.displayingMsgTime);
                 }, function (response) {
@@ -24879,6 +24884,7 @@ var CustomerSetting;
                 }
             };
             CustomerSettingController.$inject = [
+                "$window",
                 "$rootScope",
                 "$http",
                 "$timeout",

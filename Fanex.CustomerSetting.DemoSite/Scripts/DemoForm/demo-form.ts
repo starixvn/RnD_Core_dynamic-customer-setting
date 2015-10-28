@@ -467,3 +467,9 @@ module DemoFrom {
         }
     }
 }
+
+/* tslint:disable */
+function successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate) {
+    console.log("Be called after updating sucessfully!");
+};
+/* tslint:enable */

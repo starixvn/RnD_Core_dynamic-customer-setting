@@ -9,8 +9,13 @@
 module CustomerSetting {
     "use strict";
 
+    interface ISuccessfulUpdatingCallback {
+        (isPartialUpdate: boolean, isMultipleUpdate: boolean): any;
+    }
+
     class CustomerSettingController {
         public static $inject: string[] = [
+            "$window",
             "$rootScope",
             "$http",
             "$timeout",
@@ -37,6 +42,7 @@ module CustomerSetting {
             return "updateCustomerSetting/updateMultipleSetting";
         }
 
+        private $window: ng.IWindowService;
         private $rootScope: ng.IRootScopeService;
         private $http: ng.IHttpService;
         private $timeout: ng.ITimeoutService;
@@ -44,8 +50,10 @@ module CustomerSetting {
         private parametersService: ParametersService;
         private resourceService: ResourceService;
         private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
+        private successfulUpdatingCallback: ISuccessfulUpdatingCallback;
 
         constructor(
+            $window: ng.IWindowService,
             $rootScope: ng.IRootScopeService,
             $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
@@ -53,6 +61,7 @@ module CustomerSetting {
             parametersService: ParametersService,
             resourceService: ResourceService,
             updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
+            this.$window = $window;
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
@@ -60,6 +69,7 @@ module CustomerSetting {
             this.parametersService = parametersService;
             this.resourceService = resourceService;
             this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+            this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
             this.customerNames = this.parametersService.customerNames;
             this.uplineLevel = this.parametersService.uplineLevel;
@@ -83,7 +93,7 @@ module CustomerSetting {
 
                     if (validationResult.isSuccessful) {
                         this.updatingSettingTypePromiseChain.execute(command).then(() => {
-                            this.updateSetting(path, command);
+                            this.updateSetting(path, command, !!settingTypeId, isMultiple);
                         });
                     } else {
                         this.requestMsgResult = validationResult;
@@ -97,7 +107,7 @@ module CustomerSetting {
             }
         }
 
-        private updateSetting(path: string, command: SettingCommand): void {
+        private updateSetting(path: string, command: SettingCommand, isPartialUpdate?: boolean, isMultipleUpdate?: boolean): void {
             this.isUIblocked = true;
 
             this.$http
@@ -109,6 +119,10 @@ module CustomerSetting {
                     this.$timeout(() => {
                         if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
                             this.requestMsgResult = undefined;
+
+                            if (this.successfulUpdatingCallback) {
+                                this.successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate);
+                            }
                         }
                     }, Defaults.displayingMsgTime);
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
