@@ -129,19 +129,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType1.xml">
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType2.xml">
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType3.xml">
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType3.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.SettingType4.xml">
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\CustomerSettingSpNames\Fanex.CustomerSetting.xml">
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\Templates\customer-setting-ie8.htm" />

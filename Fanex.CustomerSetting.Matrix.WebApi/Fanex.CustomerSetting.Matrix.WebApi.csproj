@@ -126,7 +126,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SettingMatrixSpNames\Fanex.CustomerSetting.Matrix.xml" />
+    <Content Include="App_Data\SettingMatrixSpNames\DEV\Fanex.CustomerSetting.Matrix.xml" />
+    <Content Include="App_Data\SettingMatrixSpNames\LOCAL\Fanex.CustomerSetting.Matrix.xml" />
+    <Content Include="App_Data\SettingMatrixSpNames\UAT\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\Templates\customer-setting-matrix.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
