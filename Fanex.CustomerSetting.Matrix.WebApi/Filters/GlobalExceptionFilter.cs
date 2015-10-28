@@ -43,11 +43,12 @@
             if (objectDbException != null)
             {
                 messageBuilder.AppendFormat("Procedure: {0}", objectDbException.DbSetting.SpName).AppendLine();
-                messageBuilder.AppendFormat("Connection String: {0}", objectDbException.DbSetting.ConnectionString).AppendLine();
+                messageBuilder.AppendFormat("DB Name: {0}", objectDbException.DbSetting.DbName).AppendLine();
 
                 if (objectDbException.InnerException is SqlException)
                 {
                     var innerSqlException = objectDbException.InnerException as SqlException;
+                    messageBuilder.AppendFormat("Server: {0}", innerSqlException.Server).AppendLine();
                     messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
                 }
             }
