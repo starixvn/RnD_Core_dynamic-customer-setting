@@ -84,7 +84,8 @@
                     SportTypeId = 1,
                     IsDisabled = true,
                     IsDisabledDownline = true,
-                    IsDisabledUpline = false
+                    IsDisabledUpline = false,
+                    HasDownline = true
                 }
             };
 

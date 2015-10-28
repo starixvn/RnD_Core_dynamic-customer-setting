@@ -82,7 +82,8 @@
                 SportTypeId = 1,
                 IsDisabled = isDisbaled,
                 IsDisabledDownline = isDisabledDownline,
-                IsDisabledUpline = isDisabledUpline
+                IsDisabledUpline = isDisabledUpline,
+                HasDownline = true
             };
 
             //// Act
@@ -110,6 +111,23 @@
             {
                 Assert.AreEqual(isDisabledUpline.Value, actualProductStatusItem.Upline.IsDisabled);
             }
+        }
+
+        [Test]
+        public void Constructor_CustomerHasNoDownLine_DownlineIsNull()
+        {
+            //// Arrange
+            var productStatusItemDto = new ProductStatusItemDto
+            {
+                BetTypeId = 1,
+                SportTypeId = 1
+            };
+
+            //// Act
+            var actualProductStatusItem = new ProductStatusItem(productStatusItemDto);
+
+            //// Assert
+            Assert.IsNull(actualProductStatusItem.Downline);
         }
     }
 }
