@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services.Impl
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Matrix.Criteria;
@@ -47,23 +48,23 @@
             Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, "settingMatrixQuery.SettingTypeId");
             Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, "settingMatrixQuery.CustomerName");
 
-            var customerSettingMatrix = new CustomerSettingMatrix
+            var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
+            var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
+            settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery);
+
+            return new CustomerSettingMatrix
             {
-                CustomerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName),
-                SettingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery)
+                CustomerLine = customerLine,
+                SettingTypeMatrix = settingTypeMatrix
             };
-
-            customerSettingMatrix.SettingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery);
-
-            return customerSettingMatrix;
         }
 
-        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery)
+        private SettingTypeMatrix GetCustomerSettingTypeMatrix(SettingMatrixQuery settingMatrixQuery, IEnumerable<Customer> customerLine)
         {
             switch ((SettingType)settingMatrixQuery.SettingTypeId)
             {
                 case SettingType.PositionTaking:
-                    return _pTMatrixService.GetPTMatrix(settingMatrixQuery);
+                    return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
 
                 case SettingType.Commission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
@@ -71,6 +72,19 @@
                 default:
                     throw new InvalidOperationException(Message.InvalidSettingTypeId);
             }
+        }
+
+        private string GetMasterName(IEnumerable<Customer> customerLine)
+        {
+            foreach (var customer in customerLine)
+            {
+                if (customer.Level.IsMasterLevel())
+                {
+                    return customer.Name;
+                }
+            }
+
+            return string.Empty;
         }
 
         private byte GetSettingTypeLevel(SettingMatrixQuery settingMatrixQuery)

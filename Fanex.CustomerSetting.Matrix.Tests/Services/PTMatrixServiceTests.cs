@@ -75,22 +75,21 @@
         {
             //// Arrange
             byte productId = 1;
-            string customerName = "CustomerName";
-            _settingMatrixQuery.CustomerName = customerName;
+            string masterName = "Master Name";
             _settingMatrixQuery.ProductId = productId;
             AssumeDatabaseReturnValidPT();
 
             //// Act
-            _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
+            _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery, masterName);
 
             //// Assert
-            _dynamicRepository.Received().Get<bool>(Arg.Is<IsAllowMasterAutoPTQueryCriteria>(
-                    criteria => criteria.UserName == customerName));
+            _dynamicRepository.Received().Get<bool>(Arg.Is<IsDisableMasterAutoPTQueryCriteria>(
+                    criteria => criteria.UserName == masterName));
         }
 
         private void AssumeMasterIsAllowedAutoPT()
         {
-            _dynamicRepository.Get<bool>(Arg.Any<IsAllowMasterAutoPTQueryCriteria>()).Returns(true);
+            _dynamicRepository.Get<bool>(Arg.Any<IsDisableMasterAutoPTQueryCriteria>()).Returns(false);
         }
 
         [Test]
@@ -101,7 +100,7 @@
             AssumeMasterIsAllowedAutoPT();
 
             //// Act
-            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
+            var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery, "master name");
 
             //// Assert
             Assert.IsTrue(actualPTMatrix.IsAllowMasterAutoPT);

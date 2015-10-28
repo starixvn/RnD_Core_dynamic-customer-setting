@@ -72,7 +72,7 @@
     <Compile Include="Criteria\CommissionMatrixQueryCriteria.cs" />
     <Compile Include="Criteria\CustomerLineQueryCriteria.cs" />
     <Compile Include="Criteria\GetSettingTypeLevelCriteria.cs" />
-    <Compile Include="Criteria\IsAllowMasterAutoPTQueryCriteria.cs" />
+    <Compile Include="Criteria\IsDisableMasterAutoPTQueryCriteria.cs" />
     <Compile Include="Criteria\PTMatrixQueryCriteria.cs" />
     <Compile Include="Dtos\CommissionItemMatrixDto.cs" />
     <Compile Include="Dtos\CustomerLineDto.cs" />

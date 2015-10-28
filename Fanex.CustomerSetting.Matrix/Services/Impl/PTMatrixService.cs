@@ -27,9 +27,9 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery)
+        public PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery, string masterName = null)
         {
-            var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(settingMatrixQuery.CustomerName);
+            var isAllowAutoMasterPT = GetIsAllowMasterAutoPT(masterName);
             var pTItemMatrixDtos = GetPTItemMatrixDtos(settingMatrixQuery);
             var pTItemMatrices = GetPTItemMatricesFromDto(pTItemMatrixDtos);
 
@@ -40,11 +40,16 @@
                 };
         }
 
-        private bool GetIsAllowMasterAutoPT(string customerName)
+        private bool GetIsAllowMasterAutoPT(string masterName)
         {
-            return _dynamicRepository.Get<bool>(new IsAllowMasterAutoPTQueryCriteria
+            if (string.IsNullOrWhiteSpace(masterName))
+            {
+                return false;
+            }
+
+            return !_dynamicRepository.Get<bool>(new IsDisableMasterAutoPTQueryCriteria
                 {
-                    UserName = customerName
+                    UserName = masterName
                 });
         }
 

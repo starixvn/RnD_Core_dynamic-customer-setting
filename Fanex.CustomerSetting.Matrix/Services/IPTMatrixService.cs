@@ -4,6 +4,6 @@
 
     public interface IPTMatrixService
     {
-        PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery);
+        PTMatrix GetPTMatrix(SettingMatrixQuery settingMatrixQuery, string masterName = null);
     }
 }

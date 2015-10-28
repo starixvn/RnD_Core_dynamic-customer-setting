@@ -2,13 +2,13 @@
 {
     using Fanex.Data.Repository;
 
-    internal class IsAllowMasterAutoPTQueryCriteria : CriteriaBase
+    internal class IsDisableMasterAutoPTQueryCriteria : CriteriaBase
     {
         public string UserName { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CustSetting_AllowMasterPTSelect";
+            return "CustSetting_DisableMasterAutoPTSelect";
         }
 
         public override bool IsValid()
