@@ -11,5 +11,7 @@
         public bool? IsDisabledDownline { get; set; }
 
         public bool? IsDisabledUpline { get; set; }
+
+        public bool HasDownline { get; set; }
     }
 }

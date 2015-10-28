@@ -22,11 +22,16 @@
             SportTypeId = productStatusItemDto.SportTypeId;
             BetTypeId = productStatusItemDto.BetTypeId;
             IsDisabled = productStatusItemDto.IsDisabled;
-            Downline = productStatusItemDto.IsDisabledDownline.HasValue ? new ProductStatusItem
+
+            if (productStatusItemDto.HasDownline)
             {
-                IsDisabled = productStatusItemDto.IsDisabledDownline.Value
+                Downline = productStatusItemDto.IsDisabledDownline.HasValue ? new ProductStatusItem
+                {
+                    IsDisabled = productStatusItemDto.IsDisabledDownline.Value
+                }
+                : null;
             }
-            : null;
+
             Upline = productStatusItemDto.IsDisabledUpline.HasValue ? new ProductStatusItem
             {
                 IsDisabled = productStatusItemDto.IsDisabledUpline.Value
