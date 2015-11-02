@@ -153,4 +153,16 @@
   <data name="UserName" xml:space="preserve">
     <value>Tài khoản</value>
   </data>
+  <data name="CustomerSetting" xml:space="preserve">
+    <value>Thiết lập </value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Điện thoại</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Có</value>
+  </data>
 </root>

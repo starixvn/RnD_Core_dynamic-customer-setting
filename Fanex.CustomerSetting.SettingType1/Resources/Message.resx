@@ -118,67 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AgentMaxPTCannotBeGreaterThan" xml:space="preserve">
-    <value>Agent Max PT cannot be greater than {0}.</value>
+    <value>Agent Max PT must be less than or equal to {0}.</value>
   </data>
   <data name="AgentMaxPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
-    <value>Agent Max PT cannot be greater than Master Max PT.</value>
+    <value>Agent Max PT must be less than or equal to Master Max PT.</value>
   </data>
   <data name="AgentMaxPTCannotBeLessThan" xml:space="preserve">
-    <value>Agent Max PT cannot be less than {0}.</value>
+    <value>Agent Max PT must be less than or equal to Master Max PT.</value>
   </data>
   <data name="AgentMinPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
-    <value>Agent Min PT cannot be greater than Agent Max PT.</value>
+    <value>Agent Min PT must be less than or equal to Agent Max PT.</value>
   </data>
   <data name="AgentPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
-    <value>Agent PT cannot be greater than Agent Max PT.</value>
+    <value>Agent PT must be less than or equal to Agent Max PT.</value>
   </data>
   <data name="AgentPTCannotBeLessThanAgentMinPT" xml:space="preserve">
-    <value>Agent PT cannot be less than Agent Min PT.</value>
+    <value>Agent PT must be greater than or equal to Agent Min PT.</value>
   </data>
   <data name="MasterAutoPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
-    <value>Master Auto PT cannot be greater than Master Max PT.</value>
-  </data>
-  <data name="MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet" xml:space="preserve">
-    <value>Master Auto PT cannot be greater than zero when IsAuto is not set.</value>
+    <value>Master Auto PT must be less than or equal to Master Max PT.</value>
   </data>
   <data name="MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
-    <value>Master Auto PT On Member cannot be greater than Master Max PT.</value>
-  </data>
-  <data name="MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet" xml:space="preserve">
-    <value>Master Auto PT On Member cannot be greater than zero when IsAuto is not set.</value>
+    <value>Master Auto PT on Member must be less than or equal to Master Max PT.</value>
   </data>
   <data name="MasterAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
-    <value>Master Auto PT On Member cannot be less than {0}.</value>
+    <value>Master Auto PT on Member must be greater than or equal to {0}.</value>
   </data>
   <data name="MasterMaxPTCannotBeGreaterThan" xml:space="preserve">
-    <value>Master Max PT cannot be greater than {0}.</value>
+    <value>Master Max PT must be less than or equal to {0}.</value>
   </data>
   <data name="MasterMaxPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
-    <value>Master Max PT cannot be greater than Super Max PT.</value>
+    <value>Master Max PT must be less than or equal to Super Max PT.</value>
   </data>
   <data name="MasterMaxPTCannotBeLessThan" xml:space="preserve">
-    <value>Master Max PT cannot be less than {0}.</value>
+    <value>Master Max PT must be greater than or equal to {0}.</value>
   </data>
   <data name="MasterMinPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
-    <value>Master Min PT cannot be greater than Master Max PT.</value>
+    <value>Master Min PT must be less than or equal to Master Max PT.</value>
   </data>
   <data name="MasterPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
-    <value>Master PT cannot be greater than Master Max PT.</value>
-  </data>
-  <data name="MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet" xml:space="preserve">
-    <value>Master PT cannot be greater than zero when IsAuto is set.</value>
+    <value>Master PT must be less than or equal to Master Max PT.</value>
   </data>
   <data name="MasterPTCannotBeLessThan" xml:space="preserve">
-    <value>Master PT cannot be less than {0}.</value>
+    <value>Master PT must be greater than or equal to {0}.</value>
   </data>
   <data name="MasterPTOnMemberCannotBeGreaterThan" xml:space="preserve">
-    <value>Master PT On Member cannot be greater than {0}.</value>
-  </data>
-  <data name="MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet" xml:space="preserve">
-    <value>Master PT On Member cannot be greater than zero when IsAuto is set.</value>
+    <value>Master PT on Member must be less than or equal to {0}.</value>
   </data>
   <data name="MasterPTOnMemberCannotBeLessThan" xml:space="preserve">
-    <value>Master PT On Member cannot be less than {0}.</value>
+    <value>Master PT on Member must be greater than or equal to {0}.</value>
   </data>
   <data name="Msg_20001" xml:space="preserve">
     <value>Invalid position taking.</value>
@@ -231,49 +219,34 @@
   <data name="Msg_20034" xml:space="preserve">
     <value>The position taking violates Agent Max PT.</value>
   </data>
-  <data name="PositionTakingCannotBeExceedMaxValue" xml:space="preserve">
-    <value>Position Taking cannot be exceed Max Value.</value>
-  </data>
   <data name="SuperAutoPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
-    <value>Super Auto PT cannot be greater than Super Max PT.</value>
-  </data>
-  <data name="SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet" xml:space="preserve">
-    <value>Super Auto PT cannot be greater than zero when IsAuto is not set.</value>
+    <value>Super Auto PT must be less than or equal to Super Max PT.</value>
   </data>
   <data name="SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
-    <value>Super Auto PT On Member cannot be greater than Super Max PT.</value>
-  </data>
-  <data name="SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet" xml:space="preserve">
-    <value>Super Auto PT On Member cannot be greater than zero when IsAuto is not set.</value>
+    <value>Super Auto PT on Member must be less than or equal to Super Max PT.</value>
   </data>
   <data name="SuperAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
-    <value>Super Auto PT On Member cannot be less than {0}.</value>
+    <value>Super Auto PT on Member must be greater than or equal to {0}.</value>
   </data>
   <data name="SuperMaxPTCannotBeGreaterThan" xml:space="preserve">
-    <value>Super Max PT cannot be greater than {0}.</value>
+    <value>Super Max PT must be less than or equal to {0}.</value>
   </data>
   <data name="SuperMinPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
-    <value>Super Min PT cannot be greater than Super Max PT.</value>
+    <value>Super Min PT must be less than or equal to Super Max PT.</value>
   </data>
   <data name="SuperPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
-    <value>Super PT cannot be greater than Super Max PT.</value>
-  </data>
-  <data name="SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet" xml:space="preserve">
-    <value>Super PT cannot be greater than zero when IsAuto is set.</value>
+    <value>Super PT must be less than or equal to Super Max PT.</value>
   </data>
   <data name="SuperPTCannotBeLessThan" xml:space="preserve">
-    <value>Super PT cannot be less than {0}.</value>
+    <value>Super PT must be greater than or equal to {0}.</value>
   </data>
   <data name="SuperPTOnMemberCannotBeGreaterThan" xml:space="preserve">
-    <value>Super PT On Member cannot be greater than {0}.</value>
-  </data>
-  <data name="SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet" xml:space="preserve">
-    <value>Super PT On Member cannot be greater than zero when IsAuto is set.</value>
+    <value>Super PT on Member must be less than or equal to {0}.</value>
   </data>
   <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
-    <value>Super PT On Member cannot be less than {0}.</value>
+    <value>Super PT on Member must be greater than or equal to {0}.</value>
   </data>
   <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
-    <value>Updated position taking successfully.</value>
+    <value>Position taking is updated successfully.</value>
   </data>
 </root>

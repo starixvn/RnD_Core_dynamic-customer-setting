@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AgentMaxPT" xml:space="preserve">
-    <value>แบ่งสู้สูงสุดของเอ</value>
+    <value>แบ่งสู้สูงสุดของเอเย่น</value>
   </data>
   <data name="AgentMinPT" xml:space="preserve">
-    <value>ค่าแบ่งสู้ต่ำสุดของ</value>
+    <value>แบ่งสู้ต่ำสุดของเอเย่น</value>
   </data>
   <data name="AgentPT" xml:space="preserve">
     <value>ค่าแบ่งสู้ของเอเย่น</value>
@@ -167,5 +167,11 @@
   </data>
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>ยืนยันการอัพเดทการตั้งค่าความเสี่ยง</value>
+  </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ.</value>
   </data>
 </root>

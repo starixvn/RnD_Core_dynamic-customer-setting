@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downline status cannot be changed when the Upline has not been changed..
+        ///   Looks up a localized string similar to Downline&apos;s Product Status must be unchanged when the Upline has not been changed..
         /// </summary>
         internal static string DownlineStatusCannotBeChanged {
             get {

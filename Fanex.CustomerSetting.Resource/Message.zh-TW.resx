@@ -117,4 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessDeniedMsg" xml:space="preserve">
+    <value>對不起, 您不被允許進入此網頁.</value>
+  </data>
+  <data name="AccountWasDisabled" xml:space="preserve">
+    <value>這個帳號禁用</value>
+  </data>
+  <data name="SystemError" xml:space="preserve">
+    <value>哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧</value>
+  </data>
 </root>

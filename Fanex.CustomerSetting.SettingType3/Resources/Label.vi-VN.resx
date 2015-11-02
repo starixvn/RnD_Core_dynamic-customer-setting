@@ -121,12 +121,12 @@
     <value>Hoa hồng</value>
   </data>
   <data name="CommissionForAgent" xml:space="preserve">
-    <value>Agent Comm</value>
+    <value>Hoa hồng cho Agent</value>
   </data>
   <data name="CommissionForMaster" xml:space="preserve">
-    <value>Master Comm</value>
+    <value>Hoa hồng Master</value>
   </data>
   <data name="CommissionForMember" xml:space="preserve">
-    <value>Member Comm</value>
+    <value>Hoa hồng cho Member</value>
   </data>
 </root>

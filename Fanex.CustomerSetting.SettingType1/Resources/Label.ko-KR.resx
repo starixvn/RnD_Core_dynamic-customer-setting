@@ -168,4 +168,10 @@
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>Confirm Update Members's PT</value>
   </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다.</value>
+  </data>
 </root>

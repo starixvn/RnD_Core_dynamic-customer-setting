@@ -121,12 +121,12 @@
     <value>คอมมิชชั่น</value>
   </data>
   <data name="CommissionForAgent" xml:space="preserve">
-    <value>คอมมิชชั่นของ Agent</value>
+    <value>ค่าคอมมิชชั่น จาก ตัวแทน</value>
   </data>
   <data name="CommissionForMaster" xml:space="preserve">
-    <value>คอมมิชชั่นของ Master</value>
+    <value>ค่าคอมมิชชั่น จากตัวแทนหลัก</value>
   </data>
   <data name="CommissionForMember" xml:space="preserve">
-    <value>คอมมิชชั่นของสมาชิก</value>
+    <value>ค่าคอมมิชชั่นสำหรับสมาชิก</value>
   </data>
 </root>

@@ -121,7 +121,7 @@
     <value>代理最高占成</value>
   </data>
   <data name="AgentMinPT" xml:space="preserve">
-    <value>代理最低占成数</value>
+    <value>代理最低占成</value>
   </data>
   <data name="AgentPT" xml:space="preserve">
     <value>代理占成数</value>
@@ -176,5 +176,11 @@
   </data>
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>确认更新会员的占成数</value>
+  </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>您已更改于此代理不使用自动占成</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>您已更改此总代理不再自动占成.</value>
   </data>
 </root>

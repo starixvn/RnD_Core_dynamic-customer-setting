@@ -120,4 +120,58 @@
   <data name="Live" xml:space="preserve">
     <value>ライブ</value>
   </data>
+  <data name="AgentMaxPT" xml:space="preserve">
+    <value>Agent Max PT</value>
+  </data>
+  <data name="AgentMinPT" xml:space="preserve">
+    <value>Agent Min PT</value>
+  </data>
+  <data name="AgentPT" xml:space="preserve">
+    <value>Agent PT</value>
+  </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>You have changed this agent not to take auto position taking</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>You have changed this master not to take auto position taking.</value>
+  </data>
+  <data name="IsAuto" xml:space="preserve">
+    <value>Is Auto</value>
+  </data>
+  <data name="MasterMaxPT" xml:space="preserve">
+    <value>Master Max PT</value>
+  </data>
+  <data name="MasterMinPT" xml:space="preserve">
+    <value>Master Min PT</value>
+  </data>
+  <data name="MasterPT" xml:space="preserve">
+    <value>Master PT</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="PositionTaking" xml:space="preserve">
+    <value>Position Taking</value>
+  </data>
+  <data name="SuperMaxPT" xml:space="preserve">
+    <value>Super Max PT</value>
+  </data>
+  <data name="SuperMinPT" xml:space="preserve">
+    <value>Super Min PT</value>
+  </data>
+  <data name="SuperPT" xml:space="preserve">
+    <value>Super PT</value>
+  </data>
+  <data name="UpdateMemberPtInfo" xml:space="preserve">
+    <value>You have changed your position taking.</value>
+  </data>
+  <data name="UpdateMemberPtQuestion" xml:space="preserve">
+    <value>Do you want to update all member's position taking to:</value>
+  </data>
+  <data name="UpdateMemberPtTitle" xml:space="preserve">
+    <value>Confirm Update Members's PT</value>
+  </data>
 </root>

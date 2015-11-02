@@ -153,4 +153,16 @@
   <data name="UserName" xml:space="preserve">
     <value>사용자 이름</value>
   </data>
+  <data name="CustomerSetting" xml:space="preserve">
+    <value>Customer Setting</value>
+  </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>일반 정보</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>아니오</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

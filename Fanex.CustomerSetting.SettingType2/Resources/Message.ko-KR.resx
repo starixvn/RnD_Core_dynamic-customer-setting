@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MaxBetCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>최대 배팅은 경기당최대 값보다 클수 없습니다</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>최대베팅은 경기 당 최대치와 같거나 이하이어야합니다</value>
+  </data>
+  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
+    <value>경기당 최대 값은 {0}과 같거나 작아야 합니다.</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
+    <value>최대 배팅보다 이하이여야 합니다 {0}.</value>
+  </data>
+  <data name="MinBetCannotBeGreaterThanMaxBet" xml:space="preserve">
+    <value>최소 배팅은 최대 배팅보다 클수 없습니다.</value>
+  </data>
+  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
+    <value>최소베팅은 최대 베팅과 같거나  이하이어야합니다.</value>
+  </data>
+  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
+    <value>베팅 설정이 성공적으로 업데이트되었습니다.</value>
+  </data>
 </root>

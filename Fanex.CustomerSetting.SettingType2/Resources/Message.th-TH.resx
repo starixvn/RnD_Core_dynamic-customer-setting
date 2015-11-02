@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MaxBetCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน</value>
+  </data>
+  <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
+    <value>จำนวนการเดิมพันสูงสุงต่อรายการต้องน้อยกว่า หรือเท่ากับ {0}</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
+    <value>จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.</value>
+  </data>
+  <data name="MinBetCannotBeGreaterThanMaxBet" xml:space="preserve">
+    <value>จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้</value>
+  </data>
+  <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
+    <value>ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.</value>
+  </data>
+  <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
+    <value>การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว.</value>
+  </data>
 </root>

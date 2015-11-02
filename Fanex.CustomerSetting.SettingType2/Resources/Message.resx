@@ -127,7 +127,7 @@
     <value>Max Bet cannot be negative.</value>
   </data>
   <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
-    <value>Max Bet must be less than or equal to Max Per Match.</value>
+    <value>The Max Bet should be less than or equal to Max Per Match</value>
   </data>
   <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
     <value>Max Bet must be less than or equal to {0}.</value>
@@ -151,7 +151,7 @@
     <value>Min Bet cannot be negative.</value>
   </data>
   <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
-    <value>Min Bet must be less than or equal to Max Bet.</value>
+    <value>The Min Bet should be less than or equal to Max </value>
   </data>
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>Min Bet must be greater than or equal to {0}.</value>
@@ -190,6 +190,6 @@
     <value>Max Per Match must be less than or equal to Master Agent Max Per Match.</value>
   </data>
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
-    <value>Updated bet setting successfully.</value>
+    <value>Bet Setting is updated successfully.</value>
   </data>
 </root>

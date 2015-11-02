@@ -127,6 +127,6 @@
     <value>總代理佣金</value>
   </data>
   <data name="CommissionForMember" xml:space="preserve">
-    <value>會員佣金</value>
+    <value>會員的佣金</value>
   </data>
 </root>

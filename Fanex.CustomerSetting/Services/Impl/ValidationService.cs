@@ -90,7 +90,7 @@
 
             if (!enabledStatus)
             {
-                throw new CustomerSettingException(string.Format(Message.AccountWasDisabled, actor.Name));
+                throw new CustomerSettingException(Message.AccountWasDisabled);
             }
         }
 

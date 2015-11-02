@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have permission to access this page..
+        ///   Looks up a localized string similar to Sorry, You don&apos;t have permission to access this page..
         /// </summary>
         public static string AccessDeniedMsg {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account {0} was disabled..
+        ///   Looks up a localized string similar to This account was disabled..
         /// </summary>
         public static string AccountWasDisabled {
             get {

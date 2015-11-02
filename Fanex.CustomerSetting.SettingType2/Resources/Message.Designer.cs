@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.SettingType2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Bet must be less than or equal to Max Per Match..
+        ///   Looks up a localized string similar to The Max Bet should be less than or equal to Max Per Match.
         /// </summary>
         internal static string MaxBetLessThanOrEqualMaxPerMatch {
             get {
@@ -160,7 +160,7 @@ namespace Fanex.CustomerSetting.SettingType2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Min Bet must be less than or equal to Max Bet..
+        ///   Looks up a localized string similar to The Min Bet should be less than or equal to Max .
         /// </summary>
         internal static string MinBetLessThanOrEqualMaxBet {
             get {
@@ -277,7 +277,7 @@ namespace Fanex.CustomerSetting.SettingType2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated bet setting successfully..
+        ///   Looks up a localized string similar to Bet Setting is updated successfully..
         /// </summary>
         internal static string UpdateBetSettingSuccessfully {
             get {

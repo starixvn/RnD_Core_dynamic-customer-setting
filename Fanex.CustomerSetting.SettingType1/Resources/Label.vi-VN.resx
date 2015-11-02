@@ -174,4 +174,10 @@
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>Confirm Update Members's PT</value>
   </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>Bạn vừa mới ngăn Agent này lấy Auto PT</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>Bạn vừa mới ngăn Master này lấy Auto PT.</value>
+  </data>
 </root>

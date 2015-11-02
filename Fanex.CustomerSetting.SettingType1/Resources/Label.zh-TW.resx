@@ -121,7 +121,7 @@
     <value>代理最高佔成</value>
   </data>
   <data name="AgentMinPT" xml:space="preserve">
-    <value>代理最低占成数</value>
+    <value>代理最低佔成</value>
   </data>
   <data name="AgentPT" xml:space="preserve">
     <value>代理占成数</value>
@@ -173,5 +173,11 @@
   </data>
   <data name="UpdateMemberPtTitle" xml:space="preserve">
     <value>確認更新會員的佔成數</value>
+  </data>
+  <data name="DisableAgentAutoPt" xml:space="preserve">
+    <value>You have changed this agent not to take auto position taking</value>
+  </data>
+  <data name="DisableMasterAutoPt" xml:space="preserve">
+    <value>You have changed this master not to take auto position taking.</value>
   </data>
 </root>

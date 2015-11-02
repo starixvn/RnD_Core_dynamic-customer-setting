@@ -118,27 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MaxBetLessThanOrEqualMaxPerMatch" xml:space="preserve">
-    <value>最大投注額必須小於或等於最大單場比賽投注額</value>
+    <value>最高投注必須少於或相等於單場限額</value>
   </data>
   <data name="MaxBetLessThanOrEqualTo" xml:space="preserve">
-    <value>最大投注額必須小於或等於 {0}</value>
+    <value>最高投注不得多於或相等於 {0}</value>
   </data>
   <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
     <value>最大投注額必須大於或等於最小投注額</value>
   </data>
   <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
-    <value>最大單場比賽投注額必須小於或等於 {0}</value>
+    <value>單場最高投注需底於或等於 {0}</value>
   </data>
   <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
     <value>最大單場比賽投注額必須大於或等於最大投注額</value>
   </data>
   <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
-    <value>最小投注額必須小於或等於最大投注額</value>
+    <value> 最低投注必須少於或相等於最高投注</value>
   </data>
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>最大投注額必須大於或等於 {0}</value>
   </data>
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
-    <value>成功更新投注設置。</value>
+    <value>投注設定已更新成功.</value>
+  </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerMatch" xml:space="preserve">
+    <value>最高投注不可高於單場最高投注</value>
+  </data>
+  <data name="MinBetCannotBeGreaterThanMaxBet" xml:space="preserve">
+    <value>最低投注不可高於最高投注</value>
   </data>
 </root>
