@@ -22,7 +22,12 @@ module CustomerSetting {
                 if (isChecked && !(<SettingType4Item>this.oldSetting).isChecked) {
                     this.downline.readonly = false;
                 } else {
-                    this.downline.isChecked = this.isChecked;
+                    if ((<SettingType4Item>this.oldSetting).isChecked && (<SettingType4Item>this.downline.oldSetting).isChecked) {
+                        this.downline.isChecked = this.isChecked;
+                    } else {
+                        this.downline.isChecked = false;
+                    }
+
                     this.downline.readonly = true;
                 }
             }
@@ -45,7 +50,7 @@ module CustomerSetting {
                 }
 
                 if (settingItem.downline) {
-                    this.downline = new SettingType4Item(settingItem.downline);
+                    this.downline = new SettingType4Item(settingItem.downline, true);
                     this.downline.readonly = true;
                 }
             }

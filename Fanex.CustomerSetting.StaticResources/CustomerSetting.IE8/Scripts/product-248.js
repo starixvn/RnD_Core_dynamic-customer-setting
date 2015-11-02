@@ -25557,7 +25557,7 @@ var CustomerSetting;
                         this.readonly = false;
                     }
                     if (settingItem.downline) {
-                        this.downline = new SettingType4Item(settingItem.downline);
+                        this.downline = new SettingType4Item(settingItem.downline, true);
                         this.downline.readonly = true;
                     }
                 }
@@ -25719,6 +25719,44 @@ var CustomerSetting;
             return SettingType4Directive;
         })(IE8.SettingTypeDirective);
         IE8.ModuleRegister.directive("settingtype4", SettingType4Directive);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var StatusCheckboxDirective = (function () {
+            function StatusCheckboxDirective() {
+                this.restrict = "A";
+                this.controller = ["$scope", function ($scope) {
+                        $scope.change = function () {
+                            $scope.item.isDisabled = !$scope.item.isChecked;
+                            if ($scope.item.downline) {
+                                if ($scope.item.isChecked && !$scope.item.oldSetting.isChecked) {
+                                    $scope.item.downline.readonly = false;
+                                }
+                                else {
+                                    if ($scope.item.oldSetting.isChecked && $scope.item.downline.oldSetting.isChecked) {
+                                        $scope.item.downline.isChecked = $scope.item.isChecked;
+                                    }
+                                    else {
+                                        $scope.item.downline.isChecked = false;
+                                    }
+                                    $scope.item.downline.isChecked = $scope.item.oldSetting.isChecked ? $scope.item.isChecked : false;
+                                    $scope.item.downline.readonly = true;
+                                }
+                            }
+                        };
+                    }];
+            }
+            return StatusCheckboxDirective;
+        })();
+        IE8.ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 

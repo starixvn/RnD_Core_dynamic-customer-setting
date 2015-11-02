@@ -442,7 +442,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\settingtype4.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType4\status-checkbox.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\status-checkbox.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />

@@ -21,7 +21,13 @@ module CustomerSetting.IE8 {
                     if ($scope.item.isChecked && !(<SettingType4Item>$scope.item.oldSetting).isChecked) {
                         $scope.item.downline.readonly = false;
                     } else {
-                        $scope.item.downline.isChecked = $scope.item.isChecked;
+                        if ((<SettingType4Item>$scope.item.oldSetting).isChecked && (<SettingType4Item>$scope.item.downline.oldSetting).isChecked) {
+                            $scope.item.downline.isChecked = $scope.item.isChecked;
+                        } else {
+                            $scope.item.downline.isChecked = false;
+                        }
+
+                        $scope.item.downline.isChecked = (<SettingType4Item>$scope.item.oldSetting).isChecked ? $scope.item.isChecked : false;
                         $scope.item.downline.readonly = true;
                     }
                 }

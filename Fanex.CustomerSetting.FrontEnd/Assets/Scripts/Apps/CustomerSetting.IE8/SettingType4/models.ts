@@ -30,7 +30,7 @@ module CustomerSetting.IE8 {
                 }
 
                 if (settingItem.downline) {
-                    this.downline = new SettingType4Item(settingItem.downline);
+                    this.downline = new SettingType4Item(settingItem.downline, true);
                     this.downline.readonly = true;
                 }
             }

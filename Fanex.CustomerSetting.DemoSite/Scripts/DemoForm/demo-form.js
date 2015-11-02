@@ -342,7 +342,7 @@ var DemoFrom;
         return MultipleTargets;
     })(Target);
 })(DemoFrom || (DemoFrom = {}));
-function successfulUpdatingCallback() {
+function successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate) {
     console.log("Be called after updating sucessfully!");
 }
 ;
