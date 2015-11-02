@@ -18,6 +18,7 @@ resources["message"]["en-us"] = {
     "ProductDoesNotHaveCommissionSetting": "This product does not have commission setting.",
     "ProductDoesNotHavePTSetting": "This product does not have position taking setting.",
     "SettingMatrixIsError": "This setting type matrix is error, please notify your administrator.",
+    "ThereIsNoData": "There is no data.",
     "UsernameDoesNotExist": "Username does not exist!"
 };
 

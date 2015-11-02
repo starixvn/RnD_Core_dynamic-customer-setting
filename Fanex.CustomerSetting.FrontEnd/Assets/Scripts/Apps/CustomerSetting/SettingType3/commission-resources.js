@@ -18,7 +18,7 @@
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "总代理佣金",
-        "CommissionForMember": "会员佣金"
+        "CommissionForMember": "会员的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -26,7 +26,7 @@
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "總代理佣金",
-        "CommissionForMember": "會員佣金"
+        "CommissionForMember": "會員的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -39,22 +39,24 @@
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["ja-jp"] = {
+        "Commission": "Commission",
+        "CommissionForMember": "メンバーの手数料"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["th-th"] = {
         "Commission": "คอมมิชชั่น",
-        "CommissionForAgent": "คอมมิชชั่นของ Agent",
-        "CommissionForMaster": "คอมมิชชั่นของ Master",
-        "CommissionForMember": "คอมมิชชั่นของสมาชิก"
+        "CommissionForAgent": "ค่าคอมมิชชั่น จาก ตัวแทน",
+        "CommissionForMaster": "ค่าคอมมิชชั่น จากตัวแทนหลัก",
+        "CommissionForMember": "ค่าคอมมิชชั่นสำหรับสมาชิก"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["vi-vn"] = {
         "Commission": "Hoa hồng",
-        "CommissionForAgent": "Agent Comm",
-        "CommissionForMaster": "Master Comm",
-        "CommissionForMember": "Member Comm"
+        "CommissionForAgent": "Hoa hồng cho Agent",
+        "CommissionForMaster": "Hoa hồng Master",
+        "CommissionForMember": "Hoa hồng cho Member"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -67,16 +69,17 @@
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
-        "UpdateCommissionSuccessfully": "成功更新佣金设置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
-        "UpdateCommissionSuccessfully": "成功更新傭金設置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["ko-kr"] = {
+        "UpdateCommissionSuccessfully": "수수료가 성공적으로 업데이트되었습니다."
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -85,10 +88,12 @@
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["vi-vn"] = {
+        "UpdateCommissionSuccessfully": "Tiền hoa hồng được cập nhật thành công"
     };
 
     angular.module("customerSetting").value("commissionResources", commissionResources);

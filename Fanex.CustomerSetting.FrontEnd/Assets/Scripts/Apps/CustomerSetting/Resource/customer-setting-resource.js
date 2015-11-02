@@ -30,6 +30,8 @@
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CustomerSetting": "会员设定",
+        "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
@@ -38,14 +40,17 @@
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
+        "No": "无",
         "Phone": "电话",
         "Update": "更改",
-        "UserName": "用户名"
+        "UserName": "用户名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
@@ -55,43 +60,53 @@
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
+        "No": "無",
         "Phone": "電話",
         "Update": "更改",
-        "UserName": "用戶名"
+        "UserName": "用戶名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ko-kr"] = {
         "Agents": "에이전트",
+        "CustomerSetting": "Customer Setting",
         "Fax": "팩스",
         "FirstName": "이름",
+        "GeneralInformation": "일반 정보",
         "LastName": "성",
         "Live": "라이브",
         "Masters": "마스터",
         "Members": "회원",
         "MobilePhone": "핸드폰",
         "Nickname": "닉네임",
+        "No": "아니오",
         "Phone": "전화",
         "Update": "업데이트",
-        "UserName": "사용자 이름"
+        "UserName": "사용자 이름",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ja-jp"] = {
         "Fax": "ファックス",
         "FirstName": "名",
+        "GeneralInformation": "General Information",
         "LastName": "氏",
         "Live": "ライブ",
         "MobilePhone": "携帯電話番号",
         "Nickname": "ニックネーム",
+        "No": "No",
         "Phone": "電話番号",
         "Update": "更新",
-        "UserName": "ユーザー名"
+        "UserName": "ユーザー名",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
         "Agents": "ตัวแทน",
+        "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
@@ -101,14 +116,17 @@
         "Members": "สมาชิก",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
+        "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
-        "UserName": "ชื่อผู้ใช้ระบบ"
+        "UserName": "ชื่อผู้ใช้ระบบ",
+        "Yes": "ตกลง"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["vi-vn"] = {
         "Agents": "Agents",
+        "CustomerSetting": "Thiết lập",
         "Fax": "Fax",
         "FirstName": "Tên",
         "GeneralInformation": "Thông tin Chung",
@@ -118,14 +136,17 @@
         "Members": "Members",
         "MobilePhone": "Điện thoại di động",
         "Nickname": "Biệt danh",
+        "No": "Không",
+        "Phone": "Điện thoại",
         "Update": "Cập nhật",
-        "UserName": "Tài khoản"
+        "UserName": "Tài khoản",
+        "Yes": "Có"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["en-us"] = {
-        "AccessDeniedMsg": "You do not have permission to access this page.",
-        "AccountWasDisabled": "Account {0} was disabled.",
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
         "CopyingFailed": "Unable to copy value to the hi-lighted field(s).",
         "CustomersAreNotSameLine": "Customers are not in the same line!",
         "DataIsNotValid": "Data is not valid.",
@@ -134,6 +155,7 @@
         "NoChangeToUpdate": "There is no change to update!",
         "ProductNameMissing": "Product Id {0} does not have name in {1}",
         "SettingTypeError": "Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!",
+        "SettingTypeHasNoSettingItem": "Setting Type {0} does not have any setting item.",
         "SportTypeOrBetTypeIsInvalid": "Sport Type or Bet Type is invalid!",
         "SubAccountIdShouldBeZeroWhenSystemIsNotAgency": "Sub Account Id Should Be Zero When System Is Not Agency.",
         "SystemError": "Oops... you are here because of a system error, please notify system administrator.",
@@ -145,26 +167,44 @@
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-cn"] = {
+        "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
+        "AccountWasDisabled": "这个帐号禁用",
+        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-tw"] = {
+        "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
+        "AccountWasDisabled": "這個帳號禁用",
+        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ko-kr"] = {
+        "AccessDeniedMsg": "죄송합니다. 이페이지를 엑서스 할 수 있는 권한이 없습니다.",
+        "AccountWasDisabled": "이 계정은 실행하실수없는 계정입니다.",
+        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다."
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ja-jp"] = {
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
+        "SystemError": "Oops... you are here because of a system error, please notify the administrators"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["th-th"] = {
+        "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
+        "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["vi-vn"] = {
+        "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
+        "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
+        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý"
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);

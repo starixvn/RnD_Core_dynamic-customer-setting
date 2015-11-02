@@ -33,8 +33,10 @@
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["zh-cn"] = {
         "AgentMaxPT": "代理最高占成",
-        "AgentMinPT": "代理最低占成数",
+        "AgentMinPT": "代理最低占成",
         "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "您已更改于此代理不使用自动占成",
+        "DisableMasterAutoPt": "您已更改此总代理不再自动占成.",
         "IsAuto": "是自动",
         "LastName": "姓",
         "Live": "现场",
@@ -57,8 +59,10 @@
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["zh-tw"] = {
         "AgentMaxPT": "代理最高佔成",
-        "AgentMinPT": "代理最低占成数",
+        "AgentMinPT": "代理最低佔成",
         "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
         "IsAuto": "是自動",
         "Live": "現場",
         "MasterMaxPT": "總代理最高佔成",
@@ -82,6 +86,8 @@
         "AgentMaxPT": "에이전트 최대 PT",
         "AgentMinPT": "에이전트 최소 PT",
         "AgentPT": "에이전트 PT",
+        "DisableAgentAutoPt": "해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다",
+        "DisableMasterAutoPt": "해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다.",
         "IsAuto": "자동",
         "Live": "라이브",
         "MasterMaxPT": "마스터 최대 PT",
@@ -100,14 +106,34 @@
     
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["ja-jp"] = {
-        "Live": "ライブ"
+        "AgentMaxPT": "Agent Max PT",
+        "AgentMinPT": "Agent Min PT",
+        "AgentPT": "Agent PT",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
+        "IsAuto": "Is Auto",
+        "Live": "ライブ",
+        "MasterMaxPT": "Master Max PT",
+        "MasterMinPT": "Master Min PT",
+        "MasterPT": "Master PT",
+        "Max": "Max",
+        "Min": "Min",
+        "PositionTaking": "Position Taking",
+        "SuperMaxPT": "Super Max PT",
+        "SuperMinPT": "Super Min PT",
+        "SuperPT": "Super PT",
+        "UpdateMemberPtInfo": "You have changed your position taking.",
+        "UpdateMemberPtQuestion": "Do you want to update all member&apos;s position taking to:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
     };
     
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["th-th"] = {
-        "AgentMaxPT": "แบ่งสู้สูงสุดของเอ",
-        "AgentMinPT": "ค่าแบ่งสู้ต่ำสุดของ",
+        "AgentMaxPT": "แบ่งสู้สูงสุดของเอเย่น",
+        "AgentMinPT": "แบ่งสู้ต่ำสุดของเอเย่น",
         "AgentPT": "ค่าแบ่งสู้ของเอเย่น",
+        "DisableAgentAutoPt": "คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ",
+        "DisableMasterAutoPt": "คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ.",
         "IsAuto": "คืออัตโนมัติ",
         "Live": "สด",
         "MasterMaxPT": "แบ่งสู้สูงสุดของ",
@@ -129,6 +155,8 @@
         "AgentMaxPT": "PT lớn nhất của Agent",
         "AgentMinPT": "PT nhỏ nhất của Agent",
         "AgentPT": "PT của Agent",
+        "DisableAgentAutoPt": "Bạn vừa mới ngăn Agent này lấy Auto PT",
+        "DisableMasterAutoPt": "Bạn vừa mới ngăn Master này lấy Auto PT.",
         "IsAuto": "Auto PT",
         "Live": "Trực Tuyến",
         "MasterMaxPT": "PT lớn nhất của Master",
@@ -149,27 +177,23 @@
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["en-us"] = {
-        "AgentMaxPTCannotBeGreaterThan": "Agent Max PT cannot be greater than {0}.",
-        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT cannot be greater than Master Max PT.",
-        "AgentMaxPTCannotBeLessThan": "Agent Max PT cannot be less than {0}.",
-        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT cannot be greater than Agent Max PT.",
-        "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT cannot be greater than Agent Max PT.",
-        "AgentPTCannotBeLessThanAgentMinPT": "Agent PT cannot be less than Agent Min PT.",
-        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "Master Auto PT cannot be greater than Master Max PT.",
-        "MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Master Auto PT cannot be greater than zero when IsAuto is not set.",
-        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "Master Auto PT On Member cannot be greater than Master Max PT.",
-        "MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Master Auto PT On Member cannot be greater than zero when IsAuto is not set.",
-        "MasterAutoPTOnMemberCannotBeLessThan": "Master Auto PT On Member cannot be less than {0}.",
-        "MasterMaxPTCannotBeGreaterThan": "Master Max PT cannot be greater than {0}.",
-        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "Master Max PT cannot be greater than Super Max PT.",
-        "MasterMaxPTCannotBeLessThan": "Master Max PT cannot be less than {0}.",
-        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "Master Min PT cannot be greater than Master Max PT.",
-        "MasterPTCannotBeGreaterThanMasterMaxPT": "Master PT cannot be greater than Master Max PT.",
-        "MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet": "Master PT cannot be greater than zero when IsAuto is set.",
-        "MasterPTCannotBeLessThan": "Master PT cannot be less than {0}.",
-        "MasterPTOnMemberCannotBeGreaterThan": "Master PT On Member cannot be greater than {0}.",
-        "MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet": "Master PT On Member cannot be greater than zero when IsAuto is set.",
-        "MasterPTOnMemberCannotBeLessThan": "Master PT On Member cannot be less than {0}.",
+        "AgentMaxPTCannotBeGreaterThan": "Agent Max PT must be less than or equal to {0}.",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMaxPTCannotBeLessThan": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeLessThanAgentMinPT": "Agent PT must be greater than or equal to Agent Min PT.",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "Master Auto PT must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "Master Auto PT on Member must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeLessThan": "Master Auto PT on Member must be greater than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThan": "Master Max PT must be less than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "Master Max PT must be less than or equal to Super Max PT.",
+        "MasterMaxPTCannotBeLessThan": "Master Max PT must be greater than or equal to {0}.",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "Master Min PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "Master PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeLessThan": "Master PT must be greater than or equal to {0}.",
+        "MasterPTOnMemberCannotBeGreaterThan": "Master PT on Member must be less than or equal to {0}.",
+        "MasterPTOnMemberCannotBeLessThan": "Master PT on Member must be greater than or equal to {0}.",
         "Msg_20001": "Invalid position taking.",
         "Msg_20019": "Existing masters exceed new Super Max PT.",
         "Msg_20020": "Existing members exceed new Super Max PT.",
@@ -187,45 +211,46 @@
         "Msg_20032": "The position taking violates Master Min PT.",
         "Msg_20033": "The position taking violates Agent Min/Max PT.",
         "Msg_20034": "The position taking violates Agent Max PT.",
-        "PositionTakingCannotBeExceedMaxValue": "Position Taking cannot be exceed Max Value.",
-        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "Super Auto PT cannot be greater than Super Max PT.",
-        "SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Super Auto PT cannot be greater than zero when IsAuto is not set.",
-        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT On Member cannot be greater than Super Max PT.",
-        "SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Super Auto PT On Member cannot be greater than zero when IsAuto is not set.",
-        "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT On Member cannot be less than {0}.",
-        "SuperMaxPTCannotBeGreaterThan": "Super Max PT cannot be greater than {0}.",
-        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT cannot be greater than Super Max PT.",
-        "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT cannot be greater than Super Max PT.",
-        "SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet": "Super PT cannot be greater than zero when IsAuto is set.",
-        "SuperPTCannotBeLessThan": "Super PT cannot be less than {0}.",
-        "SuperPTOnMemberCannotBeGreaterThan": "Super PT On Member cannot be greater than {0}.",
-        "SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet": "Super PT On Member cannot be greater than zero when IsAuto is set.",
-        "SuperPTOnMemberCannotBeLessThan": "Super PT On Member cannot be less than {0}.",
-        "UpdatePositionTakingSuccessfully": "Updated position taking successfully."
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "Super Auto PT must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT on Member must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT on Member must be greater than or equal to {0}.",
+        "SuperMaxPTCannotBeGreaterThan": "Super Max PT must be less than or equal to {0}.",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeLessThan": "Super PT must be greater than or equal to {0}.",
+        "SuperPTOnMemberCannotBeGreaterThan": "Super PT on Member must be less than or equal to {0}.",
+        "SuperPTOnMemberCannotBeLessThan": "Super PT on Member must be greater than or equal to {0}.",
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-cn"] = {
+        "UpdatePositionTakingSuccessfully": "占成数设定已更新成功."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-tw"] = {
+        "UpdatePositionTakingSuccessfully": "佔成數設定已更新成功."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["ko-kr"] = {
+        "UpdatePositionTakingSuccessfully": "포지션 설정이 성공적으로 업데이트되었습니다."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["ja-jp"] = {
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["th-th"] = {
+        "UpdatePositionTakingSuccessfully": "การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["vi-vn"] = {
+        "UpdatePositionTakingSuccessfully": "PT được cập nhật thành công."
     };
 
     angular.module("customerSetting").value("positionTakingResources", positionTakingResources);
