@@ -24905,27 +24905,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var BlockUiDirective = (function () {
-            function BlockUiDirective() {
-                this.replace = true;
-                this.scope = {
-                    isLoading: "="
-                };
-                this.templateUrl = "BlockUI/block-ui.htm";
-            }
-            return BlockUiDirective;
-        })();
-        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var CustomerInfoDirective = (function () {
             function CustomerInfoDirective() {
                 this.replace = true;
@@ -24938,6 +24917,27 @@ var CustomerSetting;
             return CustomerInfoDirective;
         })();
         IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var BlockUiDirective = (function () {
+            function BlockUiDirective() {
+                this.replace = true;
+                this.scope = {
+                    isLoading: "="
+                };
+                this.templateUrl = "BlockUI/block-ui.htm";
+            }
+            return BlockUiDirective;
+        })();
+        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -26078,8 +26078,8 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'Copy\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div class=\"msg-container\" data-ng-show=\"result\"><div class=\"msg msg--{{result.msgType}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.settingResults && subResult.settingResults.length > 0\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgType}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgType}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
@@ -26126,6 +26126,8 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CustomerSetting": "会员设定",
+        "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
@@ -26134,14 +26136,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
+        "No": "无",
         "Phone": "电话",
         "Update": "更改",
-        "UserName": "用户名"
+        "UserName": "用户名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
@@ -26151,43 +26156,53 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
+        "No": "無",
         "Phone": "電話",
         "Update": "更改",
-        "UserName": "用戶名"
+        "UserName": "用戶名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ko-kr"] = {
         "Agents": "에이전트",
+        "CustomerSetting": "Customer Setting",
         "Fax": "팩스",
         "FirstName": "이름",
+        "GeneralInformation": "일반 정보",
         "LastName": "성",
         "Live": "라이브",
         "Masters": "마스터",
         "Members": "회원",
         "MobilePhone": "핸드폰",
         "Nickname": "닉네임",
+        "No": "아니오",
         "Phone": "전화",
         "Update": "업데이트",
-        "UserName": "사용자 이름"
+        "UserName": "사용자 이름",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ja-jp"] = {
         "Fax": "ファックス",
         "FirstName": "名",
+        "GeneralInformation": "General Information",
         "LastName": "氏",
         "Live": "ライブ",
         "MobilePhone": "携帯電話番号",
         "Nickname": "ニックネーム",
+        "No": "No",
         "Phone": "電話番号",
         "Update": "更新",
-        "UserName": "ユーザー名"
+        "UserName": "ユーザー名",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
         "Agents": "ตัวแทน",
+        "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
@@ -26197,14 +26212,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "สมาชิก",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
+        "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
-        "UserName": "ชื่อผู้ใช้ระบบ"
+        "UserName": "ชื่อผู้ใช้ระบบ",
+        "Yes": "ตกลง"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["vi-vn"] = {
         "Agents": "Agents",
+        "CustomerSetting": "Thiết lập",
         "Fax": "Fax",
         "FirstName": "Tên",
         "GeneralInformation": "Thông tin Chung",
@@ -26214,14 +26232,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "Members",
         "MobilePhone": "Điện thoại di động",
         "Nickname": "Biệt danh",
+        "No": "Không",
+        "Phone": "Điện thoại",
         "Update": "Cập nhật",
-        "UserName": "Tài khoản"
+        "UserName": "Tài khoản",
+        "Yes": "Có"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["en-us"] = {
-        "AccessDeniedMsg": "You do not have permission to access this page.",
-        "AccountWasDisabled": "Account {0} was disabled.",
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
         "CopyingFailed": "Unable to copy value to the hi-lighted field(s).",
         "CustomersAreNotSameLine": "Customers are not in the same line!",
         "DataIsNotValid": "Data is not valid.",
@@ -26230,6 +26251,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "NoChangeToUpdate": "There is no change to update!",
         "ProductNameMissing": "Product Id {0} does not have name in {1}",
         "SettingTypeError": "Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!",
+        "SettingTypeHasNoSettingItem": "Setting Type {0} does not have any setting item.",
         "SportTypeOrBetTypeIsInvalid": "Sport Type or Bet Type is invalid!",
         "SubAccountIdShouldBeZeroWhenSystemIsNotAgency": "Sub Account Id Should Be Zero When System Is Not Agency.",
         "SystemError": "Oops... you are here because of a system error, please notify system administrator.",
@@ -26241,26 +26263,44 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-cn"] = {
+        "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
+        "AccountWasDisabled": "这个帐号禁用",
+        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-tw"] = {
+        "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
+        "AccountWasDisabled": "這個帳號禁用",
+        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ko-kr"] = {
+        "AccessDeniedMsg": "죄송합니다. 이페이지를 엑서스 할 수 있는 권한이 없습니다.",
+        "AccountWasDisabled": "이 계정은 실행하실수없는 계정입니다.",
+        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다."
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ja-jp"] = {
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
+        "SystemError": "Oops... you are here because of a system error, please notify the administrators"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["th-th"] = {
+        "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
+        "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["vi-vn"] = {
+        "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
+        "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
+        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý"
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);
@@ -26332,7 +26372,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "BetLimitCannotBeGreaterThanMaxValue": "BetLimit cannot be greater than Max Value.",
         "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match.",
         "MaxBetCannotBeNegative": "Max Bet cannot be negative.",
-        "MaxBetLessThanOrEqualMaxPerMatch": "Max Bet must be less than or equal to Max Per Match.",
+        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
         "MaxBetLessThanOrEqualTo": "Max Bet must be less than or equal to {0}.",
         "MaxBetMoreThanOrEqualMinBet": "Max Bet must be greater than or equal to Min Bet.",
         "MaxPerMatchCannotBeNegative": "Max Per Match cannot be negative.",
@@ -26340,7 +26380,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "MaxPerMatchMoreThanOrEqualMaxBet": "Max Per Match must be greater than or equal to Max Bet.",
         "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
         "MinBetCannotBeNegative": "Min Bet cannot be negative.",
-        "MinBetLessThanOrEqualMaxBet": "Min Bet must be less than or equal to Max Bet.",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max",
         "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}.",
         "Msg_10003": "Invalid Min bet/ Max bet/ Max per match.",
         "Msg_10005": "Min bet must be less than or equal to max bet and max bet must be less than or equal to max bet per match.",
@@ -26353,47 +26393,79 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Msg_10019": "Min bet must be greater than or equal to Master Agent min bet.",
         "Msg_10020": "Max bet must be less than or equal to Master Agent max bet.",
         "Msg_10021": "Max Per Match must be less than or equal to Master Agent Max Per Match.",
-        "UpdateBetSettingSuccessfully": "Updated bet setting successfully."
+        "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["zh-cn"] = {
-        "MaxBetLessThanOrEqualMaxPerMatch": "最大投注额必须小于或等于最大单场比赛投注额",
-        "MaxBetLessThanOrEqualTo": "最大投注额必须小于或等于 {0}",
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高于当场最高投注",
+        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必须少于或相等于单场限额",
+        "MaxBetLessThanOrEqualTo": "最高投注不得多于或相等于 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最大投注额必须大于或等于最小投注额",
-        "MaxPerMatchLessThanOrEqualTo": "最大单场比赛投注额必须小于或等于 {0}",
+        "MaxPerMatchLessThanOrEqualTo": "单场最高投注需低于或相等于 {0}",
         "MaxPerMatchMoreThanOrEqualMaxBet": "最大单场比赛投注额必须大于或等于最大投注额",
-        "MinBetLessThanOrEqualMaxBet": "最小投注额必须小于或等于最大投注额",
+        "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高于最低投注",
+        "MinBetLessThanOrEqualMaxBet": "最低投注必须少于或相等于最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注额必须大于或等于 {0}",
-        "UpdateBetSettingSuccessfully": "成功更新投注设置。"
+        "UpdateBetSettingSuccessfully": "投注设定已更新成功."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["zh-tw"] = {
-        "MaxBetLessThanOrEqualMaxPerMatch": "最大投注額必須小於或等於最大單場比賽投注額",
-        "MaxBetLessThanOrEqualTo": "最大投注額必須小於或等於 {0}",
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高於單場最高投注",
+        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必須少於或相等於單場限額",
+        "MaxBetLessThanOrEqualTo": "最高投注不得多於或相等於 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最大投注額必須大於或等於最小投注額",
-        "MaxPerMatchLessThanOrEqualTo": "最大單場比賽投注額必須小於或等於 {0}",
+        "MaxPerMatchLessThanOrEqualTo": "單場最高投注需底於或等於 {0}",
         "MaxPerMatchMoreThanOrEqualMaxBet": "最大單場比賽投注額必須大於或等於最大投注額",
-        "MinBetLessThanOrEqualMaxBet": "最小投注額必須小於或等於最大投注額",
+        "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高於最高投注",
+        "MinBetLessThanOrEqualMaxBet": "最低投注必須少於或相等於最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注額必須大於或等於 {0}",
-        "UpdateBetSettingSuccessfully": "成功更新投注設置。"
+        "UpdateBetSettingSuccessfully": "投注設定已更新成功."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["ko-kr"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "최대 배팅은 경기당최대 값보다 클수 없습니다",
+        "MaxBetLessThanOrEqualMaxPerMatch": "최대베팅은 경기 당 최대치와 같거나 이하이어야합니다",
+        "MaxBetLessThanOrEqualTo": "최대 배팅보다 이하이여야 합니다 {0}.",
+        "MaxPerMatchLessThanOrEqualTo": "경기당 최대 값은 {0}과 같거나 작아야 합니다.",
+        "MinBetCannotBeGreaterThanMaxBet": "최소 배팅은 최대 배팅보다 클수 없습니다.",
+        "MinBetLessThanOrEqualMaxBet": "최소베팅은 최대 베팅과 같거나  이하이어야합니다.",
+        "UpdateBetSettingSuccessfully": "베팅 설정이 성공적으로 업데이트되었습니다."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["ja-jp"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match",
+        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
+        "MaxBetLessThanOrEqualTo": "一回当たりのマックスベットポイントは表示されていますので、再確認してください {0}.",
+        "MaxPerMatchLessThanOrEqualTo": "Max Per Match must be less than or equal to {0}.",
+        "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet",
+        "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["th-th"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น",
+        "MaxBetLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน",
+        "MaxBetLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.",
+        "MaxPerMatchLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุงต่อรายการต้องน้อยกว่า หรือเท่ากับ {0}",
+        "MinBetCannotBeGreaterThanMaxBet": "จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้",
+        "MinBetLessThanOrEqualMaxBet": "ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.",
+        "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
     };
     
     betSettingResources["message"] = betSettingResources["message"] || {};
     betSettingResources["message"]["vi-vn"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "Tiền cược lớn nhất không thể lớn hơn Tiền cược tối đa của mỗi trận đấu",
+        "MaxBetLessThanOrEqualMaxPerMatch": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng Tiền cược tối đa của mỗi trận đấu",
+        "MaxBetLessThanOrEqualTo": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng {0}",
+        "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
+        "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
+        "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
+        "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
     };
 
     angular.module("customerSetting").value("betSettingResources", betSettingResources);
@@ -26419,7 +26491,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "总代理佣金",
-        "CommissionForMember": "会员佣金"
+        "CommissionForMember": "会员的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -26427,7 +26499,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "總代理佣金",
-        "CommissionForMember": "會員佣金"
+        "CommissionForMember": "會員的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -26440,22 +26512,24 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["ja-jp"] = {
+        "Commission": "Commission",
+        "CommissionForMember": "メンバーの手数料"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["th-th"] = {
         "Commission": "คอมมิชชั่น",
-        "CommissionForAgent": "คอมมิชชั่นของ Agent",
-        "CommissionForMaster": "คอมมิชชั่นของ Master",
-        "CommissionForMember": "คอมมิชชั่นของสมาชิก"
+        "CommissionForAgent": "ค่าคอมมิชชั่น จาก ตัวแทน",
+        "CommissionForMaster": "ค่าคอมมิชชั่น จากตัวแทนหลัก",
+        "CommissionForMember": "ค่าคอมมิชชั่นสำหรับสมาชิก"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["vi-vn"] = {
         "Commission": "Hoa hồng",
-        "CommissionForAgent": "Agent Comm",
-        "CommissionForMaster": "Master Comm",
-        "CommissionForMember": "Member Comm"
+        "CommissionForAgent": "Hoa hồng cho Agent",
+        "CommissionForMaster": "Hoa hồng Master",
+        "CommissionForMember": "Hoa hồng cho Member"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -26468,16 +26542,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
-        "UpdateCommissionSuccessfully": "成功更新佣金设置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
-        "UpdateCommissionSuccessfully": "成功更新傭金設置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["ko-kr"] = {
+        "UpdateCommissionSuccessfully": "수수료가 성공적으로 업데이트되었습니다."
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -26486,10 +26561,12 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["vi-vn"] = {
+        "UpdateCommissionSuccessfully": "Tiền hoa hồng được cập nhật thành công"
     };
 
     angular.module("customerSetting").value("commissionResources", commissionResources);
@@ -26532,6 +26609,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["ja-jp"] = {
+        "Enable": "Enable"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -26552,7 +26630,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     productStatusResources["message"]["en-us"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
-        "DownlineStatusCannotBeChanged": "Downline status cannot be changed when the Upline has not been changed.",
+        "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
         "Msg_60031": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60032": "Unable to synchronize this product because the upline account setting is not synchronized.",

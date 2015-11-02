@@ -24905,27 +24905,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var BlockUiDirective = (function () {
-            function BlockUiDirective() {
-                this.replace = true;
-                this.scope = {
-                    isLoading: "="
-                };
-                this.templateUrl = "BlockUI/block-ui.htm";
-            }
-            return BlockUiDirective;
-        })();
-        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var CustomerInfoDirective = (function () {
             function CustomerInfoDirective() {
                 this.replace = true;
@@ -24938,6 +24917,27 @@ var CustomerSetting;
             return CustomerInfoDirective;
         })();
         IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var BlockUiDirective = (function () {
+            function BlockUiDirective() {
+                this.replace = true;
+                this.scope = {
+                    isLoading: "="
+                };
+                this.templateUrl = "BlockUI/block-ui.htm";
+            }
+            return BlockUiDirective;
+        })();
+        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -26757,8 +26757,8 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'Copy\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div class=\"msg-container\" data-ng-show=\"result\"><div class=\"msg msg--{{result.msgType}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.settingResults && subResult.settingResults.length > 0\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgType}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgType}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
@@ -26806,6 +26806,8 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CustomerSetting": "会员设定",
+        "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
@@ -26814,14 +26816,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
+        "No": "无",
         "Phone": "电话",
         "Update": "更改",
-        "UserName": "用户名"
+        "UserName": "用户名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
@@ -26831,43 +26836,53 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
+        "No": "無",
         "Phone": "電話",
         "Update": "更改",
-        "UserName": "用戶名"
+        "UserName": "用戶名",
+        "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ko-kr"] = {
         "Agents": "에이전트",
+        "CustomerSetting": "Customer Setting",
         "Fax": "팩스",
         "FirstName": "이름",
+        "GeneralInformation": "일반 정보",
         "LastName": "성",
         "Live": "라이브",
         "Masters": "마스터",
         "Members": "회원",
         "MobilePhone": "핸드폰",
         "Nickname": "닉네임",
+        "No": "아니오",
         "Phone": "전화",
         "Update": "업데이트",
-        "UserName": "사용자 이름"
+        "UserName": "사용자 이름",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["ja-jp"] = {
         "Fax": "ファックス",
         "FirstName": "名",
+        "GeneralInformation": "General Information",
         "LastName": "氏",
         "Live": "ライブ",
         "MobilePhone": "携帯電話番号",
         "Nickname": "ニックネーム",
+        "No": "No",
         "Phone": "電話番号",
         "Update": "更新",
-        "UserName": "ユーザー名"
+        "UserName": "ユーザー名",
+        "Yes": "Yes"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
         "Agents": "ตัวแทน",
+        "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
@@ -26877,14 +26892,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "สมาชิก",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
+        "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
-        "UserName": "ชื่อผู้ใช้ระบบ"
+        "UserName": "ชื่อผู้ใช้ระบบ",
+        "Yes": "ตกลง"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["vi-vn"] = {
         "Agents": "Agents",
+        "CustomerSetting": "Thiết lập",
         "Fax": "Fax",
         "FirstName": "Tên",
         "GeneralInformation": "Thông tin Chung",
@@ -26894,14 +26912,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Members": "Members",
         "MobilePhone": "Điện thoại di động",
         "Nickname": "Biệt danh",
+        "No": "Không",
+        "Phone": "Điện thoại",
         "Update": "Cập nhật",
-        "UserName": "Tài khoản"
+        "UserName": "Tài khoản",
+        "Yes": "Có"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["en-us"] = {
-        "AccessDeniedMsg": "You do not have permission to access this page.",
-        "AccountWasDisabled": "Account {0} was disabled.",
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
         "CopyingFailed": "Unable to copy value to the hi-lighted field(s).",
         "CustomersAreNotSameLine": "Customers are not in the same line!",
         "DataIsNotValid": "Data is not valid.",
@@ -26910,6 +26931,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "NoChangeToUpdate": "There is no change to update!",
         "ProductNameMissing": "Product Id {0} does not have name in {1}",
         "SettingTypeError": "Unable to load the setting type due to a technical problem. Please try again later or notify system administrator!",
+        "SettingTypeHasNoSettingItem": "Setting Type {0} does not have any setting item.",
         "SportTypeOrBetTypeIsInvalid": "Sport Type or Bet Type is invalid!",
         "SubAccountIdShouldBeZeroWhenSystemIsNotAgency": "Sub Account Id Should Be Zero When System Is Not Agency.",
         "SystemError": "Oops... you are here because of a system error, please notify system administrator.",
@@ -26921,26 +26943,44 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-cn"] = {
+        "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
+        "AccountWasDisabled": "这个帐号禁用",
+        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["zh-tw"] = {
+        "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
+        "AccountWasDisabled": "這個帳號禁用",
+        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ko-kr"] = {
+        "AccessDeniedMsg": "죄송합니다. 이페이지를 엑서스 할 수 있는 권한이 없습니다.",
+        "AccountWasDisabled": "이 계정은 실행하실수없는 계정입니다.",
+        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다."
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ja-jp"] = {
+        "AccessDeniedMsg": "Sorry, You don&apos;t have permission to access this page.",
+        "AccountWasDisabled": "This account was disabled.",
+        "SystemError": "Oops... you are here because of a system error, please notify the administrators"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["th-th"] = {
+        "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
+        "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["vi-vn"] = {
+        "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
+        "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
+        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý"
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);
@@ -26981,8 +27021,10 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["zh-cn"] = {
         "AgentMaxPT": "代理最高占成",
-        "AgentMinPT": "代理最低占成数",
+        "AgentMinPT": "代理最低占成",
         "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "您已更改于此代理不使用自动占成",
+        "DisableMasterAutoPt": "您已更改此总代理不再自动占成.",
         "IsAuto": "是自动",
         "LastName": "姓",
         "Live": "现场",
@@ -27005,8 +27047,10 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["zh-tw"] = {
         "AgentMaxPT": "代理最高佔成",
-        "AgentMinPT": "代理最低占成数",
+        "AgentMinPT": "代理最低佔成",
         "AgentPT": "代理占成数",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
         "IsAuto": "是自動",
         "Live": "現場",
         "MasterMaxPT": "總代理最高佔成",
@@ -27030,6 +27074,8 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "AgentMaxPT": "에이전트 최대 PT",
         "AgentMinPT": "에이전트 최소 PT",
         "AgentPT": "에이전트 PT",
+        "DisableAgentAutoPt": "해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다",
+        "DisableMasterAutoPt": "해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다.",
         "IsAuto": "자동",
         "Live": "라이브",
         "MasterMaxPT": "마스터 최대 PT",
@@ -27048,14 +27094,34 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["ja-jp"] = {
-        "Live": "ライブ"
+        "AgentMaxPT": "Agent Max PT",
+        "AgentMinPT": "Agent Min PT",
+        "AgentPT": "Agent PT",
+        "DisableAgentAutoPt": "You have changed this agent not to take auto position taking",
+        "DisableMasterAutoPt": "You have changed this master not to take auto position taking.",
+        "IsAuto": "Is Auto",
+        "Live": "ライブ",
+        "MasterMaxPT": "Master Max PT",
+        "MasterMinPT": "Master Min PT",
+        "MasterPT": "Master PT",
+        "Max": "Max",
+        "Min": "Min",
+        "PositionTaking": "Position Taking",
+        "SuperMaxPT": "Super Max PT",
+        "SuperMinPT": "Super Min PT",
+        "SuperPT": "Super PT",
+        "UpdateMemberPtInfo": "You have changed your position taking.",
+        "UpdateMemberPtQuestion": "Do you want to update all member&apos;s position taking to:",
+        "UpdateMemberPtTitle": "Confirm Update Members&apos;s PT"
     };
     
     positionTakingResources["label"] = positionTakingResources["label"] || {};
     positionTakingResources["label"]["th-th"] = {
-        "AgentMaxPT": "แบ่งสู้สูงสุดของเอ",
-        "AgentMinPT": "ค่าแบ่งสู้ต่ำสุดของ",
+        "AgentMaxPT": "แบ่งสู้สูงสุดของเอเย่น",
+        "AgentMinPT": "แบ่งสู้ต่ำสุดของเอเย่น",
         "AgentPT": "ค่าแบ่งสู้ของเอเย่น",
+        "DisableAgentAutoPt": "คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ",
+        "DisableMasterAutoPt": "คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ.",
         "IsAuto": "คืออัตโนมัติ",
         "Live": "สด",
         "MasterMaxPT": "แบ่งสู้สูงสุดของ",
@@ -27077,6 +27143,8 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "AgentMaxPT": "PT lớn nhất của Agent",
         "AgentMinPT": "PT nhỏ nhất của Agent",
         "AgentPT": "PT của Agent",
+        "DisableAgentAutoPt": "Bạn vừa mới ngăn Agent này lấy Auto PT",
+        "DisableMasterAutoPt": "Bạn vừa mới ngăn Master này lấy Auto PT.",
         "IsAuto": "Auto PT",
         "Live": "Trực Tuyến",
         "MasterMaxPT": "PT lớn nhất của Master",
@@ -27097,27 +27165,23 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["en-us"] = {
-        "AgentMaxPTCannotBeGreaterThan": "Agent Max PT cannot be greater than {0}.",
-        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT cannot be greater than Master Max PT.",
-        "AgentMaxPTCannotBeLessThan": "Agent Max PT cannot be less than {0}.",
-        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT cannot be greater than Agent Max PT.",
-        "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT cannot be greater than Agent Max PT.",
-        "AgentPTCannotBeLessThanAgentMinPT": "Agent PT cannot be less than Agent Min PT.",
-        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "Master Auto PT cannot be greater than Master Max PT.",
-        "MasterAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Master Auto PT cannot be greater than zero when IsAuto is not set.",
-        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "Master Auto PT On Member cannot be greater than Master Max PT.",
-        "MasterAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Master Auto PT On Member cannot be greater than zero when IsAuto is not set.",
-        "MasterAutoPTOnMemberCannotBeLessThan": "Master Auto PT On Member cannot be less than {0}.",
-        "MasterMaxPTCannotBeGreaterThan": "Master Max PT cannot be greater than {0}.",
-        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "Master Max PT cannot be greater than Super Max PT.",
-        "MasterMaxPTCannotBeLessThan": "Master Max PT cannot be less than {0}.",
-        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "Master Min PT cannot be greater than Master Max PT.",
-        "MasterPTCannotBeGreaterThanMasterMaxPT": "Master PT cannot be greater than Master Max PT.",
-        "MasterPTCannotBeGreaterThanZeroWhenIsAutoIsSet": "Master PT cannot be greater than zero when IsAuto is set.",
-        "MasterPTCannotBeLessThan": "Master PT cannot be less than {0}.",
-        "MasterPTOnMemberCannotBeGreaterThan": "Master PT On Member cannot be greater than {0}.",
-        "MasterPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet": "Master PT On Member cannot be greater than zero when IsAuto is set.",
-        "MasterPTOnMemberCannotBeLessThan": "Master PT On Member cannot be less than {0}.",
+        "AgentMaxPTCannotBeGreaterThan": "Agent Max PT must be less than or equal to {0}.",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMaxPTCannotBeLessThan": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT must be less than or equal to Agent Max PT.",
+        "AgentPTCannotBeLessThanAgentMinPT": "Agent PT must be greater than or equal to Agent Min PT.",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "Master Auto PT must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "Master Auto PT on Member must be less than or equal to Master Max PT.",
+        "MasterAutoPTOnMemberCannotBeLessThan": "Master Auto PT on Member must be greater than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThan": "Master Max PT must be less than or equal to {0}.",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "Master Max PT must be less than or equal to Super Max PT.",
+        "MasterMaxPTCannotBeLessThan": "Master Max PT must be greater than or equal to {0}.",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "Master Min PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "Master PT must be less than or equal to Master Max PT.",
+        "MasterPTCannotBeLessThan": "Master PT must be greater than or equal to {0}.",
+        "MasterPTOnMemberCannotBeGreaterThan": "Master PT on Member must be less than or equal to {0}.",
+        "MasterPTOnMemberCannotBeLessThan": "Master PT on Member must be greater than or equal to {0}.",
         "Msg_20001": "Invalid position taking.",
         "Msg_20019": "Existing masters exceed new Super Max PT.",
         "Msg_20020": "Existing members exceed new Super Max PT.",
@@ -27135,45 +27199,46 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Msg_20032": "The position taking violates Master Min PT.",
         "Msg_20033": "The position taking violates Agent Min/Max PT.",
         "Msg_20034": "The position taking violates Agent Max PT.",
-        "PositionTakingCannotBeExceedMaxValue": "Position Taking cannot be exceed Max Value.",
-        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "Super Auto PT cannot be greater than Super Max PT.",
-        "SuperAutoPTCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Super Auto PT cannot be greater than zero when IsAuto is not set.",
-        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT On Member cannot be greater than Super Max PT.",
-        "SuperAutoPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsNotSet": "Super Auto PT On Member cannot be greater than zero when IsAuto is not set.",
-        "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT On Member cannot be less than {0}.",
-        "SuperMaxPTCannotBeGreaterThan": "Super Max PT cannot be greater than {0}.",
-        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT cannot be greater than Super Max PT.",
-        "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT cannot be greater than Super Max PT.",
-        "SuperPTCannotBeGreaterThanZeroWhenIsAutoIsSet": "Super PT cannot be greater than zero when IsAuto is set.",
-        "SuperPTCannotBeLessThan": "Super PT cannot be less than {0}.",
-        "SuperPTOnMemberCannotBeGreaterThan": "Super PT On Member cannot be greater than {0}.",
-        "SuperPTOnMemberCannotBeGreaterThanZeroWhenIsAutoIsSet": "Super PT On Member cannot be greater than zero when IsAuto is set.",
-        "SuperPTOnMemberCannotBeLessThan": "Super PT On Member cannot be less than {0}.",
-        "UpdatePositionTakingSuccessfully": "Updated position taking successfully."
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "Super Auto PT must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "Super Auto PT on Member must be less than or equal to Super Max PT.",
+        "SuperAutoPTOnMemberCannotBeLessThan": "Super Auto PT on Member must be greater than or equal to {0}.",
+        "SuperMaxPTCannotBeGreaterThan": "Super Max PT must be less than or equal to {0}.",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "Super Min PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "Super PT must be less than or equal to Super Max PT.",
+        "SuperPTCannotBeLessThan": "Super PT must be greater than or equal to {0}.",
+        "SuperPTOnMemberCannotBeGreaterThan": "Super PT on Member must be less than or equal to {0}.",
+        "SuperPTOnMemberCannotBeLessThan": "Super PT on Member must be greater than or equal to {0}.",
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-cn"] = {
+        "UpdatePositionTakingSuccessfully": "占成数设定已更新成功."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-tw"] = {
+        "UpdatePositionTakingSuccessfully": "佔成數設定已更新成功."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["ko-kr"] = {
+        "UpdatePositionTakingSuccessfully": "포지션 설정이 성공적으로 업데이트되었습니다."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["ja-jp"] = {
+        "UpdatePositionTakingSuccessfully": "Position taking is updated successfully."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["th-th"] = {
+        "UpdatePositionTakingSuccessfully": "การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["vi-vn"] = {
+        "UpdatePositionTakingSuccessfully": "PT được cập nhật thành công."
     };
 
     angular.module("customerSetting").value("positionTakingResources", positionTakingResources);
@@ -27199,7 +27264,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "总代理佣金",
-        "CommissionForMember": "会员佣金"
+        "CommissionForMember": "会员的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -27207,7 +27272,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Commission": "佣金",
         "CommissionForAgent": "代理佣金",
         "CommissionForMaster": "總代理佣金",
-        "CommissionForMember": "會員佣金"
+        "CommissionForMember": "會員的佣金"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
@@ -27220,22 +27285,24 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["ja-jp"] = {
+        "Commission": "Commission",
+        "CommissionForMember": "メンバーの手数料"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["th-th"] = {
         "Commission": "คอมมิชชั่น",
-        "CommissionForAgent": "คอมมิชชั่นของ Agent",
-        "CommissionForMaster": "คอมมิชชั่นของ Master",
-        "CommissionForMember": "คอมมิชชั่นของสมาชิก"
+        "CommissionForAgent": "ค่าคอมมิชชั่น จาก ตัวแทน",
+        "CommissionForMaster": "ค่าคอมมิชชั่น จากตัวแทนหลัก",
+        "CommissionForMember": "ค่าคอมมิชชั่นสำหรับสมาชิก"
     };
     
     commissionResources["label"] = commissionResources["label"] || {};
     commissionResources["label"]["vi-vn"] = {
         "Commission": "Hoa hồng",
-        "CommissionForAgent": "Agent Comm",
-        "CommissionForMaster": "Master Comm",
-        "CommissionForMember": "Member Comm"
+        "CommissionForAgent": "Hoa hồng cho Agent",
+        "CommissionForMaster": "Hoa hồng Master",
+        "CommissionForMember": "Hoa hồng cho Member"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -27248,16 +27315,17 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
-        "UpdateCommissionSuccessfully": "成功更新佣金设置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
-        "UpdateCommissionSuccessfully": "成功更新傭金設置"
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["ko-kr"] = {
+        "UpdateCommissionSuccessfully": "수수료가 성공적으로 업데이트되었습니다."
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
@@ -27266,10 +27334,12 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["vi-vn"] = {
+        "UpdateCommissionSuccessfully": "Tiền hoa hồng được cập nhật thành công"
     };
 
     angular.module("customerSetting").value("commissionResources", commissionResources);
@@ -27312,6 +27382,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["ja-jp"] = {
+        "Enable": "Enable"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -27332,7 +27403,7 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     productStatusResources["message"]["en-us"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
-        "DownlineStatusCannotBeChanged": "Downline status cannot be changed when the Upline has not been changed.",
+        "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
         "Msg_60031": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60032": "Unable to synchronize this product because the upline account setting is not synchronized.",

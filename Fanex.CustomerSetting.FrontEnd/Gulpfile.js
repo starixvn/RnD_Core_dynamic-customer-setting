@@ -20,6 +20,7 @@
         publish: "Publish",
         customNodeModules: "NodeModules",
         templatesDir: "../Fanex.CustomerSetting.WebAPI/App_Data/Templates",
+        staticResourceProject: "../Fanex.CustomerSetting.StaticResources/",
         packages: {
             customerSetting: "CustomerSetting",
             customerSettingIe8: "CustomerSetting.IE8",
@@ -52,8 +53,15 @@
 
     gulp.task("install", ["libraries:install", "tsd:install"]);
 
-    gulp.task("publish", ["clean"], function () {
-        runSequence(["styles:publish", "scripts:publish"], ["ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish");
+    gulp.task("publish", ["clean"], function (callback) {
+        runSequence(["styles:publish", "scripts:publish"], ["ie8:styles:publish", "ie8:scripts:publish"], "matrix:publish", "copy-packages", callback);
+    });
+
+    gulp.task("copy-packages", function () {
+        console.log(configs.staticResourceProject);
+
+        return gulp.src(path.join(process.cwd(), configs.root, configs.publish, "**/**"))
+                   .pipe(gulp.dest(configs.staticResourceProject));
     });
 
     gulp.task("default", ["install"], function () {
