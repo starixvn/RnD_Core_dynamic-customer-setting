@@ -79,7 +79,6 @@
     <Compile Include="Attributes\CustomerSettingMatrixAuth.cs" />
     <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgery.cs" />
-    <Compile Include="ApiClient.cs" />
     <Compile Include="Configurations\SettingMatrixConfiguration.cs" />
     <Compile Include="Controllers\ViewCustomerSettingMatrixController.cs" />
     <Compile Include="Exceptions\SettingMatrixException.cs" />

@@ -1,12 +1,29 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
-    using System;
+    using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Exceptions;
+    using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using RestSharp;
 
     internal class CustomerSettingService : ICustomerSettingService
     {
+        private readonly IRestClient _restClient;
+
+        internal CustomerSettingService()
+            : this(null)
+        {
+        }
+
+        /// <summary>
+        /// https://groups.google.com/forum/#!topic/restsharp/X8JPtcfnSlo
+        /// </summary>
+        /// <param name="?"></param>
+        internal CustomerSettingService(IRestClient restClient)
+        {
+            _restClient = restClient ?? GetRestClient();
+        }
+
         public IRestResponse QueryCustomerSetting(QuerySettingRequest query)
         {
             if (query == null)
@@ -18,7 +35,7 @@
 
             request.AddObject(query);
 
-            return ApiClient.Client.Execute(request);
+            return _restClient.Execute(request);
         }
 
         public IRestResponse UpdateCustomerSetting(UpdateSettingRequest update)
@@ -32,7 +49,7 @@
 
             request.AddJsonBody(update);
 
-            return ApiClient.Client.Execute(request);
+            return _restClient.Execute(request);
         }
 
         public IRestResponse MultipleUpdateCustomerSetting(MultipleUpdateSettingRequest multipleUpdate)
@@ -46,7 +63,7 @@
 
             request.AddJsonBody(multipleUpdate);
 
-            return ApiClient.Client.Execute(request);
+            return _restClient.Execute(request);
         }
 
         public IRestResponse QueryCustomerSettingTemplate(bool isIe8)
@@ -55,7 +72,15 @@
 
             request.AddParameter("isIe8", isIe8);
 
-            return ApiClient.Client.Execute(request);
+            return _restClient.Execute(request);
+        }
+
+        private IRestClient GetRestClient()
+        {
+            var restClient = new RestClient(RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.ServiceUris));
+            restClient.Authenticator = new HmacAuthenticator();
+
+            return restClient;
         }
     }
 }
