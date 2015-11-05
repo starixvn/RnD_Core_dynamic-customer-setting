@@ -10,9 +10,10 @@ var DemoForm;
     "use strict";
     var app = angular.module("actorForm", []);
     var DemoFormController = (function () {
-        function DemoFormController($http, $location, postingToIframeService) {
+        function DemoFormController($http, $location, $window, postingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+            this.$window = $window;
             this.applicationPath = this.$window["applicationPath"];
             if (this.applicationPath && this.applicationPath[this.applicationPath.length - 1] !== "/") {
                 this.applicationPath += "/";
@@ -89,7 +90,7 @@ var DemoForm;
         DemoFormController.prototype.resolveUrl = function (requestUrl) {
             return this.applicationPath + requestUrl;
         };
-        DemoFormController.$inject = ["$http", "$location", "postingToIframeService"];
+        DemoFormController.$inject = ["$http", "$location", "$window", "postingToIframeService"];
         return DemoFormController;
     })();
     app.controller("DemoFormController", DemoFormController);

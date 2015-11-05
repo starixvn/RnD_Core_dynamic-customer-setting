@@ -7,7 +7,7 @@ module DemoForm {
     var app = angular.module("actorForm", []);
 
     class DemoFormController {
-        public static $inject = ["$http", "$location", "postingToIframeService"];
+        public static $inject = ["$http", "$location", "$window", "postingToIframeService"];
 
         public actor: Actor;
         public systemTypes: KeyValuePair<number, string>[];
@@ -30,9 +30,11 @@ module DemoForm {
         constructor(
             $http: ng.IHttpService,
             $location: ng.ILocationService,
+            $window: ng.IWindowService,
             postingToIframeService: PostingToIframeService) {
             this.$http = $http;
             this.$location = $location;
+            this.$window = $window;
 
             /* tslint:disable:no-string-literal */
             this.applicationPath = this.$window["applicationPath"];
