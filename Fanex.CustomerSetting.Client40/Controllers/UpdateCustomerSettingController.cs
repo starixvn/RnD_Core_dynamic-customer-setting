@@ -30,6 +30,7 @@
             SetActorInformation(updateSetting);
             IRestResponse updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
             Response.StatusCode = (int)updateResult.StatusCode;
+            Response.TrySkipIisCustomErrors = true;
 
             return Content(updateResult.Content);
         }
@@ -43,6 +44,7 @@
             SetActorInformation(multipleUpdateSetting);
             updateResult = _customerSettingService.MultipleUpdateCustomerSetting(multipleUpdateSetting);
             Response.StatusCode = (int)updateResult.StatusCode;
+            Response.TrySkipIisCustomErrors = true;
 
             return Content(updateResult.Content);
         }

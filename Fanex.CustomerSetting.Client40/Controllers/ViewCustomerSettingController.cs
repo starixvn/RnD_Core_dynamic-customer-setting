@@ -77,6 +77,7 @@
 
             customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
             Response.StatusCode = (int)customerSettingResponse.StatusCode;
+            Response.TrySkipIisCustomErrors = true;
 
             return Content(customerSettingResponse.Content);
         }
