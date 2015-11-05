@@ -29,11 +29,11 @@
             set { this["UMAddress"] = value; }
         }
 
-        [ConfigurationProperty("SecrectKey", IsRequired = true, DefaultValue = "oOcEDP63hAXyWYjJ2DRbOYWLdx/eIaKZ5AWoiunpeMk=")]
-        public string SecrectKey
+        [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "oOcEDP63hAXyWYjJ2DRbOYWLdx/eIaKZ5AWoiunpeMk=")]
+        public string SecretKey
         {
-            get { return (string)this["SecrectKey"]; }
-            set { this["SecrectKey"] = value; }
+            get { return (string)this["SecretKey"]; }
+            set { this["SecretKey"] = value; }
         }
     }
 }

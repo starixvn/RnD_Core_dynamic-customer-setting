@@ -90,7 +90,7 @@
             string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsoluteUri.ToLower());
             string requestHttpMethod = req.Method.Method;
 
-            var sharedKey = CustomerSettingAPIConfiguration.Settings.SecrectKey;
+            var sharedKey = CustomerSettingAPIConfiguration.Settings.SecretKey;
 
             if (IsReplayRequest(nonce, requestTimeStamp))
             {

@@ -50,7 +50,7 @@
             // Creating the raw signature string
             string signatureRawData = string.Format("{0}{1}{2}{3}{4}", _machineIP, requestHttpMethod, requestUri, requestTimeStamp, nonce);
 
-            var secretKeyByteArray = Convert.FromBase64String(CustomerSettingConfiguration.Settings.SecrectKey);
+            var secretKeyByteArray = Convert.FromBase64String(CustomerSettingConfiguration.Settings.SecretKey);
 
             byte[] signature = Encoding.UTF8.GetBytes(signatureRawData);
 

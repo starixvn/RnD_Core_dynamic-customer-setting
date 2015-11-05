@@ -90,7 +90,7 @@
             string requestUri = HttpUtility.UrlEncode(req.RequestUri.AbsoluteUri.ToLower());
             string requestHttpMethod = req.Method.Method;
 
-            var sharedKey = SettingMatrixAPIConfiguration.Settings.SecrectKey;
+            var sharedKey = SettingMatrixAPIConfiguration.Settings.SecretKey;
 
             if (IsReplayRequest(nonce, requestTimeStamp))
             {
