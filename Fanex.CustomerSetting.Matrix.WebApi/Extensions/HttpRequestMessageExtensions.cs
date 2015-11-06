@@ -6,7 +6,7 @@
 
     public static class HttpRequestMessageExtensions
     {
-        public static string GetClientIpAddress(this HttpRequestMessage request)
+        public static string GetClientIPAddress(this HttpRequestMessage request)
         {
             if (request.Properties.ContainsKey("MS_HttpContext"))
             {

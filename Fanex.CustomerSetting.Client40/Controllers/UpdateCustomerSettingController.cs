@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Client40.Services;
     using RestSharp;
 
-    [ExceptionHandlingAttribute]
+    [ExceptionHandlingAttribute, ValidateAntiForgery, LogInfoFilter]
     public class UpdateCustomerSettingController : Controller
     {
         private readonly ICustomerSettingService _customerSettingService;
@@ -24,7 +24,7 @@
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
-        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
+        [CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
         public ContentResult UpdateSetting(UpdateSettingRequest updateSetting)
         {
             SetActorInformation(updateSetting);
@@ -36,7 +36,7 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = true)]
+        [CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = true)]
         public ContentResult UpdateMultipleSetting(MultipleUpdateSettingRequest multipleUpdateSetting)
         {
             IRestResponse updateResult;

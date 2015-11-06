@@ -37,5 +37,12 @@
             get { return (string)this["SecretKey"]; }
             set { this["SecretKey"] = value; }
         }
+
+        [ConfigurationProperty("EnableRequestLogging", IsRequired = false, DefaultValue = true)]
+        public bool EnableRequestLogging
+        {
+            get { return (bool)this["EnableRequestLogging"]; }
+            set { this["EnableRequestLogging"] = value; }
+        }
     }
 }

@@ -127,7 +127,7 @@
                 {
                     customerSettingType.IsError = true;
                     customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
-                    WriteLog(query, productSettingType, new Exception(string.Format(Message.SettingTypeHasNoSettingItem, customerSettingType.Name)));
+                    WriteLog(query, customerSettingType, new Exception(string.Format(Message.SettingTypeHasNoSettingItem, customerSettingType.Name)));
                 }
 
                 customerSettingTypes.Add(customerSettingType);

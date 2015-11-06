@@ -57,7 +57,7 @@
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
-        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
+        [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false), LogInfoFilter]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
             if (querySetting == null)
@@ -74,6 +74,7 @@
             querySetting.SubAccountId = settingContext.SubAccountId;
             querySetting.Domain = settingContext.Domain;
             querySetting.Language = settingContext.Language;
+            querySetting.ClientIP = settingContext.IP;
 
             customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
             Response.StatusCode = (int)customerSettingResponse.StatusCode;

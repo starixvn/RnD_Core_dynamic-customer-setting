@@ -3,6 +3,7 @@
     using System;
     using System.Net.Http.Formatting;
     using System.Web.Http;
+    using Fanex.CustomerSetting.Matrix.WebApi.Configurations;
     using Fanex.CustomerSetting.Matrix.WebApi.Filters;
     using Newtonsoft.Json.Serialization;
 
@@ -36,6 +37,11 @@
             config.Filters.Add(new HmacAuthorizationFilter());
             config.Filters.Add(new MaintenanceFilter());
             config.Filters.Add(new GlobalExceptionFilter());
+
+            if (SettingMatrixAPIConfiguration.Settings.EnableRequestLogging)
+            {
+                config.Filters.Add(new LogInfoFilter());
+            }
         }
     }
 }
