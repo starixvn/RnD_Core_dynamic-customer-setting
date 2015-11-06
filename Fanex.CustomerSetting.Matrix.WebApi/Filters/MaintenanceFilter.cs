@@ -15,7 +15,7 @@
 
             if (IsDowntime())
             {
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Forbidden, "Service is under-maintenance.");
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Service is under-maintenance.");
             }
         }
 
