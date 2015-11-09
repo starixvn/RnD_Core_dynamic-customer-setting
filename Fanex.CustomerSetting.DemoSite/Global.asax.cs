@@ -12,12 +12,14 @@
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
             CustomerSettingRegistration.Init();
             SettingMatrixRegistration.Init();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

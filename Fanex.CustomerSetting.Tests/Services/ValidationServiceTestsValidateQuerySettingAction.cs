@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Resource;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Tests.Models;
@@ -175,7 +176,6 @@
                 uplineLevel: Level.Agent);
 
             _settingContext.Actor.Level = Level.Agent;
-            _settingContext.Actor.Name = "ActorName";
             _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(false);
 
             //// Act
@@ -183,7 +183,7 @@
 
             //// Assert
             Assert.IsFalse(actualResult.IsSuccessful);
-            Assert.AreEqual("Account ActorName was disabled.", actualResult.Message);
+            Assert.AreEqual(Message.AccountWasDisabled, actualResult.Message);
         }
 
         [Test]

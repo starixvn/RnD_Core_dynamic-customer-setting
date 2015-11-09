@@ -18,8 +18,6 @@
             };
         }
 
-        [TestCase(10, true, 3, 4, 1, 1004)]
-        [TestCase(10, false, 3, 4, 1, 1005)]
         [TestCase(0, true, 3, 4, 10, 1006)]
         [TestCase(0, true, 3, 4, 1, 0)]
         public void Validate_InValidPT_ReturnErrorCode(

@@ -108,41 +108,5 @@
             //// Assert
             Assert.AreEqual(Result.AccessDenied.Code, actualResult.Code);
         }
-
-        [Test]
-        public void ValidateUpdateMultipleSetting_CustomerIsNotMember_DontCallValidatePermissionMultiple()
-        {
-            //// Arrange
-            var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam();
-
-            AssumeValidatingPermissionMultipleExecutedOnDatabaseIsSuccessful();
-            AssumeValidateUpdateSettingIsSuccessful();
-
-            //// Act
-            _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
-
-            //// Assert
-            _validationDataAccess.DidNotReceive().ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>());
-        }
-
-        ////[Test]
-        ////public void ValidateUpdateMultipleSetting_RaisedException_AlwaysLogError()
-        ////{
-        ////    //// Arrange
-        ////    var updateMultipleSettingParam = InstanceFactory.CreateUpdateMultipleSettingParam(1, Level.Member, 1, Level.Agent);
-
-        ////    AssumeValidateUpdateSettingIsSuccessful();
-
-        ////    var expectedException = new Exception("Expected Exception");
-        ////    _validationDataAccess.ValidatePermissionMultiple(Arg.Any<int>(), Arg.Any<string>()).Returns(x => { throw expectedException; });
-
-        ////    //// Act
-        ////    _validationService.ValidateUpdateMultipleSettingAction(updateMultipleSettingParam);
-
-        ////    //// Assert
-        ////    _logger.Received().Error(
-        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
-        ////        Arg.Any<CustomerSettingException>());
-        ////}
     }
 }

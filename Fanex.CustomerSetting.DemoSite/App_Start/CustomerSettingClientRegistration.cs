@@ -45,7 +45,7 @@
         public override void RegisterRouteConfig(RouteCollection routes)
         {
             routes.MapRoute(
-                name: "DCS_default",
+                name: "DCS_Routing",
                 url: "DCS/{controller}/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSetting", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Fanex.CustomerSetting.Client40.Controllers" });

@@ -18,8 +18,6 @@
             };
         }
 
-        [TestCase(2, true, 1, 1010)]
-        [TestCase(4, false, 4, 1011)]
         [TestCase(0, true, 1, 0)]
         public void Validate_InValidPT_ReturnErrorCode(
             byte s1,

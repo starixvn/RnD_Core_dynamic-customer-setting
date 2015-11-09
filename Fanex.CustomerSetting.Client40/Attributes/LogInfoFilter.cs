@@ -13,6 +13,11 @@
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if (!CustomerSettingConfiguration.Settings.EnableRequestLogging)
+            {
+                return;
+            }
+
             var request = HttpContext.Current.Request;
 
             string message = string.Join(

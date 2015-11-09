@@ -64,5 +64,19 @@
             get { return (string)this["AccessDeniedAction"]; }
             set { this["AccessDeniedAction"] = value; }
         }
+
+        [ConfigurationProperty("EnableRequestLogging", IsRequired = false, DefaultValue = true)]
+        public bool EnableRequestLogging
+        {
+            get { return (bool)this["EnableRequestLogging"]; }
+            set { this["EnableRequestLogging"] = value; }
+        }
+
+        [ConfigurationProperty("UpdateSettingTimeout", IsRequired = false, DefaultValue = 600)]
+        public int UpdateSettingTimeout
+        {
+            get { return (int)this["UpdateSettingTimeout"] * 1000; }
+            set { this["UpdateSettingTimeout"] = value; }
+        }
     }
 }

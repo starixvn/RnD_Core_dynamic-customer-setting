@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
+    using System.Net;
     using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Exceptions;
     using Fanex.CustomerSetting.Client40.Helpers;
@@ -48,8 +49,11 @@
             var request = new RestRequest("/customersetting/post/", Method.POST);
 
             request.AddJsonBody(update);
+            request.Timeout = CustomerSettingConfiguration.Settings.UpdateSettingTimeout;
 
-            return _restClient.Execute(request);
+            IRestResponse restReponse = _restClient.Execute(request);
+
+            return UpdateTimeOutResponse(restReponse);
         }
 
         public IRestResponse MultipleUpdateCustomerSetting(MultipleUpdateSettingRequest multipleUpdate)
@@ -62,8 +66,22 @@
             var request = new RestRequest("/customersetting/postmultiple/", Method.POST);
 
             request.AddJsonBody(multipleUpdate);
+            request.Timeout = CustomerSettingConfiguration.Settings.UpdateSettingTimeout;
 
-            return _restClient.Execute(request);
+            IRestResponse restReponse = _restClient.Execute(request);
+
+            return UpdateTimeOutResponse(restReponse);
+        }
+
+        private IRestResponse UpdateTimeOutResponse(IRestResponse restReponse)
+        {
+            if ((int)restReponse.StatusCode == 0)
+            {
+                restReponse.StatusCode = HttpStatusCode.RequestTimeout;
+                restReponse.Content = "{ \"message\": \"Update Process is timeout.\" }";
+            }
+           
+            return restReponse;
         }
 
         public IRestResponse QueryCustomerSettingTemplate(bool isIe8)
