@@ -6,6 +6,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
@@ -26,6 +27,7 @@
                 "REFERRER: " + request.UrlReferrer,
                 "FORM: " + (request.Form.Count > 0 ? request.Form.ToString() : string.Empty),
                 "BODY: " + GetRequestBody(request),
+                "CLIENT IP: " + IPHelper.GetClientIPAddress(request),
                 "CULTURE: " + Thread.CurrentThread.CurrentUICulture,
                 "BROWSER CAPABILITIES:" + GetClientBrowserInformation(request));
 
