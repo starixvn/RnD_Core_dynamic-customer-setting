@@ -89,4 +89,14 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
+
+    function HideIsAutoColumnFilter() {
+        return (settingType: SettingType) => {
+            return _.some(settingType.extraData, (item: KeyValuePair<string, any>) => {
+                return item.key === "isDisableMasterAutoPT" && item.value;
+            });
+        };
+    }
+
+    ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 }

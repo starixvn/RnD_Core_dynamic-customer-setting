@@ -156,7 +156,7 @@
                  data-field-name="m1"
                  data-min="{{[0, item.n3 - item.a1] | maxValue}}"
                  data-max="{{item.m3 - item.a1}}"
-                 data-disabled="{{item.iM2 && !item.isDisableMasterAutoPT}}">
+                 data-disabled="{{item.iM2 && !(settingType | hideIsAutoColumn)}}">
             </div>
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
