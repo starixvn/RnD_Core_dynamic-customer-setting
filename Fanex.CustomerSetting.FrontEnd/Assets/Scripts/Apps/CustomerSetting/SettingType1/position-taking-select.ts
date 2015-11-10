@@ -85,14 +85,4 @@ module CustomerSetting {
     }
 
     ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
-
-    function HideIsAutoColumnFilter() {
-        return (settingType: SettingType) => {
-            return settingType.extraData.some((item: KeyValuePair<string, any>) => {
-                return item.key === "isDisableMasterAutoPT" && item.value;
-            });
-        };
-    }
-
-    ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 }

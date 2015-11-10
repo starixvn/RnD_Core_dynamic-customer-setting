@@ -5,6 +5,10 @@
 module CustomerSetting.IE8 {
     "use strict";
 
+    interface INewSettingItem {
+        (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level, extraData?: Array<KeyValuePair<string, any>>): ISettingItem;
+    }
+
     export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
         uplineLevel: Level;
         customerLevel: Level;
@@ -42,7 +46,12 @@ module CustomerSetting.IE8 {
                     } else {
                         _.forEach(settingType.settingItems, (item: any, index: number) => {
                             if (angular.isDefined(item)) {
-                                settingType.settingItems[index] = this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel);
+                                settingType.settingItems[index] = this.settingItemType(
+                                    item,
+                                    true,
+                                    $scope.customerLevel,
+                                    $scope.uplineLevel,
+                                    settingType.extraData);
                             }
                         });
                     }
@@ -50,9 +59,9 @@ module CustomerSetting.IE8 {
             });
         }];
 
-        private settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => ISettingItem;
+        private settingItemType: INewSettingItem;
 
-        constructor(settingItemType: (settingItem: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level) => ISettingItem) {
+        constructor(settingItemType: INewSettingItem) {
             this.settingItemType = settingItemType;
         }
     }

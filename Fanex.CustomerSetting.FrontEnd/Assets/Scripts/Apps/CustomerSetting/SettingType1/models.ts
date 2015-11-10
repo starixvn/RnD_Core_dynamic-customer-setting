@@ -14,7 +14,12 @@ module CustomerSetting {
     }
 
     export class SettingType1Item {
-        public static factory(settingItem?: any, backup?: boolean, customerLevel?: Level, uplineLevel?: Level): ISettingItem {
+        public static factory(
+            settingItem?: any,
+            backup?: boolean,
+            customerLevel?: Level,
+            uplineLevel?: Level,
+            extraData?: Array<KeyValuePair<string, any>>): ISettingItem {
             if (customerLevel === Level.super) {
                 return new SuperPositionTaking(settingItem, backup);
             } else if (customerLevel === Level.master) {
@@ -24,7 +29,7 @@ module CustomerSetting {
             } else if (customerLevel === Level.member && uplineLevel === Level.super) {
                 return new SuperPositionTakingOnMember(settingItem, backup);
             } else if (customerLevel === Level.member && uplineLevel === Level.master) {
-                return new MasterPositionTakingOnMember(settingItem, backup);
+                return new MasterPositionTakingOnMember(settingItem, backup, extraData);
             } else if (customerLevel === Level.member && uplineLevel === Level.agent) {
                 return new AgentPositionTakingOnMember(settingItem, backup);
             }
@@ -640,7 +645,7 @@ module CustomerSetting {
 
                     return false;
                 }
-            } else {
+            } else if (!this.iS3) {
                 var minOfSuperPtOnMember: number = Math.max(0, this.n4 - this.m1 - this.a1);
                 var maxOfSuperPtOnMember: number = Math.max(this.n4 - this.m1 - this.a1, this.s4 - this.m3);
 
@@ -687,16 +692,27 @@ module CustomerSetting {
         public iM2: boolean;
         public m3: number;
         public n3: number;
+        public isDisableMasterAutoPT: boolean;
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean, extraData: Array<KeyValuePair<string, any>>)
+        constructor(settingItem?: any, backup: boolean = false, extraData?: Array<KeyValuePair<string, any>>) {
             super(settingItem);
             SettingType1Item.fetch(settingItem, this);
 
             if (backup) {
                 this.oldSetting = new MasterPositionTakingOnMember(this);
+            }
+
+            if (extraData) {
+                var isDisableMasterAutoPTValues: Array<KeyValuePair<string, any>> = extraData.filter((item: KeyValuePair<string, any>) => {
+                    return item.key === "isDisableMasterAutoPT";
+                });
+
+                if (isDisableMasterAutoPTValues.length > 0) {
+                    this.isDisableMasterAutoPT = !!isDisableMasterAutoPTValues[0].value;
+                }
             }
         }
 
@@ -763,7 +779,7 @@ module CustomerSetting {
 
                     return false;
                 }
-            } else {
+            } else if (!this.iM2 || this.isDisableMasterAutoPT) {
                 var minOfMasterPtOnMember: number = Math.max(0, this.n3 - this.a1);
                 var maxOfMasterPtOnMember: number = this.m3 - this.a1;
 

@@ -30355,7 +30355,7 @@ var CustomerSetting;
                             else {
                                 settingType.settingItems.forEach(function (item, index) {
                                     if (angular.isDefined(item)) {
-                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel);
+                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel, settingType.extraData);
                                     }
                                 });
                             }

@@ -27,22 +27,4 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.directive("settingtype1", SettingType1Directive);
-
-    function PositionTakingFormatFilter() {
-        return (ptValue: number) => {
-            return ptValue / SettingType1Config.roundingFactor;
-        };
-    }
-
-    ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
-
-    function HideIsAutoColumnFilter() {
-        return (settingType: SettingType) => {
-            return _.some(settingType.extraData, (item: KeyValuePair<string, any>) => {
-                return item.key === "isDisableMasterAutoPT" && item.value;
-            });
-        };
-    }
-
-    ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 }

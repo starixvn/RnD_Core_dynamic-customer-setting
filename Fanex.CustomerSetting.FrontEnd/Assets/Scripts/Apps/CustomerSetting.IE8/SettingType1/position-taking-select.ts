@@ -81,4 +81,12 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
+
+    function PositionTakingFormatFilter() {
+        return (ptValue: number) => {
+            return ptValue / SettingType1Config.roundingFactor;
+        };
+    }
+
+    ModuleRegister.filter("ptFormat", PositionTakingFormatFilter);
 }
