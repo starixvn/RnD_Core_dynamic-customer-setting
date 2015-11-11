@@ -160,6 +160,21 @@
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -219,10 +234,16 @@
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+	<Content Include="Web.AppSettings.pro.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.uat.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+	<Content Include="Web.ConnectionStrings.pro.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -235,6 +256,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.uat.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.pro.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
