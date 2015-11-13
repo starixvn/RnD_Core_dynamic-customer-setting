@@ -187,6 +187,8 @@
     background-color: $msg-container-bg;
     font-weight: bold;
     margin-bottom: 10px;
+    max-height: 500px;
+    overflow-x: auto;
 }
 
 .msg {
@@ -264,6 +266,7 @@
         font-weight: bold;
         line-height: 2.2rem;
         text-align: center;
+        word-wrap: break-word;
 
         &--no-border {
             border: none;

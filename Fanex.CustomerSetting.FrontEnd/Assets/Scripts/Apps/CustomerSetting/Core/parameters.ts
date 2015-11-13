@@ -111,7 +111,7 @@ module CustomerSetting {
         }
 
         public get customerNames(): string {
-            return this.custNames.join();
+            return this.custNames.join(", ");
         }
 
         public set customerNames(names: string) {

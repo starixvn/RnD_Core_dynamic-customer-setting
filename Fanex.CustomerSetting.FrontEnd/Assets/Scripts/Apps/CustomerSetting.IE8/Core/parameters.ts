@@ -93,7 +93,7 @@ module CustomerSetting.IE8 {
         }
 
         public getCustomerNames(): string {
-            return this.customerNames.join();
+            return this.customerNames.join(", ");
         }
 
         public getFirstCustomerSettingQuery(): SettingQuery {
