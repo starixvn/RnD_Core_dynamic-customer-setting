@@ -114,6 +114,7 @@ module CustomerSettingMatrix {
         public autoMasterPT: number;
         public isAutoMasterPT: boolean;
         public isMasterLevel: boolean;
+        public isAgentOrMemberLevel: boolean;
 
         public agentPT: number;
 
@@ -130,6 +131,7 @@ module CustomerSettingMatrix {
             this.autoMasterPT = ptItemMaxtrixRow.autoMasterPT;
             this.isAutoMasterPT = ptItemMaxtrixRow.isAutoMasterPT;
             this.isMasterLevel = this.customerLevel.value === LevelValue.master;
+            this.isAgentOrMemberLevel = this.customerLevel.value === LevelValue.agent || this.customerLevel.value === LevelValue.member;
 
             this.agentPT = ptItemMaxtrixRow.agentPT;
 

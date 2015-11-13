@@ -58,8 +58,8 @@
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
         "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
-        "Msg_60031": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
-        "Msg_60032": "Unable to synchronize this product because the upline account setting is not synchronized.",
+        "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
+        "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
         "UpdateProductStatusSuccessfully": "Updated product status successfully."
     };
     

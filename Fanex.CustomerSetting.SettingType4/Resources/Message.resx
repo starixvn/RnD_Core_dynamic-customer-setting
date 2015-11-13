@@ -129,10 +129,10 @@
   <data name="DownlineStatusIsInvalid" xml:space="preserve">
     <value>The product is not offered for this line of customers</value>
   </data>
-  <data name="Msg_60031" xml:space="preserve">
+  <data name="Msg_60033" xml:space="preserve">
     <value>Unable to edit downline's Product Status because the account disabled for this product.</value>
   </data>
-  <data name="Msg_60032" xml:space="preserve">
+  <data name="Msg_60034" xml:space="preserve">
     <value>Unable to synchronize this product because the upline account setting is not synchronized.</value>
   </data>
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">

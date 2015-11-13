@@ -246,6 +246,10 @@ ul li {
   margin: 0 auto;
 }
 
+.container .main-content .group-matrix .item-matrix .not-auto-pt {
+  background: #fce9fb;
+}
+
 .container .main-content .group-matrix .item-matrix table, .container .main-content .group-matrix .item-matrix tr, .container .main-content .group-matrix .item-matrix td, .container .main-content .group-matrix .item-matrix th {
   border: 1px solid #7c98a4;
   border-collapse: collapse;
