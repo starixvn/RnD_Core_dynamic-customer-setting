@@ -120,22 +120,25 @@
                 settingType.ToXml(),
                 settingContext.IP);
 
-            return SeparateResultForEachMember(updatedResult, groupedMemberIds);
+            return SeparateResultForEachMember(updatedResult, groupedMemberIds, settingType, settingContext.Language);
         }
 
-        private IEnumerable<SettingResult> SeparateResultForEachMember(IResult result, IEnumerable<int> groupedMemberIds)
+        private IEnumerable<SettingResult> SeparateResultForEachMember(IResult result, IEnumerable<int> groupedMemberIds, SettingType settingType, string language)
         {
             var settingResults = new List<SettingResult>();
+            var sharedSettingResult = CreateSettingResult(result, 0, settingType);
+            var messageContent = TranslateUpdateResultMessage(sharedSettingResult, Message.UpdatePositionTakingSuccessfully, settingType.SettingLevel, language);
 
             foreach (int memberId in groupedMemberIds)
             {
                 var settingResult = new SettingResult(
                     result.Code,
-                    result.IsSuccessful ? Message.UpdatePositionTakingSuccessfully : result.Message, 
+                    messageContent.Message, 
                     result.MsgType,
                     memberId, 
                     Constants.SettingTypeId, 
-                    Label.PositionTaking);
+                    Label.PositionTaking,
+                    messageContent.SubMessages);
 
                 settingResults.Add(settingResult);
             }
