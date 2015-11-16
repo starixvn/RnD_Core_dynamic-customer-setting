@@ -120,4 +120,7 @@
   <data name="UpdateCommissionSuccessfully" xml:space="preserve">
     <value>佣金已更新成功</value>
   </data>
+  <data name="Msg_1" xml:space="preserve">
+    <value>傭金率無效</value>
+  </data>
 </root>

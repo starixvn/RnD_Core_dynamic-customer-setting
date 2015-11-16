@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The product is not offered for this line of customers.
+        ///   Looks up a localized string similar to The product is not offered for this customer line..
         /// </summary>
         internal static string DownlineStatusIsInvalid {
             get {
@@ -115,7 +115,7 @@ namespace Fanex.CustomerSetting.SettingType4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated product status successfully..
+        ///   Looks up a localized string similar to Product Status is updated successfully..
         /// </summary>
         internal static string UpdateProductStatusSuccessfully {
             get {

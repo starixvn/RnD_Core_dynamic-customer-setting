@@ -121,9 +121,9 @@
     <value>เปิดใช้งาน</value>
   </data>
   <data name="EnableDownline" xml:space="preserve">
-    <value>เปิดใช้งาน ดาวไลน์</value>
+    <value>เปิดการใช้งาน ดาวน์ไลน์</value>
   </data>
   <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
+    <value>สถานะผลิตภันฑ์</value>
   </data>
 </root>

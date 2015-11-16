@@ -120,4 +120,130 @@
   <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
     <value>佔成數設定已更新成功.</value>
   </data>
+  <data name="AgentMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>代理最高占成必須少於或相等於{0}</value>
+  </data>
+  <data name="AgentMaxPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>代理最高占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="AgentMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>代理最高占成必須大於或相等於{0}</value>
+  </data>
+  <data name="AgentMinPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>代理最低占成必須少於或相等於代理最高占成</value>
+  </data>
+  <data name="AgentPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>代理占成必須少於或相等於代理最高占成</value>
+  </data>
+  <data name="AgentPTCannotBeLessThanAgentMinPT" xml:space="preserve">
+    <value>代理占成必須大於或相等於代理最低占成</value>
+  </data>
+  <data name="MasterAutoPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理自動占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理自動占成在會員必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>總代理自動占成在會員必須大於或相等於{0}</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>總代理最高占成必須少於或相等於{0}</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>總代理最高占成必須少於或相等於超級總代理最高占成</value>
+  </data>
+  <data name="MasterMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>總代理最高占成必須大於或相等於{0}</value>
+  </data>
+  <data name="MasterMinPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理最低占成必須少於或相等於總代理最高占成</value>
+  </data>
+  <data name="MasterPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>總代理占成必須低於或相等於總代理最高占成。</value>
+  </data>
+  <data name="MasterPTCannotBeLessThan" xml:space="preserve">
+    <value>總代理占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>總代理於會員的占成必須小於或相等於 {0}。</value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>總代理於會員的占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="Msg_20001" xml:space="preserve">
+    <value>占成無效</value>
+  </data>
+  <data name="Msg_20019" xml:space="preserve">
+    <value>現有總代理超過新增超級總代理的最高占成</value>
+  </data>
+  <data name="Msg_20020" xml:space="preserve">
+    <value>現有會員超過新增超級總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20021" xml:space="preserve">
+    <value>現有總代理超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20022" xml:space="preserve">
+    <value>現有會員超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20023" xml:space="preserve">
+    <value>現有代理超過新增代理的最高占成。</value>
+  </data>
+  <data name="Msg_20024" xml:space="preserve">
+    <value>現有會員超過新增代理的最高占成。</value>
+  </data>
+  <data name="Msg_20025" xml:space="preserve">
+    <value>此占成違反上線的最低/最高占成.</value>
+  </data>
+  <data name="Msg_20026" xml:space="preserve">
+    <value>現有代理超過新增總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20027" xml:space="preserve">
+    <value>此占成違反公司設置於總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20028" xml:space="preserve">
+    <value>此占成違反超級總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20029" xml:space="preserve">
+    <value>此占成違反超級總代理的最低占成。</value>
+  </data>
+  <data name="Msg_20030" xml:space="preserve">
+    <value>此代理最低占成違反總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20031" xml:space="preserve">
+    <value>此占成違反總代理的最高占成。</value>
+  </data>
+  <data name="Msg_20032" xml:space="preserve">
+    <value>此占成違反總代理的最低占成。</value>
+  </data>
+  <data name="Msg_20033" xml:space="preserve">
+    <value>此占成違反代理的最低/最高占成。</value>
+  </data>
+  <data name="Msg_20034" xml:space="preserve">
+    <value>此占成違反代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的自動占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理於會員的自動占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>超級總代理於會員的自動占成必須大於或相等於 {0}。</value>
+  </data>
+  <data name="SuperMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>超級總代理的最高占成必須少於或相等於 {0}。</value>
+  </data>
+  <data name="SuperMinPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的最低占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>超級總代理的占成必須少於或相等於超級總代理的最高占成。</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>超級總代理於會員的占成必須少於或相等於{0}。</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>超級總代理於會員的占成必須大於或相等於 {0}。</value>
+  </data>
 </root>

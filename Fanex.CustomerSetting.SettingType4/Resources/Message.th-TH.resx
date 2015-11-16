@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
+    <value>สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว</value>
+  </data>
+  <data name="DownlineStatusIsInvalid" xml:space="preserve">
+    <value>ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้</value>
+  </data>
+  <data name="DownlineStatusCannotBeChanged" xml:space="preserve">
+    <value>เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย</value>
+  </data>
+  <data name="DownlineCannotBeEnabledWhenUplineIsDisabled" xml:space="preserve">
+    <value>เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย</value>
+  </data>
+  <data name="Msg_60033" xml:space="preserve">
+    <value>ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้</value>
+  </data>
+  <data name="Msg_60034" xml:space="preserve">
+    <value>ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า</value>
+  </data>
 </root>

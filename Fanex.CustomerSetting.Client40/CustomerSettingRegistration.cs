@@ -79,8 +79,8 @@
         public virtual void RegisterRouteConfig(RouteCollection routes)
         {
             routes.MapRoute(
-                name: "DCS_default",
-                url: "DCS/{controller}/{action}/{id}",
+                name: "DCS_Setting",
+                url: "DCS/ViewCustomerSetting/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSetting", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Fanex.CustomerSetting.Client40.Controllers" });
         }

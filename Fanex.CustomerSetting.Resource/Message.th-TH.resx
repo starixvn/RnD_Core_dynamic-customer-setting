@@ -126,4 +126,19 @@
   <data name="SystemError" xml:space="preserve">
     <value>อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ</value>
   </data>
+  <data name="CustomersAreNotSameLine" xml:space="preserve">
+    <value>ลูกเค้าไม่ได้อยู่ในสายเดียวกัน</value>
+  </data>
+  <data name="DuplicateValuesAlertMsg" xml:space="preserve">
+    <value>ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต</value>
+  </data>
+  <data name="Msg_90001" xml:space="preserve">
+    <value>กระบวนการอัพเดทสำเร็จแล้ว</value>
+  </data>
+  <data name="SettingTypeError" xml:space="preserve">
+    <value>ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ</value>
+  </data>
+  <data name="NoChangeToUpdate" xml:space="preserve">
+    <value>ไม่มีการเปลี่ยนแปลงการอัพเดท</value>
+  </data>
 </root>

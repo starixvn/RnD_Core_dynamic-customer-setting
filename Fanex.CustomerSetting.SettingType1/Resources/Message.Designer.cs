@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.SettingType1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agent Max PT must be less than or equal to Master Max PT..
+        ///   Looks up a localized string similar to Agent Max PT must be greater than or equal to {0}..
         /// </summary>
         internal static string AgentMaxPTCannotBeLessThan {
             get {

@@ -124,13 +124,13 @@
     <value>最高投注不得多於或相等於 {0}</value>
   </data>
   <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
-    <value>最大投注額必須大於或等於最小投注額</value>
+    <value>最高投註限額必須大於或相等於最低投註限額</value>
   </data>
   <data name="MaxPerMatchLessThanOrEqualTo" xml:space="preserve">
     <value>單場最高投注需底於或等於 {0}</value>
   </data>
   <data name="MaxPerMatchMoreThanOrEqualMaxBet" xml:space="preserve">
-    <value>最大單場比賽投注額必須大於或等於最大投注額</value>
+    <value>單場投註限額必須大於或相等於最高投註限額</value>
   </data>
   <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
     <value> 最低投注必須少於或相等於最高投注</value>
@@ -146,5 +146,38 @@
   </data>
   <data name="MinBetCannotBeGreaterThanMaxBet" xml:space="preserve">
     <value>最低投注不可高於最高投注</value>
+  </data>
+  <data name="Msg_10003" xml:space="preserve">
+    <value>最低投註/最高投註/單場限額無效</value>
+  </data>
+  <data name="Msg_10005" xml:space="preserve">
+    <value>最低投註必須少於或相等於最高投註以及最高投註必須小於或相等於單場投註限額</value>
+  </data>
+  <data name="Msg_10006" xml:space="preserve">
+    <value>最低投註必須大於或相等於代理最低投註限額</value>
+  </data>
+  <data name="Msg_10007" xml:space="preserve">
+    <value>最高投註必須少於或相等於代理最高投註限額</value>
+  </data>
+  <data name="Msg_10008" xml:space="preserve">
+    <value>單場限額必須少於或相等於代理單場投註限額</value>
+  </data>
+  <data name="Msg_10016" xml:space="preserve">
+    <value>最低投註大於或相等於超級總代理最低投註限額</value>
+  </data>
+  <data name="Msg_10017" xml:space="preserve">
+    <value>最高投註必須少於或相等於超級總代理最高投註限額</value>
+  </data>
+  <data name="Msg_10018" xml:space="preserve">
+    <value>單場限額必須少於或相等於超級總代理單場投註限額</value>
+  </data>
+  <data name="Msg_10019" xml:space="preserve">
+    <value>最低投註大於或相等於總代理最低投註限額</value>
+  </data>
+  <data name="Msg_10020" xml:space="preserve">
+    <value>最高投註必須少於或相等於總代理最高投註限額</value>
+  </data>
+  <data name="Msg_10021" xml:space="preserve">
+    <value>單場限額必須少於或相等於總代理單場投註限額</value>
   </data>
 </root>

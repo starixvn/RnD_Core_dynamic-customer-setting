@@ -121,9 +121,9 @@
     <value>启用</value>
   </data>
   <data name="EnableDownline" xml:space="preserve">
-    <value>启用下线</value>
+    <value>启动下线</value>
   </data>
   <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
+    <value>产品状态</value>
   </data>
 </root>

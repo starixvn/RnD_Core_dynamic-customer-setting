@@ -136,7 +136,7 @@
     <value>現場</value>
   </data>
   <data name="Masters" xml:space="preserve">
-    <value>會員</value>
+    <value>總代理</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>會員</value>
@@ -164,5 +164,11 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
+  </data>
+  <data name="CopyTooltip" xml:space="preserve">
+    <value>點擊以復制數值</value>
+  </data>
+  <data name="UserNames" xml:space="preserve">
+    <value>用戶名</value>
   </data>
 </root>

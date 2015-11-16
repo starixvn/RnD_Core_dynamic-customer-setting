@@ -32137,13 +32137,14 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CopyTooltip": "点击以复制数值",
         "CustomerSetting": "会员设定",
         "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "现场",
-        "Masters": "会员",
+        "Masters": "总代理",
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
@@ -32151,19 +32152,21 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Phone": "电话",
         "Update": "更改",
         "UserName": "用户名",
+        "UserNames": "用户名",
         "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CopyTooltip": "點擊以復制數值",
         "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "現場",
-        "Masters": "會員",
+        "Masters": "總代理",
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
@@ -32171,6 +32174,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Phone": "電話",
         "Update": "更改",
         "UserName": "用戶名",
+        "UserNames": "用戶名",
         "Yes": "是"
     };
     
@@ -32212,21 +32216,23 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
-        "Agents": "ตัวแทน",
+        "Agents": "เอเจนท์",
+        "CopyTooltip": "คลิ๊กค่าที่จะซ้ำกัน",
         "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
         "LastName": "นามสกุล",
         "Live": "สด",
-        "Masters": "ตัวแทนหลัก",
-        "Members": "สมาชิก",
+        "Masters": "มาสเตอร์ต่าง ๆ",
+        "Members": "เมมเบอร์ต่าง ๆ",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
         "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
         "UserName": "ชื่อผู้ใช้ระบบ",
+        "UserNames": "ยูเซอร์เนม",
         "Yes": "ตกลง"
     };
     
@@ -32276,6 +32282,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["zh-cn"] = {
         "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
         "AccountWasDisabled": "这个帐号禁用",
+        "CustomersAreNotSameLine": "会员不同线！",
+        "DuplicateValuesAlertMsg": "突显值已超出范围。",
+        "Msg_90001": "更新程序失败！",
+        "NoChangeToUpdate": "没有任何的变化更新！",
+        "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
         "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
@@ -32283,6 +32294,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["zh-tw"] = {
         "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
         "AccountWasDisabled": "這個帳號禁用",
+        "CustomersAreNotSameLine": "會員不同線！",
+        "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
+        "Msg_90001": "更新程序失敗！",
+        "NoChangeToUpdate": "沒有任何的變化更新！",
+        "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
         "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
@@ -32304,6 +32320,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["th-th"] = {
         "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
         "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "CustomersAreNotSameLine": "ลูกเค้าไม่ได้อยู่ในสายเดียวกัน",
+        "DuplicateValuesAlertMsg": "ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต",
+        "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
+        "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
+        "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
         "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     
@@ -32498,7 +32519,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     positionTakingResources["message"]["en-us"] = {
         "AgentMaxPTCannotBeGreaterThan": "Agent Max PT must be less than or equal to {0}.",
         "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "Agent Max PT must be less than or equal to Master Max PT.",
-        "AgentMaxPTCannotBeLessThan": "Agent Max PT must be less than or equal to Master Max PT.",
+        "AgentMaxPTCannotBeLessThan": "Agent Max PT must be greater than or equal to {0}.",
         "AgentMinPTCannotBeGreaterThanAgentMaxPT": "Agent Min PT must be less than or equal to Agent Max PT.",
         "AgentPTCannotBeGreaterThanAgentMaxPT": "Agent PT must be less than or equal to Agent Max PT.",
         "AgentPTCannotBeLessThanAgentMinPT": "Agent PT must be greater than or equal to Agent Min PT.",
@@ -32544,11 +32565,95 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-cn"] = {
+        "AgentMaxPTCannotBeGreaterThan": "代理最高占成必须少于或相等于{0}",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "代理最高占成必须少于或相等于总代理最高占成",
+        "AgentMaxPTCannotBeLessThan": "代理最高占成必须大于或相等于{0}",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "代理最低占成必须少于或相等于代理最高占成",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "代理占成必须少于或相等于代理最高占成",
+        "AgentPTCannotBeLessThanAgentMinPT": "代理占成必须大于或相等于代理最低占成",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "总代理自动占成必须少于或相等于总代理最高占成",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "总代理自动占成在会员必须少于或相等于总代理最高占成",
+        "MasterAutoPTOnMemberCannotBeLessThan": "总代理自动占成在会员必须大于或相等于{0}",
+        "MasterMaxPTCannotBeGreaterThan": "总代理最高占成必须少于或相等于{0}",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "总代理最高占成必须少于或相等于超级总代理最高占成",
+        "MasterMaxPTCannotBeLessThan": "总代理最高占成必须大于或相等于{0}",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "总代理最低占成必须少于或相等于总代理最高占成",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "总代理占成必须低于或相等于总代理最高占成。",
+        "MasterPTCannotBeLessThan": "总代理占成必须大于或相等于 {0}。",
+        "MasterPTOnMemberCannotBeGreaterThan": "总代理于会员的占成必须小于或相等于 {0}。",
+        "MasterPTOnMemberCannotBeLessThan": "总代理于会员的占成必须大于或相等于 {0}。",
+        "Msg_20001": "占成无效",
+        "Msg_20019": "現有总代理超過新增超级总代理的最高占成。",
+        "Msg_20020": "現有会员超過新增超级总代理的最高占成。",
+        "Msg_20021": "現有总代理超過新增总代理的最高占成。",
+        "Msg_20022": "現有会员超過新增总代理的最高占成。",
+        "Msg_20023": "現有代理超過新增代理的最高占成。",
+        "Msg_20024": "現有会员超過新增代理的最高占成。",
+        "Msg_20025": "此占成违反上线的最低/最高占成.",
+        "Msg_20026": "現有代理超過新增总代理的最高占成。",
+        "Msg_20027": "此占成违反公司设置于总代理的最高占成。",
+        "Msg_20028": "此占成违反超级总代理的最高占成。",
+        "Msg_20029": "此占成违反超级总代理的最低占成。",
+        "Msg_20030": "此代理最低占成违反总代理的最高占成。",
+        "Msg_20031": "此占成违反总代理的最高占成。",
+        "Msg_20032": "此占成违反总代理的最低占成。",
+        "Msg_20033": "此占成违反代理的最低/最高占成。",
+        "Msg_20034": "此占成违反代理的最高占成。",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "超级总代理的自动占成必须少于或相等于超级总代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "超级总代理于会员的自动占成必须少于或相等于超级总代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeLessThan": "超级总代理于会员的自动占成必须大于或相等于 {0}。",
+        "SuperMaxPTCannotBeGreaterThan": "超级总代理的最高占成必须少于或相等于 {0}。",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "超级总代理的最低占成必须少于或相等于超级总代理的最高占成。",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "超级总代理的占成必须少于或相等于超级总代理的最高占成。",
+        "SuperPTOnMemberCannotBeGreaterThan": "超级总代理于会员的占成必须少于或相等于 {0}。",
+        "SuperPTOnMemberCannotBeLessThan": "超级总代理于会员的占成必须大于或相等于 {0}。",
         "UpdatePositionTakingSuccessfully": "占成数设定已更新成功."
     };
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["zh-tw"] = {
+        "AgentMaxPTCannotBeGreaterThan": "代理最高占成必須少於或相等於{0}",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "代理最高占成必須少於或相等於總代理最高占成",
+        "AgentMaxPTCannotBeLessThan": "代理最高占成必須大於或相等於{0}",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "代理最低占成必須少於或相等於代理最高占成",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "代理占成必須少於或相等於代理最高占成",
+        "AgentPTCannotBeLessThanAgentMinPT": "代理占成必須大於或相等於代理最低占成",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "總代理自動占成必須少於或相等於總代理最高占成",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "總代理自動占成在會員必須少於或相等於總代理最高占成",
+        "MasterAutoPTOnMemberCannotBeLessThan": "總代理自動占成在會員必須大於或相等於{0}",
+        "MasterMaxPTCannotBeGreaterThan": "總代理最高占成必須少於或相等於{0}",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "總代理最高占成必須少於或相等於超級總代理最高占成",
+        "MasterMaxPTCannotBeLessThan": "總代理最高占成必須大於或相等於{0}",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "總代理最低占成必須少於或相等於總代理最高占成",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "總代理占成必須低於或相等於總代理最高占成。",
+        "MasterPTCannotBeLessThan": "總代理占成必須大於或相等於 {0}。",
+        "MasterPTOnMemberCannotBeGreaterThan": "總代理於會員的占成必須小於或相等於 {0}。",
+        "MasterPTOnMemberCannotBeLessThan": "總代理於會員的占成必須大於或相等於 {0}。",
+        "Msg_20001": "占成無效",
+        "Msg_20019": "現有總代理超過新增超級總代理的最高占成",
+        "Msg_20020": "現有會員超過新增超級總代理的最高占成。",
+        "Msg_20021": "現有總代理超過新增總代理的最高占成。",
+        "Msg_20022": "現有會員超過新增總代理的最高占成。",
+        "Msg_20023": "現有代理超過新增代理的最高占成。",
+        "Msg_20024": "現有會員超過新增代理的最高占成。",
+        "Msg_20025": "此占成違反上線的最低/最高占成.",
+        "Msg_20026": "現有代理超過新增總代理的最高占成。",
+        "Msg_20027": "此占成違反公司設置於總代理的最高占成。",
+        "Msg_20028": "此占成違反超級總代理的最高占成。",
+        "Msg_20029": "此占成違反超級總代理的最低占成。",
+        "Msg_20030": "此代理最低占成違反總代理的最高占成。",
+        "Msg_20031": "此占成違反總代理的最高占成。",
+        "Msg_20032": "此占成違反總代理的最低占成。",
+        "Msg_20033": "此占成違反代理的最低/最高占成。",
+        "Msg_20034": "此占成違反代理的最高占成。",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "超級總代理的自動占成必須少於或相等於超級總代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "超級總代理於會員的自動占成必須少於或相等於超級總代理的最高占成。",
+        "SuperAutoPTOnMemberCannotBeLessThan": "超級總代理於會員的自動占成必須大於或相等於 {0}。",
+        "SuperMaxPTCannotBeGreaterThan": "超級總代理的最高占成必須少於或相等於 {0}。",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "超級總代理的最低占成必須少於或相等於超級總代理的最高占成。",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "超級總代理的占成必須少於或相等於超級總代理的最高占成。",
+        "SuperPTOnMemberCannotBeGreaterThan": "超級總代理於會員的占成必須少於或相等於{0}。",
+        "SuperPTOnMemberCannotBeLessThan": "超級總代理於會員的占成必須大於或相等於 {0}。",
         "UpdatePositionTakingSuccessfully": "佔成數設定已更新成功."
     };
     
@@ -32564,6 +32669,48 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     positionTakingResources["message"] = positionTakingResources["message"] || {};
     positionTakingResources["message"]["th-th"] = {
+        "AgentMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "AgentMaxPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "AgentMaxPTCannotBeLessThan": "ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องมากกว่าหรือเท่ากับ {0}.",
+        "AgentMinPTCannotBeGreaterThanAgentMaxPT": "ค่าความเสี่ยงขั้นต่ำของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของเอเจนท์",
+        "AgentPTCannotBeGreaterThanAgentMaxPT": "ค่าความเสี่ยงของเอเจนท์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของเอเจนท์",
+        "AgentPTCannotBeLessThanAgentMinPT": "ค่าความเสี่ยงของเอเจนท์ต้องมากกว่าหรือเท่ากับค่าความเสี่ยงต่ำสุดของเอเจนท์",
+        "MasterAutoPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterAutoPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "MasterMaxPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "MasterMaxPTCannotBeLessThan": "ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterMinPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงขั้นต่ำของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterPTCannotBeGreaterThanMasterMaxPT": "ค่าความเสี่ยงของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์",
+        "MasterPTCannotBeLessThan": "ค่าความเสี่ยงของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "MasterPTOnMemberCannotBeGreaterThan": "ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "MasterPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "Msg_20001": "ค่าความเสี่ยงไม่ถูกต้อง",
+        "Msg_20019": "การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์",
+        "Msg_20020": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์",
+        "Msg_20021": "การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20022": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20023": "การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์",
+        "Msg_20024": "การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์",
+        "Msg_20025": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นต่ำ/ขั้นสูงสุดของทางต้นสาย",
+        "Msg_20026": "การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์",
+        "Msg_20027": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์ ที่ทางบริษัทตั้งค่าไว้",
+        "Msg_20028": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของซูเปอร์",
+        "Msg_20029": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของซูเปอร์",
+        "Msg_20030": "ค่าความเสี่ยงของเอเจนท์ขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์",
+        "Msg_20031": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์",
+        "Msg_20032": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของมาสเตอร์",
+        "Msg_20033": "ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำสุด/สูงสุดของเอเจนท์",
+        "Msg_20034": "ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของเอเจนท์",
+        "SuperAutoPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperAutoPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}.",
+        "SuperMaxPTCannotBeGreaterThan": "ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "SuperMinPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงขั้นต่ำของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperPTCannotBeGreaterThanSuperMaxPT": "ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์",
+        "SuperPTOnMemberCannotBeGreaterThan": "ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}.",
+        "SuperPTOnMemberCannotBeLessThan": "ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องมากกว่ากว่าหรือเท่ากับ {0}.",
         "UpdatePositionTakingSuccessfully": "การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว."
     };
     
@@ -32646,11 +32793,13 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
+        "Msg_1": "佣金率无效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
+        "Msg_1": "傭金率無效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
@@ -32665,6 +32814,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง",
         "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     
@@ -32693,15 +32843,15 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["zh-cn"] = {
         "Enable": "启用",
-        "EnableDownline": "启用下线",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "启动下线",
+        "ProductStatus": "产品状态"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["zh-tw"] = {
         "Enable": "啟用",
-        "EnableDownline": "啟用下線",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "啟動下線",
+        "ProductStatus": "產品狀態"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -32719,8 +32869,8 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["th-th"] = {
         "Enable": "เปิดใช้งาน",
-        "EnableDownline": "เปิดใช้งาน ดาวไลน์",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
+        "ProductStatus": "สถานะผลิตภันฑ์"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -32735,18 +32885,30 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
         "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
-        "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
+        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
-        "UpdateProductStatusSuccessfully": "Updated product status successfully."
+        "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["zh-cn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
+        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
+        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
+        "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
+        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "UpdateProductStatusSuccessfully": "产品状态更新成功"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["zh-tw"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
+        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
+        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
+        "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
+        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
@@ -32759,6 +32921,12 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["th-th"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
+        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
+        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
+        "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
+        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};

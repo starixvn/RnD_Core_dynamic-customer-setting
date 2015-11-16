@@ -30,13 +30,14 @@
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CopyTooltip": "点击以复制数值",
         "CustomerSetting": "会员设定",
         "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "现场",
-        "Masters": "会员",
+        "Masters": "总代理",
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
@@ -44,19 +45,21 @@
         "Phone": "电话",
         "Update": "更改",
         "UserName": "用户名",
+        "UserNames": "用户名",
         "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CopyTooltip": "點擊以復制數值",
         "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "現場",
-        "Masters": "會員",
+        "Masters": "總代理",
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
@@ -64,6 +67,7 @@
         "Phone": "電話",
         "Update": "更改",
         "UserName": "用戶名",
+        "UserNames": "用戶名",
         "Yes": "是"
     };
     
@@ -105,21 +109,23 @@
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
-        "Agents": "ตัวแทน",
+        "Agents": "เอเจนท์",
+        "CopyTooltip": "คลิ๊กค่าที่จะซ้ำกัน",
         "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
         "LastName": "นามสกุล",
         "Live": "สด",
-        "Masters": "ตัวแทนหลัก",
-        "Members": "สมาชิก",
+        "Masters": "มาสเตอร์ต่าง ๆ",
+        "Members": "เมมเบอร์ต่าง ๆ",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
         "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
         "UserName": "ชื่อผู้ใช้ระบบ",
+        "UserNames": "ยูเซอร์เนม",
         "Yes": "ตกลง"
     };
     
@@ -169,6 +175,11 @@
     resources["message"]["zh-cn"] = {
         "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
         "AccountWasDisabled": "这个帐号禁用",
+        "CustomersAreNotSameLine": "会员不同线！",
+        "DuplicateValuesAlertMsg": "突显值已超出范围。",
+        "Msg_90001": "更新程序失败！",
+        "NoChangeToUpdate": "没有任何的变化更新！",
+        "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
         "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
@@ -176,6 +187,11 @@
     resources["message"]["zh-tw"] = {
         "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
         "AccountWasDisabled": "這個帳號禁用",
+        "CustomersAreNotSameLine": "會員不同線！",
+        "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
+        "Msg_90001": "更新程序失敗！",
+        "NoChangeToUpdate": "沒有任何的變化更新！",
+        "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
         "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
@@ -197,6 +213,11 @@
     resources["message"]["th-th"] = {
         "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
         "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "CustomersAreNotSameLine": "ลูกเค้าไม่ได้อยู่ในสายเดียวกัน",
+        "DuplicateValuesAlertMsg": "ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต",
+        "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
+        "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
+        "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
         "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     

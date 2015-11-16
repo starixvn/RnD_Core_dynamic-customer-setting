@@ -69,11 +69,13 @@
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
+        "Msg_1": "佣金率无效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
+        "Msg_1": "傭金率無效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
@@ -88,6 +90,7 @@
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง",
         "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     

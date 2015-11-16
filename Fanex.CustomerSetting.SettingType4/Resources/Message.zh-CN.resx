@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
+    <value>产品状态更新成功</value>
+  </data>
+  <data name="DownlineStatusIsInvalid" xml:space="preserve">
+    <value>此产品没有提供给此用户</value>
+  </data>
+  <data name="DownlineStatusCannotBeChanged" xml:space="preserve">
+    <value>当上线状态没有更改，下线状态也不会被更改。</value>
+  </data>
+  <data name="DownlineCannotBeEnabledWhenUplineIsDisabled" xml:space="preserve">
+    <value>当上线被禁用下线同时也禁用。</value>
+  </data>
+  <data name="Msg_60033" xml:space="preserve">
+    <value>由于账号的此产品已关闭导致无法更改下线产品状态。</value>
+  </data>
+  <data name="Msg_60034" xml:space="preserve">
+    <value>无法连接此产品由于上线的账号设置不同步。</value>
+  </data>
 </root>

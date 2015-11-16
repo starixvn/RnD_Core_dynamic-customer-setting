@@ -120,4 +120,130 @@
   <data name="UpdatePositionTakingSuccessfully" xml:space="preserve">
     <value>การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว.</value>
   </data>
+  <data name="AgentMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ {0}. </value>
+  </data>
+  <data name="AgentMaxPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="AgentMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของเอเจนท์ ต้องมากกว่าหรือเท่ากับ {0}. </value>
+  </data>
+  <data name="AgentMinPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงขั้นต่ำของเอเจนท์ ต้องน้อยกว่าหรือเท่ากับ ค่าความเสี่ยงสูงสุดของเอเจนท์</value>
+  </data>
+  <data name="AgentPTCannotBeGreaterThanAgentMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงของเอเจนท์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของเอเจนท์</value>
+  </data>
+  <data name="AgentPTCannotBeLessThanAgentMinPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงของเอเจนท์ต้องมากกว่าหรือเท่ากับค่าความเสี่ยงต่ำสุดของเอเจนท์</value>
+  </data>
+  <data name="MasterAutoPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="MasterAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="MasterMaxPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="MasterMaxPTCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงสูงสุดของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="MasterMinPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงขั้นต่ำของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="MasterPTCannotBeGreaterThanMasterMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงของมาสเตอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="MasterPTCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของมาสเตอร์ต้องมากกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}. </value>
+  </data>
+  <data name="MasterPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของมาสเตอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}. </value>
+  </data>
+  <data name="Msg_20001" xml:space="preserve">
+    <value>ค่าความเสี่ยงไม่ถูกต้อง</value>
+  </data>
+  <data name="Msg_20019" xml:space="preserve">
+    <value>การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์</value>
+  </data>
+  <data name="Msg_20020" xml:space="preserve">
+    <value>การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของซูเปอร์</value>
+  </data>
+  <data name="Msg_20021" xml:space="preserve">
+    <value>การตั้งค่ามาสเตอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20022" xml:space="preserve">
+    <value>การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20023" xml:space="preserve">
+    <value>การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์</value>
+  </data>
+  <data name="Msg_20024" xml:space="preserve">
+    <value>การตั้งค่าเมมเบอร์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของเอเจนท์</value>
+  </data>
+  <data name="Msg_20025" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นต่ำ/ขั้นสูงสุดของทางต้นสาย</value>
+  </data>
+  <data name="Msg_20026" xml:space="preserve">
+    <value>การตั้งค่าเอเจนท์ต่างๆ ที่มีอยู่ก่อนแล้วเกินกว่าการตั้งค่าความเสี่ยงสูงสุดอันใหม่ของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20027" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์ ที่ทางบริษัทตั้งค่าไว้</value>
+  </data>
+  <data name="Msg_20028" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="Msg_20029" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของซูเปอร์</value>
+  </data>
+  <data name="Msg_20030" xml:space="preserve">
+    <value>ค่าความเสี่ยงของเอเจนท์ขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20031" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20032" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำของมาสเตอร์</value>
+  </data>
+  <data name="Msg_20033" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าความเสี่ยงขั้นต่ำสุด/สูงสุดของเอเจนท์</value>
+  </data>
+  <data name="Msg_20034" xml:space="preserve">
+    <value>ค่าความเสี่ยงขัดกับการตั้งค่าค่าความเสี่ยงขั้นสูงสุดของเอเจนท์</value>
+  </data>
+  <data name="SuperAutoPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="SuperAutoPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงแบบอัตโนมัติของซูเปอร์ต่อเมมเบอร์ต้องมากกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="SuperMaxPTCannotBeGreaterThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="SuperMinPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงขั้นต่ำของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="SuperPTCannotBeGreaterThanSuperMaxPT" xml:space="preserve">
+    <value>ค่าความเสี่ยงของซูเปอร์ต้องน้อยกว่าหรือเท่ากับค่าความเสี่ยงสูงสุดของซูเปอร์</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeGreaterThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องน้อยกว่าหรือเท่ากับ {0}.</value>
+  </data>
+  <data name="SuperPTOnMemberCannotBeLessThan" xml:space="preserve">
+    <value>ค่าความเสี่ยงของซูเปอร์ต่อเมมเบอร์ต้องมากกว่ากว่าหรือเท่ากับ {0}.</value>
+  </data>
 </root>

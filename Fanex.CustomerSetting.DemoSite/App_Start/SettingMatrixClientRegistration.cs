@@ -14,7 +14,7 @@
         public override void RegisterRouteConfig(RouteCollection routes)
         {
             routes.MapRoute(
-                name: "Matrix_default",
+                name: "DCSMatrix_Routing",
                 url: "Matrix/{controller}/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSettingMatrix", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Fanex.CustomerSetting.MatrixClient.Controllers" });

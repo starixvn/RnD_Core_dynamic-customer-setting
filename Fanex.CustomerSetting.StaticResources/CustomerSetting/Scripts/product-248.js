@@ -31119,13 +31119,14 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-cn"] = {
         "Agents": "代理",
+        "CopyTooltip": "点击以复制数值",
         "CustomerSetting": "会员设定",
         "Fax": "传真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "现场",
-        "Masters": "会员",
+        "Masters": "总代理",
         "Members": "会员",
         "MobilePhone": "手机",
         "Nickname": "昵称",
@@ -31133,19 +31134,21 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Phone": "电话",
         "Update": "更改",
         "UserName": "用户名",
+        "UserNames": "用户名",
         "Yes": "是"
     };
     
     resources["label"] = resources["label"] || {};
     resources["label"]["zh-tw"] = {
         "Agents": "代理",
+        "CopyTooltip": "點擊以復制數值",
         "CustomerSetting": "會員設定",
         "Fax": "傳真",
         "FirstName": "名",
         "GeneralInformation": "基本信息",
         "LastName": "姓",
         "Live": "現場",
-        "Masters": "會員",
+        "Masters": "總代理",
         "Members": "會員",
         "MobilePhone": "手機",
         "Nickname": "暱稱",
@@ -31153,6 +31156,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Phone": "電話",
         "Update": "更改",
         "UserName": "用戶名",
+        "UserNames": "用戶名",
         "Yes": "是"
     };
     
@@ -31194,21 +31198,23 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     resources["label"] = resources["label"] || {};
     resources["label"]["th-th"] = {
-        "Agents": "ตัวแทน",
+        "Agents": "เอเจนท์",
+        "CopyTooltip": "คลิ๊กค่าที่จะซ้ำกัน",
         "CustomerSetting": "ตั้งค่าสมาชิก",
         "Fax": "แฟกซ์",
         "FirstName": "ชื่อ",
         "GeneralInformation": "ข้อมูลทั่วไป",
         "LastName": "นามสกุล",
         "Live": "สด",
-        "Masters": "ตัวแทนหลัก",
-        "Members": "สมาชิก",
+        "Masters": "มาสเตอร์ต่าง ๆ",
+        "Members": "เมมเบอร์ต่าง ๆ",
         "MobilePhone": "โทรศัพท์มือถือ",
         "Nickname": "ชื่อเล่น",
         "No": "ไม่",
         "Phone": "โทรศัพท์",
         "Update": "ล่าสุด",
         "UserName": "ชื่อผู้ใช้ระบบ",
+        "UserNames": "ยูเซอร์เนม",
         "Yes": "ตกลง"
     };
     
@@ -31258,6 +31264,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["zh-cn"] = {
         "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
         "AccountWasDisabled": "这个帐号禁用",
+        "CustomersAreNotSameLine": "会员不同线！",
+        "DuplicateValuesAlertMsg": "突显值已超出范围。",
+        "Msg_90001": "更新程序失败！",
+        "NoChangeToUpdate": "没有任何的变化更新！",
+        "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
         "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
     };
     
@@ -31265,6 +31276,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["zh-tw"] = {
         "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
         "AccountWasDisabled": "這個帳號禁用",
+        "CustomersAreNotSameLine": "會員不同線！",
+        "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
+        "Msg_90001": "更新程序失敗！",
+        "NoChangeToUpdate": "沒有任何的變化更新！",
+        "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
         "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
     };
     
@@ -31286,6 +31302,11 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     resources["message"]["th-th"] = {
         "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
         "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "CustomersAreNotSameLine": "ลูกเค้าไม่ได้อยู่ในสายเดียวกัน",
+        "DuplicateValuesAlertMsg": "ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต",
+        "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
+        "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
+        "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
         "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
     };
     
@@ -31370,11 +31391,13 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-cn"] = {
+        "Msg_1": "佣金率无效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["zh-tw"] = {
+        "Msg_1": "傭金率無效",
         "UpdateCommissionSuccessfully": "佣金已更新成功"
     };
     
@@ -31389,6 +31412,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     commissionResources["message"] = commissionResources["message"] || {};
     commissionResources["message"]["th-th"] = {
+        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง",
         "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
     };
     
@@ -31417,15 +31441,15 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["zh-cn"] = {
         "Enable": "启用",
-        "EnableDownline": "启用下线",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "启动下线",
+        "ProductStatus": "产品状态"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["zh-tw"] = {
         "Enable": "啟用",
-        "EnableDownline": "啟用下線",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "啟動下線",
+        "ProductStatus": "產品狀態"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -31443,8 +31467,8 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["th-th"] = {
         "Enable": "เปิดใช้งาน",
-        "EnableDownline": "เปิดใช้งาน ดาวไลน์",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
+        "ProductStatus": "สถานะผลิตภันฑ์"
     };
     
     productStatusResources["label"] = productStatusResources["label"] || {};
@@ -31459,18 +31483,30 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
         "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
-        "DownlineStatusIsInvalid": "The product is not offered for this line of customers",
+        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
-        "UpdateProductStatusSuccessfully": "Updated product status successfully."
+        "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["zh-cn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
+        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
+        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
+        "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
+        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "UpdateProductStatusSuccessfully": "产品状态更新成功"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["zh-tw"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
+        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
+        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
+        "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
+        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
@@ -31483,6 +31519,12 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["th-th"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
+        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
+        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
+        "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
+        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};

@@ -47,5 +47,10 @@
                     IsSuccessful = true
                 });
         }
+
+        public ActionResult RedirectAction()
+        {
+            return this.RedirectToAction("DemoAction", "DemoCtrl");
+        }
     }
 }

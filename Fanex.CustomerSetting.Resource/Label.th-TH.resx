@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Agents" xml:space="preserve">
-    <value>ตัวแทน</value>
+    <value>เอเจนท์</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>แฟกซ์</value>
@@ -136,10 +136,10 @@
     <value>สด</value>
   </data>
   <data name="Masters" xml:space="preserve">
-    <value>ตัวแทนหลัก</value>
+    <value>มาสเตอร์ต่าง ๆ </value>
   </data>
   <data name="Members" xml:space="preserve">
-    <value>สมาชิก</value>
+    <value>เมมเบอร์ต่าง ๆ </value>
   </data>
   <data name="MobilePhone" xml:space="preserve">
     <value>โทรศัพท์มือถือ</value>
@@ -164,5 +164,11 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>ตกลง</value>
+  </data>
+  <data name="CopyTooltip" xml:space="preserve">
+    <value>คลิ๊กค่าที่จะซ้ำกัน</value>
+  </data>
+  <data name="UserNames" xml:space="preserve">
+    <value>ยูเซอร์เนม</value>
   </data>
 </root>
