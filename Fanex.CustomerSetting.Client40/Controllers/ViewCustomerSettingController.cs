@@ -95,7 +95,9 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                throw new CustomerSettingException(response.Content);
+                var errorMessage = (int)response.StatusCode == 0
+                    ? response.ErrorMessage : response.Content;
+                throw new CustomerSettingException(errorMessage);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);
