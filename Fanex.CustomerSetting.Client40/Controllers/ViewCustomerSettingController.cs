@@ -87,7 +87,13 @@
         {
             IRestResponse response = _customerSettingService.QueryCustomerSettingTemplate(isIe8);
             bool isDebug = HttpContext.IsDebuggingEnabled;
-            string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris).ToString();
+            string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris);
+
+            if(!cdn.Contains("http"))
+            {
+                cdn = Url.Content(cdn);
+            }
+
             string customCss = CustomerSettingConfiguration.Settings.CustomCssUrl != null
                 ? Url.Content(CustomerSettingConfiguration.Settings.CustomCssUrl.ToString())
                 : string.Empty;
