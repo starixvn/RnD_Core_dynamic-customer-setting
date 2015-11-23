@@ -9,6 +9,8 @@ module CustomerSetting.IE8 {
         public static $inject: string[] = ["customerSettingResource", "parametersService"];
 
         private resource: any;
+        private defaultLabel: any;
+        private defaultMessage: any;
         private label: any;
         private message: any;
 
@@ -20,10 +22,12 @@ module CustomerSetting.IE8 {
         public getLabel(key: string): string {
             var value: string = this.label[key];
 
+            if (angular.isUndefined(value)) {
+                value = this.defaultLabel[key] || key;
+            }
+
             if (angular.isDefined(value)) {
                 value = value.replace(/&apos;|&#x0*27;/g, "'");
-            } else {
-                value = key;
             }
 
             return value;
@@ -32,10 +36,12 @@ module CustomerSetting.IE8 {
         public getMessage(key: string): string {
             var msg: string = this.message[key];
 
+            if (angular.isUndefined(msg)) {
+                msg = this.defaultMessage[key] || key;
+            }
+
             if (angular.isDefined(msg)) {
                 msg = msg.replace(/&apos;|&#x0*27;/g, "'");
-            } else {
-                msg = key;
             }
 
             return msg;
@@ -56,6 +62,8 @@ module CustomerSetting.IE8 {
         /* tslint:disable:no-string-literal */
         private setLanguage(language: string): void {
             var defaultLanguage: string = Defaults.language.toLowerCase();
+            var label = this.resource["label"] || {};
+            var message = this.resource["message"] || {};
 
             if (angular.isDefined(language)) {
                 language = language.toLowerCase();
@@ -63,24 +71,11 @@ module CustomerSetting.IE8 {
                 language = defaultLanguage;
             }
 
-            this.label = this.resource["label"][language];
-            this.message = this.resource["message"][language];
+            this.defaultLabel = label[defaultLanguage] || {};
+            this.defaultMessage = message[defaultLanguage] || {};
 
-            if (angular.isUndefined(this.label)) {
-                this.label = this.resource["label"][defaultLanguage];
-            }
-
-            if (angular.isUndefined(this.label)) {
-                this.label = {};
-            }
-
-            if (angular.isUndefined(this.message)) {
-                this.message = this.resource["message"][defaultLanguage];
-            }
-
-            if (angular.isUndefined(this.message)) {
-                this.message = {};
-            }
+            this.label = label[language] || this.defaultLabel;
+            this.message = message[language] || this.defaultMessage;
         }
         /* tslint:enable:no-string-literal */
     }

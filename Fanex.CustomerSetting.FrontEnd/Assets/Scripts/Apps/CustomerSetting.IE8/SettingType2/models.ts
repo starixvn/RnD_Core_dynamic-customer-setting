@@ -116,11 +116,13 @@ module CustomerSetting.IE8 {
         }
 
         public validateMaxBet(): boolean {
+            var unlimitedUpline: boolean = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
+
             if (this.validateSpecialCase()) {
                 return true;
             }
 
-            if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+            if (!unlimitedUpline && this.maxBet > this.upline.maxBet) {
                 this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
 
                 return false;
@@ -144,11 +146,13 @@ module CustomerSetting.IE8 {
         }
 
         public validateMaxPerMatch(): boolean {
+            var unlimitedUpline: boolean = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
+
             if (this.validateSpecialCase()) {
                 return true;
             }
 
-            if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
+            if (!unlimitedUpline && this.maxPerMatch > this.upline.maxPerMatch) {
                 this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
 
                 return false;

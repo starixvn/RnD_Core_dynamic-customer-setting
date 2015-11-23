@@ -24690,21 +24690,21 @@ var CustomerSetting;
             }
             ResourceService.prototype.getLabel = function (key) {
                 var value = this.label[key];
+                if (angular.isUndefined(value)) {
+                    value = this.defaultLabel[key] || key;
+                }
                 if (angular.isDefined(value)) {
                     value = value.replace(/&apos;|&#x0*27;/g, "'");
-                }
-                else {
-                    value = key;
                 }
                 return value;
             };
             ResourceService.prototype.getMessage = function (key) {
                 var msg = this.message[key];
+                if (angular.isUndefined(msg)) {
+                    msg = this.defaultMessage[key] || key;
+                }
                 if (angular.isDefined(msg)) {
                     msg = msg.replace(/&apos;|&#x0*27;/g, "'");
-                }
-                else {
-                    msg = key;
                 }
                 return msg;
             };
@@ -24723,26 +24723,18 @@ var CustomerSetting;
             };
             ResourceService.prototype.setLanguage = function (language) {
                 var defaultLanguage = IE8.Defaults.language.toLowerCase();
+                var label = this.resource["label"] || {};
+                var message = this.resource["message"] || {};
                 if (angular.isDefined(language)) {
                     language = language.toLowerCase();
                 }
                 else {
                     language = defaultLanguage;
                 }
-                this.label = this.resource["label"][language];
-                this.message = this.resource["message"][language];
-                if (angular.isUndefined(this.label)) {
-                    this.label = this.resource["label"][defaultLanguage];
-                }
-                if (angular.isUndefined(this.label)) {
-                    this.label = {};
-                }
-                if (angular.isUndefined(this.message)) {
-                    this.message = this.resource["message"][defaultLanguage];
-                }
-                if (angular.isUndefined(this.message)) {
-                    this.message = {};
-                }
+                this.defaultLabel = label[defaultLanguage] || {};
+                this.defaultMessage = message[defaultLanguage] || {};
+                this.label = label[language] || this.defaultLabel;
+                this.message = message[language] || this.defaultMessage;
             };
             ResourceService.$inject = ["customerSettingResource", "parametersService"];
             return ResourceService;
@@ -25443,10 +25435,11 @@ var CustomerSetting;
                 return true;
             };
             SettingType2Item.prototype.validateMaxBet = function () {
+                var unlimitedUpline = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
                 if (this.validateSpecialCase()) {
                     return true;
                 }
-                if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+                if (!unlimitedUpline && this.maxBet > this.upline.maxBet) {
                     this.validationState = new IE8.ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
                     return false;
                 }
@@ -25462,10 +25455,11 @@ var CustomerSetting;
                 return true;
             };
             SettingType2Item.prototype.validateMaxPerMatch = function () {
+                var unlimitedUpline = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
                 if (this.validateSpecialCase()) {
                     return true;
                 }
-                if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
+                if (!unlimitedUpline && this.maxPerMatch > this.upline.maxPerMatch) {
                     this.validationState = new IE8.ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
                     return false;
                 }
@@ -25517,6 +25511,7 @@ var CustomerSetting;
                     }];
                 this.link = function (scope, wrapElement) {
                     var element = angular.element(wrapElement.children()[0]);
+                    var unlimitedUpline = true;
                     var constraintElement;
                     var modelCtrl;
                     element.attr("data-ng-model", "settingItem." + scope.fieldName);
@@ -25527,11 +25522,16 @@ var CustomerSetting;
                     if (scope.customerLevel !== IE8.Level.superAgent || (scope.fieldName === "minBet" && scope.settingItem.upline.minBet > 0)) {
                         element.addClass("setting-field--has-constraint");
                     }
-                    if (scope.fieldName === "minBet") {
-                        wrapElement.append(IE8.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    if (scope.settingItem.upline) {
+                        unlimitedUpline = scope.settingItem.upline.minBet === 0 && scope.settingItem.upline.maxBet === 0 && scope.settingItem.upline.maxPerMatch === 0;
                     }
-                    else {
-                        wrapElement.append(IE8.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    if (!unlimitedUpline) {
+                        if (scope.fieldName === "minBet") {
+                            wrapElement.append(IE8.StringFormater.format("<span> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                        }
+                        else {
+                            wrapElement.append(IE8.StringFormater.format("<span> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                        }
                     }
                     _this.$compile(element)(scope);
                     constraintElement = element[0].nextSibling;
@@ -25552,9 +25552,6 @@ var CustomerSetting;
                         }
                     });
                     element.on("keydown", function (event) {
-                        var dotPistion = modelCtrl.$viewValue.indexOf(".");
-                        var numberParts = modelCtrl.$viewValue.split(".");
-                        var input = element[0];
                         if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
                             event.preventDefault();
                             return;
@@ -25569,45 +25566,19 @@ var CustomerSetting;
                             event.preventDefault();
                             return;
                         }
-                        if (dotPistion >= 0 && dotPistion < getSelectionStart(input) && numberParts[1].length > 1) {
-                            event.preventDefault();
-                            return;
-                        }
                     });
                     modelCtrl.$formatters.unshift(function () {
                         return _this.$filter("number")(modelCtrl.$modelValue);
                     });
                     modelCtrl.$parsers.unshift(function (viewValue) {
                         var value = 0;
-                        var numberParts = viewValue ? viewValue.split(".") : [];
-                        if (numberParts.length > 1) {
-                            var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
-                            var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
-                            decimalPart = decimalPart.substring(0, 2);
-                            value = parseFloat(plainIntegerPart + "." + decimalPart);
-                            element.val(_this.$filter("number")(plainIntegerPart) + "." + decimalPart);
-                            return value;
+                        if (viewValue) {
+                            var plainNumber = viewValue.replace(/[\,\.]/g, "");
+                            value = parseInt(plainNumber, 10);
                         }
-                        else if (numberParts.length > 0) {
-                            var plainNumber = viewValue.replace(/[\,]/g, "");
-                            value = parseInt(plainNumber, 10) || 0;
-                            element.val(_this.$filter("number")(value));
-                            return value;
-                        }
+                        element.val(_this.$filter("number")(value));
+                        return value;
                     });
-                    function getSelectionStart(element) {
-                        if (element.createTextRange) {
-                            var selectionRange = document.selection.createRange().duplicate();
-                            selectionRange.moveEnd("character", element.value.length);
-                            if (selectionRange.text === "") {
-                                return element.value.length;
-                            }
-                            return element.value.lastIndexOf(selectionRange.text);
-                        }
-                        else {
-                            return element.selectionStart;
-                        }
-                    }
                 };
                 this.$compile = $compile;
                 this.$filter = $filter;
@@ -26109,7 +26080,7 @@ var CustomerSetting;
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'Copy\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div class=\"msg-container\" data-ng-show=\"result\"><div class=\"msg msg--{{result.msgType}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.settingResults && subResult.settingResults.length > 0\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgType}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgType}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
