@@ -50,6 +50,7 @@
 
             if (!string.IsNullOrEmpty(template))
             {
+                query.Language = CustomerSettingRegistration.SettingContext.Language;
                 template = ReplaceParameters(template, query);
             }
 
@@ -89,7 +90,7 @@
             bool isDebug = HttpContext.IsDebuggingEnabled;
             string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris);
 
-            if(!cdn.Contains("http"))
+            if (!cdn.Contains("http"))
             {
                 cdn = Url.Content(cdn);
             }

@@ -16,11 +16,14 @@
     /// </summary>
     internal class HmacAuthenticator : IAuthenticator
     {
-        private readonly string _machineIP;
+        private static string _machineIP;
 
         public HmacAuthenticator()
         {
-            _machineIP = GetLocalIPAddress();
+            if (!string.IsNullOrEmpty(_machineIP))
+            {
+                _machineIP = GetLocalIPAddress();
+            }
         }
 
         public void Authenticate(IRestClient client, IRestRequest request)
