@@ -5,12 +5,16 @@
 
     public class SettingItemError : ISettingItem
     {
+        public SettingItemError()
+        {
+            //// Workaround for multiple language, if private set, cannot use any other languages
+            ErrorMessage = Message.SettingTypeError;
+        }
+
         public string ErrorMessage
         {
-            get
-            {
-                return Message.SettingTypeError;
-            }
+            get;
+            set;
         }
 
         public string TypeName
