@@ -95,6 +95,10 @@ module CustomerSetting.IE8 {
             });
 
             element.on("keydown", function (event: JQueryEventObject) {
+                var dotPistion = modelCtrl.$viewValue.indexOf(".");
+                var numberParts: string[] = modelCtrl.$viewValue.split(".");
+                var input: HTMLInputElement = <HTMLInputElement>element[0];
+
                 if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
                     event.preventDefault();
 
@@ -114,6 +118,12 @@ module CustomerSetting.IE8 {
 
                     return;
                 }
+
+                if (dotPistion >= 0 && dotPistion < getSelectionStart(input) && numberParts[1].length > 1) {
+                    event.preventDefault();
+
+                    return;
+                }
             });
 
             modelCtrl.$formatters.unshift(() => {
@@ -122,17 +132,42 @@ module CustomerSetting.IE8 {
 
             modelCtrl.$parsers.unshift((viewValue: string) => {
                 var value: number = 0;
+                var numberParts: string[] = viewValue ? viewValue.split(".") : [];
 
-                if (viewValue) {
-                    var plainNumber = viewValue.replace(/[\,\.]/g, "");
+                if (numberParts.length > 1) {
+                    var plainIntegerPart: string = numberParts[0].replace(/[\,]/g, "") || "0";
+                    var decimalPart: string = numberParts[1].replace(/[\,\.]/g, "") || "";
 
-                    value = parseInt(plainNumber, 10);
+                    decimalPart = decimalPart.substring(0, 2);
+                    value = parseFloat(plainIntegerPart + "." + decimalPart);
+                    element.val(this.$filter("number")(plainIntegerPart) + "." + decimalPart);
+
+                    return value;
+                } else if (numberParts.length > 0) {
+                    var plainNumber: string = viewValue.replace(/[\,]/g, "");
+
+                    value = parseInt(plainNumber, 10) || 0;
+                    element.val(this.$filter("number")(value));
+
+                    return value;
                 }
-
-                element.val(this.$filter("number")(value));
-
-                return value;
             });
+
+            function getSelectionStart(element: HTMLInputElement): number {
+                if (element.createTextRange) {
+                    var selectionRange = (<any>document).selection.createRange().duplicate();
+
+                    selectionRange.moveEnd("character", element.value.length);
+
+                    if (selectionRange.text === "") {
+                        return element.value.length;
+                    }
+
+                    return element.value.lastIndexOf(selectionRange.text);
+                } else {
+                    return element.selectionStart;
+                }
+            }
         };
 
         private $compile: ng.ICompileService;
