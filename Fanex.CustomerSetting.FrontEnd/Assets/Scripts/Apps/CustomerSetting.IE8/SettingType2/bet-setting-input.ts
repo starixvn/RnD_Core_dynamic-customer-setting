@@ -100,8 +100,9 @@ module CustomerSetting.IE8 {
             });
 
             element.on("keydown", function (event: JQueryEventObject) {
-                var dotPistion = modelCtrl.$viewValue.indexOf(".");
-                var numberParts: string[] = modelCtrl.$viewValue.split(".");
+                var value: string = element.val();
+                var dotPistion = value.indexOf(".");
+                var numberParts: string[] = value.split(".");
                 var input: HTMLInputElement = <HTMLInputElement>element[0];
 
                 if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
@@ -147,6 +148,7 @@ module CustomerSetting.IE8 {
 
             modelCtrl.$parsers.unshift((viewValue: string) => {
                 var value: number = 0;
+                var formattedValue: string = viewValue;
                 var numberParts: string[] = viewValue ? viewValue.split(".") : [];
 
                 if (numberParts.length > 1) {
@@ -155,17 +157,17 @@ module CustomerSetting.IE8 {
 
                     decimalPart = decimalPart.substring(0, 2);
                     value = parseFloat(plainIntegerPart + "." + decimalPart);
-                    element.val(this.$filter("number")(plainIntegerPart) + "." + decimalPart);
-
-                    return value;
+                    formattedValue = this.$filter("number")(plainIntegerPart) + "." + decimalPart;
                 } else if (numberParts.length > 0) {
                     var plainNumber: string = viewValue.replace(/[\,]/g, "");
 
                     value = parseInt(plainNumber, 10) || 0;
-                    element.val(this.$filter("number")(value));
-
-                    return value;
+                    formattedValue = this.$filter("number")(value);
                 }
+
+                element.val(formattedValue);
+
+                return value;
             });
 
             function getSelectionStart(element: HTMLInputElement): number {

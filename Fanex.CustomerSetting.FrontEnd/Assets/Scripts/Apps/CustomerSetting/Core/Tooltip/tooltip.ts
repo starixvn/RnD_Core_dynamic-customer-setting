@@ -116,7 +116,7 @@ module CustomerSetting {
 
     ModuleRegister.directive("tooltip", Tooltip);
 
-    function TooltipMessage($injector: ng.auto.IInjectorService): Function {
+    function TooltipMessage($injector: ng.auto.IInjectorService, $filter: ng.IFilterService): Function {
         return (result: ValidationResult, resourceServiceName: string, fieldName: string) => {
             var message: string = "";
 
@@ -125,9 +125,16 @@ module CustomerSetting {
                 && !result.isWarning
                 && (!fieldName || (fieldName && fieldName === result.fieldName))) {
                 var resourceService: ResourceService = $injector.get<ResourceService>(resourceServiceName);
+                var params: string[] = (result.msgParams || []).map((param: any) => {
+                    if (typeof param === "number") {
+                        return $filter("number")(param);
+                    } else {
+                        return param;
+                    }
+                });
 
                 if (resourceService) {
-                    message = resourceService.getFormattedMessage(result.message, result.msgParams);
+                    message = resourceService.getFormattedMessage(result.message, params);
                 }
             }
 
@@ -135,7 +142,7 @@ module CustomerSetting {
         };
     }
 
-    TooltipMessage.$inject = ["$injector"];
+    TooltipMessage.$inject = ["$injector", "$filter"];
     ModuleRegister.filter("tooltipMessage", TooltipMessage);
 
     function HighlightingField(): Function {

@@ -95,8 +95,9 @@ module CustomerSetting {
             });
 
             element.on("keydown", function (event: JQueryEventObject) {
-                var dotPistion = modelCtrl.$viewValue.indexOf(".");
-                var numberParts: string[] = modelCtrl.$viewValue.split(".");
+                var value: string = element.val();
+                var dotPistion = value.indexOf(".");
+                var numberParts: string[] = value.split(".");
                 var input: HTMLInputElement = <HTMLInputElement>element[0];
 
                 if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
