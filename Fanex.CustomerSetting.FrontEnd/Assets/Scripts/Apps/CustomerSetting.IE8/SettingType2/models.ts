@@ -98,16 +98,18 @@ module CustomerSetting.IE8 {
                 return true;
             }
 
-            if (this.minBet < this.upline.minBet) {
-                this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
+            if (this.minBet !== 0) {
+                if (this.minBet < this.upline.minBet) {
+                    this.validationState = new ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.minBet > this.maxBet) {
-                this.validationState = new ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
+                if (this.minBet > this.maxBet) {
+                    this.validationState = new ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
 
-                return false;
+                    return false;
+                }
             }
 
             this.validationState = <ValidationResult>Result.normal;
@@ -116,28 +118,28 @@ module CustomerSetting.IE8 {
         }
 
         public validateMaxBet(): boolean {
-            var unlimitedUpline: boolean = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
-
             if (this.validateSpecialCase()) {
                 return true;
             }
 
-            if (!unlimitedUpline && this.maxBet > this.upline.maxBet) {
-                this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
+            if (this.maxBet !== 0) {
+                if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+                    this.validationState = new ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.maxBet > this.maxPerMatch) {
-                this.validationState = new ValidationResult("MaxBetLessThanOrEqualMaxPerMatch", "maxBet");
+                if (this.maxBet > this.maxPerMatch) {
+                    this.validationState = new ValidationResult("MaxBetLessThanOrEqualMaxPerMatch", "maxBet");
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.maxBet < this.minBet) {
-                this.validationState = new ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
+                if (this.maxBet < this.minBet) {
+                    this.validationState = new ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
 
-                return false;
+                    return false;
+                }
             }
 
             this.validationState = <ValidationResult>Result.normal;
@@ -146,22 +148,22 @@ module CustomerSetting.IE8 {
         }
 
         public validateMaxPerMatch(): boolean {
-            var unlimitedUpline: boolean = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
-
             if (this.validateSpecialCase()) {
                 return true;
             }
 
-            if (!unlimitedUpline && this.maxPerMatch > this.upline.maxPerMatch) {
-                this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
+            if (this.maxPerMatch !== 0) {
+                if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
+                    this.validationState = new ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
 
-                return false;
-            }
+                    return false;
+                }
 
-            if (this.maxBet > this.maxPerMatch) {
-                this.validationState = new ValidationResult("MaxPerMatchMoreThanOrEqualMaxBet", "maxPerMatch");
+                if (this.maxBet > this.maxPerMatch) {
+                    this.validationState = new ValidationResult("MaxPerMatchMoreThanOrEqualMaxBet", "maxPerMatch");
 
-                return false;
+                    return false;
+                }
             }
 
             this.validationState = <ValidationResult>Result.normal;

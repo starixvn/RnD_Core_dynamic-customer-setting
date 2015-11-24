@@ -43,7 +43,6 @@ module CustomerSetting {
 
         public link: ng.IDirectiveLinkFn = (scope: IBetSettingInputScope, wrapElement: ng.IAugmentedJQuery) => {
             var element: ng.IAugmentedJQuery = angular.element(wrapElement.children()[0]);
-            var unlimitedUpline: boolean = true;
             var modelCtrl: any;
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
@@ -60,16 +59,12 @@ module CustomerSetting {
                 element.addClass("setting-field--has-constraint");
             }
 
-            if (scope.settingItem.upline) {
-                unlimitedUpline = scope.settingItem.upline.minBet === 0 && scope.settingItem.upline.maxBet === 0 && scope.settingItem.upline.maxPerMatch === 0;
-            }
-
-            if (!unlimitedUpline) {
-                if (scope.fieldName === "minBet") {
-                    wrapElement.append(StringFormater.format("<span> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
-                } else {
-                    wrapElement.append(StringFormater.format("<span> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
-                }
+            if (scope.fieldName === "minBet") {
+                wrapElement.append(
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+            } else {
+                wrapElement.append(
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
             }
 
             this.$compile(wrapElement)(scope);

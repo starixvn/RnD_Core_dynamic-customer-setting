@@ -30484,6 +30484,76 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    uplineLevel: "=",
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-upline-level=\"uplineLevel\"",
+                            " data-customer-level=\"setting.customerLevel\"",
+                            " data-product-id=\"setting.productId\"",
+                            " data-product-name=\"setting.productName\"",
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            "data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../resource/resource-translation.ts" />
 /// <reference path="../module-registrater.ts" />
 var CustomerSetting;
@@ -30617,76 +30687,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    uplineLevel: "=",
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            "data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    })();
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-})(CustomerSetting || (CustomerSetting = {}));
-
 /// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -30765,49 +30765,53 @@ var CustomerSetting;
             if (this.validateSpecialCase()) {
                 return true;
             }
-            if (this.minBet < this.upline.minBet) {
-                this.validationState = new CustomerSetting.ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
-                return false;
-            }
-            if (this.minBet > this.maxBet) {
-                this.validationState = new CustomerSetting.ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
-                return false;
+            if (this.minBet !== 0) {
+                if (this.minBet < this.upline.minBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
+                    return false;
+                }
+                if (this.minBet > this.maxBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
+                    return false;
+                }
             }
             this.validationState = CustomerSetting.Result.normal;
             return true;
         };
         SettingType2Item.prototype.validateMaxBet = function () {
-            var unlimitedUpline = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
             if (this.validateSpecialCase()) {
                 return true;
             }
-            if (!unlimitedUpline && this.maxBet > this.upline.maxBet) {
-                this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
-                return false;
-            }
-            if (this.maxBet > this.maxPerMatch) {
-                this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualMaxPerMatch", "maxBet");
-                return false;
-            }
-            if (this.maxBet < this.minBet) {
-                this.validationState = new CustomerSetting.ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
-                return false;
+            if (this.maxBet !== 0) {
+                if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
+                    return false;
+                }
+                if (this.maxBet > this.maxPerMatch) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualMaxPerMatch", "maxBet");
+                    return false;
+                }
+                if (this.maxBet < this.minBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
+                    return false;
+                }
             }
             this.validationState = CustomerSetting.Result.normal;
             return true;
         };
         SettingType2Item.prototype.validateMaxPerMatch = function () {
-            var unlimitedUpline = this.upline.minBet === 0 && this.upline.maxBet === 0 && this.upline.maxPerMatch === 0;
             if (this.validateSpecialCase()) {
                 return true;
             }
-            if (!unlimitedUpline && this.maxPerMatch > this.upline.maxPerMatch) {
-                this.validationState = new CustomerSetting.ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
-                return false;
-            }
-            if (this.maxBet > this.maxPerMatch) {
-                this.validationState = new CustomerSetting.ValidationResult("MaxPerMatchMoreThanOrEqualMaxBet", "maxPerMatch");
-                return false;
+            if (this.maxPerMatch !== 0) {
+                if (this.upline.maxPerMatch > 0 && this.maxPerMatch > this.upline.maxPerMatch) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxPerMatchLessThanOrEqualTo", "maxPerMatch", [this.upline.maxPerMatch]);
+                    return false;
+                }
+                if (this.maxBet > this.maxPerMatch) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxPerMatchMoreThanOrEqualMaxBet", "maxPerMatch");
+                    return false;
+                }
             }
             this.validationState = CustomerSetting.Result.normal;
             return true;
@@ -30844,7 +30848,6 @@ var CustomerSetting;
                 }];
             this.link = function (scope, wrapElement) {
                 var element = angular.element(wrapElement.children()[0]);
-                var unlimitedUpline = true;
                 var modelCtrl;
                 element.attr("data-ng-model", "settingItem." + scope.fieldName);
                 element.attr("data-ng-change", "updateValue()");
@@ -30854,16 +30857,11 @@ var CustomerSetting;
                 if (scope.customerLevel !== CustomerSetting.Level.super || (scope.fieldName === "minBet" && scope.settingItem.upline.minBet > 0)) {
                     element.addClass("setting-field--has-constraint");
                 }
-                if (scope.settingItem.upline) {
-                    unlimitedUpline = scope.settingItem.upline.minBet === 0 && scope.settingItem.upline.maxBet === 0 && scope.settingItem.upline.maxPerMatch === 0;
+                if (scope.fieldName === "minBet") {
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
                 }
-                if (!unlimitedUpline) {
-                    if (scope.fieldName === "minBet") {
-                        wrapElement.append(CustomerSetting.StringFormater.format("<span> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
-                    }
-                    else {
-                        wrapElement.append(CustomerSetting.StringFormater.format("<span> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
-                    }
+                else {
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
                 }
                 _this.$compile(wrapElement)(scope);
                 modelCtrl = element.controller("ngModel");
