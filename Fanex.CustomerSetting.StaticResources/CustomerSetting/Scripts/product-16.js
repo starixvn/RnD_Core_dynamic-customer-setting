@@ -31920,22 +31920,33 @@ var CustomerSetting;
                     return _this.$filter("number")(modelCtrl.$modelValue);
                 });
                 modelCtrl.$parsers.unshift(function (viewValue) {
+                    var input = element[0];
                     var value = 0;
+                    var formattedValue = viewValue;
+                    var caretPosition = input.selectionStart;
                     var numberParts = viewValue ? viewValue.split(".") : [];
                     if (numberParts.length > 1) {
                         var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
                         var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
                         decimalPart = decimalPart.substring(0, 2);
                         value = parseFloat(plainIntegerPart + "." + decimalPart);
-                        element.val(_this.$filter("number")(plainIntegerPart) + "." + decimalPart);
-                        return value;
+                        formattedValue = _this.$filter("number")(plainIntegerPart) + "." + decimalPart;
                     }
                     else if (numberParts.length > 0) {
                         var plainNumber = viewValue.replace(/[\,]/g, "");
                         value = parseInt(plainNumber, 10) || 0;
-                        element.val(_this.$filter("number")(value));
-                        return value;
+                        formattedValue = _this.$filter("number")(value);
                     }
+                    element.val(formattedValue);
+                    if (viewValue.length !== caretPosition) {
+                        var offset = viewValue.length - formattedValue.length;
+                        caretPosition -= offset;
+                        if (input.selectionStart === input.selectionEnd) {
+                            input.selectionEnd = caretPosition;
+                        }
+                        input.selectionStart = caretPosition;
+                    }
+                    return value;
                 });
             };
             this.$compile = $compile;
@@ -32247,7 +32258,7 @@ $templateCache.put("settingtype1-value.htm","<div data-ng-if=\"settingType | edi
 $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
 $templateCache.put("bet-setting-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
 $templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | betSettingLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | betSettingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | betSettingLabel)}}</div></div>");
-$templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet}}</div><div class=\"block__cell w33-percent\">{{item.maxBet}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch}}</div></div>");
+$templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | number}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | number}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | number}}</div></div>");
 $templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
 $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");}]);

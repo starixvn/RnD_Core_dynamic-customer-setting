@@ -141,7 +141,10 @@ module CustomerSetting {
             });
 
             modelCtrl.$parsers.unshift((viewValue: string) => {
+                var input: HTMLInputElement = <HTMLInputElement>element[0];
                 var value: number = 0;
+                var formattedValue: string = viewValue;
+                var caretPosition: number = input.selectionStart;
                 var numberParts: string[] = viewValue ? viewValue.split(".") : [];
 
                 if (numberParts.length > 1) {
@@ -150,17 +153,29 @@ module CustomerSetting {
 
                     decimalPart = decimalPart.substring(0, 2);
                     value = parseFloat(plainIntegerPart + "." + decimalPart);
-                    element.val(this.$filter("number")(plainIntegerPart) + "." + decimalPart);
-
-                    return value;
+                    formattedValue = this.$filter("number")(plainIntegerPart) + "." + decimalPart;
                 } else if (numberParts.length > 0) {
                     var plainNumber: string = viewValue.replace(/[\,]/g, "");
 
                     value = parseInt(plainNumber, 10) || 0;
-                    element.val(this.$filter("number")(value));
-
-                    return value;
+                    formattedValue = this.$filter("number")(value);
                 }
+
+                element.val(formattedValue);
+
+                if (viewValue.length !== caretPosition) {
+                    var offset: number = viewValue.length - formattedValue.length;
+
+                    caretPosition -= offset;
+
+                    if (input.selectionStart === input.selectionEnd) {
+                        input.selectionEnd = caretPosition;
+                    }
+
+                    input.selectionStart = caretPosition;
+                }
+
+                return value;
             });
         };
 
