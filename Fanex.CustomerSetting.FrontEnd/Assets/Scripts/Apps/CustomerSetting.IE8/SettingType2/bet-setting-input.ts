@@ -110,7 +110,17 @@ module CustomerSetting.IE8 {
                     return;
                 }
 
-                if ([46, 8, 9, 27, 13, 110].indexOf(event.keyCode) >= 0 // Allow: backspace, delete, tab, escape, enter
+                if ([110, 190].indexOf(event.keyCode) >= 0) {
+                    if (numberParts.length > 1) {
+                        event.preventDefault();
+
+                        return;
+                    } else {
+                        return;
+                    }
+                }
+
+                if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0 // Allow: backspace, delete, tab, escape, enter
                     || (event.keyCode === 65 && event.ctrlKey === true) // Allow: Ctrl+A
                     || (event.keyCode >= 35 && event.keyCode <= 40)) { // Allow: home, end, left, right, down, up
                     // let it happen, don't do anything

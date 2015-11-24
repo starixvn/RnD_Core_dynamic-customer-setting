@@ -30879,7 +30879,16 @@ var CustomerSetting;
                         event.preventDefault();
                         return;
                     }
-                    if ([46, 8, 9, 27, 13, 110].indexOf(event.keyCode) >= 0
+                    if ([110, 190].indexOf(event.keyCode) >= 0) {
+                        if (numberParts.length > 1) {
+                            event.preventDefault();
+                            return;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0
                         || (event.keyCode === 65 && event.ctrlKey === true)
                         || (event.keyCode >= 35 && event.keyCode <= 40)) {
                         return;
