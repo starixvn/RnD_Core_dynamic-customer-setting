@@ -126,4 +126,7 @@
   <data name="SystemError" xml:space="preserve">
     <value>죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다.</value>
   </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>해당 기능에 대한 권한이 없습니다.</value>
+  </data>
 </root>
