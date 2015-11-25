@@ -141,4 +141,7 @@
   <data name="NoChangeToUpdate" xml:space="preserve">
     <value>没有任何的变化更新！</value>
   </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>您没有使用此功能的权限</value>
+  </data>
 </root>

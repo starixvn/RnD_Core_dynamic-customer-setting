@@ -403,12 +403,16 @@ module CustomerSetting {
             return new Result(-1, "SystemError", MessageType.error);
         }
 
+        public static get notAuthorizedError(): Result {
+            return new Result(-2, "YouAreNotAuthorized", MessageType.error);
+        }
+
         public static get noChangeToUpdate(): Result {
-            return new Result(-2, "NoChangeToUpdate", MessageType.error);
+            return new Result(-3, "NoChangeToUpdate", MessageType.error);
         }
 
         public static get invalidParameters(): Result {
-            return new Result(-3, Exceptions.invalidParams(), MessageType.error);
+            return new Result(-4, Exceptions.invalidParams(), MessageType.error);
         }
 
         constructor(code: number, message: string, msgType: MessageType) {

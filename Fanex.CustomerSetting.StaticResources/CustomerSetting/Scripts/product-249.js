@@ -29396,16 +29396,23 @@ var CustomerSetting;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(Result, "notAuthorizedError", {
+            get: function () {
+                return new Result(-2, "YouAreNotAuthorized", CustomerSetting.MessageType.error);
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Result, "noChangeToUpdate", {
             get: function () {
-                return new Result(-2, "NoChangeToUpdate", CustomerSetting.MessageType.error);
+                return new Result(-3, "NoChangeToUpdate", CustomerSetting.MessageType.error);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Result, "invalidParameters", {
             get: function () {
-                return new Result(-3, CustomerSetting.Exceptions.invalidParams(), CustomerSetting.MessageType.error);
+                return new Result(-4, CustomerSetting.Exceptions.invalidParams(), CustomerSetting.MessageType.error);
             },
             enumerable: true,
             configurable: true
@@ -30135,12 +30142,18 @@ var CustomerSetting;
                 }, CustomerSetting.Defaults.displayingMsgTime);
             }, function (response) {
                 var error;
-                if (response && response.data) {
-                    error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
-                }
-                else {
-                    error = CustomerSetting.Result.systemError;
-                    error.message = _this.resourceService.getMessage(error.message);
+                if (response) {
+                    if (response.status === 401) {
+                        error = CustomerSetting.Result.notAuthorizedError;
+                        error.message = _this.resourceService.getMessage(error.message);
+                    }
+                    else if (response.data) {
+                        error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
+                    }
+                    else {
+                        error = CustomerSetting.Result.systemError;
+                        error.message = _this.resourceService.getMessage(error.message);
+                    }
                 }
                 _this.requestMsgResult = error;
             })
@@ -30159,12 +30172,18 @@ var CustomerSetting;
                     _this.setting = new CustomerSetting.Setting(response.data);
                 }, function (response) {
                     var error;
-                    if (response && response.data) {
-                        error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
-                    }
-                    else {
-                        error = CustomerSetting.Result.systemError;
-                        error.message = _this.resourceService.getMessage(error.message);
+                    if (response) {
+                        if (response.status === 401) {
+                            error = CustomerSetting.Result.notAuthorizedError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
+                        else if (response.data) {
+                            error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
+                        }
+                        else {
+                            error = CustomerSetting.Result.systemError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
                     }
                     _this.requestMsgResult = error;
                 })

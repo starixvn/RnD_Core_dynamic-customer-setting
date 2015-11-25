@@ -390,8 +390,9 @@ module CustomerSetting.IE8 {
     export class Result {
         public static normal: Result = new Result(0, "", MessageType.success);
         public static systemError: Result = new Result(-1, "SystemError", MessageType.error);
-        public static noChangeToUpdate: Result = new Result(-2, "NoChangeToUpdate", MessageType.error);
-        public static invalidParameters: Result = new Result(-3, Exceptions.invalidParams(), MessageType.error);
+        public static notAuthorizedError: Result = new Result(-2, "YouAreNotAuthorized", MessageType.error);
+        public static noChangeToUpdate: Result = new Result(-3, "NoChangeToUpdate", MessageType.error);
+        public static invalidParameters: Result = new Result(-4, Exceptions.invalidParams(), MessageType.error);
 
         public code: number;
         public message: string;

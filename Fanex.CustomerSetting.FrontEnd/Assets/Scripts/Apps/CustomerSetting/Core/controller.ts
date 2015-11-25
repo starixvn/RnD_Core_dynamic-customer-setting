@@ -128,11 +128,16 @@ module CustomerSetting {
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
                     var error: Result;
 
-                    if (response && response.data) {
-                        error = new Result(response.status, response.data.message, MessageType.error);
-                    } else {
-                        error = Result.systemError;
-                        error.message = this.resourceService.getMessage(error.message);
+                    if (response) {
+                        if (response.status === 401) {
+                            error = Result.notAuthorizedError;
+                            error.message = this.resourceService.getMessage(error.message);
+                        } else if (response.data) {
+                            error = new Result(response.status, response.data.message, MessageType.error);
+                        } else {
+                            error = Result.systemError;
+                            error.message = this.resourceService.getMessage(error.message);
+                        }
                     }
 
                     this.requestMsgResult = error;
@@ -155,11 +160,16 @@ module CustomerSetting {
                     }, (response: ng.IHttpPromiseCallbackArg<any>) => {
                         var error: Result;
 
-                        if (response && response.data) {
-                            error = new Result(response.status, response.data.message, MessageType.error);
-                        } else {
-                            error = Result.systemError;
-                            error.message = this.resourceService.getMessage(error.message);
+                        if (response) {
+                            if (response.status === 401) {
+                                error = Result.notAuthorizedError;
+                                error.message = this.resourceService.getMessage(error.message);
+                            } else if (response.data) {
+                                error = new Result(response.status, response.data.message, MessageType.error);
+                            } else {
+                                error = Result.systemError;
+                                error.message = this.resourceService.getMessage(error.message);
+                            }
                         }
 
                         this.requestMsgResult = error;

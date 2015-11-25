@@ -126,4 +126,7 @@
   <data name="SystemError" xml:space="preserve">
     <value>Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý</value>
   </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>Bạn không được cho phép sử dụng chức năng này</value>
+  </data>
 </root>

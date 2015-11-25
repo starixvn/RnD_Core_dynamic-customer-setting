@@ -24177,8 +24177,9 @@ var CustomerSetting;
             };
             Result.normal = new Result(0, "", IE8.MessageType.success);
             Result.systemError = new Result(-1, "SystemError", IE8.MessageType.error);
-            Result.noChangeToUpdate = new Result(-2, "NoChangeToUpdate", IE8.MessageType.error);
-            Result.invalidParameters = new Result(-3, IE8.Exceptions.invalidParams(), IE8.MessageType.error);
+            Result.notAuthorizedError = new Result(-2, "YouAreNotAuthorized", IE8.MessageType.error);
+            Result.noChangeToUpdate = new Result(-3, "NoChangeToUpdate", IE8.MessageType.error);
+            Result.invalidParameters = new Result(-4, IE8.Exceptions.invalidParams(), IE8.MessageType.error);
             return Result;
         })();
         IE8.Result = Result;
@@ -24839,12 +24840,18 @@ var CustomerSetting;
                     }, IE8.Defaults.displayingMsgTime);
                 }, function (response) {
                     var error;
-                    if (response && response.data) {
-                        error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
-                    }
-                    else {
-                        error = IE8.Result.systemError;
-                        error.message = _this.resourceService.getMessage(error.message);
+                    if (response) {
+                        if (response.status === 401) {
+                            error = IE8.Result.notAuthorizedError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
+                        else if (response.data) {
+                            error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
+                        }
+                        else {
+                            error = IE8.Result.systemError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
                     }
                     _this.requestMsgResult = error;
                 })["finally"](function () {
@@ -24862,12 +24869,18 @@ var CustomerSetting;
                         _this.setting = new IE8.Setting(response.data);
                     }, function (response) {
                         var error;
-                        if (response && response.data) {
-                            error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
-                        }
-                        else {
-                            error = IE8.Result.systemError;
-                            error.message = _this.resourceService.getMessage(error.message);
+                        if (response) {
+                            if (response.status === 401) {
+                                error = IE8.Result.notAuthorizedError;
+                                error.message = _this.resourceService.getMessage(error.message);
+                            }
+                            else if (response.data) {
+                                error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
+                            }
+                            else {
+                                error = IE8.Result.systemError;
+                                error.message = _this.resourceService.getMessage(error.message);
+                            }
                         }
                         _this.requestMsgResult = error;
                     })["finally"](function () {
@@ -24887,6 +24900,49 @@ var CustomerSetting;
             return CustomerSettingController;
         })();
         IE8.ModuleRegister.controller("customerSettingController", CustomerSettingController);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var BlockUiDirective = (function () {
+            function BlockUiDirective() {
+                this.replace = true;
+                this.scope = {
+                    isLoading: "="
+                };
+                this.templateUrl = "BlockUI/block-ui.htm";
+            }
+            return BlockUiDirective;
+        })();
+        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        })();
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -25308,49 +25364,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var BlockUiDirective = (function () {
-            function BlockUiDirective() {
-                this.replace = true;
-                this.scope = {
-                    isLoading: "="
-                };
-                this.templateUrl = "BlockUI/block-ui.htm";
-            }
-            return BlockUiDirective;
-        })();
-        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        })();
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
 /// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -25760,12 +25773,12 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div class=\"msg-container\" data-ng-show=\"result\"><div class=\"msg msg--{{result.msgType}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.settingResults && subResult.settingResults.length > 0\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgType}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgType}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
-$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\"><div data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'commissionResourceService\'}}\"><select class=\"setting-field\" data-ng-model=\"settingItem.commRate\" data-ng-options=\"item.value as item.key for item in range\" data-ng-class=\"{ \'setting-field--invalid\': (settingItem.validationState | highlightingField) }\"></select></div></div>");
 $templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{\'CommissionForMaster\' | commissionLabel}}</div><div class=\"block__lbl w33-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'CommissionForMember\' | commissionLabel}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{\'CommissionForMember\' | commissionLabel}}</div></div>");
 $templateCache.put("settingtype3-value.htm","<div data-ng-if=\"settingType | editableSettingType\" data-comm-rate-select data-setting-item=\"item\"></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
@@ -25954,7 +25967,8 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Msg_90001": "更新程序失败！",
         "NoChangeToUpdate": "没有任何的变化更新！",
         "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
-        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
+        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧",
+        "YouAreNotAuthorized": "您没有使用此功能的权限"
     };
     
     resources["message"] = resources["message"] || {};
@@ -25966,14 +25980,16 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Msg_90001": "更新程序失敗！",
         "NoChangeToUpdate": "沒有任何的變化更新！",
         "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
-        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
+        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧",
+        "YouAreNotAuthorized": "您沒有使用此功能的權限"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ko-kr"] = {
         "AccessDeniedMsg": "죄송합니다. 이페이지를 엑서스 할 수 있는 권한이 없습니다.",
         "AccountWasDisabled": "이 계정은 실행하실수없는 계정입니다.",
-        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다."
+        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다.",
+        "YouAreNotAuthorized": "해당 기능에 대한 권한이 없습니다."
     };
     
     resources["message"] = resources["message"] || {};
@@ -25992,14 +26008,16 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
         "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
         "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
         "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
-        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
+        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ",
+        "YouAreNotAuthorized": "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["vi-vn"] = {
         "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
         "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
-        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý"
+        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý",
+        "YouAreNotAuthorized": "Bạn không được cho phép sử dụng chức năng này"
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);
