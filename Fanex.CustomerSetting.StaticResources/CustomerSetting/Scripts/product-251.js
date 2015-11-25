@@ -32660,7 +32660,8 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Msg_90001": "更新程序失败！",
         "NoChangeToUpdate": "没有任何的变化更新！",
         "SettingTypeError": "由于技术故障导致加载设置类型失败。请稍后再试或联系系统管理员！",
-        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧"
+        "SystemError": "哎哟..因为系统故障所以您会身在此处，请向管理层联系吧",
+        "YouAreNotAuthorized": "您没有使用此功能的权限"
     };
     
     resources["message"] = resources["message"] || {};
@@ -32672,14 +32673,16 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Msg_90001": "更新程序失敗！",
         "NoChangeToUpdate": "沒有任何的變化更新！",
         "SettingTypeError": "由於技術故障導致加載設置類型失敗。請稍後再試或聯系系統管理員！",
-        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧"
+        "SystemError": "哎喲..因為系統故障所以您會身在此處，請向管理層聯繫吧",
+        "YouAreNotAuthorized": "您沒有使用此功能的權限"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["ko-kr"] = {
         "AccessDeniedMsg": "죄송합니다. 이페이지를 엑서스 할 수 있는 권한이 없습니다.",
         "AccountWasDisabled": "이 계정은 실행하실수없는 계정입니다.",
-        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다."
+        "SystemError": "죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다.",
+        "YouAreNotAuthorized": "해당 기능에 대한 권한이 없습니다."
     };
     
     resources["message"] = resources["message"] || {};
@@ -32698,14 +32701,16 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
         "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
         "NoChangeToUpdate": "ไม่มีการเปลี่ยนแปลงการอัพเดท",
         "SettingTypeError": "ไม่สามารถโหลดการตั้งค่าต่าง ๆ เนื่องจากปัญหาทางด้านเทคนิค รบกวนลองใหม่อีกครั้งหรือจนกว่าจะได้รับคำประกาศจากทางผู้ดูแลระบบ",
-        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ"
+        "SystemError": "อุ้ย...คุณอยู่ที่นี่เนื่องจากระบบผิดพลาด กรุณาแจ้งผู้ให้บริการ",
+        "YouAreNotAuthorized": "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้"
     };
     
     resources["message"] = resources["message"] || {};
     resources["message"]["vi-vn"] = {
         "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
         "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
-        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý"
+        "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý",
+        "YouAreNotAuthorized": "Bạn không được cho phép sử dụng chức năng này"
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);
