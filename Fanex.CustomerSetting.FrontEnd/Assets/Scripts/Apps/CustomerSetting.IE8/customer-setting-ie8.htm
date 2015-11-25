@@ -10,7 +10,7 @@
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
     <div data-setting-result data-result="ctrl.requestMsgResult"></div>
-    <div class="customer-setting" data-ng-show="ctrl.setting">
+    <div class="customer-setting customer-level-{{ctrl.setting.customerLevel}}" data-ng-show="ctrl.setting">
         <div data-customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></div>
         <div data-setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></div>
         <button class="btn btn--margin-top" data-ng-if="ctrl.setting | editableForm" data-ng-click="ctrl.update()">{{'Update' | label}}</button>
