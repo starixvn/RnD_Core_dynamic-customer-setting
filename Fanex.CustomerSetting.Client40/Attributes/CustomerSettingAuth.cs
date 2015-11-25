@@ -48,10 +48,11 @@
         {
             HttpResponseBase response = filterContext.HttpContext.Response;
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            if (filterContext.HttpContext.Request.IsAjaxRequest()
+                || filterContext.HttpContext.Request.HttpMethod.ToUpper() == "POST")
             {
                 response.Clear();
-                response.Write("You are not authorized on this function!");
+                response.Write("{ \"message\": \"You are not authorized on this function!\" }");
                 filterContext.Result = new HttpUnauthorizedResult();
                 filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
                 response.End();

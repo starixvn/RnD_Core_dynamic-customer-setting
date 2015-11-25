@@ -121,7 +121,7 @@
             string finalTemplate = template;
             AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
 
-            appConfig.Editable = !query.IsReadOnly && CustomerSettingRegistration.CheckUpdatePermission(CustomerSettingRegistration.GetPermissionContext());
+            appConfig.Editable = !query.IsReadOnly;
 
             if (!string.IsNullOrEmpty(finalTemplate))
             {
