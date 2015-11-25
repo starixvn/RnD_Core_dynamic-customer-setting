@@ -55,6 +55,7 @@
                 response.Write("{ \"message\": \"You are not authorized on this function!\" }");
                 filterContext.Result = new HttpUnauthorizedResult();
                 filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                response.TrySkipIisCustomErrors = true;
                 response.End();
             }
             else
