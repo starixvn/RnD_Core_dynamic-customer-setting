@@ -18,19 +18,21 @@
             base.OnAuthorization(filterContext);
 
             PermissionContext permissionContext = CustomerSettingRegistration.GetPermissionContext();
-
+            
+            permissionContext.AuthorizationContext = filterContext;
             permissionContext.AllowUpdate = IsUpdate;
+            
             var isAuthorized = true;
 
             if (IsMultipleUpdate)
             {
-                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext, filterContext);
+                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext);
             }
             else
             {
                 if (IsUpdate)
                 {
-                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext, filterContext);
+                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext);
                 }
                 else
                 {

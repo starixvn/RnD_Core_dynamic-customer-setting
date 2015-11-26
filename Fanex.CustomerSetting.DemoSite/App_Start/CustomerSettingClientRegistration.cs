@@ -18,12 +18,12 @@
             return true;
         }
 
-        public override bool VerifyUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
+        public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
             return true;
         }
 
-        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
+        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
             return true;
         }
