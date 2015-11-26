@@ -30099,13 +30099,14 @@ var CustomerSetting;
             var _this = this;
             var isMultiple = !!this.customerNames;
             var path = isMultiple ? this.updateMultiplePath : this.updatePath;
-            var setting = isMultiple ? this.setting.getEditableSettingTypes(settingTypeId) : this.setting.getChanges(settingTypeId);
+            var getEditableSetting = this.setting.getEditableSettingTypes(settingTypeId);
+            var setting = isMultiple ? getEditableSetting : this.setting.getChanges(settingTypeId);
             var validationResult;
             var command;
             this.$rootScope.$emit("updateSetting");
             this.requestMsgResult = undefined;
             if (setting) {
-                if (setting.validate()) {
+                if (getEditableSetting.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
                     if (validationResult.isSuccessful) {

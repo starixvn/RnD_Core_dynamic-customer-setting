@@ -79,7 +79,8 @@ module CustomerSetting {
         public update(settingTypeId?: number): void {
             var isMultiple: boolean = !!this.customerNames;
             var path: string = isMultiple ? this.updateMultiplePath : this.updatePath;
-            var setting: Setting = isMultiple ? this.setting.getEditableSettingTypes(settingTypeId) : this.setting.getChanges(settingTypeId);
+            var getEditableSetting: Setting = this.setting.getEditableSettingTypes(settingTypeId);
+            var setting: Setting = isMultiple ? getEditableSetting : this.setting.getChanges(settingTypeId);
             var validationResult: Result;
             var command: SettingCommand;
 
@@ -87,7 +88,7 @@ module CustomerSetting {
             this.requestMsgResult = undefined;
 
             if (setting) {
-                if (setting.validate()) {
+                if (getEditableSetting.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
