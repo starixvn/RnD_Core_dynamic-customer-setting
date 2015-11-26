@@ -87,7 +87,7 @@ module CustomerSetting {
             this.requestMsgResult = undefined;
 
             if (setting) {
-                if (this.setting.validate()) {
+                if (setting.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
