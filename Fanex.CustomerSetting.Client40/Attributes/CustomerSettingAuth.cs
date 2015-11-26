@@ -24,13 +24,13 @@
 
             if (IsMultipleUpdate)
             {
-                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext);
+                isAuthorized = CustomerSettingRegistration.CheckMultipleUpdatePermission(permissionContext, filterContext);
             }
             else
             {
                 if (IsUpdate)
                 {
-                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext);
+                    isAuthorized = CustomerSettingRegistration.CheckUpdatePermission(permissionContext, filterContext);
                 }
                 else
                 {

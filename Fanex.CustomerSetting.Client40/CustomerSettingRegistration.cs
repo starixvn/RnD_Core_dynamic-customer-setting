@@ -54,25 +54,25 @@
             return client.VerifyQueryPermission(checkingPermissionContext);
         }
 
-        internal static bool CheckUpdatePermission(PermissionContext checkingPermissionContext)
+        internal static bool CheckUpdatePermission(PermissionContext checkingPermissionContext, AuthorizationContext authorizationContext)
         {
             CheckInitializationState();
 
-            return client.VerifyUpdatePermission(checkingPermissionContext);
+            return client.VerifyUpdatePermission(checkingPermissionContext, authorizationContext);
         }
 
-        internal static bool CheckMultipleUpdatePermission(PermissionContext checkingPermissionContext)
+        internal static bool CheckMultipleUpdatePermission(PermissionContext checkingPermissionContext, AuthorizationContext authorizationContext)
         {
             CheckInitializationState();
 
-            return client.VerifyMultipleUpdatePermission(checkingPermissionContext);
+            return client.VerifyMultipleUpdatePermission(checkingPermissionContext, authorizationContext);
         }
 
         public abstract bool VerifyQueryPermission(PermissionContext permissionContext);
 
-        public abstract bool VerifyUpdatePermission(PermissionContext permissionContext);
+        public abstract bool VerifyUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext);
 
-        public abstract bool VerifyMultipleUpdatePermission(PermissionContext permissionContext);
+        public abstract bool VerifyMultipleUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext);
 
         public abstract SettingContext FetchSettingContext();
 

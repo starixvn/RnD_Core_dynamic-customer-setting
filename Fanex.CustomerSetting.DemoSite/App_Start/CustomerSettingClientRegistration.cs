@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Web;
@@ -17,12 +18,12 @@
             return true;
         }
 
-        public override bool VerifyUpdatePermission(PermissionContext permissionContext)
+        public override bool VerifyUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
         {
             return true;
         }
 
-        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
+        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
         {
             return true;
         }
