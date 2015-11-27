@@ -164,17 +164,17 @@ var DemoFrom;
                     subAccId = 111;
                     break;
                 case Role.super:
-                    actorId = 2;
+                    actorId = 1176070;
                     name = "SA-RM";
                     subAccId = 3;
                     break;
                 case Role.master:
-                    actorId = 4174;
+                    actorId = 1176083;
                     name = "wsrm";
                     subAccId = 728497;
                     break;
                 case Role.agent:
-                    actorId = 1262;
+                    actorId = 1176086;
                     name = "428rm";
                     subAccId = 728498;
                     break;
@@ -186,19 +186,19 @@ var DemoFrom;
             var name = "";
             switch (role) {
                 case Role.super:
-                    id = 2;
+                    id = 1176070;
                     name = "SA-RM";
                     break;
                 case Role.master:
-                    id = 4174;
+                    id = 1176083;
                     name = "mrm";
                     break;
                 case Role.agent:
-                    id = 1262;
+                    id = 1176086;
                     name = "wsrm";
                     break;
                 case Role.member:
-                    id = 1277;
+                    id = 7890346;
                     name = "428RM";
                     break;
             }
@@ -209,15 +209,15 @@ var DemoFrom;
             var names = "";
             switch (role) {
                 case Role.super:
-                    ids = "2,3,4";
+                    ids = "1176070,1176070,1176070";
                     names = "SA-RM,SA-US$,SA-TB";
                     break;
                 case Role.master:
-                    ids = "4174,4300,4356";
+                    ids = "1176083,1176083,1176083";
                     names = "mrm,mbrm,MYRM";
                     break;
                 case Role.agent:
-                    ids = "1262,1653,2400";
+                    ids = "1176086,1176086,1176086";
                     names = "wsrm,SKRM,216COM";
                     break;
                 case Role.member:

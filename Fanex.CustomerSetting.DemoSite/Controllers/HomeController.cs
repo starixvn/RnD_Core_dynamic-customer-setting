@@ -5,6 +5,7 @@
     using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.DemoSite.Constants;
 
+    [Authorize]
     public class HomeController : Controller
     {
         private const byte AgencySystem = 2;
