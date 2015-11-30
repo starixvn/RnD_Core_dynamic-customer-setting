@@ -12,7 +12,7 @@
 
         public ActionResult Index()
         {
-            FormsAuthentication.SetAuthCookie(Guid.NewGuid().ToString(), true);
+            FormsAuthentication.SetAuthCookie("DemoName", true);
             if (this.Request.Browser.Browser == "IE" && (this.Request.Browser.MajorVersion < 9))
             {
                 return View("Index-IE8");
