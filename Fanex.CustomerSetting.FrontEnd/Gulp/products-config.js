@@ -10,7 +10,7 @@ module.exports = function (configs) {
         var config = {
             user: "dbateam",
             password: "@bigboy#",
-            server: "10.18.200.230\\SQLSERVER2008R2",
+            server: "10.18.200.233",
             database: "CustDB"
         };
 

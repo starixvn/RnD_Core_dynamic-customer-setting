@@ -26745,6 +26745,185 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var SettingType3Item = (function (_super) {
+            __extends(SettingType3Item, _super);
+            function SettingType3Item(settingItem, backup) {
+                if (backup === void 0) { backup = false; }
+                _super.call(this, settingItem);
+                if (settingItem) {
+                    this.commRate = settingItem.commRate;
+                    if (settingItem.upline) {
+                        this.upline = new SettingType3Item(settingItem.upline);
+                    }
+                }
+                if (backup) {
+                    this.oldSetting = new SettingType3Item(this);
+                }
+            }
+            SettingType3Item.prototype.isChanged = function () {
+                var isChanged = _super.prototype.isChanged.call(this);
+                var oldSetting = this.oldSetting;
+                return isChanged
+                    || this.commRate !== oldSetting.commRate;
+            };
+            SettingType3Item.prototype.copySettingFrom = function (source) {
+                var isSuccessful = true;
+                var backupCommRate;
+                if (source) {
+                    backupCommRate = this.commRate;
+                    this.commRate = source.commRate;
+                    isSuccessful = this.validate();
+                    if (!isSuccessful) {
+                        this.commRate = backupCommRate;
+                    }
+                }
+                return isSuccessful;
+            };
+            SettingType3Item.prototype.validate = function () {
+                if (this.commRate > this.upline.commRate) {
+                    this.validationState = new IE8.ValidationResult("CommRateCannotBeExceedMaxValue", "commRate");
+                    return false;
+                }
+                this.validationState = IE8.Result.normal;
+                return true;
+            };
+            return SettingType3Item;
+        })(IE8.DefaultSettingItem);
+        IE8.SettingType3Item = SettingType3Item;
+        var SettingType3Config = (function () {
+            function SettingType3Config() {
+            }
+            SettingType3Config.step = 0.0005;
+            SettingType3Config.roundingFactor = 10000;
+            return SettingType3Config;
+        })();
+        IE8.SettingType3Config = SettingType3Config;
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CommRateSelectDirective = (function () {
+            function CommRateSelectDirective(valueRangeService) {
+                var _this = this;
+                this.replace = true;
+                this.scope = {
+                    settingItem: "="
+                };
+                this.templateUrl = "comm-rate-select.htm";
+                this.controller = ["$scope", function ($scope) {
+                        $scope.$watch("settingItem", function () {
+                            $scope.range = _this.valueRangeService.generateRanges($scope.settingItem.commRate, 0, $scope.settingItem.upline.commRate, IE8.SettingType3Config.step, IE8.SettingType3Config.roundingFactor);
+                        });
+                    }];
+                this.valueRangeService = valueRangeService;
+            }
+            CommRateSelectDirective.$inject = ["valueRangeService"];
+            return CommRateSelectDirective;
+        })();
+        IE8.ModuleRegister.directive("commRateSelect", CommRateSelectDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CommissionResourceService = (function (_super) {
+            __extends(CommissionResourceService, _super);
+            function CommissionResourceService(commissionResources, parametersService) {
+                _super.call(this, commissionResources, parametersService);
+            }
+            CommissionResourceService.$inject = ["commissionResources", "parametersService"];
+            return CommissionResourceService;
+        })(IE8.ResourceService);
+        IE8.CommissionResourceService = CommissionResourceService;
+        IE8.ModuleRegister.service("commissionResourceService", CommissionResourceService);
+        function CommissionLabelFilter(commissionResourceService) {
+            return function (name) {
+                return commissionResourceService.getLabel(name);
+            };
+        }
+        CommissionLabelFilter.$inject = ["commissionResourceService"];
+        IE8.ModuleRegister.filter("commissionLabel", CommissionLabelFilter);
+        function CommissionMessageFilter(commissionResourceService) {
+            return function (name) {
+                var replacements = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    replacements[_i - 1] = arguments[_i];
+                }
+                return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
+            };
+        }
+        CommissionMessageFilter.$inject = ["commissionResourceService"];
+        IE8.ModuleRegister.filter("commissionMessage", CommissionMessageFilter);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="commission-resources.ts" />
+/// <reference path="models.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType3Directive = (function (_super) {
+            __extends(SettingType3Directive, _super);
+            function SettingType3Directive(commissionResourceService) {
+                var _this = this;
+                _super.call(this, function (settingItem, backup) { return new IE8.SettingType3Item(settingItem, backup); });
+                this.templateUrl = "settingtype3.htm";
+                this.link = function (scope) {
+                    if (scope.customerLevel === IE8.Level.member && scope.uplineLevel !== IE8.Level.agent) {
+                        scope.headerTemplateUrl = "settingtype3-header.htm";
+                    }
+                    scope.valueTemplateUrl = "settingtype3-value.htm";
+                    scope.settingTypeName = _this.commissionResourceService.getLabel("Commission");
+                };
+                this.commissionResourceService = commissionResourceService;
+            }
+            SettingType3Directive.$inject = ["commissionResourceService"];
+            return SettingType3Directive;
+        })(IE8.SettingTypeDirective);
+        IE8.ModuleRegister.directive("settingtype3", SettingType3Directive);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../core/models.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var SettingType4Item = (function (_super) {
             __extends(SettingType4Item, _super);
             function SettingType4Item(settingItem, backup) {
@@ -26979,6 +27158,10 @@ $templateCache.put("bet-setting-input.htm","<div><input type=\"text\" maxlength=
 $templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{\'MinBet\' | betSettingLabel}}</div><div class=\"block__lbl w33-percent\">{{\'MaxBet\' | betSettingLabel}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'MaxPerMatch\' | betSettingLabel}}</div></div>");
 $templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell w33-percent setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></div><div class=\"block__cell w33-percent setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></div></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | number}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | number}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | number}}</div></div>");
 $templateCache.put("settingtype2.htm","<div><div data-default-setting-type-grouping class=\"full-width\"></div></div>");
+$templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\"><div data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'commissionResourceService\'}}\"><select class=\"setting-field\" data-ng-model=\"settingItem.commRate\" data-ng-options=\"item.value as item.key for item in range\" data-ng-class=\"{ \'setting-field--invalid\': (settingItem.validationState | highlightingField) }\"></select></div></div>");
+$templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{\'CommissionForMaster\' | commissionLabel}}</div><div class=\"block__lbl w33-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'CommissionForMember\' | commissionLabel}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{\'CommissionForAgent\' | commissionLabel}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{\'CommissionForMember\' | commissionLabel}}</div></div>");
+$templateCache.put("settingtype3-value.htm","<div data-ng-if=\"settingType | editableSettingType\" data-comm-rate-select data-setting-item=\"item\"></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
+$templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }\"><div data-default-setting-type-grouping></div></div>");
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
 $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-grouping></div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
@@ -27801,6 +27984,110 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     };
 
     angular.module("customerSetting").value("betSettingResources", betSettingResources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var commissionResources = {};
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["en-us"] = {
+        "Commission": "Commission",
+        "CommissionForAgent": "Comm for Agent",
+        "CommissionForMaster": "Comm for Master",
+        "CommissionForMember": "Comm for Member"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["zh-cn"] = {
+        "Commission": "佣金",
+        "CommissionForAgent": "代理佣金",
+        "CommissionForMaster": "总代理佣金",
+        "CommissionForMember": "会员的佣金"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["zh-tw"] = {
+        "Commission": "佣金",
+        "CommissionForAgent": "代理佣金",
+        "CommissionForMaster": "總代理佣金",
+        "CommissionForMember": "會員的佣金"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["ko-kr"] = {
+        "Commission": "수수료",
+        "CommissionForAgent": "에이전트 수수료",
+        "CommissionForMaster": "마스터 수수료",
+        "CommissionForMember": "회원 수수료"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["ja-jp"] = {
+        "Commission": "Commission",
+        "CommissionForMember": "メンバーの手数料"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["th-th"] = {
+        "Commission": "คอมมิชชั่น",
+        "CommissionForAgent": "ค่าคอมมิชชั่น จาก ตัวแทน",
+        "CommissionForMaster": "ค่าคอมมิชชั่น จากตัวแทนหลัก",
+        "CommissionForMember": "ค่าคอมมิชชั่นสำหรับสมาชิก"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["vi-vn"] = {
+        "Commission": "Hoa hồng",
+        "CommissionForAgent": "Hoa hồng cho Agent",
+        "CommissionForMaster": "Hoa hồng Master",
+        "CommissionForMember": "Hoa hồng cho Member"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["en-us"] = {
+        "CommRateCannotBeExceedMaxValue": "Commission Rate cannot be exceed Max Value.",
+        "CommRateCannotBeNegative": "Commission Rate cannot be negative.",
+        "Msg_1": "Invalid Commission Rate.",
+        "UpdateCommissionSuccessfully": "Updated commission setting successfully."
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["zh-cn"] = {
+        "Msg_1": "佣金率无效",
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["zh-tw"] = {
+        "Msg_1": "傭金率無效",
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["ko-kr"] = {
+        "UpdateCommissionSuccessfully": "수수료가 성공적으로 업데이트되었습니다."
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["ja-jp"] = {
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["th-th"] = {
+        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง",
+        "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["vi-vn"] = {
+        "UpdateCommissionSuccessfully": "Tiền hoa hồng được cập nhật thành công"
+    };
+
+    angular.module("customerSetting").value("commissionResources", commissionResources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/
