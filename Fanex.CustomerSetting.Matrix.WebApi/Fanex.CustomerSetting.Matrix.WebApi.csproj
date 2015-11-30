@@ -168,6 +168,9 @@
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
+	<Content Include="Web.ConnectionStrings.sit.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
@@ -181,6 +184,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web.local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.sit.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.uat.config">
