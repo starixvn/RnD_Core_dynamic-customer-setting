@@ -20,12 +20,12 @@
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return false;
+            return true;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return false;
+            return true;
         }
 
         public override SettingContext FetchSettingContext()
