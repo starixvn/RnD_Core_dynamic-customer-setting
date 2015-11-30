@@ -130,6 +130,7 @@
     <Content Include="App_Data\SettingMatrixSpNames\DEV\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\SettingMatrixSpNames\LOCAL\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\SettingMatrixSpNames\PRO\Fanex.CustomerSetting.Matrix.xml" />
+    <Content Include="App_Data\SettingMatrixSpNames\SIT\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\SettingMatrixSpNames\UAT\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\Templates\customer-setting-matrix.htm" />
     <Content Include="Global.asax" />
@@ -162,19 +163,19 @@
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-	<Content Include="Web.AppSettings.pro.config">
+    <Content Include="Web.AppSettings.pro.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionStrings.sit.config">
+    <Content Include="Web.ConnectionStrings.sit.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionStrings.pro.config">
+    <Content Include="Web.ConnectionStrings.pro.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -186,13 +187,13 @@
     <Content Include="Web.local.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-	<Content Include="Web.sit.config">
+    <Content Include="Web.sit.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.uat.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-	<Content Include="Web.pro.config">
+    <Content Include="Web.pro.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
