@@ -4,6 +4,14 @@
         "settingTypes": [
             1,
             2,
+            4
+        ]
+    },
+    {
+        "productId": 19,
+        "settingTypes": [
+            1,
+            2,
             3,
             4
         ]

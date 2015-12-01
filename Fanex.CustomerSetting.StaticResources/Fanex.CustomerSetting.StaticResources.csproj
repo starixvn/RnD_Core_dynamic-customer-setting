@@ -61,6 +61,8 @@
     <Content Include="CustomerSetting.IE8\Scripts\ie8tricks.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-16.js" />
     <Content Include="CustomerSetting.IE8\Scripts\product-16.min.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-19.js" />
+    <Content Include="CustomerSetting.IE8\Scripts\product-19.min.js" />
     <Content Include="CustomerSetting.IE8\Styles\customer-setting-ie8.css" />
     <Content Include="CustomerSetting.IE8\Styles\customer-setting-ie8.min.css" />
     <Content Include="CustomerSetting.IE8\Styles\Images\auto-pt.gif" />
@@ -77,6 +79,8 @@
     <Content Include="CustomerSettingMatrix\Styles\Images\sprite.png" />
     <Content Include="CustomerSetting\Scripts\product-16.js" />
     <Content Include="CustomerSetting\Scripts\product-16.min.js" />
+    <Content Include="CustomerSetting\Scripts\product-19.js" />
+    <Content Include="CustomerSetting\Scripts\product-19.min.js" />
     <Content Include="CustomerSetting\Styles\customer-setting.css" />
     <Content Include="CustomerSetting\Styles\customer-setting.min.css" />
     <Content Include="CustomerSetting\Styles\Images\auto-pt.gif" />
