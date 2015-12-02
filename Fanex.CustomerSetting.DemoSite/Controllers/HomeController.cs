@@ -1,15 +1,16 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.DemoSite.App_Start;
     using Fanex.CustomerSetting.DemoSite.Constants;
 
     public class HomeController : Controller
     {
         private const byte AgencySystem = 2;
 
+        [RestrictAccessFilter]
         public ActionResult Index()
         {
             FormsAuthentication.SetAuthCookie("DemoName", true);
@@ -52,6 +53,17 @@
         public ActionResult RedirectAction()
         {
             return this.RedirectToAction("DemoAction", "DemoCtrl");
+        }
+
+        public ActionResult Login(string securityCode)
+        {
+            if (securityCode == DemoSiteConfiguration.Settings.SecurityCode)
+            {
+                Session["IsAuthenticated"] = true;
+                return RedirectToAction("Index");
+            }
+
+            return Content("You are not authorized!");
         }
     }
 }

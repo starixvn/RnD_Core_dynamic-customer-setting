@@ -15,7 +15,7 @@
         {
             routes.MapRoute(
                 name: "DCSMatrix_Routing",
-                url: "Matrix/{controller}/{action}/{id}",
+                url: "Matrix/ViewCustomerSettingMatrix/{action}/{id}",
                 defaults: new { controller = "ViewCustomerSettingMatrix", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Fanex.CustomerSetting.MatrixClient.Controllers" });
         }

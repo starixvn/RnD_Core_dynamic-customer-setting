@@ -125,12 +125,12 @@
 
                 if (!customerSettingType.SettingItems.Any())
                 {
-                    customerSettingType.IsError = true;
-                    customerSettingType.SettingItems = new List<ISettingItem> { new SettingItemError() };
                     WriteLog(query, customerSettingType, new Exception(string.Format(Message.SettingTypeHasNoSettingItem, customerSettingType.Name)));
                 }
-
-                customerSettingTypes.Add(customerSettingType);
+                else
+                {
+                    customerSettingTypes.Add(customerSettingType);
+                }
             }
 
             return customerSettingTypes;
