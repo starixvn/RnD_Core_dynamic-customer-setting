@@ -63,7 +63,7 @@ module CustomerSettingMatrix {
             this.resourceService = resourceService;
 
             this.settingTypes = [SettingType.PositionTaking, SettingType.Commission];
-            this.settingTypeId = SettingType.PositionTaking.id;
+            
             /* tslint:disable:no-string-literal */
             this.customerName = this.$window["customerName"];
             var querySettingMatrix: any = this.$window["querySettingMatrix"];
@@ -76,12 +76,14 @@ module CustomerSettingMatrix {
                 querySettingMatrix.isLive,
                 querySettingMatrix.showFilter);
             /* tslint:enable:no-string-literal */
+            this.settingTypeId = this.querySettingMatrix.settingTypeId;
             this.queryProductNames();
         }
 
         public updateSettingTypeView(settingTypeId: number) {
             if (this.querySettingMatrix.settingTypeId !== settingTypeId) {
                 this.querySettingMatrix.settingTypeId = settingTypeId;
+                this.settingTypeId = settingTypeId;
                 this.customerLine = [];
 
                 this.queryProductNames();
@@ -99,7 +101,17 @@ module CustomerSettingMatrix {
 
                     if (products && products.length > 0) {
                         this.products = products.map((product: any) => new Product(product));
-                        this.product = this.products[0];
+
+                        this.products.forEach(p => {
+                            if (p.id == this.querySettingMatrix.productId) {
+                                this.product = p;
+                            }
+                        });
+                        
+                        if (this.product == null || this.product.id == 0) {
+                            this.product = this.products[0];
+                        }
+
                         this.loadSettingMatrix();
                     }
                 })
@@ -137,7 +149,7 @@ module CustomerSettingMatrix {
 
                 try {
                     this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer)).reverse();
-                    switch (this.settingTypeId) {
+                    switch (this.querySettingMatrix.settingTypeId) {
                         case SettingType.PositionTaking.id:
                             this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
                             break;

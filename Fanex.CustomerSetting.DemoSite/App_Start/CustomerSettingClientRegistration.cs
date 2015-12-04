@@ -9,6 +9,7 @@
     using System.Web.Routing;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
+    using Fanex.CustomerSetting.DemoSite.App_Start;
     using Fanex.CustomerSetting.DemoSite.Constants;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
@@ -20,11 +21,21 @@
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
+            if (DemoSiteConfiguration.Settings.EnableLogin && HttpContext.Current.Session["IsAuthenticated"] == null)
+            {
+                return false;
+            }
+
             return true;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
+            if (DemoSiteConfiguration.Settings.EnableLogin && HttpContext.Current.Session["IsAuthenticated"] == null)
+            {
+                return false;
+            }
+
             return true;
         }
 
