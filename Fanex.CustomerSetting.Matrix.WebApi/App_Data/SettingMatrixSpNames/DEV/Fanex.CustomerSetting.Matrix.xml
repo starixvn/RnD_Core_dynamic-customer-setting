@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Customer_Setting_Maxtrix">
-    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
       <Mapping DataField="Discount" ObjectProperty="CommRate" />
     </Setting>
-    <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_PTMatrix" SpName="Acc_CustSetting_PTMatrix_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
     </Setting>
     <Setting Key="CustSetting_CustomerLineInfoSelect" SpName="Acc_CustSetting_CustomerLineInfoSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
     </Setting>
-    <Setting Key="CustSetting_DisableMasterAutoPTSelect" SpName="Acc_CustSetting_DisableMasterAutoPTSelect_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="CustSetting_SettingLevel" SpName="Acc_CustSetting_SettingLevel_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_DisableMasterAutoPTSelect" SpName="Acc_CustSetting_DisableMasterAutoPTSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="CustSetting_SettingLevel" SpName="Acc_CustSetting_SettingLevel_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>
