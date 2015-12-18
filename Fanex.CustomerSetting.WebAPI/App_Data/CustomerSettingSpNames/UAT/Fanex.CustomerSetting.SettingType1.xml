@@ -25,14 +25,14 @@
       <Mapping DataField="CustID" ObjectProperty="Id" />
     </Setting>
 
-    <Setting Key="CustSetting_SuperPTOnMemberMultiUpd" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_MasterPTOnMemberMultiUpd" SpName="Acc_CustSetting_MasterPTOnMemberMultiUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_AgentPTOnMemberMultiUpd" SpName="Acc_CustSetting_AgentPTOnMemberMultiUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_SuperPTOnMemberMultiUpd" SpName="Acc_CustSetting_SuperPTOnMemberMultiUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_MasterPTOnMemberMultiUpd" SpName="Acc_CustSetting_MasterPTOnMemberMultiUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTOnMemberMultiUpd" SpName="Acc_CustSetting_AgentPTOnMemberMultiUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_SuperPTUpd" SpName="Acc_CustSetting_SuperPTUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_MasterPTUpd" SpName="Acc_CustSetting_MasterPTUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
     <Setting Key="CustSetting_AgentPTUpd" SpName="Acc_CustSetting_AgentPTUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_SuperPTOnMemberUpd" SpName="Acc_CustSetting_SuperPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_MasterPTOnMemberUpd" SpName="Acc_CustSetting_MasterPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
-    <Setting Key="CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_SuperPTOnMemberUpd" SpName="Acc_CustSetting_SuperPTOnMemberUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_MasterPTOnMemberUpd" SpName="Acc_CustSetting_MasterPTOnMemberUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="CustSetting_AgentPTOnMemberUpd" SpName="Acc_CustSetting_AgentPTOnMemberUpd_UAT2" DbName="DBCUST.CUSTDB.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
