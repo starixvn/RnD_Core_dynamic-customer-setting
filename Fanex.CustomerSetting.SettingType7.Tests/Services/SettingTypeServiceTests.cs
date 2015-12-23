@@ -1,0 +1,162 @@
+﻿namespace Fanex.CustomerSetting.SettingType7.Tests.Services
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Tests;
+    using CustomerSetting.Tests.Models;
+    using DataAccesses;
+    using Dtos;
+    using Logging;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Resources;
+    using SettingType7.Models;
+    using SettingType7.Services;
+
+    [TestFixture]
+    public class SettingTypeServiceTests
+    {
+        private ISettingTypeService _settingTypeService;
+        private IResourceService _resourceService;
+        private ILogger _logger;
+        private IMessageService _messageService;
+        private IDataAccess _dataAccess;
+        private ISettingContext _settingContext;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _resourceService = Substitute.For<IResourceService>();
+            _logger = Substitute.For<ILogger>();
+            _messageService = Substitute.For<IMessageService>();
+            _dataAccess = Substitute.For<IDataAccess>();
+
+            _settingContext = new SettingContextStub();
+
+            _settingTypeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
+        }
+
+        [Test]
+        public void GetCustomerSettingType_Always_CallGetCustomerChargedCommission()
+        {
+            // Arrange
+            var query = InstanceFactory.CreateQuerySettingParam();
+
+            // Act
+            _settingTypeService.GetCustomerSettingType(_settingContext, query);
+
+            // Assert
+            _dataAccess.Received().GetCustomerChargedCommissionRawData(Arg.Is(query));
+        }
+
+        [Test]
+        public void GetCustomerSettingType_Always_ReturnCustomerChargedCommission()
+        {
+            // Arrange
+            var query = InstanceFactory.CreateQuerySettingParam();
+            var chargedCommissionItemsRawData = new List<ChargedCommissionDto>
+            {
+                new ChargedCommissionDto
+                {
+                    BetTypeId = 1,
+                    SportTypeId = 1,
+                    ChargedCommission = 0.88f,
+                    UplineChargedCommission = 0.9f
+                }
+            };
+            _dataAccess.GetCustomerChargedCommissionRawData(Arg.Any<CustomerSettingQuery>()).Returns(chargedCommissionItemsRawData);
+
+            // Act
+            var actualCustomerCommission = _settingTypeService.GetCustomerSettingType(_settingContext, query);
+            var actualCustomerCommissionItem = actualCustomerCommission.SettingItems.First() as ChargedCommissionItem;
+
+            // Assert
+            var expectedChargedComm = new ChargedCommissionItem
+            {
+                BetTypeId = 1,
+                SportTypeId = 1,
+                ChargedCommission = 0.88f,
+                Upline = new ChargedCommissionItem
+                {
+                    ChargedCommission = 0.9f
+                }
+            };
+            Assert.AreEqual(expectedChargedComm, actualCustomerCommissionItem);
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_Always_CallUpdateCustomerCommission()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Member;
+            var uplineLevel = Level.Agent;
+            byte productId = 1;
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+
+            // Act
+            _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+
+            // Assert
+            _dataAccess.Received().UpdateCustomerChargedCommission(
+                Arg.Is(_settingContext),
+                Arg.Is(customerId),
+                Arg.Is(customerLevel),
+                Arg.Is(uplineLevel),
+                Arg.Is(customerCommission.ToXml()));
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessResult()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Member;
+            var uplineLevel = Level.Agent;
+            byte productId = 1;
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+            var successResult = Result.Success;
+            _dataAccess.UpdateCustomerChargedCommission(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<int>(),
+                Arg.Any<Level>(),
+                Arg.Any<Level>(),
+                Arg.Any<string>()).Returns(successResult);
+
+            // Act
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+
+            // Assert
+            Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessMsg()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Member;
+            var uplineLevel = Level.Agent;
+            byte productId = 1;
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+            var successResult = Result.Success;
+            _dataAccess.UpdateCustomerChargedCommission(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<int>(),
+                Arg.Any<Level>(),
+                Arg.Any<Level>(),
+                Arg.Any<string>()).Returns(successResult);
+
+            // Act
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+
+            // Assert
+            Assert.AreEqual(Message.UpdatedChargedCommissionSuccessfully, actualResult.Message);
+        }
+    }
+}
