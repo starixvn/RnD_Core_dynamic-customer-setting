@@ -1,0 +1,11 @@
+﻿<div>
+    <input type="text"
+           maxlength="5"
+           data-ng-change="updateValue()"
+           data-ng-model="settingItem.chargedCommission"
+           data-tooltip
+           data-message="{{settingItem.validationState | tooltipMessage:'settingType7ResourceService':'chargedCommission'}}"
+           data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField: 'chargedCommission') }"
+           class="setting-field setting-field--fullwidth setting-field--number setting-field--has-constraint" />
+    <span data-ng-if="settingItem.upline.chargedCommission > 0"> >={{settingItem.upline.chargedCommission | number}}</span>
+</div>

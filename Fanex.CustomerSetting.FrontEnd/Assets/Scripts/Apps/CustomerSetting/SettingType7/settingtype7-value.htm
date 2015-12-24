@@ -1,0 +1,5 @@
+﻿<settingtype7-value data-ng-if="settingType | editableSettingType" data-setting-item="item"></settingtype7-value>
+<div class="setting-field-wrapper"
+     data-ng-if="!(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member)">
+    {{item.commRate | number}}
+</div>
