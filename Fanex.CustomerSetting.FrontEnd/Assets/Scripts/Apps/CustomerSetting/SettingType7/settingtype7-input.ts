@@ -7,10 +7,7 @@ module CustomerSetting {
     "use strict";
 
     interface ISettingType7InputScope extends ng.IScope {
-        settingItem: SettingType7Item;
-        customerLevel: Level;
-        uplineLevel: Level;
-        fieldName: string;
+        item: SettingType7Item;
         updateValue(): void;
     }
 
@@ -18,29 +15,15 @@ module CustomerSetting {
         public static $inject: string[] = ["$compile", "$filter", "settingType7ResourceService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "settingtype7-input.htm";
-
-        public get scope(): any {
-            return {
-                settingItem: "=",
-                customerLevel: "=",
-                uplineLevel: "=",
-                fieldName: "@"
-            };
-        }
+        public require: string = "ngModel";
 
         public controller: any = ["$scope", ($scope: ISettingType7InputScope) => {
             $scope.updateValue = () => {
-                $scope.settingItem.validate();
+                $scope.item.validate();
             };
         }];
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingType7InputScope, wrapElement: ng.IAugmentedJQuery) => {
-            var element: ng.IAugmentedJQuery = angular.element(wrapElement.children()[0]);
-            var modelCtrl: any;
-
-            modelCtrl = element.controller("ngModel");
-
+        public link: ng.IDirectiveLinkFn = (scope: ISettingType7InputScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, modelCtrl: ng.INgModelController) => {
             // Chrome has a weird behavior with the mouseup event on textboxes.
             // The position of the cursor is set on this event so that once it is fired, the selection will be removed.
             // We add some lines of code to trace the focus status as a hack for this issue.

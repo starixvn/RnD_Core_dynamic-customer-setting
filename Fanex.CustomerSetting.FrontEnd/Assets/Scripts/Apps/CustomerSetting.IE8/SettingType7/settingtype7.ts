@@ -4,7 +4,7 @@
 /// <reference path="settingtype7-resources.ts" />
 /// <reference path="models.ts" />
 
-module CustomerSetting {
+module CustomerSetting.IE8 {
     "use strict";
 
     class SettingType7Directive extends SettingTypeDirective {

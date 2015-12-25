@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Charged Commission cannot be greater than upline&apos;s charged commission.
+        ///   Looks up a localized string similar to The Charged Commission cannot be greater than Charged Commission of the Upline.
         /// </summary>
         internal static string ChargedCommissionIsGreaterThanUplineChargedCommissionError {
             get {

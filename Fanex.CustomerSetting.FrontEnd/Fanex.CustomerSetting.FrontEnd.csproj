@@ -241,7 +241,6 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-input.html" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.js">
       <DependentUpon>settingtype7-resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -345,7 +344,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>stake-level-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-input.html" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-resources.js">
       <AutoGen>True</AutoGen>

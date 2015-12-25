@@ -2,7 +2,7 @@
 /// <reference path="../core/module-registrater.ts" />
 /// <reference path="../resource/resource-translation.ts" />
 
-module CustomerSetting {
+module CustomerSetting.IE8 {
     "use strict";
 
     export class SettingType7ResourceService extends ResourceService {

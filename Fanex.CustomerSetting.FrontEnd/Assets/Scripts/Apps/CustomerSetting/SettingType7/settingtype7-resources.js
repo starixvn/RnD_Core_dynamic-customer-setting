@@ -12,7 +12,7 @@
     
     settingType7Resources["message"] = settingType7Resources["message"] || {};
     settingType7Resources["message"]["en-us"] = {
-        "ChargedCommissionIsGreaterThanUplineChargedCommissionError": "The Charged Commission cannot be greater than upline&apos;s charged commission",
+        "ChargedCommissionIsGreaterThanUplineChargedCommissionError": "The Charged Commission cannot be greater than Charged Commission of the Upline",
         "Msg_1": "Invalid Commission Rate.",
         "UpdatedChargedCommissionSuccessfully": "Charged Commission is updated successfully."
     };

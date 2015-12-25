@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChargedCommissionIsGreaterThanUplineChargedCommissionError" xml:space="preserve">
-    <value>The Charged Commission cannot be greater than upline's charged commission</value>
+    <value>The Charged Commission cannot be greater than Charged Commission of the Upline</value>
   </data>
   <data name="Msg_1" xml:space="preserve">
     <value>Invalid Commission Rate.</value>
