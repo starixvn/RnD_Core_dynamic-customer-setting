@@ -50,7 +50,7 @@
         {
             /// Arrange
             int msgType = 91; //// Wrong Product Status
-            var rawMessage = "<Root MsgID=\"60031\" Msg=\"\">"
+            var rawMessage = "<Root MsgID=\"60033\" Msg=\"\">"
                                 + "<Row SportType=\"1\" BetType=\"1\" />"
                                 + "</Root>";
             ResourceService.GetSportTypeName(1, Arg.Any<string>()).Returns(sportTypeName);

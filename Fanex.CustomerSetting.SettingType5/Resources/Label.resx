@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BetLimit" xml:space="preserve">
-    <value>Bet Limit</value>
+  <data name="AgentsShare" xml:space="preserve">
+    <value>Agent's Share</value>
+  </data>
+  <data name="ChargeCommission" xml:space="preserve">
+    <value>Charge Commission</value>
+  </data>
+  <data name="ChargeOnMemberNetWin" xml:space="preserve">
+    <value>Charge on Member Net Win</value>
+  </data>
+  <data name="CommForAgent" xml:space="preserve">
+    <value>Comm for Agent</value>
+  </data>
+  <data name="CommForMaster" xml:space="preserve">
+    <value>Comm for Master</value>
+  </data>
+  <data name="Given" xml:space="preserve">
+    <value>Given</value>
+  </data>
+  <data name="MastersShare" xml:space="preserve">
+    <value>Master's Share</value>
+  </data>
+  <data name="Remain" xml:space="preserve">
+    <value>Remain</value>
+  </data>
+  <data name="SupersShare" xml:space="preserve">
+    <value>Super's Share</value>
+  </data>
+  <data name="TotalCharge" xml:space="preserve">
+    <value>Total Charge</value>
   </data>
 </root>

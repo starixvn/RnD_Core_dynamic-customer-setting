@@ -305,6 +305,10 @@ th {
   text-align: center;
 }
 
+.align-left {
+    text-align: left;
+}
+
 .setting-field-wrapper,
 .text-field-wrapper {
   display: inline-block;

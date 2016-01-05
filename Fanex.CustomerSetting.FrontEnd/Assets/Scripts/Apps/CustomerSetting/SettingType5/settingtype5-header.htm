@@ -1,0 +1,29 @@
+﻿<div class="block__lbl"></div>
+<div class="w80-percent"  data-ng-if="customerLevel === avaiCustomerLevels.super">
+    <div class="block__lbl w33-percent">{{::('TotalCharge' | settingType5Label)}}</div>
+    <div class="block__lbl w33-percent" data-ng-bind-html="'SupersShare' | settingType5Label | unsafe"></div>
+    <div class="block__lbl block__lbl--no-border w33-percent w33-percent--last">{{::('Remain' | settingType5Label)}}</div>
+</div>
+<div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.master">
+    <div class="block__lbl w33-percent">{{::('Given' | settingType5Label)}}</div>
+    <div class="block__lbl w33-percent" data-ng-bind-html="'MastersShare' | settingType5Label | unsafe"></div>
+    <div class="block__lbl block__lbl--no-border w33-percent w33-percent--last">{{::('Remain' | settingType5Label)}}</div>
+</div>
+<div class="w80-percent" data-ng-if="customerLevel === avaiCustomerLevels.agent">
+    <div class="block__lbl w33-percent">{{::('Given' | settingType5Label)}}</div>
+    <div class="block__lbl w33-percent" data-ng-bind-html="'AgentsShare' | settingType5Label | unsafe"></div>
+    <div class="block__lbl block__lbl--no-border w33-percent w33-percent--last">{{::('Remain' | settingType5Label)}}</div>
+</div>
+<div class="w80-percent" data-ng-if="uplineLevel === avaiCustomerLevels.super && customerLevel === avaiCustomerLevels.member">
+    <div class="block__lbl w33-percent">{{::('CommForMaster' | settingType5Label)}}</div>
+    <div class="block__lbl w33-percent">{{::('CommForAgent' | settingType5Label)}}</div>
+    <div class="block__lbl block__lbl--no-border w33-percent w33-percent--last">{{::('ChargeOnMemberNetWin' | settingType5Label)}}</div>
+</div>
+<div class="w80-percent" data-ng-if="uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member">
+    <div class="block__lbl w50-percent">{{::('CommForAgent' | settingType5Label)}}</div>
+    <div class="block__lbl block__lbl--no-border w50-percent">{{::('ChargeOnMemberNetWin' | settingType5Label)}}</div>
+</div>
+<div class="w80-percent" data-ng-if="uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member">
+    <div class="block__lbl w50-percent">{{::('Given' | settingType5Label)}}</div>
+    <div class="block__lbl block__lbl--no-border w50-percent">{{::('ChargeOnMemberNetWin' | settingType5Label)}}</div>
+</div>

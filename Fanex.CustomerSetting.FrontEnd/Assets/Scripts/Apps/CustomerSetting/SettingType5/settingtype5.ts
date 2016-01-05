@@ -1,97 +1,31 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="settingtype5-resources.ts" />
 /// <reference path="models.ts" />
 
 module CustomerSetting {
-    interface ISettingType5Scope extends IDefaultSettingTypeDirectiveScope {
-        numberOfCellsOnEachRow: number;
-    }
+    "use strict";
 
-    class SettingType5Directive extends DefaultSettingTypeGroupingDirective {
-        public replace: boolean = true;
+    class SettingType5Directive extends SettingTypeDirective {
+        public static $inject: string[] = ["settingType5ResourceService"];
+
         public templateUrl: string = "settingtype5.htm";
 
-        public get scope(): any {
-            return {
-                uplineLevel: "=",
-                customerLevel: "=",
-                productId: "=",
-                productName: "=",
-                settingType: "=",
-                update: "&"
-            };
-        }
+        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
+            scope.headerTemplateUrl = "settingtype5-header.htm";
+            scope.valueTemplateUrl = "settingtype5-value.htm";
+            scope.settingTypeName = this.settingType5ResourceService.getLabel("ChargeCommission");
+        };
 
-        public controller: any = ["$scope", ($scope: ISettingType5Scope) => {
-            $scope.avaiCustomerLevels = Level;
-            $scope.avaiSettingLevels = SettingLevel;
-            $scope.numberOfCellsOnEachRow = this.numberOfCellsOnEachRow;
+        private settingType5ResourceService: SettingType5ResourceService;
 
-            $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    settingType.settingItems.forEach((item: ISettingItem, index: number) => {
-                        if (angular.isDefined(item)) {
-                            settingType.settingItems[index] = new SettingType5Item(item, true);
-                        }
+        constructor(settingType5ResourceService: SettingType5ResourceService) {
+            super((settingItem: any, backup?: boolean) => new SettingType5Item(settingItem, backup));
 
-                        $scope.sportGroups = this.groupAndAddEmptyItems($scope.settingType);
-                    });
-                }
-            });
-        }];
-
-        private numberOfCellsOnEachRow: number = 5;
-
-        private groupAndAddEmptyItems(settingType: SettingType): DefaultSettingItem[][] {
-            var groups: DefaultSettingItem[][];
-
-            if (settingType) {
-                settingType.settingItems.forEach((settingItem: SettingType5Item) => {
-                    var mod: number = settingItem.stakeLevels.length % this.numberOfCellsOnEachRow;
-                    var numberOfEmptyCells: number = 0;
-
-                    if (mod !== 0 || settingItem.stakeLevels.length === 0) {
-                        numberOfEmptyCells = this.numberOfCellsOnEachRow - mod;
-                    }
-
-                    for (var counter = 0; counter < numberOfEmptyCells; counter++) {
-                        settingItem.stakeLevels.push(new StakeLevel());
-                    }
-                });
-
-                if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                    groups = this.groupSettingItemsBySportType(settingType.settingItems);
-                } else {
-                    groups = <DefaultSettingItem[][]>[settingType.settingItems];
-                }
-            }
-
-            return groups;
+            this.settingType5ResourceService = settingType5ResourceService;
         }
     }
 
     ModuleRegister.directive("settingtype5", SettingType5Directive);
-
-    function EmptyStakeLevelFilter(): Function {
-        return (items: Array<SettingType5Item | StakeLevel>) => {
-            var hasStakeLevel: boolean = false;
-
-            if (angular.isArray(items)) {
-                hasStakeLevel = items.some((item: SettingType5Item | StakeLevel) => {
-                    if (item instanceof SettingType5Item) {
-                        return item.stakeLevels.some((stakeLevel: StakeLevel) => {
-                            return !!stakeLevel.stakeLevelId;
-                        });
-                    } else {
-                        return !!(<StakeLevel>item).stakeLevelId;
-                    }
-                });
-            }
-
-            return !hasStakeLevel;
-        };
-    }
-
-    ModuleRegister.filter("emptyStakeLevel", EmptyStakeLevelFilter);
 }

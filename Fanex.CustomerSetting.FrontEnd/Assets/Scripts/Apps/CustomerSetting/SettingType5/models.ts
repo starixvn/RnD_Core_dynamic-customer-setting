@@ -4,7 +4,14 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType5Item extends DefaultSettingItem {
-        public stakeLevels: Array<StakeLevel>;
+        static roundingFactor: number = 100;
+
+        public chargeCommission: number;
+        public upline: SettingType5Item;
+
+        public get remain(): number {
+            return this.corectData(this.upline.chargeCommission - this.chargeCommission);
+        }
 
         constructor();
         constructor(settingItem: any);
@@ -13,27 +20,67 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
-                this.stakeLevels = new Array<StakeLevel>();
+                this.chargeCommission = this.modifyChargeCommissionToDisplayForm(settingItem.chargeCommission);
 
-                if (settingItem.stakeLevels) {
-                    this.stakeLevels = settingItem.stakeLevels.map((stakeLevel: any) => {
-                        return new StakeLevel(stakeLevel, true);
-                    });
+                if (settingItem.upline) {
+                    this.upline = new SettingType5Item(settingItem.upline);
                 }
             }
 
             if (backup) {
-                this.oldSetting = new DefaultSettingItem(this);
+                this.oldSetting = new SettingType5Item(this);
             }
         }
 
         public isChanged(): boolean {
             var isChanged: boolean = super.isChanged();
-            var hasChange: boolean = this.stakeLevels.some((stakeLevel: StakeLevel) => {
-                return stakeLevel.isChanged();
-            });
+            var oldSetting: SettingType5Item = <SettingType5Item>this.oldSetting;
 
-            return isChanged || hasChange;
+            isChanged = isChanged || this.chargeCommission !== oldSetting.chargeCommission;
+
+            return isChanged;
+        }
+
+        public copySettingFrom(source: SettingType5Item): boolean {
+            var isSuccessful: boolean = true;
+            var backupChargeCommission: number;
+
+            if (source) {
+                backupChargeCommission = this.chargeCommission;
+
+                this.chargeCommission = source.chargeCommission;
+                isSuccessful = this.validate();
+
+                if (!isSuccessful) {
+                    this.chargeCommission = backupChargeCommission;
+                }
+            }
+
+            return isSuccessful;
+        }
+
+        public validate(): boolean {
+            if (this.chargeCommission > SettingType5Item.roundingFactor) {
+                this.validationState = new ValidationResult("ShareCannotBeExceed100Percent", "chargeCommission");
+
+                return false;
+            }
+
+            if (this.chargeCommission < 0) {
+                this.validationState = new ValidationResult("ShareMustBePositive", "chargeCommission");
+
+                return false;
+            }
+
+            if (this.chargeCommission > this.upline.chargeCommission) {
+                this.validationState = new ValidationResult("ShareMustBeLessThanOrEqualToGivenCommissionError", "chargeCommission");
+
+                return false;
+            }
+
+            this.validationState = <ValidationResult>Result.normal;
+
+            return true;
         }
 
         public toJson(): {} {
@@ -42,59 +89,28 @@ module CustomerSetting {
                 sportTypeName: this.sportTypeName,
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
-                typeName: this.typeName,
-                stakeLevels: []
+                typeName: this.typeName
             };
 
-            if (this.isLive !== undefined) {
-                settingItem.isLive = this.isLive;
-            }
+            settingItem.chargeCommission = this.revertPecentageToRate(this.chargeCommission);
 
-            this.stakeLevels.forEach((stakeLevel: StakeLevel) => {
-                if (stakeLevel.stakeLevelId) {
-                    settingItem.stakeLevels.push(stakeLevel.toJson());
-                }
-            });
+            if (this.upline) {
+                settingItem.upline = this.upline.toJson();
+            }
 
             return settingItem;
         }
-    }
 
-    export class StakeLevel {
-        public stakeLevelId: number;
-        public min: number;
-        public max: number;
-        public selected: boolean;
-
-        private oldStakeLevel: StakeLevel;
-
-        constructor();
-        constructor(settingItem: any);
-        constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = false) {
-            if (settingItem) {
-                this.stakeLevelId = settingItem.stakeLevelId;
-                this.min = settingItem.min;
-                this.max = settingItem.max;
-                this.selected = settingItem.selected;
-            }
-
-            if (backup) {
-                this.oldStakeLevel = new StakeLevel(this);
-            }
+        private corectData(rate: number): number {
+            return parseFloat(rate.toFixed(2));
         }
 
-        public isChanged(): boolean {
-            return this.selected !== this.oldStakeLevel.selected;
+        private revertPecentageToRate(rate: number): number {
+            return parseFloat((rate / SettingType5Item.roundingFactor).toFixed(4));
         }
 
-        public toJson(): {} {
-            return {
-                stakeLevelId: this.stakeLevelId,
-                min: this.min,
-                max: this.max,
-                selected: this.selected
-            };
+        private modifyChargeCommissionToDisplayForm(rate: number): number {
+            return parseFloat((rate * SettingType5Item.roundingFactor).toFixed(2));
         }
     }
 }

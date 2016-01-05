@@ -23701,7 +23701,6 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>');
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -23745,7 +23744,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="helpers.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -23814,8 +23812,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="helper-services.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -23857,8 +23853,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
-/// <reference path="common.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24301,11 +24295,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="common.ts" />
-/// <reference path="helpers.ts" />
-/// <reference path="models.ts" />
-/// <reference path="module-registrater.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24456,11 +24445,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
-/// <reference path="common.ts" />
-/// <reference path="module-registrater.ts" />
-/// <reference path="parameters.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -24676,9 +24660,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -24763,13 +24744,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../resource/resource-translation.ts" />
-/// <reference path="common.ts" />
-/// <reference path="helper-services.ts" />
-/// <reference path="models.ts" />
-/// <reference path="module-registrater.ts" />
-/// <reference path="parameters.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -24904,8 +24878,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -24925,8 +24897,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -24947,9 +24917,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25035,9 +25002,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25082,12 +25046,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-/// <reference path="../settingtype/setting-type-base-directive.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25149,11 +25107,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25192,10 +25145,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25258,9 +25207,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../resource/resource-translation.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -25365,8 +25311,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26002,12 +25946,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../core/defaultsettingblock/copy-setting.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26221,9 +26159,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26265,10 +26200,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -26335,11 +26266,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="models.ts" />
-/// <reference path="position-taking-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26370,7 +26296,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26507,10 +26432,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helpers.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -26655,9 +26576,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26699,11 +26617,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="bet-setting-resources.ts" />
-/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26734,7 +26647,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26848,9 +26760,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26892,11 +26801,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="models.ts" />
-/// <reference path="product-status-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26926,9 +26830,6 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
