@@ -241,17 +241,18 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.js">
-      <DependentUpon>settingtype7-resources.tt</DependentUpon>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.js">
+      <DependentUpon>settingtype5-resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.tt">
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>settingtype7-resources.js</LastGenOutput>
+      <LastGenOutput>settingtype5-resources.js</LastGenOutput>
     </Content>
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-value.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -412,10 +413,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\product-status-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType4\settingtype4.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\models.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-input.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />

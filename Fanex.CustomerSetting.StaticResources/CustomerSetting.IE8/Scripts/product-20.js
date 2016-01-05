@@ -24902,26 +24902,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        })();
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var CopySettingDirective = (function () {
             function CopySettingDirective(copyingSettingService) {
                 var _this = this;
@@ -25104,6 +25084,26 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        })();
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -26865,10 +26865,280 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType5Item = (function (_super) {
+            __extends(SettingType5Item, _super);
+            function SettingType5Item(settingItem, backup) {
+                if (backup === void 0) { backup = false; }
+                _super.call(this, settingItem);
+                if (settingItem) {
+                    this.chargeCommission = this.modifyChargeCommissionToDisplayForm(settingItem.chargeCommission);
+                    if (settingItem.upline) {
+                        this.upline = new SettingType5Item(settingItem.upline);
+                        this.remain = this.corectData(this.upline.chargeCommission - this.chargeCommission);
+                    }
+                }
+                if (backup) {
+                    this.oldSetting = new SettingType5Item(this);
+                }
+            }
+            SettingType5Item.prototype.isChanged = function () {
+                var isChanged = _super.prototype.isChanged.call(this);
+                var oldSetting = this.oldSetting;
+                isChanged = isChanged || this.chargeCommission !== oldSetting.chargeCommission;
+                return isChanged;
+            };
+            SettingType5Item.prototype.copySettingFrom = function (source) {
+                var isSuccessful = true;
+                var backupChargeCommission;
+                if (source) {
+                    backupChargeCommission = this.chargeCommission;
+                    this.chargeCommission = source.chargeCommission;
+                    isSuccessful = this.validate();
+                    if (!isSuccessful) {
+                        this.chargeCommission = backupChargeCommission;
+                    }
+                }
+                return isSuccessful;
+            };
+            SettingType5Item.prototype.validate = function () {
+                if (this.chargeCommission > SettingType5Item.roundingFactor) {
+                    this.validationState = new IE8.ValidationResult("ShareCannotBeExceed100Percent", "chargeCommission");
+                    return false;
+                }
+                if (this.chargeCommission < 0) {
+                    this.validationState = new IE8.ValidationResult("ShareMustBePositive", "chargeCommission");
+                    return false;
+                }
+                if (this.chargeCommission > this.upline.chargeCommission) {
+                    this.validationState = new IE8.ValidationResult("ShareMustBeLessThanOrEqualToGivenCommissionError", "chargeCommission");
+                    return false;
+                }
+                this.validationState = IE8.Result.normal;
+                return true;
+            };
+            SettingType5Item.prototype.toJson = function () {
+                var settingItem = {
+                    sportTypeId: this.sportTypeId,
+                    sportTypeName: this.sportTypeName,
+                    betTypeId: this.betTypeId,
+                    betTypeName: this.betTypeName,
+                    typeName: this.typeName
+                };
+                settingItem.chargeCommission = this.revertPecentageToRate(this.chargeCommission);
+                if (this.upline) {
+                    settingItem.upline = this.upline.toJson();
+                }
+                return settingItem;
+            };
+            SettingType5Item.prototype.corectData = function (rate) {
+                return parseFloat(rate.toFixed(2));
+            };
+            SettingType5Item.prototype.revertPecentageToRate = function (rate) {
+                return parseFloat((rate / SettingType5Item.roundingFactor).toFixed(4));
+            };
+            SettingType5Item.prototype.modifyChargeCommissionToDisplayForm = function (rate) {
+                return parseFloat((rate * SettingType5Item.roundingFactor).toFixed(2));
+            };
+            SettingType5Item.roundingFactor = 100;
+            return SettingType5Item;
+        })(IE8.DefaultSettingItem);
+        IE8.SettingType5Item = SettingType5Item;
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType5InputDirective = (function () {
+            function SettingType5InputDirective($compile, $filter) {
+                var _this = this;
+                this.replace = true;
+                this.require = "ngModel";
+                this.controller = ["$scope", function ($scope) {
+                        $scope.updateValue = function () {
+                            $scope.item.validate();
+                            $scope.item.remain = $scope.item.corectData($scope.item.upline.chargeCommission - $scope.item.chargeCommission);
+                        };
+                    }];
+                this.link = function (scope, element, attributes, modelCtrl) {
+                    element.on("focus", function () {
+                        element.data("focused", true);
+                    });
+                    element.on("focusout", function () {
+                        element.data("focused", false);
+                    });
+                    element.on("mouseup", function () {
+                        if (element.data("focused")) {
+                            var input = element[0];
+                            input.select();
+                        }
+                    });
+                    element.on("keydown", function (event) {
+                        var value = element.val();
+                        var dotPistion = value.indexOf(".");
+                        var numberParts = value.split(".");
+                        var input = element[0];
+                        if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
+                            event.preventDefault();
+                            return;
+                        }
+                        if ([110, 190].indexOf(event.keyCode) >= 0) {
+                            if (numberParts.length > 1) {
+                                event.preventDefault();
+                                return;
+                            }
+                            else {
+                                return;
+                            }
+                        }
+                        if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0
+                            || (event.keyCode === 65 && event.ctrlKey === true)
+                            || (event.keyCode >= 35 && event.keyCode <= 40)) {
+                            return;
+                        }
+                        if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57))
+                            && (event.keyCode < 96 || event.keyCode > 105)) {
+                            event.preventDefault();
+                            return;
+                        }
+                        if (dotPistion >= 0 && dotPistion < getSelectionStart(input) && numberParts[1].length > 1) {
+                            event.preventDefault();
+                            return;
+                        }
+                    });
+                    modelCtrl.$formatters.unshift(function () {
+                        return _this.$filter("number")(modelCtrl.$modelValue);
+                    });
+                    modelCtrl.$parsers.unshift(function (viewValue) {
+                        var value = 0;
+                        var formattedValue = viewValue;
+                        var numberParts = viewValue ? viewValue.split(".") : [];
+                        if (numberParts.length > 1) {
+                            var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
+                            var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
+                            decimalPart = decimalPart.substring(0, 2);
+                            value = parseFloat(plainIntegerPart + "." + decimalPart);
+                            formattedValue = _this.$filter("number")(plainIntegerPart) + "." + decimalPart;
+                        }
+                        else if (numberParts.length > 0) {
+                            var plainNumber = viewValue.replace(/[\,]/g, "");
+                            value = parseInt(plainNumber, 10) || 0;
+                            formattedValue = _this.$filter("number")(value);
+                        }
+                        element.val(formattedValue);
+                        return value;
+                    });
+                    function getSelectionStart(element) {
+                        if (element.createTextRange) {
+                            var selectionRange = document.selection.createRange().duplicate();
+                            selectionRange.moveEnd("character", element.value.length);
+                            if (selectionRange.text === "") {
+                                return element.value.length;
+                            }
+                            return element.value.lastIndexOf(selectionRange.text);
+                        }
+                        else {
+                            return element.selectionStart;
+                        }
+                    }
+                };
+                this.$compile = $compile;
+                this.$filter = $filter;
+            }
+            SettingType5InputDirective.$inject = ["$compile", "$filter", "settingType5ResourceService"];
+            return SettingType5InputDirective;
+        })();
+        IE8.ModuleRegister.directive("settingtype5Input", SettingType5InputDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType5ResourceService = (function (_super) {
+            __extends(SettingType5ResourceService, _super);
+            function SettingType5ResourceService(settingType5Resources, parametersService) {
+                _super.call(this, settingType5Resources, parametersService);
+            }
+            SettingType5ResourceService.$inject = ["settingType5Resources", "parametersService"];
+            return SettingType5ResourceService;
+        })(IE8.ResourceService);
+        IE8.SettingType5ResourceService = SettingType5ResourceService;
+        IE8.ModuleRegister.service("settingType5ResourceService", SettingType5ResourceService);
+        function SettingType5LabelFilter(settingType5ResourceService) {
+            return function (name) {
+                return settingType5ResourceService.getLabel(name);
+            };
+        }
+        SettingType5LabelFilter.$inject = ["settingType5ResourceService"];
+        IE8.ModuleRegister.filter("settingType5Label", SettingType5LabelFilter);
+        function SettingType5MessageFilter(settingType5ResourceService) {
+            return function (name) {
+                var replacements = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    replacements[_i - 1] = arguments[_i];
+                }
+                return settingType5ResourceService.getFormattedMessage.apply(settingType5ResourceService, [name, replacements]);
+            };
+        }
+        SettingType5MessageFilter.$inject = ["settingType5ResourceService"];
+        IE8.ModuleRegister.filter("settingType5Message", SettingType5MessageFilter);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType5Directive = (function (_super) {
+            __extends(SettingType5Directive, _super);
+            function SettingType5Directive(settingType5ResourceService) {
+                var _this = this;
+                _super.call(this, function (settingItem, backup) { return new IE8.SettingType5Item(settingItem, backup); });
+                this.templateUrl = "settingtype5.htm";
+                this.link = function (scope) {
+                    scope.headerTemplateUrl = "settingtype5-header.htm";
+                    scope.valueTemplateUrl = "settingtype5-value.htm";
+                    scope.settingTypeName = _this.settingType5ResourceService.getLabel("ChargeCommission");
+                };
+                this.settingType5ResourceService = settingType5ResourceService;
+            }
+            SettingType5Directive.$inject = ["settingType5ResourceService"];
+            return SettingType5Directive;
+        })(IE8.SettingTypeDirective);
+        IE8.ModuleRegister.directive("settingtype5", SettingType5Directive);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div class=\"msg-container\" data-ng-show=\"result\"><div class=\"msg msg--{{result.msgType}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.settingResults && subResult.settingResults.length > 0\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgType}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgType}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\"><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div><div class=\"modal__content\"><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
@@ -26881,7 +27151,10 @@ $templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><d
 $templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell w33-percent setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></div><div class=\"block__cell w33-percent setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-bet-setting-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></div></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | number}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | number}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | number}}</div></div>");
 $templateCache.put("settingtype2.htm","<div><div data-default-setting-type-grouping class=\"full-width\"></div></div>");
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
-$templateCache.put("settingtype4.htm","<div><div data-default-setting-type-grouping></div></div>");}]);
+$templateCache.put("settingtype4.htm","<div><div data-default-setting-type-grouping></div></div>");
+$templateCache.put("settingtype5-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w33-percent\">{{\'TotalCharge\' | settingType5Label}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'SupersShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'Remain\' | settingType5Label}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w33-percent\">{{\'Given\' | settingType5Label}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'MastersShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'Remain\' | settingType5Label}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w33-percent\">{{\'Given\' | settingType5Label}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'AgentsShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'Remain\' | settingType5Label}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.superAgent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w33-percent\">{{\'CommForMaster\' | settingType5Label}}</div><div class=\"block__lbl w33-percent\">{{\'CommForAgent\' | settingType5Label}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{\'ChargeOnMemberNetWin\' | settingType5Label}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.masterAgent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w50-percent\">{{\'CommForAgent\' | settingType5Label}}</div><div class=\"block__lbl block__lbl--no-border w50-percent\">{{\'ChargeOnMemberNetWin\' | settingType5Label}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w50-percent\">{{\'Given\' | settingType5Label}}</div><div class=\"block__lbl block__lbl--no-border w50-percent\">{{\'ChargeOnMemberNetWin\' | settingType5Label}}</div></div>");
+$templateCache.put("settingtype5-value.htm","<div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--has-constraint setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--has-constraint setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--has-constraint setting-field--number\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.superAgent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w33-percent\">{{item.upline.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.chargeCommission | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.masterAgent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | number}} %</div></div>");
+$templateCache.put("settingtype5.htm","<div><div data-default-setting-type-grouping class=\"full-width\"></div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -27812,4 +28085,85 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     };
 
     angular.module("customerSetting").value("productStatusResources", productStatusResources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var settingType5Resources = {};
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["en-us"] = {
+        "AgentsShare": "Agent&apos;s Share",
+        "ChargeCommission": "Charge Commission",
+        "ChargeOnMemberNetWin": "Charge on Member Net Win",
+        "CommForAgent": "Comm for Agent",
+        "CommForMaster": "Comm for Master",
+        "Given": "Given",
+        "MastersShare": "Master&apos;s Share",
+        "Remain": "Remain",
+        "SupersShare": "Super&apos;s Share",
+        "TotalCharge": "Total Charge"
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["zh-cn"] = {
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["zh-tw"] = {
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["ko-kr"] = {
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["ja-jp"] = {
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["th-th"] = {
+    };
+    
+    settingType5Resources["label"] = settingType5Resources["label"] || {};
+    settingType5Resources["label"]["vi-vn"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["en-us"] = {
+        "Msg_1": "Invalid Charge Commission Rate.",
+        "ShareCannotBeExceed100Percent": "The Share cannot be exceed 100%.",
+        "ShareMustBeLessThanOrEqualToGivenCommissionError": "The Share must be less than or equal to the Given Commission.",
+        "ShareMustBePositive": "The Share must be a positive number.",
+        "UpdatedChargeCommissionSuccessfully": "Charge Commission is updated successfully."
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["zh-cn"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["zh-tw"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["ko-kr"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["ja-jp"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["th-th"] = {
+    };
+    
+    settingType5Resources["message"] = settingType5Resources["message"] || {};
+    settingType5Resources["message"]["vi-vn"] = {
+    };
+
+    angular.module("customerSetting").value("settingType5Resources", settingType5Resources);
 })();
