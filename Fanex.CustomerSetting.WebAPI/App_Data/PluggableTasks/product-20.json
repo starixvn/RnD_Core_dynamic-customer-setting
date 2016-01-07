@@ -1,0 +1,15 @@
+﻿[
+  {
+    "productId": 20,
+    "tasks": [
+      {
+        "preTasks": [
+          "Fanex.CustomerSetting.Product20Tasks.PreUpdateSettingTask, Fanex.CustomerSetting.Product20Tasks"
+        ],
+        "postTasks": [
+          "Fanex.CustomerSetting.Product20Tasks.PostQuerySettingTask, Fanex.CustomerSetting.Product20Tasks"
+        ]
+      }
+    ]
+  }
+]

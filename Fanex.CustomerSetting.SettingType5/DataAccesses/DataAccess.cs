@@ -40,17 +40,18 @@
             Level uplineLevel,
             string chargeCommissionXml)
         {
-            var param = new Hashtable();
-
-            param.Add("userid", settingContext.Actor.Id);
-            param.Add("subaccid", settingContext.Actor.SubAccountId);
-            param.Add("custid", customerId);
-            param.Add("settingtype", Constants.SettingTypeId);
-            param.Add("ip", settingContext.IP);
-            param.Add("discount", chargeCommissionXml);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
-            param.Add("msgtype", 0);
+            var param = new Hashtable
+            {
+                { "userid", settingContext.Actor.Id },
+                { "subaccid", settingContext.Actor.SubAccountId },
+                { "custid", customerId },
+                { "settingtype", Constants.SettingTypeId },
+                { "ip", settingContext.IP },
+                { "discount", chargeCommissionXml },
+                { "msgtype", 0 },
+                { "errcode", 0 },
+                { "errmsg", string.Empty }
+            };
 
             return ExecuteNonQuery("CustSetting_ChargeCommissionUpd", param);
         }
