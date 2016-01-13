@@ -4,6 +4,6 @@
 
     public interface IPreUpdateSettingTask
     {
-        void Invoke(UpdateCustomerSettingCommand command);
+        void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command);
     }
 }

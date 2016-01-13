@@ -4,6 +4,6 @@
 
     public interface IPreQuerySettingTask
     {
-        void Invoke(CustomerSettingQuery query);
+        void Invoke(ISettingContext settingContext, CustomerSettingQuery query);
     }
 }

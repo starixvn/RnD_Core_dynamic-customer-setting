@@ -4,6 +4,6 @@
 
     public interface IPreMultipleUpdateSettingTask
     {
-        void Invoke(MultipleUpdateCustomerSettingCommand command);
+        void Invoke(ISettingContext settingContext, MultipleUpdateCustomerSettingCommand command);
     }
 }

@@ -22,6 +22,7 @@
         private ISettingContext _settingContext;
         private IValidationService _validationService;
         private IProductService _productService;
+        private IPluggedTaskService _pluggedTaskService;
         private ILogger _logger;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ISettingTypeService _settingTypeService;
@@ -32,6 +33,7 @@
             _settingContext = new SettingContextStub();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
+            _pluggedTaskService = Substitute.For<IPluggedTaskService>();
             _logger = Substitute.For<ILogger>();
             _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
 
@@ -40,6 +42,7 @@
             _settingService = new UpdateSettingService(
                 _settingContext,
                 _validationService,
+                _pluggedTaskService,
                 _logger,
                 _settingTypeServiceFactory);
         }

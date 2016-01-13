@@ -5,6 +5,6 @@
 
     public interface IPostUpdateSettingTask
     {
-        void Invoke(UpdateCustomerSettingCommand command, ref IResult result);
+        void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult result);
     }
 }

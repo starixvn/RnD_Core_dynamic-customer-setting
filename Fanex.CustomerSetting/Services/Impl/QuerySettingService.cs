@@ -19,6 +19,7 @@
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
         private readonly IResourceService _resourceService;
+        private readonly IPluggedTaskService _pluggedTaskService;
         private readonly ILogger _logger;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
         private readonly IDynamicRepository _dynamicRepository;
@@ -28,6 +29,7 @@
             IValidationService validationService = null,
             IProductService productService = null,
             IResourceService resourceService = null,
+            IPluggedTaskService pluggableTaskService = null,
             ILogger logger = null,
             ISettingTypeServiceFactory settingTypeServiceFactory = null,
             IDynamicRepository dynamicRepository = null)
@@ -39,6 +41,7 @@
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
+            _pluggedTaskService = pluggableTaskService ?? new PluggedTaskService(_settingContext);
             _logger = logger ?? Logger.Log;
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
@@ -47,6 +50,9 @@
         public Setting GetCustomerSetting(CustomerSettingQuery query)
         {
             Validate(query);
+
+            // Run plugged tasks before querying data.
+            _pluggedTaskService.Run(query.ProductId, query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
             var product = GetProductInfo(query.ProductId, _settingContext.System);
@@ -59,6 +65,9 @@
                 product.Id,
                 product.Name,
                 customerSettingTypes);
+
+            // Run plugged tasks after querying setting data of a product.
+            _pluggedTaskService.Run(query.ProductId, query, setting);
 
             return setting;
         }
@@ -144,14 +153,21 @@
             {
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
 
+                // Run plugged tasks of setting type before querying setting type's data.
+                _pluggedTaskService.Run(query.ProductId, productSettingType.Id, query);
+
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query);
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
+
                 if (customerSettingType.DisplayMode != DisplayMode.ReadOnly)
                 {
                     customerSettingType.DisplayMode = productSettingType.DisplayMode;
                 }
+
+                // Run plugged tasks on setting type after querying setting type's data.
+                _pluggedTaskService.Run(query.ProductId, productSettingType.Id, query, customerSettingType);
             }
             catch (Exception ex)
             {

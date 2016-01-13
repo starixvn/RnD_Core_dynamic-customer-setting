@@ -57,7 +57,7 @@
             byte productId,
             SettingType settingType)
         {
-            Check.Argument.IsNotNull(settingType, "settingType");
+            Check.Argument.IsNotNull(settingType, nameof(settingType));
 
             IResult result = _chargeCommissionDataAccess.UpdateCustomerChargeCommission(
                 settingContext,

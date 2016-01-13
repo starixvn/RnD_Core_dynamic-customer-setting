@@ -24,9 +24,16 @@
                 return validationResult;
             }
 
-            var results = UpdateSettingTypesForMultipleCustomers(command);
+            // Run plugged tasks before updating settings of mutiple customers.
+            _pluggedTaskService.Run(command.Setting.ProductId, command);
 
-            return MapUpdateSettingResultWithCustomerName(results, command.CustomerIds, command.CustomerNames);
+            var updateSettingTypeResults = UpdateSettingTypesForMultipleCustomers(command);
+            var result = MapUpdateSettingResultWithCustomerName(updateSettingTypeResults, command.CustomerIds, command.CustomerNames);
+
+            // Run plugged tasks after updating settings of mutiple customers.
+            _pluggedTaskService.Run(command.Setting.ProductId, command, result);
+
+            return result;
         }
 
         private IResult Validate(MultipleUpdateCustomerSettingCommand command)
@@ -63,16 +70,20 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
+                _pluggedTaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
-
-                return settingTypeService.UpdateMultipleCustomerSettingType(
+                var updateSettingResults = settingTypeService.UpdateMultipleCustomerSettingType(
                         _settingContext,
                         customerIds,
                         customerLevel,
                         uplineLevel,
                         productId,
                         settingType);
+
+                _pluggedTaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
+
+                return updateSettingResults;
             }
             catch (CustomerSettingException customerSettingException)
             {
