@@ -266,6 +266,7 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
+        public warningMessage: Result;
 
         constructor();
         constructor(setting: any)
@@ -276,6 +277,10 @@ module CustomerSetting {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
+
+                if (setting.warningMessage) {
+                    this.warningMessage = new Result(setting.warningMessage.code, setting.warningMessage.message, MessageType.warning);
+                }
 
                 if (setting.settingTypes) {
                     this.settingTypes = setting.settingTypes.map((settingType: any) => new SettingType(settingType));
@@ -395,6 +400,10 @@ module CustomerSetting {
             return this.code === 0;
         }
 
+        public get msgTypeName(): string {
+            return MessageType[this.msgType.toString()];
+        }
+
         public static get normal(): Result {
             return new Result(0, "", MessageType.success);
         }
@@ -418,8 +427,14 @@ module CustomerSetting {
         constructor(code: number, message: string, msgType: MessageType) {
             this.code = code;
             this.message = message;
-            this.msgType = msgType;
-            this.msgType = this.code !== 0 ? MessageType.error : this.msgType;
+
+            if (msgType) {
+                this.msgType = msgType;
+            } else if (this.code !== 0) {
+                this.msgType = MessageType.error;
+            } else {
+                this.msgType = MessageType.success;
+            }
         }
     }
 

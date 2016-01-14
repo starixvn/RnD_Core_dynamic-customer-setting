@@ -189,6 +189,15 @@
     margin-bottom: 10px;
     max-height: 500px;
     overflow-x: auto;
+
+    &--no-border-bottom {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    &--no-border-top {
+        border-top: none;
+    }
 }
 
 .msg {

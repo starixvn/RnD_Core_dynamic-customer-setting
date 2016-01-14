@@ -89,6 +89,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluggedTasks", "PluggedTask
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product20", "Product20", "{463AECF9-A914-4373-8639-B4049B67E537}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Product20Tasks", "Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Product20Tasks.csproj", "{CA48C0D3-B8BB-42BA-B26A-E0689419F088}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{1D56751A-C3B8-41F8-9E18-EED178FA6EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D56751A-C3B8-41F8-9E18-EED178FA6EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D56751A-C3B8-41F8-9E18-EED178FA6EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,5 +240,6 @@ Global
 		{1131984F-AA0D-4872-89F2-11648EFA9104} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 		{1D56751A-C3B8-41F8-9E18-EED178FA6EEB} = {0922F86D-26D3-4BB6-BA24-1E5D320B9CFD}
 		{463AECF9-A914-4373-8639-B4049B67E537} = {42B05657-8A0C-44E1-A910-2F95EC279A55}
+		{CA48C0D3-B8BB-42BA-B26A-E0689419F088} = {463AECF9-A914-4373-8639-B4049B67E537}
 	EndGlobalSection
 EndGlobal

@@ -503,6 +503,15 @@ th {
   margin-bottom: 10px;
 }
 
+.msg-container--no-border-bottom {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.msg-container--no-border-top {
+    border-top: none;
+}
+
 .msg {
   padding: 3px 5px;
 }

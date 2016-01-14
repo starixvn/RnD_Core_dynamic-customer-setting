@@ -28,6 +28,7 @@ module CustomerSetting {
         public customerNames: string;
         public uplineLevel: Level;
         public setting: Setting;
+        public warningMessages: Result | UpdatingSettingResult;
         public requestMsgResult: Result | UpdatingSettingResult;
 
         private get queryPath(): string {
@@ -158,6 +159,7 @@ module CustomerSetting {
                     .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
+                        this.warningMessages = this.setting.warningMessage;
                     }, (response: ng.IHttpPromiseCallbackArg<any>) => {
                         var error: Result;
 

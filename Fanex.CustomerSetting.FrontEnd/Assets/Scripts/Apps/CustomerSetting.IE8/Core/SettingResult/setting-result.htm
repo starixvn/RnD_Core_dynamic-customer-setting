@@ -1,5 +1,5 @@
 ﻿<div class="msg-container" data-ng-show="result">
-    <div class="msg msg--{{result.msgType}}" data-ng-if="!result.subResults">
+    <div class="msg msg--{{result.msgTypeName}}" data-ng-if="!result.subResults">
         <div class="icon msg__icon"></div>
         <div class="msg__content">{{result.message}}</div>
     </div>
@@ -8,12 +8,12 @@
              data-ng-if="subResult.customerName">
             {{subResult.customerName}}
         </div>
-        <div class="msg msg--{{subResult.msgType}}"
+        <div class="msg msg--{{subResult.msgTypeName}}"
              data-ng-if="!subResult.settingResults">
             <div class="icon msg__icon"></div>
             <div class="msg__content">{{subResult.message}}</div>
         </div>
-        <div class="msg msg--{{settingResult.msgType}}"
+        <div class="msg msg--{{settingResult.msgTypeName}}"
              data-ng-if="subResult.settingResults"
              data-ng-repeat="settingResult in subResult.settingResults">
             <div class="icon msg__icon"></div>

@@ -7,7 +7,11 @@
     <link rel="stylesheet" type="text/css" href="{{customCss}}" />
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
-    <setting-result data-result="ctrl.requestMsgResult"></setting-result>
+    <setting-result data-ng-if="ctrl.warningMessages" 
+                    data-result="ctrl.warningMessages"
+                    data-ng-class="{ 'msg-container--no-border-bottom': ctrl.requestMsgResult }"></setting-result>
+    <setting-result data-result="ctrl.requestMsgResult" 
+                    data-ng-class="{ 'msg-container--no-border-top': ctrl.warningMessages }"></setting-result>
     <div class="customer-setting customer-level-{{ctrl.setting.customerLevel}}" data-ng-show="ctrl.setting">
         <customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></customer-info>
         <setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></setting-type-loader>
