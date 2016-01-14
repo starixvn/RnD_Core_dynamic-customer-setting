@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Results;
 
     public interface ISetting
     {
@@ -16,5 +17,7 @@
         string ProductName { get; }
 
         IEnumerable<SettingType> SettingTypes { get; set; }
+
+        IResult WarningMessage { get; set; }
     }
 }

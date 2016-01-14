@@ -1,12 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
 {
-    using Enumerations;
+    using System.Collections.Generic;
+    using Fanex.CustomerSetting.Models.Enumerations;
 
-    internal interface IPreUpdateSettingTypeTask
+    internal interface IPreUpdateMultipleCustomersSettingTypeTask
     {
         void Invoke(
             ISettingContext settingContext,
-            int customerId,
+            IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,
             byte productId,

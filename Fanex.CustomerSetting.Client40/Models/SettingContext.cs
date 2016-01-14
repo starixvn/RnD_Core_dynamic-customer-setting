@@ -1,5 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
+    using Fanex.CustomerSetting.Client40.Configurations;
+
     public class SettingContext
     {
         public int ActorId { get; set; }
@@ -15,5 +17,7 @@
         public string Domain { get; set; }
 
         public string IP { get; set; }
+
+        public byte System { get; set; } = CustomerSettingConfiguration.Settings.System;
     }
 }

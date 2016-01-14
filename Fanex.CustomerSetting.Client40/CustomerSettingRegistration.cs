@@ -110,6 +110,7 @@
             context.Domain = settingContext.Domain;
             context.Language = settingContext.Language;
             context.ClientIP = settingContext.IP;
+            context.System = settingContext.System;
 
             return context;
         }

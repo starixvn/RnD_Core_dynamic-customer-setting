@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Results;
 
     [Serializable]
     public class Setting : ISetting
@@ -121,5 +122,7 @@
                 _settingType = value;
             }
         }
+
+        public IResult WarningMessage { get; set; }
     }
 }

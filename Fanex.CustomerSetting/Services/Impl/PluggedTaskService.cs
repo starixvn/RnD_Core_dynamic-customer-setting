@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
-    using Configurations;
-    using Models;
-    using Models.Enumerations;
-    using Models.PlugableTasks;
-    using Models.Requests;
-    using Models.Results;
+    using Fanex.CustomerSetting.Configurations;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.PlugableTasks;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
 
     public class PluggedTaskService : IPluggedTaskService
     {
@@ -15,14 +15,13 @@
         public PluggedTaskService(ISettingContext settingContext)
         {
             _settingContext = settingContext;
-            PluggableTaskConfiguration.Initialize();
         }
 
         public void Run(byte productId, CustomerSettingQuery query)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreQuerySettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreQueryCustomerSettingTask>(productId);
 
-            foreach (IPreQuerySettingTask task in tasks)
+            foreach (IPreQueryCustomerSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, query);
             }
@@ -30,9 +29,9 @@
 
         public void Run(byte productId, CustomerSettingQuery query, Setting setting)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostQuerySettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostQueryCustomerSettingTask>(productId);
 
-            foreach (IPostQuerySettingTask task in tasks)
+            foreach (IPostQueryCustomerSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, query, setting);
             }
@@ -40,9 +39,9 @@
 
         public void Run(byte productId, UpdateCustomerSettingCommand command)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateSettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateCustomerSettingTask>(productId);
 
-            foreach (IPreUpdateSettingTask task in tasks)
+            foreach (IPreUpdateCustomerSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, command);
             }
@@ -50,9 +49,9 @@
 
         public void Run(byte productId, UpdateCustomerSettingCommand command, IResult result)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateSettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateCustomerSettingTask>(productId);
 
-            foreach (IPostUpdateSettingTask task in tasks)
+            foreach (IPostUpdateCustomerSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, command, result);
             }
@@ -60,9 +59,9 @@
 
         public void Run(byte productId, MultipleUpdateCustomerSettingCommand command)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreMultipleUpdateSettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateMultipleCustomersSettingTask>(productId);
 
-            foreach (IPreMultipleUpdateSettingTask task in tasks)
+            foreach (IPreUpdateMultipleCustomersSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, command);
             }
@@ -70,9 +69,9 @@
 
         public void Run(byte productId, MultipleUpdateCustomerSettingCommand command, IResult result)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostMultipleUpdateSettingTask>(productId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateMultipleCustomersSettingTask>(productId);
 
-            foreach (IPostMultipleUpdateSettingTask task in tasks)
+            foreach (IPostUpdateMultipleCustomersSettingTask task in tasks)
             {
                 task.Invoke(_settingContext, command, result);
             }
@@ -80,9 +79,9 @@
 
         public void Run(byte productId, short settingTypeId, CustomerSettingQuery query)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreQuerySettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreQueryCustomerSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPreQuerySettingTypeTask task in tasks)
+            foreach (IPreQueryCustomerSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, query);
             }
@@ -94,9 +93,9 @@
             CustomerSettingQuery query,
             SettingType settingTypeData)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostQuerySettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostQueryCustomerSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPostQuerySettingTypeTask task in tasks)
+            foreach (IPostQueryCustomerSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, query, settingTypeData);
             }
@@ -110,9 +109,9 @@
             Level uplineLevel,
             SettingType settingTypeData)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateSettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateCustomerSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPreUpdateSettingTypeTask task in tasks)
+            foreach (IPreUpdateCustomerSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, customerId, customerLevel, uplineLevel, productId, settingTypeData);
             }
@@ -127,9 +126,9 @@
             SettingType settingTypeData,
             SettingResult updateResult)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateSettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateCustomerSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPostUpdateSettingTypeTask task in tasks)
+            foreach (IPostUpdateCustomerSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, customerId, customerLevel, uplineLevel, productId, settingTypeData, updateResult);
             }
@@ -143,9 +142,9 @@
             Level uplineLevel,
             SettingType settingTypeData)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPreMultipleUpdateSettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPreUpdateMultipleCustomersSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPreMultipleUpdateSettingTypeTask task in tasks)
+            foreach (IPreUpdateMultipleCustomersSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, customerIds, customerLevel, uplineLevel, productId, settingTypeData);
             }
@@ -160,9 +159,9 @@
             SettingType settingTypeData,
             IEnumerable<SettingResult> updateResults)
         {
-            var tasks = PluggableTaskConfiguration.PickTasks<IPostMultipleUpdateSettingTypeTask>(productId, settingTypeId);
+            var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateMultipleCustomersSettingTypeTask>(productId, settingTypeId);
 
-            foreach (IPostMultipleUpdateSettingTypeTask task in tasks)
+            foreach (IPostUpdateMultipleCustomersSettingTypeTask task in tasks)
             {
                 task.Invoke(_settingContext, customerIds, customerLevel, uplineLevel, productId, settingTypeData, updateResults);
             }

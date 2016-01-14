@@ -5,20 +5,15 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Exceptions;
-    using Models.PlugableTasks;
+    using Fanex.CustomerSetting.Models.PlugableTasks;
     using Newtonsoft.Json;
 
     internal static class PluggableTaskConfiguration
     {
-        private static IEnumerable<ProductTask> configuredTasks;
+        private static IEnumerable<ProductTask> configuredTasks
+            = ReadTasksFromConfigurationFiles(CustomerSettingConfiguration.Configurations.TasksConfigurationPath);
 
-        private static ConcurrentDictionary<string, object> cachedTasks;
-
-        public static void Initialize()
-        {
-            Initialize(null);
-        }
+        private static ConcurrentDictionary<string, object> cachedTasks = new ConcurrentDictionary<string, object>();
 
         public static void Initialize(string configurationPath)
         {
@@ -33,11 +28,6 @@
         public static IEnumerable<T> PickTasks<T>(byte productId, short? settingTypeId = default(short?)) where T : class
         {
             IEnumerable<T> runnableTasks = Enumerable.Empty<T>();
-
-            if (configuredTasks == null || cachedTasks == null)
-            {
-                throw new CustomerSettingException($"You must call {nameof(PluggableTaskConfiguration.Initialize)} first.");
-            }
 
             if (configuredTasks.Any())
             {
@@ -81,7 +71,7 @@
             Type taskType = Type.GetType(taskName);
             T task = default(T);
 
-            if (taskType != null && taskType.IsAssignableFrom(typeof(T)))
+            if (taskType != null && typeof(T).IsAssignableFrom(taskType))
             {
                 task = Activator.CreateInstance(taskType) as T;
                 cachedTasks.TryAdd(taskName, task);
@@ -97,7 +87,7 @@
 
             cachedTasks.TryGetValue(taskName, out cachedTask);
 
-            if (cachedTask != null && cachedTask.GetType().IsAssignableFrom(typeof(T)))
+            if (cachedTask != null && typeof(T).IsAssignableFrom(cachedTask?.GetType()))
             {
                 task = cachedTasks as T;
             }
@@ -145,7 +135,7 @@
 
         private static void VerifyPath(string path)
         {
-            if (!Directory.Exists(path) || !File.Exists(path))
+            if (!Directory.Exists(path) && !File.Exists(path))
             {
                 throw new DirectoryNotFoundException($"The path to the configuration file of pluggable tasks, which is {path}, is invalid");
             }

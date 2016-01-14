@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
 {
     using System.Collections.Generic;
-    using Enumerations;
-    using Results;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Results;
 
-    public interface IPostMultipleUpdateSettingTypeTask
+    public interface IPostUpdateMultipleCustomersSettingTypeTask
     {
         void Invoke(
             ISettingContext settingContext,

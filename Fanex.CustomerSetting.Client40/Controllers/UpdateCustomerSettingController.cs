@@ -62,6 +62,7 @@
                 updateSetting.Domain = settingContext.Domain;
                 updateSetting.Language = settingContext.Language;
                 updateSetting.ClientIP = settingContext.IP;
+                updateSetting.System = settingContext.System;
             }
         }
     }

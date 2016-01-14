@@ -29,6 +29,7 @@
             string actorName,
             byte role,
             int subAccountId = 0,
+            byte system = 1,
             string language = "en-US")
         {
             if (AgencySystem != CustomerSettingConfiguration.Settings.System)
@@ -40,6 +41,7 @@
             Session[SessionKeys.ActorNameSessionKey] = actorName;
             Session[SessionKeys.ActorLevelSessionKey] = role;
             Session[SessionKeys.SubAccountIdSessionKey] = subAccountId;
+            Session[SessionKeys.SystemIdSessionKey] = system;
             Session[SessionKeys.LanguageSessionKey] = language;
 
             return Json(new

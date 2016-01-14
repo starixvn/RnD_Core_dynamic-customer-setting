@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Models
 {
-    using Common.Helper;
-    using Constants;
-    using CustomerSetting.Models;
-    using CustomerSetting.Models.Results;
-    using Dtos;
-    using Resources;
+    using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.SettingType5.Constants;
+    using Fanex.CustomerSetting.SettingType5.Dtos;
+    using Fanex.CustomerSetting.SettingType5.Resources;
 
     public class ChargeCommissionItem : SettingItemDefault
     {
@@ -17,7 +17,7 @@
 
         internal ChargeCommissionItem(ChargeCommissionDto chargeCommissionDto)
         {
-            Check.Argument.IsNotNull(chargeCommissionDto, "chargeCommissionDto");
+            Check.Argument.IsNotNull(chargeCommissionDto, nameof(chargeCommissionDto));
 
             SportTypeId = chargeCommissionDto.SportTypeId;
             BetTypeId = chargeCommissionDto.BetTypeId;

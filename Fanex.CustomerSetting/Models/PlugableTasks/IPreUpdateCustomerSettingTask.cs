@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
 {
-    using Requests;
+    using Fanex.CustomerSetting.Models.Requests;
 
-    public interface IPreUpdateSettingTask
+    public interface IPreUpdateCustomerSettingTask
     {
         void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command);
     }

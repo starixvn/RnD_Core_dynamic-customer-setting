@@ -1,12 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.DemoSite
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.DemoSite.App_Start;
@@ -47,6 +44,7 @@
             settingContext.ActorName = (string)HttpContext.Current.Session[SessionKeys.ActorNameSessionKey];
             settingContext.ActorLevel = (byte)HttpContext.Current.Session[SessionKeys.ActorLevelSessionKey];
             settingContext.SubAccountId = (int)HttpContext.Current.Session[SessionKeys.SubAccountIdSessionKey];
+            settingContext.System = (byte)HttpContext.Current.Session[SessionKeys.SystemIdSessionKey];
             settingContext.Language = (string)HttpContext.Current.Session[SessionKeys.LanguageSessionKey];
             settingContext.Domain = HttpContext.Current.Request.Url.Host;
             settingContext.IP = GetClientIp();

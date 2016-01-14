@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
 {
-    using Requests;
+    using Fanex.CustomerSetting.Models.Requests;
 
-    public interface IPreQuerySettingTypeTask
+    public interface IPreQueryCustomerSettingTypeTask
     {
         void Invoke(ISettingContext settingContext, CustomerSettingQuery query);
     }

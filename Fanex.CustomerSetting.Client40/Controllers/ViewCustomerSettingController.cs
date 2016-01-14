@@ -76,6 +76,7 @@
             querySetting.Domain = settingContext.Domain;
             querySetting.Language = settingContext.Language;
             querySetting.ClientIP = settingContext.IP;
+            querySetting.System = settingContext.System;
 
             customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
             Response.StatusCode = (int)customerSettingResponse.StatusCode;

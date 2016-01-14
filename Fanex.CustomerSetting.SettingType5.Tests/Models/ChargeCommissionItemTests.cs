@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Tests.Models
 {
     using System;
-    using Dtos;
+    using Fanex.CustomerSetting.SettingType5.Dtos;
+    using Fanex.CustomerSetting.SettingType5.Models;
     using NUnit.Framework;
-    using SettingType5.Models;
 
     public class ChargeCommissionItemTests
     {

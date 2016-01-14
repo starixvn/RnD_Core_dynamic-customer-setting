@@ -130,6 +130,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.Product20Tasks.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -148,6 +151,9 @@
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.Product20Tasks.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -160,7 +166,13 @@
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.Product20Tasks.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType1.xml">
@@ -175,14 +187,26 @@
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.Product20Tasks.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType1.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType2.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType3.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType4.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.Product20Tasks.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -193,6 +217,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType5.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.xml">
@@ -282,6 +309,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Product20Tasks.csproj">
+      <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
+      <Name>Fanex.CustomerSetting.Product20Tasks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>

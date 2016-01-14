@@ -4,9 +4,7 @@
     "tasks": [
       {
         "taskNames": [
-          "Fanex.CustomerSetting.Product20Tasks.PostQuerySettingTask, Fanex.CustomerSetting.Product20Tasks",
-          "Fanex.CustomerSetting.Product20Tasks.PreUpdateSettingTask, Fanex.CustomerSetting.Product20Tasks",
-          "Fanex.CustomerSetting.Product20Tasks.PreMultipleUpdateSettingTask, Fanex.CustomerSetting.Product20Tasks"
+          "Fanex.CustomerSetting.Product20Tasks.RestrictPermissionTask, Fanex.CustomerSetting.Product20Tasks"
         ]
       }
     ]
