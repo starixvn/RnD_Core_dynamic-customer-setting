@@ -155,18 +155,18 @@ var DemoForm;
                     subAccId = 111;
                     break;
                 case Role["super"]:
-                    actorId = 2;
-                    name = "SA-RM";
+                    actorId = 1176070;
+                    name = "SuperTest1 ";
                     subAccId = 3;
                     break;
                 case Role["master"]:
-                    actorId = 4174;
-                    name = "wsrm";
+                    actorId = 1176083;
+                    name = "master1";
                     subAccId = 728497;
                     break;
                 case Role["agent"]:
-                    actorId = 1262;
-                    name = "428rm";
+                    actorId = 1176086;
+                    name = "agent01";
                     subAccId = 728498;
                     break;
             }
@@ -179,36 +179,39 @@ var DemoForm;
                     id = 2;
                     break;
                 case Role["master"]:
-                    id = 4174;
+                    id = 1176083;
+                    name = "master1";
                     break;
                 case Role["agent"]:
-                    id = 1262;
+                    id = 1176086;
+                    name = "agent01";
                     break;
                 case Role["member"]:
-                    id = 1277;
+                    id = 7890346;
+                    name = "AGENT01000";
                     break;
             }
-            return this.createSingleTarget(id, role, uplineRole);
+            return this.createSingleTarget(id, name, role, uplineRole);
         };
         SampleDataFactory.getMultipleTarget = function (role, uplineRole) {
             var ids = "";
             var names = "";
             switch (role) {
                 case Role["super"]:
-                    ids = "2,3,4";
-                    names = "SA-RM,SA-US$,SA-TB";
+                    ids = "1176070,576313,3230178";
+                    names = "SuperTest1,SuperTest2,SuperTest12";
                     break;
                 case Role["master"]:
-                    ids = "4174,4300,4356";
-                    names = "mrm,mbrm,MYRM";
+                    ids = "1176083,14167350,14373487";
+                    names = "master1,mastertest01,masterkz";
                     break;
                 case Role["agent"]:
-                    ids = "1262,1653,2400";
-                    names = "wsrm,SKRM,216COM";
+                    ids = "1176086,14373905,14374140";
+                    names = "agent01,agent03,agentlcs000";
                     break;
                 case Role["member"]:
-                    ids = "1277,1284,1290";
-                    names = "428RM,305RM,302RM";
+                    ids = "7890346,8252951,8252986";
+                    names = "AGENT01000,AGENT01001,AGENT01002";
                     break;
             }
             return this.createMultipleTargetInfo(ids, names, role, uplineRole);
@@ -216,8 +219,8 @@ var DemoForm;
         SampleDataFactory.createActor = function (id, name, role, subAccId, systemId) {
             return new Actor(id, name, role, subAccId, this.defaultLanguage, systemId);
         };
-        SampleDataFactory.createSingleTarget = function (id, role, uplineRole) {
-            return new SingleTarget(id, role, uplineRole, this.defaultProductId);
+        SampleDataFactory.createSingleTarget = function (id, name, role, uplineRole) {
+            return new SingleTarget(id, name, role, uplineRole, this.defaultProductId);
         };
         SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
             return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
@@ -298,9 +301,10 @@ var DemoForm;
     })();
     var SingleTarget = (function (_super) {
         __extends(SingleTarget, _super);
-        function SingleTarget(customerId, role, uplineRole, productId) {
+        function SingleTarget(customerId, customerName, role, uplineRole, productId) {
             _super.call(this, productId, role, uplineRole);
             this.customerId = customerId;
+            this.customerName = customerName;
         }
         return SingleTarget;
     })(Target);

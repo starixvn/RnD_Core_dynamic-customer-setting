@@ -28,6 +28,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -266,6 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bower.json" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
     <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
