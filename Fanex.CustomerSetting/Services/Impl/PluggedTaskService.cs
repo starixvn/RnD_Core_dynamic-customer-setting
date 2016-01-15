@@ -27,7 +27,7 @@
             }
         }
 
-        public void Run(byte productId, CustomerSettingQuery query, Setting setting)
+        public void Run(byte productId, CustomerSettingQuery query, ISetting setting)
         {
             var tasks = PluggableTaskConfiguration.PickTasks<IPostQueryCustomerSettingTask>(productId);
 
@@ -124,7 +124,7 @@
             Level customerLevel,
             Level uplineLevel,
             SettingType settingTypeData,
-            SettingResult updateResult)
+            IResult updateResult)
         {
             var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateCustomerSettingTypeTask>(productId, settingTypeId);
 
@@ -157,7 +157,7 @@
             Level customerLevel,
             Level uplineLevel,
             SettingType settingTypeData,
-            IEnumerable<SettingResult> updateResults)
+            IEnumerable<IResult> updateResults)
         {
             var tasks = PluggableTaskConfiguration.PickTasks<IPostUpdateMultipleCustomersSettingTypeTask>(productId, settingTypeId);
 

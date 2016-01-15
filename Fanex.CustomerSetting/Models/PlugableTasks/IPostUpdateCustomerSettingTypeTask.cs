@@ -12,6 +12,6 @@
             Level uplineLevel,
             byte productId,
             SettingType settingTypeData,
-            SettingResult updateResult);
+            IResult updateResult);
     }
 }

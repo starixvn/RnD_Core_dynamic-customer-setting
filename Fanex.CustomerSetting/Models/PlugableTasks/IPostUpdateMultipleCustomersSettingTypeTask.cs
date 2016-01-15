@@ -13,6 +13,6 @@
             Level uplineLevel,
             byte productId,
             SettingType settingTypeData,
-            IEnumerable<SettingResult> updateResults);
+            IEnumerable<IResult> updateResults);
     }
 }

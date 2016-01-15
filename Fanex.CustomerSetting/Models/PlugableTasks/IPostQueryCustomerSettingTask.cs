@@ -4,6 +4,6 @@
 
     public interface IPostQueryCustomerSettingTask
     {
-        void Invoke(ISettingContext settingContext, CustomerSettingQuery query, Setting setting);
+        void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting);
     }
 }

@@ -10,7 +10,7 @@
     {
         void Run(byte productId, CustomerSettingQuery query);
 
-        void Run(byte productId, CustomerSettingQuery query, Setting setting);
+        void Run(byte productId, CustomerSettingQuery query, ISetting setting);
 
         void Run(byte productId, UpdateCustomerSettingCommand command);
 
@@ -39,7 +39,7 @@
             Level customerLevel,
             Level uplineLevel,
             SettingType settingTypeData,
-            SettingResult updateResult);
+            IResult updateResult);
 
         void Run(
             byte productId,
@@ -56,6 +56,6 @@
             Level customerLevel,
             Level uplineLevel,
             SettingType settingTypeData,
-            IEnumerable<SettingResult> updateResults);
+            IEnumerable<IResult> updateResults);
     }
 }

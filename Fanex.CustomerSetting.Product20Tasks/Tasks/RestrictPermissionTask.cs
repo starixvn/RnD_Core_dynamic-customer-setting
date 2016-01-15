@@ -28,9 +28,10 @@
             _repository = repository ?? new DynamicRepository();
         }
 
-        public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, Setting setting)
+        public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
         {
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
 
             var criteria = new SettingRestrictionModesCriteria
