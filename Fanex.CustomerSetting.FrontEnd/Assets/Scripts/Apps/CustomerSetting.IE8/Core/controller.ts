@@ -28,6 +28,7 @@ module CustomerSetting.IE8 {
         public customerNames: string;
         public uplineLevel: Level;
         public setting: Setting;
+        public warningMessages: Result | UpdatingSettingResult;
         public requestMsgResult: Result | UpdatingSettingResult;
 
         private queryPath: string = "viewCustomerSetting/querySetting?";
@@ -150,6 +151,7 @@ module CustomerSetting.IE8 {
                     .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
+                        this.warningMessages = this.setting.warningMessage;
                     }, (response: ng.IHttpPromiseCallbackArg<any>) => {
                         var error: Result;
 

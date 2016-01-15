@@ -9,7 +9,10 @@
     <script type="text/javascript" src="{{cdnUri}}/customersetting.ie8/scripts/ie8tricks.js?v={{version}}"></script>
 </head>
 <body data-ng-cloak data-ng-controller="customerSettingController as ctrl">
-    <div data-setting-result data-result="ctrl.requestMsgResult"></div>
+    <div class="msg-container" data-ng-show="ctrl.warningMessages || ctrl.requestMsgResult">
+        <div data-setting-result data-result="ctrl.warningMessages"></div>
+        <div data-setting-result data-result="ctrl.requestMsgResult"></div>
+    </div>
     <div class="customer-setting customer-level-{{ctrl.setting.customerLevel}}" data-ng-show="ctrl.setting">
         <div data-customer-info data-info="ctrl.setting.customerInfo" data-names="ctrl.customerNames"></div>
         <div data-setting-type-loader data-upline-level="ctrl.uplineLevel" data-setting="ctrl.setting" data-update="ctrl.update(settingTypeId)"></div>

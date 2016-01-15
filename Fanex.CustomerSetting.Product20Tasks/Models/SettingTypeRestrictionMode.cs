@@ -2,7 +2,7 @@
 {
     internal class SettingTypeRestrictionMode
     {
-        public short SettingType { get; set; }
+        public short SettingTypeId { get; set; }
 
         public byte Mode { get; set; }
 

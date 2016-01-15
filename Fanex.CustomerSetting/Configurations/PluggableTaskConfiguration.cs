@@ -71,7 +71,7 @@
             Type taskType = Type.GetType(taskName);
             T task = default(T);
 
-            if (taskType != null && typeof(T).IsAssignableFrom(taskType))
+            if (typeof(T).IsAssignableFrom(taskType))
             {
                 task = Activator.CreateInstance(taskType) as T;
                 cachedTasks.TryAdd(taskName, task);
@@ -87,7 +87,7 @@
 
             cachedTasks.TryGetValue(taskName, out cachedTask);
 
-            if (cachedTask != null && typeof(T).IsAssignableFrom(cachedTask?.GetType()))
+            if (typeof(T).IsAssignableFrom(cachedTask?.GetType()))
             {
                 task = cachedTasks as T;
             }

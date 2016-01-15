@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.PlugableTasks;
     using Fanex.CustomerSetting.Models.Requests;
@@ -10,8 +11,8 @@
     using Fanex.CustomerSetting.Product20Tasks.Constants;
     using Fanex.CustomerSetting.Product20Tasks.Criteria;
     using Fanex.CustomerSetting.Product20Tasks.Models;
+    using Fanex.CustomerSetting.Product20Tasks.Resources;
     using Fanex.Data.Repository;
-    using Resources;
 
     public class RestrictPermissionTask : IPostQueryCustomerSettingTask, IPreUpdateCustomerSettingTask, IPreUpdateMultipleCustomersSettingTask
     {
@@ -29,6 +30,9 @@
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, Setting setting)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(setting, nameof(setting));
+
             var criteria = new SettingRestrictionModesCriteria
             {
                 ProductId = query.ProductId,
@@ -45,7 +49,7 @@
 
                 foreach (SettingTypeRestrictionMode restrictionMode in settingTypeRestrictionModes)
                 {
-                    SettingType matchedSettingType = setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == restrictionMode.SettingType);
+                    SettingType matchedSettingType = setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == restrictionMode.SettingTypeId);
 
                     if (matchedSettingType != null)
                     {
@@ -62,9 +66,8 @@
                 {
                     string warningMessage = Message.ResourceManager.GetString($"Msg_{ErrorCodes.RunningGameUpdateRestrictionError}");
 
-                    setting.WarningMessage = new Result(
-                        ErrorCodes.RunningGameUpdateRestrictionError,
-                        $"{warningMessage}: {string.Join(", ", restrictedSettingTypeNames)}");
+                    setting.WarningMessage
+                        = new Result(ErrorCodes.RunningGameUpdateRestrictionError, $"{warningMessage}: {string.Join(", ", restrictedSettingTypeNames)}.");
                 }
 
                 setting.SettingTypes = setting.SettingTypes.Where(settingType => settingType.DisplayMode != RestrictionModes.Hidden);
@@ -73,11 +76,15 @@
 
         public void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(command, nameof(command));
             FilterUpdatingSettingTypes(settingContext, command);
         }
 
         public void Invoke(ISettingContext settingContext, MultipleUpdateCustomerSettingCommand command)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(command, nameof(command));
             FilterUpdatingSettingTypes(settingContext, command);
         }
 
@@ -97,7 +104,8 @@
             {
                 foreach (SettingTypeRestrictionMode restrictionMode in settingTypeRestrictionModes)
                 {
-                    SettingType matchedSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == restrictionMode.SettingType);
+                    SettingType matchedSettingType = command.Setting.SettingTypes.FirstOrDefault(
+                        settingType => settingType.Id == restrictionMode.SettingTypeId);
 
                     if (matchedSettingType != null)
                     {
