@@ -165,17 +165,17 @@ var DemoFrom;
                     break;
                 case Role.super:
                     actorId = 1176070;
-                    name = "SuperTest1 ";
+                    name = "SA-RM";
                     subAccId = 3;
                     break;
                 case Role.master:
                     actorId = 1176083;
-                    name = "master1";
+                    name = "wsrm";
                     subAccId = 728497;
                     break;
                 case Role.agent:
                     actorId = 1176086;
-                    name = "agent01";
+                    name = "428rm";
                     subAccId = 728498;
                     break;
             }
@@ -187,19 +187,19 @@ var DemoFrom;
             switch (role) {
                 case Role.super:
                     id = 1176070;
-                    name = "SuperTest1";
+                    name = "SA-RM";
                     break;
                 case Role.master:
                     id = 1176083;
-                    name = "master1";
+                    name = "mrm";
                     break;
                 case Role.agent:
                     id = 1176086;
-                    name = "agent01";
+                    name = "wsrm";
                     break;
                 case Role.member:
                     id = 7890346;
-                    name = "AGENT01000";
+                    name = "428RM";
                     break;
             }
             return this.createSingleTarget(id, name, role, uplineRole);
@@ -209,20 +209,20 @@ var DemoFrom;
             var names = "";
             switch (role) {
                 case Role.super:
-                    ids = "1176070,576313,3230178";
-                    names = "SuperTest1,SuperTest2,SuperTest12";
+                    ids = "1176070,1176070,1176070";
+                    names = "SA-RM,SA-US$,SA-TB";
                     break;
                 case Role.master:
-                    ids = "1176083,14167350,14373487";
-                    names = "master1,mastertest01,masterkz";
+                    ids = "1176083,1176083,1176083";
+                    names = "mrm,mbrm,MYRM";
                     break;
                 case Role.agent:
-                    ids = "1176086,14373905,14374140";
-                    names = "agent01,agent03,agentlcs000";
+                    ids = "1176086,1176086,1176086";
+                    names = "wsrm,SKRM,216COM";
                     break;
                 case Role.member:
-                    ids = "7890346,8252951,8252986";
-                    names = "AGENT01000,AGENT01001,AGENT01002";
+                    ids = "1277,1284,1290";
+                    names = "428RM,305RM,302RM";
                     break;
             }
             return this.createMultipleTargetInfo(ids, names, role, uplineRole);
