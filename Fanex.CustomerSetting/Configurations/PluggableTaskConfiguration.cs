@@ -10,7 +10,7 @@
 
     internal static class PluggableTaskConfiguration
     {
-        private static IEnumerable<ProductTask> configuredTasks
+        private static IEnumerable<SiteProductPluggedTasks> configuredTasks
             = ReadTasksFromConfigurationFiles(CustomerSettingConfiguration.Configurations.TasksConfigurationPath);
 
         private static ConcurrentDictionary<string, object> cachedTasks = new ConcurrentDictionary<string, object>();
@@ -25,15 +25,15 @@
             cachedTasks = new ConcurrentDictionary<string, object>();
         }
 
-        public static IEnumerable<T> PickTasks<T>(byte productId, short? settingTypeId = default(short?)) where T : class
+        public static IEnumerable<T> PickTasks<T>(byte systemId, byte productId, short? settingTypeId = default(short?)) where T : class
         {
             IEnumerable<T> runnableTasks = Enumerable.Empty<T>();
 
             if (configuredTasks.Any())
             {
                 runnableTasks = configuredTasks
-                    .Where(productTask => productTask.ProductId == null || productTask.ProductId == productId)
-                    .SelectMany(productTask => PickSettingTypeTaskNames(productTask, settingTypeId))
+                    .Where(siteProductTasks => IsMatchedSiteProductTasks(siteProductTasks, systemId, productId))
+                    .SelectMany(siteProductTasks => PickSettingTypeTaskNames(siteProductTasks, settingTypeId))
                     .Select(taskName => InjectTask<T>(taskName))
                     .Where(task => task != null)
                     .ToList();
@@ -42,10 +42,16 @@
             return runnableTasks;
         }
 
-        private static IEnumerable<string> PickSettingTypeTaskNames(ProductTask productTask, short? settingTypeId = default(short?))
+        private static bool IsMatchedSiteProductTasks(SiteProductPluggedTasks taskList, byte systemId, byte productId)
+        {
+            return (taskList.System == null || taskList.System == systemId)
+                && (taskList.ProductId == null || taskList.ProductId == productId);
+        }
+
+        private static IEnumerable<string> PickSettingTypeTaskNames(SiteProductPluggedTasks productTask, short? settingTypeId = default(short?))
         {
             return productTask.Tasks
-                .Where(settingTypeTask => settingTypeId == null || settingTypeTask.SettingTypeId == null || settingTypeTask.SettingTypeId == settingTypeId)
+                .Where(settingTypeTasks => settingTypeId == null || settingTypeTasks.SettingTypeId == null || settingTypeTasks.SettingTypeId == settingTypeId)
                 .SelectMany(settingTypeTask => settingTypeTask.TaskNames);
         }
 
@@ -95,14 +101,14 @@
             return task;
         }
 
-        private static IEnumerable<ProductTask> ReadTasksFromConfigurationFiles(string path)
+        private static IEnumerable<SiteProductPluggedTasks> ReadTasksFromConfigurationFiles(string path)
         {
-            var tasks = new List<ProductTask>();
+            var tasks = new List<SiteProductPluggedTasks>();
             IEnumerable<string> filePaths = DetechFilePaths(path);
 
             foreach (string filePath in filePaths)
             {
-                var newTasks = JsonConvert.DeserializeObject<IEnumerable<ProductTask>>(File.ReadAllText(filePath));
+                var newTasks = JsonConvert.DeserializeObject<IEnumerable<SiteProductPluggedTasks>>(File.ReadAllText(filePath));
 
                 tasks.AddRange(newTasks);
             }
