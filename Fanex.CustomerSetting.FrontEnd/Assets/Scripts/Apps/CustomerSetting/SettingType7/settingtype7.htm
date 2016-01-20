@@ -1,0 +1,78 @@
+﻿<div class="block full-width settingtype7" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{settingType.Name}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType)"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }"
+             data-sport-type="{{group[0].sportTypeId}}">
+            <div class="block__sub-header__header-cell">
+                <label class="check-all-field-lbl">
+                    {{group[0].sportTypeName}}
+                </label>
+                <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                                              data-items="group" />
+            </div>
+        </div>
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.betType"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }"
+             data-product="{{group[0].productId}}">
+            <div class="block__sub-header__header-cell">
+                <label class="check-all-field-lbl">
+                    {{group[0].productName}}
+                </label>
+                <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                                              data-items="group" />
+            </div>
+        </div>
+        <div class="block__item"
+             data-ng-repeat="item in group"
+             data-ng-class="{ 'block__item--last': $last }">
+            <div class="block__lbl"
+                 data-product="{{productId}}"
+                 data-sport-type="{{item.sportTypeId}}"
+                 data-bet-type="{{item.betTypeId}}">
+                <div class="block__lbl-wrapper">
+                    <label class="check-all-field-lbl">
+                        {{item | showingName:settingType.settingLevel:productName }}
+                        {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                    </label>
+                    <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                                                  data-items="item.stakeLevelValues" />
+                </div>
+            </div>
+            <div class="block__value">
+                <div class="block__cell w20-percent setting-field-wrapper"
+                     data-ng-repeat="stakeLevelValue in item.stakeLevelValues"
+                     data-ng-class="{ 'block__cell--no-border': $index % numberOfCellsOnEachRow === numberOfCellsOnEachRow - 1,
+                                      'block__cell--border-top': $index > numberOfCellsOnEachRow - 1 }">
+                    <label class="setting-field--checkfield" data-ng-if="stakeLevelValue.stakeLevelId">
+                        <input type="checkbox"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-ng-if="customerLevel !== avaiCustomerLevels.member"
+                               data-ng-disabled="!(settingType | editableSettingType)"
+                               data-ng-model="stakeLevelValue.selected" />
+                        <input type="radio"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-ng-if="customerLevel === avaiCustomerLevels.member"
+                               data-ng-disabled="!(settingType | editableSettingType)"
+                               data-ng-model="stakeLevelValue.selected"
+                               data-ng-value="stakeLevelValue.stakeLevelId" />
+                        {{stakeLevelValue.stakeLevelRange}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
+        {{sportGroups[0][0].errorMessage}}
+    </div>
+</div>

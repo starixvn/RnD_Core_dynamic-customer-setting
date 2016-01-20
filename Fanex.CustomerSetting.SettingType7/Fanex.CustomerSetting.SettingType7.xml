@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="ChargeCommission">
+        <Setting Key="CustSetting_SuperStakeLevelSelect" SpName="Acc_CustSetting_SuperStakeLevelSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
+            <Mapping DataField="IsChecked" ObjectProperty="Selected" />
+        </Setting>
+
+        <Setting Key="CustSetting_MasterStakeLevelSelect" SpName="Acc_CustSetting_MasterStakeLevelSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
+            <Mapping DataField="IsChecked" ObjectProperty="Selected" />
+        </Setting>
+
+        <Setting Key="CustSetting_AgentStakeLevelSelect" SpName="Acc_CustSetting_AgentStakeLevelSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
+            <Mapping DataField="IsChecked" ObjectProperty="Selected" />
+        </Setting>
+
+        <Setting Key="CustSetting_MemberStakeLevelSelect" SpName="Acc_CustSetting_MemberStakeLevelSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="StakeLevelName" ObjectProperty="StakeLevelRange" />
+            <Mapping DataField="IsChecked" ObjectProperty="Selected" />
+        </Setting>
+
+        <Setting Key="CustSetting_StakeLevelUpd" SpName="Acc_CustSetting_StakeLevelUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+</Functions>
