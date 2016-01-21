@@ -4,6 +4,11 @@
 
     public class SettingContext
     {
+        public SettingContext()
+        {
+            System = CustomerSettingConfiguration.Settings.System;
+        }
+
         public int ActorId { get; set; }
 
         public string ActorName { get; set; }
@@ -18,6 +23,6 @@
 
         public string IP { get; set; }
 
-        public byte System { get; set; } = CustomerSettingConfiguration.Settings.System;
+        public byte System { get; set; }
     }
 }

@@ -349,6 +349,10 @@
       <Project>{f800a03e-8229-4ad2-93a5-cd10a6b9916d}</Project>
       <Name>Fanex.CustomerSetting.SettingType5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType7\Fanex.CustomerSetting.SettingType7.csproj">
+      <Project>{80d5af6e-f977-4bd0-8aaa-e3ffdbfa8235}</Project>
+      <Name>Fanex.CustomerSetting.SettingType7</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
