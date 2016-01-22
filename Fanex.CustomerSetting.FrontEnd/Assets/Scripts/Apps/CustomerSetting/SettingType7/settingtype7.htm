@@ -1,6 +1,6 @@
 ﻿<div class="block full-width settingtype7" data-ng-show="settingType">
     <div class="block__header" data-setting-type="{{settingType.id}}">
-        {{settingType.Name}}
+        {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
              data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType)"
@@ -65,7 +65,7 @@
                                data-ng-if="customerLevel === avaiCustomerLevels.member"
                                data-ng-disabled="!(settingType | editableSettingType)"
                                data-ng-model="stakeLevelValue.selected"
-                               data-ng-value="stakeLevelValue.stakeLevelId" />
+                               name="{{item.sportTypeId}}-{{item.betTypeId}}" />
                         {{stakeLevelValue.stakeLevelRange}}
                     </label>
                 </div>
@@ -73,6 +73,6 @@
         </div>
     </div>
     <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
-        {{sportGroups[0][0].errorMessage}}
+        {{settingType.settingItems[0].errorMessage}}
     </div>
 </div>

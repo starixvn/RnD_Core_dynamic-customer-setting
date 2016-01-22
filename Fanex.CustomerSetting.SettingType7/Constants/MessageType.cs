@@ -2,6 +2,6 @@
 {
     internal static class MessageType
     {
-        public const int StakeLevelViolation = 51;
+        public const int StakeLevelViolation = 131;
     }
 }

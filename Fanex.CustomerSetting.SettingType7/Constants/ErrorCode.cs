@@ -2,6 +2,6 @@
 {
     internal static class ErrorCode
     {
-        public const int MemberStakeLevelMustBeSelectedForSportBetType = 7007;
+        public const int MemberStakeLevelMustBeSelectedForSportBetType = 131001;
     }
 }

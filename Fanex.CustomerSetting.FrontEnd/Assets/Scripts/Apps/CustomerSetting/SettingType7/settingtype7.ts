@@ -9,6 +9,8 @@ module CustomerSetting {
     }
 
     class SettingType7Directive extends DefaultSettingTypeGroupingDirective {
+        public static $inject: string[] = ["settingType7ResourceService"];
+
         public replace: boolean = true;
         public templateUrl: string = "settingtype7.htm";
 
@@ -27,19 +29,33 @@ module CustomerSetting {
             $scope.avaiCustomerLevels = Level;
             $scope.avaiSettingLevels = SettingLevel;
             $scope.numberOfCellsOnEachRow = this.numberOfCellsOnEachRow;
+            $scope.settingTypeName = this.settingType7ResourceService.getLabel("BetLimit");
 
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    settingType.settingItems.forEach((item: ISettingItem, index: number) => {
-                        if (angular.isDefined(item)) {
-                            settingType.settingItems[index] = new SettingType7Item(item, $scope.customerLevel, true);
+                    if (settingType.isError) {
+                        if (settingType.settingItems.length > 0) {
+                            settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
                         }
+                    } else {
+                        settingType.settingItems.forEach((item: any, index: number) => {
+                            if (angular.isDefined(item)) {
+                                settingType.settingItems[index] = new SettingType7Item(item, $scope.customerLevel, true);
+                            }
+                        });
 
                         $scope.sportGroups = this.groupAndAddEmptyItems($scope.settingType);
-                    });
+                    }
                 }
             });
         }];
+
+        private settingType7ResourceService: SettingType7ResourceService;
+
+        constructor(settingType7ResourceService: SettingType7ResourceService) {
+            super();
+            this.settingType7ResourceService = settingType7ResourceService;
+        }
 
         private numberOfCellsOnEachRow: number = 5;
 

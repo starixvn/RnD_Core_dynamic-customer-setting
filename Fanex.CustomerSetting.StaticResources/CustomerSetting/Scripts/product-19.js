@@ -29671,7 +29671,7 @@ var CustomerSetting;
             });
         };
         return StringFormater;
-    }());
+    })();
     CustomerSetting.StringFormater = StringFormater;
     var ArrayHelpers = (function () {
         function ArrayHelpers() {
@@ -29691,7 +29691,7 @@ var CustomerSetting;
             return result;
         };
         return ArrayHelpers;
-    }());
+    })();
     CustomerSetting.ArrayHelpers = ArrayHelpers;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -29739,7 +29739,7 @@ var CustomerSetting;
             return "The number of customer IDs does not match with the number of customer names.";
         };
         return Exceptions;
-    }());
+    })();
     CustomerSetting.Exceptions = Exceptions;
     var Defaults = (function () {
         function Defaults() {
@@ -29766,7 +29766,7 @@ var CustomerSetting;
             configurable: true
         });
         return Defaults;
-    }());
+    })();
     CustomerSetting.Defaults = Defaults;
     var KeyValuePair = (function () {
         function KeyValuePair(key, value) {
@@ -29774,7 +29774,7 @@ var CustomerSetting;
             this.value = value;
         }
         return KeyValuePair;
-    }());
+    })();
     CustomerSetting.KeyValuePair = KeyValuePair;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -29809,7 +29809,7 @@ var CustomerSetting;
             app.value(name, target);
         };
         return ModuleRegister;
-    }());
+    })();
     CustomerSetting.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -29846,7 +29846,7 @@ var CustomerSetting;
             }
         }
         return CustomerInfo;
-    }());
+    })();
     CustomerSetting.CustomerInfo = CustomerInfo;
     var DefaultSettingItem = (function () {
         function DefaultSettingItem(settingItem) {
@@ -29908,7 +29908,7 @@ var CustomerSetting;
             return settingItem;
         };
         return DefaultSettingItem;
-    }());
+    })();
     CustomerSetting.DefaultSettingItem = DefaultSettingItem;
     var ErrorSettingItem = (function () {
         function ErrorSettingItem(errorItem) {
@@ -29931,7 +29931,7 @@ var CustomerSetting;
         };
         ;
         return ErrorSettingItem;
-    }());
+    })();
     CustomerSetting.ErrorSettingItem = ErrorSettingItem;
     var SettingType = (function () {
         function SettingType(settingType) {
@@ -30012,7 +30012,7 @@ var CustomerSetting;
             return extraData;
         };
         return SettingType;
-    }());
+    })();
     CustomerSetting.SettingType = SettingType;
     var Setting = (function () {
         function Setting(setting) {
@@ -30118,7 +30118,7 @@ var CustomerSetting;
             });
         };
         return Setting;
-    }());
+    })();
     CustomerSetting.Setting = Setting;
     var Result = (function () {
         function Result(code, message, msgType) {
@@ -30184,7 +30184,7 @@ var CustomerSetting;
             configurable: true
         });
         return Result;
-    }());
+    })();
     CustomerSetting.Result = Result;
     var SettingResult = (function (_super) {
         __extends(SettingResult, _super);
@@ -30195,7 +30195,7 @@ var CustomerSetting;
             this.messages = messages;
         }
         return SettingResult;
-    }(Result));
+    })(Result);
     CustomerSetting.SettingResult = SettingResult;
     var CustomerSettingResult = (function () {
         function CustomerSettingResult(settingResult) {
@@ -30249,7 +30249,7 @@ var CustomerSetting;
             this.settingResults = uniquedResults;
         };
         return CustomerSettingResult;
-    }());
+    })();
     CustomerSetting.CustomerSettingResult = CustomerSettingResult;
     var UpdatingSettingResult = (function (_super) {
         __extends(UpdatingSettingResult, _super);
@@ -30295,7 +30295,7 @@ var CustomerSetting;
             return this.subResults || new Array();
         };
         return UpdatingSettingResult;
-    }(Result));
+    })(Result);
     CustomerSetting.UpdatingSettingResult = UpdatingSettingResult;
     var ValidationResult = (function (_super) {
         __extends(ValidationResult, _super);
@@ -30307,7 +30307,7 @@ var CustomerSetting;
             this.isWarning = isWarning;
         }
         return ValidationResult;
-    }(Result));
+    })(Result);
     CustomerSetting.ValidationResult = ValidationResult;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -30368,7 +30368,7 @@ var CustomerSetting;
             configurable: true
         });
         return AbstractSettingQuery;
-    }());
+    })();
     CustomerSetting.AbstractSettingQuery = AbstractSettingQuery;
     var SettingQuery = (function (_super) {
         __extends(SettingQuery, _super);
@@ -30401,7 +30401,7 @@ var CustomerSetting;
             return params;
         };
         return SettingQuery;
-    }(AbstractSettingQuery));
+    })(AbstractSettingQuery);
     CustomerSetting.SettingQuery = SettingQuery;
     var MultipleSettingQuery = (function (_super) {
         __extends(MultipleSettingQuery, _super);
@@ -30447,7 +30447,7 @@ var CustomerSetting;
             return this.custIds.length === this.custNames.length;
         };
         return MultipleSettingQuery;
-    }(AbstractSettingQuery));
+    })(AbstractSettingQuery);
     CustomerSetting.MultipleSettingQuery = MultipleSettingQuery;
     var SettingCommand = (function () {
         function SettingCommand(uplineLevel, setting) {
@@ -30467,7 +30467,7 @@ var CustomerSetting;
             };
         };
         return SettingCommand;
-    }());
+    })();
     CustomerSetting.SettingCommand = SettingCommand;
     var MultipleSettingCommand = (function (_super) {
         __extends(MultipleSettingCommand, _super);
@@ -30494,7 +30494,7 @@ var CustomerSetting;
             };
         };
         return MultipleSettingCommand;
-    }(SettingCommand));
+    })(SettingCommand);
     CustomerSetting.MultipleSettingCommand = MultipleSettingCommand;
     var SettingPartialCommand = (function () {
         function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -30505,7 +30505,7 @@ var CustomerSetting;
             this.settingType = settingType;
         }
         return SettingPartialCommand;
-    }());
+    })();
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -30537,7 +30537,7 @@ var CustomerSetting;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    }());
+    })();
     CustomerSetting.AppConfigService = AppConfigService;
     CustomerSetting.ModuleRegister.service("appConfigService", AppConfigService);
     var ParametersService = (function () {
@@ -30607,7 +30607,7 @@ var CustomerSetting;
         };
         ParametersService.$inject = ["$window"];
         return ParametersService;
-    }());
+    })();
     CustomerSetting.ParametersService = ParametersService;
     CustomerSetting.ModuleRegister.service("parametersService", ParametersService);
     var UpdatingSettingTypePromiseChain = (function () {
@@ -30653,7 +30653,7 @@ var CustomerSetting;
         };
         UpdatingSettingTypePromiseChain.$inject = ["$q"];
         return UpdatingSettingTypePromiseChain;
-    }());
+    })();
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
     var ValueRangeService = (function () {
@@ -30677,7 +30677,7 @@ var CustomerSetting;
             return ranges;
         };
         return ValueRangeService;
-    }());
+    })();
     CustomerSetting.ValueRangeService = ValueRangeService;
     CustomerSetting.ModuleRegister.service("valueRangeService", ValueRangeService);
     function NAValue() {
@@ -30787,7 +30787,7 @@ var CustomerSetting;
         };
         ResourceService.$inject = ["customerSettingResource", "parametersService"];
         return ResourceService;
-    }());
+    })();
     CustomerSetting.ResourceService = ResourceService;
     CustomerSetting.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -30958,7 +30958,7 @@ var CustomerSetting;
             "resourceService",
             "updatingSettingTypePromiseChain"];
         return CustomerSettingController;
-    }());
+    })();
     CustomerSetting.ModuleRegister.controller("customerSettingController", CustomerSettingController);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -30980,7 +30980,7 @@ var CustomerSetting;
             configurable: true
         });
         return BlockUiDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31003,7 +31003,7 @@ var CustomerSetting;
             configurable: true
         });
         return CustomerInfoDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31046,7 +31046,7 @@ var CustomerSetting;
         });
         CopySettingDirective.$inject = ["copyingSettingService"];
         return CopySettingDirective;
-    }());
+    })();
     CustomerSetting.CopySettingDirective = CopySettingDirective;
     CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
     var CopyingSettingService = (function () {
@@ -31091,7 +31091,7 @@ var CustomerSetting;
         };
         CopyingSettingService.$inject = ["$rootScope"];
         return CopyingSettingService;
-    }());
+    })();
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31138,7 +31138,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingTypeDirective;
-    }());
+    })();
     CustomerSetting.SettingTypeDirective = SettingTypeDirective;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31185,7 +31185,7 @@ var CustomerSetting;
             return result;
         };
         return DefaultSettingTypeGroupingDirective;
-    }());
+    })();
     CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
     CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
     function ShowingName() {
@@ -31198,35 +31198,6 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingResultDirective = (function () {
-        function SettingResultDirective() {
-            this.replace = true;
-            this.templateUrl = "SettingResult/setting-result.htm";
-            this.controller = ["$scope", "$window", function ($scope, $window) {
-                    $scope.$watch("result", function (result) {
-                        if (angular.isDefined(result)) {
-                            $window.scrollTo(0, 0);
-                        }
-                    });
-                }];
-        }
-        Object.defineProperty(SettingResultDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    result: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingResultDirective;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -31292,8 +31263,37 @@ var CustomerSetting;
         };
         SettingTypeDirectiveLoader.$inject = ["$compile"];
         return SettingTypeDirectiveLoader;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingResultDirective = (function () {
+        function SettingResultDirective() {
+            this.replace = true;
+            this.templateUrl = "SettingResult/setting-result.htm";
+            this.controller = ["$scope", "$window", function ($scope, $window) {
+                    $scope.$watch("result", function (result) {
+                        if (angular.isDefined(result)) {
+                            $window.scrollTo(0, 0);
+                        }
+                    });
+                }];
+        }
+        Object.defineProperty(SettingResultDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    result: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingResultDirective;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -31386,7 +31386,7 @@ var CustomerSetting;
         };
         Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
         return Tooltip;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
     function TooltipMessage($injector, $filter) {
         return function (result, resourceServiceName, fieldName) {
@@ -31453,7 +31453,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType1Config;
-    }());
+    })();
     CustomerSetting.SettingType1Config = SettingType1Config;
     var SettingType1Item = (function () {
         function SettingType1Item() {
@@ -31500,7 +31500,7 @@ var CustomerSetting;
             return false;
         };
         return SettingType1Item;
-    }());
+    })();
     CustomerSetting.SettingType1Item = SettingType1Item;
     var SuperPositionTaking = (function (_super) {
         __extends(SuperPositionTaking, _super);
@@ -31561,7 +31561,7 @@ var CustomerSetting;
             return true;
         };
         return SuperPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SuperPositionTaking = SuperPositionTaking;
     var MasterPositionTaking = (function (_super) {
         __extends(MasterPositionTaking, _super);
@@ -31707,7 +31707,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.MasterPositionTaking = MasterPositionTaking;
     var AgentPositionTaking = (function (_super) {
         __extends(AgentPositionTaking, _super);
@@ -31853,7 +31853,7 @@ var CustomerSetting;
             }
         };
         return AgentPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.AgentPositionTaking = AgentPositionTaking;
     var SuperPositionTakingOnMember = (function (_super) {
         __extends(SuperPositionTakingOnMember, _super);
@@ -31935,7 +31935,7 @@ var CustomerSetting;
             }
         };
         return SuperPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
     var MasterPositionTakingOnMember = (function (_super) {
         __extends(MasterPositionTakingOnMember, _super);
@@ -32025,7 +32025,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
     var AgentPositionTakingOnMember = (function (_super) {
         __extends(AgentPositionTakingOnMember, _super);
@@ -32066,7 +32066,7 @@ var CustomerSetting;
             return true;
         };
         return AgentPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32099,7 +32099,7 @@ var CustomerSetting;
         };
         PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
         return PositionTakingOnMemberDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
     var AdjustMemberPtModalDirective = (function () {
         function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -32152,7 +32152,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
         return AdjustMemberPtModalDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
     var AdjustMemberPtModalService = (function () {
         function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -32237,7 +32237,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
         return AdjustMemberPtModalService;
-    }());
+    })();
     CustomerSetting.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
     var CopyPositionTakingOnMemberDirective = (function (_super) {
         __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -32281,7 +32281,7 @@ var CustomerSetting;
             configurable: true
         });
         return CopyPositionTakingOnMemberDirective;
-    }(CustomerSetting.CopySettingDirective));
+    })(CustomerSetting.CopySettingDirective);
     CustomerSetting.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32300,7 +32300,7 @@ var CustomerSetting;
         }
         PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
         return PositionTakingResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
     angular.module("customerSetting").service("positionTakingResourceService", PositionTakingResourceService);
     function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -32370,7 +32370,7 @@ var CustomerSetting;
         });
         PositionTakingSelectDirective.$inject = ["$compile"];
         return PositionTakingSelectDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
     function PositionTakingFormatFilter() {
         return function (ptValue) {
@@ -32411,7 +32411,7 @@ var CustomerSetting;
         }
         SettingType1Directive.$inject = ["positionTakingResourceService"];
         return SettingType1Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32544,7 +32544,7 @@ var CustomerSetting;
             return true;
         };
         return SettingType2Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType2Item = SettingType2Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32683,7 +32683,7 @@ var CustomerSetting;
         });
         BetSettingInputDirective.$inject = ["$compile", "$filter", "betSettingResourceService"];
         return BetSettingInputDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("betSettingInput", BetSettingInputDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32702,7 +32702,7 @@ var CustomerSetting;
         }
         BetSettingResourceService.$inject = ["betSettingResources", "parametersService"];
         return BetSettingResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.BetSettingResourceService = BetSettingResourceService;
     CustomerSetting.ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
     function BetSettingLabelFilter(betSettingResourceService) {
@@ -32748,7 +32748,7 @@ var CustomerSetting;
         }
         SettingType2Directive.$inject = ["betSettingResourceService"];
         return SettingType2Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype2", SettingType2Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32767,7 +32767,7 @@ var CustomerSetting;
         }
         CommissionResourceService.$inject = ["commissionResources", "parametersService"];
         return CommissionResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.CommissionResourceService = CommissionResourceService;
     CustomerSetting.ModuleRegister.service("commissionResourceService", CommissionResourceService);
     function CommissionLabelFilter(commissionResourceService) {
@@ -32841,7 +32841,7 @@ var CustomerSetting;
             return true;
         };
         return SettingType3Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType3Item = SettingType3Item;
     var SettingType3Config = (function () {
         function SettingType3Config() {
@@ -32861,7 +32861,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType3Config;
-    }());
+    })();
     CustomerSetting.SettingType3Config = SettingType3Config;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32891,7 +32891,7 @@ var CustomerSetting;
         });
         CommRateSelectDirective.$inject = ["valueRangeService"];
         return CommRateSelectDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("commRateSelect", CommRateSelectDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32920,7 +32920,7 @@ var CustomerSetting;
         }
         SettingType3Directive.$inject = ["commissionResourceService"];
         return SettingType3Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype3", SettingType3Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33049,7 +33049,7 @@ var CustomerSetting;
             return settingItem;
         };
         return SettingType4Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType4Item = SettingType4Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33068,7 +33068,7 @@ var CustomerSetting;
         }
         ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
         return ProductStatusResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.ProductStatusResourceService = ProductStatusResourceService;
     CustomerSetting.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
     function ProductStatusLabelFilter(productStatusResourceService) {
@@ -33113,7 +33113,7 @@ var CustomerSetting;
         }
         SettingType4Directive.$inject = ["productStatusResourceService"];
         return SettingType4Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype4", SettingType4Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
