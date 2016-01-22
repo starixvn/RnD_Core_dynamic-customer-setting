@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingType5.Constants;
     using Fanex.CustomerSetting.SettingType5.Resources;
     using Fanex.CustomerSetting.SettingType5.Services;
     using NSubstitute;
@@ -12,12 +13,18 @@
     {
         private IResourceService _resourceService;
         private IMessageService _messageService;
+        private int _msgType;
+        private string _rawMessage;
 
         [SetUp]
         public void Setup()
         {
             _resourceService = Substitute.For<IResourceService>();
             _messageService = new MessageService(_resourceService);
+            _msgType = MessageType.ChargeCommissionViolation;
+            _rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
+                            + "<Row SportType=\"1\" BetType=\"1\" />"
+                        + "</Root>";
         }
 
         [TestCase(1)]
@@ -26,14 +33,8 @@
         [TestCase(4)]
         public void TranslateMessage_Always_MainMessageIsMsg1(byte settingLevel)
         {
-            // Arrange
-            var msgType = 51;
-            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
-                                + "<Row SportType=\"1\" BetType=\"1\" />"
-                                + "</Root>";
-
             // Act
-            var actualMessageContent = _messageService.TranslateMessage(msgType, rawMessage, settingLevel, Arg.Any<string>());
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, Arg.Any<string>());
 
             // Assert
             Assert.AreEqual(Message.Msg_1, actualMessageContent.MainMessage);
@@ -43,14 +44,10 @@
         public void TranslateMessage_SettingLevelIsProduct_SubMessageIsEmpty()
         {
             // Arrange
-            var msgType = 51;
             byte settingLevel = 1;
-            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
-                                + "<Row SportType=\"1\" BetType=\"1\" />"
-                                + "</Root>";
 
             // Act
-            var actualMessageContent = _messageService.TranslateMessage(msgType, rawMessage, settingLevel, "en-US");
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
 
             // Assert
             Assert.IsEmpty(actualMessageContent.SubMessages.First());
@@ -60,15 +57,11 @@
         public void TranslateMessage_SettingLevelIsSportType_SubMessageIsSportTypeName()
         {
             // Arrange
-            var msgType = 51;
             byte settingLevel = 2;
-            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
-                                + "<Row SportType=\"1\" BetType=\"1\" />"
-                                + "</Root>";
             _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns("Sport type 1");
 
             // Act
-            var actualMessageContent = _messageService.TranslateMessage(msgType, rawMessage, settingLevel, "en-US");
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
 
             // Assert
             string expectedSubMsg = "Sport type 1";
@@ -79,15 +72,11 @@
         public void TranslateMessage_SettingLevelIsBetType_SubMessageIsBetTypeName()
         {
             // Arrange
-            var msgType = 51;
             byte settingLevel = 3;
-            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
-                                + "<Row SportType=\"1\" BetType=\"1\" />"
-                                + "</Root>";
             _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns("Bet type 1");
 
             // Act
-            var actualMessageContent = _messageService.TranslateMessage(msgType, rawMessage, settingLevel, "en-US");
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
 
             // Assert
             string expectedSubMsg = "Bet type 1";
@@ -98,16 +87,12 @@
         public void TranslateMessage_SettingLevelIsSportTypeBetType_SubMessageIsSportTypeNameHyphenBetTypeName()
         {
             // Arrange
-            var msgType = 51;
             byte settingLevel = 4;
-            var rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
-                                + "<Row SportType=\"1\" BetType=\"1\" />"
-                                + "</Root>";
             _resourceService.GetSportTypeName(1, Arg.Any<string>()).Returns("Sport type 1");
             _resourceService.GetBetTypeName(1, Arg.Any<string>()).Returns("Bet type 1");
 
             // Act
-            var actualMessageContent = _messageService.TranslateMessage(msgType, rawMessage, settingLevel, "en-US");
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, "en-US");
 
             // Assert
             string expectedSubMsg = "Sport type 1 - Bet type 1";

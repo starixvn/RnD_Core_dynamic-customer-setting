@@ -61,11 +61,11 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bet Limit range must be selected for the following Sports/Bet Types:.
+        ///   Looks up a localized string similar to Each bet type must have one Bet Limit value be selected..
         /// </summary>
-        internal static string BetLimitMustBeSelectedForSportSettingType {
+        internal static string MemberStakeLevelMustBeSelectedForBetType {
             get {
-                return ResourceManager.GetString("BetLimitMustBeSelectedForSportSettingType", resourceCulture);
+                return ResourceManager.GetString("MemberStakeLevelMustBeSelectedForBetType", resourceCulture);
             }
         }
         

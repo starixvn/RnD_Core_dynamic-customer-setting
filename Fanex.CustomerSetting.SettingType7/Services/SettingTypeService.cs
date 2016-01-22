@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
+    using Fanex.CustomerSetting.Exceptions;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
@@ -60,19 +61,23 @@
         {
             Check.Argument.IsNotNull(settingType, nameof(settingType));
 
-            SettingResult settingResult = ValidateMemberSelectedStakeValue(customerId, customerLevel, settingType);
-
-            if (settingResult.IsSuccessful)
+            if (customerLevel.IsMemberLevel())
             {
-                IResult result = _stakeLevelDataAccess.UpdateCustomerStakeLevel(
+                IResult validationResult = ValidateMemberSelectedStakeValue(settingType);
+
+                if (validationResult.IsFailed)
+                {
+                    throw new CustomerSettingException(validationResult.Message);
+                }
+            }
+
+            IResult result = _stakeLevelDataAccess.UpdateCustomerStakeLevel(
                     settingContext,
                     customerId,
                     customerLevel,
                     uplineLevel,
                     settingType.ToXml());
-
-                settingResult = CreateSettingResult(result, customerId, settingType);
-            }
+            SettingResult settingResult = CreateSettingResult(result, customerId, settingType);
 
             return TranslateUpdateResultMessage(
                 settingResult,
@@ -100,33 +105,23 @@
                 .ToList();
         }
 
-        private SettingResult ValidateMemberSelectedStakeValue(int customerId, Level customerLevel, SettingType settingType)
+        private IResult ValidateMemberSelectedStakeValue(SettingType settingType)
         {
             var result = new SettingResult(Result.Success);
 
-            if (customerLevel.IsMemberLevel())
+            var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().Any(stakeLevelItem =>
             {
-                var violatedItems = settingType.SettingItems.Cast<StakeLevelItem>().Where(stakeLevelItem =>
-                {
-                    return stakeLevelItem?.StakeLevelValues?.Count(stakeLevelValue => stakeLevelValue.Selected) != 1;
-                });
+                return stakeLevelItem?.StakeLevelValues?.Count(stakeLevelValue => stakeLevelValue.Selected) != 1;
+            });
 
-                if (violatedItems.Any())
-                {
-                    var violatedSportsBetTypes = violatedItems.Select(item => $"{item.SportTypeName} - {item.BetTypeName}");
-
-                    return new SettingResult(
-                        ErrorCode.MemberStakeLevelMustBeSelectedForSportBetType,
-                        Message.BetLimitMustBeSelectedForSportSettingType,
-                        MessageType.StakeLevelViolation,
-                        customerId,
-                        settingType.Id,
-                        settingType.Name,
-                        violatedSportsBetTypes);
-                }
+            if (hasViolatedItem)
+            {
+                return new Result(
+                    ErrorCode.MemberStakeLevelMustBeSelectedForSportBetType,
+                    Message.MemberStakeLevelMustBeSelectedForBetType);
             }
 
-            return result;
+            return Result.Success;
         }
     }
 }

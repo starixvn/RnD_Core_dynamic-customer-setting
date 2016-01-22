@@ -1,0 +1,217 @@
+﻿namespace Fanex.CustomerSetting.SettingType7.Tests.Services
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.CustomerSetting.Exceptions;
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
+    using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Services;
+    using Fanex.CustomerSetting.SettingType7.DataAccesses;
+    using Fanex.CustomerSetting.SettingType7.Dtos;
+    using Fanex.CustomerSetting.SettingType7.Models;
+    using Fanex.CustomerSetting.SettingType7.Resources;
+    using Fanex.CustomerSetting.SettingType7.Services;
+    using Fanex.CustomerSetting.Tests;
+    using Fanex.CustomerSetting.Tests.Models;
+    using Fanex.Logging;
+    using NSubstitute;
+    using NUnit.Framework;
+
+    [TestFixture]
+    public class SettingTypeServiceTest
+    {
+        private ISettingTypeService _settingTypeService;
+        private IResourceService _resourceService;
+        private ILogger _logger;
+        private IMessageService _messageService;
+        private IDataAccess _dataAccess;
+        private ISettingContext _settingContext;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _resourceService = Substitute.For<IResourceService>();
+            _logger = Substitute.For<ILogger>();
+            _dataAccess = Substitute.For<IDataAccess>();
+            _messageService = new MessageService(_resourceService);
+
+            _settingContext = new SettingContextStub();
+            _settingTypeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
+        }
+
+        [Test]
+        public void GetCustomerSettingType_Always_CallGetCustomerStakeLevelRawData()
+        {
+            // Arrange
+            var query = InstanceFactory.CreateQuerySettingParam();
+
+            // Act
+            _settingTypeService.GetCustomerSettingType(_settingContext, query);
+
+            // Assert
+            _dataAccess.Received().GetCustomerStakeLevelRawData(Arg.Is(query));
+        }
+
+        [Test]
+        public void GetCustomerSettingType_Always_ReturnCustomerStakeLevel()
+        {
+            // Arrange
+            var query = InstanceFactory.CreateQuerySettingParam();
+            var stakeLevelRawData = new List<StakeLevelDto>
+            {
+                new StakeLevelDto
+                {
+                    BetTypeId = 1,
+                    SportTypeId = 1,
+                    StakeLevelId = 1,
+                    StakeLevelRange = "100 - 1000",
+                    Selected = true
+                }
+            };
+            _dataAccess.GetCustomerStakeLevelRawData(Arg.Any<CustomerSettingQuery>()).Returns(stakeLevelRawData);
+
+            // Act
+            var actualCustomerStakeLevelSetting = _settingTypeService.GetCustomerSettingType(_settingContext, query);
+            var actualCustomerCommissionItem = actualCustomerStakeLevelSetting.SettingItems.First() as StakeLevelItem;
+
+            // Assert
+            var expectedStakeLevelItem = new StakeLevelItem
+            {
+                BetTypeId = 1,
+                SportTypeId = 1,
+                StakeLevelValues = new List<StakeLevelValue>
+                {
+                    new StakeLevelValue
+                    {
+                        StakeLevelId = 1,
+                        StakeLevelRange = "100 - 1000",
+                        Selected = true
+                    }
+                }
+            };
+            Assert.AreEqual(expectedStakeLevelItem, actualCustomerCommissionItem);
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_UpdateMemberStakeLevelWithStakeLevelValuesIsEmpty_ReturnError()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Member;
+            var uplineLevel = Level.Agent;
+            byte productId = 1;
+            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(7);
+            customerStakeLevel.SettingItems = new List<ISettingItem>
+            {
+                new StakeLevelItem
+                {
+                    SportTypeId = 1,
+                    BetTypeId = 1,
+                    StakeLevelValues = new List<StakeLevelValue>()
+                }
+            };
+
+            // Act
+            TestDelegate updateDelegate = () => _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerStakeLevel);
+
+            // Assert
+            Assert.Throws(typeof(CustomerSettingException), updateDelegate);
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_Always_CallUpdateCustomerStakeLevel()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Agent;
+            var uplineLevel = Level.Master;
+            byte productId = 1;
+            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(7);
+
+            // Act
+            _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerStakeLevel);
+
+            // Assert
+            _dataAccess.Received().UpdateCustomerStakeLevel(
+                Arg.Is(_settingContext),
+                Arg.Is(customerId),
+                Arg.Is(customerLevel),
+                Arg.Is(uplineLevel),
+                Arg.Is(customerStakeLevel.ToXml()));
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessResult()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Agent;
+            var uplineLevel = Level.Master;
+            byte productId = 1;
+            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(7);
+            var successResult = Result.Success;
+            _dataAccess.UpdateCustomerStakeLevel(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<int>(),
+                Arg.Any<Level>(),
+                Arg.Any<Level>(),
+                Arg.Any<string>()).Returns(successResult);
+
+            // Act
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerStakeLevel);
+
+            // Assert
+            Assert.IsTrue(actualResult.IsSuccessful);
+        }
+
+        [Test]
+        public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessMsg()
+        {
+            // Arrange
+            var customerId = 1;
+            var customerLevel = Level.Agent;
+            var uplineLevel = Level.Master;
+            byte productId = 1;
+            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(1);
+            var successResult = Result.Success;
+            _dataAccess.UpdateCustomerStakeLevel(
+                Arg.Any<ISettingContext>(),
+                Arg.Any<int>(),
+                Arg.Any<Level>(),
+                Arg.Any<Level>(),
+                Arg.Any<string>()).Returns(successResult);
+
+            // Act
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerStakeLevel);
+
+            // Assert
+            Assert.AreEqual(Message.UpdatedBetLimitSuccessfully, actualResult.Message);
+        }
+    }
+}

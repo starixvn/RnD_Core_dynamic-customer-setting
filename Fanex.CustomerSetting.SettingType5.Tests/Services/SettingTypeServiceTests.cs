@@ -37,7 +37,6 @@
             _dataAccess = Substitute.For<IDataAccess>();
 
             _settingContext = new SettingContextStub();
-
             _settingTypeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
         }
 
@@ -97,10 +96,16 @@
             var customerLevel = Level.Member;
             var uplineLevel = Level.Agent;
             byte productId = 1;
-            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(5);
 
             // Act
-            _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+            _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerCommission);
 
             // Assert
             _dataAccess.Received().UpdateCustomerChargeCommission(
@@ -119,7 +124,7 @@
             var customerLevel = Level.Member;
             var uplineLevel = Level.Agent;
             byte productId = 1;
-            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(5);
             var successResult = Result.Success;
             _dataAccess.UpdateCustomerChargeCommission(
                 Arg.Any<ISettingContext>(),
@@ -129,7 +134,13 @@
                 Arg.Any<string>()).Returns(successResult);
 
             // Act
-            var actualResult = _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerCommission);
 
             // Assert
             Assert.IsTrue(actualResult.IsSuccessful);
@@ -143,7 +154,7 @@
             var customerLevel = Level.Member;
             var uplineLevel = Level.Agent;
             byte productId = 1;
-            var customerCommission = InstanceFactory.CreateCustomerSettingType(1);
+            var customerCommission = InstanceFactory.CreateCustomerSettingType(5);
             var successResult = Result.Success;
             _dataAccess.UpdateCustomerChargeCommission(
                 Arg.Any<ISettingContext>(),
@@ -153,7 +164,13 @@
                 Arg.Any<string>()).Returns(successResult);
 
             // Act
-            var actualResult = _settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, customerCommission);
+            var actualResult = _settingTypeService.UpdateCustomerSettingType(
+                _settingContext,
+                customerId,
+                customerLevel,
+                uplineLevel,
+                productId,
+                customerCommission);
 
             // Assert
             Assert.AreEqual(Message.UpdatedChargeCommissionSuccessfully, actualResult.Message);
