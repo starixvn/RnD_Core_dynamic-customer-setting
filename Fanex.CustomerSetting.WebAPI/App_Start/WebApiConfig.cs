@@ -5,6 +5,7 @@
     using System.Web.Http;
     using Fanex.CustomerSetting.WebApi.Configurations;
     using Fanex.CustomerSetting.WebApi.Filters;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig
@@ -33,6 +34,7 @@
 
             var jsonFormater = formaters.JsonFormatter;
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            jsonFormater.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
 
             config.Filters.Add(new HmacAuthorizationFilter());
             config.Filters.Add(new MaintenanceFilter());
