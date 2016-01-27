@@ -209,7 +209,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             var validSettingItems: boolean = this.settingItems.every((item: ISettingItem) => {
-                return item.validate();
+                return !item.validate || item.validate();
             });
 
             return this.id > 0

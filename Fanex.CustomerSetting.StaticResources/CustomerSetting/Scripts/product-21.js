@@ -30593,6 +30593,73 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    uplineLevel: "=",
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-upline-level=\"uplineLevel\"",
+                            " data-customer-level=\"setting.customerLevel\"",
+                            " data-product-id=\"setting.productId\"",
+                            " data-product-name=\"setting.productName\"",
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            "data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var Tooltip = (function () {
         function Tooltip($window, $compile, $timeout, $templateCache) {
             var _this = this;
@@ -30719,73 +30786,6 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    uplineLevel: "=",
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            "data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    })();
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -32158,8 +32158,8 @@ var CustomerSetting;
             if (settingItem) {
                 this.stakeRanges = new Array();
                 if (settingItem.stakeRanges) {
-                    this.stakeRanges = settingItem.stakeRanges.map(function (stakeRange) {
-                        return new SettingType7StakeRange(stakeRange, true);
+                    this.stakeRanges = settingItem.stakeRanges.map(function (stakeLevelValue) {
+                        return new SettingType7StakeRange(stakeLevelValue, true);
                     });
                 }
                 this.customerLevel = customerLevel;
@@ -32184,8 +32184,8 @@ var CustomerSetting;
                     stakeLevel.selected = _this.selectStakeLevelId === stakeLevel.stakeLevelId;
                 });
             }
-            hasChange = this.stakeRanges.some(function (stakeRange) {
-                return stakeRange.isChanged();
+            hasChange = this.stakeRanges.some(function (stakeLevelValue) {
+                return stakeLevelValue.isChanged();
             });
             return isChanged || hasChange;
         };
@@ -32199,6 +32199,7 @@ var CustomerSetting;
             }
             return true;
         };
+        ;
         SettingType7Item.prototype.toJson = function () {
             var settingItem = {
                 sportTypeId: this.sportTypeId,
@@ -32212,7 +32213,9 @@ var CustomerSetting;
                 settingItem.isLive = this.isLive;
             }
             this.stakeRanges.forEach(function (stakeLevel) {
-                settingItem.stakeRanges.push(stakeLevel.toJson());
+                if (stakeLevel.stakeLevelId) {
+                    settingItem.stakeRanges.push(stakeLevel.toJson());
+                }
             });
             return settingItem;
         };
@@ -32236,23 +32239,24 @@ var CustomerSetting;
             }
             return groups;
         };
+        ;
         return SettingType7Item;
     })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType7Item = SettingType7Item;
     var SettingType7StakeRange = (function () {
-        function SettingType7StakeRange(stakeLevel, backup) {
+        function SettingType7StakeRange(settingItem, backup) {
             if (backup === void 0) { backup = false; }
-            if (stakeLevel) {
-                this.stakeLevelId = stakeLevel.stakeLevelId;
-                this.stakeLevelRange = stakeLevel.stakeLevelRange;
-                this.selected = stakeLevel.selected;
+            if (settingItem) {
+                this.stakeLevelId = settingItem.stakeLevelId;
+                this.stakeLevelRange = settingItem.stakeLevelRange;
+                this.selected = settingItem.selected;
             }
             if (backup) {
-                this.oldStakeRange = new SettingType7StakeRange(this);
+                this.oldStakeLevelValue = new SettingType7StakeRange(this);
             }
         }
         SettingType7StakeRange.prototype.isChanged = function () {
-            return this.selected !== this.oldStakeRange.selected;
+            return this.selected !== this.oldStakeLevelValue.selected;
         };
         SettingType7StakeRange.prototype.toJson = function () {
             return {
@@ -32399,7 +32403,6 @@ var CustomerSetting;
             this.controller = ["$scope", function ($scope) {
                     $scope.avaiCustomerLevels = CustomerSetting.Level;
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
-                    $scope.numberOfCellsOnEachRow = _this.numberOfCellsOnEachRow;
                     $scope.settingTypeName = _this.settingType7ResourceService.getLabel("BetLimit");
                     $scope.$watch("settingType", function (settingType) {
                         if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -32424,7 +32427,6 @@ var CustomerSetting;
                         }
                     });
                 }];
-            this.numberOfCellsOnEachRow = 5;
             this.settingType7ResourceService = settingType7ResourceService;
         }
         Object.defineProperty(SettingType7Directive.prototype, "scope", {
@@ -32465,7 +32467,7 @@ $templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': cu
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
 $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
-$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': (settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member) }> <label class=\" check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}} <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].productName}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"item.stakeRanges\"></setting-type7-checkbox-group></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\"><div class=\"block__cell setting-field-wrapper\" data-ng-repeat=\"stakeRange in stakeRangeGroup\" data-ng-class=\"{ \'block__cell--no-border\': $last }\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-model=\"stakeRange.selected\" id=\"{{stakeRange.stakeLevelId}}\"> <input type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" id=\"{{stakeRange.stakeLevelId}}\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
+$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].sportTypeName}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></setting-type7-checkbox-group></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"item.stakeRanges\"></setting-type7-checkbox-group></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -33340,8 +33342,7 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["en-us"] = {
-        "MemberStakeLevelMustBeSelectedForBetType": "Each bet type must have one Bet Limit value be selected.",
-        "Msg_100001": "This user&apos;s upline does not have Stake Level.",
+        "BetLimitMustBeSelectedForSportSettingType": "Bet Limit range must be selected for the following Sports/Bet Types:",
         "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
     };
     

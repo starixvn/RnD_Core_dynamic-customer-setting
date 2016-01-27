@@ -3,8 +3,14 @@
 module CustomerSetting {
     "use strict";
 
+    const numberOfCellsOnEachRow: number = 5;
+
     export class SettingType7Item extends DefaultSettingItem {
-        public stakeLevelValues: Array<SettingType7StakeLevelValue>;
+        public stakeRanges: Array<SettingType7StakeRange>;
+        public stakeRangeGroups: Array<Array<SettingType7StakeRange>>;
+        public selectStakeLevelId: number;
+
+        private customerLevel: Level;
 
         constructor();
         constructor(settingItem: any);
@@ -14,13 +20,25 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
-                this.stakeLevelValues = new Array<SettingType7StakeLevelValue>();
+                this.stakeRanges = new Array<SettingType7StakeRange>();
 
-                if (settingItem.stakeLevelValues) {
-                    this.stakeLevelValues = settingItem.stakeLevelValues.map((stakeLevelValue: any) => {
-                        return new SettingType7StakeLevelValue(stakeLevelValue, true);
+                if (settingItem.stakeRanges) {
+                    this.stakeRanges = settingItem.stakeRanges.map((stakeLevelValue: any) => {
+                        return new SettingType7StakeRange(stakeLevelValue, true);
                     });
                 }
+
+                this.customerLevel = customerLevel;
+
+                if (this.customerLevel && this.customerLevel === Level.member) {
+                    var selectedStakeRanges: SettingType7StakeRange[] = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected);
+
+                    if (selectedStakeRanges && selectedStakeRanges.length > 0) {
+                        this.selectStakeLevelId = selectedStakeRanges[0].stakeLevelId;
+                    }
+                }
+
+                this.stakeRangeGroups = this.groupStakeRanges();
             }
 
             if (backup) {
@@ -32,12 +50,32 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var hasChange: boolean;
 
-            hasChange = this.stakeLevelValues.some((stakeLevelValue: SettingType7StakeLevelValue) => {
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
+                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                });
+            }
+
+            hasChange = this.stakeRanges.some((stakeLevelValue: SettingType7StakeRange) => {
                 return stakeLevelValue.isChanged();
             });
 
             return isChanged || hasChange;
         }
+
+        public validate(): boolean {
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                var isViolated: boolean = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length != 1;
+
+                if (isViolated) {
+                    this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
+
+                    return false;
+                }
+            }
+
+            return true;
+        };
 
         public toJson(): {} {
             var settingItem: any = {
@@ -46,29 +84,55 @@ module CustomerSetting {
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
                 typeName: this.typeName,
-                stakeLevelValues: []
+                stakeRanges: []
             };
 
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
             }
 
-            this.stakeLevelValues.forEach((stakeLevel: SettingType7StakeLevelValue) => {
+            this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
                 if (stakeLevel.stakeLevelId) {
-                    settingItem.stakeLevelValues.push(stakeLevel.toJson());
+                    settingItem.stakeRanges.push(stakeLevel.toJson());
                 }
             });
 
             return settingItem;
         }
+
+        private groupStakeRanges(): Array<Array<SettingType7StakeRange>> {
+            var mod: number = this.stakeRanges.length % numberOfCellsOnEachRow;
+            var numberOfEmptyCells: number = 0;
+            var groups: Array<Array<SettingType7StakeRange>> = new Array<Array<SettingType7StakeRange>>();
+            var group: Array<SettingType7StakeRange>;
+
+            if (mod !== 0 || this.stakeRanges.length === 0) {
+                numberOfEmptyCells = numberOfCellsOnEachRow - mod;
+            }
+
+            this.stakeRanges.forEach((stakeRange: SettingType7StakeRange, index: number) => {
+                if (index % numberOfCellsOnEachRow === 0) {
+                    group = new Array<SettingType7StakeRange>();
+                    groups.push(group);
+                }
+
+                group.push(stakeRange);
+            });
+
+            for (var counter = 0; counter < numberOfEmptyCells; counter++) {
+                group.push(new SettingType7StakeRange());
+            }
+
+            return groups;
+        };
     }
 
-    export class SettingType7StakeLevelValue {
+    export class SettingType7StakeRange {
         public stakeLevelId: number;
         public stakeLevelRange: string;
         public selected: boolean;
 
-        private oldStakeLevelValue: SettingType7StakeLevelValue;
+        private oldStakeLevelValue: SettingType7StakeRange;
 
         constructor();
         constructor(settingItem: any);
@@ -81,7 +145,7 @@ module CustomerSetting {
             }
 
             if (backup) {
-                this.oldStakeLevelValue = new SettingType7StakeLevelValue(this);
+                this.oldStakeLevelValue = new SettingType7StakeRange(this);
             }
         }
 

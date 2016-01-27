@@ -505,7 +505,7 @@ th {
       padding: 0 3px;
       text-align: center;
       width: 100%; }
-  .block__cell, .block__lbl, .block__value, .settingtype7 .block__header-cell {
+  .block__cell, .block__lbl, .block__value {
     border-right: 1px solid #7c98a4;
     line-height: 2.1rem;
     min-height: 24px; }
@@ -587,56 +587,54 @@ select.setting-field {
 .setting-type-1 .question-block {
   margin: 5px 0; }
 
-.settingtype7 .check-all-field-lbl {
+.settingtype7 .block__item, .settingtype7 .block__lbl-wrapper, .settingtype7 .block__row, .settingtype7 .block__header-cell {
+  display: table;
+  table-layout: fixed; }
+
+.settingtype7 .check-all-field-lbl, .settingtype7 .check-all-field, .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .block__cell, .settingtype7 .block__lbl, .settingtype7 .block__value {
   display: table-cell;
-  vertical-align: middle;
+  vertical-align: middle; }
+
+.settingtype7 .check-all-field-lbl {
   width: 100%; }
 
 .settingtype7 .check-all-field {
-  display: table-cell;
-  padding: 0 3px;
-  vertical-align: middle; }
+  padding: 0 3px; }
 
-.settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .setting-field--checkfield__check-ctrl-lbl {
-  display: table-cell;
-  vertical-align: middle; }
-
-.settingtype7 .setting-field--checkfield__check-ctrl-lbl {
-  cursor: pointer;
-  padding-left: 5px; }
+.settingtype7 .setting-field--checkfield {
+  margin: 0; }
+  .settingtype7 .setting-field--checkfield__check-ctrl-lbl {
+    cursor: pointer;
+    padding-left: 5px; }
 
 .settingtype7 .block__item {
-  display: table;
   float: none;
   height: 100%; }
 
 .settingtype7 .block__lbl {
   padding-right: 0; }
   .settingtype7 .block__lbl-wrapper {
-    display: table;
     height: 100%; }
 
 .settingtype7 .block__row {
-  display: table;
   width: 100%; }
   .settingtype7 .block__row--border-top {
     border-top: 1px solid #7c98a4; }
 
-.settingtype7 .block__cell, .settingtype7 .block__lbl, .settingtype7 .block__value, .settingtype7 .block__header-cell {
-  display: table-cell;
+.settingtype7 .block__cell, .settingtype7 .block__lbl, .settingtype7 .block__value {
   float: none;
-  vertical-align: middle;
   width: 20%; }
 
 .settingtype7 .block__value {
   float: none;
-  width: 100%; }
+  width: auto; }
 
 .settingtype7 .block__sub-header {
   padding: 0; }
 
 .settingtype7 .block__header-cell {
-  display: table;
+  border-right: 1px solid #7c98a4;
+  table-layout: auto;
   padding-left: 3px;
   width: 20%; }
   .settingtype7 .block__header-cell--no-border {

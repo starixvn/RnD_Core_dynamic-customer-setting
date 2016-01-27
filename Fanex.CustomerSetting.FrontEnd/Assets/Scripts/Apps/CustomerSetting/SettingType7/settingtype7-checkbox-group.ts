@@ -7,7 +7,7 @@ module CustomerSetting {
 
     interface ICheckboxGroupScope extends ng.IScope {
         checked: boolean;
-        items: Array<SettingType7Item | SettingType7StakeLevelValue>;
+        items: Array<SettingType7Item | SettingType7StakeRange>;
         checkAll: Function;
     }
 
@@ -33,28 +33,28 @@ module CustomerSetting {
             }, true);
         }];
 
-        private changeStateOfAllItems(items: Array<SettingType7Item | SettingType7StakeLevelValue>, state: boolean): void {
+        private changeStateOfAllItems(items: Array<SettingType7Item | SettingType7StakeRange>, state: boolean): void {
             if (items) {
-                items.forEach((item: SettingType7Item | SettingType7StakeLevelValue) => {
+                items.forEach((item: SettingType7Item | SettingType7StakeRange) => {
                     if (item instanceof SettingType7Item) {
-                        item.stakeLevelValues.forEach((stakeLevel: SettingType7StakeLevelValue) => {
+                        item.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
                             if (stakeLevel.stakeLevelId) {
                                 stakeLevel.selected = state;
                             }
                         });
                     } else {
-                        (<SettingType7StakeLevelValue>item).selected = state;
+                        (<SettingType7StakeRange>item).selected = state;
                     }
                 });
             }
         }
 
-        private checkItemsState(items: Array<SettingType7Item | SettingType7StakeLevelValue>): boolean {
+        private checkItemsState(items: Array<SettingType7Item | SettingType7StakeRange>): boolean {
             var allChecked: boolean = false;
 
             if (items) {
-                items = items.filter((item: SettingType7Item | SettingType7StakeLevelValue) => {
-                    if (item instanceof SettingType7StakeLevelValue) {
+                items = items.filter((item: SettingType7Item | SettingType7StakeRange) => {
+                    if (item instanceof SettingType7StakeRange) {
                         return !!item.stakeLevelId;
                     } else {
                         return true;
@@ -62,17 +62,17 @@ module CustomerSetting {
                 });
 
                 if (items.length > 0) {
-                    allChecked = items.every((item: SettingType7Item | SettingType7StakeLevelValue) => {
+                    allChecked = items.every((item: SettingType7Item | SettingType7StakeRange) => {
                         var itemChecked: boolean = false;
 
                         if (item && item instanceof SettingType7Item) {
-                            itemChecked = item.stakeLevelValues.filter((stakeLevel: SettingType7StakeLevelValue) => {
+                            itemChecked = item.stakeRanges.filter((stakeLevel: SettingType7StakeRange) => {
                                 return !!stakeLevel.stakeLevelId;
-                            }).every((stakeLevel: SettingType7StakeLevelValue) => {
+                            }).every((stakeLevel: SettingType7StakeRange) => {
                                 return stakeLevel.selected;
                             });
                         } else {
-                            itemChecked = (<SettingType7StakeLevelValue>item).selected;
+                            itemChecked = (<SettingType7StakeRange>item).selected;
                         }
 
                         return itemChecked;
