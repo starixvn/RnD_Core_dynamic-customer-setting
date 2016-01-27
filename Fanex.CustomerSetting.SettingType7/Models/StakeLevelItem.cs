@@ -10,16 +10,16 @@
 
         public StakeLevelItem()
         {
-            StakeLevelValues = new List<StakeLevelValue>();
+            StakeRanges = new List<StakeRange>();
         }
 
-        public List<StakeLevelValue> StakeLevelValues { get; set; }
+        public List<StakeRange> StakeRanges { get; set; }
 
         public override string ToXml()
         {
-            var checkedStakeLevelIds = StakeLevelValues
-                .Where(stakeLevelValue => stakeLevelValue.Selected)
-                .Select(stakeLevelValue => stakeLevelValue.StakeLevelId);
+            var checkedStakeLevelIds = StakeRanges
+                .Where(stakeRange => stakeRange.Selected)
+                .Select(stakeRange => stakeRange.StakeLevelId);
 
             return string.Format(StakeLevelXmlFormat, base.ToXml(), string.Join(",", checkedStakeLevelIds));
         }
@@ -36,20 +36,20 @@
             {
                 return Equals(SportTypeId, otherObj.SportTypeId)
                     && Equals(BetTypeId, otherObj.BetTypeId)
-                    && StakeLevelValues.SequenceEqual(otherObj.StakeLevelValues);
+                    && StakeRanges.SequenceEqual(otherObj.StakeRanges);
             }
         }
 
         public override int GetHashCode()
         {
-            int stakeLevelValuesHashCode = 0;
+            int stakeRangesHashCode = 0;
 
-            foreach (StakeLevelValue stakeLevelValue in StakeLevelValues)
+            foreach (StakeRange stakeRange in StakeRanges)
             {
-                stakeLevelValuesHashCode ^= stakeLevelValue.GetHashCode();
+                stakeRangesHashCode ^= stakeRange.GetHashCode();
             }
 
-            return SportTypeId.GetHashCode() ^ BetTypeId.GetHashCode() ^ stakeLevelValuesHashCode;
+            return SportTypeId.GetHashCode() ^ BetTypeId.GetHashCode() ^ stakeRangesHashCode;
         }
     }
 }

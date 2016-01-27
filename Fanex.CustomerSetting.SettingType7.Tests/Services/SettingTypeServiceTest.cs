@@ -44,20 +44,20 @@
         [Test]
         public void GetCustomerSettingType_Always_CallGetCustomerStakeLevelRawData()
         {
-            // Arrange
+            // Arrange.
             var query = InstanceFactory.CreateQuerySettingParam();
 
-            // Act
+            // Act.
             _settingTypeService.GetCustomerSettingType(_settingContext, query);
 
-            // Assert
+            // Assert.
             _dataAccess.Received().GetCustomerStakeLevelRawData(Arg.Is(query));
         }
 
         [Test]
         public void GetCustomerSettingType_Always_ReturnCustomerStakeLevel()
         {
-            // Arrange
+            // Arrange.
             var query = InstanceFactory.CreateQuerySettingParam();
             var stakeLevelRawData = new List<StakeLevelDto>
             {
@@ -72,18 +72,18 @@
             };
             _dataAccess.GetCustomerStakeLevelRawData(Arg.Any<CustomerSettingQuery>()).Returns(stakeLevelRawData);
 
-            // Act
+            // Act.
             var actualCustomerStakeLevelSetting = _settingTypeService.GetCustomerSettingType(_settingContext, query);
             var actualCustomerCommissionItem = actualCustomerStakeLevelSetting.SettingItems.First() as StakeLevelItem;
 
-            // Assert
+            // Assert.
             var expectedStakeLevelItem = new StakeLevelItem
             {
                 BetTypeId = 1,
                 SportTypeId = 1,
-                StakeLevelValues = new List<StakeLevelValue>
+                StakeRanges = new List<StakeRange>
                 {
-                    new StakeLevelValue
+                    new StakeRange
                     {
                         StakeLevelId = 1,
                         StakeLevelRange = "100 - 1000",
@@ -109,7 +109,7 @@
                 {
                     SportTypeId = 1,
                     BetTypeId = 1,
-                    StakeLevelValues = new List<StakeLevelValue>()
+                    StakeRanges = new List<StakeRange>()
                 }
             };
 
@@ -129,14 +129,14 @@
         [Test]
         public void UpdateCustomerSettingType_Always_CallUpdateCustomerStakeLevel()
         {
-            // Arrange
+            // Arrange.
             var customerId = 1;
             var customerLevel = Level.Agent;
             var uplineLevel = Level.Master;
             byte productId = 1;
             var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(7);
 
-            // Act
+            // Act.
             _settingTypeService.UpdateCustomerSettingType(
                 _settingContext,
                 customerId,
@@ -145,7 +145,7 @@
                 productId,
                 customerStakeLevel);
 
-            // Assert
+            // Assert.
             _dataAccess.Received().UpdateCustomerStakeLevel(
                 Arg.Is(_settingContext),
                 Arg.Is(customerId),
@@ -157,7 +157,7 @@
         [Test]
         public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessResult()
         {
-            // Arrange
+            // Arrange.
             var customerId = 1;
             var customerLevel = Level.Agent;
             var uplineLevel = Level.Master;
@@ -171,7 +171,7 @@
                 Arg.Any<Level>(),
                 Arg.Any<string>()).Returns(successResult);
 
-            // Act
+            // Act.
             var actualResult = _settingTypeService.UpdateCustomerSettingType(
                 _settingContext,
                 customerId,
@@ -180,14 +180,14 @@
                 productId,
                 customerStakeLevel);
 
-            // Assert
+            // Assert.
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
         [Test]
         public void UpdateCustomerSettingType_UpdatedSuccessfully_ReturnSuccessMsg()
         {
-            // Arrange
+            // Arrange.
             var customerId = 1;
             var customerLevel = Level.Agent;
             var uplineLevel = Level.Master;
@@ -201,7 +201,7 @@
                 Arg.Any<Level>(),
                 Arg.Any<string>()).Returns(successResult);
 
-            // Act
+            // Act.
             var actualResult = _settingTypeService.UpdateCustomerSettingType(
                 _settingContext,
                 customerId,
@@ -210,7 +210,7 @@
                 productId,
                 customerStakeLevel);
 
-            // Assert
+            // Assert.
             Assert.AreEqual(Message.UpdatedBetLimitSuccessfully, actualResult.Message);
         }
     }

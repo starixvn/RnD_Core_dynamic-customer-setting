@@ -70,6 +70,15 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This user&apos;s upline does not have Stake Level..
+        /// </summary>
+        internal static string Msg_100001 {
+            get {
+                return ResourceManager.GetString("Msg_100001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated Bet Limit successfully..
         /// </summary>
         internal static string UpdatedBetLimitSuccessfully {

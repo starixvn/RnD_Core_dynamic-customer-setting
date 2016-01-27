@@ -79,7 +79,7 @@
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\StakeLevelDto.cs" />
     <Compile Include="Models\StakeLevelItem.cs" />
-    <Compile Include="Models\StakeLevelValue.cs" />
+    <Compile Include="Models\StakeRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">
       <AutoGen>True</AutoGen>

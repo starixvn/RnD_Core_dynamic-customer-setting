@@ -96,8 +96,8 @@
 
                     stakeLevelItem.SportTypeId = group.Key.SportTypeId;
                     stakeLevelItem.BetTypeId = group.Key.BetTypeId;
-                    stakeLevelItem.StakeLevelValues = group
-                        .Select(item => new StakeLevelValue(item.StakeLevelId, item.StakeLevelRange, item.Selected))
+                    stakeLevelItem.StakeRanges = group
+                        .Select(item => new StakeRange(item.StakeLevelId, item.StakeLevelRange, item.Selected))
                         .ToList();
 
                     return stakeLevelItem;
@@ -111,7 +111,7 @@
 
             var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().Any(stakeLevelItem =>
             {
-                return stakeLevelItem?.StakeLevelValues?.Count(stakeLevelValue => stakeLevelValue.Selected) != 1;
+                return stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) != 1;
             });
 
             if (hasViolatedItem)

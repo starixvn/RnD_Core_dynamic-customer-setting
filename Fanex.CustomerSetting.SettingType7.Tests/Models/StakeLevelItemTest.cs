@@ -9,19 +9,19 @@
         [Test]
         public void ToXml_Always_ReturnValidXmlString()
         {
-            // Arrange
+            // Arrange.
             var stakeLevel = new StakeLevelItem
             {
                 SportTypeId = 1,
                 BetTypeId = 1,
-                StakeLevelValues = new List<StakeLevelValue>
+                StakeRanges = new List<StakeRange>
                 {
-                    new StakeLevelValue
+                    new StakeRange
                     {
                         StakeLevelId = 1,
                         Selected = true
                     },
-                    new StakeLevelValue
+                    new StakeRange
                     {
                         StakeLevelId = 2,
                         Selected = false
@@ -29,10 +29,10 @@
                 }
             };
 
-            // Act
+            // Act.
             var actualXml = stakeLevel.ToXml();
 
-            // Assert
+            // Assert.
             var expectedXml = "<StakeLevel SportType=\"1\" BetType=\"1\" StakeLevelList=\"1\"/>";
             Assert.AreEqual(expectedXml, actualXml);
         }

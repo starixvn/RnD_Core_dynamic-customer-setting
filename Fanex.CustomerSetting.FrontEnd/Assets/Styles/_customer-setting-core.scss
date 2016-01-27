@@ -1,4 +1,4 @@
-﻿@import "compass";
+﻿@import "./Compass/_compass";
 @import "_variables";
 @import "_other";
 
@@ -37,7 +37,7 @@
 
         &__check-ctrl {
             position: relative;
-            top: 2px;
+            top: 3px;
         }
     }
 }
@@ -354,7 +354,7 @@
     &__cell {
         @include border(right);
         line-height: 2.1rem;
-        min-height: 23px;
+        min-height: 24px;
 
         &--no-border {
             border: none;

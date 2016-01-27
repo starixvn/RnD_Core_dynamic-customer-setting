@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType7.Models
 {
-    public class StakeLevelValue
+    public class StakeRange
     {
-        public StakeLevelValue()
+        public StakeRange()
         {
         }
 
-        public StakeLevelValue(int stakeLevelId, string stakeLevelRange, bool selected)
+        public StakeRange(int stakeLevelId, string stakeLevelRange, bool selected)
         {
             StakeLevelId = stakeLevelId;
             StakeLevelRange = stakeLevelRange;
@@ -21,7 +21,7 @@
 
         public override bool Equals(object obj)
         {
-            var otherObj = obj as StakeLevelValue;
+            var otherObj = obj as StakeRange;
 
             if (otherObj == null)
             {
