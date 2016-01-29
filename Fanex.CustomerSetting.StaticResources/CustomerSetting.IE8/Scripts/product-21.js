@@ -24013,7 +24013,7 @@ var CustomerSetting;
             };
             SettingType.prototype.validate = function () {
                 var validSettingItems = _.every(this.settingItems, function (item) {
-                    return item.validate();
+                    return !item.validate || item.validate();
                 });
                 return this.id > 0
                     && this.settingLevel > 0
@@ -26680,6 +26680,314 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var numberOfCellsOnEachRow = 5;
+        var SettingType7Item = (function (_super) {
+            __extends(SettingType7Item, _super);
+            function SettingType7Item(settingItem, customerLevel, backup) {
+                if (backup === void 0) { backup = false; }
+                _super.call(this, settingItem);
+                if (settingItem) {
+                    this.stakeRanges = new Array();
+                    if (settingItem.stakeRanges) {
+                        this.stakeRanges = _.map(settingItem.stakeRanges, function (stakeLevelValue) {
+                            return new SettingType7StakeRange(stakeLevelValue, true);
+                        });
+                    }
+                    this.customerLevel = customerLevel;
+                    if (this.customerLevel && this.customerLevel === IE8.Level.member) {
+                        var selectedStakeRanges = _.filter(this.stakeRanges, function (stakeRange) { return stakeRange.selected; });
+                        if (selectedStakeRanges && selectedStakeRanges.length > 0) {
+                            this.selectStakeLevelId = selectedStakeRanges[0].stakeLevelId;
+                        }
+                    }
+                    this.stakeRangeGroups = this.groupStakeRanges();
+                }
+                if (backup) {
+                    this.oldSetting = new IE8.DefaultSettingItem(this);
+                }
+            }
+            SettingType7Item.prototype.isChanged = function () {
+                var _this = this;
+                var isChanged = _super.prototype.isChanged.call(this);
+                var hasChange;
+                if (this.customerLevel && this.customerLevel === IE8.Level.member) {
+                    _.forEach(this.stakeRanges, function (stakeLevel) {
+                        stakeLevel.selected = _this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                    });
+                }
+                hasChange = _.some(this.stakeRanges, function (stakeLevelValue) {
+                    return stakeLevelValue.isChanged();
+                });
+                return isChanged || hasChange;
+            };
+            SettingType7Item.prototype.validate = function () {
+                if (this.customerLevel && this.customerLevel === IE8.Level.member) {
+                    var isViolated = _.filter(this.stakeRanges, function (stakeRange) { return stakeRange.selected; }).length != 1;
+                    if (isViolated) {
+                        this.validationState = new IE8.ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
+                        return false;
+                    }
+                }
+                return true;
+            };
+            ;
+            SettingType7Item.prototype.toJson = function () {
+                var settingItem = {
+                    sportTypeId: this.sportTypeId,
+                    sportTypeName: this.sportTypeName,
+                    betTypeId: this.betTypeId,
+                    betTypeName: this.betTypeName,
+                    typeName: this.typeName,
+                    stakeRanges: []
+                };
+                if (this.isLive !== undefined) {
+                    settingItem.isLive = this.isLive;
+                }
+                _.forEach(this.stakeRanges, function (stakeLevel) {
+                    if (stakeLevel.stakeLevelId) {
+                        settingItem.stakeRanges.push(stakeLevel.toJson());
+                    }
+                });
+                return settingItem;
+            };
+            SettingType7Item.prototype.groupStakeRanges = function () {
+                var mod = this.stakeRanges.length % numberOfCellsOnEachRow;
+                var numberOfEmptyCells = 0;
+                var groups = new Array();
+                var group;
+                if (mod !== 0 || this.stakeRanges.length === 0) {
+                    numberOfEmptyCells = numberOfCellsOnEachRow - mod;
+                }
+                _.forEach(this.stakeRanges, function (stakeRange, index) {
+                    if (index % numberOfCellsOnEachRow === 0) {
+                        group = new Array();
+                        groups.push(group);
+                    }
+                    group.push(stakeRange);
+                });
+                for (var counter = 0; counter < numberOfEmptyCells; counter++) {
+                    group.push(new SettingType7StakeRange());
+                }
+                return groups;
+            };
+            ;
+            return SettingType7Item;
+        })(IE8.DefaultSettingItem);
+        IE8.SettingType7Item = SettingType7Item;
+        var SettingType7StakeRange = (function () {
+            function SettingType7StakeRange(settingItem, backup) {
+                if (backup === void 0) { backup = false; }
+                if (settingItem) {
+                    this.stakeLevelId = settingItem.stakeLevelId;
+                    this.stakeLevelRange = settingItem.stakeLevelRange;
+                    this.selected = settingItem.selected;
+                }
+                if (backup) {
+                    this.oldStakeLevelValue = new SettingType7StakeRange(this);
+                }
+            }
+            SettingType7StakeRange.prototype.isChanged = function () {
+                return this.selected !== this.oldStakeLevelValue.selected;
+            };
+            SettingType7StakeRange.prototype.toJson = function () {
+                return {
+                    stakeLevelId: this.stakeLevelId,
+                    stakeLevelRange: this.stakeLevelRange,
+                    selected: this.selected
+                };
+            };
+            return SettingType7StakeRange;
+        })();
+        IE8.SettingType7StakeRange = SettingType7StakeRange;
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType7CheckboxGroupDirective = (function () {
+            function SettingType7CheckboxGroupDirective() {
+                var _this = this;
+                this.replace = true;
+                this.templateUrl = "settingtype7-checkbox-group.htm";
+                this.scope = {
+                    items: "="
+                };
+                this.controller = ["$scope", function ($scope) {
+                        $scope.checked = _this.checkItemsState($scope.items);
+                        $scope.checkAll = function () {
+                            _this.changeStateOfAllItems($scope.items, $scope.checked);
+                        };
+                        $scope.$watch("items", function () {
+                            $scope.checked = _this.checkItemsState($scope.items);
+                        }, true);
+                    }];
+            }
+            SettingType7CheckboxGroupDirective.prototype.changeStateOfAllItems = function (items, state) {
+                if (items) {
+                    _.forEach(items, function (item) {
+                        if (item instanceof IE8.SettingType7Item) {
+                            _.forEach(item.stakeRanges, function (stakeLevel) {
+                                if (stakeLevel.stakeLevelId) {
+                                    stakeLevel.selected = state;
+                                }
+                            });
+                        }
+                        else {
+                            item.selected = state;
+                        }
+                    });
+                }
+            };
+            SettingType7CheckboxGroupDirective.prototype.checkItemsState = function (items) {
+                var allChecked = false;
+                if (items) {
+                    items = _.filter(items, function (item) {
+                        if (item instanceof IE8.SettingType7StakeRange) {
+                            return !!item.stakeLevelId;
+                        }
+                        else {
+                            return true;
+                        }
+                    });
+                    if (items.length > 0) {
+                        allChecked = _.every(items, function (item) {
+                            var itemChecked = false;
+                            if (item && item instanceof IE8.SettingType7Item) {
+                                itemChecked = _.every(_.filter(item.stakeRanges, function (stakeLevel) {
+                                    return !!stakeLevel.stakeLevelId;
+                                }), function (stakeLevel) {
+                                    return stakeLevel.selected;
+                                });
+                            }
+                            else {
+                                itemChecked = item.selected;
+                            }
+                            return itemChecked;
+                        });
+                    }
+                }
+                return allChecked;
+            };
+            return SettingType7CheckboxGroupDirective;
+        })();
+        IE8.ModuleRegister.directive("settingType7CheckboxGroup", SettingType7CheckboxGroupDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType7ResourceService = (function (_super) {
+            __extends(SettingType7ResourceService, _super);
+            function SettingType7ResourceService(settingType7Resource, parametersService) {
+                _super.call(this, settingType7Resource, parametersService);
+            }
+            SettingType7ResourceService.$inject = ["settingType7Resource", "parametersService"];
+            return SettingType7ResourceService;
+        })(IE8.ResourceService);
+        IE8.SettingType7ResourceService = SettingType7ResourceService;
+        angular.module("customerSetting").service("settingType7ResourceService", SettingType7ResourceService);
+        function SettingType7LabelFilter(settingType7ResourceService) {
+            return function (name) {
+                return settingType7ResourceService.getLabel(name);
+            };
+        }
+        SettingType7LabelFilter.$inject = ["settingType7ResourceService"];
+        IE8.ModuleRegister.filter("settingType7Label", SettingType7LabelFilter);
+        function SettingType7MessageFilter(settingType7ResourceService) {
+            return function (name) {
+                var replacements = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    replacements[_i - 1] = arguments[_i];
+                }
+                return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, [name, replacements]);
+            };
+        }
+        SettingType7MessageFilter.$inject = ["settingType7ResourceService"];
+        IE8.ModuleRegister.filter("settingType7Message", SettingType7MessageFilter);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        var SettingType7Directive = (function (_super) {
+            __extends(SettingType7Directive, _super);
+            function SettingType7Directive(settingType7ResourceService) {
+                var _this = this;
+                _super.call(this);
+                this.replace = true;
+                this.templateUrl = "settingtype7.htm";
+                this.scope = {
+                    uplineLevel: "=",
+                    customerLevel: "=",
+                    productId: "=",
+                    productName: "=",
+                    settingType: "=",
+                    update: "&"
+                };
+                this.controller = ["$scope", function ($scope) {
+                        $scope.avaiCustomerLevels = IE8.Level;
+                        $scope.avaiSettingLevels = IE8.SettingLevel;
+                        $scope.settingTypeName = _this.settingType7ResourceService.getLabel("BetLimit");
+                        $scope.$watch("settingType", function (settingType) {
+                            if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                                if (settingType.isError) {
+                                    if (settingType.settingItems.length > 0) {
+                                        settingType.settingItems[0] = new IE8.ErrorSettingItem(settingType.settingItems[0]);
+                                    }
+                                }
+                                else {
+                                    _.forEach(settingType.settingItems, function (item, index) {
+                                        if (angular.isDefined(item)) {
+                                            settingType.settingItems[index] = new IE8.SettingType7Item(item, $scope.customerLevel, true);
+                                        }
+                                    });
+                                    if (settingType.settingLevel === IE8.SettingLevel.sportTypeBetType) {
+                                        $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                    }
+                                    else {
+                                        $scope.sportGroups = [settingType.settingItems];
+                                    }
+                                }
+                            }
+                        });
+                    }];
+                this.settingType7ResourceService = settingType7ResourceService;
+            }
+            SettingType7Directive.$inject = ["settingType7ResourceService"];
+            return SettingType7Directive;
+        })(IE8.DefaultSettingTypeGroupingDirective);
+        IE8.ModuleRegister.directive("settingtype7", SettingType7Directive);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
@@ -26696,7 +27004,9 @@ $templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === 
 $templateCache.put("settingtype3-value.htm","<div data-ng-if=\"settingType | editableSettingType\" data-comm-rate-select data-setting-item=\"item\"></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
 $templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }\"><div data-default-setting-type-grouping></div></div>");
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-status-checkbox data-ng-change=\"change()\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
-$templateCache.put("settingtype4.htm","<div><div data-default-setting-type-grouping></div></div>");}]);
+$templateCache.put("settingtype4.htm","<div><div data-default-setting-type-grouping></div></div>");
+$templateCache.put("settingtype7-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"checked\" data-ng-change=\"checkAll()\"></label>");
+$templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype7\" data-ng-show=\"settingType\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType)\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\"><div class=\"block__header-cell\" data-ng-class=\"{ \'block__header-cell--no-border\': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].sportTypeName}}</label><div data-setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"group\"></div></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__lbl-wrapper\" data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'settingType7ResourceService\'}}\"><label class=\"check-all-field-lbl\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</label><div data-setting-type7-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"item.stakeRanges\"></div></div></div><div class=\"block__value\"><div class=\"block__row\" data-ng-class=\"{ \'block__row--border-top\': $index > 0 }\" data-ng-repeat=\"stakeRangeGroup in item.stakeRangeGroups\"><div class=\"block__cell setting-field-wrapper\" data-ng-class=\"{ \'block__cell--no-border\': $last }\" data-ng-repeat=\"stakeRange in stakeRangeGroup\"><div class=\"setting-field--checkfield\" data-ng-if=\"stakeRange.stakeLevelId\"><div class=\"setting-field--checkfield__check-ctrl-wrapper\"><input id=\"{{stakeRange.stakeLevelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"stakeRange.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{stakeRange.stakeLevelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectStakeLevelId\" data-ng-value=\"stakeRange.stakeLevelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"></div><label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{stakeRange.stakeLevelId}}\">{{stakeRange.stakeLevelRange}}</label></div></div></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -27531,4 +27841,74 @@ $templateCache.put("settingtype4.htm","<div><div data-default-setting-type-group
     };
 
     angular.module("customerSetting").value("productStatusResources", productStatusResources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var settingType7Resource = {};
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["en-us"] = {
+        "BetLimit": "Bet Limit"
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["zh-cn"] = {
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["zh-tw"] = {
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["ko-kr"] = {
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["ja-jp"] = {
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["th-th"] = {
+    };
+    
+    settingType7Resource["label"] = settingType7Resource["label"] || {};
+    settingType7Resource["label"]["vi-vn"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["en-us"] = {
+        "MemberStakeLevelMustBeSelectedForBetType": "Each bet type must have one Bet Limit value be selected.",
+        "Msg_100001": "This user&apos;s upline does not have Stake Level.",
+        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["zh-cn"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["zh-tw"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["ko-kr"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["ja-jp"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["th-th"] = {
+    };
+    
+    settingType7Resource["message"] = settingType7Resource["message"] || {};
+    settingType7Resource["message"]["vi-vn"] = {
+    };
+
+    angular.module("customerSetting").value("settingType7Resource", settingType7Resource);
 })();

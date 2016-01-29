@@ -1,0 +1,81 @@
+﻿<div class="block full-width settingtype7" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{settingTypeName}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType)"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
+        <div class="block__sub-header"
+             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
+            <div class="block__header-cell"
+                 data-ng-class="{ 'block__header-cell--no-border': !(settingType | editableSettingType) || (customerLevel === avaiCustomerLevels.member) }">
+                <label class="check-all-field-lbl"
+                       data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+                    {{group[0].sportTypeName}}
+                </label>
+                <label class="check-all-field-lbl"
+                       data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+                    {{group[0].sportTypeName}}
+                </label>
+                <div data-setting-type7-checkbox-group
+                     data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                     data-items="group"></div>
+            </div>
+        </div>
+        <div class="block__item"
+             data-ng-repeat="item in group"
+             data-ng-class="{ 'block__item--last': $last }">
+            <div class="block__lbl"
+                 data-product="{{productId}}"
+                 data-sport-type="{{item.sportTypeId}}"
+                 data-bet-type="{{item.betTypeId}}">
+                <div class="block__lbl-wrapper"
+                     data-tooltip
+                     data-message="{{settingItem.validationState | tooltipMessage:'settingType7ResourceService'}}">
+                    <label class="check-all-field-lbl">
+                        {{item | showingName:settingType.settingLevel:productName }}
+                        {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                    </label>
+                    <div data-setting-type7-checkbox-group
+                         data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                         data-items="item.stakeRanges"></div>
+                </div>
+            </div>
+            <div class="block__value">
+                <div class="block__row"
+                     data-ng-class="{ 'block__row--border-top': $index > 0 }"
+                     data-ng-repeat="stakeRangeGroup in item.stakeRangeGroups">
+                    <div class="block__cell setting-field-wrapper"
+                         data-ng-class="{ 'block__cell--no-border': $last }"
+                         data-ng-repeat="stakeRange in stakeRangeGroup">
+                        <div class="setting-field--checkfield" data-ng-if="stakeRange.stakeLevelId">
+                            <div class="setting-field--checkfield__check-ctrl-wrapper">
+                                <input id="{{stakeRange.stakeLevelId}}"
+                                       type="checkbox"
+                                       class="setting-field--checkfield__check-ctrl"
+                                       data-ng-model="stakeRange.selected"
+                                       data-ng-disabled="!(settingType | editableSettingType)"
+                                       data-ng-if="customerLevel !== avaiCustomerLevels.member">
+                                <input id="{{stakeRange.stakeLevelId}}"
+                                       type="radio"
+                                       class="setting-field--checkfield__check-ctrl"
+                                       data-ng-model="item.selectStakeLevelId"
+                                       data-ng-value="stakeRange.stakeLevelId"
+                                       data-ng-disabled="!(settingType | editableSettingType)"
+                                       data-ng-if="customerLevel === avaiCustomerLevels.member">
+                            </div>
+                            <label class="setting-field--checkfield__check-ctrl-lbl" for="{{stakeRange.stakeLevelId}}">{{stakeRange.stakeLevelRange}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
+        {{settingType.settingItems[0].errorMessage}}
+    </div>
+</div>

@@ -210,7 +210,7 @@ module CustomerSetting.IE8 {
 
         public validate(): boolean {
             var validSettingItems: boolean = _.every(this.settingItems, (item: ISettingItem) => {
-                return item.validate();
+                return !item.validate || item.validate();
             });
 
             return this.id > 0

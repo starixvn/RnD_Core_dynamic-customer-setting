@@ -24013,7 +24013,7 @@ var CustomerSetting;
             };
             SettingType.prototype.validate = function () {
                 var validSettingItems = _.every(this.settingItems, function (item) {
-                    return item.validate();
+                    return !item.validate || item.validate();
                 });
                 return this.id > 0
                     && this.settingLevel > 0
