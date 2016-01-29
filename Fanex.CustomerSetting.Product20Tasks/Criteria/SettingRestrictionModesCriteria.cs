@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Product20Tasks.Criteria
+﻿namespace Fanex.CustomerSetting.Tasks.Product20.Criteria
 {
     using Fanex.Data.Repository;
 

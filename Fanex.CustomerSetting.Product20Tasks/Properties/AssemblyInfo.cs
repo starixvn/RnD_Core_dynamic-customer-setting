@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.CustomerSetting.Product20Tasks")]
+[assembly: AssemblyTitle("Fanex.CustomerSetting.Tasks.Product20")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Fanex.CustomerSetting.Product20Tasks")]
+[assembly: AssemblyProduct("Fanex.CustomerSetting.Tasks.Product20")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -36,5 +36,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: CLSCompliant(false)]
-[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Product20Tasks.Tests")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Tasks.Product20.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

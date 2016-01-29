@@ -4,15 +4,15 @@
     using Fanex.CustomerSetting.Configurations;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.PlugableTasks;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Tasks;
 
-    public class PluggedTaskService : IPluggedTaskService
+    public class TaskService : ITaskService
     {
         private readonly ISettingContext _settingContext;
 
-        public PluggedTaskService(ISettingContext settingContext)
+        public TaskService(ISettingContext settingContext)
         {
             _settingContext = settingContext;
         }

@@ -24,7 +24,7 @@
         private IValidationService _validationService;
         private IProductService _productService;
         private IResourceService _resourceService;
-        private IPluggedTaskService _pluggedTaskService;
+        private ITaskService _taskService;
         private IDynamicRepository _dymanicRepository;
         private ILogger _logger;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
@@ -38,7 +38,7 @@
             _resourceService = Substitute.For<IResourceService>();
             _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
-            _pluggedTaskService = Substitute.For<IPluggedTaskService>();
+            _taskService = Substitute.For<ITaskService>();
             _logger = Substitute.For<ILogger>();
             _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
             _dymanicRepository = Substitute.For<IDynamicRepository>();
@@ -50,7 +50,7 @@
                 _validationService,
                 _productService,
                 _resourceService,
-                _pluggedTaskService,
+                _taskService,
                 _logger,
                 _settingTypeServiceFactory,
                 _dymanicRepository);

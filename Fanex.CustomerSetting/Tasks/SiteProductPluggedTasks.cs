@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
+﻿namespace Fanex.CustomerSetting.Tasks
 {
     using System.Collections.Generic;
 

@@ -7,11 +7,13 @@
     {
         public IResult ValidatePermissionMultiple(int actorId, string memberIds)
         {
-            var param = new Hashtable();
-            param.Add("custid", actorId);
-            param.Add("targetcustidlst", memberIds);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
+            var param = new Hashtable
+            {
+                {"custid", actorId},
+                {"targetcustidlst", memberIds},
+                {"errcode", 0},
+                {"errmsg", string.Empty}
+            };
 
             return ExecuteNonQuery("CustSetting_MultiCustPermissionValidate", param);
         }

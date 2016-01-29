@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Product20Tasks.Tests.Criteria
 {
-    using Fanex.CustomerSetting.Product20Tasks.Criteria;
+    using Fanex.CustomerSetting.Tasks.Product20.Criteria;
     using NUnit.Framework;
 
     public class SettingRestrictionModesCriteriaTest

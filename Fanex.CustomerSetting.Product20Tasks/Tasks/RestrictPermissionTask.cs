@@ -1,18 +1,18 @@
-﻿namespace Fanex.CustomerSetting.Product20Tasks
+﻿namespace Fanex.CustomerSetting.Tasks.Product20
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.PlugableTasks;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Product20Tasks.Constants;
-    using Fanex.CustomerSetting.Product20Tasks.Criteria;
-    using Fanex.CustomerSetting.Product20Tasks.Models;
-    using Fanex.CustomerSetting.Product20Tasks.Resources;
+    using Fanex.CustomerSetting.Tasks.Product20.Constants;
+    using Fanex.CustomerSetting.Tasks.Product20.Criteria;
+    using Fanex.CustomerSetting.Tasks.Product20.Models;
+    using Fanex.CustomerSetting.Tasks.Product20.Resources;
     using Fanex.Data.Repository;
+    using Fanex.CustomerSetting.Tasks;
 
     public class RestrictPermissionTask : IPostQueryCustomerSettingTask, IPreUpdateCustomerSettingTask, IPreUpdateMultipleCustomersSettingTask
     {

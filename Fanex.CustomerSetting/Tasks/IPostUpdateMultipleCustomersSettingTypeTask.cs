@@ -1,9 +1,11 @@
-﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
+﻿namespace Fanex.CustomerSetting.Tasks
 {
     using System.Collections.Generic;
     using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Models;
 
-    internal interface IPreUpdateMultipleCustomersSettingTypeTask
+    public interface IPostUpdateMultipleCustomersSettingTypeTask
     {
         void Invoke(
             ISettingContext settingContext,
@@ -11,6 +13,7 @@
             Level customerLevel,
             Level uplineLevel,
             byte productId,
-            SettingType settingTypeData);
+            SettingType settingTypeData,
+            IEnumerable<IResult> updateResults);
     }
 }

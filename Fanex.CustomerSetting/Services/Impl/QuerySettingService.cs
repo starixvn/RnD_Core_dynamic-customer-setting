@@ -9,7 +9,6 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Constants;
     using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Resource;
     using Fanex.Data.Repository;
     using Fanex.Logging;
 
@@ -19,7 +18,7 @@
         private readonly IValidationService _validationService;
         private readonly IProductService _productService;
         private readonly IResourceService _resourceService;
-        private readonly IPluggedTaskService _pluggedTaskService;
+        private readonly ITaskService _taskService;
         private readonly ILogger _logger;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
         private readonly IDynamicRepository _dynamicRepository;
@@ -29,7 +28,7 @@
             IValidationService validationService = null,
             IProductService productService = null,
             IResourceService resourceService = null,
-            IPluggedTaskService pluggableTaskService = null,
+            ITaskService pluggableTaskService = null,
             ILogger logger = null,
             ISettingTypeServiceFactory settingTypeServiceFactory = null,
             IDynamicRepository dynamicRepository = null)
@@ -41,7 +40,7 @@
             _productService = productService ?? new ProductService();
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
-            _pluggedTaskService = pluggableTaskService ?? new PluggedTaskService(_settingContext);
+            _taskService = pluggableTaskService ?? new TaskService(_settingContext);
             _logger = logger ?? Logger.Log;
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
@@ -52,7 +51,7 @@
             Validate(query);
 
             // Run plugged tasks before querying data.
-            _pluggedTaskService.Run(query.ProductId, query);
+            _taskService.Run(query.ProductId, query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
             var product = GetProductInfo(query.ProductId, _settingContext.System);
@@ -67,7 +66,7 @@
                 customerSettingTypes);
 
             // Run plugged tasks after querying setting data of a product.
-            _pluggedTaskService.Run(query.ProductId, query, setting);
+            _taskService.Run(query.ProductId, query, setting);
 
             return setting;
         }
@@ -128,15 +127,12 @@
 
             // TODO Should we user parallel here.
             // How to display setting type by order.
+                        
             foreach (var productSettingType in productSettingTypes)
             {
                 SettingType customerSettingType = GetCustomerSettingType(query, productSettingType);
 
-                if (!customerSettingType.SettingItems.Any())
-                {
-                    WriteLog(query, customerSettingType, new Exception(string.Format(Message.SettingTypeHasNoSettingItem, customerSettingType.Name)));
-                }
-                else
+                if (customerSettingType.SettingItems.Any())
                 {
                     customerSettingTypes.Add(customerSettingType);
                 }
@@ -154,7 +150,7 @@
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
 
                 // Run plugged tasks of setting type before querying setting type's data.
-                _pluggedTaskService.Run(query.ProductId, productSettingType.Id, query);
+                _taskService.Run(query.ProductId, productSettingType.Id, query);
 
                 customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query);
                 customerSettingType.Id = productSettingType.Id;
@@ -167,7 +163,7 @@
                 }
 
                 // Run plugged tasks on setting type after querying setting type's data.
-                _pluggedTaskService.Run(query.ProductId, productSettingType.Id, query, customerSettingType);
+                _taskService.Run(query.ProductId, productSettingType.Id, query, customerSettingType);
             }
             catch (Exception ex)
             {

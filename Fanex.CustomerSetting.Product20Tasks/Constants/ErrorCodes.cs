@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Product20Tasks.Constants
+﻿namespace Fanex.CustomerSetting.Tasks.Product20.Constants
 {
     internal static class ErrorCodes
     {

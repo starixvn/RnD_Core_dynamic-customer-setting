@@ -85,13 +85,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Stati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType5.Tests", "Fanex.CustomerSetting.SettingType5.Tests\Fanex.CustomerSetting.SettingType5.Tests.csproj", "{1D56751A-C3B8-41F8-9E18-EED178FA6EEB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluggedTasks", "PluggedTasks", "{42B05657-8A0C-44E1-A910-2F95EC279A55}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{42B05657-8A0C-44E1-A910-2F95EC279A55}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product20", "Product20", "{463AECF9-A914-4373-8639-B4049B67E537}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Product20Tasks", "Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Product20Tasks.csproj", "{CA48C0D3-B8BB-42BA-B26A-E0689419F088}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product20", "Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj", "{CA48C0D3-B8BB-42BA-B26A-E0689419F088}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Product20Tasks.Tests", "Fanex.CustomerSetting.Product20Tasks.Tests\Fanex.CustomerSetting.Product20Tasks.Tests.csproj", "{A809EDB2-C382-4E00-BDFE-CD9AA22ED2A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product20.Tests", "Fanex.CustomerSetting.Product20Tasks.Tests\Fanex.CustomerSetting.Tasks.Product20.Tests.csproj", "{A809EDB2-C382-4E00-BDFE-CD9AA22ED2A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType6", "SettingType6", "{71CBA3E6-B7F4-42AC-BB9F-AC7749C02C12}"
 EndProject

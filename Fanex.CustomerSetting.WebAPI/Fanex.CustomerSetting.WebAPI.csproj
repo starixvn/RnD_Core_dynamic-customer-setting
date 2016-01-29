@@ -327,9 +327,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Product20Tasks.csproj">
+    <ProjectReference Include="..\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj">
       <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
-      <Name>Fanex.CustomerSetting.Product20Tasks</Name>
+      <Name>Fanex.CustomerSetting.Tasks.Product20</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>

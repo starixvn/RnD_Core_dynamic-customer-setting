@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Product20Tasks.Models
+﻿namespace Fanex.CustomerSetting.Tasks.Product20.Models
 {
     internal class RestrictionModes
     {

@@ -5,7 +5,7 @@
     "tasks": [
       {
         "taskNames": [
-          "Fanex.CustomerSetting.Product20Tasks.RestrictPermissionTask, Fanex.CustomerSetting.Product20Tasks"
+          "Fanex.CustomerSetting.Tasks.Product20.RestrictPermissionTask, Fanex.CustomerSetting.Tasks.Product20"
         ]
       }
     ]

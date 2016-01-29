@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Fanex.CustomerSetting.Models.PlugableTasks;
+    using Fanex.CustomerSetting.Tasks;
     using Newtonsoft.Json;
 
     internal static class PluggableTaskConfiguration
@@ -93,7 +93,7 @@
 
             cachedTasks.TryGetValue(taskName, out cachedTask);
 
-            if (typeof(T).IsAssignableFrom(cachedTask?.GetType()))
+            if (cachedTask is T)
             {
                 task = cachedTasks as T;
             }
@@ -133,10 +133,8 @@
 
                 return filePaths;
             }
-            else
-            {
-                return new string[] { path };
-            }
+
+            return new[] { path };
         }
 
         private static void VerifyPath(string path)

@@ -8,7 +8,7 @@
     /// </summary>
     public class CachingService : ICachingService
     {
-        private readonly ObjectCache cache;
+        private readonly ObjectCache _cache;
 
         public CachingService()
             : this(MemoryCache.Default)
@@ -22,7 +22,7 @@
                 throw new ArgumentNullException("cache");
             }
 
-            this.cache = cache;
+            this._cache = cache;
             DefaultCacheDuration = 60 * 20;
         }
 
@@ -63,14 +63,14 @@
 
             ValidateKey(key);
 
-            cache.Set(key, item, policy);
+            _cache.Set(key, item, policy);
         }
 
         public T Get<T>(string key)
         {
             ValidateKey(key);
 
-            var item = cache[key];
+            var item = _cache[key];
 
             if (item is T)
             {
@@ -106,7 +106,7 @@
 
             var newLazyCacheItem = new Lazy<T>(addItemFactory);
 
-            var existingCacheItem = cache.AddOrGetExisting(key, newLazyCacheItem, policy);
+            var existingCacheItem = _cache.AddOrGetExisting(key, newLazyCacheItem, policy);
 
             if (existingCacheItem != null)
             {
@@ -130,7 +130,7 @@
             catch
             {
                 // addItemFactory errored so do not cache the exception
-                cache.Remove(key);
+                _cache.Remove(key);
                 throw;
             }
         }
@@ -138,7 +138,7 @@
         public void Remove(string key)
         {
             ValidateKey(key);
-            cache.Remove(key);
+            _cache.Remove(key);
         }
 
         private void ValidateKey(string key)

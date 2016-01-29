@@ -25,13 +25,13 @@
             }
 
             // Run plugged tasks before updating settings of mutiple customers.
-            _pluggedTaskService.Run(command.Setting.ProductId, command);
+            _taskService.Run(command.Setting.ProductId, command);
 
             var updateSettingTypeResults = UpdateSettingTypesForMultipleCustomers(command);
             var result = MapUpdateSettingResultWithCustomerName(updateSettingTypeResults, command.CustomerIds, command.CustomerNames);
 
             // Run plugged tasks after updating settings of mutiple customers.
-            _pluggedTaskService.Run(command.Setting.ProductId, command, result);
+            _taskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
@@ -70,7 +70,7 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-                _pluggedTaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
+                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
                 var updateSettingResults = settingTypeService.UpdateMultipleCustomerSettingType(
@@ -81,7 +81,7 @@
                         productId,
                         settingType);
 
-                _pluggedTaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
+                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
 
                 return updateSettingResults;
             }

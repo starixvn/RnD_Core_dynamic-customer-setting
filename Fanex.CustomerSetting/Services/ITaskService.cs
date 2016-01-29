@@ -6,7 +6,7 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
 
-    public interface IPluggedTaskService
+    public interface ITaskService
     {
         void Run(byte productId, CustomerSettingQuery query);
 

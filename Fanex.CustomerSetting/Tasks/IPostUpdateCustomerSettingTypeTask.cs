@@ -1,5 +1,6 @@
-﻿namespace Fanex.CustomerSetting.Models.PlugableTasks
+﻿namespace Fanex.CustomerSetting.Tasks
 {
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Results;
 

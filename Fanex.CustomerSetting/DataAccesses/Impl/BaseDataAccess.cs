@@ -23,26 +23,23 @@
 
         protected IResult GetResult(Hashtable param)
         {
-            if (param != null
-                && param.ContainsKey("errcode")
-                && param.ContainsKey("errmsg"))
+            if (param == null || !param.ContainsKey("errcode") || !param.ContainsKey("errmsg"))
             {
-                var errorCode = Convert.ToInt32(param["errcode"]);
-                var errMsg = Convert.ToString(param["errmsg"]);
-                if (param.ContainsKey("msgtype"))
-                {
-                    return new Result(
-                             errorCode,
-                             errMsg,
-                             Convert.ToInt32(param["msgtype"]));
-                }
-                else
-                {
-                    return new Result(errorCode, errMsg);
-                }
+                throw new ArgumentException(
+                    "result output param is nulll or does not contain neither errcode nor errmsg.");
             }
 
-            throw new ArgumentException("result output param is nulll or does not contain neither errcode nor errmsg.");
+            var errorCode = Convert.ToInt32(param["errcode"]);
+            var errMsg = Convert.ToString(param["errmsg"]);
+            if (param.ContainsKey("msgtype"))
+            {
+                return new Result(
+                    errorCode,
+                    errMsg,
+                    Convert.ToInt32(param["msgtype"]));
+            }
+
+            return new Result(errorCode, errMsg);
         }
 
         protected Hashtable GetSPParamsForGettingSettingType(CustomerSettingQuery querySettingParam, byte settingType)
@@ -52,10 +49,12 @@
                 throw new ArgumentNullException("querySettingParam", "querySettingParam cannot be null.");
             }
 
-            Hashtable param = new Hashtable();
-            param.Add("custid", querySettingParam.CustomerId);
-            param.Add("productid", querySettingParam.ProductId);
-            param.Add("settingtype", settingType);
+            var param = new Hashtable
+            {
+                {"custid", querySettingParam.CustomerId},
+                {"productid", querySettingParam.ProductId},
+                {"settingtype", settingType}
+            };
 
             if (querySettingParam.CustomerLevel == Level.Member)
             {

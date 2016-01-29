@@ -17,7 +17,6 @@
                 case "ZH-CN": return "cs"; // Simplified
                 case "JA-JP": return "jp"; // Japanese
                 case "TH-TH": return "th"; // Thai
-                case "EN-US":
                 default: return DefaultLanguageName;
             }
         }

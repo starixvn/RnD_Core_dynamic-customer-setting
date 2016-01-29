@@ -21,14 +21,14 @@
     {
         private readonly ISettingContext _settingContext;
         private readonly IValidationService _validationService;
-        private readonly IPluggedTaskService _pluggedTaskService;
+        private readonly ITaskService _taskService;
         private readonly ILogger _logger;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         public UpdateSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
-            IPluggedTaskService pluggableTaskService = null,
+            ITaskService pluggableTaskService = null,
             ILogger logger = null,
             ISettingTypeServiceFactory settingTypeServiceFactory = null)
         {
@@ -37,7 +37,7 @@
 
             _settingContext = settingContext;
             _validationService = validationService ?? new ValidationService(_settingContext);
-            _pluggedTaskService = pluggableTaskService ?? new PluggedTaskService(_settingContext);
+            _taskService = pluggableTaskService ?? new TaskService(_settingContext);
             _logger = logger ?? Logger.Log;
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
         }
@@ -60,12 +60,12 @@
             }
 
             // Run plugged tasks before updating settings of customer.
-            _pluggedTaskService.Run(command.Setting.ProductId, command);
+            _taskService.Run(command.Setting.ProductId, command);
 
             IResult result = new UpdateSettingResult(UpdateCustomerSettingTypes(command));
 
             // Run plugged tasks after updating settings of customer.
-            _pluggedTaskService.Run(command.Setting.ProductId, command, result);
+            _taskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
@@ -87,10 +87,18 @@
 
             foreach (var settingType in settingTypes)
             {
-                updateSettingTypeResult = UpdateCustomerSettingType(customerId, command.Setting.CustomerInfo, customerLevel, settingType, productId, uplineLevel);
+                updateSettingTypeResult = UpdateCustomerSettingType(
+                    customerId,
+                    command.Setting.CustomerInfo, 
+                    customerLevel, 
+                    settingType, 
+                    productId, 
+                    uplineLevel);
 
                 settingTypeResults.Add(updateSettingTypeResult);
             }
+
+            settingTypeResults.Any(result => result.IsFailed);
 
             return settingTypeResults;
         }
@@ -106,14 +114,14 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-                _pluggedTaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
 
                 var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
 
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
-                _pluggedTaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;
             }

@@ -6,12 +6,13 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Product20Tasks.Criteria;
-    using Fanex.CustomerSetting.Product20Tasks.Models;
-    using Fanex.CustomerSetting.Product20Tasks.Resources;
+    using Fanex.CustomerSetting.Tasks.Product20;
+    using Fanex.CustomerSetting.Tasks.Product20.Criteria;
     using Fanex.Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
+    using Fanex.CustomerSetting.Tasks.Product20.Models;
+    using Fanex.CustomerSetting.Tasks.Product20.Resources;
 
     [TestFixture]
     public class RestrictPermissionTaskTest
