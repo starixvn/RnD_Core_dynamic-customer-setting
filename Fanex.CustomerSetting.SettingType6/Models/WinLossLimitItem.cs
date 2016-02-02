@@ -24,12 +24,12 @@
         {
             if (WinLimit < 0)
             {
-                return new Result(ErrorCode.MaximumWinMustNotBeLessThanZero, Message.MaximumWinMustNotBeLessThanZero);
+                return new Result(ErrorCode.MaximumWinMustNotBeLessThanZero, Message.MaximumWinShouldNotBeLessThanZero);
             }
 
             if (0 < MaxWinRange && MaxWinRange < WinLimit)
             {
-                return new Result(ErrorCode.MaximumWinMustBotExceedThanUplineMaximumWin, Message.MaximumWinMustBotExceedThanUplineMaximumWin);
+                return new Result(ErrorCode.MaximumWinMustBotExceedThanUplineMaximumWin, Message.MaximumWinShouldBotExceedThanUplineMaximumWin);
             }
 
             if (LossLimit < MinLossRange || (0 < MaxLossRange && MaxLossRange < LossLimit))
@@ -37,7 +37,7 @@
                 return new Result(
                     ErrorCode.MaximumLossValueMustBeInRange,
                     string.Format(
-                        Message.MaximumLossValueMustBeInRange,
+                        Message.MaximumLossValueShouldBeInRange,
                         NumberFormatter.FormatDecimal(MinLossRange),
                         NumberFormatter.FormatDecimal(MaxLossRange)));
             }

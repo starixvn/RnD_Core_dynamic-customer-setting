@@ -60,7 +60,7 @@
             var validationResult = winLossLimit.Validate();
 
             // Assert
-            Assert.AreEqual(Message.MaximumWinMustNotBeLessThanZero, validationResult.Message);
+            Assert.AreEqual(Message.MaximumWinShouldNotBeLessThanZero, validationResult.Message);
         }
 
         [Test]
@@ -105,7 +105,7 @@
             var validationResult = winLossLimit.Validate();
 
             // Assert
-            Assert.AreEqual(Message.MaximumWinMustBotExceedThanUplineMaximumWin, validationResult.Message);
+            Assert.AreEqual(Message.MaximumWinShouldBotExceedThanUplineMaximumWin, validationResult.Message);
         }
 
         [TestCase(100, 99, 90)]
@@ -163,7 +163,7 @@
 
             // Assert
             string expectedMessage = string.Format(
-                Message.MaximumLossValueMustBeInRange,
+                Message.MaximumLossValueShouldBeInRange,
                 NumberFormatter.FormatDecimal(minLossRange),
                 NumberFormatter.FormatDecimal(maxLossRange));
             Assert.AreEqual(expectedMessage, validationResult.Message);

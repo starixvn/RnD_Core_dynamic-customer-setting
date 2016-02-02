@@ -70,29 +70,29 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Loss value must be in the range of ({0} - {1})..
+        ///   Looks up a localized string similar to Maximum Loss value should be in the range of ({0} - {1})..
         /// </summary>
-        internal static string MaximumLossValueMustBeInRange {
+        internal static string MaximumLossValueShouldBeInRange {
             get {
-                return ResourceManager.GetString("MaximumLossValueMustBeInRange", resourceCulture);
+                return ResourceManager.GetString("MaximumLossValueShouldBeInRange", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win must not exceed upline&apos;s Maximum Win..
+        ///   Looks up a localized string similar to Maximum Win should be less than or equal to Maximum Win of Direct Upline..
         /// </summary>
-        internal static string MaximumWinMustBotExceedThanUplineMaximumWin {
+        internal static string MaximumWinShouldBotExceedThanUplineMaximumWin {
             get {
-                return ResourceManager.GetString("MaximumWinMustBotExceedThanUplineMaximumWin", resourceCulture);
+                return ResourceManager.GetString("MaximumWinShouldBotExceedThanUplineMaximumWin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win must not be less than 0..
+        ///   Looks up a localized string similar to Maximum Win should not be less than 0..
         /// </summary>
-        internal static string MaximumWinMustNotBeLessThanZero {
+        internal static string MaximumWinShouldNotBeLessThanZero {
             get {
-                return ResourceManager.GetString("MaximumWinMustNotBeLessThanZero", resourceCulture);
+                return ResourceManager.GetString("MaximumWinShouldNotBeLessThanZero", resourceCulture);
             }
         }
         
