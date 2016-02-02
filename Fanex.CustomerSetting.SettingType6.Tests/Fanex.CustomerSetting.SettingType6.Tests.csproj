@@ -71,6 +71,7 @@
     <Compile Include="Models\WinLossLimitItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageServiceTests.cs" />
+    <Compile Include="Services\SettingTypeServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.SettingType6\Fanex.CustomerSetting.SettingType6.csproj">

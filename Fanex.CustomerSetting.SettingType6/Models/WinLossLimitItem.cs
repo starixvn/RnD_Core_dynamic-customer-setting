@@ -27,12 +27,12 @@
                 return new Result(ErrorCode.MaximumWinMustNotBeLessThanZero, Message.MaximumWinMustNotBeLessThanZero);
             }
 
-            if (WinLimit > MaxWinRange)
+            if (0 < MaxWinRange && MaxWinRange < WinLimit)
             {
                 return new Result(ErrorCode.MaximumWinMustBotExceedThanUplineMaximumWin, Message.MaximumWinMustBotExceedThanUplineMaximumWin);
             }
 
-            if (MinLossRange > LossLimit || LossLimit > MaxLossRange)
+            if (LossLimit < MinLossRange || (0 < MaxLossRange && MaxLossRange < LossLimit))
             {
                 return new Result(
                     ErrorCode.MaximumLossValueMustBeInRange,
@@ -48,6 +48,39 @@
         public override string ToXml()
         {
             return $"<Limit {base.ToXml()} MaxWinLimit=\"{WinLimit}\" MaxLossLimit=\"{LossLimit}\" IsAutoReset=\"{(IsAutoReset ? 1 : 0)}\" />";
+        }
+
+        public override bool Equals(object obj)
+        {
+            var otherObj = obj as WinLossLimitItem;
+
+            if (otherObj == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(SportTypeId, otherObj.SportTypeId)
+                    && Equals(BetTypeId, otherObj.BetTypeId)
+                    && Equals(WinLimit, otherObj.WinLimit)
+                    && Equals(MaxWinRange, otherObj.MaxWinRange)
+                    && Equals(LossLimit, otherObj.LossLimit)
+                    && Equals(MaxLossRange, otherObj.MaxLossRange)
+                    && Equals(MinLossRange, otherObj.MinLossRange)
+                    && Equals(IsAutoReset, otherObj.IsAutoReset);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ WinLimit.GetHashCode()
+                ^ MaxWinRange.GetHashCode()
+                ^ LossLimit.GetHashCode()
+                ^ MaxLossRange.GetHashCode()
+                ^ MinLossRange.GetHashCode()
+                ^ IsAutoReset.GetHashCode();
         }
     }
 }
