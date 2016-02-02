@@ -10,7 +10,7 @@
 
     internal static class PluggableTaskConfiguration
     {
-        private static IEnumerable<SiteProductPluggedTasks> configuredTasks
+        private static IEnumerable<SiteProductTasks> configuredTasks
             = ReadTasksFromConfigurationFiles(CustomerSettingConfiguration.Configurations.TasksConfigurationPath);
 
         private static ConcurrentDictionary<string, object> cachedTasks = new ConcurrentDictionary<string, object>();
@@ -42,13 +42,13 @@
             return runnableTasks;
         }
 
-        private static bool IsMatchedSiteProductTasks(SiteProductPluggedTasks taskList, byte systemId, byte productId)
+        private static bool IsMatchedSiteProductTasks(SiteProductTasks taskList, byte systemId, byte productId)
         {
             return (taskList.System == null || taskList.System == systemId)
                 && (taskList.ProductId == null || taskList.ProductId == productId);
         }
 
-        private static IEnumerable<string> PickSettingTypeTaskNames(SiteProductPluggedTasks productTask, short? settingTypeId = default(short?))
+        private static IEnumerable<string> PickSettingTypeTaskNames(SiteProductTasks productTask, short? settingTypeId = default(short?))
         {
             return productTask.Tasks
                 .Where(settingTypeTasks => settingTypeId == null || settingTypeTasks.SettingTypeId == null || settingTypeTasks.SettingTypeId == settingTypeId)
@@ -101,14 +101,14 @@
             return task;
         }
 
-        private static IEnumerable<SiteProductPluggedTasks> ReadTasksFromConfigurationFiles(string path)
+        private static IEnumerable<SiteProductTasks> ReadTasksFromConfigurationFiles(string path)
         {
-            var tasks = new List<SiteProductPluggedTasks>();
+            var tasks = new List<SiteProductTasks>();
             IEnumerable<string> filePaths = DetechFilePaths(path);
 
             foreach (string filePath in filePaths)
             {
-                var newTasks = JsonConvert.DeserializeObject<IEnumerable<SiteProductPluggedTasks>>(File.ReadAllText(filePath));
+                var newTasks = JsonConvert.DeserializeObject<IEnumerable<SiteProductTasks>>(File.ReadAllText(filePath));
 
                 tasks.AddRange(newTasks);
             }
