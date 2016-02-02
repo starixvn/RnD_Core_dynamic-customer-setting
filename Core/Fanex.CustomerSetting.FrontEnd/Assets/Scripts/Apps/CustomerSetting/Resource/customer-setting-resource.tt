@@ -23,7 +23,7 @@
     var resources = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-    var resourcePath = Path.Combine(solutionPath, "Fanex.CustomerSetting.Resource");
+    var resourcePath = Path.Combine(solutionPath, "Core/Fanex.CustomerSetting.Resource");
     var fileNames = new string[]
     {
         "Label",
