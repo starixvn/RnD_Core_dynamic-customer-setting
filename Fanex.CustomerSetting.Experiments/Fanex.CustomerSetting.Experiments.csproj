@@ -59,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Client40\Fanex.CustomerSetting.Client40.csproj">
+    <ProjectReference Include="..\Core\Fanex.CustomerSetting.Client40\Fanex.CustomerSetting.Client40.csproj">
       <Project>{4522d0dc-716a-4113-b534-72c3078f1ec6}</Project>
       <Name>Fanex.CustomerSetting.Client40</Name>
     </ProjectReference>
