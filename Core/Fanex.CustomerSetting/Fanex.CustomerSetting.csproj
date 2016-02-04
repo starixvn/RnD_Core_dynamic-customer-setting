@@ -116,8 +116,6 @@
     <Compile Include="Tasks\IPreQueryCustomerSettingTypeTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTypeTask.cs" />
-    <Compile Include="Tasks\SiteProductTasks.cs" />
-    <Compile Include="Tasks\SettingTypeTasks.cs" />
     <Compile Include="Models\ProductName.cs" />
     <Compile Include="Models\Results\SettingResult.cs" />
     <Compile Include="Models\Results\UpdateSettingResult.cs" />
