@@ -3,7 +3,7 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
 
-    public interface IUpdateSettingService
+    public interface IUpdateSettingService : ISettingService
     {
         IResult Update(UpdateCustomerSettingCommand command);
 

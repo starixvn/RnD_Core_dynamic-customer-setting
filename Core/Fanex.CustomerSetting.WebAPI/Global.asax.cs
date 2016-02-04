@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Http;
+    using App_Start;
     using Fanex.Data.Configuration;
     using Fanex.Logging;
 
@@ -13,6 +14,7 @@
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            SettingServiceConfig.Run();
             DbSettingProviderManager.Current.Start();
         }
 

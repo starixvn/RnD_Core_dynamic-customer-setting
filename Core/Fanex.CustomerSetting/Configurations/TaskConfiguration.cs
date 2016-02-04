@@ -8,7 +8,7 @@
     using Fanex.CustomerSetting.Tasks;
     using Newtonsoft.Json;
 
-    internal static class PluggableTaskConfiguration
+    internal static class TaskConfiguration
     {
         private static IEnumerable<SiteProductTasks> configuredTasks
             = ReadTasksFromConfigurationFiles(CustomerSettingConfiguration.Configurations.TasksConfigurationPath);

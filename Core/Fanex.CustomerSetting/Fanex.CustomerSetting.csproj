@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.CustomerSetting</RootNamespace>
     <AssemblyName>Fanex.CustomerSetting</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
-    <Compile Include="Configurations\PluggableTaskConfiguration.cs" />
+    <Compile Include="Configurations\TaskConfiguration.cs" />
     <Compile Include="Criteria\ActorStatusQueryCriteria.cs" />
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="Models\Messages\MessageContent.cs" />
     <Compile Include="Models\Messages\MainMessage.cs" />
     <Compile Include="Models\Messages\SimpleMessage.cs" />
+    <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTypeTask.cs" />
     <Compile Include="Tasks\IPostQueryCustomerSettingTask.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Tasks\IPreQueryCustomerSettingTypeTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTypeTask.cs" />
+    <Compile Include="Tasks\SiteProductTasks.cs" />
+    <Compile Include="Tasks\SettingTypeTasks.cs" />
     <Compile Include="Models\ProductName.cs" />
     <Compile Include="Models\Results\SettingResult.cs" />
     <Compile Include="Models\Results\UpdateSettingResult.cs" />

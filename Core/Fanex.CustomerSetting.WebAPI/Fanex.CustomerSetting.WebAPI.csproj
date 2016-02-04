@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.CustomerSetting.WebApi</RootNamespace>
     <AssemblyName>Fanex.CustomerSetting.WebApi</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -92,6 +92,7 @@
       <HintPath>..\..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
       <Private>True</Private>
@@ -109,10 +110,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
       <Private>True</Private>
@@ -239,6 +241,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\SettingServiceConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configurations\CustomerSettingAPIConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
@@ -343,6 +346,10 @@
       <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
       <Name>Fanex.CustomerSetting.Tasks.Product20</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
+      <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
+      <Name>Fanex.CustomerSetting.Casino</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Resource\Fanex.CustomerSetting.Resource.csproj">
       <Project>{419a565e-af08-42e2-9114-765bacd79f07}</Project>
       <Name>Fanex.CustomerSetting.Resource</Name>
@@ -362,6 +369,10 @@
     <ProjectReference Include="..\..\SettingTypes\SettingType4\Fanex.CustomerSetting.SettingType4\Fanex.CustomerSetting.SettingType4.csproj">
       <Project>{17008F66-76C2-482C-B8E0-E838F809EE53}</Project>
       <Name>Fanex.CustomerSetting.SettingType4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.ServiceLocation\Fanex.CustomerSetting.ServiceLocation.csproj">
+      <Project>{85fc99cf-061c-4f09-882a-bbfa94dbedbc}</Project>
+      <Name>Fanex.CustomerSetting.ServiceLocation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>

@@ -3,8 +3,8 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Requests;
 
-    public interface IQuerySettingService
+    public interface IQuerySettingService : ISettingService
     {
-        Setting GetCustomerSetting(CustomerSettingQuery query);
+        ISetting GetCustomerSetting(CustomerSettingQuery query);
     }
 }

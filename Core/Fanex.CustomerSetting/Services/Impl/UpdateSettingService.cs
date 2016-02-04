@@ -25,6 +25,11 @@
         private readonly ILogger _logger;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
+        public UpdateSettingService(ISettingContext settingContext)
+            : this(settingContext, null, null, null, null)
+        {
+        }
+
         public UpdateSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -70,12 +75,12 @@
             return result;
         }
 
-        private IResult Validate(UpdateCustomerSettingCommand command)
+        protected virtual IResult Validate(UpdateCustomerSettingCommand command)
         {
             return _validationService.ValidateUpdateSettingAction(command);
         }
 
-        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
+        protected virtual IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
             var settingTypes = command.Setting.SettingTypes;
             var customerId = command.Setting.CustomerId;
@@ -89,10 +94,10 @@
             {
                 updateSettingTypeResult = UpdateCustomerSettingType(
                     customerId,
-                    command.Setting.CustomerInfo, 
-                    customerLevel, 
-                    settingType, 
-                    productId, 
+                    command.Setting.CustomerInfo,
+                    customerLevel,
+                    settingType,
+                    productId,
                     uplineLevel);
 
                 settingTypeResults.Add(updateSettingTypeResult);
@@ -103,7 +108,7 @@
             return settingTypeResults;
         }
 
-        private SettingResult UpdateCustomerSettingType(
+        protected virtual SettingResult UpdateCustomerSettingType(
             int customerId,
             CustomerInfo customerInfo,
             Level customerLevel,
@@ -143,7 +148,7 @@
             }
         }
 
-        private void CheckSettingTypeIsValid(SettingType settingType)
+        protected virtual void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
 
@@ -153,7 +158,7 @@
             }
         }
 
-        private void WriteLog(
+        protected virtual void WriteLog(
             int customerId,
             Level customerLevel,
             Level uplineLevel,

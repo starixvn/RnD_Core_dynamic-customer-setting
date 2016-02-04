@@ -105,6 +105,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Tasks.Product20", "Tasks\Product20\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj", "{CA48C0D3-B8BB-42BA-B26A-E0689419F088}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.ServiceLocation.Tests", "Core\Tests\Fanex.CustomerSetting.ServiceLocation.Tests\Fanex.CustomerSetting.ServiceLocation.Tests.csproj", "{3DBA2EEC-8930-4D8D-B355-31A24E35B736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.ServiceLocation", "Core\Fanex.CustomerSetting.ServiceLocation\Fanex.CustomerSetting.ServiceLocation.csproj", "{85FC99CF-061C-4F09-882A-BBFA94DBEDBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Casino", "Core\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj", "{6FE2478F-9E93-48D1-95B9-CAD78704B67E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Casino.Tests", "Core\Tests\Fanex.CustomerSetting.Casino.Tests\Fanex.CustomerSetting.Casino.Tests.csproj", "{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -239,6 +247,22 @@ Global
 		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA48C0D3-B8BB-42BA-B26A-E0689419F088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DBA2EEC-8930-4D8D-B355-31A24E35B736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DBA2EEC-8930-4D8D-B355-31A24E35B736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DBA2EEC-8930-4D8D-B355-31A24E35B736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DBA2EEC-8930-4D8D-B355-31A24E35B736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85FC99CF-061C-4F09-882A-BBFA94DBEDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85FC99CF-061C-4F09-882A-BBFA94DBEDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85FC99CF-061C-4F09-882A-BBFA94DBEDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85FC99CF-061C-4F09-882A-BBFA94DBEDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE2478F-9E93-48D1-95B9-CAD78704B67E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE2478F-9E93-48D1-95B9-CAD78704B67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE2478F-9E93-48D1-95B9-CAD78704B67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE2478F-9E93-48D1-95B9-CAD78704B67E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,5 +306,9 @@ Global
 		{F800A03E-8229-4AD2-93A5-CD10A6B9916D} = {0922F86D-26D3-4BB6-BA24-1E5D320B9CFD}
 		{80D5AF6E-F977-4BD0-8AAA-E3FFDBFA8235} = {0C2D80CE-CA1E-49F6-9FFF-4D8D47D84319}
 		{CA48C0D3-B8BB-42BA-B26A-E0689419F088} = {463AECF9-A914-4373-8639-B4049B67E537}
+		{3DBA2EEC-8930-4D8D-B355-31A24E35B736} = {09967616-74BB-44FA-918B-819B7AA63F26}
+		{85FC99CF-061C-4F09-882A-BBFA94DBEDBC} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
+		{6FE2478F-9E93-48D1-95B9-CAD78704B67E} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
+		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F} = {09967616-74BB-44FA-918B-819B7AA63F26}
 	EndGlobalSection
 EndGlobal

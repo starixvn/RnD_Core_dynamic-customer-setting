@@ -14,14 +14,14 @@
 
     public class QuerySettingService : IQuerySettingService
     {
-        private readonly ISettingContext _settingContext;
-        private readonly IValidationService _validationService;
-        private readonly IProductService _productService;
-        private readonly IResourceService _resourceService;
-        private readonly ITaskService _taskService;
-        private readonly ILogger _logger;
-        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
-        private readonly IDynamicRepository _dynamicRepository;
+        protected readonly ISettingContext _settingContext;
+        protected readonly IValidationService _validationService;
+        protected readonly IProductService _productService;
+        protected readonly IResourceService _resourceService;
+        protected readonly ITaskService _taskService;
+        protected readonly ILogger _logger;
+        protected readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
+        protected readonly IDynamicRepository _dynamicRepository;
 
         public QuerySettingService(
             ISettingContext settingContext,
@@ -46,7 +46,12 @@
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Setting GetCustomerSetting(CustomerSettingQuery query)
+        public QuerySettingService(ISettingContext settingContext)
+            : this(settingContext, null, null, null, null, null, null, null)
+        {
+        }
+
+        public virtual ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
             Validate(query);
 
@@ -71,7 +76,7 @@
             return setting;
         }
 
-        private void Validate(CustomerSettingQuery query)
+        protected virtual void Validate(CustomerSettingQuery query)
         {
             if (query == null)
             {
@@ -91,7 +96,7 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        private Product GetProductInfo(byte productId, byte systemId)
+        protected virtual Product GetProductInfo(byte productId, byte systemId)
         {
             var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId)
                 .Where(product => product.DisplayMode != DisplayMode.Hidden);
@@ -105,7 +110,7 @@
             };
         }
 
-        private CustomerInfo GetCustomerInfo(int customerId)
+        protected virtual CustomerInfo GetCustomerInfo(int customerId)
         {
             var customerInfo = _dynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria
             {
@@ -121,13 +126,13 @@
         /// <param name="query">The query setting parameters.</param>
         /// <param name="productSettingTypes">The product setting types.</param>
         /// <returns>Customer setting on each setting type.</returns>
-        private IList<SettingType> GetCustomerSettingTypes(CustomerSettingQuery query, IEnumerable<SettingType> productSettingTypes)
+        protected virtual IList<SettingType> GetCustomerSettingTypes(CustomerSettingQuery query, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
 
             // TODO Should we user parallel here.
             // How to display setting type by order.
-                        
+
             foreach (var productSettingType in productSettingTypes)
             {
                 SettingType customerSettingType = GetCustomerSettingType(query, productSettingType);
@@ -141,7 +146,7 @@
             return customerSettingTypes;
         }
 
-        private SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
+        protected virtual SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
         {
             SettingType customerSettingType = productSettingType;
 
@@ -176,7 +181,7 @@
             return customerSettingType;
         }
 
-        private void WriteLog(CustomerSettingQuery query, SettingType productSettingType, Exception ex)
+        protected virtual void WriteLog(CustomerSettingQuery query, SettingType productSettingType, Exception ex)
         {
             var exception = new CustomerSettingException(ex.Message, ex);
             exception.SetSettingContextInfo("Query Setting", _settingContext);
