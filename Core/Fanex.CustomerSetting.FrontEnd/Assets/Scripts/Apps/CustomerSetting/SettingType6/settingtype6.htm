@@ -1,0 +1,65 @@
+﻿<div class="block full-width settingtype6" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{settingTypeName}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType)"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
+        <div class="block__sub-header" data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
+            {{productName}}
+        </div>
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+            {{group[0].sportTypeName}}
+        </div>
+        <div class="block__item-group"
+             data-ng-repeat="item in group"
+             data-ng-class="{ 'block__item--last': $last }"
+             data-product="{{productId}}"
+             data-sport-type="{{item.sportTypeId}}"
+             data-bet-type="{{item.betTypeId}}">
+            <div class="block__sub-header block__sub-header--indent" data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+                {{item.betTypeName}}
+            </div>
+            <div class="block__column">
+                <div class="block__row">
+                    <div class="block__lbl">{{::('MaximumWin' | settingType6Label)}}</div>
+                    <div class="block__value"></div>
+                </div>
+                <div class="block__row">
+                    <div class="block__lbl">{{::('MaximumLoss' | settingType6Label)}}</div>
+                    <div class="block__cell" data-ng-if="settingType | editableSettingType">
+                        <div class="block__value w50-percent setting-field-wrapper align-left">
+                            <input type="text"
+                                   maxlength="14"
+                                   data-ng-model="item.lossLimit"
+                                   data-settingtype6-input
+                                   data-ng-change="updateValue()"
+                                   data-tooltip
+                                   data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit'}}"
+                                   data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField: 'lossLimit') }"
+                                   class="setting-field setting-field--number setting-field--has-constraint" />
+                            <span>({{item.minLossRange | number}} - {{item.maxLossRange | number}})</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block__row">
+                    <div class="block__lbl">{{::('CurrentWinLossAmount' | settingType6Label)}}</div>
+                    <div class="block__value">
+                        <a href="javascript:void();" data-ng-click="getCurrentWinLoss(item)">{{::('ClickToViewCurrentWinLossLimit' | settingType6Label)}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="block__column">
+                <div class="block__cell"></div>
+            </div>
+        </div>
+    </div>
+    <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
+        {{settingType.settingItems[0].errorMessage}}
+    </div>
+</div>

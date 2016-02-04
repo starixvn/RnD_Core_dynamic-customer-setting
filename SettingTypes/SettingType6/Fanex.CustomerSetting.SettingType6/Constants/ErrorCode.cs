@@ -2,8 +2,8 @@
 {
     internal static class ErrorCode
     {
-        public const int MaximumWinMustNotBeLessThanZero = 111001;
-        public const int MaximumWinMustBotExceedThanUplineMaximumWin = 111002;
-        public const int MaximumLossValueMustBeInRange = 111003;
+        public const int MaximumWinShouldNotBeLessThanZero = 111001;
+        public const int MaximumWinShouldNotExceedThanUplineMaximumWin = 111002;
+        public const int MaximumLossValueShouldBeInRange = 111003;
     }
 }

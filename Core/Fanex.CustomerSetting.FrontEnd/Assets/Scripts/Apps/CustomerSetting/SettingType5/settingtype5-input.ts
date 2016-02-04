@@ -12,7 +12,7 @@ module CustomerSetting {
     }
 
     class SettingType5InputDirective implements ng.IDirective {
-        public static $inject: string[] = ["$compile", "$filter", "settingType5ResourceService"];
+        public static $inject: string[] = ["$compile", "$filter"];
 
         public replace: boolean = true;
         public require: string = "ngModel";

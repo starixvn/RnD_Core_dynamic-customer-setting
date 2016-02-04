@@ -8,6 +8,6 @@
 
         public decimal LossPercent { get; set; }
 
-        public decimal MaxLossPercent { get; set; }
+        public decimal MaxLossAmount { get; set; }
     }
 }

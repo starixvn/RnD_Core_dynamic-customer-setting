@@ -115,8 +115,6 @@
     <Compile Include="Tasks\IPreQueryCustomerSettingTypeTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTask.cs" />
     <Compile Include="Tasks\IPreUpdateCustomerSettingTypeTask.cs" />
-    <Compile Include="Tasks\SiteProductPluggedTasks.cs" />
-    <Compile Include="Tasks\SettingTypePluggedTasks.cs" />
     <Compile Include="Models\ProductName.cs" />
     <Compile Include="Models\Results\SettingResult.cs" />
     <Compile Include="Models\Results\UpdateSettingResult.cs" />
@@ -169,6 +167,8 @@
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\IValidationService.cs" />
     <Compile Include="Services\Impl\LanguageNameConverter.cs" />
+    <Compile Include="Tasks\SettingTypeTasks.cs" />
+    <Compile Include="Tasks\SiteProductTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

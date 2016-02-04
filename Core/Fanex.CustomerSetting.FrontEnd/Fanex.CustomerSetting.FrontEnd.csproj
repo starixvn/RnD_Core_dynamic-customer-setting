@@ -356,6 +356,16 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-resources.js">
+      <DependentUpon>settingtype6-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype6-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-checkbox-group.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -489,6 +499,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-resource.ts" />
@@ -517,7 +531,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\" />
     <Folder Include="Assets\Scripts\Specs\CustomerSetting.IE8\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

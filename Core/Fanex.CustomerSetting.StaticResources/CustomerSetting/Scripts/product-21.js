@@ -31203,6 +31203,35 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var SettingResultDirective = (function () {
+        function SettingResultDirective() {
+            this.replace = true;
+            this.templateUrl = "SettingResult/setting-result.htm";
+            this.controller = ["$scope", "$window", function ($scope, $window) {
+                    $scope.$watch("result", function (result) {
+                        if (angular.isDefined(result)) {
+                            $window.scrollTo(0, 0);
+                        }
+                    });
+                }];
+        }
+        Object.defineProperty(SettingResultDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    result: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SettingResultDirective;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var SettingTypeDirectiveLoader = (function () {
         function SettingTypeDirectiveLoader($compile) {
             var _this = this;
@@ -31265,35 +31294,6 @@ var CustomerSetting;
         return SettingTypeDirectiveLoader;
     })();
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingResultDirective = (function () {
-        function SettingResultDirective() {
-            this.replace = true;
-            this.templateUrl = "SettingResult/setting-result.htm";
-            this.controller = ["$scope", "$window", function ($scope, $window) {
-                    $scope.$watch("result", function (result) {
-                        if (angular.isDefined(result)) {
-                            $window.scrollTo(0, 0);
-                        }
-                    });
-                }];
-        }
-        Object.defineProperty(SettingResultDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    result: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingResultDirective;
-    })();
-    CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -32302,7 +32302,7 @@ var CustomerSetting;
         return PositionTakingResourceService;
     })(CustomerSetting.ResourceService);
     CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
-    angular.module("customerSetting").service("positionTakingResourceService", PositionTakingResourceService);
+    CustomerSetting.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
     function PositionTakingLabelFilter(positionTakingResourceService) {
         return function (name) {
             return positionTakingResourceService.getLabel(name);
@@ -32788,6 +32788,44 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var SettingType6ResourceService = (function (_super) {
+        __extends(SettingType6ResourceService, _super);
+        function SettingType6ResourceService(settingType6Resource, parametersService) {
+            _super.call(this, settingType6Resource, parametersService);
+        }
+        SettingType6ResourceService.$inject = ["settingType6Resource", "parametersService"];
+        return SettingType6ResourceService;
+    })(CustomerSetting.ResourceService);
+    CustomerSetting.SettingType6ResourceService = SettingType6ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType6ResourceService", SettingType6ResourceService);
+    function SettingType6LabelFilter(settingType6ResourceService) {
+        return function (name) {
+            return settingType6ResourceService.getLabel(name);
+        };
+    }
+    SettingType6LabelFilter.$inject = ["settingType6ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType6Label", SettingType6LabelFilter);
+    function SettingType6MessageFilter(settingType6ResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, [name, replacements]);
+        };
+    }
+    SettingType6MessageFilter.$inject = ["settingType6ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType6Message", SettingType6MessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var numberOfCellsOnEachRow = 5;
     var SettingType7Item = (function (_super) {
         __extends(SettingType7Item, _super);
@@ -33004,7 +33042,7 @@ var CustomerSetting;
         return SettingType7ResourceService;
     })(CustomerSetting.ResourceService);
     CustomerSetting.SettingType7ResourceService = SettingType7ResourceService;
-    angular.module("customerSetting").service("settingType7ResourceService", SettingType7ResourceService);
+    CustomerSetting.ModuleRegister.service("settingType7ResourceService", SettingType7ResourceService);
     function SettingType7LabelFilter(settingType7ResourceService) {
         return function (name) {
             return settingType7ResourceService.getLabel(name);
@@ -33948,6 +33986,91 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
 (function () {
     "use strict";
 
+    var settingType6Resource = {};
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["en-us"] = {
+        "ClickToViewCurrentWinLossLimit": "Click to view Current Win/Loss Amount",
+        "CurrentWinLossAmount": "Current Win/Loss Amount",
+        "DailyAutoResetLimit": "Daily auto reset limit (at 12 noon GMT +8)",
+        "Losing": "Losing",
+        "MaximumLoss": "Maximum Loss",
+        "MaximumWin": "Maximum Win",
+        "OnGivenCredit": "on given credit",
+        "PercentOfNumber": "{0} of {1}",
+        "Unlimited": "Unlimited",
+        "WinLossLimit": "Win Loss Limit",
+        "Winning": "Winning"
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["zh-cn"] = {
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["zh-tw"] = {
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["ko-kr"] = {
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["ja-jp"] = {
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["th-th"] = {
+    };
+    
+    settingType6Resource["label"] = settingType6Resource["label"] || {};
+    settingType6Resource["label"]["vi-vn"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["en-us"] = {
+        "MaximumLossValueIsRequired": "Maximum Loss value is required.",
+        "MaximumLossValueShouldBeInRange": "Maximum Loss value should be in the range of ({0} - {1}).",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of Direct Upline.",
+        "MaximumWinShouldNotBeLessThanZero": "Maximum Win should not be less than 0.",
+        "Msg_10022": "You are not allowed to change Daily auto reset limit.",
+        "Msg_10024": "Maximum Win should be less than or equal to Maximum Win of Direct Upline.",
+        "Msg_10033": "Maximum Loss should be less than or equal to Maximum Loss of Direct Upline.",
+        "UpdatedWinLossLimitSuccessfully": "Updated Win Loss Limit successfully."
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["zh-cn"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["zh-tw"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["ko-kr"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["ja-jp"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["th-th"] = {
+    };
+    
+    settingType6Resource["message"] = settingType6Resource["message"] || {};
+    settingType6Resource["message"]["vi-vn"] = {
+    };
+
+    angular.module("customerSetting").value("settingType6Resource", settingType6Resource);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
     var settingType7Resource = {};
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
@@ -33981,7 +34104,8 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["en-us"] = {
-        "BetLimitMustBeSelectedForSportSettingType": "Bet Limit range must be selected for the following Sports/Bet Types:",
+        "MemberStakeLevelMustBeSelectedForBetType": "Each bet type must have one Bet Limit value be selected.",
+        "Msg_100001": "This user&apos;s upline does not have Stake Level.",
         "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
     };
     

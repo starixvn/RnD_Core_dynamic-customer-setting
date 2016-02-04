@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    internal class SettingTypePluggedTasks
+    internal class SettingTypeTasks
     {
         public short? SettingTypeId { get; set; }
 
