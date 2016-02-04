@@ -32,7 +32,8 @@
                 return new Result(ErrorCode.MaximumWinShouldNotExceedThanUplineMaximumWin, Message.MaximumWinShouldBotExceedThanUplineMaximumWin);
             }
 
-            if (LossLimit < MinLossRange || (0 < MaxLossRange && MaxLossRange < LossLimit))
+            if ((0 < MaxLossRange && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
+                || LossLimit < 0)
             {
                 return new Result(
                     ErrorCode.MaximumLossValueShouldBeInRange,

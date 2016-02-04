@@ -57,7 +57,14 @@ module CustomerSetting {
                 return false;
             }
 
-            if (this.lossLimit < this.minLossRange || (0 < this.maxLossRange && this.maxLossRange < this.lossLimit)) {
+            if (this.lossLimit === null) {
+                this.validationState = new ValidationResult("MaximumLossValueIsRequired", "lossLimit");
+
+                return false;
+            }
+
+            if (0 < this.maxLossRange && (this.lossLimit < this.minLossRange || this.maxLossRange < this.lossLimit)
+                || this.lossLimit < 0) {
                 this.validationState = new ValidationResult(
                     "MaximumLossValueShouldBeInRange",
                     "lossLimit",

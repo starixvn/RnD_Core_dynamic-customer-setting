@@ -587,11 +587,49 @@ select.setting-field {
 .setting-type-1 .question-block {
   margin: 5px 0; }
 
-.settingtype7 .block__item, .settingtype7 .block__lbl-wrapper, .settingtype7 .block__row, .settingtype7 .block__header-cell {
+.settingtype6 .block__item, .settingtype6 .block__item-group, .settingtype6 .block__row, .settingtype6 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype6 .block__lbl-wrapper, .settingtype6 .settingtype7 .block__header-cell, .settingtype7 .settingtype6 .block__header-cell {
   display: table;
   table-layout: fixed; }
 
-.settingtype7 .check-all-field-lbl, .settingtype7 .check-all-field, .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .block__cell, .settingtype7 .block__lbl, .settingtype7 .block__value {
+.settingtype6 .block__column, .settingtype6 .block__cell, .settingtype6 .block__lbl, .settingtype6 .block__value, .settingtype6 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype6 .check-all-field-lbl, .settingtype6 .settingtype7 .check-all-field, .settingtype7 .settingtype6 .check-all-field, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-wrapper, .settingtype6 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype6 .setting-field--checkfield__check-ctrl-lbl {
+  display: table-cell;
+  float: none;
+  vertical-align: middle; }
+
+.settingtype6 .block__sub-header--indent {
+  padding-left: 10px; }
+
+.settingtype6 .block__item {
+  float: none;
+  height: 100%; }
+
+.settingtype6 .block__column--border-right {
+  border-right: 1px solid #7c98a4; }
+
+.settingtype6 .block__row {
+  width: 100%; }
+  .settingtype6 .block__row--border-top {
+    border-top: 1px solid #7c98a4; }
+
+.settingtype6 .block__cell, .settingtype6 .block__lbl, .settingtype6 .block__value {
+  border: none; }
+
+.settingtype6 .block__lbl {
+  border-right: 1px solid #7c98a4;
+  width: 40%; }
+
+.settingtype6 .block__value {
+  width: 60%; }
+
+.settingtype6 .block__value {
+  float: none;
+  width: auto; }
+
+.settingtype7 .settingtype6 .block__item-group, .settingtype6 .settingtype7 .block__item-group, .settingtype7 .block__item, .settingtype7 .block__lbl-wrapper, .settingtype7 .block__row, .settingtype7 .block__header-cell {
+  display: table;
+  table-layout: fixed; }
+
+.settingtype7 .settingtype6 .block__column, .settingtype6 .settingtype7 .block__column, .settingtype7 .check-all-field-lbl, .settingtype7 .check-all-field, .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .block__cell, .settingtype7 .block__lbl, .settingtype7 .block__value {
   display: table-cell;
   vertical-align: middle; }
 

@@ -12,10 +12,10 @@ module CustomerSetting {
         updateValue(): void;
     }
 
-    class SettingType6InputDirective implements ng.IDirective {
+    class SettingType6LossLimitInputDirective implements ng.IDirective {
         public static $inject: string[] = ["$compile", "$filter", "settingType6ResourceService"];
 
-        public replace: boolean = true;
+        public restrict: string = "A";
         public require: string = "ngModel";
 
         public controller: any = ["$scope", ($scope: ISettingType6InputScope) => {
@@ -54,7 +54,7 @@ module CustomerSetting {
                 var numberParts: string[] = value.split(".");
                 var input: HTMLInputElement = <HTMLInputElement>element[0];
 
-                if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
+                if (value.length === 0 && event.keyCode === 96) {
                     event.preventDefault();
 
                     return;
@@ -121,8 +121,9 @@ module CustomerSetting {
                 }
 
                 if (value === 0) {
-                    formattedValue = this.settingType6ResourceService.getLabel("Unlimited");
-
+                    //formattedValue = this.settingType6ResourceService.getLabel("Unlimited");
+                    formattedValue = "";
+                    value = null;
                 }
 
                 element.val(formattedValue);
@@ -147,11 +148,32 @@ module CustomerSetting {
         private $filter: ng.IFilterService;
         private settingType6ResourceService: SettingType6ResourceService;
 
-        constructor($compile: ng.ICompileService, $filter: ng.IFilterService) {
+        constructor($compile: ng.ICompileService, $filter: ng.IFilterService, settingType6ResourceService: SettingType6ResourceService) {
             this.$compile = $compile;
             this.$filter = $filter;
+            this.settingType6ResourceService = settingType6ResourceService;
         }
     }
 
-    ModuleRegister.directive("settingtype6Input", SettingType6InputDirective);
+    ModuleRegister.directive("settingtype6LossLimitInput", SettingType6LossLimitInputDirective);
+
+    interface ISettingType6UnlimitedCheckboxDirectiveScope extends ng.IScope {
+        item: SettingType6Item;
+        isUnlimited: boolean;
+        check(): void;
+    }
+
+    class SettingType6UnlimitedCheckboxDirective implements ng.IDirective {
+        public restrict: string = "A";
+
+        public controller: any = ["$scope", ($scope: ISettingType6UnlimitedCheckboxDirectiveScope) => {
+            $scope.isUnlimited = $scope.item.lossLimit === 0;
+
+            $scope.check = () => {
+                $scope.item.lossLimit = $scope.isUnlimited ? 0 : null;
+            };
+        }];
+    }
+
+    ModuleRegister.directive("settingtype6UnlimitedCheckbox", SettingType6UnlimitedCheckboxDirective);
 }

@@ -160,6 +160,7 @@
     </None>
     <None Include="Assets\Styles\customer-setting.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
+    <None Include="Assets\Styles\SettingTypes\_settingtype6.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype7.scss" />
     <None Include="Assets\Styles\_base.scss" />
     <None Include="Assets\Styles\_customer-setting-core.scss" />
@@ -167,6 +168,10 @@
     <None Include="Assets\Styles\_shame.scss" />
     <None Include="Assets\Styles\_variables.scss" />
     <None Include="bower.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Gulp\gulp-tsd.json" />
     <None Include="Gulp\products-config.json" />
     <None Include="Gulp\tsd.json" />
@@ -357,6 +362,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-win-limit-select.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-resources.js">
       <DependentUpon>settingtype6-resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -500,6 +506,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType5\settingtype5.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-win-limit-select.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType6\settingtype6-resource.ts" />

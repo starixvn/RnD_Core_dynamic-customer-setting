@@ -1,0 +1,64 @@
+﻿.settingtype6 {
+    %display-table {
+        display: table;
+        table-layout: fixed;
+    }
+
+    %display-table-cell {
+        display: table-cell;
+        float: none;
+        vertical-align: middle;
+    }
+
+    .block__sub-header--indent {
+        padding-left: 10px;
+    }
+
+    .block__item {
+        @extend %display-table;
+        float: none;
+        height: 100%;
+    }
+
+    .block__item-group {
+        @extend %display-table;
+    }
+
+    .block__column {
+        @extend %display-table-cell;
+
+        &--border-right {
+            @include border(right);
+        }
+    }
+
+    .block__row {
+        @extend %display-table;
+        width: 100%;
+
+        &--border-top {
+            @include border(top);
+        }
+    }
+
+    .block__cell {
+        @extend %display-table-cell;
+        border: none;
+    }
+
+    .block__lbl {
+        @extend %display-table-cell;
+        @include border(right);
+        width: 40%;
+    }
+
+    .block__value {
+        @extend %display-table-cell;
+        width: 60%;
+    }
+
+    .block__value {
+        float: none;
+        width: auto;
+    }
+}

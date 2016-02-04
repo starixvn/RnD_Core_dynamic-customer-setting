@@ -63,4 +63,13 @@ module CustomerSetting {
     }
 
     ModuleRegister.directive("settingtype6", SettingType6Directive);
+
+    function UnlimitedLimitFilter(settingType6ResourceService: SettingType6ResourceService) {
+        return (value: any) => {
+            return parseFloat(value) > 0 ? value : settingType6ResourceService.getLabel("Unlimited");
+        };
+    }
+
+    UnlimitedLimitFilter.$inject = ["settingType6ResourceService"];
+    ModuleRegister.filter("unlimitedLimit", UnlimitedLimitFilter);
 }

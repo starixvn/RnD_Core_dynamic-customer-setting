@@ -1,0 +1,8 @@
+﻿<div class="setting-field-wrapper">
+    <div data-tooltip data-message="{{settingItem.validationState | tooltipMessage:'settingType6ResourceService':'winLimit'}}">
+        <select class="setting-field"
+                data-ng-model="settingItem.winLimit"
+                data-ng-options="item.key as item.value for item in range"
+                data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField) }"></select>
+    </div>
+</div>

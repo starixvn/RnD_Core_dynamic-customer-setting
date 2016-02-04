@@ -120,7 +120,7 @@
   <data name="MemberStakeLevelMustBeSelectedForBetType" xml:space="preserve">
     <value>Each bet type must have one Bet Limit value be selected.</value>
   </data>
-  <data name="Msg_100001" xml:space="preserve">
+  <data name="Msg_10034" xml:space="preserve">
     <value>This user's upline does not have Stake Level.</value>
   </data>
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">

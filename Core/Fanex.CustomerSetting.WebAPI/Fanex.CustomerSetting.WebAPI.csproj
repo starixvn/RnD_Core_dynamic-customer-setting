@@ -150,6 +150,9 @@
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType5.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType6.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.SettingType7.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -172,6 +175,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType6.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.SettingType7.xml">
