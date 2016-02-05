@@ -30203,7 +30203,7 @@ var CustomerSetting;
                 this.customerId = settingResult.customerId;
                 this.customerName = settingResult.customerName;
                 this.settingResults = new Array();
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.msgType, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         }
         Object.defineProperty(CustomerSettingResult.prototype, "isSuccessful", {
@@ -30218,7 +30218,7 @@ var CustomerSetting;
         });
         CustomerSettingResult.prototype.pushSettingResult = function (settingResult) {
             if (settingResult) {
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.msgType, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         };
         CustomerSettingResult.prototype.removeSuccessResults = function () {
