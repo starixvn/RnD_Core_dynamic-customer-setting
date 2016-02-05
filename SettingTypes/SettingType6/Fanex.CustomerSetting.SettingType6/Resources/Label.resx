@@ -135,11 +135,11 @@
   <data name="MaximumWin" xml:space="preserve">
     <value>Maximum Win</value>
   </data>
+  <data name="Of" xml:space="preserve">
+    <value>of</value>
+  </data>
   <data name="OnGivenCredit" xml:space="preserve">
     <value>on given credit</value>
-  </data>
-  <data name="PercentOfNumber" xml:space="preserve">
-    <value>{0} of {1}</value>
   </data>
   <data name="Unlimited" xml:space="preserve">
     <value>Unlimited</value>

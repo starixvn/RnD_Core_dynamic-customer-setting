@@ -11,6 +11,7 @@ module CustomerSetting {
         public maxLossRange: number;
         public isAutoReset: boolean;
         public isAutoResetUpline: boolean;
+        public currentWinLossAmount: CurrentWinLossAmountItem;
 
         constructor();
         constructor(settingItem: any);

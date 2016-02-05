@@ -31,18 +31,6 @@ module CustomerSetting {
         public warningMessages: Result | UpdatingSettingResult;
         public requestMsgResult: Result | UpdatingSettingResult;
 
-        private get queryPath(): string {
-            return "viewCustomerSetting/querySetting?";
-        }
-
-        private get updatePath(): string {
-            return "updateCustomerSetting/updateSetting";
-        }
-
-        private get updateMultiplePath(): string {
-            return "updateCustomerSetting/updateMultipleSetting";
-        }
-
         private $window: ng.IWindowService;
         private $rootScope: ng.IRootScopeService;
         private $http: ng.IHttpService;
@@ -79,7 +67,7 @@ module CustomerSetting {
 
         public update(settingTypeId?: number): void {
             var isMultiple: boolean = !!this.customerNames;
-            var path: string = isMultiple ? this.updateMultiplePath : this.updatePath;
+            var path: string = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
             var getEditableSetting: Setting = this.setting.getEditableSettingTypes(settingTypeId);
             var setting: Setting = isMultiple ? getEditableSetting : this.setting.getChanges(settingTypeId);
             var validationResult: Result;
@@ -113,7 +101,7 @@ module CustomerSetting {
             this.isUIblocked = true;
 
             this.$http
-                .post(this.appConfigService.resolveRootUrl(path), command.toJson())
+                .post(path, command.toJson())
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                     this.requestMsgResult = new UpdatingSettingResult(response.data);
                     this.querySetting();
@@ -156,7 +144,7 @@ module CustomerSetting {
                 this.isUIblocked = true;
 
                 this.$http
-                    .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
+                    .post(this.appConfigService.getQueryPath(), query.toJson())
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
                         this.warningMessages = this.setting.warningMessage;

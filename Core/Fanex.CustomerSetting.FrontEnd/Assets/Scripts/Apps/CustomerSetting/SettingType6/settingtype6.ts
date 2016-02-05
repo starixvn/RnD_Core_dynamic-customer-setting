@@ -6,6 +6,7 @@
 
 module CustomerSetting {
     interface ISettingType7DirectviceScope extends IDefaultSettingTypeDirectiveScope {
+        highestPercentageRange: number;
         getCurrentWinLoss: (settingItem: SettingType6Item) => void;
     }
 
@@ -30,6 +31,7 @@ module CustomerSetting {
             $scope.avaiCustomerLevels = Level;
             $scope.avaiSettingLevels = SettingLevel;
             $scope.settingTypeName = this.settingType6ResourceService.getLabel("WinLossLimit");
+            $scope.highestPercentageRange = 100;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -52,6 +54,14 @@ module CustomerSetting {
                     }
                 }
             });
+
+            $scope.getCurrentWinLoss = (settingItem: SettingType6Item) => {
+                settingItem.currentWinLossAmount = new CurrentWinLossAmountItem();
+                settingItem.currentWinLossAmount.winPercent = 110;
+                settingItem.currentWinLossAmount.maxWinAmountt = 200000;
+                settingItem.currentWinLossAmount.lossPercent = 0;
+                settingItem.currentWinLossAmount.maxLossAmount = 100000;
+            };
         }];
 
         private settingType6ResourceService: SettingType6ResourceService;

@@ -115,20 +115,20 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to of.
+        /// </summary>
+        internal static string Of {
+            get {
+                return ResourceManager.GetString("Of", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to on given credit.
         /// </summary>
         internal static string OnGivenCredit {
             get {
                 return ResourceManager.GetString("OnGivenCredit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} of {1}.
-        /// </summary>
-        internal static string PercentOfNumber {
-            get {
-                return ResourceManager.GetString("PercentOfNumber", resourceCulture);
             }
         }
         

@@ -256,6 +256,9 @@ th {
 .align-left {
   text-align: left; }
 
+.red-text {
+  color: #e9322d; }
+
 .setting-field-wrapper,
 .text-field-wrapper {
   display: inline-block;

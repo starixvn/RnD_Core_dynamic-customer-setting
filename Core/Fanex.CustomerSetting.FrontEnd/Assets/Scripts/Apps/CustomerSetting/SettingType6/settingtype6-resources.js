@@ -13,8 +13,8 @@
         "Losing": "Losing",
         "MaximumLoss": "Maximum Loss",
         "MaximumWin": "Maximum Win",
+        "Of": "of",
         "OnGivenCredit": "on given credit",
-        "PercentOfNumber": "{0} of {1}",
         "Unlimited": "Unlimited",
         "WinLossLimit": "Win Loss Limit",
         "Winning": "Winning"
