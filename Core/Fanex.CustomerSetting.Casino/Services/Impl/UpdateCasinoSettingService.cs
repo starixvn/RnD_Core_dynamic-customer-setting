@@ -1,11 +1,10 @@
-﻿namespace Fanex.CustomerSetting.Casino.Services
+﻿namespace Fanex.CustomerSetting.Casino.Services.Impl
 {
     using System;
-    using Models;
-    using Models.Requests;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.Services;
-    using Models.Results;
-
     public class UpdateCasinoSettingService : IUpdateSettingService
     {
         public UpdateCasinoSettingService(ISettingContext settingContext)

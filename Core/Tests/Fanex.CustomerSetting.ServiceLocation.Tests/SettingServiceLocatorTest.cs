@@ -1,67 +1,116 @@
 ﻿namespace Fanex.CustomerSetting.ServiceLocation.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using NUnit.Framework;
-    using NSubstitute;
-    using Models;
-    using Services.Impl;
-    using System.Linq;
-    using Fanex.CustomerSetting.ServiceLocation;
     using Casino.Services;
-    using static SettingServiceBootstraper;
+    using Casino.Services.Impl;
+    using Fanex.CustomerSetting.ServiceLocation;
+    using Models;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Services.Impl;
     using static Products;
+    using static SettingServiceBootstraper;
 
     [TestFixture]
     public class SettingServiceLocatorTest
     {
-        private static readonly object[] SupportingQuerySettingServiceTypes =
-        {
-            new object[] { Sportsbook2, true, typeof(QuerySettingService) },
-            new object[] { Sportsbook2, false, typeof(UpdateSettingService)},
-            new object[] { Cockfighting, true, typeof(QuerySettingService)},
-            new object[] { Cockfighting, false, typeof(UpdateSettingService) },
-            new object[] { Cricket, true, typeof(QuerySettingService)},
-            new object[] { Cricket, false,typeof(UpdateSettingService) },
-            new object[] { AllBet, true, typeof(QueryCasinoSettingService) },
-            new object[] { AllBet, false, typeof(UpdateCasinoSettingService)}
-        };
+        private static readonly Type QueryServiceDefaultType = typeof(QuerySettingService);
+        private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);
 
-        private static readonly IEnumerable<object> SupportingProductIds =
-           SupportingQuerySettingServiceTypes.Select(item => ((object[])item)[0]).Distinct();
-
-        private void SetUpServiceTypeConfig()
+        private void SetUpServiceTypeConfig(params byte[] productIds)
         {
-            RegisterService(Sportsbook2, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(Cockfighting, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(Cricket, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(AllBet, typeof(QueryCasinoSettingService), typeof(UpdateCasinoSettingService));
+            Clear();
+
+            foreach (var productId in productIds)
+            {
+                var config = new SettingServiceConfiguration
+                {
+                    ProductId = productId,
+                    QueryServiceType = typeof(QuerySettingService),
+                    UpdateServiceType = typeof(UpdateSettingService)
+                };
+
+                RegisterService(config);
+            }
         }
 
         [Test]
-        public void GetService_ProductIdIsNotInSupportingRanges_ThrowArgumentOutOfRangeException()
+        public void GetService_SystemIsZero_ThrowArgumentOutOfRangeException()
         {
-            //// Arrange
-            var productId = Arg.Is<int>(x => !SupportingProductIds.Contains(x));
-            var isQueryAction = Arg.Any<bool>();
-
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => new SettingServiceLocator().GetService(productId, isQueryAction, Arg.Any<ISettingContext>()));
+                () => new SettingServiceLocator().GetService(
+                    Arg.Is<byte>(0),
+                    Arg.Any<byte>(),
+                    Arg.Any<bool>(),
+                    Arg.Any<ISettingContext>()));
         }
 
-        [Test, TestCaseSource("SupportingQuerySettingServiceTypes")]
-        public void GetService_ValidProductIdAlways_ReturnValidService(int productId, bool isQueryAction, Type serviceType)
+        public void GetService_ProductIdIsZero_ThrowArgumentOutOfRangeException()
         {
-            //// Arrange
+            //// Act & Asssert
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => new SettingServiceLocator().GetService(1, 0, Arg.Any<bool>(), Arg.Any<ISettingContext>()));
+        }
+
+        [TestCase(1, 100, true)]
+        [TestCase(2, 101, false)]
+        public void GetService_ConfigurationIsEmpty_ReturnDefaultQueryService(byte system, byte productId, bool isQueryAction)
+        {
+            //// Arrange            
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
-            SetUpServiceTypeConfig();
+            Clear();
+            var defaultServiceType = (isQueryAction) ? QueryServiceDefaultType : UpdateServiceDefaultType;
 
             //// Act
-            var querySettingService = new SettingServiceLocator().GetService(productId, isQueryAction, settingContext);
+            var querySettingService = new SettingServiceLocator()
+                .GetService(system, productId, isQueryAction, settingContext);
+
+            //// Assert
+            Assert.AreEqual(querySettingService.GetType(), defaultServiceType, productId.ToString(), null);
+        }
+
+        [TestCase(1, 100, true)]
+        [TestCase(2, 101, false)]
+        public void GetService_ProductIdIsNotRegistered_ReturnDefaultQueryService(byte system, byte productId, bool isQueryAction)
+        {
+            //// Arrange            
+            var settingContext = Substitute.For<ISettingContext>();
+            settingContext.Actor = Substitute.For<User>();
+            SetUpServiceTypeConfig(AllBet, Sportsbook2);
+            var defaultServiceType = (isQueryAction) ? QueryServiceDefaultType : UpdateServiceDefaultType;
+
+            //// Act
+            var querySettingService = new SettingServiceLocator()
+                .GetService(system, productId, isQueryAction, settingContext);
+
+            //// Assert
+            Assert.AreEqual(querySettingService.GetType(), defaultServiceType, productId.ToString(), null);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetService_ProductIdIsRegistered_ReturnApproriatedValidService(bool isQueryAction)
+        {
+            //// Arrange
+            var productId = AllBet;
+            var settingContext = Substitute.For<ISettingContext>();
+            settingContext.Actor = Substitute.For<User>();
+            SetUpServiceTypeConfig(Sportsbook2, Cricket);
+            var serviceType = (isQueryAction) ? typeof(QueryCasinoSettingService) : typeof(UpdateCasinoSettingService);
+
+            var casinoConfig = new SettingServiceConfiguration
+            {
+                ProductId = productId,
+                QueryServiceType = serviceType,
+                UpdateServiceType = serviceType
+            };
+
+            SettingServiceBootstraper.RegisterService(casinoConfig);
+
+            //// Act
+            var querySettingService = new SettingServiceLocator().GetService(100, productId, isQueryAction, settingContext);
 
             //// Assert
             Assert.AreEqual(querySettingService.GetType(), serviceType, productId.ToString(), null);

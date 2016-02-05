@@ -5,6 +5,6 @@
 
     public interface ISettingServiceLocator
     {
-        ISettingService GetService(int productId, bool isQueryAction, ISettingContext settingContext);
+        ISettingService GetService(byte system, byte productId, bool isQueryAction, ISettingContext settingContext);
     }
 }

@@ -8,10 +8,10 @@
     [Serializable]
     public class Setting : ISetting
     {
-        private int _customerId;
-        private Level _customerLevel;
-        private byte _productId;
-        private IEnumerable<SettingType> _settingType;
+        protected int _customerId;
+        protected Level _customerLevel;
+        protected byte _productId;
+        protected IEnumerable<SettingType> _settingType;
 
         public Setting()
         {

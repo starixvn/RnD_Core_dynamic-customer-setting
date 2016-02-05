@@ -51,6 +51,10 @@
         {
         }
 
+        protected QuerySettingService()
+        {
+        }
+
         public virtual ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
             Validate(query);

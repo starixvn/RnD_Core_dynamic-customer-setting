@@ -15,10 +15,10 @@
         // should use another key for setting service instead of productId to reuse the setting?
         public static void Run()
         {
-            RegisterService(Sportsbook2, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(Cockfighting, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(Cricket, typeof(QuerySettingService), typeof(UpdateSettingService));
-            RegisterService(AllBet, typeof(QueryCasinoSettingService), typeof(UpdateCasinoSettingService));
+            //RegisterService(Sportsbook2, typeof(QuerySettingService), typeof(UpdateSettingService));
+            //RegisterService(Cockfighting, typeof(QuerySettingService), typeof(UpdateSettingService));
+            //RegisterService(Cricket, typeof(QuerySettingService), typeof(UpdateSettingService));
+            //RegisterService(AllBet, typeof(QueryCasinoSettingService), typeof(UpdateCasinoSettingService));
         }
     }
 }

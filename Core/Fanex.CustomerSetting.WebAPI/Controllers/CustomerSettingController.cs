@@ -30,7 +30,7 @@
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
-
+            
             var querySettingService = new QuerySettingService(request.GetSettingContext());
 
             try

@@ -82,6 +82,7 @@
     <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingServiceBootstraper.cs" />
+    <Compile Include="SettingServiceConfiguration.cs" />
     <Compile Include="SettingServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
