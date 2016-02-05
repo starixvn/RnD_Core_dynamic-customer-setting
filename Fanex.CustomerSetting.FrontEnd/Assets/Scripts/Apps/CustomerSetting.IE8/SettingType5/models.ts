@@ -26,7 +26,7 @@ module CustomerSetting.IE8 {
             }
 
             if (backup) {
-                this.oldSetting = new SettingType5Item(this);
+                this.oldSetting = new SettingType5Item(settingItem);
             }
         }
 

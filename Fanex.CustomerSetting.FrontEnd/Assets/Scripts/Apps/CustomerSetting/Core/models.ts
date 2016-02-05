@@ -477,7 +477,7 @@ module CustomerSetting {
                 this.settingResults.push(new SettingResult(
                     settingResult.code,
                     settingResult.message,
-                    settingResult.msgType,
+                    settingResult.isFailed ? MessageType.error : MessageType.success,
                     settingResult.settingTypeId,
                     settingResult.settingTypeName,
                     settingResult.subMessages));
@@ -489,7 +489,7 @@ module CustomerSetting {
                 this.settingResults.push(new SettingResult(
                     settingResult.code,
                     settingResult.message,
-                    settingResult.msgType,
+                    settingResult.isFailed ? MessageType.error : MessageType.success,
                     settingResult.settingTypeId,
                     settingResult.settingTypeName,
                     settingResult.subMessages));
