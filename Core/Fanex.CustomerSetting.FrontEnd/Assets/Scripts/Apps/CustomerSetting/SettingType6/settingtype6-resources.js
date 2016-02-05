@@ -46,6 +46,7 @@
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["en-us"] = {
+        "AutoResetIsViolatedWithUpline": "Daily Auto Reset is turned off for the Upline.",
         "MaximumLossValueIsRequired": "Maximum Loss value is required.",
         "MaximumLossValueShouldBeInRange": "Maximum Loss value should be in the range of ({0} - {1}).",
         "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of Direct Upline.",

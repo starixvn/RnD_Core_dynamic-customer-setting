@@ -10,6 +10,7 @@ module CustomerSetting {
         public minLossRange: number;
         public maxLossRange: number;
         public isAutoReset: boolean;
+        public isAutoResetUpline: boolean;
 
         constructor();
         constructor(settingItem: any);
@@ -24,6 +25,7 @@ module CustomerSetting {
                 this.minLossRange = settingItem.minLossRange;
                 this.maxLossRange = settingItem.maxLossRange;
                 this.isAutoReset = settingItem.isAutoReset;
+                this.isAutoResetUpline = settingItem.isAutoResetUpline;
             }
 
             if (backup) {
@@ -73,6 +75,12 @@ module CustomerSetting {
                 return false;
             }
 
+            if (!this.isAutoResetUpline && this.isAutoReset) {
+                this.validationState = new ValidationResult("AutoResetIsViolatedWithUpline", "isAutoReset");
+
+                return false;
+            }
+
             this.validationState = <ValidationResult>Result.normal;
 
             return true;
@@ -90,7 +98,8 @@ module CustomerSetting {
                 lossLimit: this.lossLimit,
                 minLossRange: this.minLossRange,
                 maxLossRange: this.maxLossRange,
-                isAutoReset: this.isAutoReset
+                isAutoReset: this.isAutoReset,
+                isAutoResetUpline: this.isAutoResetUpline
             };
         }
     }

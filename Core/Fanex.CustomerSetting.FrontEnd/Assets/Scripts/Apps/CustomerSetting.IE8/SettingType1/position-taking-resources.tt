@@ -23,7 +23,7 @@
     var positionTakingResources = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-    var resourcePath = Path.Combine(solutionPath, "Fanex.CustomerSetting.SettingType1", "Resources");
+    var resourcePath = Path.Combine(solutionPath, "SettingTypes/SettingType1/Fanex.CustomerSetting.SettingType1", "Resources");
     var fileNames = new string[]
     {
         "Label",

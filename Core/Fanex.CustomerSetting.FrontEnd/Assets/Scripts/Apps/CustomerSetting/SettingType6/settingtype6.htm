@@ -50,7 +50,7 @@
                                    class="setting-field setting-field--number setting-field--has-constraint" />
                             <span>({{item.minLossRange | number}} - {{item.maxLossRange | number | unlimitedLimit}})</span>
                         </div>
-                        <div class="setting-field-wrapper">
+                        <div class="setting-field-wrapper" data-ng-if="item.maxLossRange === 0">
                             <label class="setting-field--checkfield">
                                 <input type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
@@ -77,8 +77,10 @@
                     <label class="setting-field--checkfield">
                         <input type="checkbox"
                                class="setting-field--checkfield__check-ctrl"
+                               data-tooltip
+                               data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
                                data-ng-model="item.isAutoReset"
-                               data-ng-disabled="!(settingType | editableSettingType)" />
+                               data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
                         {{'DailyAutoResetLimit' | settingType6Label}}
                     </label>
                 </div>

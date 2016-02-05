@@ -61,6 +61,15 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daily Auto Reset is turned off for the Upline..
+        /// </summary>
+        internal static string AutoResetIsViolatedWithUpline {
+            get {
+                return ResourceManager.GetString("AutoResetIsViolatedWithUpline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum Loss value is required..
         /// </summary>
         internal static string MaximumLossValueIsRequired {

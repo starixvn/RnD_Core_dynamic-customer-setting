@@ -17,7 +17,9 @@
         {
             switch (msgType)
             {
-                case MessageType.WinLossLimitViolation:
+                case MessageType.WinLimitViolatedWithUpline:
+                case MessageType.LossLimitViolatedWithUpline:
+                case MessageType.DailyAutoResetViolatedWithUpline:
                     return TranslateDefaultSettingTypeViolationMessage(Message.ResourceManager, rawMessage, settingLevel, language);
 
                 default:

@@ -20,6 +20,8 @@
 
         public bool IsAutoReset { get; set; }
 
+        public bool IsAutoResetUpline { get; set; }
+
         public override IResult Validate()
         {
             if (WinLimit < 0)
@@ -41,6 +43,11 @@
                         Message.MaximumLossValueShouldBeInRange,
                         NumberFormatter.FormatDecimal(MinLossRange),
                         NumberFormatter.FormatDecimal(MaxLossRange)));
+            }
+
+            if (!IsAutoResetUpline && IsAutoReset)
+            {
+                return new Result(ErrorCode.AutoResetIsViolatedWithUpline, Message.AutoResetIsViolatedWithUpline);
             }
 
             return base.Validate();
@@ -68,7 +75,8 @@
                     && Equals(LossLimit, otherObj.LossLimit)
                     && Equals(MaxLossRange, otherObj.MaxLossRange)
                     && Equals(MinLossRange, otherObj.MinLossRange)
-                    && Equals(IsAutoReset, otherObj.IsAutoReset);
+                    && Equals(IsAutoReset, otherObj.IsAutoReset)
+                    && Equals(IsAutoReset, otherObj.IsAutoResetUpline);
             }
         }
 
@@ -81,7 +89,8 @@
                 ^ LossLimit.GetHashCode()
                 ^ MaxLossRange.GetHashCode()
                 ^ MinLossRange.GetHashCode()
-                ^ IsAutoReset.GetHashCode();
+                ^ IsAutoReset.GetHashCode()
+                ^ IsAutoResetUpline.GetHashCode();
         }
     }
 }

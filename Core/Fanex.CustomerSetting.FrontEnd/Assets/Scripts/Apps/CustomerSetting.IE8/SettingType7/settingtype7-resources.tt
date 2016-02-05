@@ -23,7 +23,7 @@
     var settingType7Resource = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
-    var resourcePath = Path.Combine(solutionPath, "Fanex.CustomerSetting.SettingType7", "Resources");
+    var resourcePath = Path.Combine(solutionPath, "SettingTypes/SettingType7/Fanex.CustomerSetting.SettingType7", "Resources");
     var fileNames = new string[]
     {
         "Label",

@@ -625,6 +625,9 @@ select.setting-field {
   float: none;
   width: auto; }
 
+.settingtype6 select.setting-field {
+  margin-right: 5px; }
+
 .settingtype7 .settingtype6 .block__item-group, .settingtype6 .settingtype7 .block__item-group, .settingtype7 .block__item, .settingtype7 .block__lbl-wrapper, .settingtype7 .block__row, .settingtype7 .block__header-cell {
   display: table;
   table-layout: fixed; }

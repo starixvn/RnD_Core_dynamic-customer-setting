@@ -2,6 +2,8 @@
 {
     internal static class MessageType
     {
-        public const int WinLossLimitViolation = 111;
+        public const int WinLimitViolatedWithUpline = 111;
+        public const int LossLimitViolatedWithUpline = 112;
+        public const int DailyAutoResetViolatedWithUpline = 113;
     }
 }
