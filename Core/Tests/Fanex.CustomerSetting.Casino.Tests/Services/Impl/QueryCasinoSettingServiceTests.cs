@@ -1,20 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests.Services.Impl
 {
     using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using NUnit.Framework;
-    using NSubstitute;
-    using Models;
-    using System.Linq;
-    using CustomerSetting.Services;
-    using Data.Repository;
-    using CustomerSetting.Models;
-    using Logging;
+    using Casino.Models;
     using Casino.Services.Impl;
     using Criteria;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
+    using CustomerSetting.Services;
+    using Data.Repository;
+    using Logging;
+    using Models;
+    using NSubstitute;
+    using NUnit.Framework;
     [TestFixture]
     public class QueryCasinoSettingServiceTests
     {
@@ -27,8 +25,16 @@
         private IDynamicRepository _dymanicRepository;
         private ILogger _logger;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
-
         private ISettingTypeService _settingTypeService;
+
+        private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
+        {
+            Level level = Level.FromValue<Level>(levelValue);
+            Level upLineLevel = level.IsMemberLevel() ? Level.FromValue<Level>(++levelValue) : null;
+            var query = new CustomerSettingQuery(10000, level, 110, upLineLevel);
+
+            return query;
+        }
 
         [SetUp]
         public void Setup()
@@ -56,9 +62,23 @@
         }
 
         [Test]
-        public void GetCustomerSetting_CustomerSettingQueryIsNull_ThrowInvalidOperationExceptionn()
+        public void GetCustomerSetting_CustomerCasinoStatusIsNull_ThrowInvalidOperationExceptionn()
         {
-            Assert.Throws<InvalidOperationException>(() => _querySettingService.GetCustomerSetting(null));
+            //// Arrange
+            var customerQuery = new CustomerSettingQuery(10000, 1, 110, 2);
+
+            CustomerCasinoStatus customerCasinoStatus = null;
+            _dymanicRepository
+                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                {
+                    ProductId = customerQuery.ProductId,
+                    CustId = customerQuery.CustomerId
+                })
+                .ReturnsForAnyArgs(customerCasinoStatus);
+
+            //// Act & Assert
+            Assert.Throws<InvalidOperationException>(
+                () => _querySettingService.GetCustomerSetting(customerQuery));
         }
 
         [Test]
@@ -79,6 +99,91 @@
             //// Act & Assert
             Assert.Throws<InvalidOperationException>(
                 () => _querySettingService.GetCustomerSetting(customerQuery));
+        }
+
+        [TestCase(4)]
+        [TestCase(3)]
+        [TestCase(2)]
+        [TestCase(1)]
+        public void GetCustomerSetting_CustomerSyncedStatusIsFalse_SettingNormalModeIsFalse(byte levelValue)
+        {
+            //// Arrange
+            var query = CreateCustomerSettingQuery(levelValue);
+            var customerCasinoStatus = new CustomerCasinoStatus { IsHidden = false, IsSynced = false };
+
+            _dymanicRepository
+                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                {
+                    ProductId = query.ProductId,
+                    CustId = query.CustomerId
+                })
+                .ReturnsForAnyArgs(customerCasinoStatus);
+
+            //// Act
+            var setting = _querySettingService.GetCustomerSetting(query) as CasinoSetting;
+
+            //// Assert
+            Assert.AreEqual(false, setting.IsNormalMode);
+        }
+
+        [TestCase(4)]
+        [TestCase(3)]
+        [TestCase(2)]
+        [TestCase(1)]
+        public void GetCustomerSetting_HasAtLeastOneDownlineIsUnsynced_SettingNormalModeIsFalse(byte levelValue)
+        {
+            //// Arrange
+            var query = CreateCustomerSettingQuery(levelValue);
+            var customerCasinoStatus = new CustomerCasinoStatus
+            {
+                IsHidden = false,
+                IsSynced = true,
+                IsSyncedDownline = false
+            };
+
+            _dymanicRepository
+                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                {
+                    ProductId = query.ProductId,
+                    CustId = query.CustomerId
+                })
+                .ReturnsForAnyArgs(customerCasinoStatus);
+
+            //// Act
+            var setting = _querySettingService.GetCustomerSetting(query) as CasinoSetting;
+
+            //// Assert
+            Assert.AreEqual(false, setting.IsNormalMode);
+        }
+
+        [TestCase(4)]
+        [TestCase(3)]
+        [TestCase(2)]
+        [TestCase(1)]
+        public void GetCustomerSetting_CustomerAndAllDownlinesAreSynced_SettingNormalModeIsTrue(byte levelValue)
+        {
+            //// Arrange
+            var query = CreateCustomerSettingQuery(levelValue);
+            var customerCasinoStatus = new CustomerCasinoStatus
+            {
+                IsHidden = false,
+                IsSynced = true,
+                IsSyncedDownline = true
+            };
+
+            _dymanicRepository
+                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                {
+                    ProductId = query.ProductId,
+                    CustId = query.CustomerId
+                })
+                .ReturnsForAnyArgs(customerCasinoStatus);
+
+            //// Act
+            var setting = _querySettingService.GetCustomerSetting(query) as CasinoSetting;
+
+            //// Assert
+            Assert.AreEqual(true, setting.IsNormalMode);
         }
     }
 }

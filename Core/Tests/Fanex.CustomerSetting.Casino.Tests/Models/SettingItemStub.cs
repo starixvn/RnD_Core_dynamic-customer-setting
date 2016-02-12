@@ -1,0 +1,27 @@
+﻿namespace Fanex.CustomerSetting.Casino.Tests.Models
+{
+    using Fanex.CustomerSetting.Models;
+    using Fanex.CustomerSetting.Models.Results;
+
+    public class SettingItemStub : ISettingItem
+    {
+        public int SportTypeId { get; set; }
+
+        public byte SettingLevel { get; set; }
+
+        public string TypeName
+        {
+            get { return "SettingItemStub"; }
+        }
+
+        public IResult Validate()
+        {
+            return Result.Success;
+        }
+
+        public string ToXml()
+        {
+            return "SettingItemStub";
+        }
+    }
+}

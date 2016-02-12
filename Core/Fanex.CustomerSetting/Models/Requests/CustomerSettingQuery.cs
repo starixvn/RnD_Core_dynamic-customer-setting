@@ -105,6 +105,7 @@
                     }
 
                     // If current context is editting super/master/agent then Upline level should be null.
+                    // TODO: WTF
                     if (_customerLevel.IsNotMemberLevel())
                     {
                         throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");

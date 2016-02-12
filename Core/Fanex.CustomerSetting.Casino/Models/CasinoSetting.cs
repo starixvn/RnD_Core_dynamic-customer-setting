@@ -9,10 +9,28 @@
 
     public class CasinoSetting : Setting
     {
-        public bool IsAllowedForceUpdate
+        private bool _isNormalModel = true;
+
+        public CasinoSetting(ISetting setting)
         {
-            get;
-            set;
+            this.CustomerId = setting.CustomerId;
+            this.CustomerInfo = setting.CustomerInfo;
+            this.CustomerLevel = setting.CustomerLevel;
+            this.ProductId = setting.ProductId;
+            this.SettingTypes = setting.SettingTypes;
+            this.WarningMessage = setting.WarningMessage;
+        }
+
+        public bool IsNormalMode
+        {
+            get
+            {
+                return _isNormalModel;
+            }
+            set
+            {
+                _isNormalModel = value;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
 
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        public IResult Update(MultipleUpdateCustomerSettingCommand command)
+        public virtual IResult Update(MultipleUpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");

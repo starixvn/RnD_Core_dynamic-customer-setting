@@ -19,11 +19,11 @@
     /// </summary>
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        private readonly ISettingContext _settingContext;
-        private readonly IValidationService _validationService;
-        private readonly ITaskService _taskService;
-        private readonly ILogger _logger;
-        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
+        protected readonly ISettingContext _settingContext;
+        protected readonly IValidationService _validationService;
+        protected readonly ITaskService _taskService;
+        protected readonly ILogger _logger;
+        protected readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         public UpdateSettingService(ISettingContext settingContext)
             : this(settingContext, null, null, null, null)
@@ -47,12 +47,16 @@
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
         }
 
+        public UpdateSettingService()
+        {
+        }
+
         /// <summary>
         /// Updates the customer setting, includes list of setting types.
         /// </summary>
         /// <param name="command">The update parameters.</param>
         /// <returns>Result after update customer setting.</returns>
-        public IResult Update(UpdateCustomerSettingCommand command)
+        public virtual IResult Update(UpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
@@ -119,13 +123,13 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
+
                 _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
-
                 var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
-
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
+
                 _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;

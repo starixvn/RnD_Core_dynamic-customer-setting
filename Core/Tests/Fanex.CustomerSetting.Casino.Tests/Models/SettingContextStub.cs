@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Casino.Tests
+﻿namespace Fanex.CustomerSetting.Casino.Tests.Models
 {
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;

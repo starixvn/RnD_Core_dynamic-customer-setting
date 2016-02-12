@@ -82,9 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstanceFactory.cs" />
     <Compile Include="Models\SettingContextStub.cs" />
+    <Compile Include="Models\SettingItemStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Impl\QueryCasinoSettingServiceTests.cs" />
+    <Compile Include="Services\Impl\UpdateCasinoSettingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

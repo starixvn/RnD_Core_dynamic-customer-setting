@@ -16,6 +16,8 @@
     /// </summary>
     public class QueryCasinoSettingService : QuerySettingService
     {
+        private readonly IQuerySettingService querySettingService;
+
         public QueryCasinoSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -49,17 +51,17 @@
         {
             var customerCasinoStatus = GetCustomerCasinoStatus(query);
 
-            if (customerCasinoStatus != null && customerCasinoStatus.IsHidden)
+            if (customerCasinoStatus == null || customerCasinoStatus.IsHidden)
             {
                 throw new InvalidOperationException($"Cannot get setting for customer {query.CustomerId} due to hidden status on product {query.ProductId}");
             }
 
-            ISetting setting = base.GetCustomerSetting(query);
+            var casinoSetting = ProcessStatusSetting(base.GetCustomerSetting(query), customerCasinoStatus, query);
 
-            return setting;
+            return casinoSetting;
         }
 
-        internal CustomerCasinoStatus GetCustomerCasinoStatus(CustomerSettingQuery query)
+        private CustomerCasinoStatus GetCustomerCasinoStatus(CustomerSettingQuery query)
         {
             var customerCasinoStatus = _dynamicRepository.Get<CustomerCasinoStatus>(
                  new GetCustomerCasinoStatusCriteria
@@ -69,6 +71,17 @@
                  });
 
             return customerCasinoStatus;
+        }
+
+        private ISetting ProcessStatusSetting(ISetting setting, CustomerCasinoStatus status, CustomerSettingQuery query)
+        {
+            Check.Argument.IsNotNull(setting, "setting");
+
+            CasinoSetting casinoSetting = new CasinoSetting(setting);
+
+            casinoSetting.IsNormalMode = (status.IsSynced && status.IsSyncedDownline);
+
+            return casinoSetting;
         }
     }
 }
