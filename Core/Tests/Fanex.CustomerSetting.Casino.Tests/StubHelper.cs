@@ -1,37 +1,44 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests
 {
-    using System.Collections.Generic;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Models;
-    public static class InstanceFactory
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public static class StubHelper
     {
+        private static readonly byte[] DefaultSettingTypeValues = new byte[] { 1, 2, 3, 4 };
         public static UpdateCustomerSettingCommand CreateUpdateSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
-            Level uplineLevel = null)
+            Level uplineLevel = null, 
+            params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;
-            var setting = CreateCustomerSetting(customerId, customerLevel, productId);
+            var setting = (settingTypeValues != null && settingTypeValues.Any()) 
+                ? CreateCustomerSetting(customerId, customerLevel, productId, settingTypeValues)
+                : CreateCustomerSetting(customerId, customerLevel, productId, DefaultSettingTypeValues);
             return new UpdateCustomerSettingCommand(setting, uplineLevel);
         }
-
         public static Setting CreateCustomerSetting(
             int customerId = 1,
             Level customerLevel = null,
-            byte productId = 1)
+            byte productId = 1, 
+            params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;
 
-            var settingTypes = new List<SettingType>
-                    {
-                        InstanceFactory.CreateCustomerSettingType(1),
-                        InstanceFactory.CreateCustomerSettingType(2),
-                        InstanceFactory.CreateCustomerSettingType(3),
-                        InstanceFactory.CreateCustomerSettingType(4)
-                    };
+            var settingTypes = new List<SettingType>();
+
+            settingTypeValues.ToList().ForEach(
+                settingTypeValue =>
+                settingTypes.Add(StubHelper.CreateCustomerSettingType(settingTypeValue))
+                );
+
             return new Setting(customerId, customerLevel, productId, settingTypes);
         }
 
@@ -72,10 +79,10 @@
 
             var settingTypes = new List<SettingType>
                     {
-                        InstanceFactory.CreateCustomerSettingType(1),
-                        InstanceFactory.CreateCustomerSettingType(2),
-                        InstanceFactory.CreateCustomerSettingType(3),
-                        InstanceFactory.CreateCustomerSettingType(4)
+                        StubHelper.CreateCustomerSettingType(1),
+                        StubHelper.CreateCustomerSettingType(2),
+                        StubHelper.CreateCustomerSettingType(3),
+                        StubHelper.CreateCustomerSettingType(4)
                     };
 
             var updateMultipleParam = new MultipleUpdateCustomerSettingCommand(
@@ -110,10 +117,10 @@
                 Id = productId,
                 SettingTypes = new List<SettingType>
                 {
-                    InstanceFactory.CreateProductSettingType(1),
-                    InstanceFactory.CreateProductSettingType(2),
-                    InstanceFactory.CreateProductSettingType(3),
-                    InstanceFactory.CreateProductSettingType(4)
+                    StubHelper.CreateProductSettingType(1),
+                    StubHelper.CreateProductSettingType(2),
+                    StubHelper.CreateProductSettingType(3),
+                    StubHelper.CreateProductSettingType(4)
                 }
             };
         }

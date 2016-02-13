@@ -107,8 +107,6 @@
                 settingTypeResults.Add(updateSettingTypeResult);
             }
 
-            settingTypeResults.Any(result => result.IsFailed);
-
             return settingTypeResults;
         }
 
