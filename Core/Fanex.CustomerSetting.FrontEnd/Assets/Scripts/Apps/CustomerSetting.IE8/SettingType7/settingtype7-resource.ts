@@ -13,7 +13,7 @@ module CustomerSetting.IE8 {
         }
     }
 
-    angular.module("customerSetting").service("settingType7ResourceService", SettingType7ResourceService);
+    ModuleRegister.service("settingType7ResourceService", SettingType7ResourceService);
 
     function SettingType7LabelFilter(settingType7ResourceService: SettingType7ResourceService): Function {
         return (name: string) => {

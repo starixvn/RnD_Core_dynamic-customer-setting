@@ -22,18 +22,14 @@ module CustomerSetting.IE8 {
             "appConfigService",
             "parametersService",
             "resourceService",
+            "blockUiService",
             "updatingSettingTypePromiseChain"];
 
-        public isUIblocked: boolean;
         public customerNames: string;
         public uplineLevel: Level;
         public setting: Setting;
         public warningMessages: Result | UpdatingSettingResult;
         public requestMsgResult: Result | UpdatingSettingResult;
-
-        private queryPath: string = "viewCustomerSetting/querySetting?";
-        private updatePath: string = "updateCustomerSetting/updateSetting";
-        private updateMultiplePath: string = "updateCustomerSetting/updateMultipleSetting";
 
         private $window: ng.IWindowService;
         private $rootScope: ng.IRootScopeService;
@@ -42,6 +38,7 @@ module CustomerSetting.IE8 {
         private appConfigService: AppConfigService;
         private parametersService: ParametersService;
         private resourceService: ResourceService;
+        private blockUiService: BlockUiService;
         private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
         private successfulUpdatingCallback: ISuccessfulUpdatingCallback;
 
@@ -53,6 +50,7 @@ module CustomerSetting.IE8 {
             appConfigService: AppConfigService,
             parametersService: ParametersService,
             resourceService: ResourceService,
+            blockUiService: BlockUiService,
             updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
             this.$window = $window;
             this.$rootScope = $rootScope;
@@ -61,19 +59,23 @@ module CustomerSetting.IE8 {
             this.appConfigService = appConfigService;
             this.parametersService = parametersService;
             this.resourceService = resourceService;
+            this.blockUiService = blockUiService;
             this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
             this.customerNames = this.parametersService.getCustomerNames();
             this.uplineLevel = this.parametersService.getUplineLevel();
-            this.querySetting();
+
+            angular.element(this.$window.document).ready(() => {
+                this.querySetting();
+            });
         }
 
         public update(settingTypeId?: number): void {
             var isMultiple: boolean = !!this.customerNames;
-            var path: string = isMultiple ? this.updateMultiplePath : this.updatePath;
-            var getEditableSetting: Setting = this.setting.getEditableSettingTypes(settingTypeId);
-            var setting: Setting = isMultiple ? getEditableSetting : this.setting.getChanges(settingTypeId);
+            var path: string = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
+            var editableSettings: Setting = this.setting.getEditableSettingTypes(settingTypeId);
+            var setting: Setting = isMultiple || !this.setting.isNormalMode ? editableSettings : this.setting.getChanges(settingTypeId);
             var validationResult: Result;
             var command: SettingCommand;
 
@@ -81,7 +83,7 @@ module CustomerSetting.IE8 {
             this.requestMsgResult = undefined;
 
             if (setting) {
-                if (getEditableSetting.validate()) {
+                if (editableSettings.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
@@ -102,10 +104,10 @@ module CustomerSetting.IE8 {
         }
 
         private updateSetting(path: string, command: SettingCommand, isPartialUpdate?: boolean, isMultipleUpdate?: boolean): void {
-            this.isUIblocked = true;
+            this.blockUiService.blockUi();
 
             this.$http
-                .post(this.appConfigService.resolveRootUrl(path), command.toJson())
+                .post(path, command.toJson())
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                     this.requestMsgResult = new UpdatingSettingResult(response.data);
                     this.querySetting();
@@ -137,7 +139,7 @@ module CustomerSetting.IE8 {
                     this.requestMsgResult = error;
                 })
             ["finally"](() => {
-                this.isUIblocked = false;
+                this.blockUiService.unblockUi();
             });
         }
 
@@ -145,10 +147,10 @@ module CustomerSetting.IE8 {
             var query: SettingQuery = this.parametersService.getSettingQuery();
 
             if (query) {
-                this.isUIblocked = true;
+                this.blockUiService.blockUi();
 
                 this.$http
-                    .post(this.appConfigService.resolveRootUrl(this.queryPath), query.toJson())
+                    .post(this.appConfigService.getQueryPath(), query.toJson())
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
                         this.setting = new Setting(response.data);
                         this.warningMessages = this.setting.warningMessage;
@@ -170,7 +172,7 @@ module CustomerSetting.IE8 {
                         this.requestMsgResult = error;
                     })
                 ["finally"](() => {
-                    this.isUIblocked = false;
+                    this.blockUiService.unblockUi();
                 });
             }
         }

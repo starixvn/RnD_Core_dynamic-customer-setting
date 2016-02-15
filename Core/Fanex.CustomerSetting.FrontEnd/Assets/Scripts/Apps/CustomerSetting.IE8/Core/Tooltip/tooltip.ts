@@ -106,7 +106,8 @@ module CustomerSetting.IE8 {
                 });
 
                 if (resourceService) {
-                    message = resourceService.getFormattedMessage(result.message, params);
+                    params.unshift(result.message)
+                    message = resourceService.getFormattedMessage.apply(resourceService, params);
                 }
             }
 

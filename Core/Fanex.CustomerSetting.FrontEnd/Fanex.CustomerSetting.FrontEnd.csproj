@@ -258,6 +258,17 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resources.js">
+      <DependentUpon>settingtype6-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype6-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-win-limit-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-checkbox-group.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resources.js">
       <DependentUpon>settingtype7-resources.tt</DependentUpon>
@@ -455,6 +466,11 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType5\settingtype5.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6-win-limit-select.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType6\settingtype6.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resource.ts" />

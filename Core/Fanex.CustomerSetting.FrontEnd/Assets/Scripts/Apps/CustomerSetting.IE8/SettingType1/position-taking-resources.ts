@@ -13,7 +13,7 @@ module CustomerSetting.IE8 {
         }
     }
 
-    angular.module("customerSetting").service("positionTakingResourceService", PositionTakingResourceService);
+    ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
 
     function PositionTakingLabelFilter(positionTakingResourceService: PositionTakingResourceService): Function {
         return (name: string) => {

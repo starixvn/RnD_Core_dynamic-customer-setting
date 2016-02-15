@@ -1,0 +1,117 @@
+﻿<div class="block full-width settingtype6" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{settingTypeName}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
+        <div class="block__sub-header" data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
+            {{productName}}
+        </div>
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
+            {{group[0].sportTypeName}}
+        </div>
+        <div class="block__item-group"
+             data-ng-repeat="item in group"
+             data-product="{{productId}}"
+             data-sport-type="{{item.sportTypeId}}"
+             data-bet-type="{{item.betTypeId}}">
+            <div class="block__sub-header block__sub-header--indent" data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+                {{item.betTypeName}}
+            </div>
+            <div class="block__column block__column--border-right w50-percent">
+                <div class="block__row">
+                    <div class="block__lbl w40-percent">{{'MaximumWin' | settingType6Label}}</div>
+                    <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
+                        <div data-settingtype6-win-limit-select data-setting-item="item"></div>
+                    </div>
+                    <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
+                        {{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? 'X' : ''}} {{'OnGivenCredit' | settingType6Label}}
+                    </div>
+                </div>
+                <div class="block__row block__row--border-top">
+                    <div class="block__lbl w40-percent">{{'MaximumLoss' | settingType6Label}}</div>
+                    <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
+                        <div class="setting-field-wrapper w100-percent">
+                            <input type="text"
+                                   maxlength="14"
+                                   data-ng-model="item.lossLimit"
+                                   data-settingtype6-loss-limit-input
+                                   data-ng-change="updateValue()"
+                                   data-ng-disabled="item.lossLimit === 0"
+                                   data-tooltip
+                                   data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit'}}"
+                                   data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField: 'lossLimit') }"
+                                   class="setting-field setting-field--number setting-field--has-constraint" />
+                            <span>({{item.minLossRange | number}} - {{item.maxLossRange | number | unlimitedLimit}})</span>
+                        </div>
+                        <div class="setting-field-wrapper" data-ng-if="item.maxLossRange === 0">
+                            <label class="setting-field--checkfield">
+                                <input type="checkbox"
+                                       class="setting-field--checkfield__check-ctrl"
+                                       data-settingtype6-unlimited-checkbox
+                                       data-ng-model="isUnlimited"
+                                       data-ng-change="check()" />
+                                {{'Unlimited' | settingType6Label}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
+                        {{item.lossLimit | number | unlimitedLimit}}
+                    </div>
+                </div>
+                <div class="block__row block__row--border-top" data-ng-if="customerLevel === avaiCustomerLevels.member">
+                    <div class="block__lbl w40-percent">{{'CurrentWinLossAmount' | settingType6Label}}</div>
+                    <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!item.currentWinLossAmount">
+                        <a href="javascript:void(0);" data-ng-click="getCurrentWinLoss(item)">{{'ClickToViewCurrentWinLossLimit' | settingType6Label}}</a>
+                    </div>
+                    <div class="block__value w60-percent setting-field-wrapper" data-ng-if="item.currentWinLossAmount">
+                        <div>
+                            <span>{{'Winning' | settingType6Label}}: </span>
+                            <span data-ng-if="item.winLimit === 0">{{'Unlimited' | settingType6Label}}</span>
+                            <span data-ng-if="item.winLimit > 0">
+                                <span data-ng-class="{ 'red-text': item.currentWinLossAmount.winPercent > highestPercentageRange }">
+                                    {{item.currentWinLossAmount.winPercent | number}}%
+                                </span>
+                                <span>{{'Of' | settingType6Label}}</span>
+                                <span>{{item.currentWinLossAmount.maxWinAmountt | number}}</span>
+                            </span>
+                        </div>
+                        <div>
+                            <span>{{'Losing' | settingType6Label}}: </span>
+                            <span data-ng-if="item.lossLimit === 0">{{'Unlimited' | settingType6Label}}</span>
+                            <span data-ng-if="item.lossLimit > 0">
+                                <span data-ng-class="{ 'red-text': item.currentWinLossAmount.lossPercent > highestPercentageRange }">
+                                    {{item.currentWinLossAmount.lossPercent | number}}%
+                                </span>
+                                <span>{{'Of' | settingType6Label}}</span>
+                                <span>{{item.currentWinLossAmount.maxLossAmount | number}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block__column w50-percent">
+                <div class="block__cell setting-field-wrapper">
+                    <label class="setting-field--checkfield">
+                        <input type="checkbox"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-tooltip
+                               data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
+                               data-ng-model="item.isAutoReset"
+                               data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
+                        {{'DailyAutoResetLimit' | settingType6Label}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
+        {{settingType.settingItems[0].errorMessage}}
+    </div>
+</div>

@@ -36,8 +36,20 @@ module CustomerSetting.IE8 {
             }
         }
 
-        public resolveRootUrl(url: string): string {
-            return this.applicationPath + url;
+        public getQueryPath(): string {
+            return this.applicationPath + "viewCustomerSetting/querySetting?";
+        }
+
+        public getUpdatePath(): string {
+            return this.applicationPath + "updateCustomerSetting/updateSetting";
+        }
+
+        public getUpdateMultiplePath(): string {
+            return this.applicationPath + "updateCustomerSetting/updateMultipleSetting";
+        }
+
+        public getSettingTypeActionPath(): string {
+            return this.applicationPath + "settingType/redirectAction";
         }
 
         public requestVerificationToken(): string {

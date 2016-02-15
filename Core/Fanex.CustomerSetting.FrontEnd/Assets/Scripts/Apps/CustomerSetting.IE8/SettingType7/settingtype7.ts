@@ -18,6 +18,7 @@ module CustomerSetting.IE8 {
             productId: "=",
             productName: "=",
             settingType: "=",
+            normalMode: "=",
             update: "&"
         };
 

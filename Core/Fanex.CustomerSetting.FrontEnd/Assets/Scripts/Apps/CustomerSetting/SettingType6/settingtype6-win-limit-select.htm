@@ -4,6 +4,6 @@
             data-ng-options="item.key as item.value for item in range"
             data-tooltip
             data-message="{{settingItem.validationState | tooltipMessage:'settingType6ResourceService':'winLimit'}}"
-            data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField) }"></select>
+            data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'winLimit') }"></select>
     <span>{{::('OnGivenCredit' | settingType6Label)}}</span>
 </div>

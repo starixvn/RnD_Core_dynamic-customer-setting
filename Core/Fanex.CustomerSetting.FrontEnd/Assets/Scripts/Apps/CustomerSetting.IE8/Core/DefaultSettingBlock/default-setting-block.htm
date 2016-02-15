@@ -5,7 +5,7 @@
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
-             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType)"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode"
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
