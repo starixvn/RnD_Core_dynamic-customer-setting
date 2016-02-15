@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/blockui/block-ui.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="models.ts" />
@@ -23,11 +24,12 @@ module CustomerSetting {
                 productId: "=",
                 productName: "=",
                 settingType: "=",
+                normalMode: "=",
                 update: "&"
             };
         }
 
-        public controller: any = ["$scope", ($scope: ISettingType7DirectviceScope) => {
+        public controller: any = ["$scope", "blockUiService", ($scope: ISettingType7DirectviceScope, blockUiService: BlockUiService) => {
             $scope.avaiCustomerLevels = Level;
             $scope.avaiSettingLevels = SettingLevel;
             $scope.settingTypeName = this.settingType6ResourceService.getLabel("WinLossLimit");
@@ -56,11 +58,13 @@ module CustomerSetting {
             });
 
             $scope.getCurrentWinLoss = (settingItem: SettingType6Item) => {
+                blockUiService.blockUi();
                 settingItem.currentWinLossAmount = new CurrentWinLossAmountItem();
                 settingItem.currentWinLossAmount.winPercent = 110;
                 settingItem.currentWinLossAmount.maxWinAmountt = 200000;
                 settingItem.currentWinLossAmount.lossPercent = 0;
                 settingItem.currentWinLossAmount.maxLossAmount = 100000;
+                blockUiService.unblockUi();
             };
         }];
 

@@ -22,9 +22,9 @@ module CustomerSetting {
             "appConfigService",
             "parametersService",
             "resourceService",
+            "blockUiService",
             "updatingSettingTypePromiseChain"];
 
-        public isUIblocked: boolean;
         public customerNames: string;
         public uplineLevel: Level;
         public setting: Setting;
@@ -38,6 +38,7 @@ module CustomerSetting {
         private appConfigService: AppConfigService;
         private parametersService: ParametersService;
         private resourceService: ResourceService;
+        private blockUiService: BlockUiService;
         private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
         private successfulUpdatingCallback: ISuccessfulUpdatingCallback;
 
@@ -49,6 +50,7 @@ module CustomerSetting {
             appConfigService: AppConfigService,
             parametersService: ParametersService,
             resourceService: ResourceService,
+            blockUiService: BlockUiService,
             updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
             this.$window = $window;
             this.$rootScope = $rootScope;
@@ -57,19 +59,23 @@ module CustomerSetting {
             this.appConfigService = appConfigService;
             this.parametersService = parametersService;
             this.resourceService = resourceService;
+            this.blockUiService = blockUiService;
             this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
             this.customerNames = this.parametersService.customerNames;
             this.uplineLevel = this.parametersService.uplineLevel;
-            this.querySetting();
+
+            angular.element(this.$window.document).ready(() => {
+                this.querySetting();
+            });
         }
 
         public update(settingTypeId?: number): void {
             var isMultiple: boolean = !!this.customerNames;
             var path: string = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
-            var getEditableSetting: Setting = this.setting.getEditableSettingTypes(settingTypeId);
-            var setting: Setting = isMultiple ? getEditableSetting : this.setting.getChanges(settingTypeId);
+            var editableSettings: Setting = this.setting.getEditableSettingTypes(settingTypeId);
+            var setting: Setting = isMultiple || !this.setting.isNormalMode ? editableSettings : this.setting.getChanges(settingTypeId);
             var validationResult: Result;
             var command: SettingCommand;
 
@@ -77,7 +83,7 @@ module CustomerSetting {
             this.requestMsgResult = undefined;
 
             if (setting) {
-                if (getEditableSetting.validate()) {
+                if (editableSettings.validate()) {
                     command = this.parametersService.createSettingCommand(setting);
                     validationResult = command.validate();
 
@@ -98,7 +104,7 @@ module CustomerSetting {
         }
 
         private updateSetting(path: string, command: SettingCommand, isPartialUpdate?: boolean, isMultipleUpdate?: boolean): void {
-            this.isUIblocked = true;
+            this.blockUiService.blockUi();
 
             this.$http
                 .post(path, command.toJson())
@@ -133,7 +139,7 @@ module CustomerSetting {
                     this.requestMsgResult = error;
                 })
                 .finally(() => {
-                    this.isUIblocked = false;
+                    this.blockUiService.unblockUi();
                 });
         }
 
@@ -141,7 +147,7 @@ module CustomerSetting {
             var query: SettingQuery = this.parametersService.getSettingQuery();
 
             if (query) {
-                this.isUIblocked = true;
+                this.blockUiService.blockUi();
 
                 this.$http
                     .post(this.appConfigService.getQueryPath(), query.toJson())
@@ -166,7 +172,7 @@ module CustomerSetting {
                         this.requestMsgResult = error;
                     })
                     .finally(() => {
-                        this.isUIblocked = false;
+                        this.blockUiService.unblockUi();
                     });
             }
         }

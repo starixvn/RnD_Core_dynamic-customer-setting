@@ -56,7 +56,8 @@ module CustomerSetting {
                             " data-setting-type=\"setting.settingTypes[",
                             index,
                             "]\"",
-                            "data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            " data-normal-mode=\"setting.isNormalMode\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
                             "></",
                             settingTypeName,
                             ">"

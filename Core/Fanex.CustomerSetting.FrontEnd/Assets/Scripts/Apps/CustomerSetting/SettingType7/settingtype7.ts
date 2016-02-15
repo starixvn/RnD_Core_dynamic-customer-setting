@@ -18,6 +18,7 @@ module CustomerSetting {
                 productId: "=",
                 productName: "=",
                 settingType: "=",
+                normalMode: "=",
                 update: "&"
             };
         }

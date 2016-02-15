@@ -15,6 +15,7 @@ module CustomerSetting {
         productName: string;
         settingType: SettingType;
         settingTypeName: string;
+        normalMode: boolean;
         update: (settingTypeId: { settingTypeId: number }) => void;
         headerTemplateUrl: string;
         valueTemplateUrl: string;
@@ -31,6 +32,7 @@ module CustomerSetting {
                 productId: "=",
                 productName: "=",
                 settingType: "=",
+                normalMode: "=",
                 update: "&"
             };
         }

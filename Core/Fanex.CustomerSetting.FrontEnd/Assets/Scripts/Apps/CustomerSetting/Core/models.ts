@@ -267,6 +267,7 @@ module CustomerSetting {
         public productName: string;
         public settingTypes: Array<SettingType>;
         public warningMessage: Result;
+        public isNormalMode: boolean;
 
         constructor();
         constructor(setting: any)
@@ -277,6 +278,7 @@ module CustomerSetting {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
+                this.isNormalMode = setting.isNormalMode || true;
 
                 if (setting.warningMessage) {
                     this.warningMessage = new Result(setting.warningMessage.code, setting.warningMessage.message, MessageType.warning);
