@@ -94,20 +94,10 @@
                 return _updateSettingService.Update(command);
             }
 
-            return new UpdateSettingResult(UpdateCustomerSettingTypes(command));
-        }
-
-        private IResult Validate(UpdateCustomerSettingCommand command)
-        {
-            return _validationService.ValidateUpdateSettingAction(command);
+            return UpdateUnsyncedCustomerSetting(command);
         }
 
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
             var settingTypes = command.Setting.SettingTypes;
             var customerId = command.Setting.CustomerId;
@@ -146,7 +136,7 @@
 
             // TODO: Update IsSync
 
-            return settingTypeResults;
+            return new UpdateSettingResult(settingTypeResults);
         }
 
         protected SettingResult UpdateCustomerSettingType(
@@ -185,6 +175,11 @@
             }
         }
 
+        private IResult Validate(UpdateCustomerSettingCommand command)
+        {
+            return _validationService.ValidateUpdateSettingAction(command);
+        }
+
         protected  void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
@@ -203,7 +198,7 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Setting", _settingContext);
+            ex.SetSettingContextInfo("Update Setting Casino", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
