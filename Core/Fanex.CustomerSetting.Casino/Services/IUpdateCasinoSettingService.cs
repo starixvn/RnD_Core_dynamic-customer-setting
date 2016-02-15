@@ -11,6 +11,6 @@
 
     public interface IUpdateCasinoSettingService : IUpdateSettingService
     {
-        IResult Update(UpdateCustomerSettingCommand command);
+        IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command);
     }
 }

@@ -102,6 +102,11 @@
             return _validationService.ValidateUpdateSettingAction(command);
         }
 
+        public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
+        {
+            throw new NotImplementedException();
+        }
+
         protected IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
             var settingTypes = command.Setting.SettingTypes;
@@ -229,5 +234,7 @@
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
