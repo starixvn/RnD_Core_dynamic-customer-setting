@@ -31,7 +31,7 @@
                         <settingtype6-win-limit-select data-setting-item="item"></settingtype6-win-limit-select>
                     </div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
-                        {{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? 'X' : ''}}
+                        {{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? 'X' : ''}} {{::('OnGivenCredit' | settingType6Label)}}
                     </div>
                 </div>
                 <div class="block__row block__row--border-top">

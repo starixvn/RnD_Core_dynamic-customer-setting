@@ -29705,7 +29705,7 @@ var CustomerSettingMatrix;
             app.directive(name, directiveFactory);
         };
         return ModuleRegister;
-    }());
+    })();
     CustomerSettingMatrix.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -29736,7 +29736,7 @@ var CustomerSettingMatrix;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    }());
+    })();
     CustomerSettingMatrix.AppConfigService = AppConfigService;
     CustomerSettingMatrix.ModuleRegister.service("appConfigService", AppConfigService);
     function PTValue() {
@@ -29774,7 +29774,7 @@ var CustomerSettingMatrix;
             this.value = level.value;
         }
         return Level;
-    }());
+    })();
     CustomerSettingMatrix.Level = Level;
     var Product = (function () {
         function Product(product) {
@@ -29782,7 +29782,7 @@ var CustomerSettingMatrix;
             this.name = product.name;
         }
         return Product;
-    }());
+    })();
     CustomerSettingMatrix.Product = Product;
     var Customer = (function () {
         function Customer(customer) {
@@ -29793,7 +29793,7 @@ var CustomerSettingMatrix;
             this.levelName = customer.level.displayName;
         }
         return Customer;
-    }());
+    })();
     CustomerSettingMatrix.Customer = Customer;
     var SettingItemMatrix = (function () {
         function SettingItemMatrix(settingItemMatrix) {
@@ -29803,7 +29803,7 @@ var CustomerSettingMatrix;
             this.sportTypeName = settingItemMatrix.sportTypeName;
         }
         return SettingItemMatrix;
-    }());
+    })();
     CustomerSettingMatrix.SettingItemMatrix = SettingItemMatrix;
     var SettingTypeMatrix = (function () {
         function SettingTypeMatrix(settingTypeMatrix) {
@@ -29820,7 +29820,7 @@ var CustomerSettingMatrix;
             throw new Error("groupDataBySettingLevel not implemented");
         };
         return SettingTypeMatrix;
-    }());
+    })();
     CustomerSettingMatrix.SettingTypeMatrix = SettingTypeMatrix;
     var SettingType = (function () {
         function SettingType(settingTypeId, settingTypeName) {
@@ -29829,9 +29829,8 @@ var CustomerSettingMatrix;
         }
         SettingType.PositionTaking = new SettingType(1, "PositionTaking");
         SettingType.Commission = new SettingType(3, "Commission");
-        SettingType.ChargeCommission = new SettingType(5, "Charge Commission");
         return SettingType;
-    }());
+    })();
     CustomerSettingMatrix.SettingType = SettingType;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29849,7 +29848,7 @@ var CustomerSettingMatrix;
             this.showFilter = showFilter;
         }
         return QuerySettingMatrix;
-    }());
+    })();
     CustomerSettingMatrix.QuerySettingMatrix = QuerySettingMatrix;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29871,7 +29870,7 @@ var CustomerSettingMatrix;
             this.templateUrl = "Directives/PTMatrix/pt-matrix.htm";
         }
         return PtMatrix;
-    }());
+    })();
     CustomerSettingMatrix.PtMatrix = PtMatrix;
     CustomerSettingMatrix.ModuleRegister.directive("ptMatrix", PtMatrix);
     var PTMatrix = (function (_super) {
@@ -29913,7 +29912,7 @@ var CustomerSettingMatrix;
             }
         };
         return PTMatrix;
-    }(CustomerSettingMatrix.SettingTypeMatrix));
+    })(CustomerSettingMatrix.SettingTypeMatrix);
     CustomerSettingMatrix.PTMatrix = PTMatrix;
     var PTItemMatrix = (function (_super) {
         __extends(PTItemMatrix, _super);
@@ -29939,7 +29938,7 @@ var CustomerSettingMatrix;
             return itemMatrixName + (this.isLive ? " (Live)" : "");
         };
         return PTItemMatrix;
-    }(CustomerSettingMatrix.SettingItemMatrix));
+    })(CustomerSettingMatrix.SettingItemMatrix);
     CustomerSettingMatrix.PTItemMatrix = PTItemMatrix;
     var PTItemMaxtrixRow = (function () {
         function PTItemMaxtrixRow(ptItemMaxtrixRow) {
@@ -29956,13 +29955,13 @@ var CustomerSettingMatrix;
             this.minPT = ptItemMaxtrixRow.minPT;
         }
         return PTItemMaxtrixRow;
-    }());
+    })();
     CustomerSettingMatrix.PTItemMaxtrixRow = PTItemMaxtrixRow;
     var PTItemMatrixGroup = (function () {
         function PTItemMatrixGroup() {
         }
         return PTItemMatrixGroup;
-    }());
+    })();
     CustomerSettingMatrix.PTItemMatrixGroup = PTItemMatrixGroup;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29983,7 +29982,7 @@ var CustomerSettingMatrix;
             this.templateUrl = "Directives/CommissionMatrix/commission-matrix.htm";
         }
         return CommissionMatrixDirective;
-    }());
+    })();
     CustomerSettingMatrix.CommissionMatrixDirective = CommissionMatrixDirective;
     CustomerSettingMatrix.ModuleRegister.directive("commissionMatrix", CommissionMatrixDirective);
     var CommissionItemMatrixRow = (function () {
@@ -29992,7 +29991,7 @@ var CustomerSettingMatrix;
             this.commRate = commissionItemMatrixRow.commRate;
         }
         return CommissionItemMatrixRow;
-    }());
+    })();
     CustomerSettingMatrix.CommissionItemMatrixRow = CommissionItemMatrixRow;
     var CommissionItemMatrix = (function (_super) {
         __extends(CommissionItemMatrix, _super);
@@ -30013,7 +30012,7 @@ var CustomerSettingMatrix;
             return "";
         };
         return CommissionItemMatrix;
-    }(CustomerSettingMatrix.SettingItemMatrix));
+    })(CustomerSettingMatrix.SettingItemMatrix);
     CustomerSettingMatrix.CommissionItemMatrix = CommissionItemMatrix;
     var CommissionMatrix = (function (_super) {
         __extends(CommissionMatrix, _super);
@@ -30054,13 +30053,13 @@ var CustomerSettingMatrix;
             }
         };
         return CommissionMatrix;
-    }(CustomerSettingMatrix.SettingTypeMatrix));
+    })(CustomerSettingMatrix.SettingTypeMatrix);
     CustomerSettingMatrix.CommissionMatrix = CommissionMatrix;
     var CommissionItemMatrixGroup = (function () {
         function CommissionItemMatrixGroup() {
         }
         return CommissionItemMatrixGroup;
-    }());
+    })();
     CustomerSettingMatrix.CommissionItemMatrixGroup = CommissionItemMatrixGroup;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -30092,7 +30091,7 @@ var CustomerSettingMatrix;
         };
         ResourceService.$inject = ["$window"];
         return ResourceService;
-    }());
+    })();
     CustomerSettingMatrix.ResourceService = ResourceService;
     CustomerSettingMatrix.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -30127,12 +30126,7 @@ var CustomerSettingMatrix;
             var querySettingMatrix = this.$window["querySettingMatrix"];
             this.querySettingMatrix = new CustomerSettingMatrix.QuerySettingMatrix(querySettingMatrix.settingTypeId, querySettingMatrix.productId, querySettingMatrix.customerName, querySettingMatrix.sportTypeId, querySettingMatrix.betTypeId, querySettingMatrix.isLive, querySettingMatrix.showFilter);
             this.settingTypeId = this.querySettingMatrix.settingTypeId;
-            if (this.querySettingMatrix.showFilter) {
-                this.queryProductNames();
-            }
-            else {
-                this.loadSettingMatrix();
-            }
+            this.queryProductNames();
         }
         Object.defineProperty(CustomerSettingMaxtrixController.prototype, "querySettingMatrixPath", {
             get: function () {
@@ -30158,8 +30152,7 @@ var CustomerSettingMatrix;
         };
         CustomerSettingMaxtrixController.prototype.queryProductNames = function () {
             var _this = this;
-            if (this.querySettingMatrix.settingTypeId === CustomerSettingMatrix.SettingType.Commission.id
-                || this.querySettingMatrix.settingTypeId === CustomerSettingMatrix.SettingType.ChargeCommission.id) {
+            if (this.querySettingMatrix.settingTypeId == CustomerSettingMatrix.SettingType.Commission.id) {
                 this.isUIblocked = true;
                 this.$http
                     .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
@@ -30175,7 +30168,6 @@ var CustomerSettingMatrix;
                         if (_this.product == null || _this.product.id == 0) {
                             _this.product = _this.products[0];
                         }
-                        _this.querySettingMatrix.productId = _this.product.id;
                         _this.loadSettingMatrix();
                     }
                 })
@@ -30196,6 +30188,7 @@ var CustomerSettingMatrix;
             if (this.querySettingMatrix.customerName === "") {
                 return;
             }
+            this.querySettingMatrix.productId = this.product.id;
             this.errorMessage = "";
             this.isUIblocked = true;
             this.$http
@@ -30213,7 +30206,6 @@ var CustomerSettingMatrix;
                             _this.settingTypeMatrix = new CustomerSettingMatrix.PTMatrix(customerSettingMatrix.settingTypeMatrix);
                             break;
                         case CustomerSettingMatrix.SettingType.Commission.id:
-                        case CustomerSettingMatrix.SettingType.ChargeCommission.id:
                             _this.settingTypeMatrix = new CustomerSettingMatrix.CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
                             break;
                     }
@@ -30240,8 +30232,25 @@ var CustomerSettingMatrix;
             "appConfigService",
             "resourceService"];
         return CustomerSettingMaxtrixController;
-    }());
+    })();
     CustomerSettingMatrix.ModuleRegister.controller("customerSettingMatrixController", CustomerSettingMaxtrixController);
+})(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
+
+var CustomerSettingMatrix;
+(function (CustomerSettingMatrix) {
+    "use strict";
+    var CustomerLineDirective = (function () {
+        function CustomerLineDirective() {
+            this.scope = {
+                customerLine: "=",
+            };
+            this.restrict = "A";
+            this.templateUrl = "Directives/CustomerLine/customer-line.htm";
+        }
+        return CustomerLineDirective;
+    })();
+    CustomerSettingMatrix.CustomerLineDirective = CustomerLineDirective;
+    CustomerSettingMatrix.ModuleRegister.directive("customerLineDirective", CustomerLineDirective);
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
 var CustomerSettingMatrix;
@@ -30262,29 +30271,12 @@ var CustomerSettingMatrix;
             configurable: true
         });
         return BlockUiDirective;
-    }());
+    })();
     CustomerSettingMatrix.ModuleRegister.directive("blockUi", BlockUiDirective);
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
-var CustomerSettingMatrix;
-(function (CustomerSettingMatrix) {
-    "use strict";
-    var CustomerLineDirective = (function () {
-        function CustomerLineDirective() {
-            this.scope = {
-                customerLine: "=",
-            };
-            this.restrict = "A";
-            this.templateUrl = "Directives/CustomerLine/customer-line.htm";
-        }
-        return CustomerLineDirective;
-    }());
-    CustomerSettingMatrix.CustomerLineDirective = CustomerLineDirective;
-    CustomerSettingMatrix.ModuleRegister.directive("customerLineDirective", CustomerLineDirective);
-})(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
-
-angular.module("customerSettingMatrix").run(["$templateCache", function($templateCache) {$templateCache.put("customer-setting-matrix.htm","<!DOCTYPE html><html data-ng-app=\"customerSettingMatrix\"><head><meta charset=\"utf-8\"><title>Setting Matrix</title><link rel=\"stylesheet\" type=\"text/css\" href=\"{{cdnUri}}/customersettingmatrix/styles/customer-setting-matrix.min.css?v={{version}}\"></head><body data-ng-cloak data-ng-controller=\"customerSettingMatrixController as ctrl\"><div class=\"container\"><div class=\"header\" data-ng-if=\"ctrl.querySettingMatrix.showFilter\"><ul class=\"setting-type-nav\"><li data-ng-repeat=\"settingType in ctrl.settingTypes\" data-ng-click=\"ctrl.updateSettingTypeView(settingType.id)\"><label><input type=\"radio\" ng-model=\"ctrl.querySettingMatrix.settingTypeId\" ng-value=\"{{::settingType.id}}\"> {{::settingType.name | label}}</label></li></ul><form class=\"matrix-form\" data-ng-submit=\"ctrl.loadSettingMatrix()\"><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==3\"><label for=\"product\">{{\'Product\' | label}}</label><select name=\"product\" data-ng-model=\"ctrl.product\" data-ng-options=\"product.name for product in ctrl.products\"></select></div><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"sporTypeId\">Sport Type Id</label> <input name=\"sporTypeId\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.sportTypeId\"></div><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"betTypeId\">Bet Type Id</label> <input name=\"betTypeId\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.betTypeId\"></div><div class=\"form-control check-box-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"isLive\">Is Live <input name=\"isLive\" id=\"isLive\" type=\"checkbox\" data-ng-model=\"ctrl.querySettingMatrix.isLive\"></label></div><div class=\"form-control\"><label for=\"userName\">{{\'Username\' | label}}</label> <input name=\"userName\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.customerName\"></div><div class=\"form-control\"><button type=\"submit\">{{\'Submit\' | label}}</button></div></form></div><div class=\"error-message-container\" data-ng-show=\"ctrl.errorMessage\"><div class=\"error-icon\"></div><div class=\"content\">{{ctrl.errorMessage}}</div></div><div class=\"main-content\" data-ng-show=\"ctrl.customerLine.length > 0\"><div customer-line=\"ctrl.customerLine\" data-customer-line-directive></div><div class=\"matrix-container\" data-ng-show=\"ctrl.settingTypeMatrix\" data-ng-switch=\"ctrl.settingTypeId\"><div data-ng-switch-when=\"1\" product=\"ctrl.product\" setting-type-matrix=\"ctrl.settingTypeMatrix\" data-pt-matrix></div><div data-ng-switch-when=\"3\" setting-type-matrix=\"ctrl.settingTypeMatrix\" data-commission-matrix></div><div data-ng-switch-when=\"5\" setting-type-matrix=\"ctrl.settingTypeMatrix\" data-commission-matrix></div></div></div></div><block-ui data-is-loading=\"ctrl.isUIblocked\"></block-ui><script type=\"text/javascript\">\r\n        var appConfig = {{appConfig}};\r\n        var querySettingMatrix = {{querySettingMatrix}};\r\n    </script><script type=\"text/javascript\" src=\"{{cdnUri}}/customersettingmatrix/customer-setting-matrix{{min}}.js?v={{version}}\"></script></body></html>");
-$templateCache.put("Directives/BlockUI/block-ui.htm","<div class=\"block-overlay\" data-ng-show=\"isLoading\"><div class=\"block-loading\" data-ng-show=\"isLoading\"></div></div>");
+angular.module("customerSettingMatrix").run(["$templateCache", function($templateCache) {$templateCache.put("customer-setting-matrix.htm","<!DOCTYPE html><html data-ng-app=\"customerSettingMatrix\"><head><meta charset=\"utf-8\"><title>Setting Matrix</title><link rel=\"stylesheet\" type=\"text/css\" href=\"{{cdnUri}}/customersettingmatrix/styles/customer-setting-matrix.min.css?v={{version}}\"></head><body data-ng-cloak data-ng-controller=\"customerSettingMatrixController as ctrl\"><div class=\"container\"><div class=\"header\" data-ng-if=\"ctrl.querySettingMatrix.showFilter\"><ul class=\"setting-type-nav\"><li data-ng-repeat=\"settingType in ctrl.settingTypes\" data-ng-click=\"ctrl.updateSettingTypeView(settingType.id)\"><label><input type=\"radio\" ng-model=\"ctrl.querySettingMatrix.settingTypeId\" ng-value=\"{{::settingType.id}}\"> {{::settingType.name | label}}</label></li></ul><form class=\"matrix-form\" data-ng-submit=\"ctrl.loadSettingMatrix()\"><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==3\"><label for=\"product\">{{\'Product\' | label}}</label><select name=\"product\" data-ng-model=\"ctrl.product\" data-ng-options=\"product.name for product in ctrl.products\"></select></div><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"sporTypeId\">Sport Type Id</label> <input name=\"sporTypeId\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.sportTypeId\"></div><div class=\"form-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"betTypeId\">Bet Type Id</label> <input name=\"betTypeId\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.betTypeId\"></div><div class=\"form-control check-box-control\" data-ng-if=\"ctrl.querySettingMatrix.settingTypeId==1\"><label for=\"isLive\">Is Live <input name=\"isLive\" id=\"isLive\" type=\"checkbox\" data-ng-model=\"ctrl.querySettingMatrix.isLive\"></label></div><div class=\"form-control\"><label for=\"userName\">{{\'Username\' | label}}</label> <input name=\"userName\" type=\"text\" data-ng-model=\"ctrl.querySettingMatrix.customerName\"></div><div class=\"form-control\"><button type=\"submit\">{{\'Submit\' | label}}</button></div></form></div><div class=\"error-message-container\" data-ng-show=\"ctrl.errorMessage\"><div class=\"error-icon\"></div><div class=\"content\">{{ctrl.errorMessage}}</div></div><div class=\"main-content\" data-ng-show=\"ctrl.customerLine.length > 0\"><div customer-line=\"ctrl.customerLine\" data-customer-line-directive></div><div class=\"matrix-container\" data-ng-show=\"ctrl.settingTypeMatrix\" data-ng-switch=\"ctrl.settingTypeId\"><div data-ng-switch-when=\"1\" product=\"ctrl.product\" setting-type-matrix=\"ctrl.settingTypeMatrix\" data-pt-matrix></div><div data-ng-switch-when=\"3\" setting-type-matrix=\"ctrl.settingTypeMatrix\" data-commission-matrix></div></div></div></div><block-ui data-is-loading=\"ctrl.isUIblocked\"></block-ui><script type=\"text/javascript\">\r\n        var appConfig = {{appConfig}};\r\n        var querySettingMatrix = {{querySettingMatrix}};\r\n    </script><script type=\"text/javascript\" src=\"{{cdnUri}}/customersettingmatrix/customer-setting-matrix{{min}}.js?v={{version}}\"></script></body></html>");
 $templateCache.put("Directives/CommissionMatrix/commission-matrix.htm","<div class=\"group-matrix\" data-ng-repeat=\"commissionItemMatrixGroup in commissionMatrix.commissionItemMatrixGroups\"><div data-ng-show=\"commissionItemMatrixGroup.name\" class=\"group-name\">{{::commissionItemMatrixGroup.name}}</div><div class=\"item-matrix\"><table><colgroup><col width=\"80\"><col width=\"120\" data-ng-repeat=\"commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices\"></colgroup><thead><tr><th></th><th data-ng-repeat=\"commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices\">{{::commissionItemMatrix.getItemMatrixName(commissionItemMatrixGroup.settingLevel)}}</th></tr></thead><tbody><tr data-ng-repeat=\"customerLevel in commissionMatrix.customerLevels\"><td class=\"customer-level\">{{::customerLevel.displayName}} ({{::customerLevel.value}})</td><td data-ng-repeat=\"commissionItemMatrix in commissionItemMatrixGroup.commissionItemMatrices\">{{::commissionItemMatrix.commissionItemMatrixRows[$parent.$index].commRate | number: 4}}</td></tr></tbody></table></div></div>");
 $templateCache.put("Directives/CustomerLine/customer-line.htm","<div class=\"customer-line\"><table><tbody><tr data-ng-repeat=\"customer in customerLine\" data-ng-switch=\"$first\"><td class=\"level-name\" data-ng-switch-when=\"false\">{{customer.levelName}}</td><td class=\"level-name\" data-ng-switch-when=\"true\">Customer</td><td class=\"customer-name\" data-ng-class=\"{\'active\': $index==0}\">{{customer.name}} ({{customer.id}})</td></tr></tbody></table></div>");
-$templateCache.put("Directives/PTMatrix/pt-matrix.htm","<div class=\"group-matrix\" data-ng-repeat=\"ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups\" data-ng-class=\"{\'group-matrix-setting-level-4\': ptMatrix.isSportTypeBetTypeSettingLevel}\"><div class=\"group-name\" data-ng-show=\"ptItemMatrixGroup.name\">{{::ptItemMatrixGroup.name}}</div><div class=\"item-matrix\" data-ng-repeat=\"ptItemMatrix in ptItemMatrixGroup.ptItemMatrices\" data-ng-class=\"{\'item-matrix-setting-level-4\': ptMatrix.isSportTypeBetTypeSettingLevel}\"><div class=\"item-name\">{{::ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, product)}}</div><table><colgroup><col width=\"80\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"></colgroup><thead><tr><th></th><th>Super</th><th>Master</th><th>Agent</th><th>US</th><th>IS</th><th>UM</th><th>IM</th><th>N</th></tr></thead><tbody><tr data-ng-repeat=\"ptItemMatrixRow in ptItemMatrix.ptItemMatrixRows\"><td class=\"customer-level\">{{::ptItemMatrixRow.customerLevel.displayName}} ({{ptItemMatrixRow.customerLevel.value}})</td><td>{{::ptItemMatrixRow.superPT | ptValue}}</td><td>{{::ptItemMatrixRow.masterPT | ptValue}}</td><td>{{::ptItemMatrixRow.agentPT | ptValue}}</td><td>{{::ptItemMatrixRow.autoSuperPT | ptValue}}</td><td><input data-ng-show=\"ptItemMatrixRow.isAutoSuperPT != null\" type=\"checkbox\" data-ng-model=\"ptItemMatrixRow.isAutoSuperPT\" disabled></td><td data-ng-switch=\"ptItemMatrixRow.isMasterLevel\" data-ng-class=\"{\'pt-icon\': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, \'pt-icon not-allow\': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,\'not-auto-pt\': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}\"><div data-ng-switch-when=\"true\"><div data-ng-class=\"{\'icon-auto-pt\': ptMatrix.isAllowMasterAutoPT, \'icon-not-auto-pt\': !ptMatrix.isAllowMasterAutoPT}\"></div></div><div data-ng-switch-when=\"false\">{{::ptItemMatrixRow.autoMasterPT | ptValue}}</div></td><td data-ng-switch=\"ptItemMatrixRow.isMasterLevel\" data-ng-class=\"{\'pt-icon\': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, \'pt-icon not-allow\': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,\'not-auto-pt\': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}\"><div data-ng-switch-when=\"true\"><div data-ng-class=\"{\'icon-auto-pt\': ptMatrix.isAllowMasterAutoPT, \'icon-not-auto-pt\': !ptMatrix.isAllowMasterAutoPT}\"></div></div><div data-ng-switch-when=\"false\"><input data-ng-show=\"ptItemMatrixRow.isAutoMasterPT!=null\" type=\"checkbox\" data-ng-model=\"ptItemMatrixRow.isAutoMasterPT\" disabled></div></td><td>{{::ptItemMatrixRow.minPT | ptValue}}</td></tr></tbody></table></div></div>");}]);
+$templateCache.put("Directives/PTMatrix/pt-matrix.htm","<div class=\"group-matrix\" data-ng-repeat=\"ptItemMatrixGroup in ptMatrix.ptItemMatrixGroups\" data-ng-class=\"{\'group-matrix-setting-level-4\': ptMatrix.isSportTypeBetTypeSettingLevel}\"><div class=\"group-name\" data-ng-show=\"ptItemMatrixGroup.name\">{{::ptItemMatrixGroup.name}}</div><div class=\"item-matrix\" data-ng-repeat=\"ptItemMatrix in ptItemMatrixGroup.ptItemMatrices\" data-ng-class=\"{\'item-matrix-setting-level-4\': ptMatrix.isSportTypeBetTypeSettingLevel}\"><div class=\"item-name\">{{::ptItemMatrix.getItemMatrixName(ptItemMatrixGroup.settingLevel, product)}}</div><table><colgroup><col width=\"80\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"><col width=\"50\"></colgroup><thead><tr><th></th><th>Super</th><th>Master</th><th>Agent</th><th>US</th><th>IS</th><th>UM</th><th>IM</th><th>N</th></tr></thead><tbody><tr data-ng-repeat=\"ptItemMatrixRow in ptItemMatrix.ptItemMatrixRows\"><td class=\"customer-level\">{{::ptItemMatrixRow.customerLevel.displayName}} ({{ptItemMatrixRow.customerLevel.value}})</td><td>{{::ptItemMatrixRow.superPT | ptValue}}</td><td>{{::ptItemMatrixRow.masterPT | ptValue}}</td><td>{{::ptItemMatrixRow.agentPT | ptValue}}</td><td>{{::ptItemMatrixRow.autoSuperPT | ptValue}}</td><td><input data-ng-show=\"ptItemMatrixRow.isAutoSuperPT != null\" type=\"checkbox\" data-ng-model=\"ptItemMatrixRow.isAutoSuperPT\" disabled></td><td data-ng-switch=\"ptItemMatrixRow.isMasterLevel\" data-ng-class=\"{\'pt-icon\': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, \'pt-icon not-allow\': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,\'not-auto-pt\': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}\"><div data-ng-switch-when=\"true\"><div data-ng-class=\"{\'icon-auto-pt\': ptMatrix.isAllowMasterAutoPT, \'icon-not-auto-pt\': !ptMatrix.isAllowMasterAutoPT}\"></div></div><div data-ng-switch-when=\"false\">{{::ptItemMatrixRow.autoMasterPT | ptValue}}</div></td><td data-ng-switch=\"ptItemMatrixRow.isMasterLevel\" data-ng-class=\"{\'pt-icon\': ptItemMatrixRow.isMasterLevel && ptMatrix.isAllowMasterAutoPT, \'pt-icon not-allow\': ptItemMatrixRow.isMasterLevel && !ptMatrix.isAllowMasterAutoPT,\'not-auto-pt\': !ptMatrix.isAllowMasterAutoPT && ptItemMatrixRow.isAgentOrMemberLevel}\"><div data-ng-switch-when=\"true\"><div data-ng-class=\"{\'icon-auto-pt\': ptMatrix.isAllowMasterAutoPT, \'icon-not-auto-pt\': !ptMatrix.isAllowMasterAutoPT}\"></div></div><div data-ng-switch-when=\"false\"><input data-ng-show=\"ptItemMatrixRow.isAutoMasterPT!=null\" type=\"checkbox\" data-ng-model=\"ptItemMatrixRow.isAutoMasterPT\" disabled></div></td><td>{{::ptItemMatrixRow.minPT | ptValue}}</td></tr></tbody></table></div></div>");
+$templateCache.put("Directives/BlockUI/block-ui.htm","<div class=\"block-overlay\" data-ng-show=\"isLoading\"><div class=\"block-loading\" data-ng-show=\"isLoading\"></div></div>");}]);
