@@ -73,22 +73,28 @@
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
-            Level uplineLevel = null)
+            Level uplineLevel = null,
+            List<int> customerIds = null,
+            List<string> customerNames = null,
+            params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;
 
-            var settingTypes = new List<SettingType>
-                    {
-                        StubHelper.CreateCustomerSettingType(1),
-                        StubHelper.CreateCustomerSettingType(2),
-                        StubHelper.CreateCustomerSettingType(3),
-                        StubHelper.CreateCustomerSettingType(4)
-                    };
+            if (settingTypeValues == null )
+            {
+                settingTypeValues = DefaultSettingTypeValues;
+            }
+
+            var settingTypes = new List<SettingType>();
+            settingTypeValues.ToList().ForEach(value =>
+            {
+                settingTypes.Add(StubHelper.CreateCustomerSettingType(value));
+            });
 
             var updateMultipleParam = new MultipleUpdateCustomerSettingCommand(
                 new Setting(customerId, customerLevel, productId, settingTypes),
-                new List<int> { customerId, 2 },
-                new List<string> { "Username1", "Username2" },
+                customerIds,
+                customerNames,
                 uplineLevel);
 
             return updateMultipleParam;

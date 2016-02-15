@@ -10,7 +10,7 @@
     {
         public bool IsSynced { get; set; }
 
-        public bool IsSyncedDownline { get; set; }
+        public bool IsDownlineSynced { get; set; }
 
         public bool IsHidden { get; set; }
     }

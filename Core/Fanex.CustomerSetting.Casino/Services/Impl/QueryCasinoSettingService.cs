@@ -79,7 +79,7 @@
 
             CasinoSetting casinoSetting = new CasinoSetting(setting);
 
-            casinoSetting.IsNormalMode = (status.IsSynced && status.IsSyncedDownline);
+            casinoSetting.IsNormalMode = (status.IsSynced && status.IsDownlineSynced);
 
             return casinoSetting;
         }

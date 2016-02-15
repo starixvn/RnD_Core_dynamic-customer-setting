@@ -36,12 +36,12 @@
             return result;
         }
 
-        private IResult Validate(MultipleUpdateCustomerSettingCommand command)
+        protected virtual IResult Validate(MultipleUpdateCustomerSettingCommand command)
         {
             return _validationService.ValidateUpdateMultipleSettingAction(command);
         }
 
-        private List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
+        protected virtual List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
         {
             var customerLevel = command.Setting.CustomerLevel;
             var uplineLevel = command.UplineLevel;
@@ -60,7 +60,7 @@
             return results;
         }
 
-        private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
+        protected virtual IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
             IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,
@@ -102,7 +102,7 @@
             }
         }
 
-        private UpdateSettingResult MapUpdateSettingResultWithCustomerName(
+        protected virtual UpdateSettingResult MapUpdateSettingResultWithCustomerName(
             IEnumerable<SettingResult> settingResults,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
@@ -112,7 +112,7 @@
             return MapSettingResultWithCustomerName(customerIdNameContainer, settingResults);
         }
 
-        private UpdateSettingResult MapSettingResultWithCustomerName(
+        protected virtual UpdateSettingResult MapSettingResultWithCustomerName(
             Dictionary<int, string> customerIdNameContainer,
             IEnumerable<SettingResult> results)
         {
@@ -127,7 +127,7 @@
             return new UpdateSettingResult(results);
         }
 
-        private Dictionary<int, string> GetCustomerIdNameContainer(
+        protected virtual Dictionary<int, string> GetCustomerIdNameContainer(
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
         {
@@ -142,7 +142,7 @@
             return customerIdNameContainer;
         }
 
-        private void WriteLog(
+        protected virtual void WriteLog(
             IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,

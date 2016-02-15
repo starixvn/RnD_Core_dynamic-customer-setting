@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Impl\QueryCasinoSettingService.cs" />
     <Compile Include="Services\Impl\UpdateCasinoSettingService.cs" />
+    <Compile Include="Services\IUpdateCasinoSettingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj">

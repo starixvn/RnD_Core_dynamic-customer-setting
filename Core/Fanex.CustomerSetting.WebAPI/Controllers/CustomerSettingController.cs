@@ -9,10 +9,10 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
-    using Fanex.CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.WebApi.Filters;
     using Fanex.CustomerSetting.WebApi.Helpers;
     using Fanex.CustomerSetting.WebApi.Models.Request;
+    using ServiceLocation;
 
     [SetLanguageFilter]
     public class CustomerSettingController : ApiController
@@ -22,6 +22,16 @@
         private const string CustomerSettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
         private const string CustomerSettingTemplateIe8FilePath = "~/App_Data/Templates/customer-setting-ie8.htm";
         private const byte CachingHours = 4;
+        private readonly ISettingServiceLocator _serviceLocator;
+
+        public CustomerSettingController(ISettingServiceLocator serviceLocator=null)
+        {
+            _serviceLocator = serviceLocator ?? new SettingServiceLocator();
+        }
+
+        public CustomerSettingController() : this(null)
+        {
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
@@ -30,8 +40,9 @@
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
-            
-            var querySettingService = new QuerySettingService(request.GetSettingContext());
+
+           
+            var querySettingService = _serviceLocator.GetQueryService(request.System, request.ProductId, request.GetSettingContext());
 
             try
             {
@@ -59,7 +70,11 @@
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
             }
 
-            var updateSettingService = new UpdateSettingService(request.GetSettingContext());
+            var updateSettingService = _serviceLocator.GetUpdateService(
+                request.System, 
+                request.Setting.ProductId, 
+                request.GetSettingContext()); 
+
             var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
 
             return Request.CreateResponse(result);
@@ -79,7 +94,11 @@
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
             }
 
-            var updateSettingService = new UpdateSettingService(request.GetSettingContext());
+            var updateSettingService = _serviceLocator.GetUpdateService(
+               request.System,
+               request.Setting.ProductId,
+               request.GetSettingContext());
+            
             var result = updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
 
             return Request.CreateResponse(result);

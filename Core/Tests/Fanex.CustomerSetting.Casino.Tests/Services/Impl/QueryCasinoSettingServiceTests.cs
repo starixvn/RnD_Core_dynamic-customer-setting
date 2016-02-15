@@ -138,7 +138,7 @@
             {
                 IsHidden = false,
                 IsSynced = true,
-                IsSyncedDownline = false
+                IsDownlineSynced = false
             };
 
             _dymanicRepository
@@ -168,7 +168,7 @@
             {
                 IsHidden = false,
                 IsSynced = true,
-                IsSyncedDownline = true
+                IsDownlineSynced = true
             };
 
             _dymanicRepository

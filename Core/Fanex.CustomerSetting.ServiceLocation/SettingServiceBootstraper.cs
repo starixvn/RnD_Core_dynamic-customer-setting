@@ -1,11 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.ServiceLocation
 {
     using System;
-    using System.Linq;
     using System.Collections.Concurrent;
+    using System.Linq;
     using Common.Helper;
-    using System.Collections;
-    using System.Collections.Generic;
+
     public static class SettingServiceBootstraper
     {
         private static ConcurrentBag<SettingServiceConfiguration> SettingConfiguration = new ConcurrentBag<SettingServiceConfiguration>();

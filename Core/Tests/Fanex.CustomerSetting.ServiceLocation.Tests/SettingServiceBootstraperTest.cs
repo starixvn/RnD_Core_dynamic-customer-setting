@@ -1,14 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.ServiceLocation.Tests
 {
-    using System;
-    using Casino.Services;
     using Fanex.CustomerSetting.ServiceLocation;
-    using Models;
-    using NSubstitute;
     using NUnit.Framework;
-    using Services.Impl;
-    using static Products;
-    using static SettingServiceBootstraper;
 
     [TestFixture]
     public class SettingServiceBootstraperTest

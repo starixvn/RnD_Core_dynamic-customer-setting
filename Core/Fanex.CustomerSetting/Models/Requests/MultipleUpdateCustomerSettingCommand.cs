@@ -85,5 +85,18 @@
                 }
             }
         }
+
+        public UpdateCustomerSettingCommand GetUpdateCustomerSettingCommand(int customerId)
+        {
+            if (!this.CustomerIds.Contains(customerId))
+            {
+                throw new ArgumentException($"{customerId} does not exist in selected ids for update action");
+            }
+
+            var command = new UpdateCustomerSettingCommand(this.Setting, this.UplineLevel);
+            command.Setting.CustomerId = customerId;
+
+            return command;
+        }
     }
 }
