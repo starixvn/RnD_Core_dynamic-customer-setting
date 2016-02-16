@@ -94,6 +94,7 @@
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\CustomerLevelQueryCriteria.cs" />
     <Compile Include="Models\Constants\DisplayMode.cs" />
+    <Compile Include="Models\Enumerations\ActionType.cs" />
     <Compile Include="Models\Enumerations\Enumeration.cs" />
     <Compile Include="Models\Constants\MessageType.cs" />
     <Compile Include="Models\Constants\ResultValue.cs" />
@@ -103,6 +104,10 @@
     <Compile Include="Models\Messages\MessageContent.cs" />
     <Compile Include="Models\Messages\MainMessage.cs" />
     <Compile Include="Models\Messages\SimpleMessage.cs" />
+    <Compile Include="Services\IAdditionalRequestHandler.cs" />
+    <Compile Include="Services\Impl\AdditionalRequestHandlerFactory.cs" />
+    <Compile Include="Services\Impl\RouteService.cs" />
+    <Compile Include="Services\IRouteService.cs" />
     <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTask.cs" />
     <Compile Include="Tasks\IPostUpdateMultipleCustomersSettingTypeTask.cs" />

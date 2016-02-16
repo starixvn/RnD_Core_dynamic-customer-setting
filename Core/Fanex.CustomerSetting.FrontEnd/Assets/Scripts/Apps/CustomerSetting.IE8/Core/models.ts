@@ -279,7 +279,7 @@ module CustomerSetting.IE8 {
                 this.customerLevel = setting.customerLevel.value;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
-                this.isNormalMode = setting.isNormalMode || true;
+                this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
 
                 if (setting.warningMessage) {
                     this.warningMessage = new Result(setting.warningMessage.code, setting.warningMessage.message, MessageType.warning);
