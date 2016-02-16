@@ -48,7 +48,7 @@
             return ExecuteNonQuery("CustSetting_WinLossLimitUpd", param);
         }
 
-        public IEnumerable<CurrentWinLossAmountItem> GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId)
+        public CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId)
         {
             using (var objectDb = new ObjectDb("CustSetting_WinLossPercentSelect"))
             {
@@ -59,7 +59,7 @@
                     { "bettype", betTypeId }
                 };
 
-                return objectDb.Query<CurrentWinLossAmountItem>(parameterValues);
+                return objectDb.QueryEntity<CurrentWinLossAmountItem>(parameterValues);
             }
         }
     }

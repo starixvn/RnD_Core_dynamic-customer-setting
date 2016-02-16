@@ -13,7 +13,7 @@
     using Fanex.CustomerSetting.SettingType6.Resources;
     using Fanex.Logging;
 
-    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
+    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService, IAdditionalRequestHandler
     {
         private readonly IDataAccess _winLossLimitDataAccess;
 
@@ -74,6 +74,16 @@
                 Message.UpdatedWinLossLimitSuccessfully,
                 settingType.SettingLevel,
                 settingContext.Language);
+        }
+
+        public object Handle(byte actionId, ActionType actionType, dynamic parameters)
+        {
+            CurrentWinLossAmountItem currentWinLossAmount = _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(
+                parameters.CustomerId,
+                parameters.SportTypeId,
+                parameters.BetTypeId);
+
+            return currentWinLossAmount;
         }
     }
 }

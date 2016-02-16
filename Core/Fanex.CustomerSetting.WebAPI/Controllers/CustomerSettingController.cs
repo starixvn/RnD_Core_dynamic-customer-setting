@@ -24,7 +24,7 @@
         private const byte CachingHours = 4;
         private readonly ISettingServiceLocator _serviceLocator;
 
-        public CustomerSettingController(ISettingServiceLocator serviceLocator=null)
+        public CustomerSettingController(ISettingServiceLocator serviceLocator = null)
         {
             _serviceLocator = serviceLocator ?? new SettingServiceLocator();
         }
@@ -41,7 +41,6 @@
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
 
-           
             var querySettingService = _serviceLocator.GetQueryService(request.System, request.ProductId, request.GetSettingContext());
 
             try
@@ -71,9 +70,9 @@
             }
 
             var updateSettingService = _serviceLocator.GetUpdateService(
-                request.System, 
-                request.Setting.ProductId, 
-                request.GetSettingContext()); 
+                request.System,
+                request.Setting.ProductId,
+                request.GetSettingContext());
 
             var result = updateSettingService.Update(request.GetUpdateCustomerSettingCommand());
 
@@ -98,7 +97,7 @@
                request.System,
                request.Setting.ProductId,
                request.GetSettingContext());
-            
+
             var result = updateSettingService.Update(request.GetMultipleUpdateCustomerSettingCommand());
 
             return Request.CreateResponse(result);

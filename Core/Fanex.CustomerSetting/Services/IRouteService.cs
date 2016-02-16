@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
 
     public interface IRouteService
     {
-        object Redirect(short settingTypeId, byte actionId, ActionType actionType, dynamic parameters);
+        object Redirect(RouteCommand command);
     }
 }

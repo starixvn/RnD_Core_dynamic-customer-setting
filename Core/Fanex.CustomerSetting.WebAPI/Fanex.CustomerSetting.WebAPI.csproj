@@ -258,6 +258,7 @@
     <Compile Include="Configurations\CustomerSettingAPIConfiguration.cs" />
     <Compile Include="Controllers\CustomerSettingController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="Filters\HmacAuthorizationFilter.cs" />
     <Compile Include="Filters\LogInfoFilter.cs" />
@@ -269,10 +270,12 @@
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />
+    <Compile Include="Helpers\RouteRequestModelBinder.cs" />
     <Compile Include="Helpers\SettingConverter.cs" />
     <Compile Include="Helpers\SettingItemConverter.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinder.cs" />
     <Compile Include="Models\Request\QuerySettingRequest.cs" />
+    <Compile Include="Models\Request\RouteRequest.cs" />
     <Compile Include="Models\Request\SettingRequest.cs" />
     <Compile Include="Models\Request\MultipleUpdateSettingRequest.cs" />
     <Compile Include="Models\Request\UpdateSettingRequest.cs" />

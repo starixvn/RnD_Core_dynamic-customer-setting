@@ -13,6 +13,6 @@
 
         IResult UpdateCustomerWinLossLimit(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, string winLossLimitXml);
 
-        IEnumerable<CurrentWinLossAmountItem> GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId);
+        CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId);
     }
 }

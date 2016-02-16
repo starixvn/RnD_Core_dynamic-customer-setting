@@ -1,13 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Fanex.CustomerSetting.Models.Requests;
 
     public class RouteService : IRouteService
     {
-        public object Redirect(short settingTypeId, byte actionId, ActionType actionType, dynamic parameters)
+        public object Redirect(RouteCommand command)
         {
-            IAdditionalRequestHandler handler = AdditionalRequestHandlerFactory.GetInstance(settingTypeId);
-            object result = handler.Handle(actionId, actionType, parameters);
+            IAdditionalRequestHandler handler = AdditionalRequestHandlerFactory.GetInstance(command.SettingTypeId);
+            object result = handler.Handle(command.ActionId, command.ActionType, command.Parameters);
 
             return result;
         }
