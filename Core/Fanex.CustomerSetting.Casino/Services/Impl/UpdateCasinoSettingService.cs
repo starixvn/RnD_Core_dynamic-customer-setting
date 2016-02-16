@@ -19,12 +19,12 @@
     public class UpdateCasinoSettingService : IUpdateCasinoSettingService
     {
         private const byte StatusSettingTypeValue = 1;
-        protected readonly ISettingContext _settingContext;
-        protected readonly IUpdateSettingService _updateSettingService;
-        protected readonly IValidationService _validationService;
-        protected readonly IDynamicRepository _dynamicRepository;
-        protected readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
-        protected readonly ILogger _logger;
+        private readonly ISettingContext _settingContext;
+        private readonly IUpdateSettingService _updateSettingService;
+        private readonly IValidationService _validationService;
+        private readonly IDynamicRepository _dynamicRepository;
+        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
+        private readonly ILogger _logger;
 
         public UpdateCasinoSettingService()
         {
@@ -47,7 +47,7 @@
             ISettingContext settingContext,
             IUpdateSettingService updateSettingService,
             IValidationService validationService,
-            IDynamicRepository dynamicRepository, 
+            IDynamicRepository dynamicRepository,
             ISettingTypeServiceFactory settingTypeServiceFactory,
             ILogger logger)
         {
@@ -94,7 +94,14 @@
                 return _updateSettingService.Update(command);
             }
 
-            return UpdateUnsyncedCustomerSetting(command);
+            var result = UpdateUnsyncedCustomerSetting(command);
+
+            if (result.IsOk)
+            {
+                // TODO: Call Update SyncStatus
+            }
+
+            return result;
         }
 
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
@@ -133,8 +140,6 @@
                                    productId,
                                    uplineLevel));
             }
-
-            // TODO: Update IsSync
 
             return new UpdateSettingResult(settingTypeResults);
         }
@@ -180,7 +185,7 @@
             return _validationService.ValidateUpdateSettingAction(command);
         }
 
-        protected  void CheckSettingTypeIsValid(SettingType settingType)
+        protected void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
 
@@ -190,7 +195,7 @@
             }
         }
 
-        protected  void WriteLog(
+        protected void WriteLog(
             int customerId,
             Level customerLevel,
             Level uplineLevel,
@@ -229,7 +234,5 @@
         {
             throw new NotImplementedException();
         }
-
-        
     }
 }

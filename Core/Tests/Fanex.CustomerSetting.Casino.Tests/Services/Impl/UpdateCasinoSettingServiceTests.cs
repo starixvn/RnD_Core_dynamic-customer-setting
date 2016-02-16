@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Casino.Models;
+    using Casino.Services;
     using Casino.Services.Impl;
     using Criteria;
     using CustomerSetting.Models;
@@ -22,7 +23,7 @@
     public class UpdateCasinoSettingServiceTests
     {
         private const int statusSettingTypeValue = 1;
-        private IUpdateSettingService _updateCasinoSettingService;
+        private IUpdateCasinoSettingService _updateCasinoSettingService;
         private ISettingContext _settingContext;
         private IUpdateSettingService _updateSettingService;
         private IValidationService _validationService;
@@ -107,25 +108,21 @@
         }
 
         [Test]
-        public void Update_CustomerCasinoStatusIsUnsynced_RunForceUpdateDownlineSettingFlow()
-        {
-
-        }
-
-        [Test]
         public void Update_UpdateAllSettingTypesSuccessfully_UpdateSyncStatusOfCustomerToTrue()
         {
-
+            Assert.Inconclusive();
         }
 
-        [Test]
-        public void Update_AFailedResultExists_DoNotCallUpdateStatus()
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public void Update_UnsyncedCustomerSetting_AFailedResultExists_DoNotCallUpdateStatus(bool isSynced, bool isDownlineSynced)
         {
             //// Arrange
             var settingTypeValues = new byte[] { statusSettingTypeValue, 2, 5, 3 };
             var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
-            var goodStatus = new CustomerCasinoStatus { IsSynced = true, IsDownlineSynced = true, IsHidden = false };
-            ArrangeCustomerCasinoStatus(command, goodStatus);
+            var unsyncedStatus = new CustomerCasinoStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
+            ArrangeCustomerCasinoStatus(command, unsyncedStatus);
             var services = new List<ISettingTypeService>();
             command.Setting.SettingTypes.ToList().ForEach(settingType =>
             {
@@ -163,14 +160,16 @@
                             Arg.Any<SettingType>());
         }
 
-        [Test]
-        public void Update_AllResultsAreSuccessfull_CallUpdateStatus()
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public void Update_UnsyncedCustomerSetting_AllResultsAreSuccessfull_CallUpdateStatus(bool isSynced, bool isDownlineSynced)
         {
             //// Arrange
             var settingTypeValues = new byte[] { statusSettingTypeValue, 4, 5, 3 };
             var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
-            var goodStatus = new CustomerCasinoStatus { IsSynced = true, IsDownlineSynced = true, IsHidden = false };
-            ArrangeCustomerCasinoStatus(command, goodStatus);
+            var unsyncedStatus = new CustomerCasinoStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
+            ArrangeCustomerCasinoStatus(command, unsyncedStatus);
             var services = new List<ISettingTypeService>();
             command.Setting.SettingTypes.ToList().ForEach(settingType =>
             {
