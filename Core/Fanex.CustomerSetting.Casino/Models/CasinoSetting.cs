@@ -1,31 +1,39 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Models
 {
+    using System;
+    using Common.Helper;
     using Fanex.CustomerSetting.Models;
 
     public class CasinoSetting : Setting
     {
-        private bool _isNormalModel = true;
+        private CustomerProductStatus customerProductStatus;
 
-        public CasinoSetting(ISetting setting)
+        public CasinoSetting(ISetting setting, CustomerProductStatus customerProductStatus)
         {
-            this.CustomerId = setting.CustomerId;
-            this.CustomerInfo = setting.CustomerInfo;
-            this.CustomerLevel = setting.CustomerLevel;
-            this.ProductId = setting.ProductId;
-            this.SettingTypes = setting.SettingTypes;
-            this.WarningMessage = setting.WarningMessage;
+            Check.Argument.IsNotNull(setting, "setting");
+            Check.Argument.IsNotNull(customerProductStatus, "customerProductStatus");
+
+            CustomerId = setting.CustomerId;
+            CustomerInfo = setting.CustomerInfo;
+            CustomerLevel = setting.CustomerLevel;
+            ProductId = setting.ProductId;
+            SettingTypes = setting.SettingTypes;
+            WarningMessage = setting.WarningMessage;
+
+            if (customerProductStatus.IsHidden)
+            {
+                throw new InvalidOperationException($"Cannot get setting for customer {CustomerId} due to hidden status on product {ProductId}");
+            }
+
+            this.customerProductStatus = customerProductStatus;
         }
 
         public bool IsNormalMode
         {
             get
-            {
-                return _isNormalModel;
-            }
-            set
-            {
-                _isNormalModel = value;
-            }
+            {                
+                return customerProductStatus.IsSynced && customerProductStatus.IsDownlineSynced;
+            }           
         }
     }
 }

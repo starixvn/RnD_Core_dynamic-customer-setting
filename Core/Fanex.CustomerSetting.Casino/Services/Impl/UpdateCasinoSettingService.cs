@@ -70,7 +70,7 @@
 
             var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId);
 
-            if (customerCasinoStatus.IsHidden)  
+            if (customerCasinoStatus.IsHidden)
             {
                 throw new InvalidOperationException($"Cannot get setting for customer {command.Setting.CustomerId} due to hidden status on product {command.Setting.ProductId}");
             }
@@ -80,12 +80,13 @@
                 return _updateSettingService.Update(command);
             }
 
+            
             var result = UpdateUnsyncedCustomerSetting(command);
 
             if (result.IsOk)
-            {                
+            {
                 _customerProductStatusService.UpdateCustomerStatus(
-                    command.Setting.CustomerId, 
+                    command.Setting.CustomerId,
                     command.Setting.ProductId,
                     _settingContext.Actor.SubAccountId,
                     _settingContext.Actor.Id,
@@ -93,6 +94,29 @@
             }
 
             return result;
+        }
+
+        public IResult Update(MultipleUpdateCustomerSettingCommand command)
+        {
+            Check.Argument.IsNotNull(command, "command");
+            Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
+
+            var customerLevel = command.Setting.CustomerLevel;
+            var uplineLevel = command.UplineLevel;
+            var customerIds = command.CustomerIds;
+            var settingTypes = command.Setting.SettingTypes;
+            var productId = command.Setting.ProductId;
+            var results = new List<SettingResult>();
+
+            foreach (var customerId in command.CustomerIds)
+            {
+                var updateCustomerSettingCommand = command.GetUpdateCustomerSettingCommand(customerId);
+                var result = Update(updateCustomerSettingCommand);
+
+                results.Add(result as SettingResult);
+            }
+
+            return new UpdateSettingResult(results);
         }
 
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
@@ -171,7 +195,7 @@
             }
         }
 
-        private IResult Validate(UpdateCustomerSettingCommand command)
+        protected IResult Validate(UpdateCustomerSettingCommand command)
         {
             return _validationService.ValidateUpdateSettingAction(command);
         }
@@ -187,43 +211,18 @@
         }
 
         protected void WriteLog(
-            int customerId,
-            Level customerLevel,
-            Level uplineLevel,
-            byte productId,
-            SettingType customerSettingType,
-            CustomerSettingException ex)
+           int customerId,
+           Level customerLevel,
+           Level uplineLevel,
+           byte productId,
+           SettingType customerSettingType,
+           CustomerSettingException ex)
         {
             ex.SetSettingContextInfo("Update Setting Casino", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
             _logger.Error(ex.Message, ex);
-        }
-
-        //protected override List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
-        //{
-        //    var customerLevel = command.Setting.CustomerLevel;
-        //    var uplineLevel = command.UplineLevel;
-        //    var customerIds = command.CustomerIds;
-        //    var settingTypes = command.Setting.SettingTypes;
-        //    var productId = command.Setting.ProductId;
-        //    var results = new List<SettingResult>();
-
-        //    foreach (var customerId in command.CustomerIds)
-        //    {
-        //        var updateCustomerSettingCommand = command.GetUpdateCustomerSettingCommand(customerId);
-        //        var result = Update(updateCustomerSettingCommand);
-
-        //        results.Add(result as SettingResult);
-        //    }
-
-        //    return results;
-        //}
-
-        public IResult Update(MultipleUpdateCustomerSettingCommand command)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }
