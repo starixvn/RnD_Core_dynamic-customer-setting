@@ -16,7 +16,7 @@
         [SetUp]
         public void Init()
         {
-            var setting = new Setting();
+            setting = new Setting();
             setting.CustomerId = 1;
             setting.CustomerLevel = Level.Member;
             setting.ProductId = 1;
