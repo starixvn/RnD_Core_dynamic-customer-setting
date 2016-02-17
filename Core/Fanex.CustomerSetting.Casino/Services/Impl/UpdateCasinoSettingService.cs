@@ -4,25 +4,22 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
-    using Criteria;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using CustomerSetting.Services.Impl;
-    using Data.Repository;
     using Exceptions;
     using Fanex.CustomerSetting.Services;
     using Logging;
-    using Models;
 
     public class UpdateCasinoSettingService : IUpdateCasinoSettingService
     {
-        private const byte StatusSettingTypeValue = 1;
+        private const byte StatusSettingTypeValue = 4;
         private readonly ISettingContext _settingContext;
         private readonly IUpdateSettingService _updateSettingService;
         private readonly IValidationService _validationService;
-        private readonly IDynamicRepository _dynamicRepository;
+        private readonly ICustomerProductStatusService _customerProductStatusService;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
         private readonly ILogger _logger;
 
@@ -38,7 +35,7 @@
             _settingContext = settingContext;
             _updateSettingService = new UpdateSettingService(settingContext);
             _validationService = new ValidationService(settingContext);
-            _dynamicRepository = new DynamicRepository();
+            _customerProductStatusService = new CustomerProductStatusService();
             _settingTypeServiceFactory = new SettingTypeServiceFactory();
             _logger = Logger.Log;
         }
@@ -47,28 +44,16 @@
             ISettingContext settingContext,
             IUpdateSettingService updateSettingService,
             IValidationService validationService,
-            IDynamicRepository dynamicRepository,
+            ICustomerProductStatusService customerProductStatusService,
             ISettingTypeServiceFactory settingTypeServiceFactory,
             ILogger logger)
         {
             _settingContext = settingContext;
             _updateSettingService = updateSettingService;
             _validationService = validationService;
-            _dynamicRepository = dynamicRepository;
+            _customerProductStatusService = customerProductStatusService;
             _settingTypeServiceFactory = settingTypeServiceFactory;
             _logger = logger;
-        }
-
-        private CustomerCasinoStatus GetCustomerCasinoStatus(byte productId, int customerId)
-        {
-            var customerCasinoStatus = _dynamicRepository.Get<CustomerCasinoStatus>(
-                 new GetCustomerCasinoStatusCriteria
-                 {
-                     ProductId = productId,
-                     CustId = customerId
-                 });
-
-            return customerCasinoStatus;
         }
 
         public IResult Update(UpdateCustomerSettingCommand command)
@@ -83,8 +68,9 @@
                 return validationResult;
             }
 
-            var customerCasinoStatus = GetCustomerCasinoStatus(command.Setting.ProductId, command.Setting.CustomerId);
-            if (customerCasinoStatus == null || customerCasinoStatus.IsHidden)
+            var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId);
+
+            if (customerCasinoStatus.IsHidden)  
             {
                 throw new InvalidOperationException($"Cannot get setting for customer {command.Setting.CustomerId} due to hidden status on product {command.Setting.ProductId}");
             }
@@ -97,8 +83,13 @@
             var result = UpdateUnsyncedCustomerSetting(command);
 
             if (result.IsOk)
-            {
-                // TODO: Call Update SyncStatus
+            {                
+                _customerProductStatusService.UpdateCustomerStatus(
+                    command.Setting.CustomerId, 
+                    command.Setting.ProductId,
+                    _settingContext.Actor.SubAccountId,
+                    _settingContext.Actor.Id,
+                    _settingContext.IP);
             }
 
             return result;

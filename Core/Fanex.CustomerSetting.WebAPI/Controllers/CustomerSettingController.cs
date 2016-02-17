@@ -13,7 +13,6 @@
     using Fanex.CustomerSetting.WebApi.Helpers;
     using Fanex.CustomerSetting.WebApi.Models.Request;
     using ServiceLocation;
-
     [SetLanguageFilter]
     public class CustomerSettingController : ApiController
     {

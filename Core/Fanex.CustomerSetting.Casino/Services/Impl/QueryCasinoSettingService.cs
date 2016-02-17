@@ -16,8 +16,6 @@
     /// </summary>
     public class QueryCasinoSettingService : QuerySettingService
     {
-        private readonly IQuerySettingService querySettingService;
-
         public QueryCasinoSettingService(
             ISettingContext settingContext,
             IValidationService validationService = null,
@@ -61,9 +59,9 @@
             return casinoSetting;
         }
 
-        private CustomerCasinoStatus GetCustomerCasinoStatus(CustomerSettingQuery query)
+        private CustomerProductStatus GetCustomerCasinoStatus(CustomerSettingQuery query)
         {
-            var customerCasinoStatus = _dynamicRepository.Get<CustomerCasinoStatus>(
+            var customerCasinoStatus = _dynamicRepository.Get<CustomerProductStatus>(
                  new GetCustomerCasinoStatusCriteria
                  {
                      ProductId = query.ProductId,
@@ -73,7 +71,7 @@
             return customerCasinoStatus;
         }
 
-        private ISetting ProcessStatusSetting(ISetting setting, CustomerCasinoStatus status, CustomerSettingQuery query)
+        private ISetting ProcessStatusSetting(ISetting setting, CustomerProductStatus status, CustomerSettingQuery query)
         {
             Check.Argument.IsNotNull(setting, "setting");
 

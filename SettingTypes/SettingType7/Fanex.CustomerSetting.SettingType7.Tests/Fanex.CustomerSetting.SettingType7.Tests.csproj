@@ -80,10 +80,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType7\Fanex.CustomerSetting.SettingType7.csproj">
-      <Project>{80d5af6e-f977-4bd0-8aaa-e3ffdbfa8235}</Project>
-      <Name>Fanex.CustomerSetting.SettingType7</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\Tests\Fanex.CustomerSetting.Tests\Fanex.CustomerSetting.Tests.csproj">
       <Project>{acbfcea2-a3f7-4527-98fa-abd1e7f451c3}</Project>
       <Name>Fanex.CustomerSetting.Tests</Name>
@@ -91,6 +87,10 @@
     <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.SettingType7\Fanex.CustomerSetting.SettingType7.csproj">
+      <Project>{80d5af6e-f977-4bd0-8aaa-e3ffdbfa8235}</Project>
+      <Name>Fanex.CustomerSetting.SettingType7</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

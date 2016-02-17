@@ -79,13 +79,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj">
-      <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product20</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Product20Tasks\Fanex.CustomerSetting.Tasks.Product20.csproj">
+      <Project>{ca48c0d3-b8bb-42ba-b26a-e0689419f088}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product20</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

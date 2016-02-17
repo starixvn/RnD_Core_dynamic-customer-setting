@@ -67,9 +67,9 @@
             //// Arrange
             var customerQuery = new CustomerSettingQuery(10000, 1, 110, 2);
 
-            CustomerCasinoStatus customerCasinoStatus = null;
+            CustomerProductStatus customerCasinoStatus = null;
             _dymanicRepository
-                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                .Get<CustomerProductStatus>(new GetCustomerCasinoStatusCriteria
                 {
                     ProductId = customerQuery.ProductId,
                     CustId = customerQuery.CustomerId
@@ -87,9 +87,9 @@
             //// Arrange
             var customerQuery = new CustomerSettingQuery(10000, 1, 110, 2);
 
-            var customerCasinoStatus = new CustomerCasinoStatus { IsHidden = true };
+            var customerCasinoStatus = new CustomerProductStatus { IsHidden = true };
             _dymanicRepository
-                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                .Get<CustomerProductStatus>(new GetCustomerCasinoStatusCriteria
                 {
                     ProductId = customerQuery.ProductId,
                     CustId = customerQuery.CustomerId
@@ -109,10 +109,10 @@
         {
             //// Arrange
             var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerCasinoStatus { IsHidden = false, IsSynced = false };
+            var customerCasinoStatus = new CustomerProductStatus { IsHidden = false, IsSynced = false };
 
             _dymanicRepository
-                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                .Get<CustomerProductStatus>(new GetCustomerCasinoStatusCriteria
                 {
                     ProductId = query.ProductId,
                     CustId = query.CustomerId
@@ -134,7 +134,7 @@
         {
             //// Arrange
             var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerCasinoStatus
+            var customerCasinoStatus = new CustomerProductStatus
             {
                 IsHidden = false,
                 IsSynced = true,
@@ -142,7 +142,7 @@
             };
 
             _dymanicRepository
-                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                .Get<CustomerProductStatus>(new GetCustomerCasinoStatusCriteria
                 {
                     ProductId = query.ProductId,
                     CustId = query.CustomerId
@@ -164,7 +164,7 @@
         {
             //// Arrange
             var query = CreateCustomerSettingQuery(levelValue);
-            var customerCasinoStatus = new CustomerCasinoStatus
+            var customerCasinoStatus = new CustomerProductStatus
             {
                 IsHidden = false,
                 IsSynced = true,
@@ -172,7 +172,7 @@
             };
 
             _dymanicRepository
-                .Get<CustomerCasinoStatus>(new GetCustomerCasinoStatusCriteria
+                .Get<CustomerProductStatus>(new GetCustomerCasinoStatusCriteria
                 {
                     ProductId = query.ProductId,
                     CustId = query.CustomerId

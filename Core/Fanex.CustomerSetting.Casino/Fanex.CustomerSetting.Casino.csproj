@@ -91,9 +91,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\GetCustomerCasinoStatusCriteria.cs" />
+    <Compile Include="DataAccesses\ICustomerProductStatusDataAccess.cs" />
+    <Compile Include="DataAccesses\Impl\CustomerProductStatusDataAccess.cs" />
     <Compile Include="Models\CasinoSetting.cs" />
-    <Compile Include="Models\CasinoStatus.cs" />
+    <Compile Include="Models\CustomerProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICustomerProductStatusService.cs" />
+    <Compile Include="Services\Impl\CustomerProductStatusService.cs" />
     <Compile Include="Services\Impl\QueryCasinoSettingService.cs" />
     <Compile Include="Services\Impl\UpdateCasinoSettingService.cs" />
     <Compile Include="Services\IUpdateCasinoSettingService.cs" />
@@ -112,6 +116,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
