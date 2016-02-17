@@ -23,7 +23,7 @@
 
             string jsonContent = actionContext.Request.Content.ReadAsStringAsync().Result;
 
-            RouteRequest routeRequest = JsonConvert.DeserializeObject<RouteRequest>(
+            RedirectRequest routeRequest = JsonConvert.DeserializeObject<RedirectRequest>(
                 jsonContent,
                 new ExpandoObjectConverter());
 

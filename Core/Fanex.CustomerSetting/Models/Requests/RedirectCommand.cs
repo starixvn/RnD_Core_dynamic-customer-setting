@@ -3,7 +3,7 @@
     using System;
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    public class RouteCommand
+    public class RedirectCommand
     {
         private short _settingTypeId;
         private byte _actionId;

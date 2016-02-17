@@ -4,7 +4,7 @@
 
     public class RouteService : IRouteService
     {
-        public object Redirect(RouteCommand command)
+        public object Redirect(RedirectCommand command)
         {
             IAdditionalRequestHandler handler = AdditionalRequestHandlerFactory.GetInstance(command.SettingTypeId);
             object result = handler.Handle(command.ActionId, command.ActionType, command.Parameters);

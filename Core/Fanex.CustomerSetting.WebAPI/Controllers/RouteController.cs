@@ -23,7 +23,7 @@
             _routeService = routeService ?? new RouteService();
         }
 
-        public HttpResponseMessage Redirect([ModelBinder(typeof(RouteRequestModelBinder))]RouteRequest request)
+        public HttpResponseMessage Redirect([ModelBinder(typeof(RouteRequestModelBinder))]RedirectRequest request)
         {
             if (request == null)
             {

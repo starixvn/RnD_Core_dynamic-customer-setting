@@ -104,7 +104,7 @@
     <Compile Include="Models\Messages\MessageContent.cs" />
     <Compile Include="Models\Messages\MainMessage.cs" />
     <Compile Include="Models\Messages\SimpleMessage.cs" />
-    <Compile Include="Models\Requests\RouteCommand.cs" />
+    <Compile Include="Models\Requests\RedirectCommand.cs" />
     <Compile Include="Services\IAdditionalRequestHandler.cs" />
     <Compile Include="Services\Impl\AdditionalRequestHandlerFactory.cs" />
     <Compile Include="Services\Impl\RouteService.cs" />

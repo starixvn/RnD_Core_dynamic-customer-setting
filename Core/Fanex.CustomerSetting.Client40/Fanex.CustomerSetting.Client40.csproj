@@ -89,6 +89,7 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\PermissionContext.cs" />
+    <Compile Include="Models\Requests\RedirectRequest.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\SettingFormQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +100,8 @@
     <Compile Include="Helpers\TypeDetection.cs" />
     <Compile Include="Services\CustomerSettingService.cs" />
     <Compile Include="Services\ICustomerSettingService.cs" />
+    <Compile Include="Services\IRouteService.cs" />
+    <Compile Include="Services\RouteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

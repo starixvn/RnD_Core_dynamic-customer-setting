@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
 
-    public class RouteRequest
+    public class RedirectRequest
     {
         [Range(1, short.MaxValue)]
         public byte SettingTypeId { get; set; }
@@ -17,9 +17,9 @@
 
         public dynamic Parameters { get; set; }
 
-        internal RouteCommand ToRouteCommand()
+        internal RedirectCommand ToRouteCommand()
         {
-            return new RouteCommand
+            return new RedirectCommand
             {
                 SettingTypeId = SettingTypeId,
                 ActionId = ActionId,

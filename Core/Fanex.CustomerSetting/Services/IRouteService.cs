@@ -4,6 +4,6 @@
 
     public interface IRouteService
     {
-        object Redirect(RouteCommand command);
+        object Redirect(RedirectCommand command);
     }
 }
