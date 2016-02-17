@@ -33,6 +33,18 @@ module CustomerSetting.IE8 {
             return value;
         }
 
+        public getFormattedLabel(key: string, ...args: any[]): string {
+            var label: string = this.getMessage(key);
+
+            if (angular.isDefined(label)) {
+                label = label.replace(/{(\d+)}/g, (match: string, index: number) => {
+                    return args[index] === (undefined || null) ? match : args[index];
+                });
+            }
+
+            return label;
+        }
+
         public getMessage(key: string): string {
             var msg: string = this.message[key];
 
@@ -93,7 +105,9 @@ module CustomerSetting.IE8 {
 
     function MessageFilter(resourceService: ResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return resourceService.getFormattedMessage.apply(resourceService, replacements);
         };
     }
 

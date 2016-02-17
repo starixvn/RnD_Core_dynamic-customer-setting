@@ -26,7 +26,9 @@ module CustomerSetting.IE8 {
 
     function SettingType6MessageFilter(settingType6ResourceService: SettingType6ResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, replacements);
         };
     }
 

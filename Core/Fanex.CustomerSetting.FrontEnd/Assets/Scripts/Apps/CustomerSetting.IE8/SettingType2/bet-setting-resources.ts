@@ -26,7 +26,9 @@ module CustomerSetting.IE8 {
 
     function BetSettingMessageFilter(betSettingResourceService: BetSettingResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return betSettingResourceService.getFormattedMessage.apply(betSettingResourceService, replacements);
         };
     }
 

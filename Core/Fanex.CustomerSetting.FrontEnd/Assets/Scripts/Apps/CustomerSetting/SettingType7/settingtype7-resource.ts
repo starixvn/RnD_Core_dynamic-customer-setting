@@ -26,7 +26,9 @@ module CustomerSetting {
 
     function SettingType7MessageFilter(settingType7ResourceService: SettingType7ResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, replacements);
         };
     }
 

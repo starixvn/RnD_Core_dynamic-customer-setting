@@ -26,7 +26,9 @@ module CustomerSetting.IE8 {
 
     function CommissionMessageFilter(commissionResourceService: CommissionResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return commissionResourceService.getFormattedMessage.apply(commissionResourceService, replacements);
         };
     }
 

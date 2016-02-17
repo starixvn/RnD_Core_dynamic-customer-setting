@@ -26,7 +26,9 @@ module CustomerSetting.IE8 {
 
     function ProductStatusMessageFilter(productStatusResourceService: ProductStatusResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, replacements);
         };
     }
 

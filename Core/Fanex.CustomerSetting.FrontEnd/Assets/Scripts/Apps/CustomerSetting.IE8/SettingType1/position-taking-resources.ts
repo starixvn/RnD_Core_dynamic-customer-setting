@@ -26,7 +26,9 @@ module CustomerSetting.IE8 {
 
     function PositionTakingMessageFilter(positionTakingResourceService: PositionTakingResourceService): Function {
         return (name: string, ...replacements: any[]) => {
-            return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, [name, replacements]);
+            replacements.unshift(name)
+
+            return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, replacements);
         };
     }
 

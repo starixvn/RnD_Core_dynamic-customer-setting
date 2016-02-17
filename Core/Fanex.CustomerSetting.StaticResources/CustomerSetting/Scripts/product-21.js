@@ -30760,6 +30760,19 @@ var CustomerSetting;
             }
             return value;
         };
+        ResourceService.prototype.getFormattedLabel = function (key) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var label = this.getLabel(key);
+            if (angular.isDefined(label)) {
+                label = label.replace(/{(\d+)}/g, function (match, index) {
+                    return args[index] === (undefined || null) ? match : args[index];
+                });
+            }
+            return label;
+        };
         ResourceService.prototype.getMessage = function (key) {
             var msg = this.message[key];
             if (angular.isUndefined(msg)) {
@@ -30813,7 +30826,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
+            replacements.unshift(name);
+            return resourceService.getFormattedMessage.apply(resourceService, replacements);
         };
     }
     MessageFilter.$inject = ["resourceService"];
@@ -31237,74 +31251,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    uplineLevel: "=",
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            " data-normal-mode=\"setting.isNormalMode\"",
-                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    })();
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var Tooltip = (function () {
         function Tooltip($window, $compile, $timeout, $templateCache) {
             var _this = this;
@@ -31432,6 +31378,74 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    uplineLevel: "=",
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-upline-level=\"uplineLevel\"",
+                            " data-customer-level=\"setting.customerLevel\"",
+                            " data-product-id=\"setting.productId\"",
+                            " data-product-name=\"setting.productName\"",
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            " data-normal-mode=\"setting.isNormalMode\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -32323,7 +32337,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, [name, replacements]);
+            replacements.unshift(name);
+            return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, replacements);
         };
     }
     PositionTakingMessageFilter.$inject = ["positionTakingResourceService"];
@@ -32453,7 +32468,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
+            replacements.unshift(name);
+            return commissionResourceService.getFormattedMessage.apply(commissionResourceService, replacements);
         };
     }
     CommissionMessageFilter.$inject = ["commissionResourceService"];
@@ -32754,7 +32770,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
+            replacements.unshift(name);
+            return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, replacements);
         };
     }
     ProductStatusMessageFilter.$inject = ["productStatusResourceService"];
@@ -32906,7 +32923,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, [name, replacements]);
+            replacements.unshift(name);
+            return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, replacements);
         };
     }
     SettingType6MessageFilter.$inject = ["settingType6ResourceService"];
@@ -33398,7 +33416,8 @@ var CustomerSetting;
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
-            return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, [name, replacements]);
+            replacements.unshift(name);
+            return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, replacements);
         };
     }
     SettingType7MessageFilter.$inject = ["settingType7ResourceService"];

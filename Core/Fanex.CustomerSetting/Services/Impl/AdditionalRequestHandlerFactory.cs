@@ -11,18 +11,15 @@
     internal static class AdditionalRequestHandlerFactory
     {
         private static ConcurrentDictionary<short, IAdditionalRequestHandler> cachedHandlers = new ConcurrentDictionary<short, IAdditionalRequestHandler>();
-        private static IEnumerable<Type> requestHanlersInAssemblies = RequestHanlersInAssemblies();
-        private static string settingTypeRootNamespaceFormat = "Fanex.CustomerSetting.SettingType{0}.";
+        private static IEnumerable<Type> requestHanlersInAssemblies = DetechRequestHanlersInAssemblies();
 
         public static IAdditionalRequestHandler GetInstance(short settingTypeId)
         {
             Check.Argument.IsNotNegativeOrZero(settingTypeId, nameof(settingTypeId));
 
-            IAdditionalRequestHandler matchedHandler = GetInstanceFromCache(settingTypeId);
+            IAdditionalRequestHandler matchingHandler = GetInstanceFromCache(settingTypeId) ?? CreateInstanceAndCache(settingTypeId);
 
-            matchedHandler = matchedHandler ?? CreateInstanceAndCache(settingTypeId);
-
-            return matchedHandler;
+            return matchingHandler;
         }
 
         private static IAdditionalRequestHandler GetInstanceFromCache(short settingTypeId)
@@ -52,12 +49,12 @@
             return handler;
         }
 
-        private static IEnumerable<Type> RequestHanlersInAssemblies()
+        private static IEnumerable<Type> DetechRequestHanlersInAssemblies()
         {
-            Assembly executingAssembly = Assembly.GetEntryAssembly();
+            Assembly entryAssembly = Assembly.GetEntryAssembly();
             IEnumerable<Type> types = Type.EmptyTypes;
             IEnumerable<Type> matchingTypes = Type.EmptyTypes;
-            ICollection assemblies = executingAssembly.GetReferencedAssemblies();
+            ICollection assemblies = entryAssembly.GetReferencedAssemblies();
 
             foreach (Assembly assembly in assemblies)
             {

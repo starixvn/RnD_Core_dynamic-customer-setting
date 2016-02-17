@@ -24701,6 +24701,19 @@ var CustomerSetting;
                 }
                 return value;
             };
+            ResourceService.prototype.getFormattedLabel = function (key) {
+                var args = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    args[_i - 1] = arguments[_i];
+                }
+                var label = this.getMessage(key);
+                if (angular.isDefined(label)) {
+                    label = label.replace(/{(\d+)}/g, function (match, index) {
+                        return args[index] === (undefined || null) ? match : args[index];
+                    });
+                }
+                return label;
+            };
             ResourceService.prototype.getMessage = function (key) {
                 var msg = this.message[key];
                 if (angular.isUndefined(msg)) {
@@ -24757,7 +24770,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return resourceService.getFormattedMessage.apply(resourceService, [name, replacements]);
+                replacements.unshift(name);
+                return resourceService.getFormattedMessage.apply(resourceService, replacements);
             };
         }
         MessageFilter.$inject = ["resourceService"];
@@ -26223,7 +26237,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, [name, replacements]);
+                replacements.unshift(name);
+                return positionTakingResourceService.getFormattedMessage.apply(positionTakingResourceService, replacements);
             };
         }
         PositionTakingMessageFilter.$inject = ["positionTakingResourceService"];
@@ -26453,7 +26468,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return commissionResourceService.getFormattedMessage.apply(commissionResourceService, [name, replacements]);
+                replacements.unshift(name);
+                return commissionResourceService.getFormattedMessage.apply(commissionResourceService, replacements);
             };
         }
         CommissionMessageFilter.$inject = ["commissionResourceService"];
@@ -26639,7 +26655,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, [name, replacements]);
+                replacements.unshift(name);
+                return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, replacements);
             };
         }
         ProductStatusMessageFilter.$inject = ["productStatusResourceService"];
@@ -26835,7 +26852,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, [name, replacements]);
+                replacements.unshift(name);
+                return settingType6ResourceService.getFormattedMessage.apply(settingType6ResourceService, replacements);
             };
         }
         SettingType6MessageFilter.$inject = ["settingType6ResourceService"];
@@ -27330,7 +27348,8 @@ var CustomerSetting;
                 for (var _i = 1; _i < arguments.length; _i++) {
                     replacements[_i - 1] = arguments[_i];
                 }
-                return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, [name, replacements]);
+                replacements.unshift(name);
+                return settingType7ResourceService.getFormattedMessage.apply(settingType7ResourceService, replacements);
             };
         }
         SettingType7MessageFilter.$inject = ["settingType7ResourceService"];
