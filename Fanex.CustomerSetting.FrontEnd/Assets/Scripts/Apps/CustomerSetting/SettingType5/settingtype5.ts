@@ -16,6 +16,10 @@ module CustomerSetting {
             scope.headerTemplateUrl = "settingtype5-header.htm";
             scope.valueTemplateUrl = "settingtype5-value.htm";
             scope.settingTypeName = this.settingType5ResourceService.getLabel("ChargeCommission");
+
+            if (scope.customerLevel === Level.member && scope.settingType.displayMode === DisplayMode.editable) {
+                scope.settingType.displayMode = DisplayMode.readOnly;
+            }
         };
 
         private settingType5ResourceService: SettingType5ResourceService;

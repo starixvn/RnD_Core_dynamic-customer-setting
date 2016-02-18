@@ -33197,6 +33197,9 @@ var CustomerSetting;
                 scope.headerTemplateUrl = "settingtype5-header.htm";
                 scope.valueTemplateUrl = "settingtype5-value.htm";
                 scope.settingTypeName = _this.settingType5ResourceService.getLabel("ChargeCommission");
+                if (scope.customerLevel === CustomerSetting.Level.member && scope.settingType.displayMode === CustomerSetting.DisplayMode.editable) {
+                    scope.settingType.displayMode = CustomerSetting.DisplayMode.readOnly;
+                }
             };
             this.settingType5ResourceService = settingType5ResourceService;
         }
