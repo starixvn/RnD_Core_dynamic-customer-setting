@@ -21,7 +21,7 @@ module CustomerSetting.IE8 {
         private settingType5ResourceService: SettingType5ResourceService;
 
         constructor(settingType5ResourceService: SettingType5ResourceService) {
-            super((settingItem: any, backup?: boolean) => new SettingType5Item(settingItem, backup));
+            super((settingItem: any, backup?: boolean, customerLevel?: Level) => new SettingType5Item(settingItem, backup, customerLevel));
 
             this.settingType5ResourceService = settingType5ResourceService;
         }

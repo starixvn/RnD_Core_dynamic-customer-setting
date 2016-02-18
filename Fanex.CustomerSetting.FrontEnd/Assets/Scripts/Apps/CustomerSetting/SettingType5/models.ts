@@ -13,14 +13,18 @@ module CustomerSetting {
             return this.corectData(this.upline.chargeCommission - this.chargeCommission);
         }
 
+        private customerLevel: Level;
+
         constructor();
         constructor(settingItem: any);
         constructor(settingItem: any, backup: boolean)
-        constructor(settingItem?: any, backup: boolean = false) {
+        constructor(settingItem?: any, backup?: boolean, customerLevel?: Level)
+        constructor(settingItem?: any, backup: boolean = false, customerLevel?: Level) {
             super(settingItem);
 
             if (settingItem) {
                 this.chargeCommission = this.modifyChargeCommissionToDisplayForm(settingItem.chargeCommission);
+                this.customerLevel = customerLevel;
 
                 if (settingItem.upline) {
                     this.upline = new SettingType5Item(settingItem.upline);
@@ -72,7 +76,7 @@ module CustomerSetting {
                 return false;
             }
 
-            if (this.chargeCommission > this.upline.chargeCommission) {
+            if (this.chargeCommission > this.upline.chargeCommission && this.customerLevel !== Level.member) {
                 this.validationState = new ValidationResult("ShareMustBeLessThanOrEqualToGivenCommissionError", "chargeCommission");
 
                 return false;

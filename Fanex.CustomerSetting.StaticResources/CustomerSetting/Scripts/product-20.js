@@ -32955,11 +32955,12 @@ var CustomerSetting;
     "use strict";
     var SettingType5Item = (function (_super) {
         __extends(SettingType5Item, _super);
-        function SettingType5Item(settingItem, backup) {
+        function SettingType5Item(settingItem, backup, customerLevel) {
             if (backup === void 0) { backup = false; }
             _super.call(this, settingItem);
             if (settingItem) {
                 this.chargeCommission = this.modifyChargeCommissionToDisplayForm(settingItem.chargeCommission);
+                this.customerLevel = customerLevel;
                 if (settingItem.upline) {
                     this.upline = new SettingType5Item(settingItem.upline);
                 }
@@ -33003,7 +33004,7 @@ var CustomerSetting;
                 this.validationState = new CustomerSetting.ValidationResult("ShareMustBePositive", "chargeCommission");
                 return false;
             }
-            if (this.chargeCommission > this.upline.chargeCommission) {
+            if (this.chargeCommission > this.upline.chargeCommission && this.customerLevel !== CustomerSetting.Level.member) {
                 this.validationState = new CustomerSetting.ValidationResult("ShareMustBeLessThanOrEqualToGivenCommissionError", "chargeCommission");
                 return false;
             }
@@ -33190,7 +33191,7 @@ var CustomerSetting;
         __extends(SettingType5Directive, _super);
         function SettingType5Directive(settingType5ResourceService) {
             var _this = this;
-            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType5Item(settingItem, backup); });
+            _super.call(this, function (settingItem, backup, customerLevel) { return new CustomerSetting.SettingType5Item(settingItem, backup, customerLevel); });
             this.templateUrl = "settingtype5.htm";
             this.link = function (scope) {
                 scope.headerTemplateUrl = "settingtype5-header.htm";
