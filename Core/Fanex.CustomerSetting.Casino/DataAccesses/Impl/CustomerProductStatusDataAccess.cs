@@ -27,10 +27,8 @@
                     SubAccID = subAccountId,
                     UserID = userId,
                     IP = ip
-
                 });
             }
-
         }
     }
 }

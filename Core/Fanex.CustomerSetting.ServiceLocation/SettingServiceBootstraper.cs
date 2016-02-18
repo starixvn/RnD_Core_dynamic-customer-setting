@@ -7,15 +7,15 @@
 
     public static class SettingServiceBootstraper
     {
-        private static ConcurrentBag<SettingServiceConfiguration> SettingConfiguration = new ConcurrentBag<SettingServiceConfiguration>();
         private static readonly Type QueryServiceDefaultType = Type.GetType("Fanex.CustomerSetting.Services.Impl.QuerySettingService, Fanex.CustomerSetting");
         private static readonly Type UpdateServiceDefaultType = Type.GetType("Fanex.CustomerSetting.Services.Impl.UpdateSettingService, Fanex.CustomerSetting");
+        private static ConcurrentBag<SettingServiceConfiguration> settingConfiguration = new ConcurrentBag<SettingServiceConfiguration>();
 
         public static void RegisterService(SettingServiceConfiguration config)
         {
             if (IsConfigValid(config))
             {
-                SettingConfiguration.Add(config);
+                settingConfiguration.Add(config);
             }
         }
 
@@ -24,28 +24,28 @@
             Check.Argument.IsNotNegativeOrZero(system, "system");
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var config = SettingConfiguration
+            var config = settingConfiguration
                 .Where(s => s.ProductId == productId)
                 .FirstOrDefault(s => s.System == system || !s.System.HasValue);
 
             if (config == null)
             {
-                return (isQueryAction) ? QueryServiceDefaultType : UpdateServiceDefaultType;
+                return isQueryAction ? QueryServiceDefaultType : UpdateServiceDefaultType;
             }
 
-            return (isQueryAction) ? config.QueryServiceType : config.UpdateServiceType;
+            return isQueryAction ? config.QueryServiceType : config.UpdateServiceType;
         }
 
         private static bool IsConfigValid(SettingServiceConfiguration config)
         {
-            return (config != null
+            return config != null
                 && config.IsValid()
-                && !IsConfigExisted(config));
+                && !IsConfigExisted(config);
         }
 
         private static bool IsConfigExisted(SettingServiceConfiguration config)
         {
-            return SettingConfiguration
+            return settingConfiguration
                 .Where(c => c.ProductId == config.ProductId)
                 .Any(c => !c.System.HasValue || c.System.Value == config.System.Value);
         }
@@ -53,7 +53,9 @@
         internal static void Clear()
         {
             SettingServiceConfiguration result;
-            while (SettingConfiguration.TryTake(out result)) ;
+            while (settingConfiguration.TryTake(out result))
+            {
+            }
         }
     }
 }

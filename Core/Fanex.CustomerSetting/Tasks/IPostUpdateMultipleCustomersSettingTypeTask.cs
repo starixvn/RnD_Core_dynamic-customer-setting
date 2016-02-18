@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tasks
 {
     using System.Collections.Generic;
+    using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Models;
 
     public interface IPostUpdateMultipleCustomersSettingTypeTask
     {

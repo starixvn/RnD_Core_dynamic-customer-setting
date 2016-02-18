@@ -51,9 +51,9 @@
 
             var param = new Hashtable
             {
-                {"custid", querySettingParam.CustomerId},
-                {"productid", querySettingParam.ProductId},
-                {"settingtype", settingType}
+                { "custid", querySettingParam.CustomerId },
+                { "productid", querySettingParam.ProductId },
+                { "settingtype", settingType }
             };
 
             if (querySettingParam.CustomerLevel == Level.Member)

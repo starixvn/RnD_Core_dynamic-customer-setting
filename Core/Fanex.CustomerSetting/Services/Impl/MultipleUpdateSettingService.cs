@@ -25,20 +25,20 @@
             }
 
             // Run plugged tasks before updating settings of mutiple customers.
-            _taskService.Run(command.Setting.ProductId, command);
+            TaskService.Run(command.Setting.ProductId, command);
 
             var updateSettingTypeResults = UpdateSettingTypesForMultipleCustomers(command);
             var result = MapUpdateSettingResultWithCustomerName(updateSettingTypeResults, command.CustomerIds, command.CustomerNames);
 
             // Run plugged tasks after updating settings of mutiple customers.
-            _taskService.Run(command.Setting.ProductId, command, result);
+            TaskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
 
         protected virtual IResult Validate(MultipleUpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateMultipleSettingAction(command);
+            return ValidationService.ValidateUpdateMultipleSettingAction(command);
         }
 
         protected virtual List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
@@ -70,18 +70,18 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
+                TaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
 
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
+                var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
                 var updateSettingResults = settingTypeService.UpdateMultipleCustomerSettingType(
-                        _settingContext,
+                        SettingContext,
                         customerIds,
                         customerLevel,
                         uplineLevel,
                         productId,
                         settingType);
 
-                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
+                TaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
 
                 return updateSettingResults;
             }
@@ -150,11 +150,11 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Multiple Setting", _settingContext);
+            ex.SetSettingContextInfo("Update Multiple Setting", SettingContext);
             ex.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            Logger.Error(ex.Message, ex);
         }
     }
 }

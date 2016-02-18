@@ -72,7 +72,8 @@
 
             if (customerCasinoStatus.IsHidden)
             {
-                throw new InvalidOperationException($"Cannot get setting for customer {command.Setting.CustomerId} due to hidden status on product {command.Setting.ProductId}");
+                throw new InvalidOperationException(
+                    $"Cannot get setting for customer {command.Setting.CustomerId} due to hidden status on product {command.Setting.ProductId}");
             }
 
             if (customerCasinoStatus.IsSynced && customerCasinoStatus.IsDownlineSynced)
@@ -80,7 +81,6 @@
                 return _updateSettingService.Update(command);
             }
 
-            
             var result = UpdateUnsyncedCustomerSetting(command);
 
             if (result.IsOk)
@@ -223,6 +223,6 @@
             ex.SetProductInfo(productId, customerSettingType);
 
             _logger.Error(ex.Message, ex);
-        }        
+        }
     }
 }

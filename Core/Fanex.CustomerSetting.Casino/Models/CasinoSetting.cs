@@ -31,9 +31,9 @@
         public bool IsNormalMode
         {
             get
-            {                
+            {
                 return customerProductStatus.IsSynced && customerProductStatus.IsDownlineSynced;
-            }           
+            }
         }
     }
 }

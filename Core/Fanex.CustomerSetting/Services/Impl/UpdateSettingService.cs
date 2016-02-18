@@ -19,11 +19,11 @@
     /// </summary>
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        protected readonly ISettingContext _settingContext;
-        protected readonly IValidationService _validationService;
-        protected readonly ITaskService _taskService;
-        protected readonly ILogger _logger;
-        protected readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
+        protected readonly ISettingContext SettingContext;
+        protected readonly IValidationService ValidationService;
+        protected readonly ITaskService TaskService;
+        protected readonly ILogger Logger;
+        protected readonly ISettingTypeServiceFactory SettingTypeServiceFactory;
 
         public UpdateSettingService(ISettingContext settingContext)
             : this(settingContext, null, null, null, null)
@@ -40,11 +40,11 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
 
-            _settingContext = settingContext;
-            _validationService = validationService ?? new ValidationService(_settingContext);
-            _taskService = pluggableTaskService ?? new TaskService(_settingContext);
-            _logger = logger ?? Logger.Log;
-            _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
+            SettingContext = settingContext;
+            ValidationService = validationService ?? new ValidationService(SettingContext);
+            TaskService = pluggableTaskService ?? new TaskService(SettingContext);
+            Logger = logger ?? Logging.Logger.Log;
+            SettingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
         }
 
         public UpdateSettingService()
@@ -69,19 +69,19 @@
             }
 
             // Run plugged tasks before updating settings of customer.
-            _taskService.Run(command.Setting.ProductId, command);
+            TaskService.Run(command.Setting.ProductId, command);
 
             IResult result = new UpdateSettingResult(UpdateCustomerSettingTypes(command));
 
             // Run plugged tasks after updating settings of customer.
-            _taskService.Run(command.Setting.ProductId, command, result);
+            TaskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
 
         protected virtual IResult Validate(UpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateSettingAction(command);
+            return ValidationService.ValidateUpdateSettingAction(command);
         }
 
         protected virtual IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
@@ -122,13 +122,13 @@
             {
                 CheckSettingTypeIsValid(settingType);
 
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
+                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
-                var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
+                var settingResult = settingTypeService.UpdateCustomerSettingType(SettingContext, customerId, customerLevel, uplineLevel, productId, settingType);
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
 
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
+                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;
             }
@@ -168,11 +168,11 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Setting", _settingContext);
+            ex.SetSettingContextInfo("Update Setting", SettingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            Logger.Error(ex.Message, ex);
         }
     }
 }

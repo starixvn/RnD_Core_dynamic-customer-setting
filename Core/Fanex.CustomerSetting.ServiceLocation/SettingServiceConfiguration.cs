@@ -20,33 +20,32 @@
                 && QueryServiceType != null;
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    var right = obj as SettingServiceConfiguration;
+        ////public override bool Equals(object obj)
+        ////{
+        ////    var right = obj as SettingServiceConfiguration;
 
-        //    if (right != null)
-        //    {
-        //        return this.System == right.System
-        //            && this.ProductId == this.ProductId;
-        //    }
+        ////    if (right != null)
+        ////    {
+        ////        return this.System == right.System
+        ////            && this.ProductId == this.ProductId;
+        ////    }
 
-        //    return false;
-        //}
+        ////    return false;
+        ////}
 
-        //public override int GetHashCode()
-        //{
-        //    unchecked
-        //    {
-        //        // Choose large primes to avoid hashing collisions
-        //        const int HashingBase = (int)2166136261;
-        //        const int HashingMultiplier = 16777619;
+        ////public override int GetHashCode()
+        ////{
+        ////    unchecked
+        ////    {
+        ////        // Choose large primes to avoid hashing collisions
+        ////        const int HashingBase = (int)2166136261;
+        ////        const int HashingMultiplier = 16777619;
 
-        //        int hash = HashingBase;
-        //        hash = (hash * HashingMultiplier) ^ ProductId.GetHashCode();
-        //        hash = (hash * HashingMultiplier) ^ (this.System.HasValue ? this.System.HasValue.GetHashCode() : this.System.GetHashCode());
-        //        return hash;
-        //    }
-        //}
+        ////        int hash = HashingBase;
+        ////        hash = (hash * HashingMultiplier) ^ ProductId.GetHashCode();
+        ////        hash = (hash * HashingMultiplier) ^ (this.System.HasValue ? this.System.HasValue.GetHashCode() : this.System.GetHashCode());
+        ////        return hash;
+        ////    }
+        ////}
     }
 }
-

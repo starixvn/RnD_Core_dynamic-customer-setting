@@ -12,22 +12,21 @@
     /// </summary>
     public class QueryCasinoSettingService : IQuerySettingService
     {
-        protected readonly ISettingContext settingContext;
-        protected readonly IQuerySettingService querySettingService;
-        protected readonly ICustomerProductStatusService customerProductStatusService;
+        protected readonly ISettingContext SettingContext;
+        protected readonly IQuerySettingService QuerySettingService;
+        protected readonly ICustomerProductStatusService CustomerProductStatusService;
 
         public QueryCasinoSettingService(
             ISettingContext settingContext,
             IQuerySettingService querySettingService = null,
             ICustomerProductStatusService customerProductStatusService = null)
-
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
 
-            this.settingContext = settingContext;
-            this.querySettingService = querySettingService ?? new QuerySettingService(settingContext);
-            this.customerProductStatusService = customerProductStatusService ?? new CustomerProductStatusService();
+            this.SettingContext = settingContext;
+            this.QuerySettingService = querySettingService ?? new QuerySettingService(settingContext);
+            this.CustomerProductStatusService = customerProductStatusService ?? new CustomerProductStatusService();
         }
 
         public QueryCasinoSettingService(ISettingContext settingContext) : this(settingContext, null, null)
@@ -40,9 +39,9 @@
 
         public ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
-            var setting = querySettingService.GetCustomerSetting(query);
+            var setting = QuerySettingService.GetCustomerSetting(query);
 
-            var customerCasinoStatus = customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId);
+            var customerCasinoStatus = CustomerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId);
 
             var casinoSetting = new CasinoSetting(setting, customerCasinoStatus);
 

@@ -15,7 +15,7 @@
             var casinoServiceConfig = new SettingServiceConfiguration
             {
                 ProductId = AllBet,
-                QueryServiceType =  typeof(QueryCasinoSettingService),
+                QueryServiceType = typeof(QueryCasinoSettingService),
                 UpdateServiceType = typeof(UpdateCasinoSettingService)
             };
 

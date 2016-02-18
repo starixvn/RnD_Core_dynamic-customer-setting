@@ -9,10 +9,10 @@
         {
             var param = new Hashtable
             {
-                {"custid", actorId},
-                {"targetcustidlst", memberIds},
-                {"errcode", 0},
-                {"errmsg", string.Empty}
+                { "custid", actorId },
+                { "targetcustidlst", memberIds },
+                { "errcode", 0 },
+                { "errmsg", string.Empty }
             };
 
             return ExecuteNonQuery("CustSetting_MultiCustPermissionValidate", param);

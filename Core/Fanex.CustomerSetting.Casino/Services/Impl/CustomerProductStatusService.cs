@@ -5,7 +5,6 @@
     using DataAccesses.Impl;
     using Models;
 
-
     public class CustomerProductStatusService : ICustomerProductStatusService
     {
         private readonly ICustomerProductStatusDataAccess dataAccess;
