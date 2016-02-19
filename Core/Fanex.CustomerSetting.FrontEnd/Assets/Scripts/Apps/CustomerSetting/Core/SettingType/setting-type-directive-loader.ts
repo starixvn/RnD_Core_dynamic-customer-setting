@@ -6,7 +6,6 @@ module CustomerSetting {
     "use strict";
 
     interface ISettingTypeLoaderScope extends ng.IScope {
-        uplineLevel: Level;
         setting: Setting;
         update: (settingTypeId: { settingTypeId: number }) => void;
     }
@@ -17,7 +16,6 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                uplineLevel: "=",
                 setting: "=",
                 update: "&"
             };
@@ -49,14 +47,9 @@ module CustomerSetting {
                         var newNodeParts = [
                             "<",
                             settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
                             " data-setting-type=\"setting.settingTypes[",
                             index,
                             "]\"",
-                            " data-normal-mode=\"setting.isNormalMode\"",
                             " data-update=\"update({ settingTypeId: settingTypeId})\"",
                             "></",
                             settingTypeName,

@@ -441,6 +441,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\module-registrater.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\requesting-server-service.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-base-directive.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-directive-loader.ts" />
@@ -496,6 +497,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\module-registrater.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\parameters.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\requesting-server-service.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-base-directive.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />

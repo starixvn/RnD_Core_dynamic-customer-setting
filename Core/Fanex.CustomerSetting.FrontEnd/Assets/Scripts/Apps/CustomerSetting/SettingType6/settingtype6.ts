@@ -1,79 +1,95 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/blockui/block-ui.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/common.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/requesting-server-service.ts" />
 /// <reference path="models.ts" />
 /// <reference path="settingtype6-resource.ts" />
 
 module CustomerSetting {
-    interface ISettingType7DirectviceScope extends IDefaultSettingTypeDirectiveScope {
+    const settingTypeId: number = 6;
+
+    interface ISettingType6DirectviceScope extends IDefaultSettingTypeDirectiveScope {
         highestPercentageRange: number;
         getCurrentWinLoss: (settingItem: SettingType6Item) => void;
     }
 
     class SettingType6Directive extends DefaultSettingTypeGroupingDirective {
-        public static $inject: string[] = ["settingType6ResourceService"];
-
         public replace: boolean = true;
         public templateUrl: string = "settingtype6.htm";
 
         public get scope(): any {
             return {
-                uplineLevel: "=",
-                customerLevel: "=",
-                productId: "=",
-                productName: "=",
                 settingType: "=",
-                normalMode: "=",
                 update: "&"
             };
         }
 
-        public controller: any = ["$scope", "blockUiService", ($scope: ISettingType7DirectviceScope, blockUiService: BlockUiService) => {
-            $scope.avaiCustomerLevels = Level;
-            $scope.avaiSettingLevels = SettingLevel;
-            $scope.settingTypeName = this.settingType6ResourceService.getLabel("WinLossLimit");
-            $scope.highestPercentageRange = 100;
+        public controller: any = [
+            "$scope",
+            "$http",
+            "appConfigService",
+            "requestService",
+            "settingTypesSharedValuesService",
+            "settingType6ResourceService",
+            (
+                $scope: ISettingType6DirectviceScope,
+                $http: ng.IHttpService,
+                appConfigService: AppConfigService,
+                requestService: RequestService,
+                settingTypesSharedValuesService: SettingTypesSharedValuesService,
+                settingType6ResourceService: SettingType6ResourceService
+            ) => {
+                $scope.customerId = settingTypesSharedValuesService.customerId;
+                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                $scope.productId = settingTypesSharedValuesService.productId;
+                $scope.productName = settingTypesSharedValuesService.productName;
+                $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                $scope.avaiCustomerLevels = Level;
+                $scope.avaiSettingLevels = SettingLevel;
+                $scope.settingTypeName = settingType6ResourceService.getLabel("WinLossLimit");
+                $scope.highestPercentageRange = 100;
 
-            $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    if (settingType.isError) {
-                        if (settingType.settingItems.length > 0) {
-                            settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
-                        }
-                    } else {
-                        settingType.settingItems.forEach((item: any, index: number) => {
-                            if (angular.isDefined(item)) {
-                                settingType.settingItems[index] = new SettingType6Item(item, true);
+                $scope.$watch("settingType", (settingType: SettingType) => {
+                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                        if (settingType.isError) {
+                            if (settingType.settingItems.length > 0) {
+                                settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
                             }
-                        });
-
-                        if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                            $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
                         } else {
-                            $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                            settingType.settingItems.forEach((item: any, index: number) => {
+                                if (angular.isDefined(item)) {
+                                    settingType.settingItems[index] = new SettingType6Item(item, true);
+                                }
+                            });
+
+                            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                                $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+                            } else {
+                                $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            $scope.getCurrentWinLoss = (settingItem: SettingType6Item) => {
-                blockUiService.blockUi();
-                settingItem.currentWinLossAmount = new CurrentWinLossAmountItem();
-                settingItem.currentWinLossAmount.winPercent = 110;
-                settingItem.currentWinLossAmount.maxWinAmountt = 200000;
-                settingItem.currentWinLossAmount.lossPercent = 0;
-                settingItem.currentWinLossAmount.maxLossAmount = 100000;
-                blockUiService.unblockUi();
-            };
-        }];
+                $scope.getCurrentWinLoss = (settingItem: SettingType6Item) => {
+                    var command: RedirectCommand = new RedirectCommand(
+                        settingTypeId,
+                        0,
+                        ActionType.query,
+                        {
+                            customerId: $scope.customerId,
+                            sportTypeId: settingItem.sportTypeId,
+                            betTypeId: settingItem.betTypeId
+                        });
 
-        private settingType6ResourceService: SettingType6ResourceService;
-
-        constructor(settingType6ResourceService: SettingType6ResourceService) {
-            super();
-            this.settingType6ResourceService = settingType6ResourceService;
-        }
+                    requestService.request(appConfigService.getSettingTypeActionPath(), command.toJson(), (response: ng.IHttpPromiseCallbackArg<any>) => {
+                        settingItem.currentWinLossAmount = new CurrentWinLossAmountItem(response.data);
+                    });
+                };
+            }];
     }
 
     ModuleRegister.directive("settingtype6", SettingType6Directive);

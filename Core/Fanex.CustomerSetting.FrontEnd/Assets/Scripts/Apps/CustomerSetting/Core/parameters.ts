@@ -213,4 +213,27 @@ module CustomerSetting {
             this.settingType = settingType;
         }
     }
+
+    export class RedirectCommand {
+        public settingTypeId: number;
+        public actionId: number;
+        public actionType: ActionType;
+        public jsonParameters: any;
+
+        constructor(settingTypeId: number, actionId: number, actionType: ActionType, jsonParameters: any) {
+            this.settingTypeId = settingTypeId;
+            this.actionId = actionId;
+            this.actionType = actionType;
+            this.jsonParameters = jsonParameters;
+        }
+
+        public toJson(): {} {
+            return {
+                settingTypeId: this.settingTypeId,
+                actionId: this.actionId,
+                actionType: this.actionType,
+                jsonParameters: JSON.stringify(this.jsonParameters)
+            };
+        }
+    }
 }

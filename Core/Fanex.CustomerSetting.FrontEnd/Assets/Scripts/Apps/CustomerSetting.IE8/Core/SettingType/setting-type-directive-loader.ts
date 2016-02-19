@@ -7,7 +7,6 @@ module CustomerSetting.IE8 {
     "use strict";
 
     interface ISettingTypeLoaderScope extends ng.IScope {
-        uplineLevel: Level;
         setting: Setting;
         update: (settingTypeId: { settingTypeId: number }) => void;
     }
@@ -48,14 +47,9 @@ module CustomerSetting.IE8 {
                         var newNodeParts = [
                             "<div data-",
                             settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
                             " data-setting-type=\"setting.settingTypes[",
                             index,
                             "]\"",
-                            " data-normal-mode=\"setting.isNormalMode\"",
                             " data-update=\"update({ settingTypeId: settingTypeId})\"",
                             "></div>"
                         ];

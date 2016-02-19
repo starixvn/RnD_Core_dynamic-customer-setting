@@ -22,6 +22,12 @@ module CustomerSetting {
         hidden = 3
     }
 
+    export enum ActionType {
+        query = 0,
+        update = 1,
+        multipleUpdate = 2
+    }
+
     export class Exceptions {
         public static notImplemented(funcName: string): string {
             return StringFormater.format("{0} is not implemented", funcName);

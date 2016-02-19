@@ -107,8 +107,17 @@ module CustomerSetting.IE8 {
 
     export class CurrentWinLossAmountItem {
         public winPercent: number;
-        public maxWinAmountt: number;
+        public maxWinAmount: number;
         public lossPercent: number;
         public maxLossAmount: number;
+
+        constructor(currentWinningAmount: any) {
+            if (currentWinningAmount) {
+                this.winPercent = currentWinningAmount.winPercent;
+                this.maxWinAmount = currentWinningAmount.maxWinAmount;
+                this.lossPercent = currentWinningAmount.lossPercent;
+                this.maxLossAmount = currentWinningAmount.maxLossAmount;
+            }
+        }
     }
 }

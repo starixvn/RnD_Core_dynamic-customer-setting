@@ -23768,6 +23768,12 @@ var CustomerSetting;
             DisplayMode[DisplayMode["hidden"] = 3] = "hidden";
         })(IE8.DisplayMode || (IE8.DisplayMode = {}));
         var DisplayMode = IE8.DisplayMode;
+        (function (ActionType) {
+            ActionType[ActionType["query"] = 0] = "query";
+            ActionType[ActionType["update"] = 1] = "update";
+            ActionType[ActionType["multipleUpdate"] = 2] = "multipleUpdate";
+        })(IE8.ActionType || (IE8.ActionType = {}));
+        var ActionType = IE8.ActionType;
         var Exceptions = (function () {
             function Exceptions() {
             }
@@ -24454,6 +24460,24 @@ var CustomerSetting;
             return SettingPartialCommand;
         })();
         IE8.SettingPartialCommand = SettingPartialCommand;
+        var RedirectCommand = (function () {
+            function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
+                this.settingTypeId = settingTypeId;
+                this.actionId = actionId;
+                this.actionType = actionType;
+                this.jsonParameters = jsonParameters;
+            }
+            RedirectCommand.prototype.toJson = function () {
+                return {
+                    settingTypeId: this.settingTypeId,
+                    actionId: this.actionId,
+                    actionType: this.actionType,
+                    jsonParameters: JSON.stringify(this.jsonParameters)
+                };
+            };
+            return RedirectCommand;
+        })();
+        IE8.RedirectCommand = RedirectCommand;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -24486,7 +24510,7 @@ var CustomerSetting;
                 return this.applicationPath + "updateCustomerSetting/updateMultipleSetting";
             };
             AppConfigService.prototype.getSettingTypeActionPath = function () {
-                return this.applicationPath + "settingType/redirectAction";
+                return this.applicationPath + "route/redirect";
             };
             AppConfigService.prototype.requestVerificationToken = function () {
                 return this.antiForgeryToken;
@@ -24608,6 +24632,23 @@ var CustomerSetting;
         })();
         IE8.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
         IE8.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
+        var SettingTypesSharedValuesService = (function () {
+            function SettingTypesSharedValuesService() {
+            }
+            SettingTypesSharedValuesService.prototype.register = function (setting, uplineLevel) {
+                this.uplineLevel = uplineLevel;
+                if (setting) {
+                    this.customerId = setting.customerId;
+                    this.customerLevel = setting.customerLevel;
+                    this.productId = setting.productId;
+                    this.productName = setting.productName;
+                    this.normalMode = setting.isNormalMode;
+                }
+            };
+            return SettingTypesSharedValuesService;
+        })();
+        IE8.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
+        IE8.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
         var ValueRangeService = (function () {
             function ValueRangeService() {
             }
@@ -24784,21 +24825,105 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var BlockUiDirective = (function () {
+            function BlockUiDirective() {
+                this.replace = true;
+                this.templateUrl = "BlockUI/block-ui.htm";
+                this.controller = ["$scope", "blockUiService", function ($scope, blockUiService) {
+                        blockUiService.setup($scope);
+                    }];
+            }
+            return BlockUiDirective;
+        })();
+        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
+        var BlockUiService = (function () {
+            function BlockUiService() {
+            }
+            BlockUiService.prototype.setup = function (scope) {
+                this.scope = scope;
+            };
+            BlockUiService.prototype.blockUi = function () {
+                this.scope.isLoading = true;
+            };
+            BlockUiService.prototype.unblockUi = function () {
+                this.scope.isLoading = false;
+            };
+            return BlockUiService;
+        })();
+        IE8.BlockUiService = BlockUiService;
+        IE8.ModuleRegister.service("blockUiService", BlockUiService);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var RequestService = (function () {
+            function RequestService($http, resourceService, blockUiService) {
+                this.$http = $http;
+                this.resourceService = resourceService;
+                this.blockUiService = blockUiService;
+            }
+            RequestService.prototype.registerSharedScope = function (sharedScope) {
+                this.sharedScope = sharedScope;
+            };
+            RequestService.prototype.request = function (path, parameters, callback) {
+                var _this = this;
+                this.blockUiService.blockUi();
+                this.$http
+                    .post(path, parameters)
+                    .then(function (response) {
+                    callback(response);
+                }, function (response) {
+                    var error;
+                    if (response) {
+                        if (response.status === 401) {
+                            error = IE8.Result.notAuthorizedError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
+                        else if (response.data) {
+                            error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
+                        }
+                        else {
+                            error = IE8.Result.systemError;
+                            error.message = _this.resourceService.getMessage(error.message);
+                        }
+                    }
+                    _this.sharedScope.requestMsgResult = error;
+                })["finally"](function () {
+                    _this.blockUiService.unblockUi();
+                });
+            };
+            RequestService.$inject = ["$http", "resourceService", "blockUiService"];
+            return RequestService;
+        })();
+        IE8.RequestService = RequestService;
+        IE8.ModuleRegister.service("requestService", RequestService);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var CustomerSettingController = (function () {
-            function CustomerSettingController($window, $rootScope, $http, $timeout, appConfigService, parametersService, resourceService, blockUiService, updatingSettingTypePromiseChain) {
+            function CustomerSettingController($window, $rootScope, $timeout, appConfigService, parametersService, resourceService, requestService, updatingSettingTypePromiseChain, settingTypesSharedValuesService) {
                 var _this = this;
                 this.$window = $window;
                 this.$rootScope = $rootScope;
-                this.$http = $http;
                 this.$timeout = $timeout;
                 this.appConfigService = appConfigService;
                 this.parametersService = parametersService;
                 this.resourceService = resourceService;
-                this.blockUiService = blockUiService;
+                this.requestService = requestService;
                 this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+                this.settingTypesSharedValuesService = settingTypesSharedValuesService;
                 this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
                 this.customerNames = this.parametersService.getCustomerNames();
-                this.uplineLevel = this.parametersService.getUplineLevel();
+                this.requestService.registerSharedScope(this);
                 angular.element(this.$window.document).ready(function () {
                     _this.querySetting();
                 });
@@ -24835,10 +24960,7 @@ var CustomerSetting;
             };
             CustomerSettingController.prototype.updateSetting = function (path, command, isPartialUpdate, isMultipleUpdate) {
                 var _this = this;
-                this.blockUiService.blockUi();
-                this.$http
-                    .post(path, command.toJson())
-                    .then(function (response) {
+                this.requestService.request(path, command.toJson(), function (response) {
                     _this.requestMsgResult = new IE8.UpdatingSettingResult(response.data);
                     _this.querySetting();
                     _this.$timeout(function () {
@@ -24849,67 +24971,29 @@ var CustomerSetting;
                             }
                         }
                     }, IE8.Defaults.displayingMsgTime);
-                }, function (response) {
-                    var error;
-                    if (response) {
-                        if (response.status === 401) {
-                            error = IE8.Result.notAuthorizedError;
-                            error.message = _this.resourceService.getMessage(error.message);
-                        }
-                        else if (response.data) {
-                            error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
-                        }
-                        else {
-                            error = IE8.Result.systemError;
-                            error.message = _this.resourceService.getMessage(error.message);
-                        }
-                    }
-                    _this.requestMsgResult = error;
-                })["finally"](function () {
-                    _this.blockUiService.unblockUi();
                 });
             };
             CustomerSettingController.prototype.querySetting = function () {
                 var _this = this;
                 var query = this.parametersService.getSettingQuery();
                 if (query) {
-                    this.blockUiService.blockUi();
-                    this.$http
-                        .post(this.appConfigService.getQueryPath(), query.toJson())
-                        .then(function (response) {
+                    this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), function (response) {
                         _this.setting = new IE8.Setting(response.data);
                         _this.warningMessages = _this.setting.warningMessage;
-                    }, function (response) {
-                        var error;
-                        if (response) {
-                            if (response.status === 401) {
-                                error = IE8.Result.notAuthorizedError;
-                                error.message = _this.resourceService.getMessage(error.message);
-                            }
-                            else if (response.data) {
-                                error = new IE8.Result(response.status, response.data.message, IE8.MessageType.error);
-                            }
-                            else {
-                                error = IE8.Result.systemError;
-                                error.message = _this.resourceService.getMessage(error.message);
-                            }
-                        }
-                        _this.requestMsgResult = error;
-                    })["finally"](function () {
-                        _this.blockUiService.unblockUi();
+                        _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.getUplineLevel());
                     });
                 }
             };
             CustomerSettingController.$inject = [
                 "$window",
                 "$rootScope",
-                "$http",
                 "$timeout",
                 "appConfigService",
                 "parametersService",
                 "resourceService",
-                "blockUiService",
-                "updatingSettingTypePromiseChain"];
+                "requestService",
+                "updatingSettingTypePromiseChain",
+                "settingTypesSharedValuesService"];
             return CustomerSettingController;
         })();
         IE8.ModuleRegister.controller("customerSettingController", CustomerSettingController);
@@ -24933,41 +25017,6 @@ var CustomerSetting;
             return CustomerInfoDirective;
         })();
         IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var BlockUiDirective = (function () {
-            function BlockUiDirective() {
-                this.replace = true;
-                this.templateUrl = "BlockUI/block-ui.htm";
-                this.controller = ["$scope", "blockUiService", function ($scope, blockUiService) {
-                        blockUiService.setup($scope);
-                    }];
-            }
-            return BlockUiDirective;
-        })();
-        IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
-        var BlockUiService = (function () {
-            function BlockUiService() {
-            }
-            BlockUiService.prototype.setup = function (scope) {
-                this.scope = scope;
-            };
-            BlockUiService.prototype.blockUi = function () {
-                this.scope.isLoading = true;
-            };
-            BlockUiService.prototype.unblockUi = function () {
-                this.scope.isLoading = false;
-            };
-            return BlockUiService;
-        })();
-        IE8.BlockUiService = BlockUiService;
-        IE8.ModuleRegister.service("blockUiService", BlockUiService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -25066,15 +25115,19 @@ var CustomerSetting;
                 var _this = this;
                 this.replace = true;
                 this.scope = {
-                    uplineLevel: "=",
-                    customerLevel: "=",
-                    productId: "=",
-                    productName: "=",
                     settingType: "=",
-                    normalMode: "=",
                     update: "&"
                 };
-                this.controller = ["$scope", function ($scope) {
+                this.controller = [
+                    "$scope",
+                    "settingTypesSharedValuesService",
+                    function ($scope, settingTypesSharedValuesService) {
+                        $scope.customerId = settingTypesSharedValuesService.customerId;
+                        $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                        $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                        $scope.productId = settingTypesSharedValuesService.productId;
+                        $scope.productName = settingTypesSharedValuesService.productName;
+                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
                         $scope.avaiCustomerLevels = IE8.Level;
                         $scope.$watch("settingType", function (settingType) {
                             if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -25222,14 +25275,9 @@ var CustomerSetting;
                             var newNodeParts = [
                                 "<div data-",
                                 settingTypeName,
-                                " data-upline-level=\"uplineLevel\"",
-                                " data-customer-level=\"setting.customerLevel\"",
-                                " data-product-id=\"setting.productId\"",
-                                " data-product-name=\"setting.productName\"",
                                 " data-setting-type=\"setting.settingTypes[",
                                 index,
                                 "]\"",
-                                " data-normal-mode=\"setting.isNormalMode\"",
                                 " data-update=\"update({ settingTypeId: settingTypeId})\"",
                                 "></div>"
                             ];
@@ -27188,8 +27236,8 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");

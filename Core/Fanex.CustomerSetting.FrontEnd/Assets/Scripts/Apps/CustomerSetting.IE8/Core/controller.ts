@@ -5,6 +5,7 @@
 /// <reference path="models.ts" />
 /// <reference path="module-registrater.ts" />
 /// <reference path="parameters.ts" />
+/// <reference path="requesting-server-service.ts" />
 
 module CustomerSetting.IE8 {
     "use strict";
@@ -17,54 +18,53 @@ module CustomerSetting.IE8 {
         public static $inject: string[] = [
             "$window",
             "$rootScope",
-            "$http",
             "$timeout",
             "appConfigService",
             "parametersService",
             "resourceService",
-            "blockUiService",
-            "updatingSettingTypePromiseChain"];
+            "requestService",
+            "updatingSettingTypePromiseChain",
+            "settingTypesSharedValuesService"];
 
         public customerNames: string;
-        public uplineLevel: Level;
         public setting: Setting;
         public warningMessages: Result | UpdatingSettingResult;
         public requestMsgResult: Result | UpdatingSettingResult;
 
         private $window: ng.IWindowService;
         private $rootScope: ng.IRootScopeService;
-        private $http: ng.IHttpService;
         private $timeout: ng.ITimeoutService;
         private appConfigService: AppConfigService;
         private parametersService: ParametersService;
         private resourceService: ResourceService;
-        private blockUiService: BlockUiService;
+        private requestService: RequestService;
         private updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain;
+        private settingTypesSharedValuesService: SettingTypesSharedValuesService;
         private successfulUpdatingCallback: ISuccessfulUpdatingCallback;
 
         constructor(
             $window: ng.IWindowService,
             $rootScope: ng.IRootScopeService,
-            $http: ng.IHttpService,
             $timeout: ng.ITimeoutService,
             appConfigService: AppConfigService,
             parametersService: ParametersService,
             resourceService: ResourceService,
-            blockUiService: BlockUiService,
-            updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain) {
+            requestService: RequestService,
+            updatingSettingTypePromiseChain: UpdatingSettingTypePromiseChain,
+            settingTypesSharedValuesService: SettingTypesSharedValuesService) {
             this.$window = $window;
             this.$rootScope = $rootScope;
-            this.$http = $http;
             this.$timeout = $timeout;
             this.appConfigService = appConfigService;
             this.parametersService = parametersService;
             this.resourceService = resourceService;
-            this.blockUiService = blockUiService;
+            this.requestService = requestService;
             this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+            this.settingTypesSharedValuesService = settingTypesSharedValuesService;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
             this.customerNames = this.parametersService.getCustomerNames();
-            this.uplineLevel = this.parametersService.getUplineLevel();
+            this.requestService.registerSharedScope(this);
 
             angular.element(this.$window.document).ready(() => {
                 this.querySetting();
@@ -104,42 +104,19 @@ module CustomerSetting.IE8 {
         }
 
         private updateSetting(path: string, command: SettingCommand, isPartialUpdate?: boolean, isMultipleUpdate?: boolean): void {
-            this.blockUiService.blockUi();
+            this.requestService.request(path, command.toJson(), (response: ng.IHttpPromiseCallbackArg<any>) => {
+                this.requestMsgResult = new UpdatingSettingResult(response.data);
+                this.querySetting();
 
-            this.$http
-                .post(path, command.toJson())
-                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                    this.requestMsgResult = new UpdatingSettingResult(response.data);
-                    this.querySetting();
+                this.$timeout(() => {
+                    if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
+                        this.requestMsgResult = undefined;
 
-                    this.$timeout(() => {
-                        if ((<UpdatingSettingResult>this.requestMsgResult).removeSuccessResults().length === 0) {
-                            this.requestMsgResult = undefined;
-
-                            if (this.successfulUpdatingCallback) {
-                                this.successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate);
-                            }
-                        }
-                    }, Defaults.displayingMsgTime);
-                }, (response: ng.IHttpPromiseCallbackArg<any>) => {
-                    var error: Result;
-
-                    if (response) {
-                        if (response.status === 401) {
-                            error = Result.notAuthorizedError;
-                            error.message = this.resourceService.getMessage(error.message);
-                        } else if (response.data) {
-                            error = new Result(response.status, response.data.message, MessageType.error);
-                        } else {
-                            error = Result.systemError;
-                            error.message = this.resourceService.getMessage(error.message);
+                        if (this.successfulUpdatingCallback) {
+                            this.successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate);
                         }
                     }
-
-                    this.requestMsgResult = error;
-                })
-            ["finally"](() => {
-                this.blockUiService.unblockUi();
+                }, Defaults.displayingMsgTime);
             });
         }
 
@@ -147,32 +124,10 @@ module CustomerSetting.IE8 {
             var query: SettingQuery = this.parametersService.getSettingQuery();
 
             if (query) {
-                this.blockUiService.blockUi();
-
-                this.$http
-                    .post(this.appConfigService.getQueryPath(), query.toJson())
-                    .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                        this.setting = new Setting(response.data);
-                        this.warningMessages = this.setting.warningMessage;
-                    }, (response: ng.IHttpPromiseCallbackArg<any>) => {
-                        var error: Result;
-
-                        if (response) {
-                            if (response.status === 401) {
-                                error = Result.notAuthorizedError;
-                                error.message = this.resourceService.getMessage(error.message);
-                            } else if (response.data) {
-                                error = new Result(response.status, response.data.message, MessageType.error);
-                            } else {
-                                error = Result.systemError;
-                                error.message = this.resourceService.getMessage(error.message);
-                            }
-                        }
-
-                        this.requestMsgResult = error;
-                    })
-                ["finally"](() => {
-                    this.blockUiService.unblockUi();
+                this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), (response: ng.IHttpPromiseCallbackArg<any>) => {
+                    this.setting = new Setting(response.data);
+                    this.warningMessages = this.setting.warningMessage;
+                    this.settingTypesSharedValuesService.register(this.setting, this.parametersService.getUplineLevel());
                 });
             }
         }

@@ -49,7 +49,7 @@ module CustomerSetting.IE8 {
         }
 
         public getSettingTypeActionPath(): string {
-            return this.applicationPath + "settingType/redirectAction";
+            return this.applicationPath + "route/redirect";
         }
 
         public requestVerificationToken(): string {
@@ -226,6 +226,29 @@ module CustomerSetting.IE8 {
     }
 
     ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
+
+    export class SettingTypesSharedValuesService {
+        public customerId: number
+        public uplineLevel: Level;
+        public customerLevel: Level;
+        public productId: number;
+        public productName: string;
+        public normalMode: boolean;
+
+        public register(setting: Setting, uplineLevel: Level): void {
+            this.uplineLevel = uplineLevel;
+
+            if (setting) {
+                this.customerId = setting.customerId;
+                this.customerLevel = setting.customerLevel;
+                this.productId = setting.productId;
+                this.productName = setting.productName;
+                this.normalMode = setting.isNormalMode;
+            }
+        }
+    }
+
+    ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
 
     export class ValueRangeService {
         public generateRanges(value: number, min: number, max: number, step: number, roundingFactor: number): Array<KeyValuePair<number, number>> {

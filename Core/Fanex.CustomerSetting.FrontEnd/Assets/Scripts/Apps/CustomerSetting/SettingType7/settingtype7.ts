@@ -6,57 +6,57 @@
 
 module CustomerSetting {
     class SettingType7Directive extends DefaultSettingTypeGroupingDirective {
-        public static $inject: string[] = ["settingType7ResourceService"];
-
         public replace: boolean = true;
         public templateUrl: string = "settingtype7.htm";
 
         public get scope(): any {
             return {
-                uplineLevel: "=",
-                customerLevel: "=",
-                productId: "=",
-                productName: "=",
                 settingType: "=",
-                normalMode: "=",
                 update: "&"
             };
         }
 
-        public controller: any = ["$scope", ($scope: IDefaultSettingTypeDirectiveScope) => {
-            $scope.avaiCustomerLevels = Level;
-            $scope.avaiSettingLevels = SettingLevel;
-            $scope.settingTypeName = this.settingType7ResourceService.getLabel("BetLimit");
+        public controller: any = [
+            "$scope",
+            "settingTypesSharedValuesService",
+            "settingType7ResourceService",
+            (
+                $scope: IDefaultSettingTypeDirectiveScope,
+                settingTypesSharedValuesService: SettingTypesSharedValuesService,
+                settingType7ResourceService: SettingType7ResourceService
+            ) => {
+                $scope.customerId = settingTypesSharedValuesService.customerId;
+                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                $scope.productId = settingTypesSharedValuesService.productId;
+                $scope.productName = settingTypesSharedValuesService.productName;
+                $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                $scope.avaiCustomerLevels = Level;
+                $scope.avaiSettingLevels = SettingLevel;
+                $scope.settingTypeName = settingType7ResourceService.getLabel("BetLimit");
 
-            $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    if (settingType.isError) {
-                        if (settingType.settingItems.length > 0) {
-                            settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
-                        }
-                    } else {
-                        settingType.settingItems.forEach((item: any, index: number) => {
-                            if (angular.isDefined(item)) {
-                                settingType.settingItems[index] = new SettingType7Item(item, $scope.customerLevel, true);
+                $scope.$watch("settingType", (settingType: SettingType) => {
+                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                        if (settingType.isError) {
+                            if (settingType.settingItems.length > 0) {
+                                settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
                             }
-                        });
-
-                        if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                            $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
                         } else {
-                            $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                            settingType.settingItems.forEach((item: any, index: number) => {
+                                if (angular.isDefined(item)) {
+                                    settingType.settingItems[index] = new SettingType7Item(item, $scope.customerLevel, true);
+                                }
+                            });
+
+                            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
+                                $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+                            } else {
+                                $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
+                            }
                         }
                     }
-                }
-            });
-        }];
-
-        private settingType7ResourceService: SettingType7ResourceService;
-
-        constructor(settingType7ResourceService: SettingType7ResourceService) {
-            super();
-            this.settingType7ResourceService = settingType7ResourceService;
-        }
+                });
+            }];
     }
 
     ModuleRegister.directive("settingtype7", SettingType7Directive);

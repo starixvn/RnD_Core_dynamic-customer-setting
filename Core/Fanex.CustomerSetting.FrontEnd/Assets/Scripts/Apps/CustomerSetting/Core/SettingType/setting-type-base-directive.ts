@@ -9,6 +9,7 @@ module CustomerSetting {
     }
 
     export interface ISettingTypeDirectiveSharedScope extends ng.IScope {
+        customerId: number;
         uplineLevel: Level;
         customerLevel: Level;
         productId: number;
@@ -27,40 +28,44 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                uplineLevel: "=",
-                customerLevel: "=",
-                productId: "=",
-                productName: "=",
                 settingType: "=",
-                normalMode: "=",
                 update: "&"
             };
         }
 
-        public controller: any = ["$scope", ($scope: ISettingTypeDirectiveSharedScope) => {
-            $scope.avaiCustomerLevels = Level;
+        public controller: any = [
+            "$scope",
+            "settingTypesSharedValuesService",
+            ($scope: ISettingTypeDirectiveSharedScope, settingTypesSharedValuesService: SettingTypesSharedValuesService) => {
+                $scope.customerId = settingTypesSharedValuesService.customerId;
+                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                $scope.productId = settingTypesSharedValuesService.productId;
+                $scope.productName = settingTypesSharedValuesService.productName;
+                $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                $scope.avaiCustomerLevels = Level;
 
-            $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                    if (settingType.isError) {
-                        if (settingType.settingItems.length > 0) {
-                            settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
-                        }
-                    } else {
-                        settingType.settingItems.forEach((item: any, index: number) => {
-                            if (angular.isDefined(item)) {
-                                settingType.settingItems[index] = this.settingItemType(
-                                    item,
-                                    true,
-                                    $scope.customerLevel,
-                                    $scope.uplineLevel,
-                                    settingType.extraData);
+                $scope.$watch("settingType", (settingType: SettingType) => {
+                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                        if (settingType.isError) {
+                            if (settingType.settingItems.length > 0) {
+                                settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
                             }
-                        });
+                        } else {
+                            settingType.settingItems.forEach((item: any, index: number) => {
+                                if (angular.isDefined(item)) {
+                                    settingType.settingItems[index] = this.settingItemType(
+                                        item,
+                                        true,
+                                        $scope.customerLevel,
+                                        $scope.uplineLevel,
+                                        settingType.extraData);
+                                }
+                            });
+                        }
                     }
-                }
-            });
-        }];
+                });
+            }];
 
         private settingItemType: INewSettingItem;
 
