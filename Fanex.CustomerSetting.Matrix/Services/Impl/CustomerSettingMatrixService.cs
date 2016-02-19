@@ -67,6 +67,7 @@
                     return _pTMatrixService.GetPTMatrix(settingMatrixQuery, GetMasterName(customerLine));
 
                 case SettingType.Commission:
+                case SettingType.ChargeCommission:
                     return _commissionMatrixService.GetCommissionMatrix(settingMatrixQuery.ProductId, settingMatrixQuery.CustomerName);
 
                 default:

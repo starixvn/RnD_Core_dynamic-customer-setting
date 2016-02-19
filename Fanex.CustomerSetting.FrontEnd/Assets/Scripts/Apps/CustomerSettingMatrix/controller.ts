@@ -63,7 +63,7 @@ module CustomerSettingMatrix {
             this.resourceService = resourceService;
 
             this.settingTypes = [SettingType.PositionTaking, SettingType.Commission];
-            
+
             /* tslint:disable:no-string-literal */
             this.customerName = this.$window["customerName"];
             var querySettingMatrix: any = this.$window["querySettingMatrix"];
@@ -77,7 +77,12 @@ module CustomerSettingMatrix {
                 querySettingMatrix.showFilter);
             /* tslint:enable:no-string-literal */
             this.settingTypeId = this.querySettingMatrix.settingTypeId;
-            this.queryProductNames();
+
+            if (this.querySettingMatrix.showFilter) {
+                this.queryProductNames();
+            } else {
+                this.loadSettingMatrix();
+            }
         }
 
         public updateSettingTypeView(settingTypeId: number) {
@@ -91,33 +96,35 @@ module CustomerSettingMatrix {
         }
 
         public queryProductNames(): void {
-            if (this.querySettingMatrix.settingTypeId == SettingType.Commission.id) {
+            if (this.querySettingMatrix.settingTypeId === SettingType.Commission.id
+                || this.querySettingMatrix.settingTypeId === SettingType.ChargeCommission.id) {
                 this.isUIblocked = true;
 
                 this.$http
                     .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
                     .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                    var products = response.data;
+                        var products = response.data;
 
-                    if (products && products.length > 0) {
-                        this.products = products.map((product: any) => new Product(product));
+                        if (products && products.length > 0) {
+                            this.products = products.map((product: any) => new Product(product));
 
-                        this.products.forEach(p => {
-                            if (p.id == this.querySettingMatrix.productId) {
-                                this.product = p;
+                            this.products.forEach(p => {
+                                if (p.id == this.querySettingMatrix.productId) {
+                                    this.product = p;
+                                }
+                            });
+
+                            if (this.product == null || this.product.id == 0) {
+                                this.product = this.products[0];
                             }
-                        });
-                        
-                        if (this.product == null || this.product.id == 0) {
-                            this.product = this.products[0];
-                        }
 
-                        this.loadSettingMatrix();
-                    }
-                })
+                            this.querySettingMatrix.productId = this.product.id;
+                            this.loadSettingMatrix();
+                        }
+                    })
                     .finally(() => {
-                    this.isUIblocked = false;
-                });
+                        this.isUIblocked = false;
+                    });
             }
             else {
                 this.product = new Product({
@@ -133,41 +140,41 @@ module CustomerSettingMatrix {
                 return;
             }
 
-            this.querySettingMatrix.productId = this.product.id;
             this.errorMessage = "";
             this.isUIblocked = true;
 
             this.$http
                 .post(this.appConfigService.resolveRootUrl(this.querySettingMatrixPath), this.querySettingMatrix)
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                var customerSettingMatrix = response.data;
+                    var customerSettingMatrix = response.data;
 
-                if (customerSettingMatrix.message != null) {
-                    this.handleError(customerSettingMatrix.message);
-                    return;
-                }
-
-                try {
-                    this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer)).reverse();
-                    switch (this.querySettingMatrix.settingTypeId) {
-                        case SettingType.PositionTaking.id:
-                            this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
-                            break;
-                        case SettingType.Commission.id:
-                            this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
-                            break;
+                    if (customerSettingMatrix.message != null) {
+                        this.handleError(customerSettingMatrix.message);
+                        return;
                     }
-                    this.settingTypeMatrix.groupDataBySettingLevel();
-                } /* tslint:disable:one-line */
-                catch (e) {
-                    this.handleError(this.resourceService.getMessage("SettingMatrixIsError"));
-                    this.$window.console.log(e);
-                }
-                /* tslint:enable:one-line */
-            })
+
+                    try {
+                        this.customerLine = customerSettingMatrix.customerLine.map((customer: any) => new Customer(customer)).reverse();
+                        switch (this.querySettingMatrix.settingTypeId) {
+                            case SettingType.PositionTaking.id:
+                                this.settingTypeMatrix = new PTMatrix(customerSettingMatrix.settingTypeMatrix);
+                                break;
+                            case SettingType.Commission.id:
+                            case SettingType.ChargeCommission.id:
+                                this.settingTypeMatrix = new CommissionMatrix(customerSettingMatrix.settingTypeMatrix);
+                                break;
+                        }
+                        this.settingTypeMatrix.groupDataBySettingLevel();
+                    } /* tslint:disable:one-line */
+                    catch (e) {
+                        this.handleError(this.resourceService.getMessage("SettingMatrixIsError"));
+                        this.$window.console.log(e);
+                    }
+                    /* tslint:enable:one-line */
+                })
                 .finally(() => {
-                this.isUIblocked = false;
-            });
+                    this.isUIblocked = false;
+                });
         }
 
         private handleError(errorMessage: string) {
