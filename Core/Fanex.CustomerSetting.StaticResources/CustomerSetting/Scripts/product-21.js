@@ -29717,6 +29717,12 @@ var CustomerSetting;
         DisplayMode[DisplayMode["hidden"] = 3] = "hidden";
     })(CustomerSetting.DisplayMode || (CustomerSetting.DisplayMode = {}));
     var DisplayMode = CustomerSetting.DisplayMode;
+    (function (ActionType) {
+        ActionType[ActionType["query"] = 0] = "query";
+        ActionType[ActionType["update"] = 1] = "update";
+        ActionType[ActionType["multipleUpdate"] = 2] = "multipleUpdate";
+    })(CustomerSetting.ActionType || (CustomerSetting.ActionType = {}));
+    var ActionType = CustomerSetting.ActionType;
     var Exceptions = (function () {
         function Exceptions() {
         }
@@ -30508,6 +30514,24 @@ var CustomerSetting;
         return SettingPartialCommand;
     })();
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
+    var RedirectCommand = (function () {
+        function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
+            this.settingTypeId = settingTypeId;
+            this.actionId = actionId;
+            this.actionType = actionType;
+            this.jsonParameters = jsonParameters;
+        }
+        RedirectCommand.prototype.toJson = function () {
+            return {
+                settingTypeId: this.settingTypeId,
+                actionId: this.actionId,
+                actionType: this.actionType,
+                jsonParameters: JSON.stringify(this.jsonParameters)
+            };
+        };
+        return RedirectCommand;
+    })();
+    CustomerSetting.RedirectCommand = RedirectCommand;
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -30537,7 +30561,7 @@ var CustomerSetting;
             return this.applicationPath + "updateCustomerSetting/updateMultipleSetting";
         };
         AppConfigService.prototype.getSettingTypeActionPath = function () {
-            return this.applicationPath + "settingType/redirectAction";
+            return this.applicationPath + "route/redirect";
         };
         AppConfigService.prototype.requestVerificationToken = function () {
             return this.antiForgeryToken;
@@ -30666,6 +30690,23 @@ var CustomerSetting;
     })();
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
+    var SettingTypesSharedValuesService = (function () {
+        function SettingTypesSharedValuesService() {
+        }
+        SettingTypesSharedValuesService.prototype.register = function (setting, uplineLevel) {
+            this.uplineLevel = uplineLevel;
+            if (setting) {
+                this.customerId = setting.customerId;
+                this.customerLevel = setting.customerLevel;
+                this.productId = setting.productId;
+                this.productName = setting.productName;
+                this.normalMode = setting.isNormalMode;
+            }
+        };
+        return SettingTypesSharedValuesService;
+    })();
+    CustomerSetting.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
+    CustomerSetting.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
     var ValueRangeService = (function () {
         function ValueRangeService() {
         }
@@ -30837,21 +30878,100 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var BlockUiDirective = (function () {
+        function BlockUiDirective() {
+            this.replace = true;
+            this.templateUrl = "BlockUI/block-ui.htm";
+            this.controller = ["$scope", "blockUiService", function ($scope, blockUiService) {
+                    blockUiService.setup($scope);
+                }];
+        }
+        return BlockUiDirective;
+    })();
+    CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
+    var BlockUiService = (function () {
+        function BlockUiService() {
+        }
+        BlockUiService.prototype.setup = function (scope) {
+            this.scope = scope;
+        };
+        BlockUiService.prototype.blockUi = function () {
+            this.scope.isLoading = true;
+        };
+        BlockUiService.prototype.unblockUi = function () {
+            this.scope.isLoading = false;
+        };
+        return BlockUiService;
+    })();
+    CustomerSetting.BlockUiService = BlockUiService;
+    CustomerSetting.ModuleRegister.service("blockUiService", BlockUiService);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var RequestService = (function () {
+        function RequestService($http, resourceService, blockUiService) {
+            this.$http = $http;
+            this.resourceService = resourceService;
+            this.blockUiService = blockUiService;
+        }
+        RequestService.prototype.registerSharedScope = function (sharedScope) {
+            this.sharedScope = sharedScope;
+        };
+        RequestService.prototype.request = function (path, parameters, callback) {
+            var _this = this;
+            this.blockUiService.blockUi();
+            this.$http
+                .post(path, parameters)
+                .then(function (response) {
+                callback(response);
+            }, function (response) {
+                var error;
+                if (response) {
+                    if (response.status === 401) {
+                        error = CustomerSetting.Result.notAuthorizedError;
+                        error.message = _this.resourceService.getMessage(error.message);
+                    }
+                    else if (response.data) {
+                        error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
+                    }
+                    else {
+                        error = CustomerSetting.Result.systemError;
+                        error.message = _this.resourceService.getMessage(error.message);
+                    }
+                }
+                _this.sharedScope.requestMsgResult = error;
+            })
+                .finally(function () {
+                _this.blockUiService.unblockUi();
+            });
+        };
+        RequestService.$inject = ["$http", "resourceService", "blockUiService"];
+        return RequestService;
+    })();
+    CustomerSetting.RequestService = RequestService;
+    CustomerSetting.ModuleRegister.service("requestService", RequestService);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var CustomerSettingController = (function () {
-        function CustomerSettingController($window, $rootScope, $http, $timeout, appConfigService, parametersService, resourceService, blockUiService, updatingSettingTypePromiseChain) {
+        function CustomerSettingController($window, $rootScope, $timeout, appConfigService, parametersService, resourceService, requestService, updatingSettingTypePromiseChain, settingTypesSharedValuesService) {
             var _this = this;
             this.$window = $window;
             this.$rootScope = $rootScope;
-            this.$http = $http;
             this.$timeout = $timeout;
             this.appConfigService = appConfigService;
             this.parametersService = parametersService;
             this.resourceService = resourceService;
-            this.blockUiService = blockUiService;
+            this.requestService = requestService;
             this.updatingSettingTypePromiseChain = updatingSettingTypePromiseChain;
+            this.settingTypesSharedValuesService = settingTypesSharedValuesService;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
             this.customerNames = this.parametersService.customerNames;
-            this.uplineLevel = this.parametersService.uplineLevel;
+            this.requestService.registerSharedScope(this);
             angular.element(this.$window.document).ready(function () {
                 _this.querySetting();
             });
@@ -30888,10 +31008,7 @@ var CustomerSetting;
         };
         CustomerSettingController.prototype.updateSetting = function (path, command, isPartialUpdate, isMultipleUpdate) {
             var _this = this;
-            this.blockUiService.blockUi();
-            this.$http
-                .post(path, command.toJson())
-                .then(function (response) {
+            this.requestService.request(path, command.toJson(), function (response) {
                 _this.requestMsgResult = new CustomerSetting.UpdatingSettingResult(response.data);
                 _this.querySetting();
                 _this.$timeout(function () {
@@ -30902,104 +31019,32 @@ var CustomerSetting;
                         }
                     }
                 }, CustomerSetting.Defaults.displayingMsgTime);
-            }, function (response) {
-                var error;
-                if (response) {
-                    if (response.status === 401) {
-                        error = CustomerSetting.Result.notAuthorizedError;
-                        error.message = _this.resourceService.getMessage(error.message);
-                    }
-                    else if (response.data) {
-                        error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
-                    }
-                    else {
-                        error = CustomerSetting.Result.systemError;
-                        error.message = _this.resourceService.getMessage(error.message);
-                    }
-                }
-                _this.requestMsgResult = error;
-            })
-                .finally(function () {
-                _this.blockUiService.unblockUi();
             });
         };
         CustomerSettingController.prototype.querySetting = function () {
             var _this = this;
             var query = this.parametersService.getSettingQuery();
             if (query) {
-                this.blockUiService.blockUi();
-                this.$http
-                    .post(this.appConfigService.getQueryPath(), query.toJson())
-                    .then(function (response) {
+                this.requestService.request(this.appConfigService.getQueryPath(), query.toJson(), function (response) {
                     _this.setting = new CustomerSetting.Setting(response.data);
                     _this.warningMessages = _this.setting.warningMessage;
-                }, function (response) {
-                    var error;
-                    if (response) {
-                        if (response.status === 401) {
-                            error = CustomerSetting.Result.notAuthorizedError;
-                            error.message = _this.resourceService.getMessage(error.message);
-                        }
-                        else if (response.data) {
-                            error = new CustomerSetting.Result(response.status, response.data.message, CustomerSetting.MessageType.error);
-                        }
-                        else {
-                            error = CustomerSetting.Result.systemError;
-                            error.message = _this.resourceService.getMessage(error.message);
-                        }
-                    }
-                    _this.requestMsgResult = error;
-                })
-                    .finally(function () {
-                    _this.blockUiService.unblockUi();
+                    _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.uplineLevel);
                 });
             }
         };
         CustomerSettingController.$inject = [
             "$window",
             "$rootScope",
-            "$http",
             "$timeout",
             "appConfigService",
             "parametersService",
             "resourceService",
-            "blockUiService",
-            "updatingSettingTypePromiseChain"];
+            "requestService",
+            "updatingSettingTypePromiseChain",
+            "settingTypesSharedValuesService"];
         return CustomerSettingController;
     })();
     CustomerSetting.ModuleRegister.controller("customerSettingController", CustomerSettingController);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var BlockUiDirective = (function () {
-        function BlockUiDirective() {
-            this.replace = true;
-            this.templateUrl = "BlockUI/block-ui.htm";
-            this.controller = ["$scope", "blockUiService", function ($scope, blockUiService) {
-                    blockUiService.setup($scope);
-                }];
-        }
-        return BlockUiDirective;
-    })();
-    CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
-    var BlockUiService = (function () {
-        function BlockUiService() {
-        }
-        BlockUiService.prototype.setup = function (scope) {
-            this.scope = scope;
-        };
-        BlockUiService.prototype.blockUi = function () {
-            this.scope.isLoading = true;
-        };
-        BlockUiService.prototype.unblockUi = function () {
-            this.scope.isLoading = false;
-        };
-        return BlockUiService;
-    })();
-    CustomerSetting.BlockUiService = BlockUiService;
-    CustomerSetting.ModuleRegister.service("blockUiService", BlockUiService);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -31120,7 +31165,16 @@ var CustomerSetting;
         function SettingTypeDirective(settingItemType) {
             var _this = this;
             this.replace = true;
-            this.controller = ["$scope", function ($scope) {
+            this.controller = [
+                "$scope",
+                "settingTypesSharedValuesService",
+                function ($scope, settingTypesSharedValuesService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.normalMode = settingTypesSharedValuesService.normalMode;
                     $scope.avaiCustomerLevels = CustomerSetting.Level;
                     $scope.$watch("settingType", function (settingType) {
                         if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -31144,12 +31198,7 @@ var CustomerSetting;
         Object.defineProperty(SettingTypeDirective.prototype, "scope", {
             get: function () {
                 return {
-                    uplineLevel: "=",
-                    customerLevel: "=",
-                    productId: "=",
-                    productName: "=",
                     settingType: "=",
-                    normalMode: "=",
                     update: "&"
                 };
             },
@@ -31266,7 +31315,6 @@ var CustomerSetting;
         Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
             get: function () {
                 return {
-                    uplineLevel: "=",
                     setting: "=",
                     update: "&"
                 };
@@ -31286,14 +31334,9 @@ var CustomerSetting;
                         var newNodeParts = [
                             "<",
                             settingTypeName,
-                            " data-upline-level=\"uplineLevel\"",
-                            " data-customer-level=\"setting.customerLevel\"",
-                            " data-product-id=\"setting.productId\"",
-                            " data-product-name=\"setting.productName\"",
                             " data-setting-type=\"setting.settingTypes[",
                             index,
                             "]\"",
-                            " data-normal-mode=\"setting.isNormalMode\"",
                             " data-update=\"update({ settingTypeId: settingTypeId})\"",
                             "></",
                             settingTypeName,
@@ -32885,7 +32928,13 @@ var CustomerSetting;
     })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType6Item = SettingType6Item;
     var CurrentWinLossAmountItem = (function () {
-        function CurrentWinLossAmountItem() {
+        function CurrentWinLossAmountItem(currentWinningAmount) {
+            if (currentWinningAmount) {
+                this.winPercent = currentWinningAmount.winPercent;
+                this.maxWinAmount = currentWinningAmount.maxWinAmount;
+                this.lossPercent = currentWinningAmount.lossPercent;
+                this.maxLossAmount = currentWinningAmount.maxLossAmount;
+            }
         }
         return CurrentWinLossAmountItem;
     })();
@@ -33104,17 +33153,31 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var CustomerSetting;
 (function (CustomerSetting) {
+    var settingTypeId = 6;
     var SettingType6Directive = (function (_super) {
         __extends(SettingType6Directive, _super);
-        function SettingType6Directive(settingType6ResourceService) {
+        function SettingType6Directive() {
             var _this = this;
-            _super.call(this);
+            _super.apply(this, arguments);
             this.replace = true;
             this.templateUrl = "settingtype6.htm";
-            this.controller = ["$scope", "blockUiService", function ($scope, blockUiService) {
+            this.controller = [
+                "$scope",
+                "$http",
+                "appConfigService",
+                "requestService",
+                "settingTypesSharedValuesService",
+                "settingType6ResourceService",
+                function ($scope, $http, appConfigService, requestService, settingTypesSharedValuesService, settingType6ResourceService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.normalMode = settingTypesSharedValuesService.normalMode;
                     $scope.avaiCustomerLevels = CustomerSetting.Level;
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
-                    $scope.settingTypeName = _this.settingType6ResourceService.getLabel("WinLossLimit");
+                    $scope.settingTypeName = settingType6ResourceService.getLabel("WinLossLimit");
                     $scope.highestPercentageRange = 100;
                     $scope.$watch("settingType", function (settingType) {
                         if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
@@ -33139,33 +33202,27 @@ var CustomerSetting;
                         }
                     });
                     $scope.getCurrentWinLoss = function (settingItem) {
-                        blockUiService.blockUi();
-                        settingItem.currentWinLossAmount = new CustomerSetting.CurrentWinLossAmountItem();
-                        settingItem.currentWinLossAmount.winPercent = 110;
-                        settingItem.currentWinLossAmount.maxWinAmountt = 200000;
-                        settingItem.currentWinLossAmount.lossPercent = 0;
-                        settingItem.currentWinLossAmount.maxLossAmount = 100000;
-                        blockUiService.unblockUi();
+                        var command = new CustomerSetting.RedirectCommand(settingTypeId, 0, CustomerSetting.ActionType.query, {
+                            customerId: $scope.customerId,
+                            sportTypeId: settingItem.sportTypeId,
+                            betTypeId: settingItem.betTypeId
+                        });
+                        requestService.request(appConfigService.getSettingTypeActionPath(), command.toJson(), function (response) {
+                            settingItem.currentWinLossAmount = new CustomerSetting.CurrentWinLossAmountItem(response.data);
+                        });
                     };
                 }];
-            this.settingType6ResourceService = settingType6ResourceService;
         }
         Object.defineProperty(SettingType6Directive.prototype, "scope", {
             get: function () {
                 return {
-                    uplineLevel: "=",
-                    customerLevel: "=",
-                    productId: "=",
-                    productName: "=",
                     settingType: "=",
-                    normalMode: "=",
                     update: "&"
                 };
             },
             enumerable: true,
             configurable: true
         });
-        SettingType6Directive.$inject = ["settingType6ResourceService"];
         return SettingType6Directive;
     })(CustomerSetting.DefaultSettingTypeGroupingDirective);
     CustomerSetting.ModuleRegister.directive("settingtype6", SettingType6Directive);
@@ -33433,15 +33490,25 @@ var CustomerSetting;
 (function (CustomerSetting) {
     var SettingType7Directive = (function (_super) {
         __extends(SettingType7Directive, _super);
-        function SettingType7Directive(settingType7ResourceService) {
+        function SettingType7Directive() {
             var _this = this;
-            _super.call(this);
+            _super.apply(this, arguments);
             this.replace = true;
             this.templateUrl = "settingtype7.htm";
-            this.controller = ["$scope", function ($scope) {
+            this.controller = [
+                "$scope",
+                "settingTypesSharedValuesService",
+                "settingType7ResourceService",
+                function ($scope, settingTypesSharedValuesService, settingType7ResourceService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.normalMode = settingTypesSharedValuesService.normalMode;
                     $scope.avaiCustomerLevels = CustomerSetting.Level;
                     $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
-                    $scope.settingTypeName = _this.settingType7ResourceService.getLabel("BetLimit");
+                    $scope.settingTypeName = settingType7ResourceService.getLabel("BetLimit");
                     $scope.$watch("settingType", function (settingType) {
                         if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                             if (settingType.isError) {
@@ -33465,24 +33532,17 @@ var CustomerSetting;
                         }
                     });
                 }];
-            this.settingType7ResourceService = settingType7ResourceService;
         }
         Object.defineProperty(SettingType7Directive.prototype, "scope", {
             get: function () {
                 return {
-                    uplineLevel: "=",
-                    customerLevel: "=",
-                    productId: "=",
-                    productName: "=",
                     settingType: "=",
-                    normalMode: "=",
                     update: "&"
                 };
             },
             enumerable: true,
             configurable: true
         });
-        SettingType7Directive.$inject = ["settingType7ResourceService"];
         return SettingType7Directive;
     })(CustomerSetting.DefaultSettingTypeGroupingDirective);
     CustomerSetting.ModuleRegister.directive("settingtype7", SettingType7Directive);
