@@ -46,6 +46,6 @@
 
         public ActionType ActionType { get; set; }
 
-        public dynamic Parameters { get; set; }
+        public string JsonParameters { get; set; }
     }
 }

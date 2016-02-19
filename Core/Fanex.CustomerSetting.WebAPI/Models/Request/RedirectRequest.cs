@@ -4,7 +4,7 @@
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
 
-    public class RedirectRequest
+    public class RedirectRequest : SettingRequest
     {
         [Range(1, short.MaxValue)]
         public byte SettingTypeId { get; set; }
@@ -15,7 +15,7 @@
         [Range(0, 2)]
         public byte ActionType { get; set; }
 
-        public dynamic Parameters { get; set; }
+        public string JsonParameters { get; set; }
 
         internal RedirectCommand ToRouteCommand()
         {
@@ -24,7 +24,7 @@
                 SettingTypeId = SettingTypeId,
                 ActionId = ActionId,
                 ActionType = (ActionType)ActionType,
-                Parameters = Parameters
+                JsonParameters = JsonParameters
             };
         }
     }

@@ -12,6 +12,7 @@
     using Fanex.CustomerSetting.SettingType6.Models;
     using Fanex.CustomerSetting.SettingType6.Resources;
     using Fanex.Logging;
+    using Newtonsoft.Json;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService, IAdditionalRequestHandler
     {
@@ -76,14 +77,25 @@
                 settingContext.Language);
         }
 
-        public object Handle(byte actionId, ActionType actionType, dynamic parameters)
+        public object Handle(ISettingContext settingContext, byte actionId, ActionType actionType, string jsonParameters)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
+
+            CurrentWinLossAmountRequest parameters = DeserializeCurrentWinLossAmountParameters(jsonParameters);
             CurrentWinLossAmountItem currentWinLossAmount = _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(
                 parameters.CustomerId,
                 parameters.SportTypeId,
                 parameters.BetTypeId);
 
             return currentWinLossAmount;
+        }
+
+        private CurrentWinLossAmountRequest DeserializeCurrentWinLossAmountParameters(string jsonParameters)
+        {
+            var parameters = JsonConvert.DeserializeObject<CurrentWinLossAmountRequest>(jsonParameters);
+
+            return parameters;
         }
     }
 }

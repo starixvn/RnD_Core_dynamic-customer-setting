@@ -11,19 +11,7 @@
 
     public class RouteController : ApiController
     {
-        private IRouteService _routeService;
-
-        public RouteController() :
-            this(null)
-        {
-        }
-
-        public RouteController(IRouteService routeService)
-        {
-            _routeService = routeService ?? new RouteService();
-        }
-
-        public HttpResponseMessage Redirect([ModelBinder(typeof(RouteRequestModelBinder))]RedirectRequest request)
+        public HttpResponseMessage Redirect(RedirectRequest request)
         {
             if (request == null)
             {
@@ -35,7 +23,8 @@
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
             }
 
-            var result = _routeService.Redirect(request.ToRouteCommand());
+            var routeService = new RouteService(request.GetSettingContext());
+            var result = routeService.Redirect(request.ToRouteCommand());
 
             return Request.CreateResponse(result);
         }

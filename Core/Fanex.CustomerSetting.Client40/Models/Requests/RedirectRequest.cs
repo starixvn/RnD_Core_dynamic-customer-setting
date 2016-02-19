@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RedirectRequest
+    public class RedirectRequest : SettingRequest
     {
         [Range(1, short.MaxValue)]
         public short SettingTypeId { get; set; }
@@ -13,6 +13,6 @@
         [Range(0, 2)]
         public byte ActionType { get; set; }
 
-        public dynamic Parameters { get; set; }
+        public string JsonParameters { get; set; }
     }
 }

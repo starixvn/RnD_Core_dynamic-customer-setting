@@ -74,12 +74,14 @@
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AdditionalRequestAuth.cs" />
     <Compile Include="Attributes\AntiForgeryExtension.cs" />
     <Compile Include="Attributes\CustomerSettingAuth.cs" />
     <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
     <Compile Include="Attributes\LogInfoFilter.cs" />
     <Compile Include="Attributes\ValidateAntiForgery.cs" />
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
+    <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Controllers\UpdateCustomerSettingController.cs" />
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="CustomerSettingRegistration.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
+    <Compile Include="Models\ActionTypes.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\PermissionContext.cs" />
     <Compile Include="Models\Requests\RedirectRequest.cs" />

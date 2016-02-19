@@ -192,6 +192,9 @@
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.Product20Tasks.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -210,7 +213,16 @@
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType5.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType6.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.SettingType7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.Casino.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -223,7 +235,16 @@
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType5.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType6.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.SettingType7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.Product20Tasks.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -240,6 +261,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType6.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.SettingType7.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.xml">

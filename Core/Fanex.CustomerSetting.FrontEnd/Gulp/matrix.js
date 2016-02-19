@@ -14,7 +14,7 @@ module.exports = function (configs) {
 
     var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSettingMatrix);
     var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSettingMatrix);
-    var destTemplateDir = "../Fanex.CustomerSetting.Matrix.WebAPI/App_Data/Templates";
+    var destTemplateDir = "../../Matrix/Fanex.CustomerSetting.Matrix.WebAPI/App_Data/Templates";
     var destScriptDir = "../Fanex.CustomerSetting.StaticResources/CustomerSettingMatrix";
 
     gulp.task("matrix:script:publish", function () {

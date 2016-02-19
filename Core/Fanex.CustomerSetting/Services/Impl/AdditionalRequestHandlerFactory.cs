@@ -51,10 +51,9 @@
 
         private static IEnumerable<Type> DetechRequestHanlersInAssemblies()
         {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
             IEnumerable<Type> types = Type.EmptyTypes;
             IEnumerable<Type> matchingTypes = Type.EmptyTypes;
-            ICollection assemblies = entryAssembly.GetReferencedAssemblies();
+            ICollection assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             foreach (Assembly assembly in assemblies)
             {
