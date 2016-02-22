@@ -5,6 +5,8 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Models;
+    using Fanex.CustomerSetting.Client40.Models.Constants;
+    using static System.Net.WebRequestMethods;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     internal sealed class AdditionalRequestAuth : AuthorizeAttribute
@@ -57,13 +59,14 @@
         {
             HttpResponseBase response = filterContext.HttpContext.Response;
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest()
-                || filterContext.HttpContext.Request.HttpMethod.ToUpper() == "POST")
+            if (filterContext.HttpContext.Request.IsAjaxRequest() || Http.Post == filterContext.HttpContext.Request.HttpMethod)
             {
                 response.Clear();
                 response.Write("{ \"message\": \"You are not authorized on this function!\" }");
+
                 filterContext.Result = new HttpUnauthorizedResult();
                 filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+
                 response.TrySkipIisCustomErrors = true;
                 response.End();
             }

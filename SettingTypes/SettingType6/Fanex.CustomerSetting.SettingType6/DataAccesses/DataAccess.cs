@@ -48,15 +48,15 @@
             return ExecuteNonQuery("CustSetting_WinLossLimitUpd", param);
         }
 
-        public CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId)
+        public CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(CurrentWinLossAmountQuery query)
         {
             using (var objectDb = new ObjectDb("CustSetting_WinLossPercentSelect"))
             {
                 var parameterValues = new Hashtable
                 {
-                    { "custid", customerId },
-                    { "sporttype", sportTypeId },
-                    { "bettype", betTypeId }
+                    { "custid", query.CustomerId },
+                    { "sporttype", query.SportTypeId },
+                    { "bettype", query.BetTypeId }
                 };
 
                 return objectDb.QueryEntity<CurrentWinLossAmountItem>(parameterValues);

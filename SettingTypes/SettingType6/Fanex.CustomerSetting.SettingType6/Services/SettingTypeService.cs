@@ -82,20 +82,10 @@
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
 
-            CurrentWinLossAmountRequest parameters = DeserializeCurrentWinLossAmountParameters(jsonParameters);
-            CurrentWinLossAmountItem currentWinLossAmount = _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(
-                parameters.CustomerId,
-                parameters.SportTypeId,
-                parameters.BetTypeId);
+            CurrentWinLossAmountQuery query = JsonConvert.DeserializeObject<CurrentWinLossAmountQuery>(jsonParameters);
+            CurrentWinLossAmountItem currentWinLossAmount = _winLossLimitDataAccess.GetCustomerCurrentWinLossAmount(query);
 
             return currentWinLossAmount;
-        }
-
-        private CurrentWinLossAmountRequest DeserializeCurrentWinLossAmountParameters(string jsonParameters)
-        {
-            var parameters = JsonConvert.DeserializeObject<CurrentWinLossAmountRequest>(jsonParameters);
-
-            return parameters;
         }
     }
 }

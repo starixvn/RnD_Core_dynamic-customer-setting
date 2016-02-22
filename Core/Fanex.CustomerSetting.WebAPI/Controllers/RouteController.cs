@@ -24,7 +24,7 @@
             }
 
             var routeService = new RouteService(request.GetSettingContext());
-            var result = routeService.Redirect(request.ToRouteCommand());
+            var result = routeService.Redirect(request.ToRedirectCommand());
 
             return Request.CreateResponse(result);
         }

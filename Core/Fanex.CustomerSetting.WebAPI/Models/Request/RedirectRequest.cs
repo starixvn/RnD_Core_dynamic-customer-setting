@@ -17,7 +17,7 @@
 
         public string JsonParameters { get; set; }
 
-        internal RedirectCommand ToRouteCommand()
+        internal RedirectCommand ToRedirectCommand()
         {
             return new RedirectCommand
             {

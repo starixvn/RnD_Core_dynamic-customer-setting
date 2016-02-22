@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.Client40.Models
+﻿namespace Fanex.CustomerSetting.Client40.Models.Constants
 {
     internal static class ActionTypes
     {

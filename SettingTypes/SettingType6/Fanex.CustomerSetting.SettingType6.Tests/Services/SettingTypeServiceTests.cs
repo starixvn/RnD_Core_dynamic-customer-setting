@@ -179,5 +179,53 @@
             // Assert
             Assert.AreEqual(Message.UpdatedWinLossLimitSuccessfully, actualResult.Message);
         }
+
+        [Test]
+        public void Handle_Always_CallGetCustomerCurrentWinLossAmount()
+        {
+            // Arrange
+            var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
+            var jsonParameters = "{\"customerId\":123,\"sportTypeId\":1,\"betTypeId\":1}";
+
+            // Act
+            routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+
+            // Assert
+            _dataAccess.Received().GetCustomerCurrentWinLossAmount(Arg.Is(new CurrentWinLossAmountQuery
+            {
+                CustomerId = 123,
+                SportTypeId = 1,
+                BetTypeId = 1
+            }));
+        }
+
+        [Test]
+        public void Handle_Always_ReturnCustomerCurrentWinLossAmount()
+        {
+            // Arrange
+            var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
+            var jsonParameters = "{\"customerId\":123,\"sportTypeId\":1,\"betTypeId\":1}";
+            var currentWinLossAmount = new CurrentWinLossAmountItem
+            {
+                WinPercent = 10,
+                MaxWinAmount = 1000,
+                LossPercent = 0,
+                MaxLossAmount = 1000
+            };
+            _dataAccess.GetCustomerCurrentWinLossAmount(Arg.Any<CurrentWinLossAmountQuery>()).Returns(currentWinLossAmount);
+
+            // Act
+            var actualCurrentWinLossAmount = routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
+
+            // Assert
+            var expectedWinLossAmount = new CurrentWinLossAmountItem
+            {
+                WinPercent = 10,
+                MaxWinAmount = 1000,
+                LossPercent = 0,
+                MaxLossAmount = 1000
+            };
+            Assert.AreEqual(expectedWinLossAmount, actualCurrentWinLossAmount);
+        }
     }
 }

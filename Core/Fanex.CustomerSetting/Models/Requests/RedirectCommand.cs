@@ -19,7 +19,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Setting Type Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(SettingTypeId)} cannot be negative or zero.");
                 }
 
                 _settingTypeId = value;
@@ -37,7 +37,7 @@
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Action Id cannot be negative.");
+                    throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ActionId)} cannot be negative.");
                 }
 
                 _actionId = value;

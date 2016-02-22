@@ -13,6 +13,6 @@
 
         IResult UpdateCustomerWinLossLimit(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, string winLossLimitXml);
 
-        CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(int customerId, short sportTypeId, short betTypeId);
+        CurrentWinLossAmountItem GetCustomerCurrentWinLossAmount(CurrentWinLossAmountQuery query);
     }
 }
