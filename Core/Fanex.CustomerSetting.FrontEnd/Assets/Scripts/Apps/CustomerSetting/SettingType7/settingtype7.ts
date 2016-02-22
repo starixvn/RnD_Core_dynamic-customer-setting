@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/helper-services.ts" />
 /// <reference path="models.ts" />
 /// <reference path="settingtype7-resource.ts" />
 
@@ -25,16 +26,16 @@ module CustomerSetting {
                 settingTypesSharedValuesService: SettingTypesSharedValuesService,
                 settingType7ResourceService: SettingType7ResourceService
             ) => {
+                $scope.customerId = settingTypesSharedValuesService.customerId;
+                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                $scope.productId = settingTypesSharedValuesService.productId;
+                $scope.productName = settingTypesSharedValuesService.productName;
                 $scope.avaiCustomerLevels = Level;
                 $scope.avaiSettingLevels = SettingLevel;
                 $scope.settingTypeName = settingType7ResourceService.getLabel("BetLimit");
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
-                    $scope.customerId = settingTypesSharedValuesService.customerId;
-                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
-                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
-                    $scope.productId = settingTypesSharedValuesService.productId;
-                    $scope.productName = settingTypesSharedValuesService.productName;
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
                     if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {

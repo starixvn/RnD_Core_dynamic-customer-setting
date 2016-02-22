@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../helper-services.ts" />
 /// <reference path="../models.ts" />
 
 module CustomerSetting.IE8 {
@@ -36,14 +37,14 @@ module CustomerSetting.IE8 {
             "$scope",
             "settingTypesSharedValuesService",
             ($scope: ISettingTypeDirectiveSharedScope, settingTypesSharedValuesService: SettingTypesSharedValuesService) => {
+                $scope.customerId = settingTypesSharedValuesService.customerId;
+                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                $scope.productId = settingTypesSharedValuesService.productId;
+                $scope.productName = settingTypesSharedValuesService.productName;
                 $scope.avaiCustomerLevels = Level;
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
-                    $scope.customerId = settingTypesSharedValuesService.customerId;
-                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
-                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
-                    $scope.productId = settingTypesSharedValuesService.productId;
-                    $scope.productName = settingTypesSharedValuesService.productName;
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;
 
                     if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
