@@ -43,6 +43,7 @@ module CustomerSetting.IE8 {
             var select: ng.IAugmentedJQuery = element.find("select");
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
+            select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
             select.attr("data-ng-class", StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
             select.attr("data-tooltip", "");
             select.attr(

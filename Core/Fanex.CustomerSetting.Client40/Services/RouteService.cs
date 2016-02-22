@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
     using System.Net;
-    using Exceptions;
     using Fanex.CustomerSetting.Client40.Configurations;
+    using Fanex.CustomerSetting.Client40.Exceptions;
     using Fanex.CustomerSetting.Client40.Helpers;
     using Fanex.CustomerSetting.Client40.Models.Requests;
     using RestSharp;

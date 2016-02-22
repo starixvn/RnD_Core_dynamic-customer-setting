@@ -36,15 +36,16 @@ module CustomerSetting.IE8 {
             "$scope",
             "settingTypesSharedValuesService",
             ($scope: ISettingTypeDirectiveSharedScope, settingTypesSharedValuesService: SettingTypesSharedValuesService) => {
-                $scope.customerId = settingTypesSharedValuesService.customerId;
-                $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
-                $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
-                $scope.productId = settingTypesSharedValuesService.productId;
-                $scope.productName = settingTypesSharedValuesService.productName;
-                $scope.normalMode = settingTypesSharedValuesService.normalMode;
                 $scope.avaiCustomerLevels = Level;
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.normalMode = settingTypesSharedValuesService.normalMode;
+
                     if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                         if (settingType.isError) {
                             if (settingType.settingItems.length > 0) {
