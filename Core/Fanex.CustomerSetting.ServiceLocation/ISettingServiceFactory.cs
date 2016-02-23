@@ -3,7 +3,7 @@
     using Fanex.CustomerSetting.Services;
     using Models;
 
-    public interface ISettingServiceLocator
+    public interface ISettingServiceFactory
     {
         IQuerySettingService GetQueryService(byte system, byte productId, ISettingContext settingContext);
 

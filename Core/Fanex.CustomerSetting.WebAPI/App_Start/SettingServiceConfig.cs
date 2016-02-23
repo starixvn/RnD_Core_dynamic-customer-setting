@@ -2,24 +2,25 @@
 {
     using Casino.Services.Impl;
     using ServiceLocation;
-    using static ServiceLocation.SettingServiceBootstraper;
+    using static ServiceLocation.SettingServiceConfigurator;
 
     public static class SettingServiceConfig
     {
-        public const int AllBet = 21;
+        public const int AllBets = 21;
 
         // TODO: WebAPI can store setting in configuraiton file.
         // should use another key for setting service instead of productId to reuse the setting?
         public static void Run()
         {
-            var casinoServiceConfig = new SettingServiceConfiguration
-            {
-                ProductId = AllBet,
-                QueryServiceType = typeof(QueryCasinoSettingService),
-                UpdateServiceType = typeof(UpdateCasinoSettingService)
-            };
+            var configurator = new SettingServiceConfigurator();
+            configurator
+                .UseQueryServiceType(typeof(QueryCasinoSettingService))
+                .UseUpdateServiceType(typeof(UpdateCasinoSettingService))
+                .ForProducts(AllBets)
+                .ForAllSystems()
+                .Apply();
 
-            RegisterService(casinoServiceConfig);
+            configurator.Verify();
         }
     }
 }

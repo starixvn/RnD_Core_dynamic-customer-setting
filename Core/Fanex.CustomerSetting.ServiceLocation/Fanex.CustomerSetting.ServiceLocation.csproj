@@ -78,12 +78,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISettingServiceLocator.cs" />
+    <Compile Include="ISettingServiceFactory.cs" />
     <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingServiceBootstraper.cs" />
-    <Compile Include="SettingServiceConfiguration.cs" />
-    <Compile Include="SettingServiceLocator.cs" />
+    <Compile Include="SettingServiceConfigurator.cs" />
+    <Compile Include="SettingServiceConfigItem.cs" />
+    <Compile Include="SettingServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

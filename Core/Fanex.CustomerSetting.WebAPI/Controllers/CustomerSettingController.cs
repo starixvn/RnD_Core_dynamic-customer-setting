@@ -22,11 +22,11 @@
         private const string CustomerSettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
         private const string CustomerSettingTemplateIe8FilePath = "~/App_Data/Templates/customer-setting-ie8.htm";
         private const byte CachingHours = 4;
-        private readonly ISettingServiceLocator _serviceLocator;
+        private readonly ISettingServiceFactory _serviceLocator;
 
-        public CustomerSettingController(ISettingServiceLocator serviceLocator = null)
+        public CustomerSettingController(ISettingServiceFactory serviceLocator = null)
         {
-            _serviceLocator = serviceLocator ?? new SettingServiceLocator();
+            _serviceLocator = serviceLocator ?? new SettingServiceFactory();
         }
 
         public CustomerSettingController() : this(null)
