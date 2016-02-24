@@ -15,7 +15,12 @@ namespace Fanex.CustomerSetting.ServiceLocation
         private List<byte> systems = new List<byte>();
         private List<byte> products = new List<byte>();
         private Type queryServiceType;
-        private Type updateServiceType;
+        private Type updateServiceType;        
+
+        public SettingServiceConfigurator()
+        {
+            Clear();
+        }
 
         internal static Type GetServiceType(byte system, byte productId, bool isQueryAction)
         {

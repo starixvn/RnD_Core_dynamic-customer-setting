@@ -2,13 +2,13 @@
 {
     using System;
     using Casino.Services.Impl;
-    using Fanex.CustomerSetting.ServiceLocation;
+    using ServiceLocation;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
     using Services.Impl;
     using static Products;
-    
+
 
     [TestFixture]
     public class SettingServiceLocatorTest
@@ -17,9 +17,10 @@
         private static readonly Type QueryServiceDefaultType = typeof(QuerySettingService);
         private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);
 
-        private void SetUpServiceTypeConfig(params byte[] productIds)
+        [SetUp]
+        public void SetUpServiceTypeConfig()
         {
-            configurator = new SettingServiceConfigurator();           
+            configurator = new SettingServiceConfigurator();            
         }
 
         [Test]
@@ -50,6 +51,12 @@
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => new SettingServiceFactory().GetQueryService(1, 0, Arg.Any<ISettingContext>()));
+
+
+
+            //new SettingServiceFactory()
+            //    .GetQueryService(1, 0, Arg.Any<ISettingContext>())
+            //    .ReturnsForAnyArgs(x => { throw new ArgumentOutOfRangeException(); });
         }
 
         [Test]
@@ -67,7 +74,7 @@
             //// Arrange            
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
-            
+
             var defaultServiceType = QueryServiceDefaultType;
 
             //// Act
@@ -85,7 +92,7 @@
             //// Arrange            
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
-            
+
             var defaultServiceType = UpdateServiceDefaultType;
 
             //// Act
@@ -103,7 +110,6 @@
             //// Arrange            
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
-            SetUpServiceTypeConfig(AllBet, Sportsbook2);
             var defaultServiceType = QueryServiceDefaultType;
 
             //// Act
@@ -121,7 +127,6 @@
             //// Arrange            
             var settingContext = Substitute.For<ISettingContext>();
             settingContext.Actor = Substitute.For<User>();
-            SetUpServiceTypeConfig(AllBet, Sportsbook2);
             var defaultServiceType = UpdateServiceDefaultType;
 
             //// Act
@@ -133,15 +138,37 @@
         }
 
         [Test]
+        public void GetUpdateService_ProductIdIsRegistered_ReturnApproriatedValidService()
+        {
+            //// Arrange
+            var productId = AllBet;
+            var settingContext = Substitute.For<ISettingContext>();
+            settingContext.Actor = Substitute.For<User>();           
+            var serviceType = typeof(UpdateCasinoSettingService);
+
+            configurator
+               .UseQueryServiceType(serviceType)
+               .UseUpdateServiceType(serviceType)
+               .ForProducts(AllBet)
+               .Apply();
+
+            //// Act
+            var settingService = new SettingServiceFactory().GetUpdateService(100, productId, settingContext);
+
+            //// Assert
+            Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
+        }
+
+        [Test]
         public void GetQueryService_ProductIdIsRegistered_ReturnApproriatedValidService()
         {
             //// Arrange
             var productId = AllBet;
             var settingContext = Substitute.For<ISettingContext>();
-            settingContext.Actor = Substitute.For<User>();            
+            settingContext.Actor = Substitute.For<User>();
             var serviceType = typeof(QueryCasinoSettingService);
-            
-            new SettingServiceConfigurator()
+
+            configurator
                 .UseQueryServiceType(serviceType)
                 .UseUpdateServiceType(serviceType)
                 .ForProducts(AllBet)
@@ -149,39 +176,6 @@
 
             //// Act
             var settingService = new SettingServiceFactory().GetQueryService(100, productId, settingContext);
-
-            //// Assert
-            Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
-        }
-
-        [Test]
-        public void GetUpdateService_ProductIdIsRegistered_ReturnApproriatedValidService()
-        {
-            //// Arrange
-            var productId = AllBet;
-            var settingContext = Substitute.For<ISettingContext>();
-            settingContext.Actor = Substitute.For<User>();
-            SetUpServiceTypeConfig(Sportsbook2, Cricket);           
-
-            var serviceType = typeof(UpdateCasinoSettingService);
-
-            new SettingServiceConfigurator()
-               .UseQueryServiceType(serviceType)
-               .UseUpdateServiceType(serviceType)
-               .ForProducts(AllBet)
-               .Apply();
-
-            var casinoConfig = new SettingServiceConfigItem
-            {
-                ProductId = productId,
-                QueryServiceType = serviceType,
-                UpdateServiceType = serviceType
-            };
-
-            
-
-            //// Act
-            var settingService = new SettingServiceFactory().GetUpdateService(100, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
