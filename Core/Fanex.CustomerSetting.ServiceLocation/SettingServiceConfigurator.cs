@@ -15,7 +15,7 @@ namespace Fanex.CustomerSetting.ServiceLocation
         private List<byte> systems = new List<byte>();
         private List<byte> products = new List<byte>();
         private Type queryServiceType;
-        private Type updateServiceType;        
+        private Type updateServiceType;
 
         public SettingServiceConfigurator()
         {
@@ -25,41 +25,45 @@ namespace Fanex.CustomerSetting.ServiceLocation
         internal static Type GetServiceType(byte system, byte productId, bool isQueryAction)
         {
             Check.Argument.IsNotNegativeOrZero(system, "system");
-            Check.Argument.IsNotNegativeOrZero(productId, "productId");            
+            Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var config = configs
-                .Where(s => s.ProductId == productId)
-                .FirstOrDefault(s => s.System == system || !s.System.HasValue);
+            var settingTypeServiceConfig = configs                
+                .Where(configItem => configItem.ProductIds.Contains(productId) || !configItem.ProductIds.Any())
+                .FirstOrDefault(configItem => configItem.Systems.Contains(system) || !configItem.Systems.Any());
 
-            if (config == null)
+            if (settingTypeServiceConfig == null)
             {
                 return isQueryAction ? DefaultQueryServiceType : DefaultUpdateServiceType;
             }
 
-            return isQueryAction ? config.QueryServiceType : config.UpdateServiceType;
+            return isQueryAction ? settingTypeServiceConfig.QueryServiceType : settingTypeServiceConfig.UpdateServiceType;
         }
 
         public SettingServiceConfigurator ForSystems(params byte[] systems)
         {
             this.systems.AddRange(systems);
+
             return this;
         }
 
         public SettingServiceConfigurator ForAllSystems()
         {
             systems.Clear();
+
             return this;
         }
 
         public SettingServiceConfigurator ForProducts(params byte[] products)
         {
             this.products.AddRange(products);
+
             return this;
         }
 
         public SettingServiceConfigurator ForAllProducts()
         {
             products.Clear();
+
             return this;
         }
 
@@ -71,6 +75,7 @@ namespace Fanex.CustomerSetting.ServiceLocation
             }
 
             this.queryServiceType = queryServiceType;
+
             return this;
         }
 
@@ -82,6 +87,7 @@ namespace Fanex.CustomerSetting.ServiceLocation
             }
 
             this.updateServiceType = updateServiceType;
+
             return this;
         }
 
@@ -91,21 +97,16 @@ namespace Fanex.CustomerSetting.ServiceLocation
             Check.Argument.IsNotNull(updateServiceType, "updateServiceType");
 
             var configItem = new SettingServiceConfigItem
-            {
-                QueryServiceType = queryServiceType,
-                UpdateServiceType = updateServiceType
-            };
+            (
+                queryServiceType,
+                updateServiceType,
+                systems,
+                products
+            );
 
-            if (products.Any())
-            {
-                SetConfigForProductLevel(configItem);
-            }
-            else
-            {
-                SetConfigForSystemLevel(configItem);
-            }
+            configs.Add(configItem);
 
-            ClearCurrentConfigContext();
+            ResetConfigContext();
         }
 
         public void Verify()
@@ -121,7 +122,7 @@ namespace Fanex.CustomerSetting.ServiceLocation
 
         public void Clear()
         {
-            ClearCurrentConfigContext();
+            ResetConfigContext();
             configs.Clear();
         }
 
@@ -135,45 +136,17 @@ namespace Fanex.CustomerSetting.ServiceLocation
         private static bool IsConfigExisted(SettingServiceConfigItem config)
         {
             return configs
-                .Where(c => c.ProductId == config.ProductId)
-                .Any(c => !c.System.HasValue || c.System.Value == config.System.Value);
+                .Where(item => !item.Equals(config))
+                .Any(item => item.ProductIds.Intersect(config.ProductIds).Any()
+                || item.Systems.Intersect(config.Systems).Any());
         }
 
-        private void ClearCurrentConfigContext()
+        private void ResetConfigContext()
         {
-            this.products.Clear();
-            this.systems.Clear();
-            this.updateServiceType = null;
-            this.queryServiceType = null;
-        }
-
-        private void SetConfigForProductLevel(SettingServiceConfigItem configItem)
-        {
-            products.ForEach(productId =>
-            {
-                var configOnProduct = (SettingServiceConfigItem)configItem.Clone();
-                configOnProduct.ProductId = productId;
-                SetConfigForSystemLevel(configOnProduct);
-
-            });
-        }
-
-        private void SetConfigForSystemLevel(SettingServiceConfigItem configItem)
-        {
-            if (systems.Any())
-            {
-                systems.ForEach(system =>
-                {
-                    var configOnSystem = (SettingServiceConfigItem)configItem.Clone();
-                    configOnSystem.System = system;
-
-                    configs.Add(configOnSystem);
-                });
-            }
-            else
-            {
-                configs.Add(configItem);
-            }
+            products.Clear();
+            systems.Clear();
+            updateServiceType = null;
+            queryServiceType = null;
         }
     }
 }

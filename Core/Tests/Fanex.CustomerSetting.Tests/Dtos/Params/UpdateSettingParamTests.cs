@@ -10,7 +10,7 @@
     [TestFixture]
     public class UpdateSettingParamTests
     {
-        private object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
+        private static object[] dataSourceSMALevels = { Level.Super, Level.Master, Level.Agent };
 
         [Test, TestCaseSource("dataSourceSMALevels")]
         public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)

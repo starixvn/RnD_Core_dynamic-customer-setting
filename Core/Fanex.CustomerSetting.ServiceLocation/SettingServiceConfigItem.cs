@@ -1,28 +1,68 @@
 ﻿namespace Fanex.CustomerSetting.ServiceLocation
 {
     using System;
+    using System.Collections.Generic;
+    using Common.Helper;
 
-    internal class SettingServiceConfigItem : ICloneable
+    internal class SettingServiceConfigItem
     {
-        public byte? System { get; set; }
+        private Type queryServiceType;
+        private Type updateServiceType;
+        private List<byte> systems;
+        private List<byte> productIds;
 
-        public byte ProductId { get; set; }
+        internal SettingServiceConfigItem(
+            Type queryServiceType,
+            Type updateServiceType,
+            List<byte> systems = null,
+            List<byte> productIds = null)
+        {
+            Check.Argument.IsNotNull(queryServiceType, "queryServiceType");
+            Check.Argument.IsNotNull(updateServiceType, "updateServiceType");
 
-        public Type UpdateServiceType { get; set; }
+            this.queryServiceType = queryServiceType;
+            this.updateServiceType = updateServiceType;
+            this.systems = systems != null ? systems : new List<byte>();
+            this.productIds = productIds != null ? productIds : new List<byte>();
+        }
 
-        public Type QueryServiceType { get; set; }
+        public Type QueryServiceType
+        {
+            get { return queryServiceType; }
+        }
+
+        public Type UpdateServiceType
+        {
+            get { return updateServiceType; }
+        }
+
+        public List<byte> Systems
+        {
+            get { return systems; }
+        }
+
+        public List<byte> ProductIds
+        {
+            get { return productIds; }
+        }
 
         public virtual bool IsValid()
         {
-            return (!System.HasValue || System.Value > 0)
-                && ProductId > 0
-                && UpdateServiceType != null
-                && QueryServiceType != null;
+            return UpdateServiceType != null && QueryServiceType != null;
         }
 
-        public object Clone()
+        public override bool Equals(object obj)
         {
-            return this.MemberwiseClone();
+            var that = obj as SettingServiceConfigItem;
+
+            return that != null
+                && this.QueryServiceType == that.QueryServiceType
+                && this.UpdateServiceType == that.UpdateServiceType;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.UpdateServiceType.GetHashCode() + this.QueryServiceType.GetHashCode();
         }
     }
 }

@@ -2,16 +2,16 @@
 {
     using System;
     using Casino.Services.Impl;
-    using ServiceLocation;
     using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using ServiceLocation;
     using Services.Impl;
     using static Products;
 
 
     [TestFixture]
-    public class SettingServiceLocatorTest
+    public class SettingServiceConfiguratorTests
     {
         private SettingServiceConfigurator configurator;
         private static readonly Type QueryServiceDefaultType = typeof(QuerySettingService);
@@ -51,12 +51,6 @@
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => new SettingServiceFactory().GetQueryService(1, 0, Arg.Any<ISettingContext>()));
-
-
-
-            //new SettingServiceFactory()
-            //    .GetQueryService(1, 0, Arg.Any<ISettingContext>())
-            //    .ReturnsForAnyArgs(x => { throw new ArgumentOutOfRangeException(); });
         }
 
         [Test]
