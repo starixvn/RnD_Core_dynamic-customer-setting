@@ -291,6 +291,15 @@
     <Content Include="Web.ConnectionStrings.sit.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
+    <None Include="Web.AppSettings.backupMNL.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </None>
+    <None Include="Web.backupMNL.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.ConnectionStrings.backupMNL.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
