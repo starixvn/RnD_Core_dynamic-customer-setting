@@ -6,13 +6,13 @@
 
     public class SettingServiceFactory : ISettingServiceFactory
     {
-        public IQuerySettingService GetQueryService(byte system, byte productId, ISettingContext settingContext)
+        public IQuerySettingService CreateQueryService(byte system, byte productId, ISettingContext settingContext)
         {
             Type type = SettingServiceConfigurator.GetServiceType(system, productId, isQueryAction: true);
             return Activator.CreateInstance(type, settingContext) as IQuerySettingService;
         }
 
-        public IUpdateSettingService GetUpdateService(byte system, byte productId, ISettingContext settingContext)
+        public IUpdateSettingService CreateUpdateService(byte system, byte productId, ISettingContext settingContext)
         {
             Type type = SettingServiceConfigurator.GetServiceType(system, productId, isQueryAction: false);
             return Activator.CreateInstance(type, settingContext) as IUpdateSettingService;

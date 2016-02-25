@@ -5,8 +5,8 @@
 
     public interface ISettingServiceFactory
     {
-        IQuerySettingService GetQueryService(byte system, byte productId, ISettingContext settingContext);
+        IQuerySettingService CreateQueryService(byte system, byte productId, ISettingContext settingContext);
 
-        IUpdateSettingService GetUpdateService(byte system, byte productId, ISettingContext settingContext);
+        IUpdateSettingService CreateUpdateService(byte system, byte productId, ISettingContext settingContext);
     }
 }

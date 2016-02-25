@@ -22,11 +22,11 @@
         private const string CustomerSettingTemplateIe8CachingKey = "CustomerSettingIE8Template";
         private const string CustomerSettingTemplateIe8FilePath = "~/App_Data/Templates/customer-setting-ie8.htm";
         private const byte CachingHours = 4;
-        private readonly ISettingServiceFactory _serviceLocator;
+        private readonly ISettingServiceFactory settingServiceFactory;
 
-        public CustomerSettingController(ISettingServiceFactory serviceLocator = null)
+        public CustomerSettingController(ISettingServiceFactory settingServiceFactory = null)
         {
-            _serviceLocator = serviceLocator ?? new SettingServiceFactory();
+            this.settingServiceFactory = settingServiceFactory ?? new SettingServiceFactory();
         }
 
         public CustomerSettingController() : this(null)
@@ -41,7 +41,7 @@
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
 
-            var querySettingService = _serviceLocator.GetQueryService(request.System, request.ProductId, request.GetSettingContext());
+            var querySettingService = settingServiceFactory.CreateQueryService(request.System, request.ProductId, request.GetSettingContext());
 
             try
             {
@@ -69,7 +69,7 @@
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
             }
 
-            var updateSettingService = _serviceLocator.GetUpdateService(
+            var updateSettingService = settingServiceFactory.CreateUpdateService(
                 request.System,
                 request.Setting.ProductId,
                 request.GetSettingContext());
@@ -93,7 +93,7 @@
                 return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
             }
 
-            var updateSettingService = _serviceLocator.GetUpdateService(
+            var updateSettingService = settingServiceFactory.CreateUpdateService(
                request.System,
                request.Setting.ProductId,
                request.GetSettingContext());

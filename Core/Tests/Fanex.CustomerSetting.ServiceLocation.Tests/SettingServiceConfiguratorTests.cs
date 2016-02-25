@@ -28,7 +28,7 @@
         {
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => new SettingServiceFactory().GetQueryService(
+                () => new SettingServiceFactory().CreateQueryService(
                     Arg.Is<byte>(0),
                     Arg.Any<byte>(),
                     Arg.Any<ISettingContext>()));
@@ -39,7 +39,7 @@
         {
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => new SettingServiceFactory().GetUpdateService(
+                () => new SettingServiceFactory().CreateUpdateService(
                     Arg.Is<byte>(0),
                     Arg.Any<byte>(),
                     Arg.Any<ISettingContext>()));
@@ -50,7 +50,7 @@
         {
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => new SettingServiceFactory().GetQueryService(1, 0, Arg.Any<ISettingContext>()));
+                () => new SettingServiceFactory().CreateQueryService(1, 0, Arg.Any<ISettingContext>()));
         }
 
         [Test]
@@ -58,7 +58,7 @@
         {
             //// Act & Asssert
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => new SettingServiceFactory().GetUpdateService(1, 0, Arg.Any<ISettingContext>()));
+                () => new SettingServiceFactory().CreateUpdateService(1, 0, Arg.Any<ISettingContext>()));
         }
 
         [TestCase(1, 100)]
@@ -73,7 +73,7 @@
 
             //// Act
             var settingService = new SettingServiceFactory()
-                .GetQueryService(system, productId, settingContext);
+                .CreateQueryService(system, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
@@ -91,7 +91,7 @@
 
             //// Act
             var settingService = new SettingServiceFactory()
-                .GetUpdateService(system, productId, settingContext);
+                .CreateUpdateService(system, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
@@ -108,7 +108,7 @@
 
             //// Act
             var settingService = new SettingServiceFactory()
-                .GetQueryService(system, productId, settingContext);
+                .CreateQueryService(system, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
@@ -125,7 +125,7 @@
 
             //// Act
             var settingService = new SettingServiceFactory()
-                .GetUpdateService(system, productId, settingContext);
+                .CreateUpdateService(system, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), defaultServiceType, productId.ToString(), null);
@@ -147,7 +147,7 @@
                .Apply();
 
             //// Act
-            var settingService = new SettingServiceFactory().GetUpdateService(100, productId, settingContext);
+            var settingService = new SettingServiceFactory().CreateUpdateService(100, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
@@ -169,7 +169,7 @@
                 .Apply();
 
             //// Act
-            var settingService = new SettingServiceFactory().GetQueryService(100, productId, settingContext);
+            var settingService = new SettingServiceFactory().CreateQueryService(100, productId, settingContext);
 
             //// Assert
             Assert.AreEqual(settingService.GetType(), serviceType, productId.ToString(), null);
