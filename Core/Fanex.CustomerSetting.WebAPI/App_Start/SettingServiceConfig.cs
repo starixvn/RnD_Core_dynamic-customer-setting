@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.App_Start
 {
     using Casino.Services.Impl;
-    using ServiceLocation;
+    using CustomerSetting.Configurations;
 
     public static class SettingServiceConfig
     {

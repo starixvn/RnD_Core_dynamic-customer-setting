@@ -94,10 +94,6 @@
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
       <Name>Fanex.CustomerSetting.Casino</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Fanex.CustomerSetting.ServiceLocation\Fanex.CustomerSetting.ServiceLocation.csproj">
-      <Project>{85fc99cf-061c-4f09-882a-bbfa94dbedbc}</Project>
-      <Name>Fanex.CustomerSetting.ServiceLocation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>

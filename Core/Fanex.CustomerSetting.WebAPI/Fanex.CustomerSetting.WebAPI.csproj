@@ -411,10 +411,6 @@
       <Project>{17008F66-76C2-482C-B8E0-E838F809EE53}</Project>
       <Name>Fanex.CustomerSetting.SettingType4</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.CustomerSetting.ServiceLocation\Fanex.CustomerSetting.ServiceLocation.csproj">
-      <Project>{85fc99cf-061c-4f09-882a-bbfa94dbedbc}</Project>
-      <Name>Fanex.CustomerSetting.ServiceLocation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>

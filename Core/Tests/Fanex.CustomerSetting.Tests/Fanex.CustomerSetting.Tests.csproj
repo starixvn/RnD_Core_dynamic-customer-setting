@@ -98,6 +98,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\SettingServiceConfiguratorTests.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="Dtos\Params\QuerySettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
@@ -133,6 +134,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
+      <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>
+      <Name>Fanex.CustomerSetting.Casino</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.CustomerSetting.RemotingRefApi\Fanex.CustomerSetting.RemotingRefApi.csproj">
       <Project>{2747b4d9-3cb5-44ba-aeb1-b210e92d8617}</Project>
       <Name>Fanex.CustomerSetting.RemotingRefApi</Name>

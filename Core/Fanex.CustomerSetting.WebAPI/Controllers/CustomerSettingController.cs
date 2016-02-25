@@ -9,10 +9,11 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
+    using CustomerSetting.Configurations;
     using Fanex.CustomerSetting.WebApi.Filters;
     using Fanex.CustomerSetting.WebApi.Helpers;
     using Fanex.CustomerSetting.WebApi.Models.Request;
-    using ServiceLocation;
+    using Services;
 
     [SetLanguageFilter]
     public class CustomerSettingController : ApiController

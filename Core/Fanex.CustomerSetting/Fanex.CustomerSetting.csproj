@@ -89,6 +89,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\CustomerSettingConfiguration.cs" />
+    <Compile Include="Services\Impl\SettingServiceFactory.cs" />
+    <Compile Include="Services\ISettingServiceFactory.cs" />
+    <Compile Include="Configurations\SettingServiceConfigItem.cs" />
+    <Compile Include="Configurations\SettingServiceConfigurator.cs" />
     <Compile Include="Configurations\TaskConfiguration.cs" />
     <Compile Include="Criteria\ActorStatusQueryCriteria.cs" />
     <Compile Include="Criteria\CheckBelongingCriteria.cs" />
