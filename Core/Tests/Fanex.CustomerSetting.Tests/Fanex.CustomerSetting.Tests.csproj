@@ -98,7 +98,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\SettingServiceConfiguratorTests.cs" />
+    <Compile Include="Services\SettingServiceConfiguratorTests.cs" />
     <Compile Include="Criteria\ProductSettingTypesQueryCriteriaTests.cs" />
     <Compile Include="Dtos\Params\QuerySettingParamTests.cs" />
     <Compile Include="Dtos\Params\UpdateMultipleSettingParamTests.cs" />
@@ -132,7 +132,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>

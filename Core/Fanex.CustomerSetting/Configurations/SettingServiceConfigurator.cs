@@ -113,7 +113,7 @@ namespace Fanex.CustomerSetting.Configurations
         {
             configs.ForEach(config =>
             {
-                if (IsConfigValid(config))
+                if (!IsConfigValid(config))
                 {
                     throw new InvalidOperationException("Something is wrong in setting service configuration");
                 }
@@ -129,17 +129,16 @@ namespace Fanex.CustomerSetting.Configurations
         private static bool IsConfigValid(SettingServiceConfigItem config)
         {
             return config != null
-                && config.IsValid()
-                && !IsConfigExisted(config);
+                && config.IsValid();                
         }
 
-        private static bool IsConfigExisted(SettingServiceConfigItem config)
-        {
-            return configs
-                .Where(item => !item.Equals(config))
-                .Any(item => item.ProductIds.Intersect(config.ProductIds).Any()
-                || item.Systems.Intersect(config.Systems).Any());
-        }
+        //private static bool IsConfigExisted(SettingServiceConfigItem config)
+        //{
+        //    return configs
+        //        .Where(item => !item.Equals(config))
+        //        .Any(item => item.ProductIds.Intersect(config.ProductIds).Any()
+        //        || item.Systems.Intersect(config.Systems).Any());
+        //}
 
         private void ResetConfigContext()
         {

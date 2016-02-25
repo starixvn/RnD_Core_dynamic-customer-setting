@@ -10,7 +10,7 @@
 
 
     [TestFixture]
-    public class SettingServiceConfiguratorTests
+    public class SettingServiceFactoryTests
     {
         private const byte AllBet = 21;
         private SettingServiceConfigurator configurator;
