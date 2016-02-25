@@ -36,6 +36,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.Tests")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.Casino")]
-[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Test")]
 [assembly: InternalsVisibleTo("Fanex.CustomerSetting.SettingType1.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

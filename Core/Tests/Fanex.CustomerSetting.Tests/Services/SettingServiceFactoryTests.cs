@@ -2,7 +2,7 @@
 {
     using System;
     using Casino.Services.Impl;
-    using Configurations;
+    using CustomerSetting.Configurations;
     using CustomerSetting.Models;
     using CustomerSetting.Services.Impl;
     using NSubstitute;
