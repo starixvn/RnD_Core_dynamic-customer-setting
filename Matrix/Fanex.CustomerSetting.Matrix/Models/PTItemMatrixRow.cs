@@ -5,7 +5,9 @@
     using Fanex.CustomerSetting.Matrix.Dtos;
     using Fanex.CustomerSetting.Models.Enumerations;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", 
+        "SA1305:FieldNamesMustNotUseHungarianNotation", 
+        Justification = "PT is abbriviation for Position Taking.")]
     public class PTItemMatrixRow
     {
         public PTItemMatrixRow()

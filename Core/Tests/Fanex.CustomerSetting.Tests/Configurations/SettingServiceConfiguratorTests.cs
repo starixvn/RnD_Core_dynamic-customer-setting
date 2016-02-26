@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.CustomerSetting.Tests.Configurations
+﻿namespace Fanex.CustomerSetting.Tests.Configurations
 {
     using System;
     using CustomerSetting.Services.Impl;
@@ -19,7 +18,6 @@ namespace Fanex.CustomerSetting.Tests.Configurations
             new object[] { true, DefaultQueryServiceType },
             new object[] { false, DefaultUpdateServiceType }
         };
-
 
         private SettingServiceConfigurator configurator;
 
@@ -84,7 +82,6 @@ namespace Fanex.CustomerSetting.Tests.Configurations
 
             //// Assert
             Assert.AreEqual(serviceType, actualServiceType);
-
         }
     }
 }

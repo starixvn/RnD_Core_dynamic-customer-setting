@@ -14,12 +14,11 @@
     using Models;
     using NSubstitute;
     using NUnit.Framework;
-
-
+    
     [TestFixture]
     public class UpdateCasinoSettingServiceTests
     {
-        private const int statusSettingTypeValue = 4;
+        private const int StatusSettingTypeValue = 4;
         private IUpdateCasinoSettingService _updateCasinoSettingService;
         private ISettingContext _settingContext;
         private IUpdateSettingService _updateSettingService;
@@ -58,8 +57,7 @@
             _customerProductStatusService
              .GetCustomerStatus(
                  command.Setting.CustomerId,
-                 command.Setting.ProductId
-             )
+                 command.Setting.ProductId)
              .ReturnsForAnyArgs(status);
         }       
 
@@ -81,7 +79,7 @@
         {
             //// Arrange
             var command = StubHelper.CreateUpdateSettingParam();
-            var goodStatus = new CustomerProductStatus { IsSynced = true, IsDownlineSynced = true, IsHidden = false};
+            var goodStatus = new CustomerProductStatus { IsSynced = true, IsDownlineSynced = true, IsHidden = false };
             ArrangeCustomerCasinoStatus(command, goodStatus);
 
             //// Act
@@ -97,7 +95,7 @@
         public void Update_UnsyncedCustomerSetting_UpdateAllSettingTypesSuccessfully_CallUpdateCustomerProductStatusSynced(bool isSynced, bool isDownlineSynced)
         {
             //// Arrange
-            var settingTypeValues = new byte[] { statusSettingTypeValue, 1, 5, 3 };
+            var settingTypeValues = new byte[] { StatusSettingTypeValue, 1, 5, 3 };
             var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
             var unsyncedStatus = new CustomerProductStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
             ArrangeCustomerCasinoStatus(command, unsyncedStatus);
@@ -141,7 +139,7 @@
         public void Update_UnsyncedCustomerSetting_AFailedResultExists_DoNotCallUpdateStatus(bool isSynced, bool isDownlineSynced)
         {
             //// Arrange
-            var settingTypeValues = new byte[] { statusSettingTypeValue, 2, 5, 3 };
+            var settingTypeValues = new byte[] { StatusSettingTypeValue, 2, 5, 3 };
             var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
             var unsyncedStatus = new CustomerProductStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
             ArrangeCustomerCasinoStatus(command, unsyncedStatus);
@@ -174,7 +172,8 @@
             //// Assert
             services[0]
                 .DidNotReceiveWithAnyArgs()
-                .UpdateCustomerSettingType(_settingContext,
+                .UpdateCustomerSettingType(
+                            _settingContext,
                             command.Setting.CustomerId,
                             command.Setting.CustomerLevel,
                             command.UplineLevel,
@@ -188,7 +187,7 @@
         public void Update_UnsyncedCustomerSetting_AllResultsAreSuccessfull_CallUpdateStatus(bool isSynced, bool isDownlineSynced)
         {
             //// Arrange
-            var settingTypeValues = new byte[] { statusSettingTypeValue, 1, 5, 3 };
+            var settingTypeValues = new byte[] { StatusSettingTypeValue, 1, 5, 3 };
             var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
             var unsyncedStatus = new CustomerProductStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
             ArrangeCustomerCasinoStatus(command, unsyncedStatus);
@@ -220,67 +219,15 @@
             //// Assert
             services[0]
                 .Received()
-                .UpdateCustomerSettingType(_settingContext,
+                .UpdateCustomerSettingType(
+                            _settingContext,
                             command.Setting.CustomerId,
                             command.Setting.CustomerLevel,
                             command.UplineLevel,
                             command.Setting.ProductId,
                             command.Setting
                         .SettingTypes
-                        .FirstOrDefault(s => s.Id == statusSettingTypeValue));
-
-        }
-
-        //[Test]
-        //public void UpdateSettingTypesForMultipleCustomers_Always_CallUpdateSingleCustomerOneByOne()
-        //{
-        //    //// Anders questions:
-        //    //// Update setting type {status, A, B} for 100 customers
-        //    //// Update successfully A for 90 customers, B for 85 customers
-        //    //// Will we update customers in intersaction of A & B? or reject all or what?
-        //    //// Arrange
-        //    const int statusSettingTypeValue = 1;
-        //    var customerIds = new List<int> { 1, 100, 1000, 1001 };
-        //    var settingTypeValues = new byte[] { statusSettingTypeValue, 2, 5, 3 };
-        //    var command = StubHelper.CreateUpdateMultipleSettingParam(
-        //        customerIds: customerIds,
-        //        customerNames: new List<string> { "username1", "100", "1000", "1001" },
-        //        settingTypeValues: settingTypeValues);
-        //    var services = new List<ISettingTypeService>();
-
-        //    command.Setting.SettingTypes.ToList().ForEach(settingType =>
-        //    {
-        //        var settingTypeService = Substitute.For<ISettingTypeService>();
-        //        var sucessResults = new List<SettingResult>();
-
-        //        settingTypeService.UpdateMultipleCustomerSettingType(
-        //            _settingContext,
-        //            command.CustomerIds,
-        //            command.Setting.CustomerLevel,
-        //            command.UplineLevel,
-        //            command.Setting.ProductId,
-        //            settingType)
-        //           .ReturnsForAnyArgs(sucessResults);
-
-        //        _settingTypeServiceFactory
-        //            .GetInstance(settingType)
-        //            .Returns(settingTypeService);
-
-        //        services.Add(settingTypeService);
-        //    });
-
-        //    _settingService = new UpdateCasinoSettingService(
-        //        _settingContext,
-        //        _validationService,
-        //        _taskService,
-        //        _logger,
-        //        _settingTypeServiceFactory);
-
-        //    //// Act
-        //    _settingService.Update(command);
-
-        //    //// Assert
-        //    _settingService.ReceivedWithAnyArgs(customerIds.Count).Update(Arg.Any<UpdateCustomerSettingCommand>());
-        //}
+                        .FirstOrDefault(s => s.Id == StatusSettingTypeValue));
+        }       
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.CustomerSetting.Configurations
+﻿namespace Fanex.CustomerSetting.Configurations
 {
     using System;
     using System.Collections.Generic;
@@ -96,13 +95,11 @@ namespace Fanex.CustomerSetting.Configurations
             Check.Argument.IsNotNull(queryServiceType, "queryServiceType");
             Check.Argument.IsNotNull(updateServiceType, "updateServiceType");
 
-            var configItem = new SettingServiceConfigItem
-            (
+            var configItem = new SettingServiceConfigItem(
                 queryServiceType,
                 updateServiceType,
                 systems,
-                products
-            );
+                products);
 
             configs.Add(configItem);
 
@@ -131,14 +128,6 @@ namespace Fanex.CustomerSetting.Configurations
             return config != null
                 && config.IsValid();                
         }
-
-        //private static bool IsConfigExisted(SettingServiceConfigItem config)
-        //{
-        //    return configs
-        //        .Where(item => !item.Equals(config))
-        //        .Any(item => item.ProductIds.Intersect(config.ProductIds).Any()
-        //        || item.Systems.Intersect(config.Systems).Any());
-        //}
 
         private void ResetConfigContext()
         {

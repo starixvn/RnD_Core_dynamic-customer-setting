@@ -12,7 +12,9 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", 
+        "SA1305:FieldNamesMustNotUseHungarianNotation", 
+        Justification = "PT is abbriviation for Position Taking.")]
     public class CustomerSettingMatrixService : ICustomerSettingMatrixService
     {
         private const string SettingTypeLevelCacheKey = "Fanex.CustomerSetting.Matrix.SettingTypeLevelCacheKey.{0}.{1}.{2}";

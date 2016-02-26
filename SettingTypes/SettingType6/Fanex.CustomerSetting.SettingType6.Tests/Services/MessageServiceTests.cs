@@ -41,10 +41,8 @@
         [TestCase(4, 10033)]
         public void TranslateMessage_Always_MainMessageIsMsgIDFromRawMsg(byte settingLevel, int msgId)
         {
-            // Arrange
-            _rawMessage = $"<Root MsgID=\"{msgId}\" Msg=\"\">"
-                           + "<Row SportType=\"1\" BetType=\"1\" />"
-                       + "</Root>";
+            // Arrange            
+            _rawMessage = string.Format("<Root MsgID=\"{0}\" Msg=\"\"><Row SportType=\"1\" BetType=\"1\" /></Root>", msgId);
 
             // Act
             var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, Arg.Any<string>());

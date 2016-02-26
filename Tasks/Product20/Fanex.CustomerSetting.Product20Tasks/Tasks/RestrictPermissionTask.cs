@@ -7,12 +7,12 @@
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
+    using Fanex.CustomerSetting.Tasks;
     using Fanex.CustomerSetting.Tasks.Product20.Constants;
     using Fanex.CustomerSetting.Tasks.Product20.Criteria;
     using Fanex.CustomerSetting.Tasks.Product20.Models;
     using Fanex.CustomerSetting.Tasks.Product20.Resources;
     using Fanex.Data.Repository;
-    using Fanex.CustomerSetting.Tasks;
 
     public class RestrictPermissionTask : IPostQueryCustomerSettingTask, IPreUpdateCustomerSettingTask, IPreUpdateMultipleCustomersSettingTask
     {

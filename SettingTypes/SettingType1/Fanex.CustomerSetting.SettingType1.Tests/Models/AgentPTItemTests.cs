@@ -6,6 +6,40 @@
     [TestFixture]
     public class AgentPTItemTests
     {
+        private static object[] agentPTItems =
+        {
+            new object[] 
+            {
+                0,
+                true,
+                1,
+                true,
+                true,
+                "<PT SportType=\"1\" BetType=\"1\" " + 
+                " IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
+            },
+            new object[] 
+            {
+                0,
+                true,
+                1,
+                false,
+                false,
+                "<PT SportType=\"1\" BetType=\"1\" " + 
+                " IsLive=\"0\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"0\" UpdAllMems_Value=\"10\"/>"
+            },
+            new object[] 
+            {
+                1,
+                false,
+                0,
+                true,
+                true,
+                "<PT SportType=\"1\" BetType=\"1\" " +
+                " IsLive=\"1\" MasterPT=\"1\" IsAutoMasterPT=\"0\" AutoMasterPT=\"0\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
+            }
+        };
+
         private AgentPTItem _agentPTItem;
 
         [SetUp]
@@ -40,11 +74,9 @@
 
             //// Assert
             Assert.AreEqual(errorCode, actualResult.Code);
-        }
+        }        
 
-        [TestCase(0, true, 1, true, true, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>")]
-        [TestCase(0, true, 1, false, false, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"0\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"0\" UpdAllMems_Value=\"10\"/>")]
-        [TestCase(1, false, 0, true, true, "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" MasterPT=\"1\" IsAutoMasterPT=\"0\" AutoMasterPT=\"0\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>")]
+        [Test, TestCaseSource("AgentPTItems")]        
         public void ToXml_ReturnFormattedXml(
             byte m2,
             bool im2,

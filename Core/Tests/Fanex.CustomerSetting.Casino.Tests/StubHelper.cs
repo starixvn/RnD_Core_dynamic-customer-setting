@@ -1,16 +1,16 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.Models.Enumerations;
     using Fanex.CustomerSetting.Models.Requests;
     using Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public static class StubHelper
     {
         private static readonly byte[] DefaultSettingTypeValues = new byte[] { 1, 2, 3, 4 };
+
         public static UpdateCustomerSettingCommand CreateUpdateSettingParam(
             int customerId = 1,
             Level customerLevel = null,
@@ -24,6 +24,7 @@
                 : CreateCustomerSetting(customerId, customerLevel, productId, DefaultSettingTypeValues);
             return new UpdateCustomerSettingCommand(setting, uplineLevel);
         }
+
         public static Setting CreateCustomerSetting(
             int customerId = 1,
             Level customerLevel = null,
@@ -36,8 +37,7 @@
 
             settingTypeValues.ToList().ForEach(
                 settingTypeValue =>
-                settingTypes.Add(StubHelper.CreateCustomerSettingType(settingTypeValue))
-                );
+                settingTypes.Add(StubHelper.CreateCustomerSettingType(settingTypeValue)));
 
             return new Setting(customerId, customerLevel, productId, settingTypes);
         }
@@ -80,7 +80,7 @@
         {
             customerLevel = customerLevel ?? Level.Master;
 
-            if (settingTypeValues == null )
+            if (settingTypeValues == null)
             {
                 settingTypeValues = DefaultSettingTypeValues;
             }

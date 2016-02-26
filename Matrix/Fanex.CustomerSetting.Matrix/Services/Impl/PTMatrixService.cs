@@ -12,7 +12,9 @@
     using Fanex.CustomerSetting.Services.Impl;
     using Fanex.Data.Repository;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "PT is abbriviation for Position Taking.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", 
+        "SA1305:FieldNamesMustNotUseHungarianNotation", 
+        Justification = "PT is abbriviation for Position Taking.")]
     internal class PTMatrixService : IPTMatrixService
     {
         private const string DefaultLanguage = "en-US";

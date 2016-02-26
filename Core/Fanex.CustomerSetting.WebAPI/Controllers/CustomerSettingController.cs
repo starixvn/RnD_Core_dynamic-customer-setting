@@ -34,7 +34,9 @@
         {
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
+            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+            Justification = "Reviewed!")]
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
         {
             if (request == null)
@@ -56,7 +58,10 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
+        [SuppressMessage("Microsoft.Globalization", 
+            "CA1303:Do not pass literals as localized parameters", 
+            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+            Justification = "Reviewed!")]
         public HttpResponseMessage Post(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<UpdateSettingRequest>))]UpdateSettingRequest request)
         {
@@ -80,7 +85,10 @@
             return Request.CreateResponse(result);
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", Justification = "Reviewed!")]
+        [SuppressMessage("Microsoft.Globalization", 
+            "CA1303:Do not pass literals as localized parameters", 
+            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+            Justification = "Reviewed!")]
         public HttpResponseMessage PostMultiple(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<MultipleUpdateSettingRequest>))]MultipleUpdateSettingRequest request)
         {

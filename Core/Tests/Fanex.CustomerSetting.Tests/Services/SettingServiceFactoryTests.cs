@@ -8,14 +8,13 @@
     using NSubstitute;
     using NUnit.Framework;
 
-
     [TestFixture]
     public class SettingServiceFactoryTests
     {
         private const byte AllBet = 21;
-        private SettingServiceConfigurator configurator;
         private static readonly Type QueryServiceDefaultType = typeof(QuerySettingService);
-        private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);
+        private static readonly Type UpdateServiceDefaultType = typeof(UpdateSettingService);        
+        private SettingServiceConfigurator configurator;        
 
         [SetUp]
         public void SetUpServiceTypeConfig()

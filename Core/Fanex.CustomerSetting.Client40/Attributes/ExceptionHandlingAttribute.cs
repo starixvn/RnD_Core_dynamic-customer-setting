@@ -26,7 +26,10 @@
             base.OnException(filterContext);
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)", Justification = "Reviewed!")]
+        [SuppressMessage("Microsoft.Globalization", 
+            "CA1303:Do not pass literals as localized parameters", 
+            MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)", 
+            Justification = "Reviewed!")]
         private void Log(Exception ex)
         {
             string message = string.Join(

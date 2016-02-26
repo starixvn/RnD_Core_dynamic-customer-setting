@@ -22,12 +22,11 @@
         private ICustomerProductStatusService _customerProductStatusService;
         private ISetting _setting;
 
-
         private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
         {
             Level level = Level.FromValue<Level>(levelValue);
-            Level upLineLevel = level.IsMemberLevel() ? Level.FromValue<Level>(++levelValue) : null;
-            var query = new CustomerSettingQuery(10000, level, 110, upLineLevel);
+            Level uplineLevel = level.IsMemberLevel() ? Level.FromValue<Level>(++levelValue) : null;
+            var query = new CustomerSettingQuery(10000, level, 110, uplineLevel);
 
             return query;
         }
@@ -42,9 +41,7 @@
             _setting.CustomerLevel = Level.Member;
             _setting.ProductId = 1;
             _setting.SettingTypes = new List<SettingType>();
-
-
-            _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
+             _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
             _querySettingService = Substitute.For<IQuerySettingService>();
 
             _querySettingService.GetCustomerSetting(Arg.Any<CustomerSettingQuery>()).ReturnsForAnyArgs(_setting);
@@ -54,7 +51,6 @@
                 _querySettingService,
                 _customerProductStatusService);
         }
-
 
         [Test]
         public void GetCustomerSetting_CustomerCasinoStatusIsHidden_ThrowInvalidOperationException()

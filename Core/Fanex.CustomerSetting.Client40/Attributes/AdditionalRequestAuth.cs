@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Attributes
 {
     using System;
+    using static System.Net.WebRequestMethods;
     using System.Web;
-    using System.Web.Mvc;
+    using System.Web.Mvc;    
     using Fanex.CustomerSetting.Client40.Configurations;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.CustomerSetting.Client40.Models.Constants;
-    using static System.Net.WebRequestMethods;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     internal sealed class AdditionalRequestAuth : AuthorizeAttribute

@@ -18,7 +18,8 @@
 
         public string ToJson()
         {
-            string objTpl = "{{\"settingTypeId\": {0}, \"productId\": {1}, \"customerName\": \"{2}\", \"sportTypeId\": {3}, \"betTypeId\": {4}, \"showFilter\": {5}, \"isLive\": {6} }}";
+            string objTpl = "{{\"settingTypeId\": {0}," + 
+                " \"productId\": {1}, \"customerName\": \"{2}\", \"sportTypeId\": {3}, \"betTypeId\": {4}, \"showFilter\": {5}, \"isLive\": {6} }}";
 
             return string.Format(
                 objTpl,

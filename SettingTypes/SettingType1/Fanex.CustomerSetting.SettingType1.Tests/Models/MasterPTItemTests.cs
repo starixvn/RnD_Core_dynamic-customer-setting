@@ -64,7 +64,8 @@
             var actualXmlFormatted = _masterPTItem.ToXml();
 
             //// Assert
-            var expectedXmlFormatted = "<PT SportType=\"1\" BetType=\"1\" IsLive=\"1\" SuperPT=\"0\" IsAutoSuperPT=\"1\" AutoSuperPT=\"10\" MasterPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>";
+            var expectedXmlFormatted = "<PT SportType=\"1\" " +
+                "BetType=\"1\" IsLive=\"1\" SuperPT=\"0\" IsAutoSuperPT=\"1\" AutoSuperPT=\"10\" MasterPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>";
             Assert.AreEqual(expectedXmlFormatted, actualXmlFormatted);
         }
     }

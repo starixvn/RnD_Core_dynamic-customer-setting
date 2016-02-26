@@ -188,7 +188,13 @@
             throw new NotImplementedException();
         }
 
-        public override SettingResult UpdateCustomerSettingType(ISettingContext settingContext, int customerId, Level customerLevel, Level uplineLevel, byte productId, SettingType settingType)
+        public override SettingResult UpdateCustomerSettingType(
+            ISettingContext settingContext, 
+            int customerId, 
+            Level customerLevel, 
+            Level uplineLevel, 
+            byte productId,
+            SettingType settingType)
         {
             if (customerId == 0)
             {
