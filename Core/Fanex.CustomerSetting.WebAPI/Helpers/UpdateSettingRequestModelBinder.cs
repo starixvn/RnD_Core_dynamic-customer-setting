@@ -35,6 +35,8 @@
                 new LevelConverter());
 
             bindingContext.Model = updateSettingRequest;
+            bindingContext.ValidationNode.ValidateAllProperties = true;
+            bindingContext.ValidationNode.Validate(actionContext);
 
             return true;
         }
