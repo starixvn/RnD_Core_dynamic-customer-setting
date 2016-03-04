@@ -117,19 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Msg_1" xml:space="preserve">
-    <value>无效的抽取佣金率</value>
+  <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
+    <value>上线每日自动重置关闭。</value>
   </data>
-  <data name="ShareCannotBeExceed100Percent" xml:space="preserve">
-    <value>占成不能超过 100%</value>
+  <data name="MaximumLossValueIsRequired" xml:space="preserve">
+    <value>最大损失值是必须的。</value>
   </data>
-  <data name="ShareMustBeLessThanOrEqualToGivenCommissionError" xml:space="preserve">
-    <value>占成必须小于或相等予佣金。</value>
+  <data name="MaximumLossValueShouldBeInRange" xml:space="preserve">
+    <value>最大损失值应在({0} - {1})范围内。</value>
   </data>
-  <data name="ShareMustBePositive" xml:space="preserve">
-    <value>占成必须是正数。</value>
+  <data name="MaximumWinShouldBotExceedThanUplineMaximumWin" xml:space="preserve">
+    <value>直接上线。</value>
   </data>
-  <data name="UpdatedChargeCommissionSuccessfully" xml:space="preserve">
-    <value>抽取佣金已成功更新。</value>
+  <data name="MaximumWinShouldNotBeLessThanZero" xml:space="preserve">
+    <value>最大收益不能小于0。</value>
+  </data>
+  <data name="Msg_10022" xml:space="preserve">
+    <value>您不能改变每日自动重置限度。</value>
+  </data>
+  <data name="Msg_10024" xml:space="preserve">
+    <value>直接上线。</value>
+  </data>
+  <data name="Msg_10033" xml:space="preserve">
+    <value>直接上线。</value>
+  </data>
+  <data name="UpdatedWinLossLimitSuccessfully" xml:space="preserve">
+    <value>成功更新赢输限度。</value>
   </data>
 </root>

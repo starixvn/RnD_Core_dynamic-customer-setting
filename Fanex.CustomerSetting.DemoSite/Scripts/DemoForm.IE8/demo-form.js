@@ -140,7 +140,7 @@ var DemoForm;
             return new Array(new KeyValuePair(1, "accounting"), new KeyValuePair(2, "agency"), new KeyValuePair(3, "external accounting"));
         };
         SampleDataFactory.getLanuages = function () {
-            return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("ko-KR", "ภาษาไทย (th-TH)"), new KeyValuePair("zh-TW", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));
+            return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("th-TH", "ภาษาไทย (th-TH)"), new KeyValuePair("zh-TW", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));
         };
         SampleDataFactory.getActor = function (selectedRole, systemId) {
             var actorId = 0;
@@ -174,7 +174,8 @@ var DemoForm;
             var id = 0;
             switch (role) {
                 case Role["super"]:
-                    id = 2;
+                    id = 1176070;
+                    name = "SuperTest1";
                     break;
                 case Role["master"]:
                     id = 1176083;

@@ -227,7 +227,7 @@ module DemoFrom {
                 new KeyValuePair<string, string>("zh-TW", "繁體中文 (zh-TW)"),
                 new KeyValuePair<string, string>("zh-CN", "简体中文 (zh-CN)"),
                 new KeyValuePair<string, string>("ja-JP", "日本語 (ja-JP)"),
-                new KeyValuePair<string, string>("ko-KR", "ภาษาไทย (th-TH)"),
+                new KeyValuePair<string, string>("th-TH", "ภาษาไทย (th-TH)"),
                 new KeyValuePair<string, string>("zh-TW", "한국어 (ko-KR)"),
                 new KeyValuePair<string, string>("vi-VN", "Tiếng Việt (vi-VN)"));
         }
@@ -273,22 +273,22 @@ module DemoFrom {
             switch (role) {
                 case Role.super:
                     id = 1176070;
-                    name = "SA-RM";
+                    name = "SuperTest1";
                     break;
 
                 case Role.master:
                     id = 1176083;
-                    name = "mrm";
+                    name = "master1";
                     break;
 
                 case Role.agent:
                     id = 1176086;
-                    name = "wsrm";
+                    name = "agent01";
                     break;
 
                 case Role.member:
                     id = 7890346;
-                    name = "428RM";
+                    name = "AGENT01000";
                     break;
             }
 
@@ -301,23 +301,23 @@ module DemoFrom {
 
             switch (role) {
                 case Role.super:
-                    ids = "1176070,1176070,1176070";
-                    names = "SA-RM,SA-US$,SA-TB";
+                    ids = "1176070,576313,3230178";
+                    names = "SuperTest1,SuperTest2,SuperTest12";
                     break;
 
                 case Role.master:
-                    ids = "1176083,1176083,1176083";
-                    names = "mrm,mbrm,MYRM";
+                    ids = "1176083,14167350,14373487";
+                    names = "master1,mastertest01,masterkz";
                     break;
 
                 case Role.agent:
-                    ids = "1176086,1176086,1176086";
-                    names = "wsrm,SKRM,216COM";
+                    ids = "1176086,14373905,14374140";
+                    names = "agent01,agent03,agentlcs000";
                     break;
 
                 case Role.member:
-                    ids = "1277,1284,1290";
-                    names = "428RM,305RM,302RM";
+                    ids = "7890346,8252951,8252986";
+                    names = "AGENT01000,AGENT01001,AGENT01002";
                     break;
             }
 

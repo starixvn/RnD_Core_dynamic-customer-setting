@@ -28,14 +28,6 @@
     };
     
     settingType5Resources["label"] = settingType5Resources["label"] || {};
-    settingType5Resources["label"]["ko-kr"] = {
-    };
-    
-    settingType5Resources["label"] = settingType5Resources["label"] || {};
-    settingType5Resources["label"]["ja-jp"] = {
-    };
-    
-    settingType5Resources["label"] = settingType5Resources["label"] || {};
     settingType5Resources["label"]["th-th"] = {
     };
     
@@ -58,14 +50,6 @@
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["zh-tw"] = {
-    };
-    
-    settingType5Resources["message"] = settingType5Resources["message"] || {};
-    settingType5Resources["message"]["ko-kr"] = {
-    };
-    
-    settingType5Resources["message"] = settingType5Resources["message"] || {};
-    settingType5Resources["message"]["ja-jp"] = {
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};

@@ -106,8 +106,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Label.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Label.ko-KR.resx" />
     <EmbeddedResource Include="Resources\Label.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Label.Designer.cs</LastGenOutput>
@@ -116,8 +114,6 @@
     <EmbeddedResource Include="Resources\Label.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Label.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Label.zh-TW.resx" />
-    <EmbeddedResource Include="Resources\Message.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Message.ko-KR.resx" />
     <EmbeddedResource Include="Resources\Message.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Message.Designer.cs</LastGenOutput>

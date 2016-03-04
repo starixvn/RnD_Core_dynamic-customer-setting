@@ -25005,26 +25005,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        })();
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var CopySettingDirective = (function () {
             function CopySettingDirective(copyingSettingService) {
                 var _this = this;
@@ -25238,6 +25218,26 @@ var CustomerSetting;
             return SettingResultDirective;
         })();
         IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        })();
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -27486,11 +27486,11 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
+$templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\"><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div><div class=\"modal__content\"><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\"></select></div>");
@@ -28367,26 +28367,62 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-cn"] = {
+        "ClickToViewCurrentWinLossLimit": "点击查看目前的赢/输金额",
+        "CurrentWinLossAmount": "目前的赢/输金额",
+        "DailyAutoResetLimit": "每日自动重置限度（中午12点GMT+8)",
+        "Losing": "输",
+        "MaximumLoss": "最大损失",
+        "MaximumWin": "最大收益",
+        "Of": "的",
+        "OnGivenCredit": "在给定信用额上",
+        "Unlimited": "无限",
+        "WinLossLimit": "赢输限度",
+        "Winning": "赢"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-tw"] = {
-    };
-    
-    settingType6Resource["label"] = settingType6Resource["label"] || {};
-    settingType6Resource["label"]["ko-kr"] = {
-    };
-    
-    settingType6Resource["label"] = settingType6Resource["label"] || {};
-    settingType6Resource["label"]["ja-jp"] = {
+        "ClickToViewCurrentWinLossLimit": "按一下查看當前的盈虧金額",
+        "CurrentWinLossAmount": "當前的盈虧金額",
+        "DailyAutoResetLimit": "每天自動重設限制 (中午 12 點 GMT +8)",
+        "Losing": "輸盤",
+        "MaximumLoss": "最大損失",
+        "MaximumWin": "最大收入",
+        "Of": "的",
+        "OnGivenCredit": "關於給定積分",
+        "Unlimited": "無限制的",
+        "WinLossLimit": "盈虧限值",
+        "Winning": "贏取"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["th-th"] = {
+        "ClickToViewCurrentWinLossLimit": "คลิกเพื่อดูจำนวนแพ้/ชนะปัจจุบัน",
+        "CurrentWinLossAmount": "จำนวนแพ้/ชนะปัจจุบัน",
+        "DailyAutoResetLimit": "ตั้งวงเงินใหม่อัตโนมัติรายวัน (เวลา 12 น. GMT+8)",
+        "Losing": "แพ้",
+        "MaximumLoss": "แพ้สูงสุด",
+        "MaximumWin": "ชนะสูงสุด",
+        "Of": "ของ",
+        "OnGivenCredit": "ยอดคงเหลือที่ได้รับ",
+        "Unlimited": "ไม่จำกัด",
+        "WinLossLimit": "วงเงินแพ้ชนะ",
+        "Winning": "ชนะ"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["vi-vn"] = {
+        "ClickToViewCurrentWinLossLimit": "Nhấn để xem giá trị thắng thua hiện tại",
+        "CurrentWinLossAmount": "Giá trị thắng thua hiện tại",
+        "DailyAutoResetLimit": "Tự động reset giới hạn chuyển khoản mỗi ngày (12 trưa GMT+8)",
+        "Losing": "Thua",
+        "MaximumLoss": "Tiền thua cược lớn nhất",
+        "MaximumWin": "Tiền thắng cược lớn nhất",
+        "Of": "của",
+        "OnGivenCredit": "trong hạn mức tín dụng được cấp",
+        "Unlimited": "Không giới hạn",
+        "WinLossLimit": "Giới hạn thắng thua",
+        "Winning": "Thắng"
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
@@ -28404,26 +28440,54 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-cn"] = {
+        "AutoResetIsViolatedWithUpline": "上线每日自动重置关闭。",
+        "MaximumLossValueIsRequired": "最大损失值是必须的。",
+        "MaximumLossValueShouldBeInRange": "最大损失值应在({0} - {1})范围内。",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "直接上线。",
+        "MaximumWinShouldNotBeLessThanZero": "最大收益不能小于0。",
+        "Msg_10022": "您不能改变每日自动重置限度。",
+        "Msg_10024": "直接上线。",
+        "Msg_10033": "直接上线。",
+        "UpdatedWinLossLimitSuccessfully": "成功更新赢输限度。"
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-tw"] = {
-    };
-    
-    settingType6Resource["message"] = settingType6Resource["message"] || {};
-    settingType6Resource["message"]["ko-kr"] = {
-    };
-    
-    settingType6Resource["message"] = settingType6Resource["message"] || {};
-    settingType6Resource["message"]["ja-jp"] = {
+        "AutoResetIsViolatedWithUpline": "上線的每日自動重設已經關閉。",
+        "MaximumLossValueIsRequired": "規定了最大損失數值。",
+        "MaximumLossValueShouldBeInRange": "最大損失數值的範圍應該是({0} - {1})。",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最大收入應該少於或等於直接上線的最大收入。",
+        "MaximumWinShouldNotBeLessThanZero": "最大收入應該不少於 0。",
+        "Msg_10022": "您無法更改每日自動重設限值。",
+        "Msg_10024": "最大收入應該少於或等於直接上線的最大收入。",
+        "Msg_10033": "最大損失應該少於或等於直接上線的最大損失。",
+        "UpdatedWinLossLimitSuccessfully": "已經成功更新盈虧限值。"
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["th-th"] = {
+        "AutoResetIsViolatedWithUpline": "มีการปิดการตั้งค่าใหม่อัตโนมัติรายวันสำหรับอัปไลน์",
+        "MaximumLossValueIsRequired": "ต้องใช้ค่าแพ้สูงสุด",
+        "MaximumLossValueShouldBeInRange": "ค่าแพ้สูงสุดควรอยู่ในช่วง ({0} - {1})",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "ชนะสูงสุดควรน้อยกว่าหรือเท่ากับชนะสูงสุดของอัปไลน์โดยตรง",
+        "MaximumWinShouldNotBeLessThanZero": "ชนะสูงสุดไม่ควรน้อยกว่า 0",
+        "Msg_10022": "ไม่อนุญาตให้เปลี่ยนแปลงวงเงินการตั้งค่าใหม่อัตโนมัติรายวัน",
+        "Msg_10024": "ชนะสูงสุดควรน้อยกว่าหรือเท่ากับชนะสูงสุดของอัปไลน์โดยตรง",
+        "Msg_10033": "แพ้สูงสุดควรน้อยกว่าหรือเท่ากับแพ้สูงสุดของอัปไลน์โดยตรง",
+        "UpdatedWinLossLimitSuccessfully": "ปรับข้อมูลวงเงินแพ้ชนะเรียบร้อยแล้ว"
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["vi-vn"] = {
+        "AutoResetIsViolatedWithUpline": "Chức năng tự động reset giới hạn chuyển khoản mỗi ngày đã được tắt cho cấp trên.",
+        "MaximumLossValueIsRequired": "Tiền thua cược lớn nhất không thể trống.",
+        "MaximumLossValueShouldBeInRange": "Tiền thua cược lớn nhất phải nằm trong khoảng ({0} - {1}).",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.",
+        "MaximumWinShouldNotBeLessThanZero": "Tiền thắng cược lớn nhất phải lớn hơn 0.",
+        "Msg_10022": "Bạn không được phép thay đổi chức năng Tự động reset giới hạn chuyển khoản mỗi ngày.",
+        "Msg_10024": "Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.",
+        "Msg_10033": "Tiền thua cược lớn nhất phải ít hơn hoặc bằng Tiền thua cược lớn nhất của cấp trên trực tiếp.",
+        "UpdatedWinLossLimitSuccessfully": "Cập nhật Giới hạn thắng thua thành công."
     };
 
     angular.module("customerSetting").value("settingType6Resource", settingType6Resource);
@@ -28443,26 +28507,22 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-cn"] = {
+        "BetLimit": "下注限度"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-tw"] = {
-    };
-    
-    settingType7Resource["label"] = settingType7Resource["label"] || {};
-    settingType7Resource["label"]["ko-kr"] = {
-    };
-    
-    settingType7Resource["label"] = settingType7Resource["label"] || {};
-    settingType7Resource["label"]["ja-jp"] = {
+        "BetLimit": "投注限值"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["th-th"] = {
+        "BetLimit": "วงเงินเดิมพัน"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["vi-vn"] = {
+        "BetLimit": "Giới hạn cược"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
@@ -28474,26 +28534,30 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-cn"] = {
+        "MemberStakeLevelMustBeSelectedForBetType": "每种下注类型必须有一个下注限值可选。",
+        "Msg_10034": "用户的上线没有赌注水平线。",
+        "UpdatedBetLimitSuccessfully": "成功更新下注限度。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-tw"] = {
-    };
-    
-    settingType7Resource["message"] = settingType7Resource["message"] || {};
-    settingType7Resource["message"]["ko-kr"] = {
-    };
-    
-    settingType7Resource["message"] = settingType7Resource["message"] || {};
-    settingType7Resource["message"]["ja-jp"] = {
+        "MemberStakeLevelMustBeSelectedForBetType": "每種投注類型必須選擇一個投注極限數值。",
+        "Msg_10034": "這位用戶的上線沒有賭金等級。",
+        "UpdatedBetLimitSuccessfully": "已經成功更新投注限值。"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["th-th"] = {
+        "MemberStakeLevelMustBeSelectedForBetType": "การเดิมพันแต่ละประเภทต้องมีค่าวงเงินเดิมพันหนึ่งค่าให้เลือก",
+        "Msg_10034": "อัปไลน์ของผู้ใช้รายนี้ไม่มีระดับเงินเดิมพัน",
+        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว"
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["vi-vn"] = {
+        "MemberStakeLevelMustBeSelectedForBetType": "Mỗi loại cược phải chọn một giá trị Giới hạn cược.",
+        "Msg_10034": "Cấp trên của người dùng này chưa cấu hình cấp độ đặt cược.",
+        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công."
     };
 
     angular.module("customerSetting").value("settingType7Resource", settingType7Resource);

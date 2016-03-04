@@ -216,7 +216,7 @@ module DemoForm {
                 new KeyValuePair<string, string>("zh-TW", "繁體中文 (zh-TW)"),
                 new KeyValuePair<string, string>("zh-CN", "简体中文 (zh-CN)"),
                 new KeyValuePair<string, string>("ja-JP", "日本語 (ja-JP)"),
-                new KeyValuePair<string, string>("ko-KR", "ภาษาไทย (th-TH)"),
+                new KeyValuePair<string, string>("th-TH", "ภาษาไทย (th-TH)"),
                 new KeyValuePair<string, string>("zh-TW", "한국어 (ko-KR)"),
                 new KeyValuePair<string, string>("vi-VN", "Tiếng Việt (vi-VN)"));
         }
@@ -263,8 +263,8 @@ module DemoForm {
             /* tslint:disable:no-string-literal */
             switch (role) {
                 case Role["super"]:
-                    id = 2;
-
+                    id = 1176070;
+                    name = "SuperTest1";
                     break;
 
                 case Role["master"]:
