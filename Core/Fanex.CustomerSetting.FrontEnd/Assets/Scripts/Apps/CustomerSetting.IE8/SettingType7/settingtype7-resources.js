@@ -12,12 +12,12 @@
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-cn"] = {
-        "BetLimit": "下注限度"
+        "BetLimit": "投注限额"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-tw"] = {
-        "BetLimit": "投注限值"
+        "BetLimit": "投注限額"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
@@ -39,16 +39,16 @@
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-cn"] = {
-        "MemberStakeLevelMustBeSelectedForBetType": "每种下注类型必须有一个下注限值可选。",
-        "Msg_10034": "用户的上线没有赌注水平线。",
-        "UpdatedBetLimitSuccessfully": "成功更新下注限度。"
+        "MemberStakeLevelMustBeSelectedForBetType": "每项投注类别需至少选择一个投注限额.",
+        "Msg_10034": "这帐号的上线无投注本金级别.",
+        "UpdatedBetLimitSuccessfully": "投注限额已成功更新."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-tw"] = {
-        "MemberStakeLevelMustBeSelectedForBetType": "每種投注類型必須選擇一個投注極限數值。",
-        "Msg_10034": "這位用戶的上線沒有賭金等級。",
-        "UpdatedBetLimitSuccessfully": "已經成功更新投注限值。"
+        "MemberStakeLevelMustBeSelectedForBetType": "每項投注類別需至少選擇一個投注限額.",
+        "Msg_10034": "這帳號的上線無投註本金級別.",
+        "UpdatedBetLimitSuccessfully": "投注限額已成功更新."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};

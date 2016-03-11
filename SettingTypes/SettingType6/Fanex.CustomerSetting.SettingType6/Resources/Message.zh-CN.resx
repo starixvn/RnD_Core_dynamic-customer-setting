@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
-    <value>上线每日自动重置关闭。</value>
+    <value>关闭上线的每日限额自动重设.</value>
   </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
-    <value>最大损失值是必须的。</value>
+    <value>需求最高输额.</value>
   </data>
   <data name="MaximumLossValueShouldBeInRange" xml:space="preserve">
-    <value>最大损失值应在({0} - {1})范围内。</value>
+    <value>最高输额需介于 ({0} - {1}) 的范围.</value>
   </data>
   <data name="MaximumWinShouldBotExceedThanUplineMaximumWin" xml:space="preserve">
-    <value>直接上线。</value>
+    <value>最高赢额应低于或相等于直系上线的最高赢额.</value>
   </data>
   <data name="MaximumWinShouldNotBeLessThanZero" xml:space="preserve">
-    <value>最大收益不能小于0。</value>
+    <value>最高赢额不应低于 0.</value>
   </data>
   <data name="Msg_10022" xml:space="preserve">
-    <value>您不能改变每日自动重置限度。</value>
+    <value>您不允许修改每日限额自动重设.</value>
   </data>
   <data name="Msg_10024" xml:space="preserve">
-    <value>直接上线。</value>
+    <value>最高赢额应低于或相等于直系上线的最高赢额.</value>
   </data>
   <data name="Msg_10033" xml:space="preserve">
-    <value>直接上线。</value>
+    <value>最高输额应低于或相等于直系上线的最高输额.</value>
   </data>
   <data name="UpdatedWinLossLimitSuccessfully" xml:space="preserve">
-    <value>成功更新赢输限度。</value>
+    <value>输赢限额已成功更新.</value>
   </data>
 </root>

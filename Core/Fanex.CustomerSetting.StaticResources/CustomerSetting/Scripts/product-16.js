@@ -30442,7 +30442,7 @@ var CustomerSetting;
             });
         };
         return StringFormater;
-    })();
+    }());
     CustomerSetting.StringFormater = StringFormater;
     var ArrayHelpers = (function () {
         function ArrayHelpers() {
@@ -30462,7 +30462,7 @@ var CustomerSetting;
             return result;
         };
         return ArrayHelpers;
-    })();
+    }());
     CustomerSetting.ArrayHelpers = ArrayHelpers;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -30516,7 +30516,7 @@ var CustomerSetting;
             return "The number of customer IDs does not match with the number of customer names.";
         };
         return Exceptions;
-    })();
+    }());
     CustomerSetting.Exceptions = Exceptions;
     var Defaults = (function () {
         function Defaults() {
@@ -30543,7 +30543,7 @@ var CustomerSetting;
             configurable: true
         });
         return Defaults;
-    })();
+    }());
     CustomerSetting.Defaults = Defaults;
     var KeyValuePair = (function () {
         function KeyValuePair(key, value) {
@@ -30551,7 +30551,7 @@ var CustomerSetting;
             this.value = value;
         }
         return KeyValuePair;
-    })();
+    }());
     CustomerSetting.KeyValuePair = KeyValuePair;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -30586,7 +30586,7 @@ var CustomerSetting;
             app.value(name, target);
         };
         return ModuleRegister;
-    })();
+    }());
     CustomerSetting.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -30623,7 +30623,7 @@ var CustomerSetting;
             }
         }
         return CustomerInfo;
-    })();
+    }());
     CustomerSetting.CustomerInfo = CustomerInfo;
     var DefaultSettingItem = (function () {
         function DefaultSettingItem(settingItem) {
@@ -30685,7 +30685,7 @@ var CustomerSetting;
             return settingItem;
         };
         return DefaultSettingItem;
-    })();
+    }());
     CustomerSetting.DefaultSettingItem = DefaultSettingItem;
     var ErrorSettingItem = (function () {
         function ErrorSettingItem(errorItem) {
@@ -30708,7 +30708,7 @@ var CustomerSetting;
         };
         ;
         return ErrorSettingItem;
-    })();
+    }());
     CustomerSetting.ErrorSettingItem = ErrorSettingItem;
     var SettingType = (function () {
         function SettingType(settingType) {
@@ -30789,7 +30789,7 @@ var CustomerSetting;
             return extraData;
         };
         return SettingType;
-    })();
+    }());
     CustomerSetting.SettingType = SettingType;
     var Setting = (function () {
         function Setting(setting) {
@@ -30896,7 +30896,7 @@ var CustomerSetting;
             });
         };
         return Setting;
-    })();
+    }());
     CustomerSetting.Setting = Setting;
     var Result = (function () {
         function Result(code, message, msgType) {
@@ -30962,7 +30962,7 @@ var CustomerSetting;
             configurable: true
         });
         return Result;
-    })();
+    }());
     CustomerSetting.Result = Result;
     var SettingResult = (function (_super) {
         __extends(SettingResult, _super);
@@ -30973,7 +30973,7 @@ var CustomerSetting;
             this.messages = messages;
         }
         return SettingResult;
-    })(Result);
+    }(Result));
     CustomerSetting.SettingResult = SettingResult;
     var CustomerSettingResult = (function () {
         function CustomerSettingResult(settingResult) {
@@ -31027,7 +31027,7 @@ var CustomerSetting;
             this.settingResults = uniquedResults;
         };
         return CustomerSettingResult;
-    })();
+    }());
     CustomerSetting.CustomerSettingResult = CustomerSettingResult;
     var UpdatingSettingResult = (function (_super) {
         __extends(UpdatingSettingResult, _super);
@@ -31073,7 +31073,7 @@ var CustomerSetting;
             return this.subResults || new Array();
         };
         return UpdatingSettingResult;
-    })(Result);
+    }(Result));
     CustomerSetting.UpdatingSettingResult = UpdatingSettingResult;
     var ValidationResult = (function (_super) {
         __extends(ValidationResult, _super);
@@ -31085,7 +31085,7 @@ var CustomerSetting;
             this.isWarning = isWarning;
         }
         return ValidationResult;
-    })(Result);
+    }(Result));
     CustomerSetting.ValidationResult = ValidationResult;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31146,7 +31146,7 @@ var CustomerSetting;
             configurable: true
         });
         return AbstractSettingQuery;
-    })();
+    }());
     CustomerSetting.AbstractSettingQuery = AbstractSettingQuery;
     var SettingQuery = (function (_super) {
         __extends(SettingQuery, _super);
@@ -31179,7 +31179,7 @@ var CustomerSetting;
             return params;
         };
         return SettingQuery;
-    })(AbstractSettingQuery);
+    }(AbstractSettingQuery));
     CustomerSetting.SettingQuery = SettingQuery;
     var MultipleSettingQuery = (function (_super) {
         __extends(MultipleSettingQuery, _super);
@@ -31225,7 +31225,7 @@ var CustomerSetting;
             return this.custIds.length === this.custNames.length;
         };
         return MultipleSettingQuery;
-    })(AbstractSettingQuery);
+    }(AbstractSettingQuery));
     CustomerSetting.MultipleSettingQuery = MultipleSettingQuery;
     var SettingCommand = (function () {
         function SettingCommand(uplineLevel, setting) {
@@ -31245,7 +31245,7 @@ var CustomerSetting;
             };
         };
         return SettingCommand;
-    })();
+    }());
     CustomerSetting.SettingCommand = SettingCommand;
     var MultipleSettingCommand = (function (_super) {
         __extends(MultipleSettingCommand, _super);
@@ -31272,7 +31272,7 @@ var CustomerSetting;
             };
         };
         return MultipleSettingCommand;
-    })(SettingCommand);
+    }(SettingCommand));
     CustomerSetting.MultipleSettingCommand = MultipleSettingCommand;
     var SettingPartialCommand = (function () {
         function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -31283,7 +31283,7 @@ var CustomerSetting;
             this.settingType = settingType;
         }
         return SettingPartialCommand;
-    })();
+    }());
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
     var RedirectCommand = (function () {
         function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
@@ -31301,7 +31301,7 @@ var CustomerSetting;
             };
         };
         return RedirectCommand;
-    })();
+    }());
     CustomerSetting.RedirectCommand = RedirectCommand;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31342,7 +31342,7 @@ var CustomerSetting;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    })();
+    }());
     CustomerSetting.AppConfigService = AppConfigService;
     CustomerSetting.ModuleRegister.service("appConfigService", AppConfigService);
     var ParametersService = (function () {
@@ -31412,7 +31412,7 @@ var CustomerSetting;
         };
         ParametersService.$inject = ["$window"];
         return ParametersService;
-    })();
+    }());
     CustomerSetting.ParametersService = ParametersService;
     CustomerSetting.ModuleRegister.service("parametersService", ParametersService);
     var UpdatingSettingTypePromiseChain = (function () {
@@ -31458,7 +31458,7 @@ var CustomerSetting;
         };
         UpdatingSettingTypePromiseChain.$inject = ["$q"];
         return UpdatingSettingTypePromiseChain;
-    })();
+    }());
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
     var SettingTypesSharedValuesService = (function () {
@@ -31475,7 +31475,7 @@ var CustomerSetting;
             }
         };
         return SettingTypesSharedValuesService;
-    })();
+    }());
     CustomerSetting.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
     CustomerSetting.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
     var ValueRangeService = (function () {
@@ -31499,7 +31499,7 @@ var CustomerSetting;
             return ranges;
         };
         return ValueRangeService;
-    })();
+    }());
     CustomerSetting.ValueRangeService = ValueRangeService;
     CustomerSetting.ModuleRegister.service("valueRangeService", ValueRangeService);
     function NAValue() {
@@ -31622,7 +31622,7 @@ var CustomerSetting;
         };
         ResourceService.$inject = ["customerSettingResource", "parametersService"];
         return ResourceService;
-    })();
+    }());
     CustomerSetting.ResourceService = ResourceService;
     CustomerSetting.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -31658,7 +31658,7 @@ var CustomerSetting;
                 }];
         }
         return BlockUiDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
     var BlockUiService = (function () {
         function BlockUiService() {
@@ -31673,7 +31673,7 @@ var CustomerSetting;
             this.scope.isLoading = false;
         };
         return BlockUiService;
-    })();
+    }());
     CustomerSetting.BlockUiService = BlockUiService;
     CustomerSetting.ModuleRegister.service("blockUiService", BlockUiService);
 })(CustomerSetting || (CustomerSetting = {}));
@@ -31720,7 +31720,7 @@ var CustomerSetting;
         };
         RequestService.$inject = ["$http", "resourceService", "blockUiService"];
         return RequestService;
-    })();
+    }());
     CustomerSetting.RequestService = RequestService;
     CustomerSetting.ModuleRegister.service("requestService", RequestService);
 })(CustomerSetting || (CustomerSetting = {}));
@@ -31814,8 +31814,31 @@ var CustomerSetting;
             "updatingSettingTypePromiseChain",
             "settingTypesSharedValuesService"];
         return CustomerSettingController;
-    })();
+    }());
     CustomerSetting.ModuleRegister.controller("customerSettingController", CustomerSettingController);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var CustomerInfoDirective = (function () {
+        function CustomerInfoDirective() {
+            this.replace = true;
+            this.templateUrl = "CustomerInfo/customer-info.htm";
+        }
+        Object.defineProperty(CustomerInfoDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    info: "=",
+                    names: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return CustomerInfoDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -31857,7 +31880,7 @@ var CustomerSetting;
         });
         CopySettingDirective.$inject = ["copyingSettingService"];
         return CopySettingDirective;
-    })();
+    }());
     CustomerSetting.CopySettingDirective = CopySettingDirective;
     CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
     var CopyingSettingService = (function () {
@@ -31902,7 +31925,7 @@ var CustomerSetting;
         };
         CopyingSettingService.$inject = ["$rootScope"];
         return CopyingSettingService;
-    })();
+    }());
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -31954,7 +31977,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingTypeDirective;
-    })();
+    }());
     CustomerSetting.SettingTypeDirective = SettingTypeDirective;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32001,7 +32024,7 @@ var CustomerSetting;
             return result;
         };
         return DefaultSettingTypeGroupingDirective;
-    })();
+    }());
     CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
     CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
     function ShowingName() {
@@ -32014,29 +32037,6 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var CustomerInfoDirective = (function () {
-        function CustomerInfoDirective() {
-            this.replace = true;
-            this.templateUrl = "CustomerInfo/customer-info.htm";
-        }
-        Object.defineProperty(CustomerInfoDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    info: "=",
-                    names: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return CustomerInfoDirective;
-    })();
-    CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -32064,7 +32064,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingResultDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32126,7 +32126,7 @@ var CustomerSetting;
         };
         SettingTypeDirectiveLoader.$inject = ["$compile"];
         return SettingTypeDirectiveLoader;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32220,7 +32220,7 @@ var CustomerSetting;
         };
         Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
         return Tooltip;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
     function TooltipMessage($injector, $filter) {
         return function (result, resourceServiceName, fieldName) {
@@ -32288,7 +32288,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType1Config;
-    })();
+    }());
     CustomerSetting.SettingType1Config = SettingType1Config;
     var SettingType1Item = (function () {
         function SettingType1Item() {
@@ -32335,7 +32335,7 @@ var CustomerSetting;
             return false;
         };
         return SettingType1Item;
-    })();
+    }());
     CustomerSetting.SettingType1Item = SettingType1Item;
     var SuperPositionTaking = (function (_super) {
         __extends(SuperPositionTaking, _super);
@@ -32396,7 +32396,7 @@ var CustomerSetting;
             return true;
         };
         return SuperPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SuperPositionTaking = SuperPositionTaking;
     var MasterPositionTaking = (function (_super) {
         __extends(MasterPositionTaking, _super);
@@ -32542,7 +32542,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.MasterPositionTaking = MasterPositionTaking;
     var AgentPositionTaking = (function (_super) {
         __extends(AgentPositionTaking, _super);
@@ -32688,7 +32688,7 @@ var CustomerSetting;
             }
         };
         return AgentPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.AgentPositionTaking = AgentPositionTaking;
     var SuperPositionTakingOnMember = (function (_super) {
         __extends(SuperPositionTakingOnMember, _super);
@@ -32770,7 +32770,7 @@ var CustomerSetting;
             }
         };
         return SuperPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
     var MasterPositionTakingOnMember = (function (_super) {
         __extends(MasterPositionTakingOnMember, _super);
@@ -32860,7 +32860,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
     var AgentPositionTakingOnMember = (function (_super) {
         __extends(AgentPositionTakingOnMember, _super);
@@ -32901,7 +32901,7 @@ var CustomerSetting;
             return true;
         };
         return AgentPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -32934,7 +32934,7 @@ var CustomerSetting;
         };
         PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
         return PositionTakingOnMemberDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
     var AdjustMemberPtModalDirective = (function () {
         function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -32987,7 +32987,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
         return AdjustMemberPtModalDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
     var AdjustMemberPtModalService = (function () {
         function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -33072,7 +33072,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
         return AdjustMemberPtModalService;
-    })();
+    }());
     CustomerSetting.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
     var CopyPositionTakingOnMemberDirective = (function (_super) {
         __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -33116,7 +33116,7 @@ var CustomerSetting;
             configurable: true
         });
         return CopyPositionTakingOnMemberDirective;
-    })(CustomerSetting.CopySettingDirective);
+    }(CustomerSetting.CopySettingDirective));
     CustomerSetting.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33135,7 +33135,7 @@ var CustomerSetting;
         }
         PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
         return PositionTakingResourceService;
-    })(CustomerSetting.ResourceService);
+    }(CustomerSetting.ResourceService));
     CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
     CustomerSetting.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
     function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -33207,7 +33207,7 @@ var CustomerSetting;
         });
         PositionTakingSelectDirective.$inject = ["$compile"];
         return PositionTakingSelectDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
     function PositionTakingFormatFilter() {
         return function (ptValue) {
@@ -33248,7 +33248,7 @@ var CustomerSetting;
         }
         SettingType1Directive.$inject = ["positionTakingResourceService"];
         return SettingType1Directive;
-    })(CustomerSetting.SettingTypeDirective);
+    }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33381,7 +33381,7 @@ var CustomerSetting;
             return true;
         };
         return SettingType2Item;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SettingType2Item = SettingType2Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33520,7 +33520,7 @@ var CustomerSetting;
         });
         BetSettingInputDirective.$inject = ["$compile", "$filter", "betSettingResourceService"];
         return BetSettingInputDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("betSettingInput", BetSettingInputDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33539,7 +33539,7 @@ var CustomerSetting;
         }
         BetSettingResourceService.$inject = ["betSettingResources", "parametersService"];
         return BetSettingResourceService;
-    })(CustomerSetting.ResourceService);
+    }(CustomerSetting.ResourceService));
     CustomerSetting.BetSettingResourceService = BetSettingResourceService;
     CustomerSetting.ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
     function BetSettingLabelFilter(betSettingResourceService) {
@@ -33586,7 +33586,7 @@ var CustomerSetting;
         }
         SettingType2Directive.$inject = ["betSettingResourceService"];
         return SettingType2Directive;
-    })(CustomerSetting.SettingTypeDirective);
+    }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype2", SettingType2Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33715,7 +33715,7 @@ var CustomerSetting;
             return settingItem;
         };
         return SettingType4Item;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SettingType4Item = SettingType4Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -33734,7 +33734,7 @@ var CustomerSetting;
         }
         ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
         return ProductStatusResourceService;
-    })(CustomerSetting.ResourceService);
+    }(CustomerSetting.ResourceService));
     CustomerSetting.ProductStatusResourceService = ProductStatusResourceService;
     CustomerSetting.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
     function ProductStatusLabelFilter(productStatusResourceService) {
@@ -33780,14 +33780,14 @@ var CustomerSetting;
         }
         SettingType4Directive.$inject = ["productStatusResourceService"];
         return SettingType4Directive;
-    })(CustomerSetting.SettingTypeDirective);
+    }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype4", SettingType4Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
-$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\"><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div><div class=\"modal__content\"><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");

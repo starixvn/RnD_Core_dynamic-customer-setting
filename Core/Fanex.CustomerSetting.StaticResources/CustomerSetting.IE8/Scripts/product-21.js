@@ -23719,7 +23719,7 @@ var CustomerSetting;
                 });
             };
             return StringFormater;
-        })();
+        }());
         IE8.StringFormater = StringFormater;
         var ArrayHelpers = (function () {
             function ArrayHelpers() {
@@ -23739,7 +23739,7 @@ var CustomerSetting;
                 return result;
             };
             return ArrayHelpers;
-        })();
+        }());
         IE8.ArrayHelpers = ArrayHelpers;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -23796,7 +23796,7 @@ var CustomerSetting;
                 return "The number of customer IDs does not match with the number of customer names.";
             };
             return Exceptions;
-        })();
+        }());
         IE8.Exceptions = Exceptions;
         var Defaults = (function () {
             function Defaults() {
@@ -23805,7 +23805,7 @@ var CustomerSetting;
             Defaults.percentageDivider = 100;
             Defaults.displayingMsgTime = 3000;
             return Defaults;
-        })();
+        }());
         IE8.Defaults = Defaults;
         var KeyValuePair = (function () {
             function KeyValuePair(key, value) {
@@ -23813,7 +23813,7 @@ var CustomerSetting;
                 this.value = value;
             }
             return KeyValuePair;
-        })();
+        }());
         IE8.KeyValuePair = KeyValuePair;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -23851,7 +23851,7 @@ var CustomerSetting;
                 app.value(name, target);
             };
             return ModuleRegister;
-        })();
+        }());
         IE8.ModuleRegister = ModuleRegister;
         app.run(["$http", "appConfigService", function ($http, appConfigService) {
                 $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -23878,7 +23878,7 @@ var CustomerSetting;
             Level.agent = 2;
             Level.member = 1;
             return Level;
-        })();
+        }());
         IE8.Level = Level;
         var CustomerInfo = (function () {
             function CustomerInfo(info) {
@@ -23894,7 +23894,7 @@ var CustomerSetting;
                 }
             }
             return CustomerInfo;
-        })();
+        }());
         IE8.CustomerInfo = CustomerInfo;
         var DefaultSettingItem = (function () {
             function DefaultSettingItem(settingItem) {
@@ -23956,7 +23956,7 @@ var CustomerSetting;
                 return settingItem;
             };
             return DefaultSettingItem;
-        })();
+        }());
         IE8.DefaultSettingItem = DefaultSettingItem;
         var ErrorSettingItem = (function () {
             function ErrorSettingItem(errorItem) {
@@ -23979,7 +23979,7 @@ var CustomerSetting;
             };
             ;
             return ErrorSettingItem;
-        })();
+        }());
         IE8.ErrorSettingItem = ErrorSettingItem;
         var SettingType = (function () {
             function SettingType(settingType) {
@@ -24060,7 +24060,7 @@ var CustomerSetting;
                 return extraData;
             };
             return SettingType;
-        })();
+        }());
         IE8.SettingType = SettingType;
         var Setting = (function () {
             function Setting(setting) {
@@ -24167,7 +24167,7 @@ var CustomerSetting;
                 });
             };
             return Setting;
-        })();
+        }());
         IE8.Setting = Setting;
         var Result = (function () {
             function Result(code, message, msgType) {
@@ -24193,7 +24193,7 @@ var CustomerSetting;
             Result.noChangeToUpdate = new Result(-3, "NoChangeToUpdate", IE8.MessageType.error);
             Result.invalidParameters = new Result(-4, IE8.Exceptions.invalidParams(), IE8.MessageType.error);
             return Result;
-        })();
+        }());
         IE8.Result = Result;
         var SettingResult = (function (_super) {
             __extends(SettingResult, _super);
@@ -24204,7 +24204,7 @@ var CustomerSetting;
                 this.messages = messages;
             }
             return SettingResult;
-        })(Result);
+        }(Result));
         IE8.SettingResult = SettingResult;
         var CustomerSettingResult = (function () {
             function CustomerSettingResult(settingResult) {
@@ -24254,7 +24254,7 @@ var CustomerSetting;
                 this.settingResults = uniquedResults;
             };
             return CustomerSettingResult;
-        })();
+        }());
         IE8.CustomerSettingResult = CustomerSettingResult;
         var UpdatingSettingResult = (function (_super) {
             __extends(UpdatingSettingResult, _super);
@@ -24296,7 +24296,7 @@ var CustomerSetting;
                 return this.subResults || new Array();
             };
             return UpdatingSettingResult;
-        })(Result);
+        }(Result));
         IE8.UpdatingSettingResult = UpdatingSettingResult;
         var ValidationResult = (function (_super) {
             __extends(ValidationResult, _super);
@@ -24308,7 +24308,7 @@ var CustomerSetting;
                 this.isWarning = isWarning;
             }
             return ValidationResult;
-        })(Result);
+        }(Result));
         IE8.ValidationResult = ValidationResult;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -24345,7 +24345,7 @@ var CustomerSetting;
                 return this.uplineLevel;
             };
             return AbstractSettingQuery;
-        })();
+        }());
         IE8.AbstractSettingQuery = AbstractSettingQuery;
         var SettingQuery = (function (_super) {
             __extends(SettingQuery, _super);
@@ -24368,7 +24368,7 @@ var CustomerSetting;
                 return params;
             };
             return SettingQuery;
-        })(AbstractSettingQuery);
+        }(AbstractSettingQuery));
         IE8.SettingQuery = SettingQuery;
         var MultipleSettingQuery = (function (_super) {
             __extends(MultipleSettingQuery, _super);
@@ -24400,7 +24400,7 @@ var CustomerSetting;
                 return this.customerIds.length === this.customerNames.length;
             };
             return MultipleSettingQuery;
-        })(AbstractSettingQuery);
+        }(AbstractSettingQuery));
         IE8.MultipleSettingQuery = MultipleSettingQuery;
         var SettingCommand = (function () {
             function SettingCommand(uplineLevel, setting) {
@@ -24420,7 +24420,7 @@ var CustomerSetting;
                 };
             };
             return SettingCommand;
-        })();
+        }());
         IE8.SettingCommand = SettingCommand;
         var MultipleSettingCommand = (function (_super) {
             __extends(MultipleSettingCommand, _super);
@@ -24447,7 +24447,7 @@ var CustomerSetting;
                 };
             };
             return MultipleSettingCommand;
-        })(SettingCommand);
+        }(SettingCommand));
         IE8.MultipleSettingCommand = MultipleSettingCommand;
         var SettingPartialCommand = (function () {
             function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -24458,7 +24458,7 @@ var CustomerSetting;
                 this.settingType = settingType;
             }
             return SettingPartialCommand;
-        })();
+        }());
         IE8.SettingPartialCommand = SettingPartialCommand;
         var RedirectCommand = (function () {
             function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
@@ -24476,7 +24476,7 @@ var CustomerSetting;
                 };
             };
             return RedirectCommand;
-        })();
+        }());
         IE8.RedirectCommand = RedirectCommand;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -24520,7 +24520,7 @@ var CustomerSetting;
             };
             AppConfigService.$inject = ["$window"];
             return AppConfigService;
-        })();
+        }());
         IE8.AppConfigService = AppConfigService;
         IE8.ModuleRegister.service("appConfigService", AppConfigService);
         var ParametersService = (function () {
@@ -24583,7 +24583,7 @@ var CustomerSetting;
             };
             ParametersService.$inject = ["$window"];
             return ParametersService;
-        })();
+        }());
         IE8.ParametersService = ParametersService;
         IE8.ModuleRegister.service("parametersService", ParametersService);
         var UpdatingSettingTypePromiseChain = (function () {
@@ -24629,7 +24629,7 @@ var CustomerSetting;
             };
             UpdatingSettingTypePromiseChain.$inject = ["$q"];
             return UpdatingSettingTypePromiseChain;
-        })();
+        }());
         IE8.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
         IE8.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
         var SettingTypesSharedValuesService = (function () {
@@ -24646,7 +24646,7 @@ var CustomerSetting;
                 }
             };
             return SettingTypesSharedValuesService;
-        })();
+        }());
         IE8.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
         IE8.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
         var ValueRangeService = (function () {
@@ -24670,7 +24670,7 @@ var CustomerSetting;
                 return ranges;
             };
             return ValueRangeService;
-        })();
+        }());
         IE8.ValueRangeService = ValueRangeService;
         IE8.ModuleRegister.service("valueRangeService", ValueRangeService);
         function NAValue() {
@@ -24795,7 +24795,7 @@ var CustomerSetting;
             };
             ResourceService.$inject = ["customerSettingResource", "parametersService"];
             return ResourceService;
-        })();
+        }());
         IE8.ResourceService = ResourceService;
         IE8.ModuleRegister.service("resourceService", ResourceService);
         function LabelFilter(resourceService) {
@@ -24834,7 +24834,7 @@ var CustomerSetting;
                     }];
             }
             return BlockUiDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
         var BlockUiService = (function () {
             function BlockUiService() {
@@ -24849,7 +24849,7 @@ var CustomerSetting;
                 this.scope.isLoading = false;
             };
             return BlockUiService;
-        })();
+        }());
         IE8.BlockUiService = BlockUiService;
         IE8.ModuleRegister.service("blockUiService", BlockUiService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
@@ -24898,7 +24898,7 @@ var CustomerSetting;
             };
             RequestService.$inject = ["$http", "resourceService", "blockUiService"];
             return RequestService;
-        })();
+        }());
         IE8.RequestService = RequestService;
         IE8.ModuleRegister.service("requestService", RequestService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
@@ -24995,8 +24995,54 @@ var CustomerSetting;
                 "updatingSettingTypePromiseChain",
                 "settingTypesSharedValuesService"];
             return CustomerSettingController;
-        })();
+        }());
         IE8.ModuleRegister.controller("customerSettingController", CustomerSettingController);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        }());
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingResultDirective = (function () {
+            function SettingResultDirective() {
+                this.replace = true;
+                this.scope = {
+                    result: "="
+                };
+                this.templateUrl = "SettingResult/setting-result.htm";
+                this.controller = ["$scope", "$window", function ($scope, $window) {
+                        $scope.$watch("result", function (result) {
+                            if (angular.isDefined(result)) {
+                                $window.scrollTo(0, 0);
+                            }
+                        });
+                    }];
+            }
+            return SettingResultDirective;
+        }());
+        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -25035,7 +25081,7 @@ var CustomerSetting;
             }
             CopySettingDirective.$inject = ["copyingSettingService"];
             return CopySettingDirective;
-        })();
+        }());
         IE8.CopySettingDirective = CopySettingDirective;
         IE8.ModuleRegister.directive("copySetting", CopySettingDirective);
         var CopyingSettingService = (function () {
@@ -25080,7 +25126,7 @@ var CustomerSetting;
             };
             CopyingSettingService.$inject = ["$rootScope"];
             return CopyingSettingService;
-        })();
+        }());
         IE8.ModuleRegister.service("copyingSettingService", CopyingSettingService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -25129,7 +25175,7 @@ var CustomerSetting;
                 this.settingItemType = settingItemType;
             }
             return SettingTypeDirective;
-        })();
+        }());
         IE8.SettingTypeDirective = SettingTypeDirective;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -25179,7 +25225,7 @@ var CustomerSetting;
                 return result;
             };
             return DefaultSettingTypeGroupingDirective;
-        })();
+        }());
         IE8.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
         IE8.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
         function ShowingName() {
@@ -25192,52 +25238,6 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var SettingResultDirective = (function () {
-            function SettingResultDirective() {
-                this.replace = true;
-                this.scope = {
-                    result: "="
-                };
-                this.templateUrl = "SettingResult/setting-result.htm";
-                this.controller = ["$scope", "$window", function ($scope, $window) {
-                        $scope.$watch("result", function (result) {
-                            if (angular.isDefined(result)) {
-                                $window.scrollTo(0, 0);
-                            }
-                        });
-                    }];
-            }
-            return SettingResultDirective;
-        })();
-        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        })();
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -25294,7 +25294,7 @@ var CustomerSetting;
             };
             SettingTypeDirectiveLoader.$inject = ["$compile"];
             return SettingTypeDirectiveLoader;
-        })();
+        }());
         IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -25361,7 +25361,7 @@ var CustomerSetting;
             };
             Tooltip.$inject = ["$window", "$document", "$compile", "$timeout", "$templateCache"];
             return Tooltip;
-        })();
+        }());
         IE8.ModuleRegister.directive("tooltip", Tooltip);
         function TooltipMessage($injector, $filter) {
             return function (result, resourceServiceName, fieldName) {
@@ -25420,7 +25420,7 @@ var CustomerSetting;
             SettingType1Config.step = 1;
             SettingType1Config.roundingFactor = 100;
             return SettingType1Config;
-        })();
+        }());
         IE8.SettingType1Config = SettingType1Config;
         var SettingType1Item = (function () {
             function SettingType1Item() {
@@ -25468,7 +25468,7 @@ var CustomerSetting;
                 return false;
             };
             return SettingType1Item;
-        })();
+        }());
         IE8.SettingType1Item = SettingType1Item;
         var SuperPositionTaking = (function (_super) {
             __extends(SuperPositionTaking, _super);
@@ -25529,7 +25529,7 @@ var CustomerSetting;
                 return true;
             };
             return SuperPositionTaking;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SuperPositionTaking = SuperPositionTaking;
         var MasterPositionTaking = (function (_super) {
             __extends(MasterPositionTaking, _super);
@@ -25675,7 +25675,7 @@ var CustomerSetting;
                 }
             };
             return MasterPositionTaking;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.MasterPositionTaking = MasterPositionTaking;
         var AgentPositionTaking = (function (_super) {
             __extends(AgentPositionTaking, _super);
@@ -25821,7 +25821,7 @@ var CustomerSetting;
                 }
             };
             return AgentPositionTaking;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.AgentPositionTaking = AgentPositionTaking;
         var SuperPositionTakingOnMember = (function (_super) {
             __extends(SuperPositionTakingOnMember, _super);
@@ -25903,7 +25903,7 @@ var CustomerSetting;
                 }
             };
             return SuperPositionTakingOnMember;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
         var MasterPositionTakingOnMember = (function (_super) {
             __extends(MasterPositionTakingOnMember, _super);
@@ -25993,7 +25993,7 @@ var CustomerSetting;
                 }
             };
             return MasterPositionTakingOnMember;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
         var AgentPositionTakingOnMember = (function (_super) {
             __extends(AgentPositionTakingOnMember, _super);
@@ -26034,7 +26034,7 @@ var CustomerSetting;
                 return true;
             };
             return AgentPositionTakingOnMember;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26070,7 +26070,7 @@ var CustomerSetting;
             };
             PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
             return PositionTakingOnMemberDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
         var AdjustMemberPtModalDirective = (function () {
             function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -26117,7 +26117,7 @@ var CustomerSetting;
             };
             AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
             return AdjustMemberPtModalDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
         var AdjustMemberPtModalService = (function () {
             function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -26202,7 +26202,7 @@ var CustomerSetting;
             };
             AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
             return AdjustMemberPtModalService;
-        })();
+        }());
         IE8.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
         var CopyPositionTakingOnMemberDirective = (function (_super) {
             __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -26240,7 +26240,7 @@ var CustomerSetting;
                     }];
             }
             return CopyPositionTakingOnMemberDirective;
-        })(IE8.CopySettingDirective);
+        }(IE8.CopySettingDirective));
         IE8.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
         function Unsafe($sce) {
             return function (value) {
@@ -26269,7 +26269,7 @@ var CustomerSetting;
             }
             PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
             return PositionTakingResourceService;
-        })(IE8.ResourceService);
+        }(IE8.ResourceService));
         IE8.PositionTakingResourceService = PositionTakingResourceService;
         IE8.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
         function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -26342,7 +26342,7 @@ var CustomerSetting;
             };
             PositionTakingSelectDirective.$inject = ["$compile", "valueRangeService"];
             return PositionTakingSelectDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
         function PositionTakingFormatFilter() {
             return function (ptValue) {
@@ -26386,7 +26386,7 @@ var CustomerSetting;
             }
             SettingType1Directive.$inject = ["positionTakingResourceService"];
             return SettingType1Directive;
-        })(IE8.SettingTypeDirective);
+        }(IE8.SettingTypeDirective));
         IE8.ModuleRegister.directive("settingtype1", SettingType1Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26444,7 +26444,7 @@ var CustomerSetting;
                 return true;
             };
             return SettingType3Item;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SettingType3Item = SettingType3Item;
         var SettingType3Config = (function () {
             function SettingType3Config() {
@@ -26452,7 +26452,7 @@ var CustomerSetting;
             SettingType3Config.step = 0.0005;
             SettingType3Config.roundingFactor = 10000;
             return SettingType3Config;
-        })();
+        }());
         IE8.SettingType3Config = SettingType3Config;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26479,7 +26479,7 @@ var CustomerSetting;
             }
             CommRateSelectDirective.$inject = ["valueRangeService"];
             return CommRateSelectDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("commRateSelect", CommRateSelectDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26501,7 +26501,7 @@ var CustomerSetting;
             }
             CommissionResourceService.$inject = ["commissionResources", "parametersService"];
             return CommissionResourceService;
-        })(IE8.ResourceService);
+        }(IE8.ResourceService));
         IE8.CommissionResourceService = CommissionResourceService;
         IE8.ModuleRegister.service("commissionResourceService", CommissionResourceService);
         function CommissionLabelFilter(commissionResourceService) {
@@ -26553,7 +26553,7 @@ var CustomerSetting;
             }
             SettingType3Directive.$inject = ["commissionResourceService"];
             return SettingType3Directive;
-        })(IE8.SettingTypeDirective);
+        }(IE8.SettingTypeDirective));
         IE8.ModuleRegister.directive("settingtype3", SettingType3Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26666,7 +26666,7 @@ var CustomerSetting;
                 return settingItem;
             };
             return SettingType4Item;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SettingType4Item = SettingType4Item;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26688,7 +26688,7 @@ var CustomerSetting;
             }
             ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
             return ProductStatusResourceService;
-        })(IE8.ResourceService);
+        }(IE8.ResourceService));
         IE8.ProductStatusResourceService = ProductStatusResourceService;
         IE8.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
         function ProductStatusLabelFilter(productStatusResourceService) {
@@ -26737,7 +26737,7 @@ var CustomerSetting;
             }
             SettingType4Directive.$inject = ["productStatusResourceService"];
             return SettingType4Directive;
-        })(IE8.SettingTypeDirective);
+        }(IE8.SettingTypeDirective));
         IE8.ModuleRegister.directive("settingtype4", SettingType4Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26772,7 +26772,7 @@ var CustomerSetting;
                     }];
             }
             return StatusCheckboxDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26857,7 +26857,7 @@ var CustomerSetting;
                 };
             };
             return SettingType6Item;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SettingType6Item = SettingType6Item;
         var CurrentWinLossAmountItem = (function () {
             function CurrentWinLossAmountItem(currentWinningAmount) {
@@ -26869,7 +26869,7 @@ var CustomerSetting;
                 }
             }
             return CurrentWinLossAmountItem;
-        })();
+        }());
         IE8.CurrentWinLossAmountItem = CurrentWinLossAmountItem;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -26891,7 +26891,7 @@ var CustomerSetting;
             }
             SettingType6ResourceService.$inject = ["settingType6Resource", "parametersService"];
             return SettingType6ResourceService;
-        })(IE8.ResourceService);
+        }(IE8.ResourceService));
         IE8.SettingType6ResourceService = SettingType6ResourceService;
         IE8.ModuleRegister.service("settingType6ResourceService", SettingType6ResourceService);
         function SettingType6LabelFilter(settingType6ResourceService) {
@@ -27028,7 +27028,7 @@ var CustomerSetting;
             }
             SettingType6LossLimitInputDirective.$inject = ["$compile", "$filter", "settingType6ResourceService"];
             return SettingType6LossLimitInputDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("settingtype6LossLimitInput", SettingType6LossLimitInputDirective);
         var SettingType6UnlimitedCheckboxDirective = (function () {
             function SettingType6UnlimitedCheckboxDirective() {
@@ -27041,7 +27041,7 @@ var CustomerSetting;
                     }];
             }
             return SettingType6UnlimitedCheckboxDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("settingtype6UnlimitedCheckbox", SettingType6UnlimitedCheckboxDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -27080,7 +27080,7 @@ var CustomerSetting;
             SettingType6WinLimitSelectDirective.$inject = ["settingType6ResourceService"];
             SettingType6WinLimitSelectDirective.supportedWinLimits = [3, 5, 10, 0];
             return SettingType6WinLimitSelectDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("settingtype6WinLimitSelect", SettingType6WinLimitSelectDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -27160,7 +27160,7 @@ var CustomerSetting;
                 this.settingType6ResourceService = settingType6ResourceService;
             }
             return SettingType6Directive;
-        })(IE8.DefaultSettingTypeGroupingDirective);
+        }(IE8.DefaultSettingTypeGroupingDirective));
         IE8.ModuleRegister.directive("settingtype6", SettingType6Directive);
         function UnlimitedLimitFilter(settingType6ResourceService) {
             return function (value) {
@@ -27274,7 +27274,7 @@ var CustomerSetting;
             };
             ;
             return SettingType7Item;
-        })(IE8.DefaultSettingItem);
+        }(IE8.DefaultSettingItem));
         IE8.SettingType7Item = SettingType7Item;
         var SettingType7StakeRange = (function () {
             function SettingType7StakeRange(settingItem, backup) {
@@ -27299,7 +27299,7 @@ var CustomerSetting;
                 };
             };
             return SettingType7StakeRange;
-        })();
+        }());
         IE8.SettingType7StakeRange = SettingType7StakeRange;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -27374,7 +27374,7 @@ var CustomerSetting;
                 return allChecked;
             };
             return SettingType7CheckboxGroupDirective;
-        })();
+        }());
         IE8.ModuleRegister.directive("settingType7CheckboxGroup", SettingType7CheckboxGroupDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
@@ -27396,7 +27396,7 @@ var CustomerSetting;
             }
             SettingType7ResourceService.$inject = ["settingType7Resource", "parametersService"];
             return SettingType7ResourceService;
-        })(IE8.ResourceService);
+        }(IE8.ResourceService));
         IE8.SettingType7ResourceService = SettingType7ResourceService;
         IE8.ModuleRegister.service("settingType7ResourceService", SettingType7ResourceService);
         function SettingType7LabelFilter(settingType7ResourceService) {
@@ -27481,16 +27481,16 @@ var CustomerSetting;
                 this.settingType7ResourceService = settingType7ResourceService;
             }
             return SettingType7Directive;
-        })(IE8.DefaultSettingTypeGroupingDirective);
+        }(IE8.DefaultSettingTypeGroupingDirective));
         IE8.ModuleRegister.directive("settingtype7", SettingType7Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
-angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
-$templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
+angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
+$templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\"><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div class=\"modal__title\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div><div class=\"modal__content\"><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\"></select></div>");
@@ -28367,32 +28367,32 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-cn"] = {
-        "ClickToViewCurrentWinLossLimit": "点击查看目前的赢/输金额",
-        "CurrentWinLossAmount": "目前的赢/输金额",
-        "DailyAutoResetLimit": "每日自动重置限度（中午12点GMT+8)",
+        "ClickToViewCurrentWinLossLimit": "点击查看目前输赢数额",
+        "CurrentWinLossAmount": "目前输赢数额",
+        "DailyAutoResetLimit": "每日限额自动重设 (于 中午12 时正 GMT +8)",
         "Losing": "输",
-        "MaximumLoss": "最大损失",
-        "MaximumWin": "最大收益",
+        "MaximumLoss": "最高输额",
+        "MaximumWin": "最高赢额",
         "Of": "的",
-        "OnGivenCredit": "在给定信用额上",
+        "OnGivenCredit": "无信用额",
         "Unlimited": "无限",
-        "WinLossLimit": "赢输限度",
+        "WinLossLimit": "输赢限额",
         "Winning": "赢"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-tw"] = {
-        "ClickToViewCurrentWinLossLimit": "按一下查看當前的盈虧金額",
-        "CurrentWinLossAmount": "當前的盈虧金額",
-        "DailyAutoResetLimit": "每天自動重設限制 (中午 12 點 GMT +8)",
-        "Losing": "輸盤",
-        "MaximumLoss": "最大損失",
-        "MaximumWin": "最大收入",
+        "ClickToViewCurrentWinLossLimit": "點擊查看目前輸贏數額",
+        "CurrentWinLossAmount": "目前輸贏數額",
+        "DailyAutoResetLimit": "每日限額自動重設 (于 中午12 時正 GMT +8)",
+        "Losing": "輸",
+        "MaximumLoss": "最高輸額",
+        "MaximumWin": "最高赢額",
         "Of": "的",
-        "OnGivenCredit": "關於給定積分",
-        "Unlimited": "無限制的",
-        "WinLossLimit": "盈虧限值",
-        "Winning": "贏取"
+        "OnGivenCredit": "無信用額",
+        "Unlimited": "無限",
+        "WinLossLimit": "輸贏限額",
+        "Winning": "贏"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
@@ -28440,28 +28440,28 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-cn"] = {
-        "AutoResetIsViolatedWithUpline": "上线每日自动重置关闭。",
-        "MaximumLossValueIsRequired": "最大损失值是必须的。",
-        "MaximumLossValueShouldBeInRange": "最大损失值应在({0} - {1})范围内。",
-        "MaximumWinShouldBotExceedThanUplineMaximumWin": "直接上线。",
-        "MaximumWinShouldNotBeLessThanZero": "最大收益不能小于0。",
-        "Msg_10022": "您不能改变每日自动重置限度。",
-        "Msg_10024": "直接上线。",
-        "Msg_10033": "直接上线。",
-        "UpdatedWinLossLimitSuccessfully": "成功更新赢输限度。"
+        "AutoResetIsViolatedWithUpline": "关闭上线的每日限额自动重设.",
+        "MaximumLossValueIsRequired": "需求最高输额.",
+        "MaximumLossValueShouldBeInRange": "最高输额需介于 ({0} - {1}) 的范围.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "MaximumWinShouldNotBeLessThanZero": "最高赢额不应低于 0.",
+        "Msg_10022": "您不允许修改每日限额自动重设.",
+        "Msg_10024": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "Msg_10033": "最高输额应低于或相等于直系上线的最高输额.",
+        "UpdatedWinLossLimitSuccessfully": "输赢限额已成功更新."
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-tw"] = {
-        "AutoResetIsViolatedWithUpline": "上線的每日自動重設已經關閉。",
-        "MaximumLossValueIsRequired": "規定了最大損失數值。",
-        "MaximumLossValueShouldBeInRange": "最大損失數值的範圍應該是({0} - {1})。",
-        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最大收入應該少於或等於直接上線的最大收入。",
-        "MaximumWinShouldNotBeLessThanZero": "最大收入應該不少於 0。",
-        "Msg_10022": "您無法更改每日自動重設限值。",
-        "Msg_10024": "最大收入應該少於或等於直接上線的最大收入。",
-        "Msg_10033": "最大損失應該少於或等於直接上線的最大損失。",
-        "UpdatedWinLossLimitSuccessfully": "已經成功更新盈虧限值。"
+        "AutoResetIsViolatedWithUpline": "關閉上線的每日限額自動重設.",
+        "MaximumLossValueIsRequired": "需求最高輸額.",
+        "MaximumLossValueShouldBeInRange": "最高輸額需介於 ({0} - {1}) 的範圍.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "MaximumWinShouldNotBeLessThanZero": "最高贏額不應低於 0.",
+        "Msg_10022": "您不允許修改每日限額自動重設.",
+        "Msg_10024": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "Msg_10033": "最高輸額應低於或相等於直系上線的最高輸額.",
+        "UpdatedWinLossLimitSuccessfully": "輸贏限額已成功更新."
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
@@ -28507,12 +28507,12 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-cn"] = {
-        "BetLimit": "下注限度"
+        "BetLimit": "投注限额"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
     settingType7Resource["label"]["zh-tw"] = {
-        "BetLimit": "投注限值"
+        "BetLimit": "投注限額"
     };
     
     settingType7Resource["label"] = settingType7Resource["label"] || {};
@@ -28534,16 +28534,16 @@ $templateCache.put("settingtype7.htm","<div class=\"block full-width settingtype
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-cn"] = {
-        "MemberStakeLevelMustBeSelectedForBetType": "每种下注类型必须有一个下注限值可选。",
-        "Msg_10034": "用户的上线没有赌注水平线。",
-        "UpdatedBetLimitSuccessfully": "成功更新下注限度。"
+        "MemberStakeLevelMustBeSelectedForBetType": "每项投注类别需至少选择一个投注限额.",
+        "Msg_10034": "这帐号的上线无投注本金级别.",
+        "UpdatedBetLimitSuccessfully": "投注限额已成功更新."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};
     settingType7Resource["message"]["zh-tw"] = {
-        "MemberStakeLevelMustBeSelectedForBetType": "每種投注類型必須選擇一個投注極限數值。",
-        "Msg_10034": "這位用戶的上線沒有賭金等級。",
-        "UpdatedBetLimitSuccessfully": "已經成功更新投注限值。"
+        "MemberStakeLevelMustBeSelectedForBetType": "每項投注類別需至少選擇一個投注限額.",
+        "Msg_10034": "這帳號的上線無投註本金級別.",
+        "UpdatedBetLimitSuccessfully": "投注限額已成功更新."
     };
     
     settingType7Resource["message"] = settingType7Resource["message"] || {};

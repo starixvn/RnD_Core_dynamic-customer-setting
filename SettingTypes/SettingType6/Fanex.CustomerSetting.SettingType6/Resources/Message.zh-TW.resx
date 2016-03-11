@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AutoResetIsViolatedWithUpline" xml:space="preserve">
-    <value>上線的每日自動重設已經關閉。</value>
+    <value>關閉上線的每日限額自動重設.</value>
   </data>
   <data name="MaximumLossValueIsRequired" xml:space="preserve">
-    <value>規定了最大損失數值。</value>
+    <value>需求最高輸額.</value>
   </data>
   <data name="MaximumLossValueShouldBeInRange" xml:space="preserve">
-    <value>最大損失數值的範圍應該是({0} - {1})。</value>
+    <value>最高輸額需介於 ({0} - {1}) 的範圍.</value>
   </data>
   <data name="MaximumWinShouldBotExceedThanUplineMaximumWin" xml:space="preserve">
-    <value>最大收入應該少於或等於直接上線的最大收入。</value>
+    <value>最高贏額應低於或相等於直系上線的最高贏額.</value>
   </data>
   <data name="MaximumWinShouldNotBeLessThanZero" xml:space="preserve">
-    <value>最大收入應該不少於 0。</value>
+    <value>最高贏額不應低於 0.</value>
   </data>
   <data name="Msg_10022" xml:space="preserve">
-    <value>您無法更改每日自動重設限值。</value>
+    <value>您不允許修改每日限額自動重設.</value>
   </data>
   <data name="Msg_10024" xml:space="preserve">
-    <value>最大收入應該少於或等於直接上線的最大收入。</value>
+    <value>最高贏額應低於或相等於直系上線的最高贏額.</value>
   </data>
   <data name="Msg_10033" xml:space="preserve">
-    <value>最大損失應該少於或等於直接上線的最大損失。</value>
+    <value>最高輸額應低於或相等於直系上線的最高輸額.</value>
   </data>
   <data name="UpdatedWinLossLimitSuccessfully" xml:space="preserve">
-    <value>已經成功更新盈虧限值。</value>
+    <value>輸贏限額已成功更新.</value>
   </data>
 </root>

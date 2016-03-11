@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MemberStakeLevelMustBeSelectedForBetType" xml:space="preserve">
-    <value>每種投注類型必須選擇一個投注極限數值。</value>
+    <value>每項投注類別需至少選擇一個投注限額.</value>
   </data>
   <data name="Msg_10034" xml:space="preserve">
-    <value>這位用戶的上線沒有賭金等級。</value>
+    <value>這帳號的上線無投註本金級別.</value>
   </data>
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
-    <value>已經成功更新投注限值。</value>
+    <value>投注限額已成功更新.</value>
   </data>
 </root>

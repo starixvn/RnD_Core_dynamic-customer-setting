@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClickToViewCurrentWinLossLimit" xml:space="preserve">
-    <value>按一下查看當前的盈虧金額</value>
+    <value>點擊查看目前輸贏數額</value>
   </data>
   <data name="CurrentWinLossAmount" xml:space="preserve">
-    <value>當前的盈虧金額</value>
+    <value>目前輸贏數額</value>
   </data>
   <data name="DailyAutoResetLimit" xml:space="preserve">
-    <value>每天自動重設限制 (中午 12 點 GMT +8)</value>
+    <value>每日限額自動重設 (于 中午12 時正 GMT +8)</value>
   </data>
   <data name="Losing" xml:space="preserve">
-    <value>輸盤</value>
+    <value>輸</value>
   </data>
   <data name="MaximumLoss" xml:space="preserve">
-    <value>最大損失</value>
+    <value>最高輸額</value>
   </data>
   <data name="MaximumWin" xml:space="preserve">
-    <value>最大收入</value>
+    <value>最高赢額</value>
   </data>
   <data name="Of" xml:space="preserve">
     <value>的</value>
   </data>
   <data name="OnGivenCredit" xml:space="preserve">
-    <value>關於給定積分</value>
+    <value>無信用額</value>
   </data>
   <data name="Unlimited" xml:space="preserve">
-    <value>無限制的</value>
+    <value>無限</value>
   </data>
   <data name="WinLossLimit" xml:space="preserve">
-    <value>盈虧限值</value>
+    <value>輸贏限額</value>
   </data>
   <data name="Winning" xml:space="preserve">
-    <value>贏取</value>
+    <value>贏</value>
   </data>
 </root>

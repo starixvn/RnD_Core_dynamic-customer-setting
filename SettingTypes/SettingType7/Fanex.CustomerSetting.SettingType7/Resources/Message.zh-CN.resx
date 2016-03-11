@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MemberStakeLevelMustBeSelectedForBetType" xml:space="preserve">
-    <value>每种下注类型必须有一个下注限值可选。</value>
+    <value>每项投注类别需至少选择一个投注限额.</value>
   </data>
   <data name="Msg_10034" xml:space="preserve">
-    <value>用户的上线没有赌注水平线。</value>
+    <value>这帐号的上线无投注本金级别.</value>
   </data>
   <data name="UpdatedBetLimitSuccessfully" xml:space="preserve">
-    <value>成功更新下注限度。</value>
+    <value>投注限额已成功更新.</value>
   </data>
 </root>

@@ -22,32 +22,32 @@
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-cn"] = {
-        "ClickToViewCurrentWinLossLimit": "点击查看目前的赢/输金额",
-        "CurrentWinLossAmount": "目前的赢/输金额",
-        "DailyAutoResetLimit": "每日自动重置限度（中午12点GMT+8)",
+        "ClickToViewCurrentWinLossLimit": "点击查看目前输赢数额",
+        "CurrentWinLossAmount": "目前输赢数额",
+        "DailyAutoResetLimit": "每日限额自动重设 (于 中午12 时正 GMT +8)",
         "Losing": "输",
-        "MaximumLoss": "最大损失",
-        "MaximumWin": "最大收益",
+        "MaximumLoss": "最高输额",
+        "MaximumWin": "最高赢额",
         "Of": "的",
-        "OnGivenCredit": "在给定信用额上",
+        "OnGivenCredit": "无信用额",
         "Unlimited": "无限",
-        "WinLossLimit": "赢输限度",
+        "WinLossLimit": "输赢限额",
         "Winning": "赢"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
     settingType6Resource["label"]["zh-tw"] = {
-        "ClickToViewCurrentWinLossLimit": "按一下查看當前的盈虧金額",
-        "CurrentWinLossAmount": "當前的盈虧金額",
-        "DailyAutoResetLimit": "每天自動重設限制 (中午 12 點 GMT +8)",
-        "Losing": "輸盤",
-        "MaximumLoss": "最大損失",
-        "MaximumWin": "最大收入",
+        "ClickToViewCurrentWinLossLimit": "點擊查看目前輸贏數額",
+        "CurrentWinLossAmount": "目前輸贏數額",
+        "DailyAutoResetLimit": "每日限額自動重設 (于 中午12 時正 GMT +8)",
+        "Losing": "輸",
+        "MaximumLoss": "最高輸額",
+        "MaximumWin": "最高赢額",
         "Of": "的",
-        "OnGivenCredit": "關於給定積分",
-        "Unlimited": "無限制的",
-        "WinLossLimit": "盈虧限值",
-        "Winning": "贏取"
+        "OnGivenCredit": "無信用額",
+        "Unlimited": "無限",
+        "WinLossLimit": "輸贏限額",
+        "Winning": "贏"
     };
     
     settingType6Resource["label"] = settingType6Resource["label"] || {};
@@ -95,28 +95,28 @@
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-cn"] = {
-        "AutoResetIsViolatedWithUpline": "上线每日自动重置关闭。",
-        "MaximumLossValueIsRequired": "最大损失值是必须的。",
-        "MaximumLossValueShouldBeInRange": "最大损失值应在({0} - {1})范围内。",
-        "MaximumWinShouldBotExceedThanUplineMaximumWin": "直接上线。",
-        "MaximumWinShouldNotBeLessThanZero": "最大收益不能小于0。",
-        "Msg_10022": "您不能改变每日自动重置限度。",
-        "Msg_10024": "直接上线。",
-        "Msg_10033": "直接上线。",
-        "UpdatedWinLossLimitSuccessfully": "成功更新赢输限度。"
+        "AutoResetIsViolatedWithUpline": "关闭上线的每日限额自动重设.",
+        "MaximumLossValueIsRequired": "需求最高输额.",
+        "MaximumLossValueShouldBeInRange": "最高输额需介于 ({0} - {1}) 的范围.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "MaximumWinShouldNotBeLessThanZero": "最高赢额不应低于 0.",
+        "Msg_10022": "您不允许修改每日限额自动重设.",
+        "Msg_10024": "最高赢额应低于或相等于直系上线的最高赢额.",
+        "Msg_10033": "最高输额应低于或相等于直系上线的最高输额.",
+        "UpdatedWinLossLimitSuccessfully": "输赢限额已成功更新."
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
     settingType6Resource["message"]["zh-tw"] = {
-        "AutoResetIsViolatedWithUpline": "上線的每日自動重設已經關閉。",
-        "MaximumLossValueIsRequired": "規定了最大損失數值。",
-        "MaximumLossValueShouldBeInRange": "最大損失數值的範圍應該是({0} - {1})。",
-        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最大收入應該少於或等於直接上線的最大收入。",
-        "MaximumWinShouldNotBeLessThanZero": "最大收入應該不少於 0。",
-        "Msg_10022": "您無法更改每日自動重設限值。",
-        "Msg_10024": "最大收入應該少於或等於直接上線的最大收入。",
-        "Msg_10033": "最大損失應該少於或等於直接上線的最大損失。",
-        "UpdatedWinLossLimitSuccessfully": "已經成功更新盈虧限值。"
+        "AutoResetIsViolatedWithUpline": "關閉上線的每日限額自動重設.",
+        "MaximumLossValueIsRequired": "需求最高輸額.",
+        "MaximumLossValueShouldBeInRange": "最高輸額需介於 ({0} - {1}) 的範圍.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "MaximumWinShouldNotBeLessThanZero": "最高贏額不應低於 0.",
+        "Msg_10022": "您不允許修改每日限額自動重設.",
+        "Msg_10024": "最高贏額應低於或相等於直系上線的最高贏額.",
+        "Msg_10033": "最高輸額應低於或相等於直系上線的最高輸額.",
+        "UpdatedWinLossLimitSuccessfully": "輸贏限額已成功更新."
     };
     
     settingType6Resource["message"] = settingType6Resource["message"] || {};
