@@ -66,7 +66,8 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            if (0 < this.maxLossRange && (this.lossLimit < this.minLossRange || this.maxLossRange < this.lossLimit)
+            if (0 < this.maxLossRange
+                && (this.lossLimit < this.minLossRange || this.maxLossRange < this.lossLimit)
                 || this.lossLimit < 0) {
                 this.validationState = new ValidationResult(
                     "MaximumLossValueShouldBeInRange",

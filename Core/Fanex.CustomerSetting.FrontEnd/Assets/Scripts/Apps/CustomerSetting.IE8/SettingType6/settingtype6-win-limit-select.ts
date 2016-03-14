@@ -35,6 +35,10 @@ module CustomerSetting.IE8 {
                     availableWinLimits = _.filter(SettingType6WinLimitSelectDirective.supportedWinLimits, (winLimit: number) => {
                         return winLimit > 0 && winLimit <= settingItem.maxWinRange;
                     });
+
+                    if (_.filter(availableWinLimits, (range: number) => range === $scope.settingItem.winLimit).length === 0) {
+                        availableWinLimits.unshift($scope.settingItem.winLimit);
+                    }
                 }
 
                 $scope.range = _.map(availableWinLimits, (winLimit: number) => {

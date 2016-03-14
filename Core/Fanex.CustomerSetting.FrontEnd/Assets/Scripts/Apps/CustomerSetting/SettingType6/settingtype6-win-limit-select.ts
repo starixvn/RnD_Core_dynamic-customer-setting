@@ -36,6 +36,10 @@ module CustomerSetting {
                     availableWinLimits = SettingType6WinLimitSelectDirective.supportedWinLimits.filter((winLimit: number) => {
                         return winLimit > 0 && winLimit <= settingItem.maxWinRange;
                     });
+
+                    if (availableWinLimits.filter((range: number) => range === $scope.settingItem.winLimit).length === 0) {
+                        availableWinLimits.unshift($scope.settingItem.winLimit);
+                    }
                 }
 
                 $scope.range = availableWinLimits.map((winLimit: number) => {
