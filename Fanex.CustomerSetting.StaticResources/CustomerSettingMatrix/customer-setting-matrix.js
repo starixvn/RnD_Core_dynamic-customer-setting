@@ -29705,7 +29705,7 @@ var CustomerSettingMatrix;
             app.directive(name, directiveFactory);
         };
         return ModuleRegister;
-    })();
+    }());
     CustomerSettingMatrix.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -29736,7 +29736,7 @@ var CustomerSettingMatrix;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    })();
+    }());
     CustomerSettingMatrix.AppConfigService = AppConfigService;
     CustomerSettingMatrix.ModuleRegister.service("appConfigService", AppConfigService);
     function PTValue() {
@@ -29774,7 +29774,7 @@ var CustomerSettingMatrix;
             this.value = level.value;
         }
         return Level;
-    })();
+    }());
     CustomerSettingMatrix.Level = Level;
     var Product = (function () {
         function Product(product) {
@@ -29782,7 +29782,7 @@ var CustomerSettingMatrix;
             this.name = product.name;
         }
         return Product;
-    })();
+    }());
     CustomerSettingMatrix.Product = Product;
     var Customer = (function () {
         function Customer(customer) {
@@ -29793,7 +29793,7 @@ var CustomerSettingMatrix;
             this.levelName = customer.level.displayName;
         }
         return Customer;
-    })();
+    }());
     CustomerSettingMatrix.Customer = Customer;
     var SettingItemMatrix = (function () {
         function SettingItemMatrix(settingItemMatrix) {
@@ -29803,7 +29803,7 @@ var CustomerSettingMatrix;
             this.sportTypeName = settingItemMatrix.sportTypeName;
         }
         return SettingItemMatrix;
-    })();
+    }());
     CustomerSettingMatrix.SettingItemMatrix = SettingItemMatrix;
     var SettingTypeMatrix = (function () {
         function SettingTypeMatrix(settingTypeMatrix) {
@@ -29820,7 +29820,7 @@ var CustomerSettingMatrix;
             throw new Error("groupDataBySettingLevel not implemented");
         };
         return SettingTypeMatrix;
-    })();
+    }());
     CustomerSettingMatrix.SettingTypeMatrix = SettingTypeMatrix;
     var SettingType = (function () {
         function SettingType(settingTypeId, settingTypeName) {
@@ -29831,7 +29831,7 @@ var CustomerSettingMatrix;
         SettingType.Commission = new SettingType(3, "Commission");
         SettingType.ChargeCommission = new SettingType(5, "Charge Commission");
         return SettingType;
-    })();
+    }());
     CustomerSettingMatrix.SettingType = SettingType;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29849,7 +29849,7 @@ var CustomerSettingMatrix;
             this.showFilter = showFilter;
         }
         return QuerySettingMatrix;
-    })();
+    }());
     CustomerSettingMatrix.QuerySettingMatrix = QuerySettingMatrix;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29871,7 +29871,7 @@ var CustomerSettingMatrix;
             this.templateUrl = "Directives/PTMatrix/pt-matrix.htm";
         }
         return PtMatrix;
-    })();
+    }());
     CustomerSettingMatrix.PtMatrix = PtMatrix;
     CustomerSettingMatrix.ModuleRegister.directive("ptMatrix", PtMatrix);
     var PTMatrix = (function (_super) {
@@ -29913,7 +29913,7 @@ var CustomerSettingMatrix;
             }
         };
         return PTMatrix;
-    })(CustomerSettingMatrix.SettingTypeMatrix);
+    }(CustomerSettingMatrix.SettingTypeMatrix));
     CustomerSettingMatrix.PTMatrix = PTMatrix;
     var PTItemMatrix = (function (_super) {
         __extends(PTItemMatrix, _super);
@@ -29939,7 +29939,7 @@ var CustomerSettingMatrix;
             return itemMatrixName + (this.isLive ? " (Live)" : "");
         };
         return PTItemMatrix;
-    })(CustomerSettingMatrix.SettingItemMatrix);
+    }(CustomerSettingMatrix.SettingItemMatrix));
     CustomerSettingMatrix.PTItemMatrix = PTItemMatrix;
     var PTItemMaxtrixRow = (function () {
         function PTItemMaxtrixRow(ptItemMaxtrixRow) {
@@ -29956,13 +29956,13 @@ var CustomerSettingMatrix;
             this.minPT = ptItemMaxtrixRow.minPT;
         }
         return PTItemMaxtrixRow;
-    })();
+    }());
     CustomerSettingMatrix.PTItemMaxtrixRow = PTItemMaxtrixRow;
     var PTItemMatrixGroup = (function () {
         function PTItemMatrixGroup() {
         }
         return PTItemMatrixGroup;
-    })();
+    }());
     CustomerSettingMatrix.PTItemMatrixGroup = PTItemMatrixGroup;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -29983,7 +29983,7 @@ var CustomerSettingMatrix;
             this.templateUrl = "Directives/CommissionMatrix/commission-matrix.htm";
         }
         return CommissionMatrixDirective;
-    })();
+    }());
     CustomerSettingMatrix.CommissionMatrixDirective = CommissionMatrixDirective;
     CustomerSettingMatrix.ModuleRegister.directive("commissionMatrix", CommissionMatrixDirective);
     var CommissionItemMatrixRow = (function () {
@@ -29992,7 +29992,7 @@ var CustomerSettingMatrix;
             this.commRate = commissionItemMatrixRow.commRate;
         }
         return CommissionItemMatrixRow;
-    })();
+    }());
     CustomerSettingMatrix.CommissionItemMatrixRow = CommissionItemMatrixRow;
     var CommissionItemMatrix = (function (_super) {
         __extends(CommissionItemMatrix, _super);
@@ -30013,7 +30013,7 @@ var CustomerSettingMatrix;
             return "";
         };
         return CommissionItemMatrix;
-    })(CustomerSettingMatrix.SettingItemMatrix);
+    }(CustomerSettingMatrix.SettingItemMatrix));
     CustomerSettingMatrix.CommissionItemMatrix = CommissionItemMatrix;
     var CommissionMatrix = (function (_super) {
         __extends(CommissionMatrix, _super);
@@ -30054,13 +30054,13 @@ var CustomerSettingMatrix;
             }
         };
         return CommissionMatrix;
-    })(CustomerSettingMatrix.SettingTypeMatrix);
+    }(CustomerSettingMatrix.SettingTypeMatrix));
     CustomerSettingMatrix.CommissionMatrix = CommissionMatrix;
     var CommissionItemMatrixGroup = (function () {
         function CommissionItemMatrixGroup() {
         }
         return CommissionItemMatrixGroup;
-    })();
+    }());
     CustomerSettingMatrix.CommissionItemMatrixGroup = CommissionItemMatrixGroup;
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -30092,7 +30092,7 @@ var CustomerSettingMatrix;
         };
         ResourceService.$inject = ["$window"];
         return ResourceService;
-    })();
+    }());
     CustomerSettingMatrix.ResourceService = ResourceService;
     CustomerSettingMatrix.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -30240,7 +30240,7 @@ var CustomerSettingMatrix;
             "appConfigService",
             "resourceService"];
         return CustomerSettingMaxtrixController;
-    })();
+    }());
     CustomerSettingMatrix.ModuleRegister.controller("customerSettingMatrixController", CustomerSettingMaxtrixController);
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -30262,7 +30262,7 @@ var CustomerSettingMatrix;
             configurable: true
         });
         return BlockUiDirective;
-    })();
+    }());
     CustomerSettingMatrix.ModuleRegister.directive("blockUi", BlockUiDirective);
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));
 
@@ -30278,7 +30278,7 @@ var CustomerSettingMatrix;
             this.templateUrl = "Directives/CustomerLine/customer-line.htm";
         }
         return CustomerLineDirective;
-    })();
+    }());
     CustomerSettingMatrix.CustomerLineDirective = CustomerLineDirective;
     CustomerSettingMatrix.ModuleRegister.directive("customerLineDirective", CustomerLineDirective);
 })(CustomerSettingMatrix || (CustomerSettingMatrix = {}));

@@ -94,14 +94,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Message.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Message.ko-KR.resx" />
     <EmbeddedResource Include="Resources\Message.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Message.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Message.th-TH.resx" />
-    <EmbeddedResource Include="Resources\Message.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-TW.resx" />
   </ItemGroup>
