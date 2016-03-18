@@ -106,14 +106,14 @@
             var customerIds = command.CustomerIds;
             var settingTypes = command.Setting.SettingTypes;
             var productId = command.Setting.ProductId;
-            var results = new List<SettingResult>();
+            var results = new List<IResult>();
 
             foreach (var customerId in command.CustomerIds)
             {
                 var updateCustomerSettingCommand = command.GetUpdateCustomerSettingCommand(customerId);
                 var result = Update(updateCustomerSettingCommand);
 
-                results.Add(result as SettingResult);
+                results.Add(result);
             }
 
             return new UpdateSettingResult(results);

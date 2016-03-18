@@ -11,6 +11,40 @@
             SubResults = subResults;
         }
 
+        public UpdateSettingResult(IEnumerable<IResult> results)
+            : base(0)
+        {
+            if (results != null)
+            {
+                var subResults = new List<SettingResult>();
+
+                foreach (IResult result in results)
+                {
+                    var updateSettingResult = result as UpdateSettingResult;
+
+                    if (updateSettingResult != null)
+                    {
+                        subResults.AddRange(updateSettingResult.SubResults);
+                    }
+                    else
+                    {
+                        var settingResult = result as SettingResult;
+
+                        if (settingResult != null)
+                        {
+                            subResults.Add(settingResult);
+                        }
+                        else
+                        {
+                            subResults.Add(new SettingResult(result));
+                        }
+                    }
+                }
+
+                SubResults = subResults;
+            }
+        }
+
         public UpdateSettingResult(IResult result)
             : base(result.Code, result.Message)
         {
