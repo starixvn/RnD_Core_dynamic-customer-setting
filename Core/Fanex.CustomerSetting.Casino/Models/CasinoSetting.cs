@@ -20,7 +20,7 @@
             SettingTypes = setting.SettingTypes;
             WarningMessage = setting.WarningMessage;
 
-            if (customerProductStatus.IsHidden)
+            if (customerProductStatus.IsHidden && CustomerLevel.IsNotSuperLevel())
             {
                 throw new InvalidOperationException($"Cannot get setting for customer {CustomerId} due to hidden status on product {ProductId}");
             }

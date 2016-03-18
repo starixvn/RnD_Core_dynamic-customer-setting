@@ -70,7 +70,7 @@
 
             var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId);
 
-            if (customerCasinoStatus.IsHidden)
+            if (customerCasinoStatus.IsHidden && command.Setting.CustomerLevel.IsNotSuperLevel())
             {
                 throw new InvalidOperationException(
                     $"Cannot get setting for customer {command.Setting.CustomerId} due to hidden status on product {command.Setting.ProductId}");
