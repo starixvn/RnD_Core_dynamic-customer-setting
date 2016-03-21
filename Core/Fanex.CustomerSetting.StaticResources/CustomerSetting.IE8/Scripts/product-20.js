@@ -25246,64 +25246,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var SettingTypeDirectiveLoader = (function () {
-            function SettingTypeDirectiveLoader($compile) {
-                var _this = this;
-                this.replace = true;
-                this.scope = {
-                    uplineLevel: "=",
-                    setting: "=",
-                    update: "&"
-                };
-                this.link = function (scope, element) {
-                    scope.$watch("setting.settingTypes", function () {
-                        _this.generateNodes(scope, element);
-                    });
-                };
-                this.$compile = $compile;
-                this.loadedSettingTypes = new Array();
-            }
-            SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-                var _this = this;
-                if (angular.isDefined(scope.setting)) {
-                    _.forEach(scope.setting.settingTypes, function (settingType, index) {
-                        var loaded = _.some(_this.loadedSettingTypes, function (item) {
-                            return item === settingType.id;
-                        });
-                        if (!loaded) {
-                            var settingTypeName = IE8.StringFormater.format("settingtype{0}", settingType.id);
-                            var newNodeParts = [
-                                "<div data-",
-                                settingTypeName,
-                                " data-setting-type=\"setting.settingTypes[",
-                                index,
-                                "]\"",
-                                " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                                "></div>"
-                            ];
-                            var settingTypeElement = angular.element(newNodeParts.join(""));
-                            if (index === scope.setting.settingTypes.length - 1) {
-                                settingTypeElement.addClass("last-setting-type");
-                            }
-                            element.append(settingTypeElement);
-                            _this.$compile(settingTypeElement)(scope);
-                            _this.loadedSettingTypes.push(settingType.id);
-                        }
-                    });
-                }
-            };
-            SettingTypeDirectiveLoader.$inject = ["$compile"];
-            return SettingTypeDirectiveLoader;
-        }());
-        IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var Tooltip = (function () {
             function Tooltip($window, $document, $compile, $timeout, $templateCache) {
                 var _this = this;
@@ -25401,6 +25343,64 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("highlightingField", HighlightingField);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingTypeDirectiveLoader = (function () {
+            function SettingTypeDirectiveLoader($compile) {
+                var _this = this;
+                this.replace = true;
+                this.scope = {
+                    uplineLevel: "=",
+                    setting: "=",
+                    update: "&"
+                };
+                this.link = function (scope, element) {
+                    scope.$watch("setting.settingTypes", function () {
+                        _this.generateNodes(scope, element);
+                    });
+                };
+                this.$compile = $compile;
+                this.loadedSettingTypes = new Array();
+            }
+            SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+                var _this = this;
+                if (angular.isDefined(scope.setting)) {
+                    _.forEach(scope.setting.settingTypes, function (settingType, index) {
+                        var loaded = _.some(_this.loadedSettingTypes, function (item) {
+                            return item === settingType.id;
+                        });
+                        if (!loaded) {
+                            var settingTypeName = IE8.StringFormater.format("settingtype{0}", settingType.id);
+                            var newNodeParts = [
+                                "<div data-",
+                                settingTypeName,
+                                " data-setting-type=\"setting.settingTypes[",
+                                index,
+                                "]\"",
+                                " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                                "></div>"
+                            ];
+                            var settingTypeElement = angular.element(newNodeParts.join(""));
+                            if (index === scope.setting.settingTypes.length - 1) {
+                                settingTypeElement.addClass("last-setting-type");
+                            }
+                            element.append(settingTypeElement);
+                            _this.$compile(settingTypeElement)(scope);
+                            _this.loadedSettingTypes.push(settingType.id);
+                        }
+                    });
+                }
+            };
+            SettingTypeDirectiveLoader.$inject = ["$compile"];
+            return SettingTypeDirectiveLoader;
+        }());
+        IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
