@@ -50,7 +50,10 @@
 
             if (!string.IsNullOrEmpty(template))
             {
-                query.Language = CustomerSettingRegistration.SettingContext.Language;
+                SettingContext settingContext = CustomerSettingRegistration.SettingContext;
+
+                query.System = settingContext.System;
+                query.Language = settingContext.Language;
                 template = ReplaceParameters(template, query);
             }
 

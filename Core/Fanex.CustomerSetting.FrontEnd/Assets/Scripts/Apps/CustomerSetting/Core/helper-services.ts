@@ -65,6 +65,10 @@ module CustomerSetting {
     export class ParametersService {
         public static $inject: string[] = ["$window"];
 
+        public get systemId(): number {
+            return this.system;
+        }
+
         public get language(): string {
             return this.lang;
         }
@@ -80,6 +84,7 @@ module CustomerSetting {
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
         private isMultipleUpdates: boolean;
+        private system: number;
 
         private $window: ng.IWindowService;
 
@@ -131,6 +136,7 @@ module CustomerSetting {
 
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;
+                this.system = params.system || Defaults.system;
 
                 if (this.isMultipleUpdates) {
                     this.query = new MultipleSettingQuery(

@@ -26,6 +26,7 @@ module CustomerSetting.IE8 {
             "updatingSettingTypePromiseChain",
             "settingTypesSharedValuesService"];
 
+        public systemId: number;
         public customerNames: string;
         public setting: Setting;
         public warningMessages: Result | UpdatingSettingResult;
@@ -63,6 +64,7 @@ module CustomerSetting.IE8 {
             this.settingTypesSharedValuesService = settingTypesSharedValuesService;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
+            this.systemId = this.parametersService.getSystemId();
             this.customerNames = this.parametersService.getCustomerNames();
             this.requestService.registerSharedScope(this);
 

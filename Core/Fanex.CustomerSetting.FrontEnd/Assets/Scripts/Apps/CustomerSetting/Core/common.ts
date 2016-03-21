@@ -55,6 +55,10 @@ module CustomerSetting {
     }
 
     export class Defaults {
+        public static get system(): number {
+            return 1;
+        }
+
         public static get language(): string {
             return "en-US";
         }

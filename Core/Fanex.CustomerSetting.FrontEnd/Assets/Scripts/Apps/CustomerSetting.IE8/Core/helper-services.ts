@@ -69,12 +69,17 @@ module CustomerSetting.IE8 {
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
         private isMultipleUpdates: boolean;
+        private system: number;
 
         private $window: ng.IWindowService;
 
         constructor($window: ng.IWindowService) {
             this.$window = $window;
             this.fetchParams();
+        }
+
+        public getSystemId(): number {
+            return this.system;
         }
 
         public getLanguage(): string {
@@ -136,6 +141,7 @@ module CustomerSetting.IE8 {
 
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;
+                this.system = params.system || Defaults.system;
 
                 if (this.isMultipleUpdates) {
                     this.query = new MultipleSettingQuery(

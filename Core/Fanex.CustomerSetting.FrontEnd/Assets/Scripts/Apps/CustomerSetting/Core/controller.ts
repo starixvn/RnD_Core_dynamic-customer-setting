@@ -26,6 +26,7 @@ module CustomerSetting {
             "updatingSettingTypePromiseChain",
             "settingTypesSharedValuesService"];
 
+        public systemId: number;
         public customerNames: string;
         public setting: Setting;
         public warningMessages: Result | UpdatingSettingResult;
@@ -63,6 +64,7 @@ module CustomerSetting {
             this.settingTypesSharedValuesService = settingTypesSharedValuesService;
             this.successfulUpdatingCallback = this.$window.parent["successfulUpdatingCallback"];
 
+            this.systemId = this.parametersService.systemId;
             this.customerNames = this.parametersService.customerNames;
             this.requestService.registerSharedScope(this);
 

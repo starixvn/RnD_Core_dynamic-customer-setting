@@ -55,6 +55,8 @@ module CustomerSetting.IE8 {
     }
 
     export class Defaults {
+        public static system: number = 1;
+
         public static language: string = "en-US";
 
         public static percentageDivider: number = 100;

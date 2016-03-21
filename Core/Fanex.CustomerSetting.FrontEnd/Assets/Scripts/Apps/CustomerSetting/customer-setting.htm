@@ -8,7 +8,8 @@
 </head>
 <body data-ng-cloak>
     <block-ui></block-ui>
-    <div data-ng-controller="customerSettingController as ctrl">
+    <div data-ng-controller="customerSettingController as ctrl"
+         class="system-{{ctrl.systemId}}">
         <div class="msg-container" data-ng-show="ctrl.warningMessages || ctrl.requestMsgResult">
             <setting-result data-result="ctrl.warningMessages"></setting-result>
             <setting-result data-result="ctrl.requestMsgResult"></setting-result>

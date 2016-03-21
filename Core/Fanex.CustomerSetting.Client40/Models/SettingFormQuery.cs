@@ -23,12 +23,15 @@
 
         public bool IsReadOnly { get; set; }
 
+        internal byte System { get; set; }
+
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Reviewed!")]
         internal string ToJson()
         {
             var properties = new List<string>();
 
             properties.Add("{");
+            properties.Add(string.Format("\"system\": {0},", this.System));
             properties.Add(string.Format("\"language\": \"{0}\",", this.Language));
             properties.Add(string.Format("\"productId\": {0},", this.ProductId));
             properties.Add(string.Format("\"customerLevel\": {0},", this.CustomerLevel));
