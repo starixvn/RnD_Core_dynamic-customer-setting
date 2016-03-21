@@ -146,14 +146,23 @@
 
             if (!settingTypeResults.Exists(result => result.IsNotOk))
             {
-                settingTypeResults.Add(
-                    UpdateCustomerSettingType(
-                                   customerId,
-                                   command.Setting.CustomerInfo,
-                                   customerLevel,
-                                   settingTypes.First(settingType => settingType.Id == StatusSettingTypeValue),
-                                   productId,
-                                   uplineLevel));
+                var statusSettingType = settingTypes.FirstOrDefault(settingType => settingType.Id == StatusSettingTypeValue);
+
+                if (statusSettingType != null)
+                {
+                    settingTypeResults.Add(
+                        UpdateCustomerSettingType(
+                                       customerId,
+                                       command.Setting.CustomerInfo,
+                                       customerLevel,
+                                       statusSettingType,
+                                       productId,
+                                       uplineLevel));
+                }
+                else
+                {
+                    throw new CustomerSettingException($"Missing Product Status of customer {customerId}.");
+                }
             }
 
             return new UpdateSettingResult(settingTypeResults);
