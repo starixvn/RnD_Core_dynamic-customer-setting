@@ -21,18 +21,44 @@
     
     settingType5Resources["label"] = settingType5Resources["label"] || {};
     settingType5Resources["label"]["zh-cn"] = {
+        "AgentsShare": "代理占成",
+        "ChargeCommission": "抽取佣金",
+        "ChargeOnMemberNetWin": "会员净赢抽取的金额",
+        "CommForAgent": "代理佣金",
+        "CommForMaster": "总代理佣金",
+        "Given": "给予",
+        "MastersShare": "总代理占成",
+        "Remain": "剩余",
+        "SupersShare": "超级总代理占成",
+        "TotalCharge": "总抽取金额"
     };
     
     settingType5Resources["label"] = settingType5Resources["label"] || {};
     settingType5Resources["label"]["zh-tw"] = {
+        "AgentsShare": "代理占成",
+        "ChargeCommission": "抽取傭金",
+        "ChargeOnMemberNetWin": "會員凈贏抽取的金額",
+        "CommForAgent": "代理傭金",
+        "CommForMaster": "總代理傭金",
+        "Given": "給予",
+        "MastersShare": "總代理占成",
+        "Remain": "剩余",
+        "SupersShare": "超級總代理占成",
+        "TotalCharge": "總抽取金額"
     };
     
     settingType5Resources["label"] = settingType5Resources["label"] || {};
     settingType5Resources["label"]["th-th"] = {
-    };
-    
-    settingType5Resources["label"] = settingType5Resources["label"] || {};
-    settingType5Resources["label"]["vi-vn"] = {
+        "AgentsShare": "ส่วนแบ่งของเอเจนต์",
+        "ChargeCommission": "ค่าธรรมเนียมคอมมิชชั่น",
+        "ChargeOnMemberNetWin": "คิดเงินจากเงินได้สุทธิ",
+        "CommForAgent": "ค่าคอมมิชชั่นสำหรับเอเจนต์",
+        "CommForMaster": "ค่าคอมมิชชั่นสำหรับมาสเตอร์",
+        "Given": "ได้รับ",
+        "MastersShare": "ส่วนแบ่งของมาสเตอร์",
+        "Remain": "คงเหลือ",
+        "SupersShare": "ส่วนแบ่งของซูเปอร์",
+        "TotalCharge": "ค่าธรรมเนียมรวม"
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
@@ -46,18 +72,17 @@
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["zh-cn"] = {
+        "Msg_20029": "赛事还在进行中，您目前无法更改以下设置。"
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["zh-tw"] = {
+        "Msg_20029": "賽事還在進行中，您目前無法更改以下設置。"
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["th-th"] = {
-    };
-    
-    settingType5Resources["message"] = settingType5Resources["message"] || {};
-    settingType5Resources["message"]["vi-vn"] = {
+        "Msg_20029": "ไม่อนุญาตให้เปลี่ยนแปลงการตั้งค่าต่าง ๆ ในขณะนี้ เนื่องจากกำลังมีเกมการแข่งขัน"
     };
 
     angular.module("customerSetting").value("settingType5Resources", settingType5Resources);
