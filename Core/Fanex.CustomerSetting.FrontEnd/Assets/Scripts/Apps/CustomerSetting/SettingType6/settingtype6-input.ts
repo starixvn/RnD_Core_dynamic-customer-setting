@@ -171,6 +171,11 @@ module CustomerSetting {
 
             $scope.check = () => {
                 $scope.item.lossLimit = $scope.isUnlimited ? 0 : null;
+
+                // Hide validation error if there is any.
+                if ($scope.isUnlimited && $scope.item.validationState.fieldName === "lossLimit") {
+                    $scope.item.validationState = <ValidationResult>Result.normal;
+                }
             };
         }];
     }
