@@ -102,6 +102,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Casin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Casino.Tests", "Core\Tests\Fanex.CustomerSetting.Casino.Tests\Fanex.CustomerSetting.Casino.Tests.csproj", "{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType8", "SettingType8", "{30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8", "SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8\Fanex.CustomerSetting.SettingType8.csproj", "{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8.Tests", "Fanex.CustomerSetting.SettingType8.Tests\Fanex.CustomerSetting.SettingType8.Tests.csproj", "{F198F6F4-FDB2-4550-B270-CEBD79B1950E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -244,6 +250,14 @@ Global
 		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,5 +303,8 @@ Global
 		{CA48C0D3-B8BB-42BA-B26A-E0689419F088} = {463AECF9-A914-4373-8639-B4049B67E537}
 		{6FE2478F-9E93-48D1-95B9-CAD78704B67E} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 		{3F97B38B-2B4C-4215-BFCB-BD59F3FBC08F} = {09967616-74BB-44FA-918B-819B7AA63F26}
+		{30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC} = {B306779E-7128-423D-AC57-5963D0629397}
+		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8} = {30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}
+		{F198F6F4-FDB2-4550-B270-CEBD79B1950E} = {30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}
 	EndGlobalSection
 EndGlobal

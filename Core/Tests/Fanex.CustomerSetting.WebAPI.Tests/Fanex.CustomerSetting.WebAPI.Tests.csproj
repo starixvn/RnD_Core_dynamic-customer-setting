@@ -55,7 +55,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj">
       <Project>{9B52485B-6CAC-4B70-994B-5D8CF74B3380}</Project>
-      <Name>Fanex.CustomerSetting.WebApi</Name>
+      <Name>Fanex.CustomerSetting.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
