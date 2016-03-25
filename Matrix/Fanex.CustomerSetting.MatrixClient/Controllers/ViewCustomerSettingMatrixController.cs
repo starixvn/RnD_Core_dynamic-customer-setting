@@ -74,7 +74,7 @@
         {
             IRestResponse response = _customerSettingMatrixService.QueryCustomerSettingMatrixTemplate();
             bool isDebug = HttpContext.IsDebuggingEnabled;
-            string cdn = RandomHelper.GetRandomUri(SettingMatrixConfiguration.Settings.CdnUris).ToString();
+            string cdn = RandomHelper.GetRandomUri(SettingMatrixConfiguration.Settings.CdnUris);
             string customCss = SettingMatrixConfiguration.Settings.CustomCssUrl != null
                 ? Url.Content(SettingMatrixConfiguration.Settings.CustomCssUrl.ToString())
                 : string.Empty;
@@ -83,6 +83,11 @@
             if (response.StatusCode != HttpStatusCode.OK)
             {
                 throw new SettingMatrixException(response.Content);
+            }
+
+            if (!cdn.Contains("http"))
+            {
+                cdn = Url.Content(cdn);
             }
 
             template = SimpleJson.DeserializeObject<string>(response.Content);

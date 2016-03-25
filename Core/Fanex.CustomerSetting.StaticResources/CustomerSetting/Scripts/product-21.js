@@ -30616,6 +30616,33 @@ var CustomerSetting;
         return ArrayHelpers;
     }());
     CustomerSetting.ArrayHelpers = ArrayHelpers;
+    function debounce(func, waitTime) {
+        var timeout;
+        var timestamp;
+        var context;
+        var args;
+        var runLater = function () {
+            var lastRun = new Date().getTime() - timestamp;
+            if (lastRun > 0 && lastRun < waitTime) {
+                timeout = setTimeout(runLater, waitTime - lastRun);
+            }
+            else {
+                timeout = null;
+                func.apply(context, args);
+                context = null;
+                args = null;
+            }
+        };
+        context = this;
+        args = arguments;
+        return function () {
+            timestamp = new Date().getTime();
+            if (!timeout) {
+                timeout = setTimeout(runLater, waitTime);
+            }
+        };
+    }
+    CustomerSetting.debounce = debounce;
 })(CustomerSetting || (CustomerSetting = {}));
 
 var CustomerSetting;
@@ -32309,7 +32336,7 @@ var CustomerSetting;
             this.link = function (scope, element) {
                 var template = _this.$templateCache.get("Tooltip/tooltip.htm");
                 var tooltip = angular.element(template);
-                var debounceResize = _this.debounce(function () {
+                var debounceResize = CustomerSetting.debounce(function () {
                     if (!tooltip.hasClass("ng-hide")) {
                         _this.calculatePosition(element, tooltip);
                     }
@@ -32358,33 +32385,6 @@ var CustomerSetting;
                     });
                 }
             });
-        };
-        Tooltip.prototype.debounce = function (func, waitTime) {
-            var _this = this;
-            var timeout;
-            var timestamp;
-            var context;
-            var args;
-            var runLater = function () {
-                var lastRun = new Date().getTime() - timestamp;
-                if (lastRun > 0 && lastRun < waitTime) {
-                    timeout = _this.$timeout(runLater, waitTime - lastRun);
-                }
-                else {
-                    timeout = null;
-                    func.apply(context, args);
-                    context = null;
-                    args = null;
-                }
-            };
-            context = this;
-            args = arguments;
-            return function () {
-                timestamp = new Date().getTime();
-                if (!timeout) {
-                    timeout = _this.$timeout(runLater, waitTime);
-                }
-            };
         };
         Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
         return Tooltip;

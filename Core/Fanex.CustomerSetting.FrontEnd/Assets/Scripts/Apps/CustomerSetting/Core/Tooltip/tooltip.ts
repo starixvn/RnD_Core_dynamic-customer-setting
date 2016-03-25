@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../resource/resource-translation.ts" />
+/// <reference path="../helpers.ts" />
 /// <reference path="../module-registrater.ts" />
 
 module CustomerSetting {
@@ -24,7 +25,7 @@ module CustomerSetting {
         public link: ng.IDirectiveLinkFn = (scope: ITooltipScope, element: ng.IAugmentedJQuery) => {
             var template = this.$templateCache.get("Tooltip/tooltip.htm");
             var tooltip = angular.element(template);
-            var debounceResize = this.debounce(() => {
+            var debounceResize = debounce(() => {
                 if (!tooltip.hasClass("ng-hide")) {
                     this.calculatePosition(element, tooltip);
                 }
@@ -80,37 +81,6 @@ module CustomerSetting {
                     });
                 }
             });
-        }
-
-        private debounce(func: Function, waitTime: number): any {
-            var timeout: ng.IPromise<void>;
-            var timestamp: number;
-            var context: any;
-            var args: IArguments;
-
-            var runLater = () => {
-                var lastRun: number = new Date().getTime() - timestamp;
-
-                if (lastRun > 0 && lastRun < waitTime) {
-                    timeout = this.$timeout(runLater, waitTime - lastRun);
-                } else {
-                    timeout = null;
-                    func.apply(context, args);
-                    context = null;
-                    args = null;
-                }
-            };
-
-            context = this;
-            args = arguments;
-
-            return () => {
-                timestamp = new Date().getTime();
-
-                if (!timeout) {
-                    timeout = this.$timeout(runLater, waitTime);
-                }
-            };
         }
     }
 

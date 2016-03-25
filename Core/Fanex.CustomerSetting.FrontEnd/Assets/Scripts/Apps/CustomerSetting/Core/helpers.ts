@@ -26,4 +26,35 @@
             return result;
         }
     }
+
+    export function debounce(func: Function, waitTime: number): any {
+        var timeout: number;
+        var timestamp: number;
+        var context: any;
+        var args: IArguments;
+
+        var runLater = () => {
+            var lastRun: number = new Date().getTime() - timestamp;
+
+            if (lastRun > 0 && lastRun < waitTime) {
+                timeout = setTimeout(runLater, waitTime - lastRun);
+            } else {
+                timeout = null;
+                func.apply(context, args);
+                context = null;
+                args = null;
+            }
+        };
+
+        context = this;
+        args = arguments;
+
+        return () => {
+            timestamp = new Date().getTime();
+
+            if (!timeout) {
+                timeout = setTimeout(runLater, waitTime);
+            }
+        };
+    }
 }
