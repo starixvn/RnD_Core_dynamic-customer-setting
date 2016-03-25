@@ -43,6 +43,7 @@ module CustomerSetting {
 
             if (backup) {
                 this.oldSetting = new DefaultSettingItem(this);
+                (<SettingType7Item>this.oldSetting).selectStakeLevelId = this.selectStakeLevelId;
             }
         }
 
@@ -50,15 +51,13 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var hasChange: boolean;
 
-            if (this.customerLevel && this.customerLevel === Level.member) {
-                this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
-                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
-                });
-            }
-
             hasChange = this.stakeRanges.some((stakeLevelValue: SettingType7StakeRange) => {
                 return stakeLevelValue.isChanged();
             });
+
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                hasChange = hasChange || (this.selectStakeLevelId !== (<SettingType7Item>this.oldSetting).selectStakeLevelId);
+            }
 
             return isChanged || hasChange;
         }
@@ -89,6 +88,12 @@ module CustomerSetting {
 
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
+            }
+
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
+                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                });
             }
 
             this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {

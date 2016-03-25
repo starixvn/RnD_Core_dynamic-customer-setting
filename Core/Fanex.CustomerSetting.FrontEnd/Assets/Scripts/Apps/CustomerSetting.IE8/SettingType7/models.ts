@@ -44,6 +44,7 @@ module CustomerSetting.IE8 {
 
             if (backup) {
                 this.oldSetting = new DefaultSettingItem(this);
+                (<SettingType7Item>this.oldSetting).selectStakeLevelId = this.selectStakeLevelId;
             }
         }
 
@@ -51,15 +52,13 @@ module CustomerSetting.IE8 {
             var isChanged: boolean = super.isChanged();
             var hasChange: boolean;
 
-            if (this.customerLevel && this.customerLevel === Level.member) {
-                _.forEach(this.stakeRanges, (stakeLevel: SettingType7StakeRange) => {
-                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
-                });
-            }
-
             hasChange = _.some(this.stakeRanges, (stakeLevelValue: SettingType7StakeRange) => {
                 return stakeLevelValue.isChanged();
             });
+
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                hasChange = hasChange || (this.selectStakeLevelId !== (<SettingType7Item>this.oldSetting).selectStakeLevelId);
+            }
 
             return isChanged || hasChange;
         }
@@ -90,6 +89,12 @@ module CustomerSetting.IE8 {
 
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
+            }
+
+            if (this.customerLevel && this.customerLevel === Level.member) {
+                _.forEach(this.stakeRanges, (stakeLevel: SettingType7StakeRange) => {
+                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                });
             }
 
             _.forEach(this.stakeRanges, (stakeLevel: SettingType7StakeRange) => {
