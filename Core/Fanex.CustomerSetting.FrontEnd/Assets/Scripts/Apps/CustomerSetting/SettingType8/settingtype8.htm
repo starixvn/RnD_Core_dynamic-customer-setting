@@ -1,0 +1,16 @@
+﻿<div class="block full-width settingtype8" data-ng-show="settingType">
+    <div class="block__header" data-setting-type="{{settingType.id}}">
+        {{settingTypeName}}
+        <div class="right-btn-area right-btn-area--seperate"
+             title="{{'Update' | label}}"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode"
+             data-ng-click="update({ settingTypeId: settingType.id })">
+            <span class="icon icon--update"></span>
+        </div>
+    </div>
+    <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
+    </div>
+    <div class="block__item block__item--error" data-ng-if="!(settingType | validSettingType)">
+        {{settingType.settingItems[0].errorMessage}}
+    </div>
+</div>
