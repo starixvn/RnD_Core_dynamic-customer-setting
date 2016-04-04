@@ -15,10 +15,13 @@
     using Dtos;
     using Logging;
     using Models;
+    using Models.Requests;
+    using Newtonsoft.Json;
     using Resources;
 
-    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
+    public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService, IAdditionalRequestHandler
     {
+        private const string StakeLevelGroupRefId = "StakeLevel_GG";
         private readonly IDataAccess _groupStakeLevelDataAccess;
 
         public SettingTypeService()
@@ -39,17 +42,16 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
-            IEnumerable<StakeLevelGroupDto> stakeLevelGroups = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroups(query);
-            IEnumerable<StakeLevelDetailDto> stakeLevelGroupsDetails = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroupsDetails(query);
-            var customerStakeLevels = new SettingType
+            IEnumerable<StakeLevelGroupItem> stakeLevelGroups = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId);
+            var customerStakeLevelGroups = new SettingType
             {
                 Name = Label.BetLimit,
-                SettingItems = MapStakeLevelGroupItems(stakeLevelGroups, stakeLevelGroupsDetails)
+                SettingItems = stakeLevelGroups
             };
 
-            SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerStakeLevels, query);
+            SetSettingTypeReadOnlyWhenIndirectUplineEditMember(customerStakeLevelGroups, query);
 
-            return SetSportTypeBetTypeName(customerStakeLevels, settingContext.Language);
+            return SetSportTypeBetTypeName(customerStakeLevelGroups, settingContext.Language);
         }
 
         public override SettingResult UpdateCustomerSettingType(
@@ -87,25 +89,108 @@
                 settingContext.Language);
         }
 
-        private List<StakeLevelGroupItem> MapStakeLevelGroupItems(
-            IEnumerable<StakeLevelGroupDto> stakeLevelGroupsRawData,
-            IEnumerable<StakeLevelDetailDto> stakeLevelGroupsDetailsRawData)
+        public object Handle(ISettingContext settingContext, byte actionId, ActionType actionType, string jsonParameters)
         {
-            return stakeLevelRawData
-                .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
-                .Select(group =>
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
+
+            StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(jsonParameters);
+            IEnumerable<StakeLevelGroupItem> stakeLevelGroupDetails
+                = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId, query.SportTypeId, true);
+
+            return new SettingType
+            {
+                Name = Label.BetLimit,
+                SettingItems = stakeLevelGroupDetails
+            };
+        }
+
+        private IEnumerable<StakeLevelGroupItem> QueryAndMapStakeLevelGroups(
+            string language,
+            int customerId,
+            byte productId,
+            short? sportTypeId = null,
+            bool showAll = false)
+        {
+            var result = Enumerable.Empty<StakeLevelGroupItem>();
+            IEnumerable<StakeLevelGroupDto> stakeLevelGroupsRawData
+                = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroups(customerId, productId);
+
+            if (stakeLevelGroupsRawData?.Any() == true)
+            {
+                result = stakeLevelGroupsRawData
+                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
+                    .Where(group => group.Key.SportTypeId == sportTypeId || !sportTypeId.HasValue)
+                    .Select(group =>
+                    {
+                        var stakeLevelGroupItem = new StakeLevelGroupItem();
+                        int numberOfDetailedItem = 0;
+
+                        stakeLevelGroupItem.SportTypeId = group.Key.SportTypeId;
+                        stakeLevelGroupItem.BetTypeId = group.Key.BetTypeId;
+                        stakeLevelGroupItem.LevelGroups = GroupLevelGroups(group.ToList(), language);
+                        stakeLevelGroupItem.StakeLevelItems = QueryAndMapStakeLevelGroupDetails(
+                            customerId,
+                            group.Key.SportTypeId,
+                            language,
+                            showAll,
+                            out numberOfDetailedItem);
+                        stakeLevelGroupItem.NumberOfDetailedItems = numberOfDetailedItem;
+
+                        return stakeLevelGroupItem;
+                    });
+            }
+
+            return result;
+        }
+
+        private IEnumerable<LevelGroup> GroupLevelGroups(IEnumerable<StakeLevelGroupDto> rawData, string language)
+        {
+            var result = Enumerable.Empty<LevelGroup>();
+
+            if (rawData?.Any() == true)
+            {
+                result = rawData.Select(item =>
                 {
-                    var stakeLevelItem = new StakeLevelItem();
+                    string levelName = ResourceService.GetResourceData(StakeLevelGroupRefId, item.StakeLevelGroupId.ToString(), language);
 
-                    stakeLevelItem.SportTypeId = group.Key.SportTypeId;
-                    stakeLevelItem.BetTypeId = group.Key.BetTypeId;
-                    stakeLevelItem.StakeRanges = group
-                        .Select(item => new StakeRange(item.StakeLevelId, item.StakeLevelRange, item.Selected))
-                        .ToList();
+                    return new LevelGroup(item.StakeLevelId, item.StakeLevelGroupId, levelName, item.Selected);
+                });
+            }
 
-                    return stakeLevelItem;
-                })
-                .ToList();
+            return result;
+        }
+
+        private IEnumerable<StakeLevelItem> QueryAndMapStakeLevelGroupDetails(
+            int customerId,
+            short sportTypeId,
+            string language,
+            bool showAll,
+            out int numberOfDetailedItems)
+        {
+            var stakeLevelGroupDetails = Enumerable.Empty<StakeLevelItem>();
+            IEnumerable<StakeLevelDetailDto> stakeLevelGroupDetailsRawData
+                = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroupsDetails(customerId, sportTypeId, out numberOfDetailedItems, showAll);
+
+            if (stakeLevelGroupDetailsRawData?.Any() == true)
+            {
+                stakeLevelGroupDetails = stakeLevelGroupDetailsRawData
+                    .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
+                    .Select(group =>
+                    {
+                        var stakeLevelItem = new StakeLevelItem();
+
+                        stakeLevelItem.SportTypeId = group.Key.SportTypeId;
+                        stakeLevelItem.SportTypeName = ResourceService.GetSportTypeName(stakeLevelItem.SportTypeId, language);
+                        stakeLevelItem.BetTypeId = group.Key.BetTypeId;
+                        stakeLevelItem.BetTypeName = ResourceService.GetBetTypeName(stakeLevelItem.BetTypeId, language);
+                        stakeLevelItem.StakeRanges = group.Select(item => new StakeRange(item.StakeLevelGroupId, item.StakeLevel));
+
+                        return stakeLevelItem;
+                    });
+            }
+
+            return stakeLevelGroupDetails;
         }
 
         private IResult ValidateMemberSelectedGroup(SettingType settingType)

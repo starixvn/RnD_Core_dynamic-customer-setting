@@ -6,21 +6,20 @@
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
-    using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using Data;
     using Dtos;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
-        public IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(CustomerSettingQuery query)
+        public IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId)
         {
             using (var objectDb = new ObjectDb("CustSetting_StakeLevelGroupSelect"))
             {
                 var parameterValues = new Hashtable
                 {
-                    { "custid", query.CustomerId },
-                    { "productid", query.ProductId }
+                    { "custid", customerId },
+                    { "productid", productId }
                 };
 
                 return objectDb.Query<StakeLevelGroupDto>(parameterValues);
@@ -28,7 +27,7 @@
         }
 
         public IEnumerable<StakeLevelDetailDto> GetCustomerStakeLevelGroupsDetails(
-            CustomerSettingQuery query,
+            int customerId,
             short sportTypeId,
             out int numberOfDetailedItems,
             bool showAll = false)
@@ -37,8 +36,7 @@
             {
                 var parameterValues = new Hashtable
                 {
-                    { "custid", query.CustomerId },
-                    { "productid", query.ProductId },
+                    { "custid", customerId },
                     { "sporttypeid", sportTypeId },
                     { "noofrows", 0 },
                     { "showall", showAll }
@@ -77,7 +75,7 @@
                 { "errmsg", string.Empty }
             };
 
-            return ExecuteNonQuery("CustSetting_StakeLevelUpd", param);
+            return ExecuteNonQuery("CustSetting_StakeLevelGroupUpd", param);
         }
     }
 }

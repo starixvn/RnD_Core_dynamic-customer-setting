@@ -9,10 +9,10 @@
 
     internal interface IDataAccess
     {
-        IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(CustomerSettingQuery query);
+        IEnumerable<StakeLevelGroupDto> GetCustomerStakeLevelGroups(int customerId, byte productId);
 
         IEnumerable<StakeLevelDetailDto> GetCustomerStakeLevelGroupsDetails(
-            CustomerSettingQuery query,
+            int customerId,
             short sportTypeId,
             out int numberOfDetailedItems,
             bool showAll = true);

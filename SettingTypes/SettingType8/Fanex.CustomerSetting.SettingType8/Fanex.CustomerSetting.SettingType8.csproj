@@ -66,6 +66,10 @@
       <HintPath>..\..\..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -80,6 +84,7 @@
     <Compile Include="Dtos\StakeLevelDetailDto.cs" />
     <Compile Include="Dtos\StakeLevelGroupDto.cs" />
     <Compile Include="Models\LevelGroup.cs" />
+    <Compile Include="Models\Requests\StakeLevelGroupDetailsQuery.cs" />
     <Compile Include="Models\StakeLevelGroupItem.cs" />
     <Compile Include="Models\StakeLevelItem.cs" />
     <Compile Include="Models\StakeRange.cs" />

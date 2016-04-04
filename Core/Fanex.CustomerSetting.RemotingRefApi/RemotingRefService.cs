@@ -13,5 +13,10 @@
         {
             return RefData.GetBetTypeName(betTypeId, language);
         }
+
+        public string GetResourceData(string refId, string resourceId, string language)
+        {
+            return RefData.GetResourceDataByRefIdAndResourceId(refId, resourceId, language, string.Empty);
+        }
     }
 }

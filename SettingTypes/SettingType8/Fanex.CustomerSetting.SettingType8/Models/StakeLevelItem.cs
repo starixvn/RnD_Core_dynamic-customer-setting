@@ -6,12 +6,7 @@
 
     public class StakeLevelItem : SettingItemDefault
     {
-        public StakeLevelItem()
-        {
-            StakeRanges = new List<StakeRange>();
-        }
-
-        public List<StakeRange> StakeRanges { get; set; }
+        public IEnumerable<StakeRange> StakeRanges { get; set; }
 
         public override bool Equals(object obj)
         {

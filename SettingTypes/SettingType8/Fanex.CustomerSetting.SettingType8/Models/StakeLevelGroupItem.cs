@@ -8,15 +8,9 @@
     {
         private const string StakeLevelGroupXmlFormat = "<StakeLevel {0} StakeLevelList=\"{1}\"/>";
 
-        public StakeLevelGroupItem()
-        {
-            LevelGroups = new List<LevelGroup>();
-            StakeLevelItems = new List<StakeLevelItem>();
-        }
+        public IEnumerable<LevelGroup> LevelGroups { get; set; }
 
-        public List<LevelGroup> LevelGroups { get; set; }
-
-        public List<StakeLevelItem> StakeLevelItems { get; set; }
+        public IEnumerable<StakeLevelItem> StakeLevelItems { get; set; }
 
         public int NumberOfDetailedItems { get; set; }
 

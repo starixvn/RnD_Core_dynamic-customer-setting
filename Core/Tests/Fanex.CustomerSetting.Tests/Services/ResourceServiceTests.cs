@@ -1,12 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting;
     using Fanex.CustomerSetting.Models;
     using Fanex.CustomerSetting.RemotingRefApi;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Tests.Models;
     using Fanex.Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
@@ -51,8 +49,8 @@
             byte productId = 1;
             var productName = new ProductName { ProductId = productId, Name = "product name EN" };
             _cachingService.GetOrAdd<ProductName>(
-                Arg.Any<string>(), 
-                Arg.Any<Func<ProductName>>(), 
+                Arg.Any<string>(),
+                Arg.Any<Func<ProductName>>(),
                 new TimeSpan(1, 0, 0)).Returns(productName);
 
             //// Act
@@ -68,10 +66,10 @@
             //// Arrange
             byte productId = 1;
             ProductName nullProductName = null;
-             _cachingService.GetOrAdd<ProductName>(
-                Arg.Any<string>(), 
-                Arg.Any<Func<ProductName>>(), 
-                new TimeSpan(1, 0, 0)).Returns(nullProductName);
+            _cachingService.GetOrAdd<ProductName>(
+               Arg.Any<string>(),
+               Arg.Any<Func<ProductName>>(),
+               new TimeSpan(1, 0, 0)).Returns(nullProductName);
 
             //// Act
             var actualResult = _resourceService.GetProductName(productId, _language);
@@ -226,5 +224,86 @@
         }
 
         #endregion Get Bet Type Name
+
+        #region Get Data Resource
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetDataResource_RefIdIsNullOrEmpty_ReturnEmpty(string refId)
+        {
+            // Arrange.
+            string resourceId = nameof(resourceId);
+
+            // Act.
+            string actualResourceData = _resourceService.GetResourceData(refId, resourceId, _language);
+
+            // Assert.
+            Assert.IsEmpty(actualResourceData);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetDataResource_ResourceIdIsNullOrEmpty_ReturnEmpty(string resourceId)
+        {
+            // Arrange.
+            string refId = nameof(refId);
+
+            // Act.
+            string actualResourceData = _resourceService.GetResourceData(refId, resourceId, _language);
+
+            // Assert.
+            Assert.IsEmpty(actualResourceData);
+        }
+
+        public void GetDataResource_RefIdAndResourceIdAreNotEmpty_CallRemotingRefApi()
+        {
+            // Arrange.
+            string refId = nameof(refId);
+            string resourceId = nameof(resourceId);
+
+            // Act.
+            _resourceService.GetResourceData(refId, resourceId, _language);
+
+            // Assert.
+            _remotingRefApi
+                .Received()
+                .GetResourceData(
+                    Arg.Is<string>(passedRefId => passedRefId == refId),
+                    Arg.Is<string>(passedResourceId => passedResourceId == resourceId),
+                    Arg.Any<string>());
+        }
+
+        public void GetDataResource_RefIdAndResourceIdAreNotEmpty_ReturnDataFromRemotingRefApi()
+        {
+            // Arrange.
+            string refId = nameof(refId);
+            string resourceId = nameof(resourceId);
+            string resourceData = nameof(resourceData);
+
+            _remotingRefApi.GetResourceData(refId, resourceId, Arg.Any<string>()).Returns(resourceData);
+
+            // Act.
+            string actualData = _resourceService.GetResourceData(refId, resourceId, _language);
+
+            // Assert.
+            Assert.AreEqual(resourceData, actualData);
+        }
+
+        public void GetDataResource_RemotingRefApiReturnsEmpty_ReturnDefaultResourceData()
+        {
+            // Arrange.
+            string refId = nameof(refId);
+            string resourceId = nameof(resourceId);
+
+            _remotingRefApi.GetResourceData(refId, resourceId, Arg.Any<string>()).Returns(string.Empty);
+
+            // Act.
+            string actualData = _resourceService.GetResourceData(refId, resourceId, _language);
+
+            // Assert.
+            Assert.AreEqual($"Ref Resource: {refId} - Key: {resourceId}", actualData);
+        }
+
+        #endregion Get Data Resource
     }
 }

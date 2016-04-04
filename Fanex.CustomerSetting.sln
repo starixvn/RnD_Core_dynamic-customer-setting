@@ -106,7 +106,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingType8", "SettingType
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8", "SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8\Fanex.CustomerSetting.SettingType8.csproj", "{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8.Tests", "Fanex.CustomerSetting.SettingType8.Tests\Fanex.CustomerSetting.SettingType8.Tests.csproj", "{F198F6F4-FDB2-4550-B270-CEBD79B1950E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8.Tests", "SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8.Tests\Fanex.CustomerSetting.SettingType8.Tests.csproj", "{F198F6F4-FDB2-4550-B270-CEBD79B1950E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
