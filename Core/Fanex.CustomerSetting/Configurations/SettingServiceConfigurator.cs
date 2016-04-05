@@ -26,7 +26,7 @@
             Check.Argument.IsNotNegativeOrZero(system, "system");
             Check.Argument.IsNotNegativeOrZero(productId, "productId");
 
-            var settingTypeServiceConfig = configs                
+            var settingTypeServiceConfig = configs
                 .Where(configItem => configItem.ProductIds.Contains(productId) || !configItem.ProductIds.Any())
                 .FirstOrDefault(configItem => configItem.Systems.Contains(system) || !configItem.Systems.Any());
 
@@ -126,13 +126,13 @@
         private static bool IsConfigValid(SettingServiceConfigItem config)
         {
             return config != null
-                && config.IsValid();                
+                && config.IsValid();
         }
 
         private void ResetConfigContext()
         {
-            products.Clear();
-            systems.Clear();
+            products = new List<byte>();
+            systems = new List<byte>();
             updateServiceType = null;
             queryServiceType = null;
         }
