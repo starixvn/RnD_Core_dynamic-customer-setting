@@ -130,15 +130,16 @@
                         stakeLevelGroupItem.BetTypeId = group.Key.BetTypeId;
                         stakeLevelGroupItem.LevelGroups = GroupLevelGroups(group.ToList(), language);
                         stakeLevelGroupItem.StakeLevelItems = QueryAndMapStakeLevelGroupDetails(
+                            language,
                             customerId,
                             group.Key.SportTypeId,
-                            language,
                             showAll,
                             out numberOfDetailedItem);
                         stakeLevelGroupItem.NumberOfDetailedItems = numberOfDetailedItem;
 
                         return stakeLevelGroupItem;
-                    });
+                    })
+                    .ToList();
             }
 
             return result;
@@ -162,9 +163,9 @@
         }
 
         private IEnumerable<StakeLevelItem> QueryAndMapStakeLevelGroupDetails(
+            string language,
             int customerId,
             short sportTypeId,
-            string language,
             bool showAll,
             out int numberOfDetailedItems)
         {

@@ -35,7 +35,8 @@
             {
                 return Equals(SportTypeId, otherObj.SportTypeId)
                     && Equals(BetTypeId, otherObj.BetTypeId)
-                    && LevelGroups.SequenceEqual(otherObj.LevelGroups);
+                    && LevelGroups.SequenceEqual(otherObj.LevelGroups)
+                    && Equals(NumberOfDetailedItems, otherObj.NumberOfDetailedItems);
             }
         }
 
@@ -48,7 +49,10 @@
                 levelGroupsHashCode ^= levelGroup.GetHashCode();
             }
 
-            return SportTypeId.GetHashCode() ^ BetTypeId.GetHashCode() ^ levelGroupsHashCode;
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ levelGroupsHashCode
+                ^ NumberOfDetailedItems.GetHashCode();
         }
     }
 }
