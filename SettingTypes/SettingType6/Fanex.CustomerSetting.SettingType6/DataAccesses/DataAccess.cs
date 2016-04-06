@@ -8,6 +8,7 @@
     using Fanex.CustomerSetting.Models.Requests;
     using Fanex.CustomerSetting.Models.Results;
     using Fanex.CustomerSetting.SettingType6.Models;
+    using Fanex.CustomerSetting.SettingType6.Models.Requests;
     using Fanex.Data;
 
     internal class DataAccess : BaseDataAccess, IDataAccess

@@ -70,11 +70,11 @@
                     Selected = true
                 }
             };
-            _dataAccess.GetCustomerStakeLevelRawData(Arg.Any<CustomerSettingQuery>()).Returns(stakeLevelRawData);
+            _dataAccess.GetCustomerStakeLevelRawData(query).Returns(stakeLevelRawData);
 
             // Act.
             var actualCustomerStakeLevelSetting = _settingTypeService.GetCustomerSettingType(_settingContext, query);
-            var actualCustomerCommissionItem = actualCustomerStakeLevelSetting.SettingItems.First() as StakeLevelItem;
+            var actualCustomerStakeLevelItem = actualCustomerStakeLevelSetting.SettingItems.First() as StakeLevelItem;
 
             // Assert.
             var expectedStakeLevelItem = new StakeLevelItem
@@ -91,7 +91,7 @@
                     }
                 }
             };
-            Assert.AreEqual(expectedStakeLevelItem, actualCustomerCommissionItem);
+            Assert.AreEqual(expectedStakeLevelItem, actualCustomerStakeLevelItem);
         }
 
         [Test]
@@ -192,7 +192,7 @@
             var customerLevel = Level.Agent;
             var uplineLevel = Level.Master;
             byte productId = 1;
-            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(1);
+            var customerStakeLevel = InstanceFactory.CreateCustomerSettingType(7);
             var successResult = Result.Success;
             _dataAccess.UpdateCustomerStakeLevel(
                 Arg.Any<ISettingContext>(),

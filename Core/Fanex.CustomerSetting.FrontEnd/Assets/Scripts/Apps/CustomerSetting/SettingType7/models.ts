@@ -64,7 +64,7 @@ module CustomerSetting {
 
         public validate(): boolean {
             if (this.customerLevel && this.customerLevel === Level.member) {
-                var isViolated: boolean = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length != 1;
+                var isViolated: boolean = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length !== 1;
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
@@ -74,7 +74,7 @@ module CustomerSetting {
             }
 
             return true;
-        };
+        }
 
         public toJson(): {} {
             var settingItem: any = {

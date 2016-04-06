@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.SettingType6.Models
+﻿namespace Fanex.CustomerSetting.SettingType6.Models.Requests
 {
     internal class CurrentWinLossAmountQuery
     {

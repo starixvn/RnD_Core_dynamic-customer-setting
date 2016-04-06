@@ -1,5 +1,7 @@
-﻿<div class="block full-width settingtype6" data-ng-show="settingType">
-    <div class="block__header" data-setting-type="{{settingType.id}}">
+﻿<div class="block full-width settingtype6" data-ng-show="settingType" data-ng-class="{ 'block--error': !(settingType | validSettingType) }">
+    <div class="block__header"
+         data-setting-type="{{settingType.id}}"
+         data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -16,12 +18,16 @@
              data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
             {{group[0].sportTypeName}}
         </div>
+        <div class="block__sub-header"
+             data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+            {{group[0].betTypeName}}
+        </div>
         <div class="block__item-group"
              data-ng-repeat="item in group"
              data-product="{{productId}}"
              data-sport-type="{{item.sportTypeId}}"
              data-bet-type="{{item.betTypeId}}">
-            <div class="block__sub-header block__sub-header--indent" data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
+            <div class="block__sub-header block__sub-header--indent" data-ng-if="settingType.settingLevel === avaiSettingLevels.sportTypeBetType">
                 {{item.betTypeName}}
             </div>
             <div class="block__column block__column--border-right w50-percent">

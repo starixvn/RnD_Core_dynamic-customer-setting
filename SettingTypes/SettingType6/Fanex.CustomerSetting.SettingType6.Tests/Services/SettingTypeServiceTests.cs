@@ -9,6 +9,7 @@
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType6.DataAccesses;
     using Fanex.CustomerSetting.SettingType6.Models;
+    using Fanex.CustomerSetting.SettingType6.Models.Requests;
     using Fanex.CustomerSetting.SettingType6.Resources;
     using Fanex.CustomerSetting.SettingType6.Services;
     using Fanex.CustomerSetting.Tests;

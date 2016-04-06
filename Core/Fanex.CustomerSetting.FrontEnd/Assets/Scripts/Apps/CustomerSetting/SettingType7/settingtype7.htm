@@ -1,5 +1,7 @@
-﻿<div class="block full-width settingtype7" data-ng-show="settingType">
-    <div class="block__header" data-setting-type="{{settingType.id}}">
+﻿<div class="block full-width settingtype7" data-ng-show="settingType" data-ng-class="{ 'block--error': !(settingType | validSettingType) }">
+    <div class="block__header"
+         data-setting-type="{{settingType.id}}"
+         data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
         {{settingTypeName}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
@@ -18,8 +20,8 @@
                     {{group[0].sportTypeName}}
                 </label>
                 <label class="check-all-field-lbl"
-                       data-ng-if="settingType.settingLevel === avaiSettingLevels.betType">
-                    {{group[0].sportTypeName}}
+                       data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.betType">
+                    {{productName}}
                 </label>
                 <setting-type7-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
                                               data-items="group" />

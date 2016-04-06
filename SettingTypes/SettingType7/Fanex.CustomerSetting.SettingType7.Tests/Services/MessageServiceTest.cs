@@ -3,6 +3,7 @@
     using System.Linq;
     using Fanex.CustomerSetting.Services;
     using Fanex.CustomerSetting.SettingType7.Constants;
+    using Fanex.CustomerSetting.SettingType7.Resources;
     using Fanex.CustomerSetting.SettingType7.Services;
     using NSubstitute;
     using NUnit.Framework;
@@ -20,9 +21,22 @@
             _resourceService = Substitute.For<IResourceService>();
             _messageService = new MessageService(_resourceService);
             _msgType = MessageType.StakeLevelViolation;
-            _rawMessage = "<Root MsgID=\"1\" Msg=\"\">"
+            _rawMessage = "<Root MsgID=\"10034\" Msg=\"\">"
                             + "<Row SportType=\"1\" BetType=\"1\" />"
                         + "</Root>";
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        public void TranslateMessage_Always_MainMessageIsMsg1(byte settingLevel)
+        {
+            // Act
+            var actualMessageContent = _messageService.TranslateMessage(_msgType, _rawMessage, settingLevel, Arg.Any<string>());
+
+            // Assert
+            Assert.AreEqual(Message.Msg_10034, actualMessageContent.MainMessage);
         }
 
         [Test]

@@ -269,8 +269,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bower.json" />
-    <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Scripts\Libraries\AngularJs\angular.min.js.gzip" />
     <Content Include="Scripts\Libraries\AngularJs\angular.min.js.map" />
     <None Include="tsd.json" />
