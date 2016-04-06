@@ -129,7 +129,7 @@
                         stakeLevelGroupItem.SportTypeId = group.Key.SportTypeId;
                         stakeLevelGroupItem.BetTypeId = group.Key.BetTypeId;
                         stakeLevelGroupItem.LevelGroups = GroupLevelGroups(group.ToList(), language);
-                        stakeLevelGroupItem.StakeLevelItems = QueryAndMapStakeLevelGroupDetails(
+                        stakeLevelGroupItem.StakeLevelDetailedItems = QueryAndMapStakeLevelGroupDetails(
                             language,
                             customerId,
                             group.Key.SportTypeId,
@@ -162,14 +162,14 @@
             return result;
         }
 
-        private IEnumerable<StakeLevelItem> QueryAndMapStakeLevelGroupDetails(
+        private IEnumerable<StakeLevelDetailedItem> QueryAndMapStakeLevelGroupDetails(
             string language,
             int customerId,
             short sportTypeId,
             bool showAll,
             out int numberOfDetailedItems)
         {
-            var stakeLevelGroupDetails = Enumerable.Empty<StakeLevelItem>();
+            var stakeLevelGroupDetails = Enumerable.Empty<StakeLevelDetailedItem>();
             IEnumerable<StakeLevelDetailDto> stakeLevelGroupDetailsRawData
                 = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroupsDetails(customerId, sportTypeId, out numberOfDetailedItems, showAll);
 
@@ -179,7 +179,7 @@
                     .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
                     .Select(group =>
                     {
-                        var stakeLevelItem = new StakeLevelItem();
+                        var stakeLevelItem = new StakeLevelDetailedItem();
 
                         stakeLevelItem.SportTypeId = group.Key.SportTypeId;
                         stakeLevelItem.SportTypeName = ResourceService.GetSportTypeName(stakeLevelItem.SportTypeId, language);

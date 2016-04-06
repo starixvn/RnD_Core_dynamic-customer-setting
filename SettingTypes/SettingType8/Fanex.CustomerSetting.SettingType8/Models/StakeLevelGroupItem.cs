@@ -10,7 +10,7 @@
 
         public IEnumerable<LevelGroup> LevelGroups { get; set; }
 
-        public IEnumerable<StakeLevelItem> StakeLevelItems { get; set; }
+        public IEnumerable<StakeLevelDetailedItem> StakeLevelDetailedItems { get; set; }
 
         public int NumberOfDetailedItems { get; set; }
 

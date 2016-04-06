@@ -49,12 +49,6 @@ module CustomerSetting {
                                     settingType.settingItems[index] = new SettingType8Item(item, $scope.customerLevel, true);
                                 }
                             });
-
-                            if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
-                                $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
-                            } else {
-                                $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
-                            }
                         }
                     }
                 });

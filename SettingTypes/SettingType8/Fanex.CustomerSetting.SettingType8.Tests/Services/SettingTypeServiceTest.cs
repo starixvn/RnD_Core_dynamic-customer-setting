@@ -325,9 +325,9 @@
                         Selected = true
                     }
                 },
-                StakeLevelItems = new List<StakeLevelItem>
+                StakeLevelDetailedItems = new List<StakeLevelDetailedItem>
                 {
-                    new StakeLevelItem
+                    new StakeLevelDetailedItem
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,

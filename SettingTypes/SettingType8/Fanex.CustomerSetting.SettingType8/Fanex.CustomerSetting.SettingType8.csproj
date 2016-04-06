@@ -86,7 +86,7 @@
     <Compile Include="Models\LevelGroup.cs" />
     <Compile Include="Models\Requests\StakeLevelGroupDetailsQuery.cs" />
     <Compile Include="Models\StakeLevelGroupItem.cs" />
-    <Compile Include="Models\StakeLevelItem.cs" />
+    <Compile Include="Models\StakeLevelDetailedItem.cs" />
     <Compile Include="Models\StakeRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">
