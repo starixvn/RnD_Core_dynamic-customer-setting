@@ -37,7 +37,7 @@
                 var parameterValues = new Hashtable
                 {
                     { "custid", customerId },
-                    { "sporttypeid", sportTypeId },
+                    { "sporttype", sportTypeId },
                     { "noofrows", 0 },
                     { "showall", showAll }
                 };

@@ -684,3 +684,37 @@ select.setting-field {
   .settingtype7 .block__header-cell--no-border {
     border: none; }
 
+.settingtype8 .block__item-group {
+  background-color: #b5c4d0; }
+
+.settingtype8 .col {
+  border-right: 1px solid #7c98a4;
+  display: inline-block;
+  float: none;
+  min-width: 20%; }
+  .settingtype8 .col--border-top {
+    border-top: 1px solid #7c98a4; }
+  .settingtype8 .col--last {
+    border-right: none; }
+    .settingtype8 .col--last .block__cell, .settingtype8 .col--last .block__lbl, .settingtype8 .col--last .block__value {
+      border-right: none; }
+
+.settingtype8 .block__cell, .settingtype8 .block__lbl, .settingtype8 .block__value {
+  border-bottom: 1px solid #7c98a4;
+  border-right: none;
+  padding: 0 5px; }
+  .settingtype8 .block__cell--no-border-bottom {
+    border-bottom: none; }
+
+.settingtype8 .scrollable-area {
+  border-right: none;
+  display: inline-block;
+  float: right;
+  overflow-x: auto;
+  white-space: nowrap; }
+  .settingtype8 .scrollable-area .block__cell, .settingtype8 .scrollable-area .block__lbl, .settingtype8 .scrollable-area .block__value {
+    background-color: #fff; }
+
+.settingtype8 .setting-field--checkfield {
+  margin: 0; }
+

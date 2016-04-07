@@ -162,6 +162,7 @@
     <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype6.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype7.scss" />
+    <None Include="Assets\Styles\SettingTypes\_settingtype8.scss" />
     <None Include="Assets\Styles\_base.scss" />
     <None Include="Assets\Styles\_customer-setting-core.scss" />
     <None Include="Assets\Styles\_other.scss" />

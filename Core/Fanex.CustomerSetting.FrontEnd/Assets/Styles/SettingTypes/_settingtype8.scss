@@ -1,0 +1,50 @@
+﻿.settingtype8 {
+    .block__item-group {
+        background-color: $block-item-lbl-bg;
+    }
+
+    .col {
+        @include border(right);
+        display: inline-block;
+        float: none;
+        min-width: 20%;
+
+        &--border-top {
+            @include border(top);
+        }
+
+        &--last {
+            border-right: none;
+
+            .block__cell {
+                border-right: none;
+            }
+        }
+    }
+
+    .block__cell {
+        @include border(bottom);
+        border-right: none;
+        padding: 0 5px;
+
+        &--no-border-bottom {
+            border-bottom: none;
+        }
+    }
+
+    .scrollable-area {
+        border-right: none;
+        display: inline-block;
+        float: right;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        .block__cell {
+            background-color: $default-bg;
+        }
+    }
+
+    .setting-field--checkfield {
+        margin: 0;
+    }
+}

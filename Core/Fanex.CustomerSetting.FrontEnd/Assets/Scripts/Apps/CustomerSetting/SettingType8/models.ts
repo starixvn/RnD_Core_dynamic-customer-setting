@@ -117,8 +117,6 @@ module CustomerSetting {
         public levelGroupId: number;
         public levelGroupName: string;
         public selected: boolean;
-        public expectedColumnWidth: number;
-        public columnWidth: number;
 
         private oldStakeLevelGroupValue: SettingType8StakeLevelGroup;
 
@@ -131,7 +129,6 @@ module CustomerSetting {
                 this.levelGroupId = stakeLevelGroup.levelGroupId;
                 this.levelGroupName = stakeLevelGroup.levelGroupName;
                 this.selected = stakeLevelGroup.selected;
-                this.expectedColumnWidth = this.levelGroupName.length * 13 + 20; // Length of level group's name's length * 13px.
             }
 
             if (backup) {
@@ -177,9 +174,6 @@ module CustomerSetting {
 
                     if (matchingRanges && matchingRanges.length > 0) {
                         var range: SettingType8StakeRange = new SettingType8StakeRange(matchingRanges[0]);
-
-                        // Maximum of column's name and each range's length.
-                        levelGroup.expectedColumnWidth = Math.max(levelGroup.expectedColumnWidth, range.value.length * 13);
 
                         return range;
                     } else {

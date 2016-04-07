@@ -1,4 +1,4 @@
-﻿<div class="block full-width settingtype8" data-ng-show="settingType" data-ng-class="{ 'block--error': !(settingType | validSettingType) }">
+﻿<div class="block settingtype8" data-ng-show="settingType" data-ng-class="{ 'block--error': !(settingType | validSettingType) }">
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
@@ -13,12 +13,12 @@
     <div class="block__item-group"
          data-ng-if="settingType | validSettingType"
          data-ng-repeat="item in settingType.settingItems">
-        <div class="block__sub-header"
-             data-ng-class="{ 'block__sub-header--border-top': ($index > 0) }">
-            <div class="block__header-cell">
+        <div class="col w20-percent"
+             data-ng-class="{ 'col--border-top': ($index > 0) }">
+            <div class="block__sub-header">
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType">
-                    {{group[0].sportTypeName}}
+                    {{item.sportTypeName}}
                 </label>
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
@@ -27,38 +27,40 @@
                 <setting-type8-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
                                               data-items="item.levelGroups" />
             </div>
-            <div class="block__header-cell" data-ng-if="levelGroup in item.levelGroups">
-                <div class="setting-field--checkfield">
-                    <input id="{{levelGroup.levelId}}"
-                           type="checkbox"
-                           class="setting-field--checkfield__check-ctrl"
-                           data-ng-model="levelGroup.selected"
-                           data-ng-disabled="!(settingType | editableSettingType)"
-                           data-ng-if="customerLevel !== avaiCustomerLevels.member">
-                    <input id="{{levelGroup.levelId}}"
-                           type="radio"
-                           class="setting-field--checkfield__check-ctrl"
-                           data-ng-model="item.selectedLevelId"
-                           data-ng-value="levelGroup.levelId"
-                           data-ng-disabled="!(settingType | editableSettingType)"
-                           data-ng-if="customerLevel === avaiCustomerLevels.member">
-                    <label class="setting-field--checkfield__check-ctrl-lbl" for="{{levelGroup.levelId}}">{{levelGroup.levelGroupName}}</label>
-                </div>
+            <div class="block__cell"
+                 data-ng-repeat="stakeLevelDetailedItem in item.stakeLevelDetailedItems"
+                 data-ng-class="{ 'block__cell--no-border-bottom': $last }">
+                {{stakeLevelDetailedItem.betTypeName }}
             </div>
         </div>
-        <div class="block__item"
-             data-ng-repeat="stakeLevelDetailedItem in item.stakeLevelDetailedItems"
-             data-ng-class="{ 'block__item--last': $last }">
-            <div class="block__lbl">
-                {{stakeLevelDetailedItem | showingName:settingType.settingLevel:productName }}
-            </div>
-            <div class="block__value">
-                <div class="block__cell setting-field-wrapper"
-                     data-ng-class="{ 'block__cell--no-border': $last }"
-                     data-ng-repeat="stakeRange in stakeLevelDetailedItem.stakeRanges">
-                    <div class="setting-field--checkfield" data-ng-if="stakeRange.id">
-                        {{stakeRange.value}}
+        <div class="col scrollable-area w80-percent"
+             data-ng-class="{ 'col--border-top': ($index > 0) }">
+            <div class="col"
+                 data-ng-repeat="levelGroup in item.levelGroups"
+                 data-ng-class="{ 'col--last': $last }"
+                 data-ng-style="levelGroup.getStyles()">
+                <div class="block__sub-header">
+                    <div class="setting-field--checkfield">
+                        <input id="{{levelGroup.levelId}}"
+                               type="checkbox"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-ng-model="levelGroup.selected"
+                               data-ng-disabled="!(settingType | editableSettingType)"
+                               data-ng-if="customerLevel !== avaiCustomerLevels.member">
+                        <input id="{{levelGroup.levelId}}"
+                               type="radio"
+                               class="setting-field--checkfield__check-ctrl"
+                               data-ng-model="item.selectedLevelId"
+                               data-ng-value="levelGroup.levelId"
+                               data-ng-disabled="!(settingType | editableSettingType)"
+                               data-ng-if="customerLevel === avaiCustomerLevels.member">
+                        <label class="setting-field--checkfield__check-ctrl-lbl" for="{{levelGroup.levelId}}">{{levelGroup.levelGroupName}}</label>
                     </div>
+                </div>
+                <div class="block__cell"
+                     data-ng-class="{ 'block__cell--no-border-bottom': $last }"
+                     data-ng-repeat="stakeLevelDetailedItem in item.stakeLevelDetailedItems">
+                    {{stakeLevelDetailedItem.stakeRanges[$index].value}}
                 </div>
             </div>
         </div>
