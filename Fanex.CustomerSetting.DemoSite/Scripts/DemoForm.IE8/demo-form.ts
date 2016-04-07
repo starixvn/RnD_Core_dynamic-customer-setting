@@ -200,7 +200,7 @@ module DemoForm {
     app.service("postingToIframeService", PostingToIframeService);
 
     class SampleDataFactory {
-        private static defaultProductId: number = 21;
+        private static defaultProductId: number = 22;
         private static defaultLanguage: string = "en-US";
 
         public static getSystemTypes(): KeyValuePair<number, string>[] {
@@ -370,7 +370,7 @@ module DemoForm {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId: number = parseInt(item, 10);
 
                     if (roleId !== Role.member) {
@@ -398,7 +398,7 @@ module DemoForm {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId: number = parseInt(item, 10);
 
                     if (roleId < uplineRole) {
@@ -414,7 +414,7 @@ module DemoForm {
             var roles = new Array<KeyValuePair<number, string>>();
 
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId: number = parseInt(item, 10);
 
                     if (downlineRole < roleId && roleId < Role.company) {

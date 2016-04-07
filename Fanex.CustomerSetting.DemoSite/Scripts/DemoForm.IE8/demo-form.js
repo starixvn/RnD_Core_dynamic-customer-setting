@@ -90,7 +90,7 @@ var DemoForm;
         };
         DemoFormController.$inject = ["$http", "$location", "$window", "postingToIframeService"];
         return DemoFormController;
-    })();
+    }());
     app.controller("DemoFormController", DemoFormController);
     var PostingToIframeDirective = (function () {
         function PostingToIframeDirective(postingToIframeService) {
@@ -108,7 +108,7 @@ var DemoForm;
             this.postingToIframeService = postingToIframeService;
         }
         return PostingToIframeDirective;
-    })();
+    }());
     app.directive("postingToIframe", ["postingToIframeService", function () {
             var args = Array.prototype.concat.apply([null], arguments);
             return new (Function.prototype.bind.apply(PostingToIframeDirective, args));
@@ -131,7 +131,7 @@ var DemoForm;
         };
         PostingToIframeService.$inject = ["$timeout"];
         return PostingToIframeService;
-    })();
+    }());
     app.service("postingToIframeService", PostingToIframeService);
     var SampleDataFactory = (function () {
         function SampleDataFactory() {
@@ -224,10 +224,10 @@ var DemoForm;
         SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
             return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         };
-        SampleDataFactory.defaultProductId = 21;
+        SampleDataFactory.defaultProductId = 22;
         SampleDataFactory.defaultLanguage = "en-US";
         return SampleDataFactory;
-    })();
+    }());
     var Role;
     (function (Role) {
         Role[Role["company"] = 5] = "company";
@@ -242,7 +242,7 @@ var DemoForm;
             this.value = value;
         }
         return KeyValuePair;
-    })();
+    }());
     var Actor = (function () {
         function Actor(actorId, actorName, role, subAccountId, language, system) {
             this.actorId = actorId;
@@ -255,7 +255,7 @@ var DemoForm;
         Actor.getAvailableRoles = function () {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (roleId !== Role.member) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -265,7 +265,7 @@ var DemoForm;
             return roles;
         };
         return Actor;
-    })();
+    }());
     var Target = (function () {
         function Target(productId, role, uplineRole) {
             this.productId = productId;
@@ -275,7 +275,7 @@ var DemoForm;
         Target.getAvailableRoles = function (uplineRole) {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (roleId < uplineRole) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -287,7 +287,7 @@ var DemoForm;
         Target.getUplineRoles = function (downlineRole) {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (downlineRole < roleId && roleId < Role.company) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -297,7 +297,7 @@ var DemoForm;
             return roles;
         };
         return Target;
-    })();
+    }());
     var SingleTarget = (function (_super) {
         __extends(SingleTarget, _super);
         function SingleTarget(customerId, customerName, role, uplineRole, productId) {
@@ -306,7 +306,7 @@ var DemoForm;
             this.customerName = customerName;
         }
         return SingleTarget;
-    })(Target);
+    }(Target));
     var MultipleTargets = (function (_super) {
         __extends(MultipleTargets, _super);
         function MultipleTargets(customerIds, customerNames, role, uplineRole, productId) {
@@ -315,7 +315,7 @@ var DemoForm;
             this.customerNames = customerNames;
         }
         return MultipleTargets;
-    })(Target);
+    }(Target));
 })(DemoForm || (DemoForm = {}));
 
 angular.module("actorForm").run(["$templateCache", function($templateCache) {$templateCache.put("posting-to-iframe.htm","<form action=\"{{path}}\" target=\"{{frameName}}\" method=\"post\" class=\"hide\">\r\n    <input type=\"hidden\" name=\"language\" value=\"{{language}}\" />\r\n    <input type=\"hidden\" name=\"productId\" value=\"{{productId}}\" />\r\n    <input type=\"hidden\" name=\"customerLevel\" value=\"{{customerLevel}}\" />\r\n    <input type=\"hidden\" name=\"uplineLevel\" value=\"{{uplineLevel}}\" data-ng-if=\"uplineLevel\" />\r\n    <input type=\"hidden\" name=\"customerId\" value=\"{{customerId}}\" data-ng-if=\"!isMultiple\" />\r\n    <input type=\"hidden\" name=\"isMultiple\" value=\"{{isMultiple}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerIds\" value=\"{{customerIds}}\" data-ng-if=\"isMultiple\" />\r\n    <input type=\"hidden\" name=\"customerNames\" value=\"{{customerNames}}\" data-ng-if=\"isMultiple\" />\r\n</form>");}]);

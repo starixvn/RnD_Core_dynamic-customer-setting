@@ -24,6 +24,42 @@
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.product">
                     {{productName}}
                 </label>
+                <setting-type8-checkbox-group data-ng-if="(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)"
+                                              data-items="item.levelGroups" />
+            </div>
+            <div class="block__header-cell" data-ng-if="levelGroup in item.levelGroups">
+                <div class="setting-field--checkfield">
+                    <input id="{{levelGroup.levelId}}"
+                           type="checkbox"
+                           class="setting-field--checkfield__check-ctrl"
+                           data-ng-model="levelGroup.selected"
+                           data-ng-disabled="!(settingType | editableSettingType)"
+                           data-ng-if="customerLevel !== avaiCustomerLevels.member">
+                    <input id="{{levelGroup.levelId}}"
+                           type="radio"
+                           class="setting-field--checkfield__check-ctrl"
+                           data-ng-model="item.selectedLevelId"
+                           data-ng-value="levelGroup.levelId"
+                           data-ng-disabled="!(settingType | editableSettingType)"
+                           data-ng-if="customerLevel === avaiCustomerLevels.member">
+                    <label class="setting-field--checkfield__check-ctrl-lbl" for="{{levelGroup.levelId}}">{{levelGroup.levelGroupName}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="block__item"
+             data-ng-repeat="stakeLevelDetailedItem in item.stakeLevelDetailedItems"
+             data-ng-class="{ 'block__item--last': $last }">
+            <div class="block__lbl">
+                {{stakeLevelDetailedItem | showingName:settingType.settingLevel:productName }}
+            </div>
+            <div class="block__value">
+                <div class="block__cell setting-field-wrapper"
+                     data-ng-class="{ 'block__cell--no-border': $last }"
+                     data-ng-repeat="stakeRange in stakeLevelDetailedItem.stakeRanges">
+                    <div class="setting-field--checkfield" data-ng-if="stakeRange.id">
+                        {{stakeRange.value}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

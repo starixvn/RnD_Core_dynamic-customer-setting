@@ -395,6 +395,7 @@
       <DependentUpon>settingtype7-resources.tt</DependentUpon>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-checkbox-group.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-resources.js">
       <DependentUpon>settingtype8-resources.tt</DependentUpon>
@@ -544,6 +545,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType7\settingtype7.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />

@@ -100,7 +100,7 @@ var DemoFrom;
         };
         DemoFormController.$inject = ["$http", "$location", "$window", "postingToIframeService"];
         return DemoFormController;
-    })();
+    }());
     app.controller("DemoFormController", DemoFormController);
     var PostingToIframeDirective = (function () {
         function PostingToIframeDirective(postingToIframeService) {
@@ -118,7 +118,7 @@ var DemoFrom;
             this.postingToIframeService = postingToIframeService;
         }
         return PostingToIframeDirective;
-    })();
+    }());
     app.directive("postingToIframe", ["postingToIframeService", function () {
             var args = Array.prototype.concat.apply([null], arguments);
             return new (Function.prototype.bind.apply(PostingToIframeDirective, args));
@@ -141,7 +141,7 @@ var DemoFrom;
         };
         PostingToIframeService.$inject = ["$timeout"];
         return PostingToIframeService;
-    })();
+    }());
     app.service("postingToIframeService", PostingToIframeService);
     var SampleDataFactory = (function () {
         function SampleDataFactory() {
@@ -235,10 +235,10 @@ var DemoFrom;
         SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
             return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         };
-        SampleDataFactory.defaultProductId = 21;
+        SampleDataFactory.defaultProductId = 22;
         SampleDataFactory.defaultLanguage = "en-US";
         return SampleDataFactory;
-    })();
+    }());
     var Role;
     (function (Role) {
         Role[Role["company"] = 5] = "company";
@@ -253,7 +253,7 @@ var DemoFrom;
             this.value = value;
         }
         return KeyValuePair;
-    })();
+    }());
     var Actor = (function () {
         function Actor(actorId, actorName, role, subAccountId, language, system) {
             this.actorId = actorId;
@@ -266,7 +266,7 @@ var DemoFrom;
         Actor.getAvailableRoles = function () {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (roleId !== Role.member) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -276,7 +276,7 @@ var DemoFrom;
             return roles.reverse();
         };
         return Actor;
-    })();
+    }());
     var Target = (function () {
         function Target(productId, role, uplineRole) {
             this.productId = productId;
@@ -286,7 +286,7 @@ var DemoFrom;
         Target.getAvailableRoles = function (uplineRole) {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (roleId < uplineRole) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -298,7 +298,7 @@ var DemoFrom;
         Target.getUplineRoles = function (downlineRole) {
             var roles = new Array();
             for (var item in Role) {
-                if (!isNaN(item)) {
+                if (item) {
                     var roleId = parseInt(item, 10);
                     if (downlineRole < roleId && roleId < Role.company) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
@@ -308,7 +308,7 @@ var DemoFrom;
             return roles.reverse();
         };
         return Target;
-    })();
+    }());
     var SingleTarget = (function (_super) {
         __extends(SingleTarget, _super);
         function SingleTarget(customerId, customerName, role, uplineRole, productId) {
@@ -317,7 +317,7 @@ var DemoFrom;
             this.customerName = customerName;
         }
         return SingleTarget;
-    })(Target);
+    }(Target));
     var MultipleTargets = (function (_super) {
         __extends(MultipleTargets, _super);
         function MultipleTargets(customerIds, customerNames, role, uplineRole, productId) {
@@ -339,7 +339,7 @@ var DemoFrom;
             configurable: true
         });
         return MultipleTargets;
-    })(Target);
+    }(Target));
 })(DemoFrom || (DemoFrom = {}));
 function successfulUpdatingCallback(isPartialUpdate, isMultipleUpdate) {
     console.log("Be called after updating sucessfully!");
