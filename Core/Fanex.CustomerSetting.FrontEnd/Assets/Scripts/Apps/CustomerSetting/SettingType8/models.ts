@@ -7,7 +7,9 @@ module CustomerSetting {
         public groups: Array<SettingType8LevelGroup>;
         public details: Array<SettingType8StakeLevel>;
         public selectedLevelId: number;
-        public showMore: boolean;
+        public hasMoreDetails: boolean;
+        public allDetails: SettingType8Item;
+        public showingDetails: boolean;
         public styles: {};
 
         private customerLevel: Level;
@@ -34,7 +36,7 @@ module CustomerSetting {
                     });
                 }
 
-                this.showMore = settingItem.showMore;
+                this.hasMoreDetails = settingItem.showMore;
                 this.customerLevel = customerLevel;
                 this.styles = {
                     "min-width": (100 / this.groups.length) + "%"

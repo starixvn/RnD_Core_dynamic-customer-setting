@@ -5,4 +5,11 @@
 
 module CustomerSetting {
     "use strict";
+
+    class SettingType8GroupsDetailsDirective implements ng.IDirective {
+        public replace: boolean = true;
+        public templateUrl: string = "settingtype8-groupsdetails-modal.htm";
+    }
+
+    ModuleRegister.directive("settingtype8GroupsDetails", SettingType8GroupsDetailsDirective);
 }

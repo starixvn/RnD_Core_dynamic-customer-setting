@@ -30,10 +30,10 @@
             </div>
             <div class="block__cell"
                  data-ng-repeat="detail in item.details"
-                 data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.showMore }">
+                 data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.hasMoreDetails }">
                 {{detail.betTypeName }}
             </div>
-            <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.showMore">
+            <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.hasMoreDetails">
                 <a href="javascript:void(0);" data-ng-click="getLevelGroupDetails(item)">
                     {{::('ViewMore' | settingType8Label)}}
                 </a>
@@ -66,11 +66,11 @@
                     </div>
                 </div>
                 <div class="block__cell"
-                     data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.showMore }"
+                     data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.hasMoreDetails }"
                      data-ng-repeat="detail in item.details">
                     {{detail.stakeRanges[$parent.$index].value}}
                 </div>
-                <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.showMore"></div>
+                <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.hasMoreDetails"></div>
             </div>
         </div>
     </div>

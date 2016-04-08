@@ -136,7 +136,7 @@
                             group.Key.SportTypeId,
                             showAll,
                             out numberOfDetailedItem);
-                        stakeLevelGroupItem.ShowMore = numberOfDetailedItem > stakeLevelGroupItem.Details.Count();
+                        stakeLevelGroupItem.HasMoreDetails = numberOfDetailedItem > stakeLevelGroupItem.Details.Count();
 
                         return stakeLevelGroupItem;
                     })

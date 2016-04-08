@@ -12,7 +12,7 @@
 
         public IEnumerable<StakeLevel> Details { get; set; }
 
-        public bool ShowMore { get; set; }
+        public bool HasMoreDetails { get; set; }
 
         public override string ToXml()
         {
@@ -36,7 +36,7 @@
                 return Equals(SportTypeId, otherObj.SportTypeId)
                     && Equals(BetTypeId, otherObj.BetTypeId)
                     && Groups.SequenceEqual(otherObj.Groups)
-                    && Equals(ShowMore, otherObj.ShowMore);
+                    && Equals(HasMoreDetails, otherObj.HasMoreDetails);
             }
         }
 
@@ -52,7 +52,7 @@
             return SportTypeId.GetHashCode()
                 ^ BetTypeId.GetHashCode()
                 ^ levelGroupsHashCode
-                ^ ShowMore.GetHashCode();
+                ^ HasMoreDetails.GetHashCode();
         }
     }
 }
