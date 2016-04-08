@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
     using Casino.Models;
     using Casino.Services;
@@ -18,7 +17,7 @@
     {
         private IQuerySettingService _queryCasinoSettingService;
         private IQuerySettingService _querySettingService;
-        private ISettingContext _settingContext;        
+        private ISettingContext _settingContext;
         private ICustomerProductStatusService _customerProductStatusService;
         private ISetting _setting;
 
@@ -41,7 +40,7 @@
             _setting.CustomerLevel = Level.Member;
             _setting.ProductId = 1;
             _setting.SettingTypes = new List<SettingType>();
-             _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
+            _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
             _querySettingService = Substitute.For<IQuerySettingService>();
 
             _querySettingService.GetCustomerSetting(Arg.Any<CustomerSettingQuery>()).ReturnsForAnyArgs(_setting);
@@ -50,21 +49,6 @@
                 _settingContext,
                 _querySettingService,
                 _customerProductStatusService);
-        }
-
-        [Test]
-        public void GetCustomerSetting_CustomerCasinoStatusIsHidden_ThrowInvalidOperationException()
-        {
-            //// Arrange
-            var query = new CustomerSettingQuery(10000, 1, 110, 2);
-
-            var customerCasinoStatus = new CustomerProductStatus { IsHidden = true };
-            _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId)
-                .ReturnsForAnyArgs(customerCasinoStatus);
-
-            //// Act & Assert
-            Assert.Throws<InvalidOperationException>(
-                () => _queryCasinoSettingService.GetCustomerSetting(query));
         }
 
         [TestCase(4)]

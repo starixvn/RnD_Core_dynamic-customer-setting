@@ -153,7 +153,7 @@
                                        productId,
                                        uplineLevel));
                 }
-                else
+                else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
                 {
                     throw new CustomerSettingException($"Missing Product Status of customer {customerId}.");
                 }

@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Casino.Models;
@@ -14,7 +13,7 @@
     using Models;
     using NSubstitute;
     using NUnit.Framework;
-    
+
     [TestFixture]
     public class UpdateCasinoSettingServiceTests
     {
@@ -29,7 +28,7 @@
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ISettingTypeService _settingTypeService;
         private ICustomerProductStatusService _customerProductStatusService;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -59,19 +58,6 @@
                  command.Setting.CustomerId,
                  command.Setting.ProductId)
              .ReturnsForAnyArgs(status);
-        }       
-
-        [Test]
-        public void Update_CustomerCasinoStatusIsHidden_ThrowInvalidOperationException()
-        {
-            //// Arrange
-            var command = StubHelper.CreateUpdateSettingParam();
-            var hiddenStatus = new CustomerProductStatus { IsHidden = true };
-            ArrangeCustomerCasinoStatus(command, hiddenStatus);
-
-            //// Act & Assert
-            Assert.Throws<InvalidOperationException>(
-               () => _updateCasinoSettingService.Update(command));
         }
 
         [Test]
@@ -126,7 +112,7 @@
 
             //// Assert
             _customerProductStatusService.Received().UpdateCustomerStatus(
-                command.Setting.CustomerId, 
+                command.Setting.CustomerId,
                 command.Setting.ProductId,
                 _settingContext.Actor.SubAccountId,
                 _settingContext.Actor.Id,
@@ -228,6 +214,6 @@
                             command.Setting
                         .SettingTypes
                         .FirstOrDefault(s => s.Id == StatusSettingTypeValue));
-        }       
+        }
     }
 }
