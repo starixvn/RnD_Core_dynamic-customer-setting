@@ -70,6 +70,15 @@ namespace Fanex.CustomerSetting.SettingType8.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View More ....
         /// </summary>
         internal static string ViewMore {

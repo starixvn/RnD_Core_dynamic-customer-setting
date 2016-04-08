@@ -120,6 +120,9 @@
   <data name="BetLimit" xml:space="preserve">
     <value>Bet Limit</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ViewMore" xml:space="preserve">
     <value>View More ...</value>
   </data>

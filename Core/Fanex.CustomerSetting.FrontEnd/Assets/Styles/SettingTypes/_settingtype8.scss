@@ -8,6 +8,7 @@
         display: inline-block;
         float: none;
         min-width: 20%;
+        vertical-align: middle;
 
         &--border-top {
             @include border(top);
@@ -23,6 +24,7 @@
 
         &--lbl {
             .block__cell {
+                @include clearfix();
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }

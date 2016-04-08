@@ -25,12 +25,7 @@ module CustomerSetting {
         public controller: any = [
             "$scope",
             "settingTypesSharedValuesService",
-            "settingType8ResourceService",
-            (
-                $scope: ISettingType8DirectiveScope,
-                settingTypesSharedValuesService: SettingTypesSharedValuesService,
-                settingType8ResourceService: SettingType8ResourceService
-            ) => {
+            ($scope: ISettingType8DirectiveScope, settingTypesSharedValuesService: SettingTypesSharedValuesService) => {
                 $scope.customerId = settingTypesSharedValuesService.customerId;
                 $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
                 $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
@@ -38,7 +33,6 @@ module CustomerSetting {
                 $scope.productName = settingTypesSharedValuesService.productName;
                 $scope.avaiCustomerLevels = Level;
                 $scope.avaiSettingLevels = SettingLevel;
-                $scope.settingTypeName = settingType8ResourceService.getLabel("BetLimit");
 
                 $scope.$watch("settingType", (settingType: SettingType) => {
                     $scope.normalMode = settingTypesSharedValuesService.normalMode;

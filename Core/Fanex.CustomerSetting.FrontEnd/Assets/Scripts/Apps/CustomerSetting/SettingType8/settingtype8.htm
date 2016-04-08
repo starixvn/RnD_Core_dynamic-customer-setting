@@ -1,11 +1,12 @@
 ﻿<div class="block settingtype8" data-ng-show="settingType" data-ng-class="{ 'block--error': !(settingType | validSettingType) }">
     <div class="block__header"
          data-setting-type="{{settingType.id}}"
+         data-ng-if="!popupMode"
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
-        {{settingTypeName}}
+        {{::('BetLimit' | settingType8Label)}}
         <div class="right-btn-area right-btn-area--seperate"
              title="{{'Update' | label}}"
-             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode && !popupMode"
+             data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode"
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>

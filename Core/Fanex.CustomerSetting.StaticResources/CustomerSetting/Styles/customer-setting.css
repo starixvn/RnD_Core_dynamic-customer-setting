@@ -691,7 +691,8 @@ select.setting-field {
   border-right: 1px solid #7c98a4;
   display: inline-block;
   float: none;
-  min-width: 20%; }
+  min-width: 20%;
+  vertical-align: middle; }
   .settingtype8 .col--border-top {
     border-top: 1px solid #7c98a4; }
   .settingtype8 .col--border-left {
@@ -699,6 +700,8 @@ select.setting-field {
   .settingtype8 .col--last, .settingtype8 .col--lbl {
     border-right: none; }
   .settingtype8 .col--lbl .block__cell, .settingtype8 .col--lbl .block__lbl, .settingtype8 .col--lbl .block__value {
+    overflow: hidden;
+    *zoom: 1;
     white-space: nowrap;
     text-overflow: ellipsis; }
 

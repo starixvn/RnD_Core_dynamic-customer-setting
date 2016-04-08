@@ -1,0 +1,13 @@
+﻿<div class="modal-overlay" data-ng-show="isShown">
+    <div class="modal">
+        <div class="modal__title">
+            {{::('BetLimit' | settingType8Label)}}
+        </div>
+        <div class="modal__content">
+            <settingtype8 data-setting-type="detail" data-popup-mode="true"/>
+        </div>
+        <div class="modal__footer">
+            <button class="btn btn--small" data-ng-click="cancel()">{{'Cancel' | settingType8Label}}</button>
+        </div>
+    </div>
+</div>
