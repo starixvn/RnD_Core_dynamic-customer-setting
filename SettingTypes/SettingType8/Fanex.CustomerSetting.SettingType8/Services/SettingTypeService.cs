@@ -129,14 +129,14 @@
 
                         stakeLevelGroupItem.SportTypeId = group.Key.SportTypeId;
                         stakeLevelGroupItem.BetTypeId = group.Key.BetTypeId;
-                        stakeLevelGroupItem.LevelGroups = GroupLevelGroups(group.ToList(), language);
-                        stakeLevelGroupItem.StakeLevelDetailedItems = QueryAndMapStakeLevelGroupDetails(
+                        stakeLevelGroupItem.Groups = GroupLevelGroups(group.ToList(), language);
+                        stakeLevelGroupItem.Details = QueryAndMapStakeLevelGroupDetails(
                             language,
                             customerId,
                             group.Key.SportTypeId,
                             showAll,
                             out numberOfDetailedItem);
-                        stakeLevelGroupItem.ShowMore = numberOfDetailedItem > stakeLevelGroupItem.StakeLevelDetailedItems.Count();
+                        stakeLevelGroupItem.ShowMore = numberOfDetailedItem > stakeLevelGroupItem.Details.Count();
 
                         return stakeLevelGroupItem;
                     })
@@ -163,14 +163,14 @@
             return result;
         }
 
-        private IEnumerable<StakeLevelDetailedItem> QueryAndMapStakeLevelGroupDetails(
+        private IEnumerable<StakeLevel> QueryAndMapStakeLevelGroupDetails(
             string language,
             int customerId,
             short sportTypeId,
             bool showAll,
             out int numberOfDetailedItems)
         {
-            var stakeLevelGroupDetails = Enumerable.Empty<StakeLevelDetailedItem>();
+            var stakeLevelGroupDetails = Enumerable.Empty<StakeLevel>();
             IEnumerable<StakeLevelDetailDto> stakeLevelGroupDetailsRawData
                 = _groupStakeLevelDataAccess.GetCustomerStakeLevelGroupsDetails(customerId, sportTypeId, out numberOfDetailedItems, showAll);
 
@@ -180,7 +180,7 @@
                     .GroupBy(rawItem => new { rawItem.SportTypeId, rawItem.BetTypeId })
                     .Select(group =>
                     {
-                        var stakeLevelItem = new StakeLevelDetailedItem();
+                        var stakeLevelItem = new StakeLevel();
 
                         stakeLevelItem.SportTypeId = group.Key.SportTypeId;
                         stakeLevelItem.SportTypeName = ResourceService.GetSportTypeName(stakeLevelItem.SportTypeId, language);
@@ -201,7 +201,7 @@
 
             var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelGroupItem>().Any(item =>
             {
-                return item?.LevelGroups?.Count(group => group.Selected) != 1;
+                return item?.Groups?.Count(group => group.Selected) != 1;
             });
 
             if (hasViolatedItem)

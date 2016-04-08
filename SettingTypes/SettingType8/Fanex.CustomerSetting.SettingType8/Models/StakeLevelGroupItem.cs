@@ -8,15 +8,15 @@
     {
         private const string StakeLevelGroupXmlFormat = "<StakeLevel {0} StakeLevelList=\"{1}\"/>";
 
-        public IEnumerable<LevelGroup> LevelGroups { get; set; }
+        public IEnumerable<LevelGroup> Groups { get; set; }
 
-        public IEnumerable<StakeLevelDetailedItem> StakeLevelDetailedItems { get; set; }
+        public IEnumerable<StakeLevel> Details { get; set; }
 
         public bool ShowMore { get; set; }
 
         public override string ToXml()
         {
-            var checkedGroupIds = LevelGroups
+            var checkedGroupIds = Groups
                 .Where(group => group.Selected)
                 .Select(group => group.LevelId);
 
@@ -35,7 +35,7 @@
             {
                 return Equals(SportTypeId, otherObj.SportTypeId)
                     && Equals(BetTypeId, otherObj.BetTypeId)
-                    && LevelGroups.SequenceEqual(otherObj.LevelGroups)
+                    && Groups.SequenceEqual(otherObj.Groups)
                     && Equals(ShowMore, otherObj.ShowMore);
             }
         }
@@ -44,7 +44,7 @@
         {
             int levelGroupsHashCode = 0;
 
-            foreach (LevelGroup levelGroup in LevelGroups)
+            foreach (LevelGroup levelGroup in Groups)
             {
                 levelGroupsHashCode ^= levelGroup.GetHashCode();
             }

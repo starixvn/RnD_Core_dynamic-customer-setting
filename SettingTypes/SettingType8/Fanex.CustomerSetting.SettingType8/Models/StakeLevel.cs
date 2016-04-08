@@ -4,13 +4,13 @@
     using System.Linq;
     using CustomerSetting.Models;
 
-    public class StakeLevelDetailedItem : SettingItemDefault
+    public class StakeLevel : SettingItemDefault
     {
         public IEnumerable<StakeRange> StakeRanges { get; set; }
 
         public override bool Equals(object obj)
         {
-            var otherObj = obj as StakeLevelDetailedItem;
+            var otherObj = obj as StakeLevel;
 
             if (otherObj == null)
             {

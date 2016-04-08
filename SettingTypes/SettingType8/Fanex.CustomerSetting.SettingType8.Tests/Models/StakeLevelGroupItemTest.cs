@@ -14,7 +14,7 @@
             {
                 SportTypeId = 1,
                 BetTypeId = 1,
-                LevelGroups = new List<LevelGroup>
+                Groups = new List<LevelGroup>
                 {
                     new LevelGroup
                     {

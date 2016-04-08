@@ -7,7 +7,7 @@ module CustomerSetting {
 
     interface ICheckboxGroupScope extends ng.IScope {
         checked: boolean;
-        items: Array<SettingType8StakeLevelGroup>;
+        items: Array<SettingType8LevelGroup>;
         checkAll: Function;
     }
 
@@ -33,20 +33,20 @@ module CustomerSetting {
             }, true);
         }];
 
-        private changeStateOfAllItems(items: Array<SettingType8StakeLevelGroup>, state: boolean): void {
+        private changeStateOfAllItems(items: Array<SettingType8LevelGroup>, state: boolean): void {
             if (items) {
-                items.forEach((item: SettingType8StakeLevelGroup) => {
+                items.forEach((item: SettingType8LevelGroup) => {
                     item.selected = state;
                 });
             }
         }
 
-        private checkItemsState(items: Array<SettingType8StakeLevelGroup>): boolean {
+        private checkItemsState(items: Array<SettingType8LevelGroup>): boolean {
             var allChecked: boolean = false;
 
             if (items) {
                 if (items.length > 0) {
-                    allChecked = items.every((item: SettingType8StakeLevelGroup) => {
+                    allChecked = items.every((item: SettingType8LevelGroup) => {
                         return item.selected;
                     });
                 }

@@ -4,8 +4,8 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType8Item extends DefaultSettingItem {
-        public levelGroups: Array<SettingType8StakeLevelGroup>;
-        public stakeLevelDetailedItems: Array<SettingType8StakeLevelDetailedItem>;
+        public groups: Array<SettingType8LevelGroup>;
+        public details: Array<SettingType8StakeLevel>;
         public selectedLevelId: number;
         public showMore: boolean;
         public styles: {};
@@ -20,32 +20,32 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
-                this.levelGroups = new Array<SettingType8StakeLevelGroup>();
+                this.groups = new Array<SettingType8LevelGroup>();
 
-                if (settingItem.levelGroups) {
-                    this.levelGroups = settingItem.levelGroups.map((levelGroup: any) => {
-                        return new SettingType8StakeLevelGroup(levelGroup, true);
+                if (settingItem.groups) {
+                    this.groups = settingItem.groups.map((group: any) => {
+                        return new SettingType8LevelGroup(group, true);
                     });
                 }
 
-                if (settingItem.stakeLevelDetailedItems) {
-                    this.stakeLevelDetailedItems = settingItem.stakeLevelDetailedItems.map((stakeLevelDetailedItem: any) => {
-                        return new SettingType8StakeLevelDetailedItem(stakeLevelDetailedItem, this.levelGroups);
+                if (settingItem.details) {
+                    this.details = settingItem.details.map((item: any) => {
+                        return new SettingType8StakeLevel(item, this.groups);
                     });
                 }
 
                 this.showMore = settingItem.showMore;
                 this.customerLevel = customerLevel;
                 this.styles = {
-                    "min-width": (100 / this.levelGroups.length) + "%"
+                    "min-width": (100 / this.groups.length) + "%"
                 };
 
                 if (this.customerLevel && this.customerLevel === Level.member) {
-                    var selectedLevelGroups: SettingType8StakeLevelGroup[]
-                        = this.levelGroups.filter((levelGroup: SettingType8StakeLevelGroup) => levelGroup.selected);
+                    var selectedGroups: SettingType8LevelGroup[]
+                        = this.groups.filter((group: SettingType8LevelGroup) => group.selected);
 
-                    if (selectedLevelGroups && selectedLevelGroups.length > 0) {
-                        this.selectedLevelId = selectedLevelGroups[0].levelId;
+                    if (selectedGroups && selectedGroups.length > 0) {
+                        this.selectedLevelId = selectedGroups[0].levelId;
                     }
                 }
             }
@@ -63,8 +63,8 @@ module CustomerSetting {
             if (this.customerLevel && this.customerLevel === Level.member) {
                 hasChange = this.selectedLevelId !== (<SettingType8Item>this.oldSetting).selectedLevelId;
             } else {
-                hasChange = this.levelGroups.some((stakeLevelGroup: SettingType8StakeLevelGroup) => {
-                    return stakeLevelGroup.isChanged();
+                hasChange = this.groups.some((group: SettingType8LevelGroup) => {
+                    return group.isChanged();
                 });
             }
 
@@ -74,7 +74,7 @@ module CustomerSetting {
         public validate(): boolean {
             if (this.customerLevel && this.customerLevel === Level.member) {
                 var isViolated: boolean
-                    = this.levelGroups.filter((levelGroup: SettingType8StakeLevelGroup) => levelGroup.selected).length !== 1;
+                    = this.groups.filter((group: SettingType8LevelGroup) => group.selected).length !== 1;
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelGroupMustBeSelected");
@@ -93,7 +93,7 @@ module CustomerSetting {
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
                 typeName: this.typeName,
-                levelGroups: []
+                groups: []
             };
 
             if (this.isLive !== undefined) {
@@ -101,14 +101,14 @@ module CustomerSetting {
             }
 
             if (this.customerLevel && this.customerLevel === Level.member) {
-                this.levelGroups.forEach((levelGroup: SettingType8StakeLevelGroup) => {
-                    levelGroup.selected = this.selectedLevelId === levelGroup.levelId;
+                this.groups.forEach((group: SettingType8LevelGroup) => {
+                    group.selected = this.selectedLevelId === group.levelId;
                 });
             }
 
-            this.levelGroups.forEach((levelGroup: SettingType8StakeLevelGroup) => {
-                if (levelGroup.levelId) {
-                    settingItem.levelGroups.push(levelGroup.toJson());
+            this.groups.forEach((group: SettingType8LevelGroup) => {
+                if (group.levelId) {
+                    settingItem.groups.push(group.toJson());
                 }
             });
 
@@ -116,13 +116,13 @@ module CustomerSetting {
         }
     }
 
-    export class SettingType8StakeLevelGroup {
+    export class SettingType8LevelGroup {
         public levelId: number;
         public levelGroupId: number;
         public levelGroupName: string;
         public selected: boolean;
 
-        private oldStakeLevelGroupValue: SettingType8StakeLevelGroup;
+        private oldStakeLevelGroupValue: SettingType8LevelGroup;
 
         constructor();
         constructor(stakeLevelGroup: any);
@@ -136,7 +136,7 @@ module CustomerSetting {
             }
 
             if (backup) {
-                this.oldStakeLevelGroupValue = new SettingType8StakeLevelGroup(this);
+                this.oldStakeLevelGroupValue = new SettingType8LevelGroup(this);
             }
         }
 
@@ -153,12 +153,12 @@ module CustomerSetting {
         }
     }
 
-    export class SettingType8StakeLevelDetailedItem extends DefaultSettingItem {
+    export class SettingType8StakeLevel extends DefaultSettingItem {
         public stakeRanges: Array<SettingType8StakeRange>;
 
         constructor();
-        constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8StakeLevelGroup[])
-        constructor(stakeLevelDetailedItem?: any, levelGroups?: SettingType8StakeLevelGroup[]) {
+        constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8LevelGroup[])
+        constructor(stakeLevelDetailedItem?: any, levelGroups?: SettingType8LevelGroup[]) {
             super(stakeLevelDetailedItem);
 
             if (stakeLevelDetailedItem) {
@@ -166,11 +166,11 @@ module CustomerSetting {
             }
         }
 
-        private fillLevelGroupDetails(rawStakeRanges: any[], levelGroups: SettingType8StakeLevelGroup[]): SettingType8StakeRange[] {
+        private fillLevelGroupDetails(rawStakeRanges: any[], levelGroups: SettingType8LevelGroup[]): SettingType8StakeRange[] {
             var stakeRanges: SettingType8StakeRange[];
 
             if (levelGroups && levelGroups.length > 0 && rawStakeRanges && rawStakeRanges.length > 0) {
-                stakeRanges = levelGroups.map((levelGroup: SettingType8StakeLevelGroup) => {
+                stakeRanges = levelGroups.map((levelGroup: SettingType8LevelGroup) => {
                     var matchingRanges: any = rawStakeRanges.filter((range: any) => range.id === levelGroup.levelGroupId);
 
                     if (matchingRanges && matchingRanges.length > 0) {

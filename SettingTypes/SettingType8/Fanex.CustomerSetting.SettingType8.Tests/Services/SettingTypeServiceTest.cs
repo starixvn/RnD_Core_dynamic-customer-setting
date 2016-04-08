@@ -56,19 +56,19 @@
         {
             // Arrange.
             var query = InstanceFactory.CreateQuerySettingParam();
-            var stakeLevelGroupRawData = CreateSampleDataOfStakeLevelGroups();
-            var stakeLevelDetailRawData = CreateSampleDataOfStakeLevelGroupDetails();
+            var levelGroupsRawData = CreateSampleDataOfLevelGroups();
+            var detailsRawData = CreateSampleDataOfDetails();
             int numberOfDetailedItems = 0;
 
             _resourceService.GetResourceData("StakeLevel_GG", "1", "en-US").Returns("Level 1");
-            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(stakeLevelGroupRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(levelGroupsRawData);
             _dataAccess
                 .GetCustomerStakeLevelGroupsDetails(query.CustomerId, 1, out numberOfDetailedItems, false)
                 .Returns(parameters =>
                 {
                     parameters[2] = 1;
 
-                    return stakeLevelDetailRawData;
+                    return detailsRawData;
                 });
 
             // Act.
@@ -85,9 +85,9 @@
         {
             // Arrange.
             var query = InstanceFactory.CreateQuerySettingParam();
-            var stakeLevelGroupRawData = CreateSampleDataOfStakeLevelGroups();
+            var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
-            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(stakeLevelGroupRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(query.CustomerId, query.ProductId).Returns(levelGroupsRawData);
 
             // Act.
             _settingTypeService.GetCustomerSettingType(_settingContext, query);
@@ -231,9 +231,9 @@
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
             var jsonParameters = $"{{\"{nameof(customerId)}\":{customerId},\"{nameof(productId)}\":{productId},\"{nameof(sportTypeId)}\":{sportTypeId}}}";
-            var stakeLevelGroupRawData = CreateSampleDataOfStakeLevelGroups();
+            var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
-            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(stakeLevelGroupRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
 
             // Act
             routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
@@ -254,19 +254,19 @@
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
             var jsonParameters = $"{{\"{nameof(customerId)}\":{customerId},\"{nameof(productId)}\":{productId},\"{nameof(sportTypeId)}\":{sportTypeId}}}";
-            var stakeLevelGroupRawData = CreateSampleDataOfStakeLevelGroups();
-            var stakeLevelDetailRawData = CreateSampleDataOfStakeLevelGroupDetails();
+            var levelGroupsRawData = CreateSampleDataOfLevelGroups();
+            var detailsRawData = CreateSampleDataOfDetails();
             int numberOfDetailedItems = 0;
 
             _resourceService.GetResourceData("StakeLevel_GG", "1", "en-US").Returns("Level 1");
-            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(stakeLevelGroupRawData);
+            _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
             _dataAccess
                 .GetCustomerStakeLevelGroupsDetails(customerId, sportTypeId, out numberOfDetailedItems, true)
                 .Returns(parameters =>
                 {
                     parameters[2] = 1;
 
-                    return stakeLevelDetailRawData;
+                    return detailsRawData;
                 });
 
             // Act.
@@ -279,7 +279,7 @@
             Assert.AreEqual(expectedStakeLevelGroupItem, actualCustomerStakeLevelGroupItem);
         }
 
-        private List<StakeLevelGroupDto> CreateSampleDataOfStakeLevelGroups()
+        private List<StakeLevelGroupDto> CreateSampleDataOfLevelGroups()
         {
             return new List<StakeLevelGroupDto>
             {
@@ -294,7 +294,7 @@
             };
         }
 
-        private List<StakeLevelDetailDto> CreateSampleDataOfStakeLevelGroupDetails()
+        private List<StakeLevelDetailDto> CreateSampleDataOfDetails()
         {
             return new List<StakeLevelDetailDto>
             {
@@ -315,7 +315,7 @@
                 BetTypeId = 1,
                 SportTypeId = 1,
                 ShowMore = false,
-                LevelGroups = new List<LevelGroup>
+                Groups = new List<LevelGroup>
                 {
                     new LevelGroup
                     {
@@ -325,9 +325,9 @@
                         Selected = true
                     }
                 },
-                StakeLevelDetailedItems = new List<StakeLevelDetailedItem>
+                Details = new List<StakeLevel>
                 {
-                    new StakeLevelDetailedItem
+                    new StakeLevel
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
