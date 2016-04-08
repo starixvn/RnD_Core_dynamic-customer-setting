@@ -7,7 +7,8 @@ module CustomerSetting {
         public levelGroups: Array<SettingType8StakeLevelGroup>;
         public stakeLevelDetailedItems: Array<SettingType8StakeLevelDetailedItem>;
         public selectedLevelId: number;
-        public numberOfDetailedItems: number;
+        public showMore: boolean;
+        public styles: {};
 
         private customerLevel: Level;
 
@@ -33,8 +34,11 @@ module CustomerSetting {
                     });
                 }
 
-                this.numberOfDetailedItems = settingItem.numberOfDetailedItems;
+                this.showMore = settingItem.showMore;
                 this.customerLevel = customerLevel;
+                this.styles = {
+                    "min-width": (100 / this.levelGroups.length) + "%"
+                };
 
                 if (this.customerLevel && this.customerLevel === Level.member) {
                     var selectedLevelGroups: SettingType8StakeLevelGroup[]
@@ -151,14 +155,11 @@ module CustomerSetting {
 
     export class SettingType8StakeLevelDetailedItem extends DefaultSettingItem {
         public stakeRanges: Array<SettingType8StakeRange>;
-        public rowHeight: number;
-        public expectedRowHeight: number;
 
         constructor();
         constructor(stakeLevelDetailedItem: any, levelGroups: SettingType8StakeLevelGroup[])
         constructor(stakeLevelDetailedItem?: any, levelGroups?: SettingType8StakeLevelGroup[]) {
             super(stakeLevelDetailedItem);
-            this.expectedRowHeight = 23; // default row height is 23px.
 
             if (stakeLevelDetailedItem) {
                 this.stakeRanges = this.fillLevelGroupDetails(stakeLevelDetailedItem.stakeRanges, levelGroups);

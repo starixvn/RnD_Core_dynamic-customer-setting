@@ -314,7 +314,7 @@
             {
                 BetTypeId = 1,
                 SportTypeId = 1,
-                NumberOfDetailedItems = 1,
+                ShowMore = false,
                 LevelGroups = new List<LevelGroup>
                 {
                     new LevelGroup

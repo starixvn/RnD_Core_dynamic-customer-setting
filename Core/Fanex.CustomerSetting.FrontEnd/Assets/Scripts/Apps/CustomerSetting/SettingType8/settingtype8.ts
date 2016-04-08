@@ -6,6 +6,10 @@
 /// <reference path="settingtype8-resource.ts" />
 
 module CustomerSetting {
+    interface ISettingType8DirectiveScope extends IDefaultSettingTypeDirectiveScope {
+        popupMode: boolean;
+    }
+
     class SettingType8Directive extends DefaultSettingTypeGroupingDirective {
         public replace: boolean = true;
         public templateUrl: string = "settingtype8.htm";
@@ -13,6 +17,7 @@ module CustomerSetting {
         public get scope(): any {
             return {
                 settingType: "=",
+                popupMode: "=",
                 update: "&"
             };
         }
@@ -22,7 +27,7 @@ module CustomerSetting {
             "settingTypesSharedValuesService",
             "settingType8ResourceService",
             (
-                $scope: IDefaultSettingTypeDirectiveScope,
+                $scope: ISettingType8DirectiveScope,
                 settingTypesSharedValuesService: SettingTypesSharedValuesService,
                 settingType8ResourceService: SettingType8ResourceService
             ) => {

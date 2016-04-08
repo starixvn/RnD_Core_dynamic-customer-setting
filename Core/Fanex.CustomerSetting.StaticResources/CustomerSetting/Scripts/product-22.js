@@ -34208,8 +34208,11 @@ var CustomerSetting;
                         return new SettingType8StakeLevelDetailedItem(stakeLevelDetailedItem, _this.levelGroups);
                     });
                 }
-                this.numberOfDetailedItems = settingItem.numberOfDetailedItems;
+                this.showMore = settingItem.showMore;
                 this.customerLevel = customerLevel;
+                this.styles = {
+                    "min-width": (100 / this.levelGroups.length) + "%"
+                };
                 if (this.customerLevel && this.customerLevel === CustomerSetting.Level.member) {
                     var selectedLevelGroups = this.levelGroups.filter(function (levelGroup) { return levelGroup.selected; });
                     if (selectedLevelGroups && selectedLevelGroups.length > 0) {
@@ -34303,7 +34306,6 @@ var CustomerSetting;
         __extends(SettingType8StakeLevelDetailedItem, _super);
         function SettingType8StakeLevelDetailedItem(stakeLevelDetailedItem, levelGroups) {
             _super.call(this, stakeLevelDetailedItem);
-            this.expectedRowHeight = 23;
             if (stakeLevelDetailedItem) {
                 this.stakeRanges = this.fillLevelGroupDetails(stakeLevelDetailedItem.stakeRanges, levelGroups);
             }
@@ -34477,6 +34479,7 @@ var CustomerSetting;
             get: function () {
                 return {
                     settingType: "=",
+                    popupMode: "=",
                     update: "&"
                 };
             },
@@ -34508,7 +34511,7 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (settingItem.validationState | highlightingField:\'winLimit\') }\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
 $templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'lossLimit\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | number}} - {{item.maxLossRange | number | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-disabled=\"item.maxLossRange !== 0\" data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | number | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | number}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | number}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | number}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | number}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype8-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
-$templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"item in settingType.settingItems\"><div class=\"col w20-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"block__sub-header\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType\">{{item.sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</label><setting-type8-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member)\" data-items=\"item.levelGroups\"></setting-type8-checkbox-group></div><div class=\"block__cell\" data-ng-repeat=\"stakeLevelDetailedItem in item.stakeLevelDetailedItems\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last }\">{{stakeLevelDetailedItem.betTypeName }}</div></div><div class=\"col scrollable-area w80-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"col\" data-ng-repeat=\"levelGroup in item.levelGroups\" data-ng-class=\"{ \'col--last\': $last }\" data-ng-style=\"levelGroup.getStyles()\"><div class=\"block__sub-header\"><div class=\"setting-field--checkfield\"><input id=\"{{levelGroup.levelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"levelGroup.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member\"> <input id=\"{{levelGroup.levelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectedLevelId\" data-ng-value=\"levelGroup.levelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"> <label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{levelGroup.levelId}}\">{{levelGroup.levelGroupName}}</label></div></div><div class=\"block__cell\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last }\" data-ng-repeat=\"stakeLevelDetailedItem in item.stakeLevelDetailedItems\">{{stakeLevelDetailedItem.stakeRanges[$index].value}}</div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
+$templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode && !popupMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"item in settingType.settingItems\"><div class=\"col col--lbl w20-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"block__sub-header\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType\">{{item.sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</label><setting-type8-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member) && !popupMode\" data-items=\"item.levelGroups\"></setting-type8-checkbox-group></div><div class=\"block__cell\" data-ng-repeat=\"stakeLevelDetailedItem in item.stakeLevelDetailedItems\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last && !item.showMore }\">{{stakeLevelDetailedItem.betTypeName }}</div><div class=\"block__cell block__cell--no-border-bottom\" data-ng-if=\"item.showMore\"><a href=\"javascript:void(0);\" data-ng-click=\"getLevelGroupDetails(item)\">{{::(\'ViewMore\' | settingType8Label)}}</a></div></div><div class=\"col col--border-left scrollable-area w80-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"col\" data-ng-repeat=\"levelGroup in item.levelGroups\" data-ng-class=\"{ \'col--last\': $last }\" data-ng-style=\"item.styles\"><div class=\"block__sub-header\"><div class=\"setting-field--checkfield\"><input id=\"{{levelGroup.levelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"levelGroup.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member && !popupMode\"> <input id=\"{{levelGroup.levelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectedLevelId\" data-ng-value=\"levelGroup.levelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && !popupMode\"> <label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{levelGroup.levelId}}\">{{levelGroup.levelGroupName}}</label></div></div><div class=\"block__cell\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last && !item.showMore }\" data-ng-repeat=\"stakeLevelDetailedItem in item.stakeLevelDetailedItems\">{{stakeLevelDetailedItem.stakeRanges[$index].value}}</div><div class=\"block__cell block__cell--no-border-bottom\" data-ng-if=\"item.showMore\"></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 
 (function () {
@@ -35504,12 +35507,59 @@ $templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng
     
     settingType8Resource["label"] = settingType8Resource["label"] || {};
     settingType8Resource["label"]["en-us"] = {
-        "BetLimit": "Bet Limit"
+        "BetLimit": "Bet Limit",
+        "ViewMore": "View More ..."
+    };
+    
+    settingType8Resource["label"] = settingType8Resource["label"] || {};
+    settingType8Resource["label"]["zh-cn"] = {
+        "BetLimit": "投注限额"
+    };
+    
+    settingType8Resource["label"] = settingType8Resource["label"] || {};
+    settingType8Resource["label"]["zh-tw"] = {
+        "BetLimit": "投注限額"
+    };
+    
+    settingType8Resource["label"] = settingType8Resource["label"] || {};
+    settingType8Resource["label"]["th-th"] = {
+        "BetLimit": "วงเงินเดิมพัน"
+    };
+    
+    settingType8Resource["label"] = settingType8Resource["label"] || {};
+    settingType8Resource["label"]["vi-vn"] = {
+        "BetLimit": "Giới hạn cược"
     };
     
     settingType8Resource["message"] = settingType8Resource["message"] || {};
     settingType8Resource["message"]["en-us"] = {
-        "MemberStakeLevelGroupMustBeSelected": "Bet Limit is required for Member level."
+        "MemberStakeLevelGroupMustBeSelected": "Bet Limit is required for Member level.",
+        "Msg_10034": "This user&apos;s upline does not have Stake Level.",
+        "UpdatedBetLimitSuccessfully": "Updated Bet Limit successfully."
+    };
+    
+    settingType8Resource["message"] = settingType8Resource["message"] || {};
+    settingType8Resource["message"]["zh-cn"] = {
+        "Msg_10034": "这帐号的上线无投注本金级别.",
+        "UpdatedBetLimitSuccessfully": "投注限额已成功更新."
+    };
+    
+    settingType8Resource["message"] = settingType8Resource["message"] || {};
+    settingType8Resource["message"]["zh-tw"] = {
+        "Msg_10034": "這帳號的上線無投註本金級別.",
+        "UpdatedBetLimitSuccessfully": "投注限額已成功更新."
+    };
+    
+    settingType8Resource["message"] = settingType8Resource["message"] || {};
+    settingType8Resource["message"]["th-th"] = {
+        "Msg_10034": "อัปไลน์ของผู้ใช้รายนี้ไม่มีระดับเงินเดิมพัน",
+        "UpdatedBetLimitSuccessfully": "ปรับข้อมูลวงเงินเดิมพันเรียบร้อยแล้ว"
+    };
+    
+    settingType8Resource["message"] = settingType8Resource["message"] || {};
+    settingType8Resource["message"]["vi-vn"] = {
+        "Msg_10034": "Cấp trên của người dùng này chưa cấu hình cấp độ đặt cược.",
+        "UpdatedBetLimitSuccessfully": "Cập nhật Giới hạn cược thành công."
     };
 
     angular.module("customerSetting").value("settingType8Resource", settingType8Resource);

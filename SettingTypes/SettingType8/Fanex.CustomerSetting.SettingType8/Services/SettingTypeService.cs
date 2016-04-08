@@ -97,12 +97,13 @@
             StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(jsonParameters);
             IEnumerable<StakeLevelGroupItem> stakeLevelGroupDetails
                 = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId, query.SportTypeId, true);
-
-            return new SettingType
+            var stakeLevelGroup = new SettingType
             {
                 Name = Label.BetLimit,
                 SettingItems = stakeLevelGroupDetails
             };
+
+            return SetSportTypeBetTypeName(stakeLevelGroup, settingContext.Language);
         }
 
         private IEnumerable<StakeLevelGroupItem> QueryAndMapStakeLevelGroups(
@@ -135,7 +136,7 @@
                             group.Key.SportTypeId,
                             showAll,
                             out numberOfDetailedItem);
-                        stakeLevelGroupItem.NumberOfDetailedItems = numberOfDetailedItem;
+                        stakeLevelGroupItem.ShowMore = numberOfDetailedItem > stakeLevelGroupItem.StakeLevelDetailedItems.Count();
 
                         return stakeLevelGroupItem;
                     })
