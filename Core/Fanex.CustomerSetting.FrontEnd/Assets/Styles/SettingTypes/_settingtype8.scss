@@ -20,6 +20,13 @@
         &--last, &--lbl {
             border-right: none;
         }
+
+        &--lbl {
+            .block__cell {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     .block__cell {
@@ -46,6 +53,10 @@
 
     .setting-field--checkfield {
         margin: 0;
+
+        &__check-ctrl-lbl {
+            cursor: pointer;
+        }
     }
 
     .check-all-field {

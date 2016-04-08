@@ -67,7 +67,7 @@
                 <div class="block__cell"
                      data-ng-class="{ 'block__cell--no-border-bottom': $last && !item.showMore }"
                      data-ng-repeat="stakeLevelDetailedItem in item.stakeLevelDetailedItems">
-                    {{stakeLevelDetailedItem.stakeRanges[$index].value}}
+                    {{stakeLevelDetailedItem.stakeRanges[$parent.$index].value}}
                 </div>
                 <div class="block__cell block__cell--no-border-bottom" data-ng-if="item.showMore"></div>
             </div>

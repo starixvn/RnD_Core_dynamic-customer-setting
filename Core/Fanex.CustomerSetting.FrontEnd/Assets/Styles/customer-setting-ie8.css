@@ -698,6 +698,9 @@ select.setting-field {
     border-left: 1px solid #7c98a4; }
   .settingtype8 .col--last, .settingtype8 .col--lbl {
     border-right: none; }
+  .settingtype8 .col--lbl .block__cell, .settingtype8 .col--lbl .block__lbl, .settingtype8 .col--lbl .block__value {
+    white-space: nowrap;
+    text-overflow: ellipsis; }
 
 .settingtype8 .block__cell, .settingtype8 .block__lbl, .settingtype8 .block__value {
   border-bottom: 1px solid #7c98a4;
@@ -717,6 +720,8 @@ select.setting-field {
 
 .settingtype8 .setting-field--checkfield {
   margin: 0; }
+  .settingtype8 .setting-field--checkfield__check-ctrl-lbl {
+    cursor: pointer; }
 
 .settingtype8 .check-all-field {
   float: right; }
