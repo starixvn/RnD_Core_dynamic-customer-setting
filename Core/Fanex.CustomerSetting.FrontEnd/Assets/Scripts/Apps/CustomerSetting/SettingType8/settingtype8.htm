@@ -5,7 +5,7 @@
          data-ng-class="{ 'block__header--error': !(settingType | validSettingType) }">
         {{::('BetLimit' | settingType8Label)}}
         <div class="right-btn-area right-btn-area--seperate"
-             title="{{'Update' | label}}"
+             title="{{::('Update' | label)}}"
              data-ng-if="(settingType | editableSettingType) && (settingType | validSettingType) && normalMode"
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
@@ -37,7 +37,7 @@
                 <a href="javascript:void(0);" data-ng-click="getLevelGroupDetails(item)">
                     {{::('ViewMore' | settingType8Label)}}
                 </a>
-                <settingtype8-groups-details data-ng-if="item.allDetails" data-host-item="item" />
+                <settingtype8-group-details-modal data-ng-if="item.allDetails" data-host-item="item" />
             </div>
         </div>
         <div class="col col--border-left scrollable-area w80-percent"

@@ -281,6 +281,18 @@
       <LastGenOutput>settingtype7-resources.js</LastGenOutput>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-checkbox-group.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupsdetails-modal.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resources.js">
+      <DependentUpon>settingtype8-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype8-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -489,6 +501,11 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-checkbox-group.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType7\settingtype7.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-checkbox-group.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupsdetails-modal.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />

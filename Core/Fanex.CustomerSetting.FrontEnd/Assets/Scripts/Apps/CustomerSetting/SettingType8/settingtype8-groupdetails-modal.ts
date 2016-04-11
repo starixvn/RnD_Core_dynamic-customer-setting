@@ -6,14 +6,14 @@
 module CustomerSetting {
     "use strict";
 
-    interface ISettingType8GroupsDetailsScope extends ng.IScope {
+    interface ISettingType8GroupDetailsScope extends ng.IScope {
         hostItem: SettingType8Item;
         cancel: Function;
     }
 
-    class SettingType8GroupsDetailsDirective implements ng.IDirective {
+    class SettingType8GroupDetailsDirective implements ng.IDirective {
         public replace: boolean = true;
-        public templateUrl: string = "settingtype8-groupsdetails-modal.htm";
+        public templateUrl: string = "settingtype8-groupdetails-modal.htm";
 
         public get scope(): any {
             return {
@@ -21,12 +21,12 @@ module CustomerSetting {
             };
         }
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingType8GroupsDetailsScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: ISettingType8GroupDetailsScope) => {
             scope.cancel = () => {
                 scope.hostItem.showingDetails = false;
             }
         };
     }
 
-    ModuleRegister.directive("settingtype8GroupsDetails", SettingType8GroupsDetailsDirective);
+    ModuleRegister.directive("settingtype8GroupDetailsModal", SettingType8GroupDetailsDirective);
 }
