@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Customer_Setting_Maxtrix">
-    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_CommMatrix" SpName="Acc_CustSetting_CommMatrix" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="RoleID" ObjectProperty="LevelValue" />
       <Mapping DataField="Discount" ObjectProperty="CommRate" />
     </Setting>
