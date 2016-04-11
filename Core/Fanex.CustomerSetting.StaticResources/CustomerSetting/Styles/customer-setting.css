@@ -715,7 +715,6 @@ select.setting-field {
 .settingtype8 .scrollable-area {
   border-right: none;
   display: inline-block;
-  float: right;
   overflow-x: auto;
   white-space: nowrap; }
   .settingtype8 .scrollable-area .block__cell, .settingtype8 .scrollable-area .block__lbl, .settingtype8 .scrollable-area .block__value {

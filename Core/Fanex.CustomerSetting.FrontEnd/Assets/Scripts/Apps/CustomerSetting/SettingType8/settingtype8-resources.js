@@ -8,7 +8,7 @@
     settingType8Resource["label"] = settingType8Resource["label"] || {};
     settingType8Resource["label"]["en-us"] = {
         "BetLimit": "Bet Limit",
-        "Cancel": "Cancel",
+        "Close": "Close",
         "ViewMore": "View More ..."
     };
     
