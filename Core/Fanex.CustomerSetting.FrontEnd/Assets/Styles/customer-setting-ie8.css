@@ -731,9 +731,10 @@ select.setting-field {
 
 .settingtype8 .modal {
   width: 600px; }
-  .settingtype8 .modal__content {
-    max-height: 600px;
-    overflow-y: auto; }
+
+.settingtype8 .modal__content {
+  max-height: 600px;
+  overflow-y: auto; }
 
 body {
   font-size: 11px;
