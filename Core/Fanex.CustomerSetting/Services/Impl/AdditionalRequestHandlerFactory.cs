@@ -11,7 +11,20 @@
     internal static class AdditionalRequestHandlerFactory
     {
         private static ConcurrentDictionary<short, IAdditionalRequestHandler> cachedHandlers = new ConcurrentDictionary<short, IAdditionalRequestHandler>();
-        private static IEnumerable<Type> requestHanlersInAssemblies = DetechRequestHanlersInAssemblies();
+        private static IEnumerable<Type> _requestHanlersInAssemblies;
+
+        public static IEnumerable<Type> RequestHanlersInAssemblies
+        {
+            get
+            {
+                if (_requestHanlersInAssemblies == null)
+                {
+                    _requestHanlersInAssemblies = DetechRequestHanlersInAssemblies();
+                }
+
+                return _requestHanlersInAssemblies;
+            }
+        }
 
         public static IAdditionalRequestHandler GetInstance(short settingTypeId)
         {
@@ -35,7 +48,7 @@
         {
             IAdditionalRequestHandler handler = null;
             string handlerNamespace = $"Fanex.CustomerSetting.SettingType{settingTypeId}.Services";
-            Type handlerType = requestHanlersInAssemblies.FirstOrDefault(type => type.Namespace.Contains(handlerNamespace));
+            Type handlerType = RequestHanlersInAssemblies.FirstOrDefault(type => type.Namespace.Contains(handlerNamespace));
 
             if (handlerType == null)
             {

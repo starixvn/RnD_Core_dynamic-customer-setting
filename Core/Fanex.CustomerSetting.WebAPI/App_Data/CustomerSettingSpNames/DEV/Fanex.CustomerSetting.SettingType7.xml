@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Function Name="ChargeCommission">
+    <Function Name="StakeLevel">
         <Setting Key="CustSetting_StakeLevelSelect" SpName="Acc_CustSetting_StakeLevelSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
