@@ -61,5 +61,7 @@
                 _sportTypeId = value;
             }
         }
+
+        public byte SettingLevel { get; set; }
     }
 }

@@ -729,3 +729,9 @@ select.setting-field {
 .settingtype8 .check-all-field {
   float: right; }
 
+.settingtype8 .modal {
+  width: 600px; }
+  .settingtype8 .modal&__content {
+    max-height: 600px;
+    overflow-y: auto; }
+

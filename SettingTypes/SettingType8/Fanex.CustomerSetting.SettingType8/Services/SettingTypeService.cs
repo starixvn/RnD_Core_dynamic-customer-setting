@@ -100,7 +100,8 @@
             var stakeLevelGroup = new SettingType
             {
                 Name = Label.BetLimit,
-                SettingItems = stakeLevelGroupDetails
+                SettingItems = stakeLevelGroupDetails,
+                SettingLevel = query.SettingLevel
             };
 
             return SetSportTypeBetTypeName(stakeLevelGroup, settingContext.Language);

@@ -37,6 +37,7 @@
                 <a href="javascript:void(0);" data-ng-click="getLevelGroupDetails(item)">
                     {{::('ViewMore' | settingType8Label)}}
                 </a>
+                <settingtype8-groups-details data-ng-if="item.allDetails" data-host-item="item" />
             </div>
         </div>
         <div class="col col--border-left scrollable-area w80-percent"

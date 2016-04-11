@@ -1,7 +1,8 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/requesting-server-service.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="models.ts" />
 /// <reference path="settingtype8-resource.ts" />
 
@@ -70,12 +71,13 @@ module CustomerSetting {
                         {
                             customerId: $scope.customerId,
                             productId: $scope.productId,
-                            sportTypeId: settingItem.sportTypeId
+                            sportTypeId: settingItem.sportTypeId,
+                            settingLevel: $scope.settingType.settingLevel
                         });
 
                     if (!settingItem.allDetails) {
                         requestService.request(appConfigService.getSettingTypeActionPath(), command.toJson(), (response: ng.IHttpPromiseCallbackArg<any>) => {
-                            settingItem.allDetails = new SettingType8Item(response.data);
+                            settingItem.allDetails = new SettingType(response.data);
                             settingItem.showingDetails = true;
                         });
                     }

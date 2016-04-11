@@ -64,4 +64,13 @@
     .check-all-field {
         float: right;
     }
+
+    .modal {
+        width: 600px;
+
+        &__content {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+    }
 }
