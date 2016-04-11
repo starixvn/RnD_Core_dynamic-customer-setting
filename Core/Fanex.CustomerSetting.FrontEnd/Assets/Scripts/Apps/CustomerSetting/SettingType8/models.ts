@@ -75,8 +75,13 @@ module CustomerSetting {
 
         public validate(): boolean {
             if (this.customerLevel && this.customerLevel === Level.member) {
-                var isViolated: boolean
-                    = this.groups.filter((group: SettingType8LevelGroup) => group.selected).length !== 1;
+                var isViolated: boolean = true;
+
+                this.groups.forEach((group: SettingType8LevelGroup) => {
+                    group.selected = this.selectedLevelId === group.levelId;
+                });
+
+                isViolated = this.groups.filter((group: SettingType8LevelGroup) => group.selected).length !== 1;
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelGroupMustBeSelected");
@@ -100,12 +105,6 @@ module CustomerSetting {
 
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
-            }
-
-            if (this.customerLevel && this.customerLevel === Level.member) {
-                this.groups.forEach((group: SettingType8LevelGroup) => {
-                    group.selected = this.selectedLevelId === group.levelId;
-                });
             }
 
             this.groups.forEach((group: SettingType8LevelGroup) => {

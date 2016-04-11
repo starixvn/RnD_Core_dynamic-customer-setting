@@ -27244,8 +27244,13 @@ var CustomerSetting;
                 return isChanged || hasChange;
             };
             SettingType8Item.prototype.validate = function () {
+                var _this = this;
                 if (this.customerLevel && this.customerLevel === IE8.Level.member) {
-                    var isViolated = _.filter(this.groups, function (group) { return group.selected; }).length !== 1;
+                    var isViolated = true;
+                    _.forEach(this.groups, function (group) {
+                        group.selected = _this.selectedLevelId === group.levelId;
+                    });
+                    isViolated = _.filter(this.groups, function (group) { return group.selected; }).length !== 1;
                     if (isViolated) {
                         this.validationState = new IE8.ValidationResult("MemberStakeLevelGroupMustBeSelected");
                         return false;
@@ -27254,7 +27259,6 @@ var CustomerSetting;
                 return true;
             };
             SettingType8Item.prototype.toJson = function () {
-                var _this = this;
                 var settingItem = {
                     sportTypeId: this.sportTypeId,
                     sportTypeName: this.sportTypeName,
@@ -27265,11 +27269,6 @@ var CustomerSetting;
                 };
                 if (this.isLive !== undefined) {
                     settingItem.isLive = this.isLive;
-                }
-                if (this.customerLevel && this.customerLevel === IE8.Level.member) {
-                    _.forEach(this.groups, function (group) {
-                        group.selected = _this.selectedLevelId === group.levelId;
-                    });
                 }
                 _.forEach(this.groups, function (group) {
                     if (group.levelId) {
