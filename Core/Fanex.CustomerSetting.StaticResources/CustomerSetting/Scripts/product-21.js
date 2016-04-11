@@ -34229,8 +34229,13 @@ var CustomerSetting;
             return isChanged || hasChange;
         };
         SettingType7Item.prototype.validate = function () {
+            var _this = this;
             if (this.customerLevel && this.customerLevel === CustomerSetting.Level.member) {
-                var isViolated = this.stakeRanges.filter(function (stakeRange) { return stakeRange.selected; }).length !== 1;
+                var isViolated = true;
+                this.stakeRanges.forEach(function (stakeLevel) {
+                    stakeLevel.selected = _this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                });
+                isViolated = this.stakeRanges.filter(function (stakeRange) { return stakeRange.selected; }).length !== 1;
                 if (isViolated) {
                     this.validationState = new CustomerSetting.ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
                     return false;
@@ -34239,7 +34244,6 @@ var CustomerSetting;
             return true;
         };
         SettingType7Item.prototype.toJson = function () {
-            var _this = this;
             var settingItem = {
                 sportTypeId: this.sportTypeId,
                 sportTypeName: this.sportTypeName,
@@ -34250,11 +34254,6 @@ var CustomerSetting;
             };
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
-            }
-            if (this.customerLevel && this.customerLevel === CustomerSetting.Level.member) {
-                this.stakeRanges.forEach(function (stakeLevel) {
-                    stakeLevel.selected = _this.selectStakeLevelId === stakeLevel.stakeLevelId;
-                });
             }
             this.stakeRanges.forEach(function (stakeLevel) {
                 if (stakeLevel.stakeLevelId) {

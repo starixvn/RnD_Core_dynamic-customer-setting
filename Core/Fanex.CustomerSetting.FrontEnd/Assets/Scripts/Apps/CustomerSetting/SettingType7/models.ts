@@ -64,7 +64,13 @@ module CustomerSetting {
 
         public validate(): boolean {
             if (this.customerLevel && this.customerLevel === Level.member) {
-                var isViolated: boolean = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length !== 1;
+                var isViolated: boolean = true;
+
+                this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
+                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
+                });
+
+                isViolated = this.stakeRanges.filter((stakeRange: SettingType7StakeRange) => stakeRange.selected).length !== 1;
 
                 if (isViolated) {
                     this.validationState = new ValidationResult("MemberStakeLevelMustBeSelectedForBetType");
@@ -88,12 +94,6 @@ module CustomerSetting {
 
             if (this.isLive !== undefined) {
                 settingItem.isLive = this.isLive;
-            }
-
-            if (this.customerLevel && this.customerLevel === Level.member) {
-                this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
-                    stakeLevel.selected = this.selectStakeLevelId === stakeLevel.stakeLevelId;
-                });
             }
 
             this.stakeRanges.forEach((stakeLevel: SettingType7StakeRange) => {
