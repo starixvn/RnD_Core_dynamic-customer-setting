@@ -75,19 +75,7 @@
                 return _updateSettingService.Update(command);
             }
 
-            var result = UpdateUnsyncedCustomerSetting(command);
-
-            if (result.IsOk)
-            {
-                _customerProductStatusService.UpdateCustomerStatus(
-                    command.Setting.CustomerId,
-                    command.Setting.ProductId,
-                    _settingContext.Actor.SubAccountId,
-                    _settingContext.Actor.Id,
-                    _settingContext.IP);
-            }
-
-            return result;
+            return UpdateUnsyncedCustomerSetting(command);
         }
 
         public IResult Update(MultipleUpdateCustomerSettingCommand command)
@@ -144,14 +132,24 @@
 
                 if (statusSettingType != null)
                 {
-                    settingTypeResults.Add(
-                        UpdateCustomerSettingType(
-                                       customerId,
-                                       command.Setting.CustomerInfo,
-                                       customerLevel,
-                                       statusSettingType,
-                                       productId,
-                                       uplineLevel));
+                    var productStatusResult = UpdateCustomerSettingType(
+                        customerId,
+                        command.Setting.CustomerInfo,
+                        customerLevel,
+                        statusSettingType,
+                        productId,
+                        uplineLevel);
+                    settingTypeResults.Add(productStatusResult);
+
+                    if (productStatusResult.IsOk)
+                    {
+                        _customerProductStatusService.UpdateCustomerStatus(
+                            command.Setting.CustomerId,
+                            command.Setting.ProductId,
+                            _settingContext.Actor.SubAccountId,
+                            _settingContext.Actor.Id,
+                            _settingContext.IP);
+                    }
                 }
                 else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
                 {
