@@ -191,6 +191,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ext-nap.css" />
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
