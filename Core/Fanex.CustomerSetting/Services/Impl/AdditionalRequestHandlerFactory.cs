@@ -11,20 +11,7 @@
     internal static class AdditionalRequestHandlerFactory
     {
         private static ConcurrentDictionary<short, IAdditionalRequestHandler> cachedHandlers = new ConcurrentDictionary<short, IAdditionalRequestHandler>();
-        private static IEnumerable<Type> _requestHanlersInAssemblies;
-
-        public static IEnumerable<Type> RequestHanlersInAssemblies
-        {
-            get
-            {
-                if (_requestHanlersInAssemblies == null)
-                {
-                    _requestHanlersInAssemblies = DetechRequestHanlersInAssemblies();
-                }
-
-                return _requestHanlersInAssemblies;
-            }
-        }
+        private static IEnumerable<Type> requestHanlersInAssemblies;
 
         public static IAdditionalRequestHandler GetInstance(short settingTypeId)
         {
@@ -48,11 +35,21 @@
         {
             IAdditionalRequestHandler handler = null;
             string handlerNamespace = $"Fanex.CustomerSetting.SettingType{settingTypeId}.Services";
-            Type handlerType = RequestHanlersInAssemblies.FirstOrDefault(type => type.Namespace.Contains(handlerNamespace));
+            Type handlerType = requestHanlersInAssemblies?.FirstOrDefault(type => type.Namespace.Contains(handlerNamespace));
 
             if (handlerType == null)
             {
-                throw new DllNotFoundException($"{handlerNamespace} namespace is not found.");
+                // There is a case that some assemblies was loaded after the first run of DetechRequestHanlersInAssemblies, we can't fetch types in those assemblies.
+                // So we try to get loaded assemblies one more time to reduce the risk.
+                // Consider that should we load all DLLs in Bin folder when the app started or not?
+                // We could completely ignore the issue, but unused assemblies would be in the game!
+                requestHanlersInAssemblies = DetechRequestHanlersInAssemblies();
+                handlerType = requestHanlersInAssemblies.FirstOrDefault(type => type.Namespace.Contains(handlerNamespace));
+
+                if (handlerType == null)
+                {
+                    throw new DllNotFoundException($"{handlerNamespace} namespace is not found.");
+                }
             }
 
             handler = Activator.CreateInstance(handlerType) as IAdditionalRequestHandler;
