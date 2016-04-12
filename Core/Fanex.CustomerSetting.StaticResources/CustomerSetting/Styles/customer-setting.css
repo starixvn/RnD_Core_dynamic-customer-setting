@@ -690,7 +690,6 @@ select.setting-field {
 .settingtype8 .col {
   border-right: 1px solid #7c98a4;
   display: inline-block;
-  float: none;
   min-width: 20%;
   vertical-align: middle; }
   .settingtype8 .col--border-top {
@@ -729,9 +728,9 @@ select.setting-field {
   float: right; }
 
 .settingtype8 .modal {
-  width: 600px; }
+  width: 80%; }
 
 .settingtype8 .modal__content {
-  max-height: 600px;
+  max-height: 500px;
   overflow-y: auto; }
 

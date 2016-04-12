@@ -6,7 +6,6 @@
     .col {
         @include border(right);
         display: inline-block;
-        float: none;
         min-width: 20%;
         vertical-align: middle;
 
@@ -65,11 +64,11 @@
     }
 
     .modal {
-        width: 600px;
+        width: 80%;
     }
 
     .modal__content {
-        max-height: 600px;
+        max-height: 500px;
         overflow-y: auto;
     }
 }
