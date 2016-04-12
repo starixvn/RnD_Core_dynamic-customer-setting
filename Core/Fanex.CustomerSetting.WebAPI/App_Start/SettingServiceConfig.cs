@@ -6,7 +6,7 @@
     public static class SettingServiceConfig
     {
         public const int AllBets = 21;
-        public const int Voidbridge = 21;
+        public const int Voidbridge = 22;
 
         public static void Run()
         {
