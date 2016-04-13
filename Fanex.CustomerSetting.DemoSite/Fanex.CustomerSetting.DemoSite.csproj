@@ -191,7 +191,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alpha.css" />
+    <Content Include="Content\alpha.min.css">
+      <DependentUpon>alpha.css</DependentUpon>
+    </Content>
     <Content Include="Content\ext-nap.css" />
+    <Content Include="Content\ext-nap.min.css">
+      <DependentUpon>ext-nap.css</DependentUpon>
+    </Content>
     <Content Include="Content\Images\tab-icon.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
@@ -200,6 +207,7 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <None Include="bundleconfig.json" />
     <None Include="Gulpfile.js" />
     <Content Include="Scripts\DemoForm.IE8\demo-form.js">
       <DependentUpon>demo-form.ts</DependentUpon>
