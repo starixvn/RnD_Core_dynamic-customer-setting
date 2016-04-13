@@ -60,7 +60,7 @@
             }
         }
 
-        public string ProductName { get; private set; }
+        public string ProductName { get; protected set; }
 
         public int CustomerId
         {

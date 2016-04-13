@@ -16,6 +16,7 @@
             CustomerInfo = setting.CustomerInfo;
             CustomerLevel = setting.CustomerLevel;
             ProductId = setting.ProductId;
+            ProductName = setting.ProductName;
             SettingTypes = setting.SettingTypes;
             WarningMessage = setting.WarningMessage;
 
