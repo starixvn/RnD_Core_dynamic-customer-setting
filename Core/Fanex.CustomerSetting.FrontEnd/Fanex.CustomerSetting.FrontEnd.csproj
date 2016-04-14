@@ -462,6 +462,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Draggable\draggable.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helpers.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\models.ts" />
@@ -523,6 +524,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Draggable\draggable.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helpers.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\models.ts" />
