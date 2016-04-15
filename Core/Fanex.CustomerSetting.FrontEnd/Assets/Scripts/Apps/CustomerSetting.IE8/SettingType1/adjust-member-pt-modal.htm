@@ -1,10 +1,12 @@
 ﻿<div class="modal-overlay" data-ng-show="isShown">
-    <div class="modal">
-        <div class="modal__title" data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
-            {{'DisableMasterAutoPt' | positionTakingLabel}}
-        </div>
-        <div class="modal__title" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-            {{'DisableAgentAutoPt' | positionTakingLabel}}
+    <div class="modal" data-draggable="'modal-title'">
+        <div id="modal-title" class="modal__title">
+            <div data-ng-if="customerLevel === avaiCustomerLevels.masterAgent">
+                {{'DisableMasterAutoPt' | positionTakingLabel}}
+            </div>
+            <div data-ng-if="customerLevel === avaiCustomerLevels.agent">
+                {{'DisableAgentAutoPt' | positionTakingLabel}}
+            </div>
         </div>
         <div class="modal__content">
             <div class="question-block" data-ng-bind-html="'UpdateMemberPtQuestion' | positionTakingLabel | unsafe"></div>
