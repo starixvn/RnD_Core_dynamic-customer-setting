@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Msg_20029" xml:space="preserve">
-    <value>ไม่อนุญาตให้เปลี่ยนแปลงการตั้งค่าต่าง ๆ ในขณะนี้ เนื่องจากกำลังมีเกมการแข่งขัน</value>
+  <data name="Msg_1" xml:space="preserve">
+    <value>อัตราค่าธรรมเนียมคอมมิชชั่นไม่ถูกต้อง</value>
+  </data>
+  <data name="ShareCannotBeExceed100Percent" xml:space="preserve">
+    <value>ส่วนแบ่งต้องไม่เกิน 100%</value>
+  </data>
+  <data name="ShareMustBeLessThanOrEqualToGivenCommissionError" xml:space="preserve">
+    <value>ส่วนแบ่งต้องน้อยกว่าหรือเท่ากับค่าคอมมิชชั่นที่ได้รับ</value>
+  </data>
+  <data name="ShareMustBePositive" xml:space="preserve">
+    <value>ส่วนแบ่งต้องเป็นจำนวนบวก</value>
+  </data>
+  <data name="UpdatedChargeCommissionSuccessfully" xml:space="preserve">
+    <value>อัพเดทค่าธรรมเนียมคอมมิชชั่นเรียบร้อยแล้ว</value>
   </data>
 </root>

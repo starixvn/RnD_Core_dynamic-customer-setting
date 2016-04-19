@@ -72,17 +72,29 @@
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["zh-cn"] = {
-        "Msg_20029": "赛事还在进行中，您目前无法更改以下设置。"
+        "Msg_1": "无效的抽取佣金率。",
+        "ShareCannotBeExceed100Percent": "占成不能超过 100%。",
+        "ShareMustBeLessThanOrEqualToGivenCommissionError": "占成必须小于或相等予佣金。",
+        "ShareMustBePositive": "占成必须是正数。",
+        "UpdatedChargeCommissionSuccessfully": "抽取佣金已成功更新。"
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["zh-tw"] = {
-        "Msg_20029": "賽事還在進行中，您目前無法更改以下設置。"
+        "Msg_1": "無效的抽取傭金率。",
+        "ShareCannotBeExceed100Percent": "占成不能超過 100%。",
+        "ShareMustBeLessThanOrEqualToGivenCommissionError": "占成必须小于或相等予佣金。",
+        "ShareMustBePositive": "占成必須是正數。",
+        "UpdatedChargeCommissionSuccessfully": "抽取傭金已成功更新。"
     };
     
     settingType5Resources["message"] = settingType5Resources["message"] || {};
     settingType5Resources["message"]["th-th"] = {
-        "Msg_20029": "ไม่อนุญาตให้เปลี่ยนแปลงการตั้งค่าต่าง ๆ ในขณะนี้ เนื่องจากกำลังมีเกมการแข่งขัน"
+        "Msg_1": "อัตราค่าธรรมเนียมคอมมิชชั่นไม่ถูกต้อง",
+        "ShareCannotBeExceed100Percent": "ส่วนแบ่งต้องไม่เกิน 100%",
+        "ShareMustBeLessThanOrEqualToGivenCommissionError": "ส่วนแบ่งต้องน้อยกว่าหรือเท่ากับค่าคอมมิชชั่นที่ได้รับ",
+        "ShareMustBePositive": "ส่วนแบ่งต้องเป็นจำนวนบวก",
+        "UpdatedChargeCommissionSuccessfully": "อัพเดทค่าธรรมเนียมคอมมิชชั่นเรียบร้อยแล้ว"
     };
 
     angular.module("customerSetting").value("settingType5Resources", settingType5Resources);

@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Msg_20029" xml:space="preserve">
-    <value>賽事還在進行中，您目前無法更改以下設置。</value>
+  <data name="Msg_1" xml:space="preserve">
+    <value>無效的抽取傭金率。</value>
+  </data>
+  <data name="ShareCannotBeExceed100Percent" xml:space="preserve">
+    <value>占成不能超過 100%。</value>
+  </data>
+  <data name="ShareMustBeLessThanOrEqualToGivenCommissionError" xml:space="preserve">
+    <value>占成必须小于或相等予佣金。</value>
+  </data>
+  <data name="ShareMustBePositive" xml:space="preserve">
+    <value>占成必須是正數。</value>
+  </data>
+  <data name="UpdatedChargeCommissionSuccessfully" xml:space="preserve">
+    <value>抽取傭金已成功更新。</value>
   </data>
 </root>
