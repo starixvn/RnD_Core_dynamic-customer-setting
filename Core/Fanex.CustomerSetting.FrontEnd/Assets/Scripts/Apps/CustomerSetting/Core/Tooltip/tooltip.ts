@@ -40,6 +40,12 @@ module CustomerSetting {
                 }
             });
 
+            scope.$watch(() => {
+                if (scope.message) {
+                    this.calculatePosition(element, tooltip);
+                }
+            });
+
             angular.element(this.$window).on("resize", debounceResize);
         };
 

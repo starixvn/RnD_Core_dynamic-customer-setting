@@ -25405,6 +25405,11 @@ var CustomerSetting;
                             _this.calculatePosition(element, tooltip);
                         }
                     });
+                    scope.$watch(function () {
+                        if (scope.message) {
+                            _this.calculatePosition(element, tooltip);
+                        }
+                    });
                     angular.element(_this.$window).on("resize", debounceResize);
                 };
                 this.$window = $window;
