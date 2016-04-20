@@ -158,6 +158,10 @@
     border-bottom: none;
 }
 
+.settingtype8 .modal {
+    height: 380px;
+}
+
 .settingtype8 .modal__content {
     max-height: 300px;
 }
