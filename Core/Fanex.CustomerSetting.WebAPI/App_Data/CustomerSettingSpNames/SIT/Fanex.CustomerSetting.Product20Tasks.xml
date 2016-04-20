@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
     <Function Name="RestrictPermission">
-        <Setting Key="Acc_CustSetting_UpdateRestrictionSelect" SpName="Acc_CustSetting_UpdateRestrictionSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="Acc_CustSetting_UpdateRestrictionSelect" SpName="Acc_CustSetting_UpdateRestrictionSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="RestrictionMode" ObjectProperty="Mode" />
             <Mapping DataField="ErrCode" ObjectProperty="ErrorCode" />
             <Mapping DataField="SettingType" ObjectProperty="SettingTypeId" />
