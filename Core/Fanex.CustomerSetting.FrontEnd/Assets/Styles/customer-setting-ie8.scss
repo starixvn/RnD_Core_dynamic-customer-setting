@@ -31,3 +31,17 @@ body {
         width: 3px;
     }
 }
+
+.settingtype8 .scrollable-area .col {
+    margin-right: -1px;
+
+    .block__sub-header, .block__cell {
+        @include border(right);
+    }
+
+    &.col--last {
+        .block__sub-header, .block__cell {
+            border-right: none;
+        }
+    }
+}

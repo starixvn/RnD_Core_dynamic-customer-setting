@@ -141,6 +141,7 @@
 
     &__footer {
         @include border(top, $modal-footer-border-color);
+        @include clearfix();
         padding: 5px;
         text-align: right;
     }

@@ -366,6 +366,8 @@ th {
     text-align: left; }
   .modal__footer {
     border-top: 1px solid #ececec;
+    overflow: hidden;
+    *zoom: 1;
     padding: 5px;
     text-align: right; }
 
@@ -731,7 +733,6 @@ select.setting-field {
   width: 80%; }
 
 .settingtype8 .modal__content {
-  max-height: 500px;
   overflow-y: auto; }
 
 body {
@@ -751,4 +752,11 @@ body {
 .tooltip:after {
   border-color: transparent;
   border-width: 3px; }
+
+.settingtype8 .scrollable-area .col {
+  margin-right: -1px; }
+  .settingtype8 .scrollable-area .col .block__sub-header, .settingtype8 .scrollable-area .col .block__cell, .settingtype8 .scrollable-area .col .block__lbl, .settingtype8 .scrollable-area .col .block__value {
+    border-right: 1px solid #7c98a4; }
+  .settingtype8 .scrollable-area .col.col--last .block__sub-header, .settingtype8 .scrollable-area .col.col--last .block__cell, .settingtype8 .scrollable-area .col.col--last .block__lbl, .settingtype8 .scrollable-area .col.col--last .block__value {
+    border-right: none; }
 

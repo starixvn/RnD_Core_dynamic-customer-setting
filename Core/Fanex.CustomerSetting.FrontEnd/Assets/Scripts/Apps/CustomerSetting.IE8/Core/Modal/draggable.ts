@@ -4,7 +4,7 @@
 module CustomerSetting.IE8 {
     "use strict";
 
-    interface IDraggableScope extends ng.IScope {
+    interface IDraggableDirectiveScope extends ng.IScope {
         draggableBannerId: string;
     }
 
@@ -12,7 +12,7 @@ module CustomerSetting.IE8 {
         (eventObject: JQueryMouseEventObject, ...args: any[]): any;
     }
 
-    class Draggable implements ng.IDirective {
+    class DraggableDirective implements ng.IDirective {
         public static $inject: string[] = ["$document"];
 
         public restrict: string = "A";
@@ -21,9 +21,9 @@ module CustomerSetting.IE8 {
             draggableBannerId: "=draggable"
         };
 
-        public link: ng.IDirectiveLinkFn = (scope: IDraggableScope, element: ng.IAugmentedJQuery) => {
+        public link: ng.IDirectiveLinkFn = (scope: IDraggableDirectiveScope, element: ng.IAugmentedJQuery) => {
             var draggableBanner: ng.IAugmentedJQuery = angular.element(document.getElementById(scope.draggableBannerId));
-            var container = angular.element(element.parent())[0];
+            var container: HTMLElement = angular.element(element.parent())[0];
             var width: number;
             var height: number;
             var startX: number;
@@ -87,5 +87,5 @@ module CustomerSetting.IE8 {
         }
     }
 
-    ModuleRegister.directive("draggable", Draggable);
+    ModuleRegister.directive("draggable", DraggableDirective);
 }
