@@ -5,7 +5,7 @@ module CustomerSetting {
     "use strict";
 
     interface IDraggableDirectiveScope extends ng.IScope {
-        draggableBannerId: string;
+        draggableBanner: string;
     }
 
     interface IMouseEventHandler {
@@ -19,12 +19,12 @@ module CustomerSetting {
 
         public get scope(): any {
             return {
-                draggableBannerId: "=draggable"
+                draggableBanner: "=draggable"
             };
         }
 
         public link: ng.IDirectiveLinkFn = (scope: IDraggableDirectiveScope, element: ng.IAugmentedJQuery) => {
-            var draggableBanner: ng.IAugmentedJQuery = angular.element(document.getElementById(scope.draggableBannerId));
+            var draggableBanner: ng.IAugmentedJQuery = angular.element(element[0].querySelector(scope.draggableBanner));
             var container: HTMLElement = angular.element(element.parent())[0];
             var width: number;
             var height: number;

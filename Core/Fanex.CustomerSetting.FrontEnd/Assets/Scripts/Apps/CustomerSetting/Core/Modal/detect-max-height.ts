@@ -33,9 +33,9 @@ module CustomerSetting {
 
         private calculateHeight(element: ng.IAugmentedJQuery, container: ng.IAugmentedJQuery): void {
             this.$timeout(() => {
-                var targetContainerHeight: number = this.$window.innerHeight;
-                var maxHeigth: number = targetContainerHeight * 0.6;
-                var marginTop: number = targetContainerHeight * 0.2 - 35;
+                var outerHeight: number = this.$window.innerHeight;
+                var maxHeigth: number = outerHeight * 0.6;
+                var marginTop: number = outerHeight * 0.2 - 35;
 
                 element.css({
                     "max-height": maxHeigth + "px"

@@ -1,10 +1,10 @@
 ﻿<div class="modal-overlay" data-ng-show="hostItem.showingDetails">
-    <div class="modal" data-draggable="'modal-title'">
-        <div id="modal-title" class="modal__title">
+    <div class="modal" data-draggable="'.modal__title'">
+        <div class="modal__title">
             {{::('BetLimit' | settingType8Label)}}
         </div>
         <div class="modal__content" data-detect-max-height>
-            <settingtype8 data-setting-type="hostItem.allDetails" data-popup-mode="true"/>
+            <settingtype8 data-setting-type="hostItem.allDetails" data-popup-mode="true" />
         </div>
         <div class="modal__footer">
             <button class="btn btn--small" data-ng-click="cancel()">{{::('Close' | settingType8Label)}}</button>

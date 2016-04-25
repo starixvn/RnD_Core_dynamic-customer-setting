@@ -73,7 +73,7 @@ module.exports = function (configs) {
 
         productsConfigs.forEach(function (prodConfig) {
             var sources = [
-                path.join(process.cwd(), configs.bower, "jquery/jquery.js"),
+                path.join(process.cwd(), configs.bower, "jquery/dist/jquery.js"),
                 path.join(process.cwd(), configs.bower, "underscore/underscore.js"),
                 path.join(process.cwd(), configs.bower, "angular-legacy/angular.js"),
                 path.join(tempDir, "product-" + prodConfig.productId + ".js"),

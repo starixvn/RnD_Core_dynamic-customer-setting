@@ -33,14 +33,17 @@ module CustomerSetting.IE8 {
 
         private calculateHeight(element: ng.IAugmentedJQuery, container: ng.IAugmentedJQuery): void {
             this.$timeout(() => {
-                var targetContainerHeight: number = container.parent()[0].clientHeight;
-                var maxHeigth: number = targetContainerHeight * 0.6;
-                var marginTop: number = targetContainerHeight * 0.2 - 35;
+                var outerHeight: number = angular.element(window).innerHeight();
 
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
+                if (outerHeight > 0) {
+                    var maxHeigth: number = outerHeight * 0.6;
+                    var marginTop: number = outerHeight * 0.2 - 35;
+
+                    element.css({
+                        "max-height": maxHeigth + "px"
+                    });
+                    container.css({ "margin-top": marginTop + "px" });
+                }
             });
         }
     }
