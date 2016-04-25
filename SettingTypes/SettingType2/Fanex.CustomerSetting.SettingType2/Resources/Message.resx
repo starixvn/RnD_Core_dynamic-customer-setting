@@ -151,7 +151,7 @@
     <value>Min Bet cannot be negative.</value>
   </data>
   <data name="MinBetLessThanOrEqualMaxBet" xml:space="preserve">
-    <value>The Min Bet should be less than or equal to Max </value>
+    <value>The Min Bet should be less than or equal to Max Bet.</value>
   </data>
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>Min Bet must be greater than or equal to {0}.</value>

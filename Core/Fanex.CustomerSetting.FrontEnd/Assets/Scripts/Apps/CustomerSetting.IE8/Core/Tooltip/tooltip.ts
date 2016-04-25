@@ -39,7 +39,7 @@ module CustomerSetting.IE8 {
 
             scope.$watch(() => {
                 if (scope.message) {
-                    this.calculatePosition(element, tooltip);
+                    debounceResize();
                 }
             });
 
@@ -95,7 +95,7 @@ module CustomerSetting.IE8 {
     ModuleRegister.directive("tooltip", Tooltip);
 
     function TooltipMessage($injector: ng.auto.IInjectorService, $filter: ng.IFilterService): Function {
-        return (result: ValidationResult, resourceServiceName: string, fieldName: string) => {
+        return (result: ValidationResult, resourceServiceName: string, fieldName: string, customFilterName: string = null) => {
             var message: string = "";
 
             if (result
@@ -105,7 +105,13 @@ module CustomerSetting.IE8 {
                 var resourceService: ResourceService = $injector.get<ResourceService>(resourceServiceName);
                 var params: string[] = _.map((result.msgParams || []), (param: any) => {
                     if (typeof param === "number") {
-                        return $filter("number")(param);
+                        var value = $filter("number")(param);
+
+                        if (customFilterName) {
+                            value = $filter(customFilterName)(value);
+                        }
+
+                        return value;
                     } else {
                         return param;
                     }

@@ -42,7 +42,7 @@ module CustomerSetting {
 
             scope.$watch(() => {
                 if (scope.message) {
-                    this.calculatePosition(element, tooltip);
+                    debounceResize();
                 }
             });
 
@@ -93,7 +93,7 @@ module CustomerSetting {
     ModuleRegister.directive("tooltip", Tooltip);
 
     function TooltipMessage($injector: ng.auto.IInjectorService, $filter: ng.IFilterService): Function {
-        return (result: ValidationResult, resourceServiceName: string, fieldName: string) => {
+        return (result: ValidationResult, resourceServiceName: string, fieldName: string, customFilterName: string = null) => {
             var message: string = "";
 
             if (result
@@ -103,7 +103,13 @@ module CustomerSetting {
                 var resourceService: ResourceService = $injector.get<ResourceService>(resourceServiceName);
                 var params: string[] = (result.msgParams || []).map((param: any) => {
                     if (typeof param === "number") {
-                        return $filter("number")(param);
+                        var value = $filter("number")(param);
+
+                        if (customFilterName) {
+                            value = $filter(customFilterName)(value);
+                        }
+
+                        return value;
                     } else {
                         return param;
                     }

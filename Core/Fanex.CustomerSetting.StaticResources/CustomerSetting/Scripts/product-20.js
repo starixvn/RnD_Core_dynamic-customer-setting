@@ -32380,6 +32380,121 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var Tooltip = (function () {
+        function Tooltip($window, $compile, $timeout, $templateCache) {
+            var _this = this;
+            this.restrict = "A";
+            this.priority = 100;
+            this.link = function (scope, element) {
+                var template = _this.$templateCache.get("Tooltip/tooltip.htm");
+                var tooltip = angular.element(template);
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!tooltip.hasClass("ng-hide")) {
+                        _this.calculatePosition(element, tooltip);
+                    }
+                }, 100);
+                _this.$compile(tooltip)(scope);
+                element.parent().prepend(tooltip);
+                scope.$watch("message", function (newMessage, oldMessage) {
+                    if (newMessage && newMessage !== oldMessage) {
+                        _this.calculatePosition(element, tooltip);
+                    }
+                });
+                scope.$watch(function () {
+                    if (scope.message) {
+                        debounceResize();
+                    }
+                });
+                angular.element(_this.$window).on("resize", debounceResize);
+            };
+            this.$window = $window;
+            this.$compile = $compile;
+            this.$timeout = $timeout;
+            this.$templateCache = $templateCache;
+        }
+        Object.defineProperty(Tooltip.prototype, "scope", {
+            get: function () {
+                return {
+                    message: "@"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Tooltip.prototype.calculatePosition = function (element, tooltip) {
+            var _this = this;
+            this.$timeout(function () {
+                var elementRect = element[0].getBoundingClientRect();
+                var tooltipRect = tooltip[0].getBoundingClientRect();
+                var scrollX = _this.$window.pageXOffset;
+                var scrollY = _this.$window.pageYOffset;
+                var top = Math.max(0, elementRect.top - tooltipRect.height + scrollY + 5);
+                var left = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX);
+                if (_this.$window.innerWidth < left + tooltipRect.width) {
+                    left = elementRect.left - tooltipRect.width + elementRect.width / 2;
+                    left = Math.min(left, _this.$window.innerWidth - tooltipRect.width - 5);
+                    tooltip.addClass("tooltip--right");
+                }
+                if (top !== tooltipRect.top || left !== tooltipRect.left) {
+                    tooltip.css({
+                        "top": top + "px",
+                        "left": left + "px"
+                    });
+                }
+            });
+        };
+        Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
+        return Tooltip;
+    }());
+    CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
+    function TooltipMessage($injector, $filter) {
+        return function (result, resourceServiceName, fieldName, customFilterName) {
+            if (customFilterName === void 0) { customFilterName = null; }
+            var message = "";
+            if (result
+                && !result.isSuccessful
+                && !result.isWarning
+                && (!fieldName || (fieldName && fieldName === result.fieldName))) {
+                var resourceService = $injector.get(resourceServiceName);
+                var params = (result.msgParams || []).map(function (param) {
+                    if (typeof param === "number") {
+                        var value = $filter("number")(param);
+                        if (customFilterName) {
+                            value = $filter(customFilterName)(value);
+                        }
+                        return value;
+                    }
+                    else {
+                        return param;
+                    }
+                });
+                if (resourceService) {
+                    params.unshift(result.message);
+                    message = resourceService.getFormattedMessage.apply(resourceService, params);
+                }
+            }
+            return message;
+        };
+    }
+    TooltipMessage.$inject = ["$injector", "$filter"];
+    CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+    function HighlightingField() {
+        return function (result, fieldName) {
+            var mustHighlighted = false;
+            if (result
+                && !result.isSuccessful
+                && (!fieldName || (fieldName && fieldName === result.fieldName))) {
+                mustHighlighted = true;
+            }
+            return mustHighlighted;
+        };
+    }
+    CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var SettingTypeDirectiveLoader = (function () {
         function SettingTypeDirectiveLoader($compile) {
             var _this = this;
@@ -32437,116 +32552,6 @@ var CustomerSetting;
         return SettingTypeDirectiveLoader;
     }());
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var Tooltip = (function () {
-        function Tooltip($window, $compile, $timeout, $templateCache) {
-            var _this = this;
-            this.restrict = "A";
-            this.priority = 100;
-            this.link = function (scope, element) {
-                var template = _this.$templateCache.get("Tooltip/tooltip.htm");
-                var tooltip = angular.element(template);
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!tooltip.hasClass("ng-hide")) {
-                        _this.calculatePosition(element, tooltip);
-                    }
-                }, 100);
-                _this.$compile(tooltip)(scope);
-                element.parent().prepend(tooltip);
-                scope.$watch("message", function (newMessage, oldMessage) {
-                    if (newMessage && newMessage !== oldMessage) {
-                        _this.calculatePosition(element, tooltip);
-                    }
-                });
-                scope.$watch(function () {
-                    if (scope.message) {
-                        _this.calculatePosition(element, tooltip);
-                    }
-                });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$compile = $compile;
-            this.$timeout = $timeout;
-            this.$templateCache = $templateCache;
-        }
-        Object.defineProperty(Tooltip.prototype, "scope", {
-            get: function () {
-                return {
-                    message: "@"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Tooltip.prototype.calculatePosition = function (element, tooltip) {
-            var _this = this;
-            this.$timeout(function () {
-                var elementRect = element[0].getBoundingClientRect();
-                var tooltipRect = tooltip[0].getBoundingClientRect();
-                var scrollX = _this.$window.pageXOffset;
-                var scrollY = _this.$window.pageYOffset;
-                var top = Math.max(0, elementRect.top - tooltipRect.height + scrollY + 5);
-                var left = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX);
-                if (_this.$window.innerWidth < left + tooltipRect.width) {
-                    left = elementRect.left - tooltipRect.width + elementRect.width / 2;
-                    left = Math.min(left, _this.$window.innerWidth - tooltipRect.width - 5);
-                    tooltip.addClass("tooltip--right");
-                }
-                if (top !== tooltipRect.top || left !== tooltipRect.left) {
-                    tooltip.css({
-                        "top": top + "px",
-                        "left": left + "px"
-                    });
-                }
-            });
-        };
-        Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
-        return Tooltip;
-    }());
-    CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
-    function TooltipMessage($injector, $filter) {
-        return function (result, resourceServiceName, fieldName) {
-            var message = "";
-            if (result
-                && !result.isSuccessful
-                && !result.isWarning
-                && (!fieldName || (fieldName && fieldName === result.fieldName))) {
-                var resourceService = $injector.get(resourceServiceName);
-                var params = (result.msgParams || []).map(function (param) {
-                    if (typeof param === "number") {
-                        return $filter("number")(param);
-                    }
-                    else {
-                        return param;
-                    }
-                });
-                if (resourceService) {
-                    params.unshift(result.message);
-                    message = resourceService.getFormattedMessage.apply(resourceService, params);
-                }
-            }
-            return message;
-        };
-    }
-    TooltipMessage.$inject = ["$injector", "$filter"];
-    CustomerSetting.ModuleRegister.filter("tooltipMessage", TooltipMessage);
-    function HighlightingField() {
-        return function (result, fieldName) {
-            var mustHighlighted = false;
-            if (result
-                && !result.isSuccessful
-                && (!fieldName || (fieldName && fieldName === result.fieldName))) {
-                mustHighlighted = true;
-            }
-            return mustHighlighted;
-        };
-    }
-    CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -35052,7 +35057,7 @@ $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class
         "MaxPerMatchMoreThanOrEqualMaxBet": "Max Per Match must be greater than or equal to Max Bet.",
         "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
         "MinBetCannotBeNegative": "Min Bet cannot be negative.",
-        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet.",
         "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}.",
         "Msg_10003": "Invalid Min bet/ Max bet/ Max per match.",
         "Msg_10005": "Min bet must be less than or equal to max bet and max bet must be less than or equal to max bet per match.",

@@ -51,7 +51,7 @@
                                    data-ng-change="updateValue()"
                                    data-ng-disabled="item.lossLimit === 0"
                                    data-tooltip
-                                   data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit'}}"
+                                   data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit':'unlimitedLimit'}}"
                                    data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField: 'lossLimit') }"
                                    class="setting-field setting-field--number setting-field--has-constraint" />
                             <span>({{item.minLossRange | number}} - {{item.maxLossRange | number | unlimitedLimit}})</span>

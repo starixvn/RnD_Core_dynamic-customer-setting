@@ -160,7 +160,7 @@ namespace Fanex.CustomerSetting.SettingType2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Min Bet should be less than or equal to Max .
+        ///   Looks up a localized string similar to The Min Bet should be less than or equal to Max Bet..
         /// </summary>
         internal static string MinBetLessThanOrEqualMaxBet {
             get {

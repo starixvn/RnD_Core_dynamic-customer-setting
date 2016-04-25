@@ -72,7 +72,7 @@
         "MaxPerMatchMoreThanOrEqualMaxBet": "Max Per Match must be greater than or equal to Max Bet.",
         "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
         "MinBetCannotBeNegative": "Min Bet cannot be negative.",
-        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet.",
         "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}.",
         "Msg_10003": "Invalid Min bet/ Max bet/ Max per match.",
         "Msg_10005": "Min bet must be less than or equal to max bet and max bet must be less than or equal to max bet per match.",
