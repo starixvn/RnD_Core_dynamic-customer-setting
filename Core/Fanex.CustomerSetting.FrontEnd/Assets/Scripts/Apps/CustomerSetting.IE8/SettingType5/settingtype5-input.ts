@@ -20,7 +20,7 @@ module CustomerSetting.IE8 {
         public controller: any = ["$scope", ($scope: ISettingType5InputScope) => {
             $scope.updateValue = () => {
                 $scope.item.validate();
-                $scope.item.remain = $scope.item.corectData($scope.item.upline.chargeCommission - $scope.item.chargeCommission);
+                $scope.item.remain = $scope.item.correctData($scope.item.upline.chargeCommission - $scope.item.chargeCommission);
             };
         }];
 

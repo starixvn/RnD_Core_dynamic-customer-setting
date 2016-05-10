@@ -1,5 +1,5 @@
 ﻿<div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.super">
-    <div class="block__cell w33-percent">{{item.upline.chargeCommission | number}} %</div>
+    <div class="block__cell w33-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
     <div class="block__cell w33-percent setting-field-wrapper align-left" data-ng-if="settingType | editableSettingType">
         <input type="text"
                maxlength="5"
@@ -12,11 +12,11 @@
                class="setting-field setting-field--number setting-field--has-constraint" />
         <span>%</span>
     </div>
-    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | number}} %</div>
+    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | formatNumber}} %</div>
 </div>
 <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.master">
-    <div class="block__cell w33-percent">{{item.upline.chargeCommission | number}} %</div>
+    <div class="block__cell w33-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
     <div class="block__cell w33-percent setting-field-wrapper align-left" data-ng-if="settingType | editableSettingType">
         <input type="text"
                maxlength="5"
@@ -29,11 +29,11 @@
                class="setting-field setting-field--number setting-field--has-constraint" />
         <span>%</span>
     </div>
-    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | number}} %</div>
+    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | formatNumber}} %</div>
 </div>
 <div class="align-center" data-ng-if="customerLevel === avaiCustomerLevels.agent">
-    <div class="block__cell w33-percent">{{item.upline.chargeCommission | number}} %</div>
+    <div class="block__cell w33-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
     <div class="block__cell w33-percent setting-field-wrapper align-left" data-ng-if="settingType | editableSettingType">
         <input type="text"
                maxlength="5"
@@ -46,19 +46,19 @@
                class="setting-field setting-field--number setting-field--has-constraint" />
         <span>%</span>
     </div>
-    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | number}} %</div>
+    <div class="block__cell w33-percent" data-ng-if="!(settingType | editableSettingType)">{{item.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.remain | formatNumber}} %</div>
 </div>
 <div class="align-center" data-ng-if="uplineLevel === avaiCustomerLevels.super && customerLevel === avaiCustomerLevels.member">
-    <div class="block__cell w33-percent">{{item.upline.upline.chargeCommission | number}} %</div>
-    <div class="block__cell w33-percent">{{item.upline.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.chargeCommission | number}} %</div>
+    <div class="block__cell w33-percent">{{item.upline.upline.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell w33-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.chargeCommission | formatNumber}} %</div>
 </div>
 <div class="align-center" data-ng-if="uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member">
-    <div class="block__cell w50-percent">{{item.upline.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w50-percent">{{item.chargeCommission | number}} %</div>
+    <div class="block__cell w50-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w50-percent">{{item.chargeCommission | formatNumber}} %</div>
 </div>
 <div class="align-center" data-ng-if="uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member">
-    <div class="block__cell w50-percent">{{item.upline.chargeCommission | number}} %</div>
-    <div class="block__cell block__cell--no-border w50-percent">{{item.chargeCommission | number}} %</div>
+    <div class="block__cell w50-percent">{{item.upline.chargeCommission | formatNumber}} %</div>
+    <div class="block__cell block__cell--no-border w50-percent">{{item.chargeCommission | formatNumber}} %</div>
 </div>

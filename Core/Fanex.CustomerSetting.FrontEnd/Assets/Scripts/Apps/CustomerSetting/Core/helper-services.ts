@@ -278,6 +278,19 @@ module CustomerSetting {
 
     ModuleRegister.service("valueRangeService", ValueRangeService);
 
+    function FormatNumber($filter: ng.IFilterService): Function {
+        var numberFilter = $filter("number");
+
+        return (value: number, factor?: number) => {
+            factor = factor || value.toString().indexOf(".") > 0 ? 2 : 0;
+
+            return numberFilter(value, factor);
+        };
+    }
+
+    FormatNumber.$inject = ["$filter"];
+    ModuleRegister.filter("formatNumber", FormatNumber);
+
     function NAValue(): Function {
         return (value: string) => {
             return value || "---";

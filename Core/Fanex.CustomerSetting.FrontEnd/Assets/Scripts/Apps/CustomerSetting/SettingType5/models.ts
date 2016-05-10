@@ -10,7 +10,7 @@ module CustomerSetting {
         public upline: SettingType5Item;
 
         public get remain(): number {
-            return this.corectData(this.upline.chargeCommission - this.chargeCommission);
+            return this.correctData(this.upline.chargeCommission - this.chargeCommission);
         }
 
         private customerLevel: Level;
@@ -105,7 +105,7 @@ module CustomerSetting {
             return settingItem;
         }
 
-        private corectData(rate: number): number {
+        private correctData(rate: number): number {
             return parseFloat(rate.toFixed(2));
         }
 

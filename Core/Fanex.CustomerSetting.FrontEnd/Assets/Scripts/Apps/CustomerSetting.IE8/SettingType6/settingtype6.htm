@@ -54,7 +54,7 @@
                                    data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit':'unlimitedLimit'}}"
                                    data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField: 'lossLimit') }"
                                    class="setting-field setting-field--number setting-field--has-constraint" />
-                            <span>({{item.minLossRange | number}} - {{item.maxLossRange | number | unlimitedLimit}})</span>
+                            <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span>
                         </div>
                         <div class="setting-field-wrapper">
                             <label class="setting-field--checkfield">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
-                        {{item.lossLimit | number | unlimitedLimit}}
+                        {{item.lossLimit | formatNumber | unlimitedLimit}}
                     </div>
                 </div>
                 <div class="block__row block__row--border-top" data-ng-if="customerLevel === avaiCustomerLevels.member">
@@ -83,10 +83,10 @@
                             <span data-ng-if="item.winLimit === 0">{{'Unlimited' | settingType6Label}}</span>
                             <span data-ng-if="item.winLimit > 0">
                                 <span data-ng-class="{ 'red-text': item.currentWinLossAmount.winPercent >= highestPercentageRange }">
-                                    {{item.currentWinLossAmount.winPercent | number}}%
+                                    {{item.currentWinLossAmount.winPercent | formatNumber}}%
                                 </span>
                                 <span>{{'Of' | settingType6Label}}</span>
-                                <span>{{item.currentWinLossAmount.maxWinAmount | number}}</span>
+                                <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span>
                             </span>
                         </div>
                         <div>
@@ -94,10 +94,10 @@
                             <span data-ng-if="item.lossLimit === 0">{{'Unlimited' | settingType6Label}}</span>
                             <span data-ng-if="item.lossLimit > 0">
                                 <span data-ng-class="{ 'red-text': item.currentWinLossAmount.lossPercent >= highestPercentageRange }">
-                                    {{item.currentWinLossAmount.lossPercent | number}}%
+                                    {{item.currentWinLossAmount.lossPercent | formatNumber}}%
                                 </span>
                                 <span>{{'Of' | settingType6Label}}</span>
-                                <span>{{item.currentWinLossAmount.maxLossAmount | number}}</span>
+                                <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span>
                             </span>
                         </div>
                     </div>

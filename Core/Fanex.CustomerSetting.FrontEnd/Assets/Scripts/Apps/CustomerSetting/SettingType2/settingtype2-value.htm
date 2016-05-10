@@ -20,7 +20,7 @@
 </div>
 <div class="align-center"
      data-ng-if="!(settingType | editableSettingType)">
-    <div class="block__cell w33-percent">{{item.minBet | number}}</div>
-    <div class="block__cell w33-percent">{{item.maxBet | number}}</div>
-    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.maxPerMatch | number}}</div>
+    <div class="block__cell w33-percent">{{item.minBet | formatNumber}}</div>
+    <div class="block__cell w33-percent">{{item.maxBet | formatNumber}}</div>
+    <div class="block__cell block__cell--no-border w33-percent w33-percent--last">{{item.maxPerMatch | formatNumber}}</div>
 </div>

@@ -25,7 +25,7 @@ module CustomerSetting.IE8 {
 
                 if (settingItem.upline) {
                     this.upline = new SettingType5Item(settingItem.upline);
-                    this.remain = this.corectData(this.upline.chargeCommission - this.chargeCommission);
+                    this.remain = this.correctData(this.upline.chargeCommission - this.chargeCommission);
                 }
             }
 
@@ -103,7 +103,7 @@ module CustomerSetting.IE8 {
             return settingItem;
         }
 
-        public corectData(rate: number): number {
+        public correctData(rate: number): number {
             return parseFloat(rate.toFixed(2));
         }
 

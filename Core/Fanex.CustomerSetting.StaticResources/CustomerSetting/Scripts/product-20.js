@@ -31696,6 +31696,15 @@ var CustomerSetting;
     }());
     CustomerSetting.ValueRangeService = ValueRangeService;
     CustomerSetting.ModuleRegister.service("valueRangeService", ValueRangeService);
+    function FormatNumber($filter) {
+        var numberFilter = $filter("number");
+        return function (value, factor) {
+            factor = factor || value.toString().indexOf(".") > 0 ? 2 : 0;
+            return numberFilter(value, factor);
+        };
+    }
+    FormatNumber.$inject = ["$filter"];
+    CustomerSetting.ModuleRegister.filter("formatNumber", FormatNumber);
     function NAValue() {
         return function (value) {
             return value || "---";
@@ -32380,6 +32389,68 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    }());
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var Tooltip = (function () {
         function Tooltip($window, $compile, $timeout, $templateCache) {
             var _this = this;
@@ -32490,68 +32561,6 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
-            this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
-            };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
-        }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
-            get: function () {
-                return {
-                    setting: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
-    }());
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -33710,10 +33719,10 @@ var CustomerSetting;
                     element.addClass("setting-field--has-constraint");
                 }
                 if (scope.fieldName === "minBet") {
-                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
                 }
                 else {
-                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
                 }
                 _this.$compile(wrapElement)(scope);
                 modelCtrl = element.controller("ngModel");
@@ -34102,7 +34111,7 @@ var CustomerSetting;
         }
         Object.defineProperty(SettingType5Item.prototype, "remain", {
             get: function () {
-                return this.corectData(this.upline.chargeCommission - this.chargeCommission);
+                return this.correctData(this.upline.chargeCommission - this.chargeCommission);
             },
             enumerable: true,
             configurable: true
@@ -34156,7 +34165,7 @@ var CustomerSetting;
             }
             return settingItem;
         };
-        SettingType5Item.prototype.corectData = function (rate) {
+        SettingType5Item.prototype.correctData = function (rate) {
             return parseFloat(rate.toFixed(2));
         };
         SettingType5Item.prototype.revertPecentageToRate = function (rate) {
@@ -34354,12 +34363,12 @@ $templateCache.put("settingtype1-value.htm","<div data-ng-if=\"settingType | edi
 $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping><adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></adjust-member-pt-modal></div>");
 $templateCache.put("bet-setting-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
 $templateCache.put("settingtype2-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | betSettingLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | betSettingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerMatch\' | betSettingLabel)}}</div></div>");
-$templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | number}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | number}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | number}}</div></div>");
+$templateCache.put("settingtype2-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></bet-setting-input><bet-setting-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></bet-setting-input><bet-setting-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerMatch\"></bet-setting-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerMatch | formatNumber}}</div></div>");
 $templateCache.put("settingtype2.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
 $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype5-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w33-percent\">{{::(\'TotalCharge\' | settingType5Label)}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'SupersShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'Remain\' | settingType5Label)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w33-percent\">{{::(\'Given\' | settingType5Label)}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'MastersShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'Remain\' | settingType5Label)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w33-percent\">{{::(\'Given\' | settingType5Label)}}</div><div class=\"block__lbl w33-percent\" data-ng-bind-html=\"\'AgentsShare\' | settingType5Label | unsafe\"></div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'Remain\' | settingType5Label)}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.super && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w33-percent\">{{::(\'CommForMaster\' | settingType5Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'CommForAgent\' | settingType5Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'ChargeOnMemberNetWin\' | settingType5Label)}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w50-percent\">{{::(\'CommForAgent\' | settingType5Label)}}</div><div class=\"block__lbl block__lbl--no-border w50-percent\">{{::(\'ChargeOnMemberNetWin\' | settingType5Label)}}</div></div><div class=\"w80-percent\" data-ng-if=\"uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w50-percent\">{{::(\'Given\' | settingType5Label)}}</div><div class=\"block__lbl block__lbl--no-border w50-percent\">{{::(\'ChargeOnMemberNetWin\' | settingType5Label)}}</div></div>");
-$templateCache.put("settingtype5-value.htm","<div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.super && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w33-percent\">{{item.upline.upline.chargeCommission | number}} %</div><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.chargeCommission | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | number}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | number}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | number}} %</div></div>");
+$templateCache.put("settingtype5-value.htm","<div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | formatNumber}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | formatNumber}} %</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell w33-percent setting-field-wrapper align-left\" data-ng-if=\"settingType | editableSettingType\"><input type=\"text\" maxlength=\"5\" data-ng-model=\"item.chargeCommission\" data-settingtype5-input data-ng-change=\"updateValue()\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType5ResourceService\':\'chargeCommission\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'chargeCommission\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>%</span></div><div class=\"block__cell w33-percent\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.remain | formatNumber}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.super && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w33-percent\">{{item.upline.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell w33-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.chargeCommission | formatNumber}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.master && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | formatNumber}} %</div></div><div class=\"align-center\" data-ng-if=\"uplineLevel === avaiCustomerLevels.agent && customerLevel === avaiCustomerLevels.member\"><div class=\"block__cell w50-percent\">{{item.upline.chargeCommission | formatNumber}} %</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.chargeCommission | formatNumber}} %</div></div>");
 $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");}]);
 /*jshint -W101,-W106,-W044,-W098*/
 

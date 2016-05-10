@@ -60,10 +60,10 @@ module CustomerSetting.IE8 {
 
             if (scope.fieldName === "minBet") {
                 wrapElement.append(
-                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
             } else {
                 wrapElement.append(
-                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | number}}</span>", scope.fieldName));
+                    StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
             }
 
             this.$compile(element)(scope);
