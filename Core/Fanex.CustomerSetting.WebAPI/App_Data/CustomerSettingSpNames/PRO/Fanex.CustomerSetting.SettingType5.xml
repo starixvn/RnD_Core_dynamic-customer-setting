@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="ChargeCommission">
-    <Setting Key="CustSetting_SuperChargeCommissionSelect" SpName="Acc_CustSetting_SuperSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_SuperChargeCommissionSelect" SpName="Acc_CustSetting_SuperSettingSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="SuperDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="DefaultMaxDiscount" ObjectProperty="UplineChargeCommission" />
     </Setting>
 
-    <Setting Key="CustSetting_MasterChargeCommissionSelect" SpName="Acc_CustSetting_MasterSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_MasterChargeCommissionSelect" SpName="Acc_CustSetting_MasterSettingSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="MasterDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="SuperDiscount" ObjectProperty="UplineChargeCommission" />
     </Setting>
 
-    <Setting Key="CustSetting_AgentChargeCommissionSelect" SpName="Acc_CustSetting_AgentSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_AgentChargeCommissionSelect" SpName="Acc_CustSetting_AgentSettingSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="AgentDiscount" ObjectProperty="ChargeCommission" />
       <Mapping DataField="MasterDiscount" ObjectProperty="UplineChargeCommission" />
     </Setting>
 
-    <Setting Key="CustSetting_MemberChargeCommissionSelect" SpName="Acc_CustSetting_MemberSettingSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+    <Setting Key="CustSetting_MemberChargeCommissionSelect" SpName="Acc_CustSetting_MemberSettingSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="PlayerDiscount" ObjectProperty="ChargeCommission" />
