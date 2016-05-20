@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".readme", ".readme", "{5697E4DC-4C04-474A-83C0-5B24B1344DB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -60,8 +60,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI", "Core\Fanex.CustomerSetting.WebAPI\Fanex.CustomerSetting.WebAPI.csproj", "{9B52485B-6CAC-4B70-994B-5D8CF74B3380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI.Tests", "Core\Tests\Fanex.CustomerSetting.WebAPI.Tests\Fanex.CustomerSetting.WebAPI.Tests.csproj", "{3697334F-BBA4-41CB-9610-F73C80293271}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.MatrixClient", "Matrix\Fanex.CustomerSetting.MatrixClient\Fanex.CustomerSetting.MatrixClient.csproj", "{995A61D3-DC81-4624-99F4-315CDC805096}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.WebApi", "Matrix\Fanex.CustomerSetting.Matrix.WebApi\Fanex.CustomerSetting.Matrix.WebApi.csproj", "{EF2A479E-4107-4055-86C1-5AF7947EEEFD}"
@@ -107,6 +105,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8", "SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8\Fanex.CustomerSetting.SettingType8.csproj", "{0B879D62-31D1-4640-AC8C-F618AAAEC6D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType8.Tests", "SettingTypes\SettingType8\Fanex.CustomerSetting.SettingType8.Tests\Fanex.CustomerSetting.SettingType8.Tests.csproj", "{F198F6F4-FDB2-4550-B270-CEBD79B1950E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI.Tests", "Core\Tests\Fanex.CustomerSetting.WebAPI.Tests\Fanex.CustomerSetting.WebAPI.Tests.csproj", "{22B07933-D1E2-4258-BFB6-152FEF795A58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,10 +186,6 @@ Global
 		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B52485B-6CAC-4B70-994B-5D8CF74B3380}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3697334F-BBA4-41CB-9610-F73C80293271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3697334F-BBA4-41CB-9610-F73C80293271}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3697334F-BBA4-41CB-9610-F73C80293271}.Release|Any CPU.Build.0 = Release|Any CPU
 		{995A61D3-DC81-4624-99F4-315CDC805096}.Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{995A61D3-DC81-4624-99F4-315CDC805096}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{995A61D3-DC81-4624-99F4-315CDC805096}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -258,6 +254,10 @@ Global
 		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F198F6F4-FDB2-4550-B270-CEBD79B1950E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B07933-D1E2-4258-BFB6-152FEF795A58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B07933-D1E2-4258-BFB6-152FEF795A58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B07933-D1E2-4258-BFB6-152FEF795A58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B07933-D1E2-4258-BFB6-152FEF795A58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -283,7 +283,6 @@ Global
 		{3E059FA6-3822-475F-9694-F3DBB15ACF98} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{183E8744-85E2-4F7C-902F-1DFEC955323E} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{9B52485B-6CAC-4B70-994B-5D8CF74B3380} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
-		{3697334F-BBA4-41CB-9610-F73C80293271} = {09967616-74BB-44FA-918B-819B7AA63F26}
 		{995A61D3-DC81-4624-99F4-315CDC805096} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{EF2A479E-4107-4055-86C1-5AF7947EEEFD} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
 		{4522D0DC-716A-4113-B534-72C3078F1EC6} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
@@ -306,5 +305,9 @@ Global
 		{30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC} = {B306779E-7128-423D-AC57-5963D0629397}
 		{0B879D62-31D1-4640-AC8C-F618AAAEC6D8} = {30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}
 		{F198F6F4-FDB2-4550-B270-CEBD79B1950E} = {30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}
+		{22B07933-D1E2-4258-BFB6-152FEF795A58} = {09967616-74BB-44FA-918B-819B7AA63F26}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

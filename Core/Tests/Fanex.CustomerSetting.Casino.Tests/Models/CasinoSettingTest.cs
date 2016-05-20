@@ -30,16 +30,6 @@
         }
 
         [Test]
-        public void CasinoSettingCtor_CasinoStatusIsHidden_ThrowInvalidOperationException()
-        {
-            //// Arrange
-            var customerProductStatus = new CustomerProductStatus { IsHidden = true };
-
-            //// Act & Assert
-            Assert.Throws<InvalidOperationException>(() => new CasinoSetting(setting, customerProductStatus));
-        }
-
-        [Test]
         public void CasinoSetting_CustomerProductStatusIsSyncedAndDonlineIsSynced_IsNormalModeMustBeTrue()
         {
             //// Arrange

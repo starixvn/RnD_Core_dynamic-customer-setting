@@ -8,35 +8,35 @@
     {
         private static object[] agentPTItems =
         {
-            new object[] 
+            new object[]
             {
-                0,
+                (byte)0,
                 true,
-                1,
-                true,
-                true,
-                "<PT SportType=\"1\" BetType=\"1\" " + 
-                " IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
-            },
-            new object[] 
-            {
-                0,
-                true,
-                1,
-                false,
-                false,
-                "<PT SportType=\"1\" BetType=\"1\" " + 
-                " IsLive=\"0\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"0\" UpdAllMems_Value=\"10\"/>"
-            },
-            new object[] 
-            {
-                1,
-                false,
-                0,
+                (byte)1,
                 true,
                 true,
                 "<PT SportType=\"1\" BetType=\"1\" " +
-                " IsLive=\"1\" MasterPT=\"1\" IsAutoMasterPT=\"0\" AutoMasterPT=\"0\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
+                "IsLive=\"1\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
+            },
+            new object[]
+            {
+                (byte)0,
+                true,
+                (byte)1,
+                false,
+                false,
+                "<PT SportType=\"1\" BetType=\"1\" " +
+                "IsLive=\"0\" MasterPT=\"0\" IsAutoMasterPT=\"1\" AutoMasterPT=\"1\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"0\" UpdAllMems_Value=\"10\"/>"
+            },
+            new object[]
+            {
+                (byte)1,
+                false,
+                (byte)0,
+                true,
+                true,
+                "<PT SportType=\"1\" BetType=\"1\" " +
+                "IsLive=\"1\" MasterPT=\"1\" IsAutoMasterPT=\"0\" AutoMasterPT=\"0\" AgentPT=\"10\" MinPT=\"4\" IsUpdAllMems=\"1\" UpdAllMems_Value=\"10\"/>"
             }
         };
 
@@ -74,9 +74,9 @@
 
             //// Assert
             Assert.AreEqual(errorCode, actualResult.Code);
-        }        
+        }
 
-        [Test, TestCaseSource("AgentPTItems")]        
+        [Test, TestCaseSource("agentPTItems")]
         public void ToXml_ReturnFormattedXml(
             byte m2,
             bool im2,
@@ -91,13 +91,13 @@
                 M2 = m2,
                 IM2 = im2,
                 UM2 = um2,
-                A2 = 10,
-                N2 = 4,
+                A2 = (byte)10,
+                N2 = (byte)4,
                 IsLive = isLive,
                 SportTypeId = 1,
                 BetTypeId = 1,
                 IsUpdateMasterPTOnMembers = isUpdateMasterPTOnMember,
-                MasterPTOnMembers = 10
+                MasterPTOnMembers = (byte)10
             };
 
             //// Act
