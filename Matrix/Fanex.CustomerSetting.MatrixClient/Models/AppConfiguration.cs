@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Models
 {
-    using Fanex.CustomerSetting.MatrixClient.Attributes;
+    using Attributes;
 
     internal class AppConfiguration
     {

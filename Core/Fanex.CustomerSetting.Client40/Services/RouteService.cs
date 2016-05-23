@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
     using System.Net;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Exceptions;
-    using Fanex.CustomerSetting.Client40.Helpers;
-    using Fanex.CustomerSetting.Client40.Models.Requests;
+    using Configurations;
+    using Exceptions;
+    using Helpers;
+    using Models.Requests;
     using RestSharp;
 
     public class RouteService : IRouteService

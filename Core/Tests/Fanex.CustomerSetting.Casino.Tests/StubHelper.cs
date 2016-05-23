@@ -2,24 +2,24 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
     using Models;
 
     public static class StubHelper
     {
-        private static readonly byte[] DefaultSettingTypeValues = new byte[] { 1, 2, 3, 4 };
+        private static readonly byte[] DefaultSettingTypeValues = { 1, 2, 3, 4 };
 
         public static UpdateCustomerSettingCommand CreateUpdateSettingParam(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
-            Level uplineLevel = null, 
+            Level uplineLevel = null,
             params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;
-            var setting = (settingTypeValues != null && settingTypeValues.Any()) 
+            var setting = (settingTypeValues != null && settingTypeValues.Any())
                 ? CreateCustomerSetting(customerId, customerLevel, productId, settingTypeValues)
                 : CreateCustomerSetting(customerId, customerLevel, productId, DefaultSettingTypeValues);
             return new UpdateCustomerSettingCommand(setting, uplineLevel);
@@ -28,7 +28,7 @@
         public static Setting CreateCustomerSetting(
             int customerId = 1,
             Level customerLevel = null,
-            byte productId = 1, 
+            byte productId = 1,
             params byte[] settingTypeValues)
         {
             customerLevel = customerLevel ?? Level.Master;

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Messages
 {
-    using Fanex.CustomerSetting.Services;
+    using Services;
 
     public interface ISubMessage
     {

@@ -2,9 +2,9 @@
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.DemoSite.App_Start;
-    using Fanex.CustomerSetting.DemoSite.Constants;
+    using AppStart;
+    using Client40.Configurations;
+    using Constants;
 
     public class HomeController : Controller
     {
@@ -45,11 +45,11 @@
             Session[SessionKeys.LanguageSessionKey] = language;
 
             return Json(new
-                {
-                    Code = 0,
-                    Message = string.Empty,
-                    IsSuccessful = true
-                });
+            {
+                Code = 0,
+                Message = string.Empty,
+                IsSuccessful = true
+            });
         }
 
         public ActionResult RedirectAction()

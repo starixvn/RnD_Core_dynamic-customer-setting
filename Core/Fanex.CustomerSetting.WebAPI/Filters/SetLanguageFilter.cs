@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.WebApi.Models.Request;
+    using Models.Request;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public sealed class SetLanguageFilter : ActionFilterAttribute

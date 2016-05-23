@@ -3,8 +3,8 @@
     using System;
     using System.Net.Http.Formatting;
     using System.Web.Http;
-    using Fanex.CustomerSetting.WebApi.Configurations;
-    using Fanex.CustomerSetting.WebApi.Filters;
+    using Configurations;
+    using Filters;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -14,7 +14,7 @@
         {
             if (config == null)
             {
-                throw new ArgumentNullException("config", "HttpConfiguration cannot be null");
+                throw new ArgumentNullException(nameof(config), "HttpConfiguration cannot be null");
             }
 
             config.MapHttpAttributeRoutes();

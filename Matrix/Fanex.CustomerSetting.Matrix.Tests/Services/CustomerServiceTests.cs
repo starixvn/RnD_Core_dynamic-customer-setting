@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Matrix.Services;
-    using Fanex.CustomerSetting.Matrix.Services.Impl;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.Data.Repository;
+    using Criteria;
+    using CustomerSetting.Models.Enumerations;
+    using Data.Repository;
+    using Dtos;
+    using Matrix.Services;
+    using Matrix.Services.Impl;
     using NSubstitute;
     using NUnit.Framework;
 

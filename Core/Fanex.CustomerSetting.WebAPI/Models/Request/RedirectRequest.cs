@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
     using System.ComponentModel.DataAnnotations;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
 
     public class RedirectRequest : SettingRequest
     {

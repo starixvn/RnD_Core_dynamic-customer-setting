@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models.Results
 {
-    using Fanex.CustomerSetting.Models.Constants;
-    using Resource = Fanex.CustomerSetting.Resource;
+    using Constants;
+    using Resource = Resource;
 
     public class Result : IResult
     {

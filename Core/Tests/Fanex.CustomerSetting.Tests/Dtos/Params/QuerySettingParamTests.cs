@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Dtos.Params
 {
     using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
     using NUnit.Framework;
 
     [TestFixture]
@@ -29,7 +29,7 @@
                     () => new CustomerSettingQuery(1, Level.Master, 0, null)));
         }
 
-        [Test, TestCaseSource("dataSourceSMALevels")]
+        [Test, TestCaseSource(nameof(dataSourceSMALevels))]
         public void SetUplineLevel_ValueIsNotNullAndCustomerIsNotMember_ThrowArgumentOutOfRangeException(Level customerLevel)
         {
             //// Act
@@ -37,7 +37,7 @@
                 new TestDelegate(
                     () => new CustomerSettingQuery(1, customerLevel, 1, customerLevel)));
         }
-        
+
         [Test]
         public void SetUplineLevel_ValueIsNullAndCustomerIsMember_ThrowArgumentNullException()
         {

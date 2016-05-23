@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Tests.Models
 {
     using System;
-    using Fanex.CustomerSetting.SettingType5.Dtos;
-    using Fanex.CustomerSetting.SettingType5.Models;
+    using Dtos;
     using NUnit.Framework;
+    using SettingType5.Models;
 
     public class ChargeCommissionItemTests
     {
@@ -210,7 +210,7 @@
             var chargeComm = new ChargeCommissionItem
             {
                 ChargeCommission = 0.9m,
-                Upline = new ChargeCommissionItem()
+                Upline = new ChargeCommissionItem
                 {
                     ChargeCommission = 0.88m
                 }

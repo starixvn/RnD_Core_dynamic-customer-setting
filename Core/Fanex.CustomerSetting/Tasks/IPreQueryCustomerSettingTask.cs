@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tasks
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Requests;
+    using Models;
+    using Models.Requests;
 
     public interface IPreQueryCustomerSettingTask
     {

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
     using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Enumerations;
 
     public class CustomerSettingQuery
     {
@@ -45,7 +45,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Customer Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Customer Id cannot be negative or zero.");
                 }
 
                 _customerId = value;
@@ -63,7 +63,7 @@
             {
                 if (value < Level.Member || value > Level.Super)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Invalid customer level.");
                 }
 
                 _customerLevel = value;
@@ -81,7 +81,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Product Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Product Id cannot be negative or zero.");
                 }
 
                 _productId = value;
@@ -101,20 +101,20 @@
                 {
                     if (value < Level.Agent || value > Level.Super)
                     {
-                        throw new ArgumentOutOfRangeException("value", "Upline Level is out of value range.");
+                        throw new ArgumentOutOfRangeException(nameof(value), "Upline Level is out of value range.");
                     }
 
                     // If current context is editting super/master/agent then Upline level should be null.
                     // TODO: WTF
                     if (_customerLevel.IsNotMemberLevel())
                     {
-                        throw new ArgumentOutOfRangeException("value", "Upline should be null when getting customer setting is not member");
+                        throw new ArgumentOutOfRangeException(nameof(value), "Upline should be null when getting customer setting is not member");
                     }
                 }
                 else if (_customerLevel.IsMemberLevel())
                 {
                     // When editting member, upline level should have value
-                    throw new ArgumentNullException("value", "Upline cannot be null when getting member setting.");
+                    throw new ArgumentNullException(nameof(value), "Upline cannot be null when getting member setting.");
                 }
 
                 _uplineLevel = value;

@@ -4,7 +4,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Services;
+    using Services;
 
     /// <summary>
     /// Contains Xml data of Raw Message,

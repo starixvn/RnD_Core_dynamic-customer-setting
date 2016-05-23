@@ -2,22 +2,21 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Tests;
+    using CustomerSetting.Tests.Models;
+    using DataAccesses;
+    using Dtos;
     using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType7.DataAccesses;
-    using Fanex.CustomerSetting.SettingType7.Dtos;
-    using Fanex.CustomerSetting.SettingType7.Models;
-    using Fanex.CustomerSetting.SettingType7.Resources;
-    using Fanex.CustomerSetting.SettingType7.Services;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
+    using Logging;
     using NSubstitute;
     using NUnit.Framework;
+    using Resources;
+    using SettingType7.Models;
+    using SettingType7.Services;
 
     [TestFixture]
     public class SettingTypeServiceTest

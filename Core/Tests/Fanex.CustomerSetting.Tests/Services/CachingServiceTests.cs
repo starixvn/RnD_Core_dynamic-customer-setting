@@ -5,9 +5,8 @@
     using System.Runtime.Caching;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fanex.CustomerSetting.Services.Impl;
+    using CustomerSetting.Services.Impl;
     using FluentAssertions;
-    using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]
@@ -190,7 +189,7 @@
             var t1 = Task.Factory.StartNew(() =>
             {
                 sut.GetOrAdd(
-                    TestKey, 
+                    TestKey,
                     () =>
                     {
                         Interlocked.Increment(ref times);
@@ -201,7 +200,7 @@
             var t2 = Task.Factory.StartNew(() =>
             {
                 sut.GetOrAdd(
-                    TestKey, 
+                    TestKey,
                     () =>
                     {
                         Interlocked.Increment(ref times);
@@ -259,7 +258,7 @@
             var sut = new CachingService();
 
             var expected = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
                 {
                     times++;
@@ -277,7 +276,7 @@
             var sut = new CachingService();
 
             var expectedFirst = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
                 {
                     times++;
@@ -285,7 +284,7 @@
                 });
 
             var expectedSecond = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
                 {
                     times++;
@@ -306,7 +305,7 @@
             sut.Add(TestKey, cached);
 
             var expected = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
                 {
                     times++;
@@ -359,21 +358,21 @@
             var sut = new CachingService();
 
             var expectedFirst = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
                 {
                     times++;
                     return new DateTime(2001, 01, 01);
-                }, 
+                },
                 new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1), Priority = CacheItemPriority.NotRemovable });
 
             var expectedSecond = sut.GetOrAdd(
-                TestKey, 
+                TestKey,
                 () =>
             {
                 times++;
                 return new DateTime(2002, 01, 01);
-            }, 
+            },
             new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1), Priority = CacheItemPriority.NotRemovable });
 
             Assert.AreEqual(2001, expectedFirst.Year);

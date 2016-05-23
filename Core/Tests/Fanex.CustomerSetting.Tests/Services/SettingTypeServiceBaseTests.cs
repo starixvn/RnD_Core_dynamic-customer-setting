@@ -3,15 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Messages;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Messages;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Logging;
+    using Models;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -116,7 +116,7 @@
             MessageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>()).Returns(messageContent);
 
             //// Act
-           this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
+            this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
 
             //// Assert
             MessageService.Received().TranslateMessage(
@@ -189,16 +189,16 @@
         }
 
         public override SettingResult UpdateCustomerSettingType(
-            ISettingContext settingContext, 
-            int customerId, 
-            Level customerLevel, 
-            Level uplineLevel, 
+            ISettingContext settingContext,
+            int customerId,
+            Level customerLevel,
+            Level uplineLevel,
             byte productId,
             SettingType settingType)
         {
             if (customerId == 0)
             {
-                throw new ArgumentOutOfRangeException("customerId");
+                throw new ArgumentOutOfRangeException(nameof(customerId));
             }
 
             return new SettingResult(Result.Success);

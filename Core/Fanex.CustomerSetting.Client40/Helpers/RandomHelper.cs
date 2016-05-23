@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Fanex.CustomerSetting.Client40.Exceptions;
+    using Exceptions;
 
     internal static class RandomHelper
     {

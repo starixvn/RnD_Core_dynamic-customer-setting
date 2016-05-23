@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
+    using Models.Requests;
+    using Models.Results;
 
     public interface IUpdateSettingService : ISettingService
     {

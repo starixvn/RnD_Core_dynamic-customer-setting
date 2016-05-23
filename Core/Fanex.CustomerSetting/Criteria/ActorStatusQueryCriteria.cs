@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Criteria
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     internal class ActorStatusQueryCriteria : CriteriaBase
     {

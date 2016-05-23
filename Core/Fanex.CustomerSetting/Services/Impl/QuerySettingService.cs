@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Common.Helper;
+    using Criteria;
+    using Data.Repository;
+    using Exceptions;
+    using Logging;
+    using Models;
+    using Models.Constants;
+    using Models.Requests;
 
     public class QuerySettingService : IQuerySettingService
     {
@@ -84,7 +84,7 @@
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             var validationResult = ValidationService.ValidateQuerySettingAction(query);

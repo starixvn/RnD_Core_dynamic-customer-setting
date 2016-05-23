@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Concurrent;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Services;
+    using Common.Helper;
+    using Models;
+    using Services;
 
     internal class SettingTypeServiceFactory : ISettingTypeServiceFactory
     {

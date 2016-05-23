@@ -4,10 +4,10 @@
     using System.Linq;
     using System.Net;
     using System.Web;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.CustomerSetting.Client40.Models;
-    using Fanex.CustomerSetting.DemoSite.App_Start;
-    using Fanex.CustomerSetting.DemoSite.Constants;
+    using AppStart;
+    using Client40;
+    using Client40.Models;
+    using Constants;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {

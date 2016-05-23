@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType1.Models;
     using NUnit.Framework;
+    using SettingType1.Models;
 
     [TestFixture]
     public class MasterPTItemTests

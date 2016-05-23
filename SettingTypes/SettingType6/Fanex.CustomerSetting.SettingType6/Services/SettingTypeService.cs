@@ -1,19 +1,19 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.Services
 {
     using System.Collections.Generic;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType6.DataAccesses;
-    using Fanex.CustomerSetting.SettingType6.Models;
-    using Fanex.CustomerSetting.SettingType6.Models.Requests;
-    using Fanex.CustomerSetting.SettingType6.Resources;
-    using Fanex.Logging;
+    using Common.Helper;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using DataAccesses;
+    using Logging;
+    using Models;
+    using Models.Requests;
     using Newtonsoft.Json;
+    using Resources;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService, IAdditionalRequestHandler
     {

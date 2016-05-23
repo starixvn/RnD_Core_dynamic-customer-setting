@@ -4,9 +4,9 @@
     using System.IO;
     using System.Resources;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Messages;
-    using Fanex.CustomerSetting.Resource;
+    using Models.Constants;
+    using Models.Messages;
+    using Resource;
 
     public abstract class MessageServiceBase : IMessageService
     {
@@ -59,7 +59,7 @@
         {
             if (resouceManager == null)
             {
-                throw new ArgumentNullException("resouceManager", "Resource Mananger cannot be null");
+                throw new ArgumentNullException(nameof(resouceManager), "Resource Mananger cannot be null");
             }
 
             var key = string.Format(MessageFormat, messsageId);

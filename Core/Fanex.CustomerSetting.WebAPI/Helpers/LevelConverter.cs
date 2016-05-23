@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Enumerations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -11,7 +11,7 @@
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj", "object cannot be null");
+                throw new ArgumentNullException(nameof(obj), "object cannot be null");
             }
 
             return Enumeration.FromValue<Level>(Convert.ToByte(obj["value"]));

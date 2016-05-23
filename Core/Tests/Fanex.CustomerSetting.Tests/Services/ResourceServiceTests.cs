@@ -1,13 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.RemotingRefApi;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.Data.Repository;
+    using CustomerSetting.Models;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Data.Repository;
     using NSubstitute;
     using NUnit.Framework;
+    using RemotingRefApi;
 
     [TestFixture]
     public class ResourceServiceTests

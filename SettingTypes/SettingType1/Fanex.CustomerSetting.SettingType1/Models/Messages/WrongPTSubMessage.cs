@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models.Messages
 {
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Models.Messages;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType1.Resources;
+    using CustomerSetting.Models.Messages;
+    using CustomerSetting.Services;
+    using Resources;
 
     public class WrongPTSubMessage : DefaultSubMessage, ISubMessage
     {

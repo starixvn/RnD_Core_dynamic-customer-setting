@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Models.Requests;
+    using Requests;
 
     public class PermissionContext : SettingRequest
     {

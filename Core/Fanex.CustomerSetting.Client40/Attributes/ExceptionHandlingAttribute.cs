@@ -5,8 +5,8 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.Logging;
+    using Configurations;
+    using Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     internal sealed class ExceptionHandlingAttribute : HandleErrorAttribute
@@ -26,9 +26,9 @@
             base.OnException(filterContext);
         }
 
-        [SuppressMessage("Microsoft.Globalization", 
-            "CA1303:Do not pass literals as localized parameters", 
-            MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)", 
+        [SuppressMessage("Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
+            MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)",
             Justification = "Reviewed!")]
         private void Log(Exception ex)
         {

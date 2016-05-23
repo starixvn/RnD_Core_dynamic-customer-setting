@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType1.Services;
+    using CustomerSetting.Models;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
     using FluentAssertions;
     using NUnit.Framework;
+    using SettingType1.Services;
 
     [TestFixture]
     public class SettingTypeServiceFactoryTest

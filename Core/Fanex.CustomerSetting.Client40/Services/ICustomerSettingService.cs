@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
-    using Fanex.CustomerSetting.Client40.Models.Requests;
+    using Models.Requests;
     using RestSharp;
 
     public interface ICustomerSettingService

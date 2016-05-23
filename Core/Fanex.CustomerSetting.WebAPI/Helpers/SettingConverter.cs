@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
-    using Fanex.CustomerSetting.Models;
+    using CustomerSetting.Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -11,7 +11,7 @@
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader", "Reader cannot be null");
+                throw new ArgumentNullException(nameof(reader), "Reader cannot be null");
             }
 
             return JObject.Parse((string)reader.Value);

@@ -3,8 +3,8 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.Common;
-    using Fanex.CustomerSetting.Models.Requests;
+    using Common;
+    using CustomerSetting.Models.Requests;
 
     public class MultipleUpdateSettingRequest : UpdateSettingRequest
     {

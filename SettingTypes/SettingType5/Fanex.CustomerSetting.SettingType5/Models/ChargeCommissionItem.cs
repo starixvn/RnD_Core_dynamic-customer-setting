@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Models
 {
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType5.Constants;
-    using Fanex.CustomerSetting.SettingType5.Dtos;
-    using Fanex.CustomerSetting.SettingType5.Resources;
+    using Common.Helper;
+    using Constants;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Results;
+    using Dtos;
+    using Resources;
 
     public class ChargeCommissionItem : SettingItemDefault
     {
@@ -29,7 +29,7 @@
 
             if (chargeCommissionDto.UplineOfUplineChargeCommission.HasValue)
             {
-                Upline.Upline = new ChargeCommissionItem()
+                Upline.Upline = new ChargeCommissionItem
                 {
                     ChargeCommission = chargeCommissionDto.UplineOfUplineChargeCommission.Value
                 };

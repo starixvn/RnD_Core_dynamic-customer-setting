@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.Tests.Models
 {
     using Constants;
-    using Fanex.CustomerSetting.SettingType6.Models;
-    using Fanex.CustomerSetting.SettingType6.Resources;
-    using Fanex.CustomerSetting.SettingType6.Utilities;
     using NUnit.Framework;
+    using Resources;
+    using SettingType6.Models;
+    using Utilities;
 
     public class WinLossLimitItemTest
     {

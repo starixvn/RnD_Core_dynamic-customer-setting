@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.Product20.Criteria
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     public class SettingRestrictionModesCriteria : CriteriaBase
     {

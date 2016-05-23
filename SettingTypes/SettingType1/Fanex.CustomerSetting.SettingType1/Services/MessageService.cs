@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Services
 {
-    using Fanex.CustomerSetting.Models.Messages;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Models.Messages;
-    using Fanex.CustomerSetting.SettingType1.Resources;
+    using Constants;
+    using CustomerSetting.Models.Messages;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Models.Messages;
+    using Resources;
 
     internal class MessageService : MessageServiceBase, IMessageService
     {

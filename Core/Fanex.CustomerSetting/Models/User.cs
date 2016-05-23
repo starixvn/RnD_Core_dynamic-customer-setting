@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
     using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Enumerations;
 
     [Serializable]
     public class User : Entity<int>
@@ -22,7 +22,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "User Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "User Id cannot be negative or zero.");
                 }
 
                 _id = value;
@@ -40,7 +40,7 @@
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentOutOfRangeException("value", "Username cannot be null or empty.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Username cannot be null or empty.");
                 }
 
                 _name = value;
@@ -58,7 +58,7 @@
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Sub account id cannot be negative.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Sub account id cannot be negative.");
                 }
 
                 _subAccountId = value;
@@ -76,12 +76,12 @@
             {
                 if (ReferenceEquals(value, null))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (value == Level.Member)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Cannot set level Member to user");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Cannot set level Member to user");
                 }
 
                 _level = value;

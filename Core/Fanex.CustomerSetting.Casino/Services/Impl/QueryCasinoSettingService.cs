@@ -8,7 +8,7 @@
     using Models;
 
     /// <summary>
-    /// <see cref="https://redmine.nexcel.vn/projects/allbet/wiki/Allbet_Credit_Changes_On_NAP#2.1"/>
+    /// <see url="https://redmine.nexcel.vn/projects/allbet/wiki/Allbet_Credit_Changes_On_NAP#2.1"/>
     /// </summary>
     public class QueryCasinoSettingService : IQuerySettingService
     {

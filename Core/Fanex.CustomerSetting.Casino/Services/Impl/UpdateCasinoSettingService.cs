@@ -8,9 +8,9 @@
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Exceptions;
-    using Fanex.CustomerSetting.Services;
     using Logging;
 
     public class UpdateCasinoSettingService : IUpdateCasinoSettingService

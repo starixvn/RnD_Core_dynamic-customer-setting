@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Tests
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Tests.Models;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using Models;
 
     public static class InstanceFactory
     {
@@ -95,12 +95,12 @@
             Level uplineLevel = null)
         {
             customerLevel = customerLevel ?? Level.Member;
-            
+
             if (customerLevel.IsMemberLevel())
             {
                 uplineLevel = uplineLevel ?? Level.Master;
             }
-            
+
             return new CustomerSettingQuery(customerId, customerLevel, productId, uplineLevel);
         }
 

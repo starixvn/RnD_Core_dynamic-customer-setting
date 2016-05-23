@@ -3,7 +3,7 @@
     using System;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.MatrixClient.Configurations;
+    using Configurations;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public sealed class CustomerSettingMatrixAuth : AuthorizeAttribute

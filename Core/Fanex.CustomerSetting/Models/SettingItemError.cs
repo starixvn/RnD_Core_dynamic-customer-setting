@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Resource;
+    using Resource;
+    using Results;
 
     public class SettingItemError : ISettingItem
     {

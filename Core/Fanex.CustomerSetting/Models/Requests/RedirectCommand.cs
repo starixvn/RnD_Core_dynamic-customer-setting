@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Models.Requests
 {
     using System;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Enumerations;
 
     public class RedirectCommand
     {

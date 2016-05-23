@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
 
     public class Customer : Entity<int>
     {

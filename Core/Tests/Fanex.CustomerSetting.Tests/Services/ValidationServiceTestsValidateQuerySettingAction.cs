@@ -2,21 +2,20 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using CustomerSetting.Criteria;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Data.Repository;
+    using DataAccesses;
+    using Logging;
+    using Models;
     using NSubstitute;
     using NUnit.Framework;
+    using Resource;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]
@@ -372,31 +371,8 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = new Level[] 
-        {
+        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = {
             Level.Super, Level.Master, Level.Agent
         };
-
-        ////[Test]
-        ////public void ValidateQuerySetting_RaisedException_AlwaysLogError()
-        ////{
-        ////    //// Arrange
-        ////    CustomerSettingQuery query = new CustomerSettingQuery(
-        ////        customerId: 1,
-        ////        customerLevel: Level.Master,
-        ////        productId: 1);
-        ////    _settingContext.Actor.Level = Level.Company;
-
-        ////    var expectedException = new Exception("Expected Exception");
-        ////    _dynamicRepository.Get<bool>(Arg.Any<ActorStatusQueryCriteria>()).Returns(x => { throw expectedException; });
-
-        ////    //// Act
-        ////   _validationService.ValidateQuerySettingAction(query);
-
-        ////    //// Assert
-        ////    _logger.Received().Error(
-        ////        Arg.Is<string>(message => message.Contains(expectedException.Message)),
-        ////        Arg.Any<CustomerSettingException>());
-        ////}
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Services
 {
-    using Fanex.CustomerSetting.MatrixClient.Models.Requests;
+    using Models.Requests;
     using RestSharp;
 
     public interface ICustomerSettingMatrixService

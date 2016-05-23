@@ -3,7 +3,7 @@
     using System.Diagnostics.CodeAnalysis;
 
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Reviewed !")]
-    public enum SystemType : int
+    public enum SystemType
     {
         Accounting = 1,
 

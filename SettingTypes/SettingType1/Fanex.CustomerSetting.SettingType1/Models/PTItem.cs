@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models;
+    using CustomerSetting.Models;
 
     public class PTItem : SettingItemDefault
     {

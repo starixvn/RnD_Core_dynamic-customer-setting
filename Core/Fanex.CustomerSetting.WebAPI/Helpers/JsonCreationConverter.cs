@@ -57,17 +57,17 @@
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader", "Reader cannot be null");
+                throw new ArgumentNullException(nameof(reader), "Reader cannot be null");
             }
 
             if (type == null)
             {
-                throw new ArgumentNullException("type", "type cannot be null");
+                throw new ArgumentNullException(nameof(type), "type cannot be null");
             }
 
             if (serializer == null)
             {
-                throw new ArgumentNullException("serializer", "serializer cannot be null");
+                throw new ArgumentNullException(nameof(serializer), "serializer cannot be null");
             }
         }
     }

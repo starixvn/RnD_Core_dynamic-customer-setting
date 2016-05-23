@@ -59,7 +59,7 @@
             {
                 if (SubResults != null && SubResults.Any())
                 {
-                    return SubResults.Where(x => !x.IsSuccessful).FirstOrDefault() == null;
+                    return SubResults.FirstOrDefault(x => !x.IsSuccessful) == null;
                 }
 
                 return base.IsSuccessful;

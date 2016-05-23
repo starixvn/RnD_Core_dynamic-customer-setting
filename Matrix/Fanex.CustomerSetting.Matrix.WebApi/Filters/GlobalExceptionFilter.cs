@@ -7,10 +7,10 @@
     using System.Text;
     using System.Threading;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.Matrix.WebApi.Extensions;
-    using Fanex.CustomerSetting.Resource;
-    using Fanex.Data;
-    using Fanex.Logging;
+    using Data;
+    using Extensions;
+    using Logging;
+    using Resource;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public sealed class GlobalExceptionFilter : ExceptionFilterAttribute

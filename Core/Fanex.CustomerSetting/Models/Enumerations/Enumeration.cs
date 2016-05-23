@@ -6,9 +6,6 @@
     using System.Linq;
     using System.Reflection;
 
-    /// <summary>
-    /// <see cref="https://github.com/HeadspringLabs/Tarantino/blob/master/src/Tarantino.Core/Commons/Model/Enumerations/Enumeration.cs"/>
-    /// </summary>
     [Serializable]
     public abstract class Enumeration : IComparable
     {
@@ -35,13 +32,13 @@
             get { return _value; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
-            MessageId = "1", 
-            Justification = "Reviewed"),
-        System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
             "CA1062:Validate arguments of public methods",
-            MessageId = "0", 
+            MessageId = "1",
+            Justification = "Reviewed"),
+        System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "0",
             Justification = "Reviewed")]
         public static byte AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
         {
@@ -178,7 +175,7 @@
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             return Value.CompareTo(((Enumeration)obj).Value);
@@ -188,12 +185,12 @@
         {
             if (ReferenceEquals(left, null))
             {
-                throw new ArgumentNullException("left");
+                throw new ArgumentNullException(nameof(left));
             }
 
             if (ReferenceEquals(right, null))
             {
-                throw new ArgumentNullException("right");
+                throw new ArgumentNullException(nameof(right));
             }
         }
 

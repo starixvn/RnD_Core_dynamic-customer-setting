@@ -1,13 +1,15 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.WebApi.Filters
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.Matrix.WebApi.Configurations;
+    using Configurations;
     using Sunplus.UMControllerLibrary;
 
-    public class MaintenanceFilter : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public sealed class MaintenanceFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

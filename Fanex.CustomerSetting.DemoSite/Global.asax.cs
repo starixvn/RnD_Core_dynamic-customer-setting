@@ -4,8 +4,8 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.CustomerSetting.MatrixClient;
+    using Client40;
+    using MatrixClient;
 
     public class MvcApplication : System.Web.HttpApplication
     {

@@ -2,8 +2,8 @@
 {
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.WebApi.Helpers;
-    using Fanex.Logging;
+    using Helpers;
+    using Logging;
 
     public class LogInfoFilter : ActionFilterAttribute
     {

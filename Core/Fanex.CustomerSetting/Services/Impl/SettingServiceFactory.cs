@@ -3,8 +3,8 @@
     using System;
     using Common.Helper;
     using Configurations;
-    using Fanex.CustomerSetting.Services;
     using Models;
+    using Services;
 
     public class SettingServiceFactory : ISettingServiceFactory
     {
@@ -14,7 +14,7 @@
 
             Type type = SettingServiceConfigurator.GetServiceType(system, productId, isQueryAction: true);
             return Activator.CreateInstance(type, settingContext) as IQuerySettingService;
-        }        
+        }
 
         public IUpdateSettingService CreateUpdateService(byte system, byte productId, ISettingContext settingContext)
         {

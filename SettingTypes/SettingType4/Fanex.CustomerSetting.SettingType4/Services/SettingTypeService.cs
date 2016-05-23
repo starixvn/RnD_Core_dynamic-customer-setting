@@ -1,18 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Services
 {
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType4.DataAccesses;
-    using Fanex.CustomerSetting.SettingType4.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Models;
-    using Fanex.CustomerSetting.SettingType4.Resources;
-    using Fanex.Logging;
+    using Common.Helper;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using DataAccesses;
+    using Dtos;
+    using Logging;
+    using Models;
+    using Resources;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
     {

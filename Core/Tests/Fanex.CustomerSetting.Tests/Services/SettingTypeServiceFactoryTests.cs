@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
     using System;
-    using Fanex.CustomerSetting.Services.Impl;
+    using CustomerSetting.Services.Impl;
     using FluentAssertions;
     using NUnit.Framework;
 

@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Matrix.Models;
-    using Fanex.CustomerSetting.Matrix.Resources;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.Data.Repository;
+    using Common.Helper;
+    using Criteria;
+    using CustomerSetting.Models.Enumerations;
+    using Data.Repository;
+    using Dtos;
+    using Models;
+    using Resources;
 
     internal class CustomerService : ICustomerService
     {

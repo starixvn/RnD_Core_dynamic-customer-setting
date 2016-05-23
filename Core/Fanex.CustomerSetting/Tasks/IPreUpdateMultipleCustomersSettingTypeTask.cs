@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tasks
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Models;
+    using Models.Enumerations;
 
     internal interface IPreUpdateMultipleCustomersSettingTypeTask
     {

@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.Client40.Exceptions;
-    using Fanex.CustomerSetting.Client40.Helpers;
-    using Fanex.CustomerSetting.Client40.Models;
+    using Exceptions;
+    using Helpers;
+    using Models;
 
     public abstract class CustomerSettingRegistration
     {

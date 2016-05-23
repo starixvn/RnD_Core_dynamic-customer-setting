@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models;
+    using Models;
 
     public interface IProductService
     {

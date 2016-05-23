@@ -2,17 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.DataAccesses;
-    using Fanex.CustomerSetting.SettingType1.Resources;
-    using Fanex.Logging;
+    using Common.Helper;
+    using Constants;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using DataAccesses;
+    using Logging;
+    using Resources;
 
     public class SettingTypeService : SettingTypeServiceBase, ISettingTypeService
     {
@@ -133,10 +133,10 @@
             {
                 var settingResult = new SettingResult(
                     result.Code,
-                    messageContent.Message, 
+                    messageContent.Message,
                     result.MsgType,
-                    memberId, 
-                    Constants.SettingTypeId, 
+                    memberId,
+                    Constants.SettingTypeId,
                     Label.PositionTaking,
                     messageContent.SubMessages);
 

@@ -4,8 +4,8 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.MatrixClient.Configurations;
-    using Fanex.Logging;
+    using Configurations;
+    using Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class ExceptionHandlingAttribute : HandleErrorAttribute

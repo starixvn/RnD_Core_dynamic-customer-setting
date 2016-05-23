@@ -3,16 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Tasks;
-    using Fanex.CustomerSetting.Tasks.Product20.Constants;
-    using Fanex.CustomerSetting.Tasks.Product20.Criteria;
-    using Fanex.CustomerSetting.Tasks.Product20.Models;
-    using Fanex.CustomerSetting.Tasks.Product20.Resources;
-    using Fanex.Data.Repository;
+    using Common.Helper;
+    using Constants;
+    using Criteria;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using Data.Repository;
+    using Models;
+    using Resources;
+    using Tasks;
 
     public class RestrictPermissionTask : IPostQueryCustomerSettingTask, IPreUpdateCustomerSettingTask, IPreUpdateMultipleCustomersSettingTask
     {

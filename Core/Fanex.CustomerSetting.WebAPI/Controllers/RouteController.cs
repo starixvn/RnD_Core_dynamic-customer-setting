@@ -1,13 +1,18 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Controllers
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.WebApi.Models.Request;
+    using Models.Request;
+    using Services.Impl;
 
     public class RouteController : ApiController
     {
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
+            Justification = "Reviewed!")]
         public HttpResponseMessage Redirect(RedirectRequest request)
         {
             if (request == null)

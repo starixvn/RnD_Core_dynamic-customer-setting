@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Services
 {
-    using Fanex.CustomerSetting.MatrixClient.Configurations;
-    using Fanex.CustomerSetting.MatrixClient.Exceptions;
-    using Fanex.CustomerSetting.MatrixClient.Helpers;
-    using Fanex.CustomerSetting.MatrixClient.Models.Requests;
+    using Configurations;
+    using Exceptions;
+    using Helpers;
+    using Models.Requests;
     using RestSharp;
 
     public class CustomerSettingMatrixService : ICustomerSettingMatrixService
@@ -17,11 +17,6 @@
         {
         }
 
-        /// <summary>
-        /// https://groups.google.com/forum/#!topic/restsharp/X8JPtcfnSlo
-        /// http://pawel.sawicz.eu/restsharp/
-        /// </summary>
-        /// <param name="?"></param>
         internal CustomerSettingMatrixService(IRestClient restClient)
         {
             _restClient = restClient ?? GetRestClient();

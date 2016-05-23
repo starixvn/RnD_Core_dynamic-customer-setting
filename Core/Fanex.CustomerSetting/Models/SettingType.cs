@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models.Results;
+    using Results;
 
     [Serializable]
     public class SettingType
@@ -73,7 +73,7 @@
 
             var failedResult = GetFailedResult();
 
-            return (failedResult == null) ? Result.Success : failedResult;
+            return failedResult ?? Result.Success;
         }
 
         private IResult GetFailedResult()

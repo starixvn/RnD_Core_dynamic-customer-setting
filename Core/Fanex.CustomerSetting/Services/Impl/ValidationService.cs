@@ -3,19 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.DataAccesses;
-    using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Resource;
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using Common.Helper;
+    using Criteria;
+    using Data.Repository;
+    using DataAccesses;
+    using DataAccesses.Impl;
+    using Exceptions;
+    using Logging;
+    using Models;
+    using Models.Constants;
+    using Models.Enumerations;
+    using Models.Requests;
+    using Models.Results;
+    using Resource;
 
     internal class ValidationService : IValidationService
     {
@@ -51,7 +51,7 @@
         {
             if (query == null)
             {
-                throw new ArgumentNullException("query");
+                throw new ArgumentNullException(nameof(query));
             }
 
             var customerId = query.CustomerId;
@@ -84,9 +84,9 @@
         private void CheckActorStatus(User actor)
         {
             var enabledStatus = _dynamicRepository.Get<bool>(new ActorStatusQueryCriteria
-                {
-                    CustId = actor.Id
-                });
+            {
+                CustId = actor.Id
+            });
 
             if (!enabledStatus)
             {
@@ -232,14 +232,14 @@
         {
             if (command == null)
             {
-                throw new ArgumentNullException("command");
+                throw new ArgumentNullException(nameof(command));
             }
 
             try
             {
                 CheckUpdateSetting(command);
 
-                CheckActorPermissionOnMultipleMembers(command.CustomerIds, command.Setting.CustomerLevel);
+                CheckActorPermissionOnMultipleMembers(command.CustomerIds);
             }
             catch (CustomerSettingException customerSettingException)
             {
@@ -261,7 +261,7 @@
             }
         }
 
-        private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds, Level customerLevel)
+        private void CheckActorPermissionOnMultipleMembers(IEnumerable<int> memberIds)
         {
             var result = _validationDataAccess.ValidatePermissionMultiple(_settingContext.Actor.Id, string.Join(",", memberIds));
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Models.Requests;
+    using Models.Requests;
 
     public interface IRouteService
     {

@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.WebApi.App_Start
+﻿namespace Fanex.CustomerSetting.WebApi.AppStart
 {
     using Casino.Services.Impl;
     using CustomerSetting.Configurations;

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Models
 {
     using Common.Helper;
-    using Fanex.CustomerSetting.Models;
+    using CustomerSetting.Models;
 
     public class CasinoSetting : Setting
     {

@@ -5,7 +5,7 @@
     using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.WebApi.Configurations;
+    using Configurations;
     using Sunplus.UMControllerLibrary;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
@@ -19,7 +19,7 @@
             {
                 if (actionContext == null)
                 {
-                    throw new ArgumentNullException("actionContext", "Action Context cannot be null");
+                    throw new ArgumentNullException(nameof(actionContext), "Action Context cannot be null");
                 }
 
                 actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Service is under-maintenance.");

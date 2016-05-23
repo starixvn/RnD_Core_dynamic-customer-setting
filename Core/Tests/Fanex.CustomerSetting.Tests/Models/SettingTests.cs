@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using FluentAssertions;
     using NUnit.Framework;
 
@@ -60,7 +60,7 @@
 
             //// Act
             Action action = () => { setting.CustomerLevel = null; };
-            
+
             //// Assert
             action.ShouldThrow<ArgumentNullException>("value");
         }

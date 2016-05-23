@@ -3,16 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Matrix.Models;
-    using Fanex.CustomerSetting.Matrix.Services;
-    using Fanex.CustomerSetting.Matrix.Services.Impl;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.Data.Repository;
+    using Criteria;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Services;
+    using Data.Repository;
+    using Dtos;
+    using Matrix.Services;
+    using Matrix.Services.Impl;
+    using Models;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -140,7 +138,7 @@
         {
             //// Arrange
             AssumeDatabaseReturnValidPT();
-            
+
             //// Act
             var actualPTMatrix = _positionTakingMatrixService.GetPTMatrix(_settingMatrixQuery);
 

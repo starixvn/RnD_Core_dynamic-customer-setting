@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Enumerations;
+    using Models;
 
     public class MultipleUpdateCustomerSettingCommand : UpdateCustomerSettingCommand
     {
@@ -33,7 +33,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value", "CustomerIds cannot be null when update multiple setting.");
+                    throw new ArgumentNullException(nameof(value), "CustomerIds cannot be null when update multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(value, _customerNames);
@@ -53,7 +53,7 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value", "CustomerNames cannot be null when update multiple setting.");
+                    throw new ArgumentNullException(nameof(value), "CustomerNames cannot be null when update multiple setting.");
                 }
 
                 ValidateCustomerIdListWithCustomerNameList(_customerIds, value);
@@ -71,17 +71,17 @@
 
                 if (customerIdsLength <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("customerIds", "CustomerIds should have at least one customer id.");
+                    throw new ArgumentOutOfRangeException(nameof(customerIds), "CustomerIds should have at least one customer id.");
                 }
 
                 if (customerNamesLength <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("customerNames", "CustomerNames should have at least one customer id.");
+                    throw new ArgumentOutOfRangeException(nameof(customerNames), "CustomerNames should have at least one customer id.");
                 }
 
                 if (customerIdsLength != customerNamesLength)
                 {
-                    throw new ArgumentOutOfRangeException("customerIds", "CustomerIds does not match with CustomerNames");
+                    throw new ArgumentOutOfRangeException(nameof(customerIds), "CustomerIds does not match with CustomerNames");
                 }
             }
         }

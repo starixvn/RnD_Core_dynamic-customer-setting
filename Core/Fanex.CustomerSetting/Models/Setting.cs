@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Results;
+    using Enumerations;
+    using Results;
 
     [Serializable]
     public class Setting : ISetting
@@ -53,7 +53,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Product Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Product Id cannot be negative or zero.");
                 }
 
                 _productId = value;
@@ -73,7 +73,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Customer Id cannot be negative or zero.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Customer Id cannot be negative or zero.");
                 }
 
                 _customerId = value;
@@ -91,12 +91,12 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (value < Level.Member || value > Level.Super)
                 {
-                    throw new ArgumentOutOfRangeException("value", "Invalid customer level.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Invalid customer level.");
                 }
 
                 _customerLevel = value;

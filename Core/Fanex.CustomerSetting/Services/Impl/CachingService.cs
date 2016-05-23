@@ -3,9 +3,6 @@
     using System;
     using System.Runtime.Caching;
 
-    /// <summary>
-    ///  <see cref="https://github.com/alastairtree/LazyCache"/>
-    /// </summary>
     public class CachingService : ICachingService
     {
         private readonly ObjectCache _cache;
@@ -19,7 +16,7 @@
         {
             if (cache == null)
             {
-                throw new ArgumentNullException("cache");
+                throw new ArgumentNullException(nameof(cache));
             }
 
             this._cache = cache;
@@ -58,7 +55,7 @@
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             }
 
             ValidateKey(key);
@@ -145,12 +142,12 @@
         {
             if (key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentOutOfRangeException("key", @"Cache keys cannot be empty or whitespace");
+                throw new ArgumentOutOfRangeException(nameof(key), "Cache keys cannot be empty or whitespace");
             }
         }
     }

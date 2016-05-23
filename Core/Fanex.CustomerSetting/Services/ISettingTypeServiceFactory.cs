@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Models;
+    using Models;
 
     public interface ISettingTypeServiceFactory
     {

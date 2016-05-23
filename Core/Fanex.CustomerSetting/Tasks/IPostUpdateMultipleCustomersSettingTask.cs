@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tasks
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
+    using Models;
+    using Models.Requests;
+    using Models.Results;
 
     public interface IPostUpdateMultipleCustomersSettingTask
     {

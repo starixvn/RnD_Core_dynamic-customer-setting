@@ -3,8 +3,8 @@
     using System;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Models;
+    using Configurations;
+    using Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     internal sealed class CustomerSettingAuth : AuthorizeAttribute
@@ -18,10 +18,10 @@
             base.OnAuthorization(filterContext);
 
             PermissionContext permissionContext = CustomerSettingRegistration.GetPermissionContext();
-            
+
             permissionContext.AuthorizationContext = filterContext;
             permissionContext.AllowUpdate = IsUpdate;
-            
+
             var isAuthorized = true;
 
             if (IsMultipleUpdate)

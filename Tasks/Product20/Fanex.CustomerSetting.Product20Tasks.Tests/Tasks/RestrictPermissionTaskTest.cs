@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Tasks.Product20;
-    using Fanex.CustomerSetting.Tasks.Product20.Criteria;
-    using Fanex.CustomerSetting.Tasks.Product20.Models;
-    using Fanex.CustomerSetting.Tasks.Product20.Resources;
-    using Fanex.Data.Repository;
+    using CustomerSetting.Tasks.Product20;
+    using CustomerSetting.Tasks.Product20.Criteria;
+    using CustomerSetting.Tasks.Product20.Models;
+    using CustomerSetting.Tasks.Product20.Resources;
+    using Data.Repository;
+    using Models;
+    using Models.Enumerations;
+    using Models.Requests;
     using NSubstitute;
     using NUnit.Framework;
 

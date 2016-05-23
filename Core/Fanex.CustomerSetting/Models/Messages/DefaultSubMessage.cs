@@ -2,8 +2,8 @@
 {
     using System;
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Services;
+    using Enumerations;
+    using Services;
 
     public class DefaultSubMessage : ISubMessage
     {
@@ -17,7 +17,7 @@
         {
             if (resourceService == null)
             {
-                throw new ArgumentNullException("resourceService");
+                throw new ArgumentNullException(nameof(resourceService));
             }
 
             switch ((SettingLevel)settingLevel)

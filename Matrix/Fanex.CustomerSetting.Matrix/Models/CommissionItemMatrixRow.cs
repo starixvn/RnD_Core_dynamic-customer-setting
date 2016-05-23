@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Models
 {
     using System;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Enumerations;
+    using Dtos;
 
     public class CommissionItemMatrixRow
     {
@@ -14,7 +14,7 @@
         {
             if (commissionItemMatrixDto == null)
             {
-                throw new ArgumentNullException("commissionItemMatrixDto", "Commission Item Matrix Dto cannot be null");
+                throw new ArgumentNullException(nameof(commissionItemMatrixDto), "Commission Item Matrix Dto cannot be null");
             }
 
             CustomerLevel = Enumeration.FromValue<Level>(commissionItemMatrixDto.LevelValue);

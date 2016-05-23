@@ -1,14 +1,14 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using NUnit.Framework;
 
     [TestFixture]
     public class UserTests
     {
-        private static object[] isMethodAlwaysReturnRightValueCases =  
+        private static object[] isMethodAlwaysReturnRightValueCases =
         {
             new object[] { Level.Company, Level.Company, true },
             new object[] { Level.Company, Level.Super, false },

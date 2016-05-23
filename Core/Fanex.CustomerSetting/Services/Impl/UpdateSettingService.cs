@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.Logging;
+    using Common.Helper;
+    using Exceptions;
+    using Logging;
+    using Models;
+    using Models.Enumerations;
+    using Models.Requests;
+    using Models.Results;
 
     /// <summary>
     /// Service class for get single customer setting/ update single/multiple setting

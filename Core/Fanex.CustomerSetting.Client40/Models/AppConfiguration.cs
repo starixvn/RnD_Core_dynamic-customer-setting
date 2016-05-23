@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
-    using Fanex.CustomerSetting.Client40.Attributes;
+    using Attributes;
 
     internal class AppConfiguration
     {

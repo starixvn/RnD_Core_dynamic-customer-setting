@@ -5,9 +5,9 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Helpers;
-    using Fanex.Logging;
+    using Configurations;
+    using Helpers;
+    using Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     internal sealed class LogInfoFilter : ActionFilterAttribute

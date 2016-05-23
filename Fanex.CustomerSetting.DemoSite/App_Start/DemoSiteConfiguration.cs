@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.App_Start
+﻿namespace Fanex.CustomerSetting.DemoSite.AppStart
 {
     using System.Configuration;
 

@@ -3,10 +3,10 @@
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.Data;
+    using Data;
+    using Models.Enumerations;
+    using Models.Requests;
+    using Models.Results;
 
     public class BaseDataAccess
     {
@@ -46,7 +46,7 @@
         {
             if (querySettingParam == null)
             {
-                throw new ArgumentNullException("querySettingParam", "querySettingParam cannot be null.");
+                throw new ArgumentNullException(nameof(querySettingParam), "querySettingParam cannot be null.");
             }
 
             var param = new Hashtable

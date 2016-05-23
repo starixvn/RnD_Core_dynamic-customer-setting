@@ -21,7 +21,7 @@
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request", "Request cannot be null");
+                throw new ArgumentNullException(nameof(request), "Request cannot be null");
             }
 
             string data;

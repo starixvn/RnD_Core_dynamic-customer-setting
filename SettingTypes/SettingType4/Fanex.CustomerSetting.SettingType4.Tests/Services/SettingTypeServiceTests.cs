@@ -3,20 +3,20 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType4.DataAccesses;
-    using Fanex.CustomerSetting.SettingType4.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Models;
-    using Fanex.CustomerSetting.SettingType4.Services;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Logging;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Tests;
+    using CustomerSetting.Tests.Models;
+    using DataAccesses;
+    using Dtos;
+    using Logging;
     using NSubstitute;
     using NUnit.Framework;
+    using SettingType4.Models;
+    using SettingType4.Services;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore", Justification = "Reviewed.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed.")]

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Services
 {
     using CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
 
     public interface IUpdateCasinoSettingService : IUpdateSettingService
     {

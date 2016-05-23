@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Attributes;
-    using Fanex.CustomerSetting.Client40.Models;
-    using Fanex.CustomerSetting.Client40.Models.Requests;
-    using Fanex.CustomerSetting.Client40.Services;
+    using Attributes;
+    using Models;
+    using Models.Requests;
     using RestSharp;
+    using Services;
 
     [ExceptionHandlingAttribute, ValidateAntiForgery, LogInfoFilter]
     public class RouteController : Controller

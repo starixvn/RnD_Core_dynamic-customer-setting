@@ -5,8 +5,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Fanex.CustomerSetting.Tasks;
     using Newtonsoft.Json;
+    using Tasks;
 
     internal static class TaskConfiguration
     {

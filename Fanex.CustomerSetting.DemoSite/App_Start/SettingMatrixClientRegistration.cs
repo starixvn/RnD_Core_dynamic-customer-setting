@@ -1,8 +1,8 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.App_Start
+﻿namespace Fanex.CustomerSetting.DemoSite.AppStart
 {
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.MatrixClient;
+    using MatrixClient;
 
     public class SettingMatrixClientRegistration : SettingMatrixRegistration
     {

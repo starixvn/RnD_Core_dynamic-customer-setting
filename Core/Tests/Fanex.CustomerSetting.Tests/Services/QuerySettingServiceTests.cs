@@ -3,16 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.Data.Repository;
-    using Fanex.Logging;
+    using CustomerSetting.Criteria;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Data.Repository;
+    using Exceptions;
+    using Logging;
+    using Models;
     using NSubstitute;
     using NUnit.Framework;
 

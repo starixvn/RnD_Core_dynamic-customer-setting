@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Services
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using Models;
+    using Models.Enumerations;
 
     public interface IAdditionalRequestHandler
     {

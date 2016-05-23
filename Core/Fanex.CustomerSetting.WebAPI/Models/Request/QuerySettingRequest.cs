@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
     using System.ComponentModel.DataAnnotations;
-    using Fanex.CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Requests;
 
     public class QuerySettingRequest : SettingRequest
     {

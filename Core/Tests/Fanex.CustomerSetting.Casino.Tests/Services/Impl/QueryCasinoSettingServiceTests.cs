@@ -23,8 +23,8 @@
 
         private CustomerSettingQuery CreateCustomerSettingQuery(byte levelValue)
         {
-            Level level = Level.FromValue<Level>(levelValue);
-            Level uplineLevel = level.IsMemberLevel() ? Level.FromValue<Level>(++levelValue) : null;
+            Level level = Enumeration.FromValue<Level>(levelValue);
+            Level uplineLevel = level.IsMemberLevel() ? Enumeration.FromValue<Level>(++levelValue) : null;
             var query = new CustomerSettingQuery(10000, level, 110, uplineLevel);
 
             return query;

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Criteria
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     internal class CustomerLineQueryCriteria : CriteriaBase
     {

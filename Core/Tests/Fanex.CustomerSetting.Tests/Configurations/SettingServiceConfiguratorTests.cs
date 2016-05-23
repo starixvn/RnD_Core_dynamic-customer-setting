@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Configurations
 {
     using System;
+    using CustomerSetting.Configurations;
     using CustomerSetting.Services.Impl;
-    using Fanex.CustomerSetting.Configurations;
     using NUnit.Framework;
 
     [TestFixture]
@@ -49,7 +49,7 @@
                     () => SettingServiceConfigurator.GetServiceType(system, product, true));
         }
 
-        [Test, TestCaseSource("ServiceTypeCases")]
+        [Test, TestCaseSource(nameof(ServiceTypeCases))]
         public void GetServiceType_ConfigIsNotExist_ReturnDefaultServiceType(bool isQueryAction, Type serviceType)
         {
             //// Arrange
@@ -64,7 +64,7 @@
             Assert.AreEqual(serviceType, actualServiceType);
         }
 
-        [Test, TestCaseSource("ServiceTypeCases")]
+        [Test, TestCaseSource(nameof(ServiceTypeCases))]
         public void GetServiceType_ConfigDoesNotSetForASpecifiedSystem_ReturnApproriatedTypeGetFromThatConfig(bool isQueryAction, Type serviceType)
         {
             //// Arrange

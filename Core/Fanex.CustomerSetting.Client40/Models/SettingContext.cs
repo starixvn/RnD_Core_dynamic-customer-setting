@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
-    using Fanex.CustomerSetting.Client40.Configurations;
+    using Configurations;
 
     public class SettingContext
     {

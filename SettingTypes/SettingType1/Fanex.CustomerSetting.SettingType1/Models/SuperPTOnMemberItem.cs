@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Resources;
-
     public class SuperPTOnMemberItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} SuperPT=\"{1}\" AutoSuperPT=\"{2}\" IsAutoSuperPT=\"{3}\"/>";

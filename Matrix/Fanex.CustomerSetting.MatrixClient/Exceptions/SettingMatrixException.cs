@@ -3,7 +3,8 @@
     using System;
     using System.Runtime.Serialization;
 
-    public class SettingMatrixException : Exception, ISerializable
+    [Serializable]
+    public class SettingMatrixException : Exception
     {
         public SettingMatrixException()
             : base()

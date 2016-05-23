@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Models
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Results;
+    using Enumerations;
+    using Results;
 
     public interface ISetting
     {

@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.DataAccesses
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType6.Models;
-    using Fanex.CustomerSetting.SettingType6.Models.Requests;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using Models;
+    using Models.Requests;
 
     internal interface IDataAccess
     {

@@ -3,8 +3,8 @@
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
+    using Services;
+    using Services.Impl;
 
     public class ProductController : ApiController
     {

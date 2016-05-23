@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Matrix.Models;
-    using Fanex.CustomerSetting.Matrix.Resources;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.Data.Repository;
+    using Criteria;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Data.Repository;
+    using Dtos;
+    using Models;
+    using Resources;
 
     internal class CommissionMatrixService : ICommissionMatrixService
     {

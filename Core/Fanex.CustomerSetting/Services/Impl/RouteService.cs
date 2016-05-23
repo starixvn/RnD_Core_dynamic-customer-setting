@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Requests;
+    using Common.Helper;
+    using Models;
+    using Models.Requests;
 
     public class RouteService : IRouteService
     {

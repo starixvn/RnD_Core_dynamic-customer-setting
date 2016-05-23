@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.RemotingRefApi;
-    using Fanex.Data.Repository;
+    using Common.Helper;
+    using Criteria;
+    using Data.Repository;
+    using Models;
+    using RemotingRefApi;
 
     public class ResourceService : IResourceService
     {

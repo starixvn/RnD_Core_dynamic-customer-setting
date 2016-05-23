@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Results;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Constants;
+    using CustomerSetting.Models.Results;
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;

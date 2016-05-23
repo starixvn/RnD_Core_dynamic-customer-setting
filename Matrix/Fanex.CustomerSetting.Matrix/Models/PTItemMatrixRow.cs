@@ -2,11 +2,11 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Enumerations;
+    using Dtos;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", 
-        "SA1305:FieldNamesMustNotUseHungarianNotation", 
+    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules",
+        "SA1305:FieldNamesMustNotUseHungarianNotation",
         Justification = "PT is abbriviation for Position Taking.")]
     public class PTItemMatrixRow
     {
@@ -18,7 +18,7 @@
         {
             if (pTMatrixDto == null)
             {
-                throw new ArgumentNullException("pTMatrixDto", "PT Item Matrix Dto cannot be null");
+                throw new ArgumentNullException(nameof(pTMatrixDto), "PT Item Matrix Dto cannot be null");
             }
 
             CustomerLevel = Enumeration.FromValue<Level>(pTMatrixDto.LevelValue);
@@ -72,7 +72,7 @@
             {
                 IsAutoSuperPT = pTMatrixDto.IsAutoSuperPT;
                 AutoSuperPT = IsAutoSuperPT.Value ? pTMatrixDto.AutoSuperPT : 0;
-                
+
                 if (CustomerLevel.IsMasterLevel())
                 {
                     SuperPT = IsAutoSuperPT.Value ? 0 : pTMatrixDto.SuperPT;

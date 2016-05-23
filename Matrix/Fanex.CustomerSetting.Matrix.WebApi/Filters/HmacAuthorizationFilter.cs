@@ -11,7 +11,7 @@
     using System.Web;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.Matrix.WebApi.Configurations;
+    using Configurations;
 
     /// <summary>
     /// http://bitoftech.net/2014/12/15/secure-asp-net-web-api-using-api-key-authentication-hmac-authentication/
@@ -26,7 +26,7 @@
         {
             if (actionContext == null)
             {
-                throw new ArgumentNullException("actionContext", "Action Context cannot be null");
+                throw new ArgumentNullException(nameof(actionContext), "Action Context cannot be null");
             }
 
             var request = actionContext.Request;

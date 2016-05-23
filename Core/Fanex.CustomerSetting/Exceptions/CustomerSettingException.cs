@@ -4,9 +4,9 @@
     using System.Data.SqlClient;
     using System.Runtime.Serialization;
     using System.Text;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.Data;
+    using Data;
+    using Models;
+    using Models.Enumerations;
 
     [Serializable]
     public class CustomerSettingException : Exception
@@ -30,27 +30,27 @@
         {
             if (info != null)
             {
-                this.ActionName = info.GetString("ActionName");
+                ActionName = info.GetString("ActionName");
 
-                this.SystemId = info.GetInt32("SystemId");
-                this.Language = info.GetString("Language");
-                this.IP = info.GetString("IP");
-                this.Domain = info.GetString("Domain");
+                SystemId = info.GetInt32("SystemId");
+                Language = info.GetString("Language");
+                IP = info.GetString("IP");
+                Domain = info.GetString("Domain");
 
-                this.ActorId = info.GetInt32("ActorId");
-                this.ActorName = info.GetString("ActorName");
-                this.ActorLevel = info.GetString("ActorLevel");
-                this.SubAccountId = info.GetInt32("SubAccountId");
+                ActorId = info.GetInt32("ActorId");
+                ActorName = info.GetString("ActorName");
+                ActorLevel = info.GetString("ActorLevel");
+                SubAccountId = info.GetInt32("SubAccountId");
 
-                this.ProductId = info.GetInt32("ProductId");
-                this.SettingTypeId = info.GetInt16("SettingTypeId");
-                this.SettingTypeName = info.GetString("SettingTypeName");
-                this.SettingTypeLevel = info.GetByte("SettingTypeLevel");
+                ProductId = info.GetInt32("ProductId");
+                SettingTypeId = info.GetInt16("SettingTypeId");
+                SettingTypeName = info.GetString("SettingTypeName");
+                SettingTypeLevel = info.GetByte("SettingTypeLevel");
 
-                this.CustomerId = info.GetInt32("CustomerId");
-                this.CustomerIds = info.GetString("CustomerIds");
-                this.CustomerLevel = info.GetString("CustomerLevel");
-                this.UplineLevel = info.GetString("UplineLevel");
+                CustomerId = info.GetInt32("CustomerId");
+                CustomerIds = info.GetString("CustomerIds");
+                CustomerLevel = info.GetString("CustomerLevel");
+                UplineLevel = info.GetString("UplineLevel");
             }
         }
 
@@ -116,7 +116,7 @@
         {
             if (settingContext == null)
             {
-                throw new ArgumentNullException("settingContext", "Setting Context cannot be null");
+                throw new ArgumentNullException(nameof(settingContext), "Setting Context cannot be null");
             }
 
             ActionName = actionName;
@@ -174,27 +174,27 @@
 
             if (info != null)
             {
-                info.AddValue("ActionName", this.ActionName);
+                info.AddValue("ActionName", ActionName);
 
-                info.AddValue("SystemId", this.SystemId);
-                info.AddValue("Language", this.Language);
-                info.AddValue("Domain", this.Domain);
-                info.AddValue("IP", this.IP);
+                info.AddValue("SystemId", SystemId);
+                info.AddValue("Language", Language);
+                info.AddValue("Domain", Domain);
+                info.AddValue("IP", IP);
 
-                info.AddValue("ActorId", this.ActorId);
-                info.AddValue("ActorName", this.ActorName);
-                info.AddValue("ActorLevel", this.ActorLevel);
-                info.AddValue("SubAccountId", this.SubAccountId);
+                info.AddValue("ActorId", ActorId);
+                info.AddValue("ActorName", ActorName);
+                info.AddValue("ActorLevel", ActorLevel);
+                info.AddValue("SubAccountId", SubAccountId);
 
-                info.AddValue("ProductId", this.ProductId);
-                info.AddValue("SettingTypeId", this.SettingTypeId);
-                info.AddValue("SettingTypeName", this.SettingTypeName);
-                info.AddValue("SettingTypeLevel", this.SettingTypeLevel);
+                info.AddValue("ProductId", ProductId);
+                info.AddValue("SettingTypeId", SettingTypeId);
+                info.AddValue("SettingTypeName", SettingTypeName);
+                info.AddValue("SettingTypeLevel", SettingTypeLevel);
 
-                info.AddValue("CustomerId", this.CustomerId);
-                info.AddValue("CustomerIds", this.CustomerIds);
-                info.AddValue("CustomerLevel", this.CustomerLevel);
-                info.AddValue("UplineLevel", this.UplineLevel);
+                info.AddValue("CustomerId", CustomerId);
+                info.AddValue("CustomerIds", CustomerIds);
+                info.AddValue("CustomerLevel", CustomerLevel);
+                info.AddValue("UplineLevel", UplineLevel);
             }
         }
 
@@ -203,27 +203,27 @@
             var messageBuilder = new StringBuilder();
 
             messageBuilder.AppendLine(base.Message);
-            messageBuilder.AppendFormat("Action: {0}", ActionName).AppendLine();
 
-            messageBuilder.AppendFormat("Language: {0}", Language).AppendLine();
-            messageBuilder.AppendFormat("IP: {0}", IP).AppendLine();
-            messageBuilder.AppendFormat("System: {0}", SystemId).AppendLine();
-            messageBuilder.AppendFormat("Domain: {0}", Domain).AppendLine();
+            messageBuilder.AppendLine($"Action: {ActionName}");
+            messageBuilder.AppendLine($"Language: {Language}");
+            messageBuilder.AppendLine($"IP: {IP}");
+            messageBuilder.AppendLine($"System: {SystemId}");
+            messageBuilder.AppendLine($"Domain: {Domain}");
 
-            messageBuilder.AppendFormat("Actor Id: {0}", ActorId).AppendLine();
-            messageBuilder.AppendFormat("Actor Name: {0}", ActorName).AppendLine();
-            messageBuilder.AppendFormat("Actor Level: {0}", ActorLevel).AppendLine();
-            messageBuilder.AppendFormat("Sub Account Id: {0}", SubAccountId).AppendLine();
+            messageBuilder.AppendLine($"Actor Id: {ActorId}");
+            messageBuilder.AppendLine($"Actor Name: {ActorName}");
+            messageBuilder.AppendLine($"Actor Level: {ActorLevel}");
+            messageBuilder.AppendLine($"Sub Account Id: {SubAccountId}");
 
-            messageBuilder.AppendFormat("Customer Id(s): {0}", CustomerId > 0 ? CustomerId.ToString() : CustomerIds).AppendLine();
-            messageBuilder.AppendFormat("Customer Level: {0}", CustomerLevel).AppendLine();
-            messageBuilder.AppendFormat("Upline Level: {0}", UplineLevel).AppendLine();
+            messageBuilder.AppendLine($"Customer Id(s): {(CustomerId > 0 ? CustomerId.ToString() : CustomerIds)}");
+            messageBuilder.AppendLine($"Customer Level: {CustomerLevel}");
+            messageBuilder.AppendLine($"Upline Level: {UplineLevel}");
 
-            messageBuilder.AppendFormat("ProductId: {0}", ProductId).AppendLine();
+            messageBuilder.AppendLine($"ProductId: {ProductId}");
 
-            messageBuilder.AppendFormat("Setting Type Id: {0}", SettingTypeId).AppendLine();
-            messageBuilder.AppendFormat("Setting Type Name: {0}", SettingTypeName).AppendLine();
-            messageBuilder.AppendFormat("Setting Type Level: {0}", SettingTypeLevel).AppendLine();
+            messageBuilder.AppendLine($"Setting Type Id: {SettingTypeId}");
+            messageBuilder.AppendLine($"Setting Type Name: {SettingTypeName}");
+            messageBuilder.AppendLine($"Setting Type Level: {SettingTypeLevel}");
 
             LogDatabaseException(messageBuilder);
 
@@ -232,17 +232,19 @@
 
         private void LogDatabaseException(StringBuilder messageBuilder)
         {
-            if (this.InnerException is ObjectDbException)
-            {
-                var objectDbException = this.InnerException as ObjectDbException;
-                messageBuilder.AppendFormat("Procedure: {0}", objectDbException.DbSetting.SpName).AppendLine();
-                messageBuilder.AppendFormat("DB Name: {0}", objectDbException.DbSetting.DbName).AppendLine();
+            var objectDbException = InnerException as ObjectDbException;
 
-                if (objectDbException.InnerException is SqlException)
+            if (objectDbException != null)
+            {
+                var innerSqlException = objectDbException.InnerException as SqlException;
+
+                messageBuilder.AppendLine($"Procedure: {objectDbException.DbSetting.SpName}");
+                messageBuilder.AppendLine($"DB Name: {objectDbException.DbSetting.DbName}");
+
+                if (innerSqlException != null)
                 {
-                    var innerSqlException = objectDbException.InnerException as SqlException;
-                    messageBuilder.AppendFormat("Server: {0}", innerSqlException.Server).AppendLine();
-                    messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
+                    messageBuilder.AppendLine($"Server: {innerSqlException.Server}");
+                    messageBuilder.AppendLine($"Line Number: {innerSqlException.LineNumber}");
                 }
             }
         }

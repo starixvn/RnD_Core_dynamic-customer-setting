@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType1.Models;
     using NUnit.Framework;
+    using SettingType1.Models;
 
     [TestFixture]
     public class BasePTItemTests
@@ -12,11 +12,11 @@
         {
             //// Arrange
             var positionTakingItem = new PTItem
-                {
-                    SportTypeId = 1,
-                    BetTypeId = 1,
-                    IsLive = isLive
-                };
+            {
+                SportTypeId = 1,
+                BetTypeId = 1,
+                IsLive = isLive
+            };
 
             //// Act
             var actualXmlFormatted = positionTakingItem.ToXml();

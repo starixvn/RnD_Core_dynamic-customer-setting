@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType3.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType3.Dtos;
-    using Fanex.CustomerSetting.SettingType3.Models;
+    using Dtos;
     using NUnit.Framework;
+    using SettingType3.Models;
 
     [TestFixture]
     public class CommissionItemTests

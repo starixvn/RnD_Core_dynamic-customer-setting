@@ -38,9 +38,9 @@
             return isQueryAction ? settingTypeServiceConfig.QueryServiceType : settingTypeServiceConfig.UpdateServiceType;
         }
 
-        public SettingServiceConfigurator ForSystems(params byte[] systems)
+        public SettingServiceConfigurator ForSystems(params byte[] appliedSystems)
         {
-            this.systems.AddRange(systems);
+            systems.AddRange(appliedSystems);
 
             return this;
         }
@@ -52,9 +52,9 @@
             return this;
         }
 
-        public SettingServiceConfigurator ForProducts(params byte[] products)
+        public SettingServiceConfigurator ForProducts(params byte[] appliedProducts)
         {
-            this.products.AddRange(products);
+            products.AddRange(appliedProducts);
 
             return this;
         }
@@ -66,34 +66,34 @@
             return this;
         }
 
-        public SettingServiceConfigurator UseQueryServiceType(Type queryServiceType)
+        public SettingServiceConfigurator UseQueryServiceType(Type usedQueryServiceType)
         {
-            if (ReferenceEquals(queryServiceType, null))
+            if (ReferenceEquals(usedQueryServiceType, null))
             {
-                throw new ArgumentNullException("queryServiceType");
+                throw new ArgumentNullException(nameof(usedQueryServiceType));
             }
 
-            this.queryServiceType = queryServiceType;
+            queryServiceType = usedQueryServiceType;
 
             return this;
         }
 
-        public SettingServiceConfigurator UseUpdateServiceType(Type updateServiceType)
+        public SettingServiceConfigurator UseUpdateServiceType(Type usedUpdateServiceType)
         {
-            if (ReferenceEquals(updateServiceType, null))
+            if (ReferenceEquals(usedUpdateServiceType, null))
             {
-                throw new ArgumentNullException("updateServiceType");
+                throw new ArgumentNullException(nameof(usedUpdateServiceType));
             }
 
-            this.updateServiceType = updateServiceType;
+            updateServiceType = usedUpdateServiceType;
 
             return this;
         }
 
         public void Apply()
         {
-            Check.Argument.IsNotNull(queryServiceType, "queryServiceType");
-            Check.Argument.IsNotNull(updateServiceType, "updateServiceType");
+            Check.Argument.IsNotNull(queryServiceType, nameof(queryServiceType));
+            Check.Argument.IsNotNull(updateServiceType, nameof(updateServiceType));
 
             var configItem = new SettingServiceConfigItem(
                 queryServiceType,

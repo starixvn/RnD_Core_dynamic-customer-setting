@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Resource;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Constants;
+    using CustomerSetting.Models.Results;
     using FluentAssertions;
     using NUnit.Framework;
+    using Resource;
 
     [TestFixture]
     public class SettingItemErrorTests
@@ -35,7 +35,7 @@
 
             //// Act
             IResult settingResult = errorItem.Validate();
-            
+
             //// Assert
             settingResult.ShouldBeEquivalentTo<IResult>(expected);
         }

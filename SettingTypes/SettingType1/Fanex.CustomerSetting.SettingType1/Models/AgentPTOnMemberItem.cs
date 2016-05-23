@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Resources;
-
     public class AgentPTOnMemberItem : PTItem
     {
         private const string PositionTakingXmlFormat = "<PT {0} AgentPT=\"{1}\"/>";

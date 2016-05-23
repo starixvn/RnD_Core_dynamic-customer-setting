@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Criteria
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     public class GetCustomerCasinoStatusCriteria : CriteriaBase
     {

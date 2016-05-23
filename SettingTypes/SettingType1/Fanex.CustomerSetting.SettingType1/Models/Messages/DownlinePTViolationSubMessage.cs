@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models.Messages
 {
     using System.Xml.Serialization;
-    using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Services;
+    using CustomerSetting.Services;
+    using Resource;
 
     public class DownlinePTViolationSubMessage : WrongPTSubMessage
     {

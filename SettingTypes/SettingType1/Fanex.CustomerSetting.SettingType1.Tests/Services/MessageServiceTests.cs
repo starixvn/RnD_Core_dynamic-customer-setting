@@ -1,13 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType1.Resources;
-    using Fanex.CustomerSetting.SettingType1.Services;
-    using Fanex.CustomerSetting.Tests.Models;
-    using Fanex.CustomerSetting.Tests.Services;
+    using CustomerSetting.Services;
+    using CustomerSetting.Tests.Models;
+    using CustomerSetting.Tests.Services;
     using NSubstitute;
     using NUnit.Framework;
+    using Resources;
+    using SettingType1.Services;
 
     [TestFixture]
     public class MessageServiceTests : MessageServiceBaseTests

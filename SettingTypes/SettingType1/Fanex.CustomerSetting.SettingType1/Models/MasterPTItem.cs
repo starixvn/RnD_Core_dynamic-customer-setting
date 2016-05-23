@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Resources;
+    using Constants;
+    using CustomerSetting.Models.Results;
+    using Resources;
 
     public class MasterPTItem : PTItem
     {
-        private const string PTXmlFormat 
+        private const string PTXmlFormat
             = "<PT {0} SuperPT=\"{1}\" IsAutoSuperPT=\"{2}\" AutoSuperPT=\"{3}\" MasterPT=\"{4}\" MinPT=\"{5}\" IsUpdAllMems=\"{6}\" UpdAllMems_Value=\"{7}\"/>";
 
         /// <summary>

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType7.Tests.Models
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.SettingType7.Models;
     using NUnit.Framework;
+    using SettingType7.Models;
 
     public class StakeLevelItemTest
     {

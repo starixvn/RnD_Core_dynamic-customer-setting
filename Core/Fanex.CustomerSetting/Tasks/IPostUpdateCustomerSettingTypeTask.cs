@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tasks
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Results;
+    using Models;
+    using Models.Enumerations;
+    using Models.Results;
 
     internal interface IPostUpdateCustomerSettingTypeTask
     {

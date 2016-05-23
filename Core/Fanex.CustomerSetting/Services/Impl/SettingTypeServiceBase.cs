@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Fanex.CustomerSetting.Exceptions;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Constants;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.Logging;
+    using Exceptions;
+    using Logging;
+    using Models;
+    using Models.Constants;
+    using Models.Enumerations;
+    using Models.Requests;
+    using Models.Results;
 
     public abstract class SettingTypeServiceBase : ISettingTypeService
     {
@@ -51,7 +51,7 @@
         {
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             if (result.IsSuccessful)
@@ -142,7 +142,7 @@
         {
             if (customerIds == null)
             {
-                throw new ArgumentNullException("customerIds");
+                throw new ArgumentNullException(nameof(customerIds));
             }
 
             var settingTypeResults = new List<SettingResult>();

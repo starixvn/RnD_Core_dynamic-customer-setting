@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.CustomerSetting.MatrixClient.Exceptions;
-    using Fanex.CustomerSetting.MatrixClient.Helpers;
+    using Exceptions;
+    using Helpers;
 
     public abstract class SettingMatrixRegistration
     {

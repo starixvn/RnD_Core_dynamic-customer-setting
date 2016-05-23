@@ -3,17 +3,18 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Models;
-    using Fanex.CustomerSetting.Matrix.Models.Enumerations;
-    using Fanex.CustomerSetting.Matrix.Resources;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Services.Impl;
-    using Fanex.Data.Repository;
+    using Common.Helper;
+    using Criteria;
+    using CustomerSetting.Services;
+    using CustomerSetting.Services.Impl;
+    using Data.Repository;
+    using Models;
+    using Models.Enumerations;
+    using Resources;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.NamingRules", 
-        "SA1305:FieldNamesMustNotUseHungarianNotation", 
+    [SuppressMessage(
+        "Microsoft.StyleCop.CSharp.NamingRules",
+        "SA1305:FieldNamesMustNotUseHungarianNotation",
         Justification = "PT is abbriviation for Position Taking.")]
     public class CustomerSettingMatrixService : ICustomerSettingMatrixService
     {
@@ -46,9 +47,9 @@
 
         public CustomerSettingMatrix GetCustomerSettingMatrix(SettingMatrixQuery settingMatrixQuery)
         {
-            Check.Argument.IsNotNull(settingMatrixQuery, "settingMatrixQuery");
-            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, "settingMatrixQuery.SettingTypeId");
-            Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, "settingMatrixQuery.CustomerName");
+            Check.Argument.IsNotNull(settingMatrixQuery, nameof(settingMatrixQuery));
+            Check.Argument.IsNotNegativeOrZero(settingMatrixQuery.SettingTypeId, nameof(settingMatrixQuery.SettingTypeId));
+            Check.Argument.IsNotEmpty(settingMatrixQuery.CustomerName, nameof(settingMatrixQuery.CustomerName));
 
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
             var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);

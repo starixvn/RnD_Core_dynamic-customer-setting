@@ -2,14 +2,14 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.DataAccesses.Impl;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType4.Constants;
-    using Fanex.CustomerSetting.SettingType4.Dtos;
-    using Fanex.Data;
+    using Constants;
+    using CustomerSetting.DataAccesses.Impl;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models.Requests;
+    using CustomerSetting.Models.Results;
+    using Data;
+    using Dtos;
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {

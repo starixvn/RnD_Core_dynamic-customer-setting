@@ -7,10 +7,10 @@
     using System.Runtime.Caching;
     using System.Web.Hosting;
     using System.Web.Http;
-    using Fanex.CustomerSetting.Matrix.Models;
-    using Fanex.CustomerSetting.Matrix.Services;
-    using Fanex.CustomerSetting.Matrix.Services.Impl;
-    using Fanex.CustomerSetting.Models.Results;
+    using CustomerSetting.Models.Results;
+    using Models;
+    using Services;
+    using Services.Impl;
 
     public class CustomerSettingMatrixController : ApiController
     {

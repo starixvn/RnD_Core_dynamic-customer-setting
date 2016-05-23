@@ -4,8 +4,8 @@
     using System.Data.SqlClient;
     using System.Web;
     using System.Web.Http;
-    using Fanex.Data.Configuration;
-    using Fanex.Logging;
+    using Data.Configuration;
+    using Logging;
 
     public class WebApiApplication : HttpApplication
     {

@@ -3,15 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.CustomerSetting.Matrix.Criteria;
-    using Fanex.CustomerSetting.Matrix.Dtos;
-    using Fanex.CustomerSetting.Matrix.Services;
-    using Fanex.CustomerSetting.Matrix.Services.Impl;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.Tests;
-    using Fanex.Data.Repository;
+    using Criteria;
+    using CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Services;
+    using Data.Repository;
+    using Dtos;
+    using Matrix.Services;
+    using Matrix.Services.Impl;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -104,7 +102,7 @@
             byte productId = 1;
             string customerName = "CustomerName";
             AssumeDatabaseReturnValidCommission();
-            
+
             //// Act
             var actualCommissionMatrix = _commissionMatrixService.GetCommissionMatrix(productId, customerName);
 

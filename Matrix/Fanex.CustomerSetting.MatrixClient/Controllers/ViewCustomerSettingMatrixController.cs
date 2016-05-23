@@ -4,14 +4,14 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.MatrixClient.Attributes;
-    using Fanex.CustomerSetting.MatrixClient.Configurations;
-    using Fanex.CustomerSetting.MatrixClient.Exceptions;
-    using Fanex.CustomerSetting.MatrixClient.Helpers;
-    using Fanex.CustomerSetting.MatrixClient.Models;
-    using Fanex.CustomerSetting.MatrixClient.Models.Requests;
-    using Fanex.CustomerSetting.MatrixClient.Services;
+    using Attributes;
+    using Configurations;
+    using Exceptions;
+    using Helpers;
+    using Models;
+    using Models.Requests;
     using RestSharp;
+    using Services;
 
     [ExceptionHandlingAttribute]
     public class ViewCustomerSettingMatrixController : Controller

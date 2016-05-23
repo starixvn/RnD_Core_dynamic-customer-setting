@@ -1,8 +1,10 @@
-﻿namespace Fanex.CustomerSetting.DemoSite.App_Start
+﻿namespace Fanex.CustomerSetting.DemoSite.AppStart
 {
+    using System;
     using System.Web.Mvc;
 
-    public class RestrictAccessFilter : AuthorizeAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public sealed class RestrictAccessFilter : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {

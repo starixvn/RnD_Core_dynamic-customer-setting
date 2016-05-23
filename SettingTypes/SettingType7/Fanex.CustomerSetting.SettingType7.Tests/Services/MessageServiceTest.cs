@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType7.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType7.Constants;
-    using Fanex.CustomerSetting.SettingType7.Resources;
-    using Fanex.CustomerSetting.SettingType7.Services;
+    using Constants;
+    using CustomerSetting.Services;
     using NSubstitute;
     using NUnit.Framework;
+    using Resources;
+    using SettingType7.Services;
 
     public class MessageServiceTests
     {

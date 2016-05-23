@@ -1,9 +1,9 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Resource;
-    using Fanex.CustomerSetting.Services;
+    using CustomerSetting.Models;
+    using CustomerSetting.Services;
     using NUnit.Framework;
+    using Resource;
 
     [TestFixture]
     public abstract class MessageServiceBaseTests

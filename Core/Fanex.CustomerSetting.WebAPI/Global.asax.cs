@@ -5,9 +5,9 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Http;
-    using App_Start;
-    using Fanex.Data.Configuration;
-    using Fanex.Logging;
+    using AppStart;
+    using Data.Configuration;
+    using Logging;
 
     public class WebApiApplication : HttpApplication
     {
@@ -23,9 +23,9 @@
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
-        [SuppressMessage("Microsoft.Globalization", 
-            "CA1303:Do not pass literals as localized parameters", 
-            MessageId = "Fanex.Logging.LogService.Error(System.String)", 
+        [SuppressMessage("Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
+            MessageId = "Fanex.Logging.LogService.Error(System.String)",
             Justification = "Reviewed!")]
         protected void Application_Error(object sender, EventArgs e)
         {

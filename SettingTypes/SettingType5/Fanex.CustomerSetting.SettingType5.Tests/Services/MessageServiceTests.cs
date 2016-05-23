@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType5.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType5.Constants;
-    using Fanex.CustomerSetting.SettingType5.Resources;
-    using Fanex.CustomerSetting.SettingType5.Services;
+    using Constants;
+    using CustomerSetting.Services;
     using NSubstitute;
     using NUnit.Framework;
+    using Resources;
+    using SettingType5.Services;
 
     [TestFixture]
     public class MessageServiceTests

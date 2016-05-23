@@ -1,9 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Resources;
-
     public class MasterPTOnMemberItem : PTItem
     {
         private const string PTXmlFormat = "<PT {0} MasterPT=\"{1}\" AutoMasterPT=\"{2}\" IsAutoMasterPT=\"{3}\"/>";

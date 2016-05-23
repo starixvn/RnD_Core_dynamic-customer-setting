@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models
 {
-    using Fanex.CustomerSetting.Models;
+    using CustomerSetting.Models;
 
     public class SettingContext : ISettingContext
     {

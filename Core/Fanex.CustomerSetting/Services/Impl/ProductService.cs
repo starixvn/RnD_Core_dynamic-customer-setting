@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Criteria;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.Data.Repository;
+    using Common.Helper;
+    using Criteria;
+    using Data.Repository;
+    using Models;
 
     public class ProductService : IProductService
     {
@@ -34,10 +34,10 @@
                    {
                        return _productRepository.Fetch<SettingType>(
                            new ProductSettingTypesQueryCriteria
-                       {
-                           ProductId = productId,
-                           SystemId = systemId
-                       });
+                           {
+                               ProductId = productId,
+                               SystemId = systemId
+                           });
                    },
                    new TimeSpan(CacheDuration, 0, 0));
 

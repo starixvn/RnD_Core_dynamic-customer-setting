@@ -22,8 +22,8 @@
 
             this.queryServiceType = queryServiceType;
             this.updateServiceType = updateServiceType;
-            this.systems = systems != null ? systems : new List<byte>();
-            this.productIds = productIds != null ? productIds : new List<byte>();
+            this.systems = systems ?? new List<byte>();
+            this.productIds = productIds ?? new List<byte>();
         }
 
         public Type QueryServiceType

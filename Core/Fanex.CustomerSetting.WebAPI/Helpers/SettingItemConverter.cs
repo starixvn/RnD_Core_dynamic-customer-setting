@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Helpers
 {
     using System;
-    using Fanex.CustomerSetting.Models;
+    using CustomerSetting.Models;
     using Newtonsoft.Json.Linq;
 
     public class SettingItemConverter : JsonCreationConverter<ISettingItem>
@@ -10,7 +10,7 @@
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj", "Object cannot be null");
+                throw new ArgumentNullException(nameof(obj), "Object cannot be null");
             }
 
             return Type.GetType(obj.GetValue("typeName", StringComparison.OrdinalIgnoreCase).ToString());

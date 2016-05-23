@@ -1,11 +1,13 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.WebApi.Filters
 {
+    using System;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Fanex.CustomerSetting.Matrix.WebApi.Extensions;
-    using Fanex.Logging;
+    using Extensions;
+    using Logging;
 
-    public class LogInfoFilter : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    public sealed class LogInfoFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

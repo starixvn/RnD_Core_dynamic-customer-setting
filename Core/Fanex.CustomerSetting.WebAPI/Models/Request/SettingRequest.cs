@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Models.Request
 {
     using System.ComponentModel.DataAnnotations;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
 
     public abstract class SettingRequest
     {

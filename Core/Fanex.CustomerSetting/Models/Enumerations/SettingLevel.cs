@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Enumerations
 {
-    internal enum SettingLevel : int
+    internal enum SettingLevel
     {
         Product = 1,
         SportType = 2,

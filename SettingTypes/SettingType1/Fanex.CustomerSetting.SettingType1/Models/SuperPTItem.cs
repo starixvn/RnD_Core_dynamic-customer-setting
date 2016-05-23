@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Models
 {
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType1.Constants;
-    using Fanex.CustomerSetting.SettingType1.Resources;
+    using Constants;
+    using CustomerSetting.Models.Results;
+    using Resources;
 
     public class SuperPTItem : PTItem
     {

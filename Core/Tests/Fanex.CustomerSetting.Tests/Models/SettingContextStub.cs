@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
 
     public class SettingContextStub : ISettingContext
     {

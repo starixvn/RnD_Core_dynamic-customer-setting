@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType6.Constants;
-    using Fanex.CustomerSetting.SettingType6.Resources;
-    using Fanex.CustomerSetting.SettingType6.Utilities;
+    using Constants;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Results;
+    using Resources;
+    using Utilities;
 
     public class WinLossLimitItem : SettingItemDefault
     {

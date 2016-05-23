@@ -1,11 +1,11 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Models
 {
-    using Fanex.Common.Helper;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.SettingType4.Constants;
-    using Fanex.CustomerSetting.SettingType4.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Resources;
+    using Common.Helper;
+    using Constants;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Results;
+    using Dtos;
+    using Resources;
 
     public class ProductStatusItem : SettingItemDefault
     {

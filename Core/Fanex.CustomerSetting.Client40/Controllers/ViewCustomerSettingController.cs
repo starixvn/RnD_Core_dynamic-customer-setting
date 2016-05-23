@@ -5,14 +5,14 @@
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Client40.Attributes;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Exceptions;
-    using Fanex.CustomerSetting.Client40.Helpers;
-    using Fanex.CustomerSetting.Client40.Models;
-    using Fanex.CustomerSetting.Client40.Models.Requests;
-    using Fanex.CustomerSetting.Client40.Services;
+    using Attributes;
+    using Configurations;
+    using Exceptions;
+    using Helpers;
+    using Models;
+    using Models.Requests;
     using RestSharp;
+    using Services;
 
     [ExceptionHandlingAttribute]
     public class ViewCustomerSettingController : Controller
@@ -60,13 +60,16 @@
             return Content(template, "text/HTML");
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1719:ParameterNamesShouldNotMatchMemberNames",
+            Justification = "Reviewed!"), HttpPost]
         [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false), LogInfoFilter]
         public ContentResult QuerySetting(QuerySettingRequest querySetting)
         {
             if (querySetting == null)
             {
-                throw new ArgumentNullException("querySetting", "Query Setting cannot be null");
+                throw new ArgumentNullException(nameof(querySetting), "Query Setting cannot be null");
             }
 
             IRestResponse customerSettingResponse;
@@ -106,8 +109,8 @@
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                var errorMessage = (int)response.StatusCode == 0
-                    ? response.ErrorMessage : response.Content;
+                var errorMessage = response.StatusCode == 0 ? response.ErrorMessage : response.Content;
+
                 throw new CustomerSettingException(errorMessage);
             }
 

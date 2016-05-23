@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.SettingType6.Tests.Services
 {
     using System.Linq;
-    using Fanex.CustomerSetting.Services;
-    using Fanex.CustomerSetting.SettingType6.Constants;
-    using Fanex.CustomerSetting.SettingType6.Resources;
-    using Fanex.CustomerSetting.SettingType6.Services;
+    using Constants;
+    using CustomerSetting.Services;
     using NSubstitute;
     using NUnit.Framework;
+    using Resources;
+    using SettingType6.Services;
 
     [TestFixture]
     public class MessageServiceTests
@@ -39,9 +39,9 @@
         [TestCase(2, 10033)]
         [TestCase(3, 10033)]
         [TestCase(4, 10033)]
-        public void TranslateMessage_Always_MainMessageIsMsgIDFromRawMsg(byte settingLevel, int msgId)
+        public void TranslateMessage_Always_MainMessageIsMsgIdFromRawMsg(byte settingLevel, int msgId)
         {
-            // Arrange            
+            // Arrange
             _rawMessage = string.Format("<Root MsgID=\"{0}\" Msg=\"\"><Row SportType=\"1\" BetType=\"1\" /></Root>", msgId);
 
             // Act

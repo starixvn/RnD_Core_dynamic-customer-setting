@@ -1,10 +1,10 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Services
 {
     using System.Net;
-    using Fanex.CustomerSetting.Client40.Configurations;
-    using Fanex.CustomerSetting.Client40.Exceptions;
-    using Fanex.CustomerSetting.Client40.Helpers;
-    using Fanex.CustomerSetting.Client40.Models.Requests;
+    using Configurations;
+    using Exceptions;
+    using Helpers;
+    using Models.Requests;
     using RestSharp;
 
     internal class CustomerSettingService : ICustomerSettingService
@@ -16,10 +16,6 @@
         {
         }
 
-        /// <summary>
-        /// https://groups.google.com/forum/#!topic/restsharp/X8JPtcfnSlo
-        /// </summary>
-        /// <param name="?"></param>
         internal CustomerSettingService(IRestClient restClient)
         {
             _restClient = restClient ?? GetRestClient();
@@ -80,7 +76,7 @@
                 restReponse.StatusCode = HttpStatusCode.RequestTimeout;
                 restReponse.Content = "{ \"message\": \"Update Process is timeout.\" }";
             }
-           
+
             return restReponse;
         }
 

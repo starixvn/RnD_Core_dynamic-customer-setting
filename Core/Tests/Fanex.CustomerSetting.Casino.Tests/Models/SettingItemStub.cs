@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Casino.Tests.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Results;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Results;
 
     public class SettingItemStub : ISettingItem
     {

@@ -9,9 +9,9 @@
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
-    using Fanex.CustomerSetting.WebApi.Filters;
-    using Fanex.CustomerSetting.WebApi.Helpers;
-    using Fanex.CustomerSetting.WebApi.Models.Request;
+    using Filters;
+    using Helpers;
+    using Models.Request;
     using Services;
     using Services.Impl;
 
@@ -34,8 +34,9 @@
         {
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
-            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
             Justification = "Reviewed!")]
         public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
         {
@@ -58,9 +59,9 @@
             }
         }
 
-        [SuppressMessage("Microsoft.Globalization", 
-            "CA1303:Do not pass literals as localized parameters", 
-            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
             Justification = "Reviewed!")]
         public HttpResponseMessage Post(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<UpdateSettingRequest>))]UpdateSettingRequest request)
@@ -85,9 +86,9 @@
             return Request.CreateResponse(result);
         }
 
-        [SuppressMessage("Microsoft.Globalization", 
-            "CA1303:Do not pass literals as localized parameters", 
-            MessageId = "System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)", 
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1303:Do not pass literals as localized parameters",
             Justification = "Reviewed!")]
         public HttpResponseMessage PostMultiple(
             [ModelBinder(typeof(UpdateSettingRequestModelBinder<MultipleUpdateSettingRequest>))]MultipleUpdateSettingRequest request)

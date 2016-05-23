@@ -3,7 +3,7 @@
     using System;
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
-    using Fanex.CustomerSetting.WebApi.Models.Request;
+    using Models.Request;
     using Newtonsoft.Json;
 
     public class UpdateSettingRequestModelBinder<T> : IModelBinder
@@ -13,12 +13,12 @@
         {
             if (actionContext == null)
             {
-                throw new ArgumentNullException("actionContext");
+                throw new ArgumentNullException(nameof(actionContext));
             }
 
             if (bindingContext == null)
             {
-                throw new ArgumentNullException("bindingContext");
+                throw new ArgumentNullException(nameof(bindingContext));
             }
 
             if (bindingContext.ModelType != typeof(T))

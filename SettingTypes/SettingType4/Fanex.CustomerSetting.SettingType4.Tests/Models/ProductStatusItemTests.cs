@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType4.Tests.Models
 {
-    using Fanex.CustomerSetting.SettingType4.Dtos;
-    using Fanex.CustomerSetting.SettingType4.Models;
+    using Dtos;
     using NUnit.Framework;
+    using SettingType4.Models;
 
     [TestFixture]
     public class ProductStatusItemTests

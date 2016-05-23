@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Matrix.Services
 {
-    using Fanex.CustomerSetting.Matrix.Models;
+    using Models;
 
     public interface IPTMatrixService
     {

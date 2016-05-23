@@ -1,12 +1,12 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Configurations;
-    using Fanex.CustomerSetting.Models;
-    using Fanex.CustomerSetting.Models.Enumerations;
-    using Fanex.CustomerSetting.Models.Requests;
-    using Fanex.CustomerSetting.Models.Results;
-    using Fanex.CustomerSetting.Tasks;
+    using Configurations;
+    using Models;
+    using Models.Enumerations;
+    using Models.Requests;
+    using Models.Results;
+    using Tasks;
 
     public class TaskService : ITaskService
     {
