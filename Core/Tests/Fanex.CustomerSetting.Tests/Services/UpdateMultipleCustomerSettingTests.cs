@@ -21,7 +21,6 @@
         private IUpdateSettingService _settingService;
         private ISettingContext _settingContext;
         private IValidationService _validationService;
-        private IProductService _productService;
         private ITaskService _taskService;
         private ILogger _logger;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
@@ -31,7 +30,6 @@
         public void Setup()
         {
             _settingContext = new SettingContextStub();
-            _productService = Substitute.For<IProductService>();
             _validationService = Substitute.For<IValidationService>();
             _taskService = Substitute.For<ITaskService>();
             _logger = Substitute.For<ILogger>();
@@ -110,7 +108,7 @@
             };
 
             //// Act
-            var result = _settingService.Update(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             settingItemMock.Received().Validate();
@@ -164,7 +162,7 @@
             };
 
             //// Act
-            var result = _settingService.Update(updateMultipleSettingParam);
+            _settingService.Update(updateMultipleSettingParam);
 
             //// Assert
             _logger.Received().Error(
@@ -307,7 +305,7 @@
 
             AssumeUpdateMultipleCustomersSettingActionIsValid(updateMultipleSettingParam);
 
-            var expectedException = new Exception("Expected Exception");
+            var expectedException = new DllNotFoundException("Dll not found");
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
 
             //// Act

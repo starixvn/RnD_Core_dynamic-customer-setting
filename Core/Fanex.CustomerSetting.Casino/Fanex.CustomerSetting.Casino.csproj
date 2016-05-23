@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -93,6 +94,7 @@
     <Compile Include="Criteria\GetCustomerCasinoStatusCriteria.cs" />
     <Compile Include="DataAccesses\ICustomerProductStatusDataAccess.cs" />
     <Compile Include="DataAccesses\Impl\CustomerProductStatusDataAccess.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CasinoSetting.cs" />
     <Compile Include="Models\CustomerProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -81,6 +81,7 @@
     <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\ChargeCommissionDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ChargeCommissionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">

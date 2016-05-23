@@ -30,7 +30,7 @@
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
             Check.Argument.IsNotEmpty(ip, "ip");
 
-            dataAccess.UpdateCustomerProductSyncedStatus(customerId, productId, subAccountId, userId, ip);
+            dataAccess.UpdateCustomerProductSyncedStatus(customerId, productId, userId, subAccountId, ip);
         }
     }
 }

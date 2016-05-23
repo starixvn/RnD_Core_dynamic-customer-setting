@@ -37,6 +37,11 @@
         [CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
         public ContentResult Index(SettingFormQuery query)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
             ObjectCache cache = MemoryCache.Default;
             bool isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
             string cachedKey = isIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;

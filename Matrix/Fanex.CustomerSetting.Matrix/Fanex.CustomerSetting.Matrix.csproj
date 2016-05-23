@@ -78,6 +78,7 @@
     <Compile Include="Dtos\CommissionItemMatrixDto.cs" />
     <Compile Include="Dtos\CustomerLineDto.cs" />
     <Compile Include="Dtos\PTItemMatrixDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CommissionMatrix.cs" />
     <Compile Include="Models\CustomerSettingMatrix.cs" />
     <Compile Include="Models\Enumerations\SettingType.cs" />

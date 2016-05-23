@@ -86,6 +86,7 @@
     <Compile Include="Controllers\ViewCustomerSettingController.cs" />
     <Compile Include="CustomerSettingRegistration.cs" />
     <Compile Include="Exceptions\CustomerSettingException.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />

@@ -309,6 +309,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\HttpRequestMessageExtensions.cs" />
     <Compile Include="Helpers\JsonCreationConverter.cs" />
     <Compile Include="Helpers\LevelConverter.cs" />

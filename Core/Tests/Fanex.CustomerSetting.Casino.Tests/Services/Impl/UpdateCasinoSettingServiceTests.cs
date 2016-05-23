@@ -22,11 +22,8 @@
         private ISettingContext _settingContext;
         private IUpdateSettingService _updateSettingService;
         private IValidationService _validationService;
-        private IProductService _productService;
-        private ITaskService _taskService;
         private ILogger _logger;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
-        private ISettingTypeService _settingTypeService;
         private ICustomerProductStatusService _customerProductStatusService;
 
         [SetUp]
@@ -35,12 +32,9 @@
             _settingContext = new SettingContextStub();
             _validationService = Substitute.For<IValidationService>();
             _updateSettingService = Substitute.For<IUpdateSettingService>();
-            _taskService = Substitute.For<ITaskService>();
             _logger = Substitute.For<ILogger>();
             _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
-            _settingTypeService = Substitute.For<ISettingTypeService>();
             _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
-            _productService = Substitute.For<IProductService>();
 
             _updateCasinoSettingService = new UpdateCasinoSettingService(
                 _settingContext,

@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
@@ -20,18 +21,18 @@
             }
 
             var request = HttpContext.Current.Request;
+            var messageBuilder = new StringBuilder();
 
-            string message = string.Join(
-                "\r\n",
-                "URL: " + request.Url.OriginalString,
-                "REFERRER: " + request.UrlReferrer,
-                "FORM: " + (request.Form.Count > 0 ? request.Form.ToString() : string.Empty),
-                "BODY: " + GetRequestBody(request),
-                "CLIENT IP: " + IPHelper.GetClientIPAddress(request),
-                "CULTURE: " + Thread.CurrentThread.CurrentUICulture,
-                "BROWSER CAPABILITIES:" + GetClientBrowserInformation(request));
+            messageBuilder
+                .AppendLine($"URL: {request.Url.OriginalString}")
+                .AppendLine($"REFERRER: {request.UrlReferrer}")
+                .AppendLine($"FORM: {(request.Form.Count > 0 ? request.Form.ToString() : string.Empty)}")
+                .AppendLine($"BODY: {GetRequestBody(request)}")
+                .AppendLine($"CLIENT IP: {IPHelper.GetClientIPAddress(request)}")
+                .AppendLine($"CULTURE: {Thread.CurrentThread.CurrentUICulture}")
+                .AppendLine($"BROWSER CAPABILITIES: {GetClientBrowserInformation(request)}");
 
-            LogService.Info(message, CustomerSettingConfiguration.Settings.ClientLogCategory);
+            LogService.Info(messageBuilder.ToString(), CustomerSettingConfiguration.Settings.ClientLogCategory);
         }
 
         internal static string GetClientBrowserInformation(HttpRequest request)
@@ -42,24 +43,25 @@
             }
 
             var browser = request.Browser;
-            var browserInformation = string.Join(
-                "\r\n",
-                "Type: " + browser.Type,
-                "Name: " + browser.Browser,
-                "Version: " + browser.Version,
-                "Major Version: " + browser.MajorVersion,
-                "Minor Version: " + browser.MinorVersion,
-                "Platform: " + browser.Platform,
-                "Is Beta: " + browser.Beta,
-                "Is Crawler: " + browser.Crawler,
-                "Is AOL: " + browser.AOL,
-                "Is Win16: " + browser.Win16,
-                "Is Win32: " + browser.Win32,
-                "Supports Frames: " + browser.Frames,
-                "Supports Tables: " + browser.Tables,
-                "Supports Cookies: " + browser.Cookies);
+            var browserInformationBuilder = new StringBuilder();
 
-            return browserInformation;
+            browserInformationBuilder
+                .AppendLine($"Type: {browser.Type}")
+                .AppendLine($"Name: {browser.Browser}")
+                .AppendLine($"Version: {browser.Version}")
+                .AppendLine($"Major Version: {browser.MajorVersion}")
+                .AppendLine($"Minor Version: {browser.MinorVersion}")
+                .AppendLine($"Platform: {browser.Platform}")
+                .AppendLine($"Is Beta: {browser.Beta}")
+                .AppendLine($"Is Crawler: {browser.Crawler}")
+                .AppendLine($"Is AOL: {browser.AOL}")
+                .AppendLine($"Is Win16: {browser.Win16}")
+                .AppendLine($"Is Win32: {browser.Win32}")
+                .AppendLine($"Supports Frames: {browser.Frames}")
+                .AppendLine($"Supports Tables: {browser.Tables}")
+                .AppendLine($"Supports Cookies: {browser.Cookies}");
+
+            return browserInformationBuilder.ToString();
         }
 
         internal static string GetRequestBody(HttpRequest request)

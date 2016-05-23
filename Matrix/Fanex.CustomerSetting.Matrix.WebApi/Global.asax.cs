@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.SqlClient;
+    using System.Text;
     using System.Web;
     using System.Web.Http;
     using Data.Configuration;
@@ -27,12 +28,15 @@
             {
                 Exception ex = Server.GetLastError().GetBaseException();
 
+                var messageBuilder = new StringBuilder();
+
                 // Get base exception data
-                string message = ex.Message +
-                    "\r\nType: " + ex.GetType().ToString() +
-                    "\r\nSource: " + ex.Source +
-                    "\r\nTarget Site: " + ex.TargetSite +
-                    "\r\nStack Trace: " + ex.StackTrace;
+                messageBuilder
+                    .AppendLine(ex.Message)
+                    .AppendLine($"Type: {ex.GetType()}")
+                    .AppendLine($"Source: {ex.Source}")
+                    .AppendLine($"Target Site: {ex.TargetSite}")
+                    .AppendLine($"Stack Trace: {ex.StackTrace}");
 
                 // Get additional exception data
                 SqlException sqlException = ex as SqlException;
@@ -44,12 +48,13 @@
 
                 if (sqlException != null)
                 {
-                    message += "\r\nProcedure: " + sqlException.Procedure +
-                        "\r\nLine Number: " + sqlException.LineNumber +
-                        "\r\nServer: " + sqlException.Server;
+                    messageBuilder
+                    .AppendLine($"Procedure: {sqlException.Procedure}")
+                    .AppendLine($"Line Number: {sqlException.LineNumber}")
+                    .AppendLine($"Server: {sqlException.Server}");
                 }
 
-                LogService.Error(message);
+                LogService.Error(messageBuilder.ToString());
             }
         }
     }

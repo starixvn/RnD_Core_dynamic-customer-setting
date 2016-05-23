@@ -19,11 +19,11 @@
     /// </summary>
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        protected readonly ISettingContext SettingContext;
-        protected readonly IValidationService ValidationService;
-        protected readonly ITaskService TaskService;
-        protected readonly ILogger Logger;
-        protected readonly ISettingTypeServiceFactory SettingTypeServiceFactory;
+        private readonly ISettingContext _settingContext;
+        private readonly IValidationService _validationService;
+        private readonly ITaskService _taskService;
+        private readonly ILogger _logger;
+        private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
 
         public UpdateSettingService(ISettingContext settingContext)
             : this(settingContext, null, null, null, null)
@@ -40,11 +40,11 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
 
-            SettingContext = settingContext;
-            ValidationService = validationService ?? new ValidationService(SettingContext);
-            TaskService = pluggableTaskService ?? new TaskService(SettingContext);
-            Logger = logger ?? Logging.Logger.Log;
-            SettingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
+            _settingContext = settingContext;
+            _validationService = validationService ?? new ValidationService(_settingContext);
+            _taskService = pluggableTaskService ?? new TaskService(_settingContext);
+            _logger = logger ?? Logging.Logger.Log;
+            _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
         }
 
         public UpdateSettingService()
@@ -56,7 +56,7 @@
         /// </summary>
         /// <param name="command">The update parameters.</param>
         /// <returns>Result after update customer setting.</returns>
-        public virtual IResult Update(UpdateCustomerSettingCommand command)
+        public IResult Update(UpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
@@ -69,22 +69,22 @@
             }
 
             // Run plugged tasks before updating settings of customer.
-            TaskService.Run(command.Setting.ProductId, command);
+            _taskService.Run(command.Setting.ProductId, command);
 
             IResult result = new UpdateSettingResult(UpdateCustomerSettingTypes(command));
 
             // Run plugged tasks after updating settings of customer.
-            TaskService.Run(command.Setting.ProductId, command, result);
+            _taskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
 
-        protected virtual IResult Validate(UpdateCustomerSettingCommand command)
+        private IResult Validate(UpdateCustomerSettingCommand command)
         {
-            return ValidationService.ValidateUpdateSettingAction(command);
+            return _validationService.ValidateUpdateSettingAction(command);
         }
 
-        protected virtual IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
+        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
             var settingTypes = command.Setting.SettingTypes;
             var customerId = command.Setting.CustomerId;
@@ -110,7 +110,7 @@
             return settingTypeResults;
         }
 
-        protected virtual SettingResult UpdateCustomerSettingType(
+        private SettingResult UpdateCustomerSettingType(
             int customerId,
             CustomerInfo customerInfo,
             Level customerLevel,
@@ -122,13 +122,13 @@
             {
                 CheckSettingTypeIsValid(settingType);
 
-                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
-                var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
-                var settingResult = settingTypeService.UpdateCustomerSettingType(SettingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
+                var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
 
-                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;
             }
@@ -150,7 +150,7 @@
             }
         }
 
-        protected virtual void CheckSettingTypeIsValid(SettingType settingType)
+        private void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
 
@@ -160,7 +160,7 @@
             }
         }
 
-        protected virtual void WriteLog(
+        private void WriteLog(
             int customerId,
             Level customerLevel,
             Level uplineLevel,
@@ -168,11 +168,11 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Setting", SettingContext);
+            ex.SetSettingContextInfo("Update Setting", _settingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
-            Logger.Error(ex.Message, ex);
+            _logger.Error(ex.Message, ex);
         }
     }
 }

@@ -16,7 +16,7 @@
             return customerProductStatus;
         }
 
-        public void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int subAccountId, int userId, string ip)
+        public void UpdateCustomerProductSyncedStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
             using (var objectDb = new ObjectDb("Acc_CustSetting_SyncStatusUpd"))
             {

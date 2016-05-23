@@ -301,7 +301,7 @@
             AssumeQuerySettingActionIsValid(querySettingParam);
             SetupProductSettingTypesStub();
 
-            var expectedException = new Exception("Expected Exception");
+            var expectedException = new DllNotFoundException("Dll not found");
             _settingTypeServiceFactory.GetInstance(Arg.Any<SettingType>()).Returns(x => { throw expectedException; });
 
             //// Act

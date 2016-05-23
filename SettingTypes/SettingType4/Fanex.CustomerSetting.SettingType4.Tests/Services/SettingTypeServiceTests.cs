@@ -54,7 +54,7 @@
             _settingType4Service = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
         }
 
-        [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
+        [Test, TestCaseSource(nameof(GetCustomerSettingType_ViewDirectDownlineCustomer_Cases))]
         public void GetCustomerSettingType_ViewDirectDownlineCustomer_AlwaysCallGetCustomerProductStatus(
             Level customerLevel,
             Level uplineLevel)
@@ -69,7 +69,7 @@
             _dataAccess.Received().GetCustomerProductStatusItemsRawData(Arg.Is<CustomerSettingQuery>(query));
         }
 
-        [Test, TestCaseSource("GetCustomerSettingType_ViewDirectDownlineCustomer_Cases")]
+        [Test, TestCaseSource(nameof(GetCustomerSettingType_ViewDirectDownlineCustomer_Cases))]
         public void GetCustomerSettingType_ViewDirectDownlineCustomer_AlwaysReturnCustomerProductStatus(
             Level customerLevel,
             Level uplineLevel)
@@ -110,7 +110,7 @@
             new object[] { Level.Member, Level.Master }
         };
 
-        [Test, TestCaseSource("GetCustomerSettingType_ViewInDirectDownlineCustomer_Cases")]
+        [Test, TestCaseSource(nameof(GetCustomerSettingType_ViewInDirectDownlineCustomer_Cases))]
         public void GetCustomerSettingType_ViewInDirectDownlineCustomer_AlwaysReturnNoSettingItem(
             Level customerLevel,
             Level uplineLevel)

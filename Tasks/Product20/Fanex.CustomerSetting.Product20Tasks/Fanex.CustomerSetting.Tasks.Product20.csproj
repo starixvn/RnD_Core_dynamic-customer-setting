@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Constants\ErrorCodes.cs" />
     <Compile Include="Criteria\SettingRestrictionModesCriteria.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\RestrictionModes.cs" />
     <Compile Include="Models\SettingTypeRestrictionMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -78,7 +78,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1,
@@ -116,7 +116,7 @@
             Level customerLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
@@ -149,7 +149,7 @@
         public void ValidateQuerySetting_Always_CallGetActorStatus()
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -168,7 +168,7 @@
         public void ValidateQuerySetting_ActorIsDisabled_ReturnFailedResult()
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -189,7 +189,7 @@
         public void ValidateQuerySetting_Always_CallGetCustomerLevel()
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -218,7 +218,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -241,7 +241,7 @@
         public void ValidateQuerySetting_IsNotSameLine_ReturnAccessDeninedResult()
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -265,7 +265,7 @@
         public void ValidateQuerySetting_ActorIsCompany_DontCallValidateBelongIn()
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -290,7 +290,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -322,7 +322,7 @@
             Level uplineLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: Level.Member,
                 productId: 1,
@@ -354,7 +354,7 @@
         public void ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_ReturnSuccessResult(Level customerLevel)
         {
             //// Arrange
-            CustomerSettingQuery query = new CustomerSettingQuery(
+            var query = new CustomerSettingQuery(
                 customerId: 1,
                 customerLevel: customerLevel,
                 productId: 1);
@@ -371,8 +371,11 @@
             Assert.IsTrue(actualResult.IsSuccessful);
         }
 
-        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases = {
-            Level.Super, Level.Master, Level.Agent
+        private static Level[] ValidateQuerySetting_CompanyEditsCustomerIsNotMemberAndUplineLevelIsNull_Cases =
+        {
+            Level.Super,
+            Level.Master,
+            Level.Agent
         };
     }
 }

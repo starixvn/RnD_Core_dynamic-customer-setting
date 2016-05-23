@@ -83,11 +83,6 @@
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            var customerLevel = command.Setting.CustomerLevel;
-            var uplineLevel = command.UplineLevel;
-            var customerIds = command.CustomerIds;
-            var settingTypes = command.Setting.SettingTypes;
-            var productId = command.Setting.ProductId;
             var results = new List<IResult>();
 
             foreach (var customerId in command.CustomerIds)
@@ -103,6 +98,8 @@
 
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
         {
+            Check.Argument.IsNotNull(command, nameof(command));
+
             var settingTypes = command.Setting.SettingTypes;
             var customerId = command.Setting.CustomerId;
             var customerLevel = command.Setting.CustomerLevel;
@@ -160,7 +157,7 @@
             return new UpdateSettingResult(settingTypeResults);
         }
 
-        protected SettingResult UpdateCustomerSettingType(
+        private SettingResult UpdateCustomerSettingType(
            int customerId,
            CustomerInfo customerInfo,
            Level customerLevel,
@@ -196,12 +193,12 @@
             }
         }
 
-        protected IResult Validate(UpdateCustomerSettingCommand command)
+        private IResult Validate(UpdateCustomerSettingCommand command)
         {
             return _validationService.ValidateUpdateSettingAction(command);
         }
 
-        protected void CheckSettingTypeIsValid(SettingType settingType)
+        private void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
 
@@ -211,7 +208,7 @@
             }
         }
 
-        protected void WriteLog(
+        private void WriteLog(
            int customerId,
            Level customerLevel,
            Level uplineLevel,

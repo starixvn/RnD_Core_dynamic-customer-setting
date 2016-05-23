@@ -89,11 +89,6 @@
                 Arg.Any<byte>());
         }
 
-        private void AssumeCustomerSettingTypesAreValid(IEnumerable<SettingType> dummySettingTypes)
-        {
-            _productService.GetProductSettingTypes(Arg.Any<byte>(), Arg.Any<byte>()).Returns(dummySettingTypes);
-        }
-
         [Test]
         public void ValidateUpdateSetting_CustomerSettingTypesDontMatchWithProductSettingTypes_ReturnFailedResult()
         {

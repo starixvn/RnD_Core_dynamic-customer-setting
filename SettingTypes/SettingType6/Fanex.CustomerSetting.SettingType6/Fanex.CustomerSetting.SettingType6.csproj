@@ -83,6 +83,7 @@
     <Compile Include="Constants\MessageType.cs" />
     <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="DataAccesses\IDataAccess.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CurrentWinLossAmountItem.cs" />
     <Compile Include="Models\Requests\CurrentWinLossAmountQuery.cs" />
     <Compile Include="Models\WinLossLimitItem.cs" />

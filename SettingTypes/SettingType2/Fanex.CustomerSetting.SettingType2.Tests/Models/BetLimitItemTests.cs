@@ -1,8 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType2.Tests.Models
 {
     using Dtos;
-    using SettingType2.Models;
     using NUnit.Framework;
+    using SettingType2.Models;
 
     [TestFixture]
     public class BetLimitItemTests

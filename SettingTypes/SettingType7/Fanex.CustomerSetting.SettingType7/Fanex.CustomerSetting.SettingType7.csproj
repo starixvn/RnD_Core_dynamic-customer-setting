@@ -80,6 +80,7 @@
     <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\StakeLevelDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\StakeLevelItem.cs" />
     <Compile Include="Models\StakeRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

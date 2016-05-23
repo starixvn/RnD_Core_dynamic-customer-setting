@@ -39,6 +39,9 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+
             IEnumerable<StakeLevelDto> stakeLevelRawData = _stakeLevelDataAccess.GetCustomerStakeLevelRawData(query);
             var customerStakeLevels = new SettingType
             {
@@ -107,8 +110,6 @@
 
         private IResult ValidateMemberSelectedStakeValue(SettingType settingType)
         {
-            var result = new SettingResult(Result.Success);
-
             var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelItem>().Any(stakeLevelItem =>
             {
                 return stakeLevelItem?.StakeRanges?.Count(stakeLevelValue => stakeLevelValue.Selected) != 1;

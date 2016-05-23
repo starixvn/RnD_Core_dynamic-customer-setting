@@ -42,6 +42,9 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+
             IEnumerable<StakeLevelGroupItem> stakeLevelGroups = QueryAndMapStakeLevelGroups(settingContext.Language, query.CustomerId, query.ProductId);
             var customerStakeLevelGroups = new SettingType
             {
@@ -198,8 +201,6 @@
 
         private IResult ValidateMemberSelectedGroup(SettingType settingType)
         {
-            var result = new SettingResult(Result.Success);
-
             var hasViolatedItem = settingType.SettingItems.Cast<StakeLevelGroupItem>().Any(item =>
             {
                 return item?.Groups?.Count(group => group.Selected) != 1;

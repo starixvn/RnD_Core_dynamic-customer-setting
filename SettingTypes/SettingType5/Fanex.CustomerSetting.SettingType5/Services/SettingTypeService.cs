@@ -37,6 +37,9 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+
             IEnumerable<ChargeCommissionDto> chargeCommissionRawData = _chargeCommissionDataAccess.GetCustomerChargeCommissionRawData(query);
             var customerChargeCommission = new SettingType
             {

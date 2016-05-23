@@ -12,9 +12,9 @@
     /// </summary>
     public class QueryCasinoSettingService : IQuerySettingService
     {
-        protected readonly ISettingContext SettingContext;
-        protected readonly IQuerySettingService QuerySettingService;
-        protected readonly ICustomerProductStatusService CustomerProductStatusService;
+        private readonly ISettingContext _settingContext;
+        private readonly IQuerySettingService _querySettingService;
+        private readonly ICustomerProductStatusService _customerProductStatusService;
 
         public QueryCasinoSettingService(
             ISettingContext settingContext,
@@ -24,9 +24,9 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
 
-            this.SettingContext = settingContext;
-            this.QuerySettingService = querySettingService ?? new QuerySettingService(settingContext);
-            this.CustomerProductStatusService = customerProductStatusService ?? new CustomerProductStatusService();
+            _settingContext = settingContext;
+            _querySettingService = querySettingService ?? new QuerySettingService(_settingContext);
+            _customerProductStatusService = customerProductStatusService ?? new CustomerProductStatusService();
         }
 
         public QueryCasinoSettingService(ISettingContext settingContext) : this(settingContext, null, null)
@@ -39,10 +39,10 @@
 
         public ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
-            var setting = QuerySettingService.GetCustomerSetting(query);
+            Check.Argument.IsNotNull(query, nameof(query));
 
-            var customerCasinoStatus = CustomerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId);
-
+            var setting = _querySettingService.GetCustomerSetting(query);
+            var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(query.CustomerId, query.ProductId);
             var casinoSetting = new CasinoSetting(setting, customerCasinoStatus);
 
             return casinoSetting;

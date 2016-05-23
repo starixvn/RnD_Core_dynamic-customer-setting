@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,6 +84,7 @@
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\StakeLevelDetailDto.cs" />
     <Compile Include="Dtos\StakeLevelGroupDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\LevelGroup.cs" />
     <Compile Include="Models\Requests\StakeLevelGroupDetailsQuery.cs" />
     <Compile Include="Models\StakeLevelGroupItem.cs" />
