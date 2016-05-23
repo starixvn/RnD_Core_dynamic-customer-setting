@@ -91,13 +91,13 @@
                 M2 = m2,
                 IM2 = im2,
                 UM2 = um2,
-                A2 = (byte)10,
-                N2 = (byte)4,
+                A2 = 10,
+                N2 = 4,
                 IsLive = isLive,
                 SportTypeId = 1,
                 BetTypeId = 1,
                 IsUpdateMasterPTOnMembers = isUpdateMasterPTOnMember,
-                MasterPTOnMembers = (byte)10
+                MasterPTOnMembers = 10
             };
 
             //// Act

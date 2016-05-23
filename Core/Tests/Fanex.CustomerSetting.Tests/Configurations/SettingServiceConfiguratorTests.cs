@@ -3,7 +3,6 @@
     using System;
     using CustomerSetting.Services.Impl;
     using Fanex.CustomerSetting.Configurations;
-    using NSubstitute;
     using NUnit.Framework;
 
     [TestFixture]
