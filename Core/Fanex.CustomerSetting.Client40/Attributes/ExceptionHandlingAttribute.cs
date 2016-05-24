@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Attributes
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
@@ -26,26 +26,24 @@
             base.OnException(filterContext);
         }
 
-        [SuppressMessage("Microsoft.Globalization",
-            "CA1303:Do not pass literals as localized parameters",
-            MessageId = "Fanex.Logging.LogService.Error(System.String,System.String)",
-            Justification = "Reviewed!")]
         private void Log(Exception ex)
         {
-            string message = string.Join(
-                "\r\n",
-                ex.Message,
-                "URL: " + HttpContext.Current.Request.Url.OriginalString,
-                "REFERRER: " + HttpContext.Current.Request.UrlReferrer,
-                "FORM: " + (HttpContext.Current.Request.Form.Count > 0 ? HttpContext.Current.Request.Form.ToString() : string.Empty),
-                "SOURCE: " + ex.Source,
-                "TARGETSITE: " + ex.TargetSite,
-                "DETAIL: " + ex,
-                "STACKTRACE: " + ex.StackTrace,
-                "CULTURE: " + Thread.CurrentThread.CurrentUICulture,
-                "BROWSER CAPABILITIES:" + LogInfoFilter.GetClientBrowserInformation(HttpContext.Current.Request));
+            var request = HttpContext.Current.Request;
+            var messageBuilder = new StringBuilder();
 
-            LogService.Error(message, CustomerSettingConfiguration.Settings.ClientLogCategory);
+            messageBuilder
+                .AppendLine(ex.Message)
+                .AppendLine($"URL: {request.Url.OriginalString}")
+                .AppendLine($"REFERRER: {request.UrlReferrer}")
+                .AppendLine($"FORM: {(request.Form.Count > 0 ? request.Form.ToString() : string.Empty)}")
+                .AppendLine($"SOURCE: {ex.Source}")
+                .AppendLine($"TARGET SITE: {ex.TargetSite}")
+                .AppendLine($"DETAIL: {ex}")
+                .AppendLine($"STACK TRACE: {ex.StackTrace}")
+                .AppendLine($"CULTURE: {Thread.CurrentThread.CurrentUICulture}")
+                .AppendLine($"BROWSER CAPABILITIES: {LogInfoFilter.GetClientBrowserInformation(request)}");
+
+            LogService.Error(messageBuilder.ToString(), CustomerSettingConfiguration.Settings.ClientLogCategory);
         }
     }
 }

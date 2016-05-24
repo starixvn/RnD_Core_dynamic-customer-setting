@@ -1,6 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Attributes;
     using Models;
@@ -8,7 +7,7 @@
     using RestSharp;
     using Services;
 
-    [ExceptionHandlingAttribute, ValidateAntiForgery, LogInfoFilter]
+    [ExceptionHandling, ValidateAntiForgery, LogInfoFilter]
     public class UpdateCustomerSettingController : Controller
     {
         private readonly ICustomerSettingService _customerSettingService;
@@ -23,12 +22,12 @@
         {
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames", MessageId = "0#", Justification = "Reviewed!"), HttpPost]
+        [HttpPost]
         [CustomerSettingAuth(IsUpdate = true, IsMultipleUpdate = false)]
-        public ContentResult UpdateSetting(UpdateSettingRequest updateSetting)
+        public ContentResult UpdateSetting(UpdateSettingRequest updateSettingRequest)
         {
-            SetActorInformation(updateSetting);
-            IRestResponse updateResult = _customerSettingService.UpdateCustomerSetting(updateSetting);
+            SetActorInformation(updateSettingRequest);
+            IRestResponse updateResult = _customerSettingService.UpdateCustomerSetting(updateSettingRequest);
             Response.StatusCode = (int)updateResult.StatusCode;
             Response.TrySkipIisCustomErrors = true;
 

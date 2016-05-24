@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections;
-    using System.Diagnostics.CodeAnalysis;
     using Data;
     using Models.Enumerations;
     using Models.Requests;
@@ -10,7 +9,6 @@
 
     public class BaseDataAccess
     {
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Reviewed")]
         protected IResult ExecuteNonQuery(string settingKey, Hashtable storedProcedureParam)
         {
             using (var objectDb = new ObjectDb(settingKey))

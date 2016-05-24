@@ -1,6 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Attributes
 {
     using System;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
@@ -24,20 +25,22 @@
 
         private void Log(Exception ex)
         {
-            string message = string.Join(
-                "\r\n",
-                ex.Message,
-                "URL: " + HttpContext.Current.Request.Url.OriginalString,
-                "REFERRER: " + HttpContext.Current.Request.UrlReferrer,
-                "FORM: " + (HttpContext.Current.Request.Form.Count > 0 ? HttpContext.Current.Request.Form.ToString() : string.Empty),
-                "SOURCE: " + ex.Source,
-                "TARGETSITE: " + ex.TargetSite,
-                "DETAIL: " + ex,
-                "STACKTRACE: " + ex.StackTrace,
-                "CULTURE: " + Thread.CurrentThread.CurrentUICulture,
-                "BROWSER CAPABILITIES:" + ClientInformation(HttpContext.Current.Request));
+            var request = HttpContext.Current.Request;
+            var messageBuilder = new StringBuilder();
 
-            LogService.Error(message, SettingMatrixConfiguration.Settings.ClientLogCategory);
+            messageBuilder
+                .AppendLine(ex.Message)
+                .AppendLine($"URL: {request.Url.OriginalString}")
+                .AppendLine($"REFERRER: {request.UrlReferrer}")
+                .AppendLine($"FORM: {(request.Form.Count > 0 ? request.Form.ToString() : string.Empty)}")
+                .AppendLine($"SOURCE: {ex.Source}")
+                .AppendLine($"TARGET SITE: {ex.TargetSite}")
+                .AppendLine($"DETAIL: {ex}")
+                .AppendLine($"STACK TRACE: {ex.StackTrace}")
+                .AppendLine($"CULTURE: {Thread.CurrentThread.CurrentUICulture}")
+                .AppendLine($"BROWSER CAPABILITIES: {ClientInformation(request)}");
+
+            LogService.Error(messageBuilder.ToString(), SettingMatrixConfiguration.Settings.ClientLogCategory);
         }
 
         private string ClientInformation(HttpRequest request)

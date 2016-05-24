@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Models
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     public class SettingFormQuery
     {
@@ -25,7 +24,6 @@
 
         internal byte System { get; set; }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Reviewed!")]
         internal string ToJson()
         {
             var properties = new List<string>();

@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Results
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     public class SettingResult : Result
     {
@@ -38,7 +37,6 @@
             SubMessages = subMessages;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "Reviewed !")]
         public SettingResult(
             int code,
             string message,

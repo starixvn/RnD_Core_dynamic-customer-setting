@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Client40.Controllers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Runtime.Caching;
     using System.Web.Mvc;
@@ -14,7 +13,7 @@
     using RestSharp;
     using Services;
 
-    [ExceptionHandlingAttribute]
+    [ExceptionHandling]
     public class ViewCustomerSettingController : Controller
     {
         private const string SettingTemplateCachingKey = "CustomerSettingTemplate";
@@ -65,31 +64,28 @@
             return Content(template, "text/HTML");
         }
 
-        [SuppressMessage(
-            "Microsoft.Naming",
-            "CA1719:ParameterNamesShouldNotMatchMemberNames",
-            Justification = "Reviewed!"), HttpPost]
+        [HttpPost]
         [ValidateAntiForgery, CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false), LogInfoFilter]
-        public ContentResult QuerySetting(QuerySettingRequest querySetting)
+        public ContentResult QuerySetting(QuerySettingRequest querySettingRequest)
         {
-            if (querySetting == null)
+            if (querySettingRequest == null)
             {
-                throw new ArgumentNullException(nameof(querySetting), "Query Setting cannot be null");
+                throw new ArgumentNullException(nameof(querySettingRequest), "Query Setting cannot be null");
             }
 
             IRestResponse customerSettingResponse;
             SettingContext settingContext = CustomerSettingRegistration.SettingContext;
 
-            querySetting.ActorId = settingContext.ActorId;
-            querySetting.ActorLevel = settingContext.ActorLevel;
-            querySetting.ActorName = settingContext.ActorName;
-            querySetting.SubAccountId = settingContext.SubAccountId;
-            querySetting.Domain = settingContext.Domain;
-            querySetting.Language = settingContext.Language;
-            querySetting.ClientIP = settingContext.IP;
-            querySetting.System = settingContext.System;
+            querySettingRequest.ActorId = settingContext.ActorId;
+            querySettingRequest.ActorLevel = settingContext.ActorLevel;
+            querySettingRequest.ActorName = settingContext.ActorName;
+            querySettingRequest.SubAccountId = settingContext.SubAccountId;
+            querySettingRequest.Domain = settingContext.Domain;
+            querySettingRequest.Language = settingContext.Language;
+            querySettingRequest.ClientIP = settingContext.IP;
+            querySettingRequest.System = settingContext.System;
 
-            customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySetting);
+            customerSettingResponse = _customerSettingService.QueryCustomerSetting(querySettingRequest);
             Response.StatusCode = (int)customerSettingResponse.StatusCode;
             Response.TrySkipIisCustomErrors = true;
 

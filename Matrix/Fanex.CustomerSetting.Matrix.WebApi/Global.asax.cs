@@ -27,7 +27,6 @@
             if (Server != null)
             {
                 Exception ex = Server.GetLastError().GetBaseException();
-
                 var messageBuilder = new StringBuilder();
 
                 // Get base exception data

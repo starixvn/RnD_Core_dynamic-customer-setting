@@ -2,7 +2,7 @@
 {
     using System;
     using System.Data.SqlClient;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Text;
     using System.Web;
     using System.Web.Http;
     using AppStart;
@@ -18,28 +18,21 @@
             DbSettingProviderManager.Current.Start();
         }
 
-        /// <summary>
-        /// Application error event handler.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
-        [SuppressMessage("Microsoft.Globalization",
-            "CA1303:Do not pass literals as localized parameters",
-            MessageId = "Fanex.Logging.LogService.Error(System.String)",
-            Justification = "Reviewed!")]
         protected void Application_Error(object sender, EventArgs e)
         {
             // Logging
             if (Server != null)
             {
                 Exception ex = Server.GetLastError().GetBaseException();
+                var messageBuilder = new StringBuilder();
 
                 // Get base exception data
-                string message = ex.Message +
-                    "\r\nType: " + ex.GetType().ToString() +
-                    "\r\nSource: " + ex.Source +
-                    "\r\nTarget Site: " + ex.TargetSite +
-                    "\r\nStack Trace: " + ex.StackTrace;
+                messageBuilder
+                    .AppendLine(ex.Message)
+                    .AppendLine($"Type: {ex.GetType()}")
+                    .AppendLine($"Source: {ex.Source}")
+                    .AppendLine($"Target Site: {ex.TargetSite}")
+                    .AppendLine($"Stack Trace: {ex.StackTrace}");
 
                 // Get additional exception data
                 var sqlException = ex as SqlException;
@@ -51,12 +44,13 @@
 
                 if (sqlException != null)
                 {
-                    message += "\r\nProcedure: " + sqlException.Procedure +
-                        "\r\nLine Number: " + sqlException.LineNumber +
-                        "\r\nServer: " + sqlException.Server;
+                    messageBuilder
+                    .AppendLine($"Procedure: {sqlException.Procedure}")
+                    .AppendLine($"Line Number: {sqlException.LineNumber}")
+                    .AppendLine($"Server: {sqlException.Server}");
                 }
 
-                LogService.Error(message);
+                LogService.Error(messageBuilder.ToString());
             }
         }
     }

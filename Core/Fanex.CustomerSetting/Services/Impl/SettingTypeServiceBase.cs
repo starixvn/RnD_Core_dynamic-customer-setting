@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Exceptions;
     using Logging;
@@ -72,7 +71,6 @@
         /// </summary>
         /// <param name="settingType">Type of the setting, includes list of setting items.</param>
         /// <returns>Setting type with setting item have sport, bet type name.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed !")]
         protected SettingType SetSportTypeBetTypeName(SettingType settingType, string language)
         {
             if (settingType != null && settingType.SettingItems.Any())
@@ -81,9 +79,10 @@
 
                 foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
-                    if (settingItem is SettingItemDefault)
+                    var defaultSettingItem = settingItem as SettingItemDefault;
+
+                    if (defaultSettingItem != null)
                     {
-                        var defaultSettingItem = settingItem as SettingItemDefault;
                         defaultSettingItem.BetTypeName = ResourceService.GetBetTypeName(defaultSettingItem.BetTypeId, language);
                         defaultSettingItem.SportTypeName = ResourceService.GetSportTypeName(defaultSettingItem.SportTypeId, language);
                         defaultSettingItems.Add(defaultSettingItem);

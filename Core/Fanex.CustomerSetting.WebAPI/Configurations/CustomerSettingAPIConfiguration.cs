@@ -1,9 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.WebApi.Configurations
 {
     using System.Configuration;
-    using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "API", Justification = "Reviewed!")]
     public class CustomerSettingAPIConfiguration : ConfigurationSection
     {
         private static CustomerSettingAPIConfiguration settings

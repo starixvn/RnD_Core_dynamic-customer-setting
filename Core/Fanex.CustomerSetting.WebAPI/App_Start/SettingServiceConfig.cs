@@ -6,7 +6,7 @@
     public static class SettingServiceConfig
     {
         public const int AllBets = 21;
-        public const int Voidbridge = 22;
+        public const int MacauGames = 22;
 
         public static void Run()
         {
@@ -14,7 +14,7 @@
             configurator
                 .UseQueryServiceType(typeof(QueryCasinoSettingService))
                 .UseUpdateServiceType(typeof(UpdateCasinoSettingService))
-                .ForProducts(AllBets, Voidbridge)
+                .ForProducts(AllBets, MacauGames)
                 .ForAllSystems()
                 .Apply();
 
