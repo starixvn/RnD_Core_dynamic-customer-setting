@@ -6,7 +6,7 @@
     [TestFixture]
     public class AgentPTItemTests
     {
-        private static readonly object[] agentPTItems =
+        private static readonly object[] AgentPTItems =
         {
             new object[]
             {
@@ -76,7 +76,7 @@
             Assert.AreEqual(errorCode, actualResult.Code);
         }
 
-        [Test, TestCaseSource(nameof(agentPTItems))]
+        [Test, TestCaseSource(nameof(AgentPTItems))]
         public void ToXml_ReturnFormattedXml(
             byte m2,
             bool im2,

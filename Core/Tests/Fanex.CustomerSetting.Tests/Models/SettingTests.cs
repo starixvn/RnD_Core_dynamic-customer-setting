@@ -84,7 +84,7 @@
         public void SettingTypes_SetValueToNullThenGet_ReturnEmptySettingTypes()
         {
             //// Arrange
-            Setting setting = new Setting(1, Level.Super, 1, null);
+            var setting = new Setting(1, Level.Super, 1, null);
 
             //// Assert
             setting.SettingTypes.ShouldBeEquivalentTo<IEnumerable<SettingType>>(Enumerable.Empty<SettingType>());

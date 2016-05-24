@@ -117,7 +117,7 @@
         {
             //// Arrange
             short settingTypeId = 1;
-            SettingType settingType = new SettingType
+            var settingType = new SettingType
             {
                 Id = settingTypeId
             };

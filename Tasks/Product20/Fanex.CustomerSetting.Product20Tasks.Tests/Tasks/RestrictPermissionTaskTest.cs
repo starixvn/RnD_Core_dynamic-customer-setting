@@ -271,8 +271,8 @@
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData1();
-            List<int> customerIds = new List<int> { 1 };
-            List<string> customerNames = new List<string> { "username" };
+            var customerIds = new List<int> { 1 };
+            var customerNames = new List<string> { "username" };
             var command = Substitute.For<MultipleUpdateCustomerSettingCommand>(setting, customerIds, customerNames, Arg.Any<Level>());
 
             // Act.
@@ -288,8 +288,8 @@
         {
             // Arrange.
             ISetting setting = CreateSampleSettingData1();
-            List<int> customerIds = new List<int> { 1 };
-            List<string> customerNames = new List<string> { "username" };
+            var customerIds = new List<int> { 1 };
+            var customerNames = new List<string> { "username" };
             var command = Substitute.For<MultipleUpdateCustomerSettingCommand>(setting, customerIds, customerNames, Arg.Any<Level>());
 
             // Act.

@@ -32,7 +32,7 @@
         public void SetSportTypeBetTypeName_WhenCalled_SetSportTypeBetTypeNameForSettingItems()
         {
             //// Arrange
-            SettingType settingType = new SettingType
+            var settingType = new SettingType
             {
                 SettingItems = new List<ISettingItem>
                     {
@@ -53,7 +53,7 @@
             var actualSettingType = this.SetSportTypeBetTypeName(settingType, DefaultLanguage);
 
             //// Assert
-            SettingItemDefault settingItem = actualSettingType.SettingItems.First() as SettingItemDefault;
+            var settingItem = actualSettingType.SettingItems.First() as SettingItemDefault;
             Assert.AreEqual(sportTypeName, settingItem.SportTypeName);
             Assert.AreEqual(betTypeName, settingItem.BetTypeName);
         }
@@ -62,7 +62,7 @@
         public void GetCustomerSettingType_TypeOfSettingItemIsNotDefaultSettingItem_ThrowInvalidCastException()
         {
             //// Arrange
-            SettingType settingType = new SettingType
+            var settingType = new SettingType
             {
                 SettingItems = new List<ISettingItem>
                     {
@@ -94,7 +94,7 @@
         public void TranslateUpdateResultMessage_SettingResultIsSuccess_ReturnSuccessMessage()
         {
             //// Arrange
-            SettingResult settingResult = new SettingResult(Result.Success);
+            var settingResult = new SettingResult(Result.Success);
             string successMessage = "Success Message";
             byte settingLevel = 1;
 
@@ -108,7 +108,7 @@
         public void TranslateUpdateResultMessage_SettingResultIsFailed_AlwaysCallTranslateMessage()
         {
             //// Arrange
-            SettingResult settingResult = new SettingResult(code: 1, message: "Failed", msgType: 1, customerId: 1, settingTypeId: 1, settingTypeName: "SettingTypeName");
+            var settingResult = new SettingResult(code: 1, message: "Failed", msgType: 1, customerId: 1, settingTypeId: 1, settingTypeName: "SettingTypeName");
             string successMessage = "Success Message";
             byte settingLevel = 1;
             var messageContent = new MessageContent("MainMessage");
@@ -130,7 +130,7 @@
         public void TranslateUpdateResultMessage_SettingResultIsFailed_AlwaysReturnTranslatedMessage()
         {
             //// Arrange
-            SettingResult settingResult = new SettingResult(code: 1, message: "Failed", msgType: 1, customerId: 1, settingTypeId: 1, settingTypeName: "SettingTypeName");
+            var settingResult = new SettingResult(code: 1, message: "Failed", msgType: 1, customerId: 1, settingTypeId: 1, settingTypeName: "SettingTypeName");
             string successMessage = "Success Message";
             byte settingLevel = 1;
             var messageContent = new MessageContent("MainMessage");

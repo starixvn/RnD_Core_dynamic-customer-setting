@@ -131,7 +131,7 @@
         private string ReplaceParameters(string template, SettingFormQuery query)
         {
             string finalTemplate = template;
-            AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
+            var appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
 
             appConfig.Editable = !query.IsReadOnly;
 

@@ -58,7 +58,9 @@
 
         public IResult Update(UpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(command, "command");
+            Check.Argument.IsNotNull(command, nameof(command));
+            Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
+            Check.Argument.IsNotNull(command.Setting.SettingTypes, nameof(command.Setting.SettingTypes));
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
             var validationResult = Validate(command);
@@ -80,7 +82,9 @@
 
         public IResult Update(MultipleUpdateCustomerSettingCommand command)
         {
-            Check.Argument.IsNotNull(command, "command");
+            Check.Argument.IsNotNull(command, nameof(command));
+            Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
+            Check.Argument.IsNotNull(command.Setting.SettingTypes, nameof(command.Setting.SettingTypes));
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
             var results = new List<IResult>();
@@ -99,62 +103,71 @@
         public IResult UpdateUnsyncedCustomerSetting(UpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, nameof(command));
+            Check.Argument.IsNotNull(command.Setting, nameof(command.Setting));
+            Check.Argument.IsNotNull(command.Setting.SettingTypes, nameof(command.Setting.SettingTypes));
 
-            var settingTypes = command.Setting.SettingTypes;
-            var customerId = command.Setting.CustomerId;
-            var customerLevel = command.Setting.CustomerLevel;
-            var uplineLevel = command.UplineLevel;
-            var productId = command.Setting.ProductId;
             var settingTypeResults = new List<SettingResult>();
 
-            settingTypes
+            command.Setting.SettingTypes
                 .Where(settingType => settingType.Id != StatusSettingTypeValue)
                 .ToList()
                 .ForEach(settingType =>
                 {
                     var updateSettingTypeResult = UpdateCustomerSettingType(
-                               customerId,
+                               command.Setting.CustomerId,
                                command.Setting.CustomerInfo,
-                               customerLevel,
+                               command.Setting.CustomerLevel,
                                settingType,
-                               productId,
-                               uplineLevel);
+                               command.Setting.ProductId,
+                               command.UplineLevel);
 
                     settingTypeResults.Add(updateSettingTypeResult);
                 });
 
             if (!settingTypeResults.Exists(result => result.IsNotOk))
             {
-                var statusSettingType = settingTypes.FirstOrDefault(settingType => settingType.Id == StatusSettingTypeValue);
+                var productStatusResult = UpdateProductStatus(command);
 
-                if (statusSettingType != null)
+                if (productStatusResult != null)
                 {
-                    var productStatusResult = UpdateCustomerSettingType(
-                        customerId,
-                        command.Setting.CustomerInfo,
-                        customerLevel,
-                        statusSettingType,
-                        productId,
-                        uplineLevel);
                     settingTypeResults.Add(productStatusResult);
-
-                    if (productStatusResult.IsOk)
-                    {
-                        _customerProductStatusService.UpdateCustomerStatus(
-                            command.Setting.CustomerId,
-                            command.Setting.ProductId,
-                            _settingContext.Actor.SubAccountId,
-                            _settingContext.Actor.Id,
-                            _settingContext.IP);
-                    }
-                }
-                else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
-                {
-                    throw new CustomerSettingException($"Missing Product Status of customer {customerId}.");
                 }
             }
 
             return new UpdateSettingResult(settingTypeResults);
+        }
+
+        private SettingResult UpdateProductStatus(UpdateCustomerSettingCommand command)
+        {
+            SettingResult productStatusResult = null;
+            var statusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == StatusSettingTypeValue);
+
+            if (statusSettingType != null)
+            {
+                productStatusResult = UpdateCustomerSettingType(
+                    command.Setting.CustomerId,
+                    command.Setting.CustomerInfo,
+                    command.Setting.CustomerLevel,
+                    statusSettingType,
+                    command.Setting.ProductId,
+                    command.UplineLevel);
+
+                if (productStatusResult.IsOk)
+                {
+                    _customerProductStatusService.UpdateCustomerStatus(
+                        command.Setting.CustomerId,
+                        command.Setting.ProductId,
+                        _settingContext.Actor.SubAccountId,
+                        _settingContext.Actor.Id,
+                        _settingContext.IP);
+                }
+            }
+            else if (command.Setting.CustomerLevel.IsNotMemberLevel() || command.UplineLevel?.IsAgentLevel() == true)
+            {
+                throw new CustomerSettingException($"Missing Product Status of customer {command.Setting.CustomerId}.");
+            }
+
+            return productStatusResult;
         }
 
         private SettingResult UpdateCustomerSettingType(

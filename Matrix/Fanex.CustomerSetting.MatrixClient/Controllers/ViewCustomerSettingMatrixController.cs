@@ -102,7 +102,7 @@
         private string ReplaceParameters(string template, QuerySettingMatrixRequest querySettingMatrix)
         {
             string finalTemplate = template;
-            AppConfiguration appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
+            var appConfig = new AppConfiguration(Response.ApplyAppPathModifier(Request.ApplicationPath));
 
             if (!string.IsNullOrEmpty(finalTemplate))
             {

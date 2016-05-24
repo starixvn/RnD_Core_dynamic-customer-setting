@@ -213,7 +213,14 @@
             byte productId = 1;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = $"{{\"{nameof(customerId)}\":{customerId},\"{nameof(productId)}\":{productId},\"{nameof(sportTypeId)}\":{sportTypeId}}}";
+            var jsonParameters = string.Format(
+                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
+                nameof(customerId),
+                customerId,
+                nameof(productId),
+                productId,
+                nameof(sportTypeId),
+                sportTypeId);
 
             // Act
             routeService.Handle(_settingContext, 0, ActionType.Query, jsonParameters);
@@ -230,7 +237,14 @@
             byte productId = 1;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = $"{{\"{nameof(customerId)}\":{customerId},\"{nameof(productId)}\":{productId},\"{nameof(sportTypeId)}\":{sportTypeId}}}";
+            var jsonParameters = string.Format(
+                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
+                nameof(customerId),
+                customerId,
+                nameof(productId),
+                productId,
+                nameof(sportTypeId),
+                sportTypeId);
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
 
             _dataAccess.GetCustomerStakeLevelGroups(customerId, productId).Returns(levelGroupsRawData);
@@ -253,7 +267,14 @@
             byte productId = 1;
             short sportTypeId = 1;
             var routeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
-            var jsonParameters = $"{{\"{nameof(customerId)}\":{customerId},\"{nameof(productId)}\":{productId},\"{nameof(sportTypeId)}\":{sportTypeId}}}";
+            var jsonParameters = string.Format(
+                "{{\"{0}\":{1},\"{2}\":{3},\"{4}\":{5}}}",
+                nameof(customerId),
+                customerId,
+                nameof(productId),
+                productId,
+                nameof(sportTypeId),
+                sportTypeId);
             var levelGroupsRawData = CreateSampleDataOfLevelGroups();
             var detailsRawData = CreateSampleDataOfDetails();
             int numberOfDetailedItems = 0;

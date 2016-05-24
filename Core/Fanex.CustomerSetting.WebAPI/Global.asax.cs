@@ -42,7 +42,7 @@
                     "\r\nStack Trace: " + ex.StackTrace;
 
                 // Get additional exception data
-                SqlException sqlException = ex as SqlException;
+                var sqlException = ex as SqlException;
 
                 if (sqlException == null && ex.InnerException != null)
                 {

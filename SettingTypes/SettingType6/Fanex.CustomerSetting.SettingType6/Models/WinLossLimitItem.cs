@@ -8,6 +8,8 @@
 
     public class WinLossLimitItem : SettingItemDefault
     {
+        private const string WinLossLimitXmlFormat = "<Limit {0} MaxWinLimit=\"{1}\" MaxLossLimit=\"{2}\" IsAutoReset=\"{3}\" />";
+
         public decimal WinLimit { get; set; }
 
         public decimal MaxWinRange { get; set; }
@@ -37,12 +39,12 @@
             if ((0 < MaxLossRange && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
                 || LossLimit < 0)
             {
-                return new Result(
-                    ErrorCode.MaximumLossValueShouldBeInRange,
-                    string.Format(
+                var errorMessage = string.Format(
                         Message.MaximumLossValueShouldBeInRange,
                         NumberFormatter.FormatDecimal(MinLossRange),
-                        NumberFormatter.FormatDecimal(MaxLossRange)));
+                        NumberFormatter.FormatDecimal(MaxLossRange));
+
+                return new Result(ErrorCode.MaximumLossValueShouldBeInRange, errorMessage);
             }
 
             if (!IsAutoResetUpline && IsAutoReset)
@@ -55,7 +57,7 @@
 
         public override string ToXml()
         {
-            return $"<Limit {base.ToXml()} MaxWinLimit=\"{WinLimit}\" MaxLossLimit=\"{LossLimit}\" IsAutoReset=\"{(IsAutoReset ? 1 : 0)}\" />";
+            return string.Format(WinLossLimitXmlFormat, base.ToXml(), WinLimit, LossLimit, IsAutoReset ? 1 : 0);
         }
 
         public override bool Equals(object obj)

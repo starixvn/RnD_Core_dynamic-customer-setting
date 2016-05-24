@@ -4,38 +4,14 @@
 
     public class SettingContext : ISettingContext
     {
-        public SettingContext()
-        {
-        }
+        public User Actor { get; set; }
 
-        public User Actor
-        {
-            get;
-            set;
-        }
+        public string Language { get; set; }
 
-        public string Language
-        {
-            get;
-            set;
-        }
+        public string IP { get; set; }
 
-        public string IP
-        {
-            get;
-            set;
-        }
+        public byte System { get; set; }
 
-        public byte System
-        {
-            get;
-            set;
-        }
-
-        public string Domain
-        {
-            get;
-            set;
-        }
+        public string Domain { get; set; }
     }
 }

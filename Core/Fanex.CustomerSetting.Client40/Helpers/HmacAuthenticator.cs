@@ -42,7 +42,7 @@
             string requestHttpMethod = request.Method.ToString();
 
             // Calculate UNIX time
-            DateTime epochStart = new DateTime(1970, 01, 01, 0, 0, 0, 0, DateTimeKind.Utc);
+            var epochStart = new DateTime(1970, 01, 01, 0, 0, 0, 0, DateTimeKind.Utc);
             TimeSpan timeSpan = DateTime.UtcNow - epochStart;
             string requestTimeStamp = Convert.ToUInt64(timeSpan.TotalSeconds).ToString();
 

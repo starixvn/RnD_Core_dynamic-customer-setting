@@ -22,13 +22,13 @@
                 var exception = actionExecutedContext.Exception;
                 var messageBuilder = new StringBuilder();
 
-                messageBuilder.AppendFormat("Message: {0}", exception.Message).AppendLine();
-                messageBuilder.AppendFormat("Type: {0}", exception.GetType().ToString()).AppendLine();
-                messageBuilder.AppendFormat("Source: {0}", exception.Source).AppendLine();
-                messageBuilder.AppendFormat("Client IP: {0}", actionExecutedContext.Request.GetClientIPAddress()).AppendLine();
-                messageBuilder.AppendFormat("Culture: {0}", Thread.CurrentThread.CurrentUICulture).AppendLine();
-                messageBuilder.AppendFormat("Url: {0}", actionExecutedContext.Request.RequestUri.OriginalString).AppendLine();
-                messageBuilder.AppendFormat("Body: {0}", actionExecutedContext.Request.GetBodyForm()).AppendLine();
+                messageBuilder.AppendLine($"Message: {exception.Message}");
+                messageBuilder.AppendLine($"Type: {exception.GetType()}");
+                messageBuilder.AppendLine($"Source: {exception.Source}");
+                messageBuilder.AppendLine($"Client IP: {actionExecutedContext.Request.GetClientIPAddress()}");
+                messageBuilder.AppendLine($"Culture: {Thread.CurrentThread.CurrentUICulture}");
+                messageBuilder.AppendLine($"Url: {actionExecutedContext.Request.RequestUri.OriginalString}");
+                messageBuilder.AppendLine($"Body: {actionExecutedContext.Request.GetBodyForm()}");
 
                 LogDatabaseException(exception, messageBuilder);
 
@@ -44,14 +44,15 @@
 
             if (objectDbException != null)
             {
-                messageBuilder.AppendFormat("Procedure: {0}", objectDbException.DbSetting.SpName).AppendLine();
-                messageBuilder.AppendFormat("DB Name: {0}", objectDbException.DbSetting.DbName).AppendLine();
+                var innerSqlException = objectDbException.InnerException as SqlException;
 
-                if (objectDbException.InnerException is SqlException)
+                messageBuilder.AppendLine($"Procedure: {objectDbException.DbSetting.SpName}");
+                messageBuilder.AppendLine($"DB Name: {objectDbException.DbSetting.DbName}");
+
+                if (innerSqlException != null)
                 {
-                    var innerSqlException = objectDbException.InnerException as SqlException;
-                    messageBuilder.AppendFormat("Server: {0}", innerSqlException.Server).AppendLine();
-                    messageBuilder.AppendFormat("Line Number: {0}", innerSqlException.LineNumber).AppendLine();
+                    messageBuilder.AppendLine($"Server: {innerSqlException.Server}");
+                    messageBuilder.AppendLine($"Line Number: {innerSqlException.LineNumber}");
                 }
             }
         }

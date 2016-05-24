@@ -83,7 +83,7 @@
         {
             //// Arrange
             byte productId = 1;
-            ProductName productName = new ProductName { Name = "A product name" };
+            var productName = new ProductName { Name = "A product name" };
 
             _cachingService.GetOrAdd<ProductName>(
                Arg.Any<string>(),

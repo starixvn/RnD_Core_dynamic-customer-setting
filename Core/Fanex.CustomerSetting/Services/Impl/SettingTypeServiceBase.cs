@@ -77,7 +77,7 @@
         {
             if (settingType != null && settingType.SettingItems.Any())
             {
-                List<SettingItemDefault> defaultSettingItems = new List<SettingItemDefault>();
+                var defaultSettingItems = new List<SettingItemDefault>();
 
                 foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
