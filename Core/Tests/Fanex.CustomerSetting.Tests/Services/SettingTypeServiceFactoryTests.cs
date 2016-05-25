@@ -2,7 +2,6 @@
 {
     using System;
     using CustomerSetting.Services.Impl;
-    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -14,11 +13,9 @@
             //// Arrange
             var factory = new SettingTypeServiceFactory();
 
-            //// Act
-            Action action = () => factory.GetInstance(null);
-
-            //// Assert
-            action.ShouldThrow<ArgumentNullException>("settingType");
+            //// Act and Assert
+            var ex = Assert.Throws<ArgumentNullException>(() => factory.GetInstance(null));
+            Assert.That(ex.ParamName, Is.EqualTo("settingType"));
         }
     }
 }

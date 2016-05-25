@@ -1,7 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
-    using Fanex.CustomerSetting.Models;
-    using FluentAssertions;
+    using CustomerSetting.Models;
     using NUnit.Framework;
 
     [TestFixture]
@@ -17,10 +16,10 @@
         {
             //// Arrange
             var settingItem = new SettingItemDefault
-                {
-                    SportTypeId = sportTypeId,
-                    BetTypeId = betTypeId
-                };
+            {
+                SportTypeId = sportTypeId,
+                BetTypeId = betTypeId
+            };
 
             //// Act
             var actualResult = settingItem.Validate();
@@ -78,7 +77,7 @@
             var settingItem = new SettingItemDefault();
 
             //// Assert
-            settingItem.TypeName.ShouldBeEquivalentTo<string>(settingItem.GetType().AssemblyQualifiedName);
+            Assert.AreEqual(settingItem.GetType().AssemblyQualifiedName, settingItem.TypeName);
         }
     }
 }

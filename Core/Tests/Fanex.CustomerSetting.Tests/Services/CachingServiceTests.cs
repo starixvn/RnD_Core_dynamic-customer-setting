@@ -6,7 +6,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using CustomerSetting.Services.Impl;
-    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -46,72 +45,72 @@
         public void AddEmptyKeyThrowsException()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(string.Empty, new object());
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(string.Empty, new object()));
         }
 
         [Test]
         public void AddEmptyKeyThrowsExceptionWithExpiration()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(string.Empty, new object(), DateTimeOffset.Now.AddHours(1));
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(string.Empty, new object(), DateTimeOffset.Now.AddHours(1)));
         }
 
         [Test]
         public void AddEmptyKeyThrowsExceptionWithPolicy()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(string.Empty, new object(), new CacheItemPolicy());
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(string.Empty, new object(), new CacheItemPolicy()));
         }
 
         [Test]
         public void AddEmptyKeyThrowsExceptionWithSliding()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(string.Empty, new object(), new TimeSpan(1000));
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Add(string.Empty, new object(), new TimeSpan(1000)));
         }
 
         [Test]
         public void AddNullKeyThrowsException()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(null, new object());
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object()));
         }
 
         [Test]
         public void AddNullKeyThrowsExceptionWithExpiration()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(null, new object(), DateTimeOffset.Now.AddHours(1));
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), DateTimeOffset.Now.AddHours(1)));
         }
 
         [Test]
         public void AddNullKeyThrowsExceptionWithPolicy()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(null, new object(), new CacheItemPolicy());
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), new CacheItemPolicy()));
         }
 
         [Test]
         public void AddNullKeyThrowsExceptionWithSliding()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add(null, new object(), new TimeSpan(1000));
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Add(null, new object(), new TimeSpan(1000)));
         }
 
         [Test]
         public void AddNullThrowsException()
         {
             var sut = new CachingService();
-            Action act = () => sut.Add<object>(TestKey, null);
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Add<object>(TestKey, null));
         }
 
         [Test]
@@ -177,8 +176,8 @@
         public void GetEmptyKeyThrowsException()
         {
             var sut = new CachingService();
-            Action act = () => sut.Get<object>(string.Empty);
-            act.ShouldThrow<ArgumentOutOfRangeException>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => sut.Get<object>(string.Empty));
         }
 
         [Test]
@@ -217,8 +216,8 @@
         public void GetNullKeyThrowsException()
         {
             var sut = new CachingService();
-            Action act = () => sut.Get<object>(null);
-            act.ShouldThrow<ArgumentNullException>();
+
+            Assert.Throws<ArgumentNullException>(() => sut.Get<object>(null));
         }
 
         [Test]

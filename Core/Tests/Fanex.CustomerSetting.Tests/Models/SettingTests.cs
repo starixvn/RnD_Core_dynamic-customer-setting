@@ -1,11 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Models
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
-    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -17,11 +14,8 @@
             //// Arrange
             Setting setting = InstanceFactory.CreateCustomerSetting();
 
-            //// Act
-            Action action = () => { setting.ProductId = 0; };
-
-            //// Assert
-            action.ShouldThrow<ArgumentOutOfRangeException>("Product Id cannot be negative or zero.");
+            //// Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => { setting.ProductId = 0; }, "Product Id cannot be negative or zero.");
         }
 
         [TestCase(0)]
@@ -31,11 +25,8 @@
             //// Arrange
             Setting setting = InstanceFactory.CreateCustomerSetting();
 
-            //// Act
-            Action action = () => { setting.CustomerId = customerId; };
-
-            //// Assert
-            action.ShouldThrow<ArgumentOutOfRangeException>("Product Id cannot be negative or zero.");
+            //// Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => { setting.CustomerId = customerId; }, "Customer Id cannot be negative or zero.");
         }
 
         [Test]
@@ -49,7 +40,7 @@
             setting.CustomerId = customerId;
 
             //// Assert
-            setting.CustomerId.ShouldBeEquivalentTo<int>(customerId);
+            Assert.AreEqual(customerId, setting.CustomerId);
         }
 
         [Test]
@@ -58,11 +49,9 @@
             //// Arrange
             Setting setting = InstanceFactory.CreateCustomerSetting();
 
-            //// Act
-            Action action = () => { setting.CustomerLevel = null; };
-
-            //// Assert
-            action.ShouldThrow<ArgumentNullException>("value");
+            //// Act and Assert
+            var ex = Assert.Throws<ArgumentNullException>(() => { setting.CustomerLevel = null; });
+            Assert.That(ex.ParamName, Is.EqualTo("value"));
         }
 
         [TestCase(0)]
@@ -73,11 +62,10 @@
             //// Arrange
             Setting setting = InstanceFactory.CreateCustomerSetting();
 
-            //// Act
-            Action action = () => { setting.CustomerLevel = Enumeration.FromValue<Level>(levelValue); };
-
-            //// Assert
-            action.ShouldThrow<ArgumentOutOfRangeException>("Invalid customer level.");
+            //// Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => { setting.CustomerLevel = Enumeration.FromValue<Level>(levelValue); },
+                "Invalid customer level.");
         }
 
         [Test]
@@ -87,7 +75,7 @@
             var setting = new Setting(1, Level.Super, 1, null);
 
             //// Assert
-            setting.SettingTypes.ShouldBeEquivalentTo<IEnumerable<SettingType>>(Enumerable.Empty<SettingType>());
+            Assert.IsEmpty(setting.SettingTypes);
         }
     }
 }

@@ -53,5 +53,27 @@
         {
             get { return !IsOk; }
         }
+
+        public override bool Equals(object obj)
+        {
+            var otherObj = obj as Result;
+
+            if (ReferenceEquals(this, otherObj))
+            {
+                return true;
+            }
+
+            if (otherObj == null)
+            {
+                return false;
+            }
+
+            return Code == otherObj.Code && Message == otherObj.Message;
+        }
+
+        public override int GetHashCode()
+        {
+            return Code.GetHashCode();
+        }
     }
 }

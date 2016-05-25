@@ -1,10 +1,8 @@
 ﻿namespace Fanex.CustomerSetting.SettingType1.Tests.Services
 {
-    using System;
     using CustomerSetting.Models;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
-    using FluentAssertions;
     using NUnit.Framework;
     using SettingType1.Services;
 
@@ -23,7 +21,7 @@
             ISettingTypeService actual = factory.GetInstance(settingType);
 
             //// Assert
-            actual.GetType().ShouldBeEquivalentTo<Type>(expected.GetType());
+            Assert.AreEqual(expected.GetType(), actual.GetType());
         }
     }
 }

@@ -3,7 +3,6 @@
     using CustomerSetting.Models;
     using CustomerSetting.Models.Constants;
     using CustomerSetting.Models.Results;
-    using FluentAssertions;
     using NUnit.Framework;
     using Resource;
 
@@ -15,7 +14,7 @@
         {
             var errorItem = new SettingItemError();
 
-            errorItem.ErrorMessage.ShouldBeEquivalentTo<string>(Message.SettingTypeError);
+            Assert.AreEqual(Message.SettingTypeError, errorItem.ErrorMessage);
         }
 
         [Test]
@@ -23,7 +22,7 @@
         {
             var errorItem = new SettingItemError();
 
-            errorItem.TypeName.ShouldBeEquivalentTo<string>(errorItem.GetType().AssemblyQualifiedName);
+            Assert.AreEqual(errorItem.GetType().AssemblyQualifiedName, errorItem.TypeName);
         }
 
         [Test]
@@ -37,15 +36,16 @@
             IResult settingResult = errorItem.Validate();
 
             //// Assert
-            settingResult.ShouldBeEquivalentTo<IResult>(expected);
+            Assert.AreEqual(expected, settingResult);
         }
 
         [Test]
         public void ToXml_Always_ReturnExpectedString()
         {
             var errorItem = new SettingItemError();
+            var expectedXml = $"<Error>{Message.SettingTypeError}</Error>";
 
-            errorItem.ToXml().ShouldBeEquivalentTo<string>(string.Format("<Error>{0}</Error>", Message.SettingTypeError));
+            Assert.AreEqual(expectedXml, errorItem.ToXml());
         }
     }
 }

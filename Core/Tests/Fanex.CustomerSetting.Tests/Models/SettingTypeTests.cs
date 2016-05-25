@@ -4,7 +4,6 @@
     using CustomerSetting.Models;
     using CustomerSetting.Models.Constants;
     using CustomerSetting.Models.Results;
-    using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -21,7 +20,7 @@
             settingType.SettingItems = null;
 
             //// Assert
-            settingType.SettingItems.Should().BeEmpty();
+            Assert.IsEmpty(settingType.SettingItems);
         }
 
         [Test]
@@ -29,7 +28,7 @@
         {
             var settingType = new SettingType();
 
-            settingType.TypeName.ShouldBeEquivalentTo<string>(settingType.GetType().AssemblyQualifiedName);
+            Assert.AreEqual(settingType.GetType().AssemblyQualifiedName, settingType.TypeName);
         }
 
         [Test]
