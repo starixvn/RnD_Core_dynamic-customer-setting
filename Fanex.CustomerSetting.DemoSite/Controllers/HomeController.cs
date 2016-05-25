@@ -14,7 +14,7 @@
         public ActionResult Index()
         {
             FormsAuthentication.SetAuthCookie("DemoName", true);
-            if (this.Request.Browser.Browser == "IE" && (this.Request.Browser.MajorVersion < 9))
+            if (Request.Browser.Browser == "IE" && (Request.Browser.MajorVersion < 9))
             {
                 return View("Index-IE8");
             }
@@ -54,7 +54,7 @@
 
         public ActionResult RedirectAction()
         {
-            return this.RedirectToAction("DemoAction", "DemoCtrl");
+            return RedirectToAction("DemoAction", "DemoCtrl");
         }
 
         public ActionResult Login(string securityCode)

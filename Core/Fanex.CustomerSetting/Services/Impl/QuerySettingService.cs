@@ -41,7 +41,7 @@
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
             _taskService = pluggableTaskService ?? new TaskService(_settingContext);
-            _logger = logger ?? Logging.Logger.Log;
+            _logger = logger ?? Logger.Log;
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }

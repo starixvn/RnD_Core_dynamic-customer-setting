@@ -95,7 +95,7 @@
 
         private Hashtable CreateQueryPTSettingSpParam(CustomerSettingQuery query)
         {
-            var parameters = this.GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
+            var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
 
             if (query.CustomerLevel == Level.Agent
                 || query.UplineLevel == Level.Master)

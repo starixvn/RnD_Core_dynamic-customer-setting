@@ -19,7 +19,7 @@
 
         public string TypeName
         {
-            get { return this.GetType().AssemblyQualifiedName; }
+            get { return GetType().AssemblyQualifiedName; }
         }
 
         public IResult Validate()

@@ -48,13 +48,13 @@
         {
             get
             {
-                return this.GetType().AssemblyQualifiedName;
+                return GetType().AssemblyQualifiedName;
             }
         }
 
         public override string ToString()
         {
-            return string.Join(base.ToString(), this.Id);
+            return string.Join(base.ToString(), Id);
         }
 
         public virtual string ToXml()

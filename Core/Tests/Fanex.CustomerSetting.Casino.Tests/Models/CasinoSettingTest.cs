@@ -34,7 +34,7 @@
         {
             //// Arrange
             var customerProductStatus = new CustomerProductStatus { IsHidden = false, IsSynced = true, IsDownlineSynced = true };
-            var casinotSetting = new CasinoSetting(this.setting, customerProductStatus);
+            var casinotSetting = new CasinoSetting(setting, customerProductStatus);
 
             //// Act
             var actual = casinotSetting.IsNormalMode;

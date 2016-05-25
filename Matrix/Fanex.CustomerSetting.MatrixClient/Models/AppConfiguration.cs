@@ -17,9 +17,9 @@
         {
             string objTpl = "{{\"applicationPath\": \"{0}\", \"antiForgeryToken\": \"{1}\"}}";
 
-            this.AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
+            AntiForgeryToken = AntiForgeryExtension.GetTokenHeaderValue();
 
-            return string.Format(objTpl, this.ApplicationPath, this.AntiForgeryToken);
+            return string.Format(objTpl, ApplicationPath, AntiForgeryToken);
         }
     }
 }

@@ -56,13 +56,13 @@
             var that = obj as SettingServiceConfigItem;
 
             return that != null
-                && this.QueryServiceType == that.QueryServiceType
-                && this.UpdateServiceType == that.UpdateServiceType;
+                && QueryServiceType == that.QueryServiceType
+                && UpdateServiceType == that.UpdateServiceType;
         }
 
         public override int GetHashCode()
         {
-            return this.UpdateServiceType.GetHashCode() + this.QueryServiceType.GetHashCode();
+            return UpdateServiceType.GetHashCode() + QueryServiceType.GetHashCode();
         }
     }
 }

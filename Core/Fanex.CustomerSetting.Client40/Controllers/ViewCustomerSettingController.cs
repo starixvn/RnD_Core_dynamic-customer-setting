@@ -42,7 +42,7 @@
             }
 
             ObjectCache cache = MemoryCache.Default;
-            bool isIe8 = this.Request.Browser.Browser == "IE" && this.Request.Browser.MajorVersion < 9;
+            bool isIe8 = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 9;
             string cachedKey = isIe8 ? SettingTemplateIe8CachingKey : SettingTemplateCachingKey;
             string template = cache.Get(cachedKey) as string;
 

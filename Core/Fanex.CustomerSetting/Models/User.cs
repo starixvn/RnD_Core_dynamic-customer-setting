@@ -92,7 +92,7 @@
         {
             get
             {
-                return this.Level == Level.Company;
+                return Level == Level.Company;
             }
         }
 
@@ -100,7 +100,7 @@
         {
             get
             {
-                return !this.IsCompany;
+                return !IsCompany;
             }
         }
     }

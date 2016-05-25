@@ -50,7 +50,7 @@
             ResourceService.GetBetTypeName(1, Arg.Any<string>()).Returns(betTypeName);
 
             //// Act
-            var actualSettingType = this.SetSportTypeBetTypeName(settingType, DefaultLanguage);
+            var actualSettingType = SetSportTypeBetTypeName(settingType, DefaultLanguage);
 
             //// Assert
             var settingItem = actualSettingType.SettingItems.First() as SettingItemDefault;
@@ -73,7 +73,7 @@
             //// Act
             Assert.Throws<InvalidCastException>(
                 new TestDelegate(
-                    () => this.SetSportTypeBetTypeName(settingType, DefaultLanguage)));
+                    () => SetSportTypeBetTypeName(settingType, DefaultLanguage)));
         }
 
         [Test]
@@ -87,7 +87,7 @@
             //// Act
             Assert.Throws<ArgumentNullException>(
                 new TestDelegate(
-                    () => this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage)));
+                    () => TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage)));
         }
 
         [Test]
@@ -99,7 +99,7 @@
             byte settingLevel = 1;
 
             //// Act
-            var actualSettingResult = this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
+            var actualSettingResult = TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
 
             //// Assert
             Assert.AreEqual(successMessage, actualSettingResult.Message);
@@ -116,7 +116,7 @@
             MessageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>()).Returns(messageContent);
 
             //// Act
-            this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
+            TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
 
             //// Assert
             MessageService.Received().TranslateMessage(
@@ -138,7 +138,7 @@
             MessageService.TranslateMessage(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<byte>(), Arg.Any<string>()).Returns(messageContent);
 
             //// Act
-            var actualSettingResult = this.TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
+            var actualSettingResult = TranslateUpdateResultMessage(settingResult, successMessage, settingLevel, DefaultLanguage);
 
             //// Assert
             Assert.AreEqual(messageContent.MainMessage, actualSettingResult.Message);
@@ -151,7 +151,7 @@
             var customerIds = new List<int> { 1, 2 };
 
             //// Act
-            var settingTypeResults = this.UpdateMultipleCustomerSettingType(
+            var settingTypeResults = UpdateMultipleCustomerSettingType(
                 Arg.Any<ISettingContext>(),
                 customerIds,
                 Arg.Any<Level>(),
@@ -171,7 +171,7 @@
             var settingContext = new SettingContextStub();
 
             //// Act
-            var updateResults = this.UpdateMultipleCustomerSettingType(
+            var updateResults = UpdateMultipleCustomerSettingType(
                 settingContext,
                 customerIds,
                 Level.Member,

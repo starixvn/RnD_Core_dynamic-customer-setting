@@ -17,10 +17,10 @@
         internal CustomerSettingQuery GetCustomerSettingQuery()
         {
             var query = new CustomerSettingQuery(
-             this.CustomerId,
-             this.CustomerLevel,
-             this.ProductId,
-             this.UplineLevel);
+             CustomerId,
+             CustomerLevel,
+             ProductId,
+             UplineLevel);
 
             return query;
         }

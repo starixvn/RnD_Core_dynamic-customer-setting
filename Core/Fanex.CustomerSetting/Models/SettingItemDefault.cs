@@ -22,7 +22,7 @@
         {
             get
             {
-                return this.GetType().AssemblyQualifiedName;
+                return GetType().AssemblyQualifiedName;
             }
         }
 

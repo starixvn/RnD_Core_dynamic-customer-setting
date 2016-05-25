@@ -38,19 +38,19 @@
             {
                 var actor = new User
                 {
-                    Id = this.ActorId,
-                    Name = this.ActorName,
-                    Level = Enumeration.FromValue<Level>(this.ActorLevel),
-                    SubAccountId = this.SubAccountId
+                    Id = ActorId,
+                    Name = ActorName,
+                    Level = Enumeration.FromValue<Level>(ActorLevel),
+                    SubAccountId = SubAccountId
                 };
 
                 _settingContext = new SettingContext
                 {
                     Actor = actor,
-                    Language = this.Language,
-                    IP = this.ClientIP,
-                    System = this.System,
-                    Domain = this.Domain
+                    Language = Language,
+                    IP = ClientIP,
+                    System = System,
+                    Domain = Domain
                 };
             }
 

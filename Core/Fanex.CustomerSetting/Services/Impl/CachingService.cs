@@ -19,7 +19,7 @@
                 throw new ArgumentNullException(nameof(cache));
             }
 
-            this._cache = cache;
+            _cache = cache;
             DefaultCacheDuration = 60 * 20;
         }
 

@@ -88,16 +88,16 @@
 
         public UpdateCustomerSettingCommand GetUpdateCustomerSettingCommand(int customerId)
         {
-            int customerIdIndex = this.CustomerIds.ToList().IndexOf(customerId);
+            int customerIdIndex = CustomerIds.ToList().IndexOf(customerId);
 
             if (customerIdIndex < 0)
             {
                 throw new ArgumentException($"{customerId} does not exist in selected ids for update action");
             }
 
-            var command = new UpdateCustomerSettingCommand(this.Setting, this.UplineLevel);
+            var command = new UpdateCustomerSettingCommand(Setting, UplineLevel);
             command.Setting.CustomerId = customerId;
-            command.Setting.CustomerInfo.UserName = this.CustomerNames.ElementAt(customerIdIndex);
+            command.Setting.CustomerInfo.UserName = CustomerNames.ElementAt(customerIdIndex);
 
             return command;
         }
