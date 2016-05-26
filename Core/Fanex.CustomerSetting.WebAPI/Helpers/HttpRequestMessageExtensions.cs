@@ -9,9 +9,11 @@
     {
         public static string GetClientIPAddress(this HttpRequestMessage request)
         {
-            if (request != null && request.Properties.ContainsKey("MS_HttpContext"))
+            object httpContext = null;
+
+            if (request?.Properties.TryGetValue("MS_HttpContext", out httpContext) == true)
             {
-                return IPAddress.Parse(((HttpContextBase)request.Properties["MS_HttpContext"]).Request.UserHostAddress).ToString();
+                return IPAddress.Parse(((HttpContextBase)httpContext).Request.UserHostAddress).ToString();
             }
 
             return "Unknown";
