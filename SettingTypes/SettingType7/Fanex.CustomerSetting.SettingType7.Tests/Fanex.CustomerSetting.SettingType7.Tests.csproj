@@ -76,7 +76,7 @@
     <Compile Include="Services\SettingTypeServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <Content Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
