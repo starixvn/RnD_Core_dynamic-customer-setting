@@ -1,0 +1,40 @@
+﻿{
+  "productId": 255,
+  "productName": "Product 255",
+  "customerId": 1,
+  "customerLevel": {
+    "displayName": "Super",
+    "value": 4
+  },
+  "customerInfo": {
+    "userName": "SA-RM",
+    "userName2": null,
+    "firstName": "---",
+    "lastName": "---",
+    "phone": "-",
+    "mobilePhone": "-",
+    "fax": "-",
+    "email": "test@test.com"
+  },
+  "settingTypes": [
+    {
+      "id": 1,
+      "name": "Setting Type 1",
+      "settingLevel": 1,
+      "displayOrder": 1,
+      "displayMode": 1,
+      "isReadOnly": false,
+      "settingItems": [
+        {
+          "sportTypeId": 121,
+          "sportTypeName": "Sport Type 121",
+          "betTypeId": 30001,
+          "betTypeName": "Bet Type 30001",
+          "typeName": "Fanex.CustomerSetting.Models.SettingItemDefault, Fanex.CustomerSetting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+        }
+      ],
+      "typeName": "Fanex.CustomerSetting.Models.SettingType, Fanex.CustomerSetting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "isError": false
+    }
+  ]
+}

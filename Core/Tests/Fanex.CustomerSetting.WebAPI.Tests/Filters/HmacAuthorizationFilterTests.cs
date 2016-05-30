@@ -16,7 +16,6 @@
     [TestFixture]
     public class HmacAuthorizationFilterTests
     {
-        private HttpContextBase _context;
         private HttpRequestMessage _request;
         private HttpActionContext _actionContext;
         private HttpControllerContext _controllerContext;
@@ -27,7 +26,6 @@
         [SetUp]
         public void SetUp()
         {
-            _context = Substitute.ForPartsOf<HttpContextBase>();
             _request = Substitute.ForPartsOf<HttpRequestMessage>();
             _controllerContext = Substitute.ForPartsOf<HttpControllerContext>();
             _actionDescriptor = Substitute.ForPartsOf<HttpActionDescriptor>();
