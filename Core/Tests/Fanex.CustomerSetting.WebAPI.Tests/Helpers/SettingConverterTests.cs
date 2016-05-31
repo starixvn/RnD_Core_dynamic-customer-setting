@@ -10,6 +10,7 @@
     using NUnit.Framework;
     using WebApi.Helpers;
     using WebApi.Models.Request;
+
     [TestFixture]
     public class SettingConverterTests
     {
@@ -59,7 +60,7 @@
 
             sampleSetting = sampleSetting.Replace("\"", "\\\"");
 
-            return new string[] { "{\"Setting\":\"" + sampleSetting +"\"}" };
+            return new string[] { "{\"Setting\":\"" + sampleSetting + "\"}" };
         }
 
         [Test, TestCaseSource(nameof(ReadSampleData))]

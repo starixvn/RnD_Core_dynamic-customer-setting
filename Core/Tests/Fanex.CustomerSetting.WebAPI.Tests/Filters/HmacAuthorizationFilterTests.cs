@@ -152,7 +152,7 @@
             DateTime requestTime = DateTime.UtcNow;
             DateTime wrongRequestTime = DateTime.UtcNow.AddHours(1);
             string hmacString = ComputeHmacString(_secretKey, requestTime: requestTime);
-            string authHeader = CombineAuthenticationHeader(_secretKey, requestTime: wrongRequestTime);
+            string authHeader = CombineAuthenticationHeader(hmacString, requestTime: wrongRequestTime);
 
             _request.Headers.Add("Authorization", authHeader);
 
