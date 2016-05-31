@@ -150,7 +150,7 @@
         public void AddWithSlidingReturnsCachedItem()
         {
             var sut = new CachingService();
-            sut.Add(TestKey, "testObject", new TimeSpan(0, 0, 5));
+            sut.Add(TestKey, "testObject", new TimeSpan(0, 0, 10));
             Assert.AreEqual("testObject", sut.Get<string>(TestKey));
         }
 
