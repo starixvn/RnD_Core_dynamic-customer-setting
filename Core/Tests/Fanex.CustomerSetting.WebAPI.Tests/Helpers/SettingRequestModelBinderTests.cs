@@ -64,13 +64,7 @@
 
         protected HttpRequestMessage Request { get; set; }
 
-        protected HttpControllerContext ControllerContext { get; set; }
-
-        protected HttpActionDescriptor ActionDescriptor { get; set; }
-
         protected HttpActionContext ActionContext { get; set; }
-
-        protected SysValueProviders.IValueProvider ValueProvider { get; set; }
 
         protected ModelBindingContext BindingContext { get; set; }
 
@@ -82,17 +76,16 @@
             var data = new DataAnnotationsModelMetadataProvider();
             var modelMetadata = data.GetMetadataForType(null, typeof(T));
 
-            ValueProvider = Substitute.For<SysValueProviders.IValueProvider>();
             BindingContext = new ModelBindingContext
             {
-                ValueProvider = ValueProvider,
+                ValueProvider = Substitute.For<SysValueProviders.IValueProvider>(),
                 ModelMetadata = modelMetadata
             };
 
             Request = Substitute.For<HttpRequestMessage>();
-            ControllerContext = new HttpControllerContext(Substitute.For<HttpConfiguration>(), Substitute.For<IHttpRouteData>(), Request);
-            ActionDescriptor = Substitute.For<HttpActionDescriptor>();
-            ActionContext = new HttpActionContext(ControllerContext, ActionDescriptor);
+            ActionContext = new HttpActionContext(
+                new HttpControllerContext(Substitute.For<HttpConfiguration>(), Substitute.For<IHttpRouteData>(), Request),
+                Substitute.For<HttpActionDescriptor>());
             ActionContext.ControllerContext.Request = Request;
 
             ModelBinder = new UpdateSettingRequestModelBinder<T>();
