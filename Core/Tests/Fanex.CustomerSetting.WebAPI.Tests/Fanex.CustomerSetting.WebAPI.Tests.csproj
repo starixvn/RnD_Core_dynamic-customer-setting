@@ -74,6 +74,10 @@
     <Compile Include="Helpers\SettingConverterTests.cs" />
     <Compile Include="Helpers\SettingRequestModelBinderTests.cs" />
     <Compile Include="Helpers\UpdateSettingRequestModelBinderTests.cs" />
+    <Compile Include="Models\MultipleUpdateCustomerSettingCommandTests.cs" />
+    <Compile Include="Models\QuerySettingRequestTests.cs" />
+    <Compile Include="Models\RedirectRequestTests.cs" />
+    <Compile Include="Models\UpdateSettingRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

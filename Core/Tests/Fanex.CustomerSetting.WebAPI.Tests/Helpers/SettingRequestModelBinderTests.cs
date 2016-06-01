@@ -9,8 +9,8 @@
     using System.Web.Http.Metadata.Providers;
     using System.Web.Http.ModelBinding;
     using System.Web.Http.Routing;
-    using Models;
-    using Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using NSubstitute;

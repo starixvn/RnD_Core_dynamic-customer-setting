@@ -331,8 +331,6 @@
     <Content Include="App_Data\PluggableTasks\product-20.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>

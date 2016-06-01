@@ -17,12 +17,12 @@
 
             if (string.IsNullOrWhiteSpace(CustomerIds))
             {
-                throw new InvalidOperationException("CustomerIds cannot be null or empty");
+                throw new InvalidOperationException("Customer Ids cannot be null or empty");
             }
 
             if (string.IsNullOrWhiteSpace(CustomerNames))
             {
-                throw new InvalidOperationException("CustomerNames cannot be null or empty");
+                throw new InvalidOperationException("Customer Names cannot be null or empty");
             }
 
             return new MultipleUpdateCustomerSettingCommand(

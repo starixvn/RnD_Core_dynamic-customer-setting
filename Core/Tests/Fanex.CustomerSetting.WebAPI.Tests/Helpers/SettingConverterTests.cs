@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Models;
-    using Models.Enumerations;
+    using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using NUnit.Framework;
