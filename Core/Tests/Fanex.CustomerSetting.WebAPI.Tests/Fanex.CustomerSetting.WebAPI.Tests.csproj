@@ -65,6 +65,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProductControllerTests.cs" />
     <Compile Include="Filters\HmacAuthorizationFilterTests.cs" />
     <Compile Include="Filters\SetLanguageFilterTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -87,14 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.config" />
-    <Content Include="Helpers\sample-data.json">
+    <Content Include="SampleData\settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

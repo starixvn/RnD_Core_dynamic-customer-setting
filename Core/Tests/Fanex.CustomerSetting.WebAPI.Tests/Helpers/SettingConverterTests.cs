@@ -14,7 +14,7 @@
     [TestFixture]
     public class SettingConverterTests
     {
-        private const string SampleDataFilePath = @"\Helpers\sample-data.json";
+        private const string SampleDataFilePath = @"\SampleData\settings.json";
 
         private static Setting ExpectedData
         {
