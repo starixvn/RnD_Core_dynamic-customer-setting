@@ -287,8 +287,12 @@
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Templates\customer-setting-ie8.htm" />
-    <Content Include="App_Data\Templates\customer-setting.htm" />
+    <Content Include="App_Data\Templates\customer-setting-ie8.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Templates\customer-setting.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

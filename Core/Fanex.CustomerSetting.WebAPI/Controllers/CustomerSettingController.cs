@@ -40,6 +40,11 @@
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Request parameters cannot be null.");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, "Precondition request is failed.");
+            }
+
             var querySettingService = settingServiceFactory.CreateQueryService(request.System, request.ProductId, request.GetSettingContext());
 
             try
