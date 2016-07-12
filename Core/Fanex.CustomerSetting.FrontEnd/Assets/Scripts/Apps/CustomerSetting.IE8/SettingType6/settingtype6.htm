@@ -56,12 +56,11 @@
                                    class="setting-field setting-field--number setting-field--has-constraint" />
                             <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span>
                         </div>
-                        <div class="setting-field-wrapper">
+                        <div class="setting-field-wrapper" data-ng-if="item.maxLossRange === 0">
                             <label class="setting-field--checkfield">
                                 <input type="checkbox"
                                        class="setting-field--checkfield__check-ctrl"
                                        data-settingtype6-unlimited-checkbox
-                                       data-ng-disabled="item.maxLossRange !== 0"
                                        data-ng-model="isUnlimited"
                                        data-ng-change="check()" />
                                 {{'Unlimited' | settingType6Label}}

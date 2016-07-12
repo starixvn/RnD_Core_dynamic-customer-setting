@@ -30594,7 +30594,7 @@ var CustomerSetting;
             });
         };
         return StringFormater;
-    }());
+    })();
     CustomerSetting.StringFormater = StringFormater;
     var ArrayHelpers = (function () {
         function ArrayHelpers() {
@@ -30614,7 +30614,7 @@ var CustomerSetting;
             return result;
         };
         return ArrayHelpers;
-    }());
+    })();
     CustomerSetting.ArrayHelpers = ArrayHelpers;
     function debounce(func, waitTime) {
         var timeout;
@@ -30645,6 +30645,7 @@ var CustomerSetting;
     CustomerSetting.debounce = debounce;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="helpers.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -30695,7 +30696,7 @@ var CustomerSetting;
             return "The number of customer IDs does not match with the number of customer names.";
         };
         return Exceptions;
-    }());
+    })();
     CustomerSetting.Exceptions = Exceptions;
     var Defaults = (function () {
         function Defaults() {
@@ -30729,7 +30730,7 @@ var CustomerSetting;
             configurable: true
         });
         return Defaults;
-    }());
+    })();
     CustomerSetting.Defaults = Defaults;
     var KeyValuePair = (function () {
         function KeyValuePair(key, value) {
@@ -30737,10 +30738,12 @@ var CustomerSetting;
             this.value = value;
         }
         return KeyValuePair;
-    }());
+    })();
     CustomerSetting.KeyValuePair = KeyValuePair;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="helper-services.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -30772,17 +30775,19 @@ var CustomerSetting;
             app.value(name, target);
         };
         return ModuleRegister;
-    }());
+    })();
     CustomerSetting.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
         }]);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="common.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -30809,7 +30814,7 @@ var CustomerSetting;
             }
         }
         return CustomerInfo;
-    }());
+    })();
     CustomerSetting.CustomerInfo = CustomerInfo;
     var DefaultSettingItem = (function () {
         function DefaultSettingItem(settingItem) {
@@ -30871,7 +30876,7 @@ var CustomerSetting;
             return settingItem;
         };
         return DefaultSettingItem;
-    }());
+    })();
     CustomerSetting.DefaultSettingItem = DefaultSettingItem;
     var ErrorSettingItem = (function () {
         function ErrorSettingItem(errorItem) {
@@ -30894,7 +30899,7 @@ var CustomerSetting;
         };
         ;
         return ErrorSettingItem;
-    }());
+    })();
     CustomerSetting.ErrorSettingItem = ErrorSettingItem;
     var SettingType = (function () {
         function SettingType(settingType) {
@@ -30975,7 +30980,7 @@ var CustomerSetting;
             return extraData;
         };
         return SettingType;
-    }());
+    })();
     CustomerSetting.SettingType = SettingType;
     var Setting = (function () {
         function Setting(setting) {
@@ -31082,7 +31087,7 @@ var CustomerSetting;
             });
         };
         return Setting;
-    }());
+    })();
     CustomerSetting.Setting = Setting;
     var Result = (function () {
         function Result(code, message, msgType) {
@@ -31148,7 +31153,7 @@ var CustomerSetting;
             configurable: true
         });
         return Result;
-    }());
+    })();
     CustomerSetting.Result = Result;
     var SettingResult = (function (_super) {
         __extends(SettingResult, _super);
@@ -31159,7 +31164,7 @@ var CustomerSetting;
             this.messages = messages;
         }
         return SettingResult;
-    }(Result));
+    })(Result);
     CustomerSetting.SettingResult = SettingResult;
     var CustomerSettingResult = (function () {
         function CustomerSettingResult(settingResult) {
@@ -31213,7 +31218,7 @@ var CustomerSetting;
             this.settingResults = uniquedResults;
         };
         return CustomerSettingResult;
-    }());
+    })();
     CustomerSetting.CustomerSettingResult = CustomerSettingResult;
     var UpdatingSettingResult = (function (_super) {
         __extends(UpdatingSettingResult, _super);
@@ -31259,7 +31264,7 @@ var CustomerSetting;
             return this.subResults || new Array();
         };
         return UpdatingSettingResult;
-    }(Result));
+    })(Result);
     CustomerSetting.UpdatingSettingResult = UpdatingSettingResult;
     var ValidationResult = (function (_super) {
         __extends(ValidationResult, _super);
@@ -31271,14 +31276,20 @@ var CustomerSetting;
             this.isWarning = isWarning;
         }
         return ValidationResult;
-    }(Result));
+    })(Result);
     CustomerSetting.ValidationResult = ValidationResult;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="common.ts" />
+/// <reference path="helpers.ts" />
+/// <reference path="models.ts" />
+/// <reference path="module-registrater.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -31332,7 +31343,7 @@ var CustomerSetting;
             configurable: true
         });
         return AbstractSettingQuery;
-    }());
+    })();
     CustomerSetting.AbstractSettingQuery = AbstractSettingQuery;
     var SettingQuery = (function (_super) {
         __extends(SettingQuery, _super);
@@ -31365,7 +31376,7 @@ var CustomerSetting;
             return params;
         };
         return SettingQuery;
-    }(AbstractSettingQuery));
+    })(AbstractSettingQuery);
     CustomerSetting.SettingQuery = SettingQuery;
     var MultipleSettingQuery = (function (_super) {
         __extends(MultipleSettingQuery, _super);
@@ -31411,7 +31422,7 @@ var CustomerSetting;
             return this.custIds.length === this.custNames.length;
         };
         return MultipleSettingQuery;
-    }(AbstractSettingQuery));
+    })(AbstractSettingQuery);
     CustomerSetting.MultipleSettingQuery = MultipleSettingQuery;
     var SettingCommand = (function () {
         function SettingCommand(uplineLevel, setting) {
@@ -31431,7 +31442,7 @@ var CustomerSetting;
             };
         };
         return SettingCommand;
-    }());
+    })();
     CustomerSetting.SettingCommand = SettingCommand;
     var MultipleSettingCommand = (function (_super) {
         __extends(MultipleSettingCommand, _super);
@@ -31458,7 +31469,7 @@ var CustomerSetting;
             };
         };
         return MultipleSettingCommand;
-    }(SettingCommand));
+    })(SettingCommand);
     CustomerSetting.MultipleSettingCommand = MultipleSettingCommand;
     var SettingPartialCommand = (function () {
         function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -31469,7 +31480,7 @@ var CustomerSetting;
             this.settingType = settingType;
         }
         return SettingPartialCommand;
-    }());
+    })();
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
     var RedirectCommand = (function () {
         function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
@@ -31487,10 +31498,14 @@ var CustomerSetting;
             };
         };
         return RedirectCommand;
-    }());
+    })();
     CustomerSetting.RedirectCommand = RedirectCommand;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="common.ts" />
+/// <reference path="module-registrater.ts" />
+/// <reference path="parameters.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31528,7 +31543,7 @@ var CustomerSetting;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    }());
+    })();
     CustomerSetting.AppConfigService = AppConfigService;
     CustomerSetting.ModuleRegister.service("appConfigService", AppConfigService);
     var ParametersService = (function () {
@@ -31606,7 +31621,7 @@ var CustomerSetting;
         };
         ParametersService.$inject = ["$window"];
         return ParametersService;
-    }());
+    })();
     CustomerSetting.ParametersService = ParametersService;
     CustomerSetting.ModuleRegister.service("parametersService", ParametersService);
     var UpdatingSettingTypePromiseChain = (function () {
@@ -31652,7 +31667,7 @@ var CustomerSetting;
         };
         UpdatingSettingTypePromiseChain.$inject = ["$q"];
         return UpdatingSettingTypePromiseChain;
-    }());
+    })();
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
     var SettingTypesSharedValuesService = (function () {
@@ -31669,7 +31684,7 @@ var CustomerSetting;
             }
         };
         return SettingTypesSharedValuesService;
-    }());
+    })();
     CustomerSetting.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
     CustomerSetting.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
     var ValueRangeService = (function () {
@@ -31693,7 +31708,7 @@ var CustomerSetting;
             return ranges;
         };
         return ValueRangeService;
-    }());
+    })();
     CustomerSetting.ValueRangeService = ValueRangeService;
     CustomerSetting.ModuleRegister.service("valueRangeService", ValueRangeService);
     function FormatNumber($filter) {
@@ -31760,6 +31775,9 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("unsafe", Unsafe);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31825,7 +31843,7 @@ var CustomerSetting;
         };
         ResourceService.$inject = ["customerSettingResource", "parametersService"];
         return ResourceService;
-    }());
+    })();
     CustomerSetting.ResourceService = ResourceService;
     CustomerSetting.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -31849,6 +31867,8 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("message", MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31861,7 +31881,7 @@ var CustomerSetting;
                 }];
         }
         return BlockUiDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
     var BlockUiService = (function () {
         function BlockUiService() {
@@ -31876,11 +31896,14 @@ var CustomerSetting;
             this.scope.isLoading = false;
         };
         return BlockUiService;
-    }());
+    })();
     CustomerSetting.BlockUiService = BlockUiService;
     CustomerSetting.ModuleRegister.service("blockUiService", BlockUiService);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="blockui/block-ui.ts" />
+/// <reference path="module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31923,11 +31946,19 @@ var CustomerSetting;
         };
         RequestService.$inject = ["$http", "resourceService", "blockUiService"];
         return RequestService;
-    }());
+    })();
     CustomerSetting.RequestService = RequestService;
     CustomerSetting.ModuleRegister.service("requestService", RequestService);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="common.ts" />
+/// <reference path="helper-services.ts" />
+/// <reference path="models.ts" />
+/// <reference path="module-registrater.ts" />
+/// <reference path="parameters.ts" />
+/// <reference path="requesting-server-service.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32018,10 +32049,12 @@ var CustomerSetting;
             "updatingSettingTypePromiseChain",
             "settingTypesSharedValuesService"];
         return CustomerSettingController;
-    }());
+    })();
     CustomerSetting.ModuleRegister.controller("customerSettingController", CustomerSettingController);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32041,10 +32074,12 @@ var CustomerSetting;
             configurable: true
         });
         return CustomerInfoDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32084,7 +32119,7 @@ var CustomerSetting;
         });
         CopySettingDirective.$inject = ["copyingSettingService"];
         return CopySettingDirective;
-    }());
+    })();
     CustomerSetting.CopySettingDirective = CopySettingDirective;
     CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
     var CopyingSettingService = (function () {
@@ -32129,10 +32164,13 @@ var CustomerSetting;
         };
         CopyingSettingService.$inject = ["$rootScope"];
         return CopyingSettingService;
-    }());
+    })();
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../helper-services.ts" />
+/// <reference path="../models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32181,10 +32219,15 @@ var CustomerSetting;
             configurable: true
         });
         return SettingTypeDirective;
-    }());
+    })();
     CustomerSetting.SettingTypeDirective = SettingTypeDirective;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
+/// <reference path="../settingtype/setting-type-base-directive.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32228,7 +32271,7 @@ var CustomerSetting;
             return result;
         };
         return DefaultSettingTypeGroupingDirective;
-    }());
+    })();
     CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
     CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
     function ShowingName() {
@@ -32243,6 +32286,9 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../helpers.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32278,10 +32324,12 @@ var CustomerSetting;
         };
         DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
         return DetectMaxHeightDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32353,10 +32401,14 @@ var CustomerSetting;
         });
         DraggableDirective.$inject = ["$document"];
         return DraggableDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32382,10 +32434,13 @@ var CustomerSetting;
             configurable: true
         });
         return SettingResultDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32444,10 +32499,14 @@ var CustomerSetting;
         };
         SettingTypeDirectiveLoader.$inject = ["$compile"];
         return SettingTypeDirectiveLoader;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../resource/resource-translation.ts" />
+/// <reference path="../helpers.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32516,7 +32575,7 @@ var CustomerSetting;
         };
         Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
         return Tooltip;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
     function TooltipMessage($injector, $filter) {
         return function (result, resourceServiceName, fieldName, customFilterName) {
@@ -32563,10 +32622,12 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -32589,7 +32650,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType1Config;
-    }());
+    })();
     CustomerSetting.SettingType1Config = SettingType1Config;
     var SettingType1Item = (function () {
         function SettingType1Item() {
@@ -32636,7 +32697,7 @@ var CustomerSetting;
             return false;
         };
         return SettingType1Item;
-    }());
+    })();
     CustomerSetting.SettingType1Item = SettingType1Item;
     var SuperPositionTaking = (function (_super) {
         __extends(SuperPositionTaking, _super);
@@ -32697,7 +32758,7 @@ var CustomerSetting;
             return true;
         };
         return SuperPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SuperPositionTaking = SuperPositionTaking;
     var MasterPositionTaking = (function (_super) {
         __extends(MasterPositionTaking, _super);
@@ -32843,7 +32904,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.MasterPositionTaking = MasterPositionTaking;
     var AgentPositionTaking = (function (_super) {
         __extends(AgentPositionTaking, _super);
@@ -32989,7 +33050,7 @@ var CustomerSetting;
             }
         };
         return AgentPositionTaking;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.AgentPositionTaking = AgentPositionTaking;
     var SuperPositionTakingOnMember = (function (_super) {
         __extends(SuperPositionTakingOnMember, _super);
@@ -33071,7 +33132,7 @@ var CustomerSetting;
             }
         };
         return SuperPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
     var MasterPositionTakingOnMember = (function (_super) {
         __extends(MasterPositionTakingOnMember, _super);
@@ -33161,7 +33222,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
     var AgentPositionTakingOnMember = (function (_super) {
         __extends(AgentPositionTakingOnMember, _super);
@@ -33202,14 +33263,20 @@ var CustomerSetting;
             return true;
         };
         return AgentPositionTakingOnMember;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/defaultsettingblock/copy-setting.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33235,7 +33302,7 @@ var CustomerSetting;
         };
         PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
         return PositionTakingOnMemberDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
     var AdjustMemberPtModalDirective = (function () {
         function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -33288,7 +33355,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
         return AdjustMemberPtModalDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
     var AdjustMemberPtModalService = (function () {
         function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -33373,7 +33440,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
         return AdjustMemberPtModalService;
-    }());
+    })();
     CustomerSetting.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
     var CopyPositionTakingOnMemberDirective = (function (_super) {
         __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -33417,14 +33484,18 @@ var CustomerSetting;
             configurable: true
         });
         return CopyPositionTakingOnMemberDirective;
-    }(CustomerSetting.CopySettingDirective));
+    })(CustomerSetting.CopySettingDirective);
     CustomerSetting.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33436,7 +33507,7 @@ var CustomerSetting;
         }
         PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
         return PositionTakingResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
     CustomerSetting.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
     function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -33460,6 +33531,10 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("positionTakingMessage", PositionTakingMessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -33508,7 +33583,7 @@ var CustomerSetting;
         });
         PositionTakingSelectDirective.$inject = ["$compile"];
         return PositionTakingSelectDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
     function PositionTakingFormatFilter() {
         return function (ptValue) {
@@ -33526,10 +33601,16 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="models.ts" />
+/// <reference path="position-taking-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33549,14 +33630,18 @@ var CustomerSetting;
         }
         SettingType1Directive.$inject = ["positionTakingResourceService"];
         return SettingType1Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33568,7 +33653,7 @@ var CustomerSetting;
         }
         CommissionResourceService.$inject = ["commissionResources", "parametersService"];
         return CommissionResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.CommissionResourceService = CommissionResourceService;
     CustomerSetting.ModuleRegister.service("commissionResourceService", CommissionResourceService);
     function CommissionLabelFilter(commissionResourceService) {
@@ -33592,10 +33677,12 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("commissionMessage", CommissionMessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33643,7 +33730,7 @@ var CustomerSetting;
             return true;
         };
         return SettingType3Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType3Item = SettingType3Item;
     var SettingType3Config = (function () {
         function SettingType3Config() {
@@ -33663,10 +33750,15 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType3Config;
-    }());
+    })();
     CustomerSetting.SettingType3Config = SettingType3Config;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="commission-resources.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -33693,14 +33785,20 @@ var CustomerSetting;
         });
         CommRateSelectDirective.$inject = ["valueRangeService"];
         return CommRateSelectDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("commRateSelect", CommRateSelectDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="commission-resources.ts" />
+/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33722,14 +33820,16 @@ var CustomerSetting;
         }
         SettingType3Directive.$inject = ["commissionResourceService"];
         return SettingType3Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype3", SettingType3Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33851,14 +33951,18 @@ var CustomerSetting;
             return settingItem;
         };
         return SettingType4Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType4Item = SettingType4Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33870,7 +33974,7 @@ var CustomerSetting;
         }
         ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
         return ProductStatusResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.ProductStatusResourceService = ProductStatusResourceService;
     CustomerSetting.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
     function ProductStatusLabelFilter(productStatusResourceService) {
@@ -33894,10 +33998,16 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("productStatusMessage", ProductStatusMessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="models.ts" />
+/// <reference path="product-status-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33916,14 +34026,16 @@ var CustomerSetting;
         }
         SettingType4Directive.$inject = ["productStatusResourceService"];
         return SettingType4Directive;
-    }(CustomerSetting.SettingTypeDirective));
+    })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype4", SettingType4Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33999,7 +34111,7 @@ var CustomerSetting;
             };
         };
         return SettingType6Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType6Item = SettingType6Item;
     var CurrentWinLossAmountItem = (function () {
         function CurrentWinLossAmountItem(currentWinningAmount) {
@@ -34011,14 +34123,18 @@ var CustomerSetting;
             }
         }
         return CurrentWinLossAmountItem;
-    }());
+    })();
     CustomerSetting.CurrentWinLossAmountItem = CurrentWinLossAmountItem;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34030,7 +34146,7 @@ var CustomerSetting;
         }
         SettingType6ResourceService.$inject = ["settingType6Resource", "parametersService"];
         return SettingType6ResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.SettingType6ResourceService = SettingType6ResourceService;
     CustomerSetting.ModuleRegister.service("settingType6ResourceService", SettingType6ResourceService);
     function SettingType6LabelFilter(settingType6ResourceService) {
@@ -34054,6 +34170,11 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("settingType6Message", SettingType6MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helpers.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+/// <reference path="settingtype6-resource.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -34161,7 +34282,7 @@ var CustomerSetting;
         }
         SettingType6LossLimitInputDirective.$inject = ["$compile", "$filter", "settingType6ResourceService"];
         return SettingType6LossLimitInputDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingtype6LossLimitInput", SettingType6LossLimitInputDirective);
     var SettingType6UnlimitedCheckboxDirective = (function () {
         function SettingType6UnlimitedCheckboxDirective() {
@@ -34177,10 +34298,15 @@ var CustomerSetting;
                 }];
         }
         return SettingType6UnlimitedCheckboxDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingtype6UnlimitedCheckbox", SettingType6UnlimitedCheckboxDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helpers.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+/// <reference path="settingtype6-resource.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -34222,14 +34348,24 @@ var CustomerSetting;
         SettingType6WinLimitSelectDirective.$inject = ["settingType6ResourceService"];
         SettingType6WinLimitSelectDirective.supportedWinLimits = [3, 5, 10, 0];
         return SettingType6WinLimitSelectDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingtype6WinLimitSelect", SettingType6WinLimitSelectDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/blockui/block-ui.ts" />
+/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/common.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/requesting-server-service.ts" />
+/// <reference path="models.ts" />
+/// <reference path="settingtype6-resource.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34304,7 +34440,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType6Directive;
-    }(CustomerSetting.DefaultSettingTypeGroupingDirective));
+    })(CustomerSetting.DefaultSettingTypeGroupingDirective);
     CustomerSetting.ModuleRegister.directive("settingtype6", SettingType6Directive);
     function UnlimitedLimitFilter(settingType6ResourceService) {
         return function (value) {
@@ -34315,10 +34451,12 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("unlimitedLimit", UnlimitedLimitFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34406,7 +34544,7 @@ var CustomerSetting;
             return settingItem;
         };
         return SettingType8Item;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType8Item = SettingType8Item;
     var SettingType8LevelGroup = (function () {
         function SettingType8LevelGroup(stakeLevelGroup, backup) {
@@ -34432,7 +34570,7 @@ var CustomerSetting;
             };
         };
         return SettingType8LevelGroup;
-    }());
+    })();
     CustomerSetting.SettingType8LevelGroup = SettingType8LevelGroup;
     var SettingType8StakeLevel = (function (_super) {
         __extends(SettingType8StakeLevel, _super);
@@ -34459,7 +34597,7 @@ var CustomerSetting;
             return stakeRanges || new Array();
         };
         return SettingType8StakeLevel;
-    }(CustomerSetting.DefaultSettingItem));
+    })(CustomerSetting.DefaultSettingItem);
     CustomerSetting.SettingType8StakeLevel = SettingType8StakeLevel;
     var SettingType8StakeRange = (function () {
         function SettingType8StakeRange(stakeRange) {
@@ -34469,10 +34607,13 @@ var CustomerSetting;
             }
         }
         return SettingType8StakeRange;
-    }());
+    })();
     CustomerSetting.SettingType8StakeRange = SettingType8StakeRange;
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -34519,10 +34660,14 @@ var CustomerSetting;
             return allChecked;
         };
         return SettingType8CheckboxGroupDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingType8CheckboxGroup", SettingType8CheckboxGroupDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -34546,14 +34691,18 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType8GroupDetailsDirective;
-    }());
+    })();
     CustomerSetting.ModuleRegister.directive("settingtype8GroupDetailsModal", SettingType8GroupDetailsDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34565,7 +34714,7 @@ var CustomerSetting;
         }
         SettingType8ResourceService.$inject = ["settingType8Resource", "parametersService"];
         return SettingType8ResourceService;
-    }(CustomerSetting.ResourceService));
+    })(CustomerSetting.ResourceService);
     CustomerSetting.SettingType8ResourceService = SettingType8ResourceService;
     CustomerSetting.ModuleRegister.service("settingType8ResourceService", SettingType8ResourceService);
     function SettingType8LabelFilter(settingType8ResourceService) {
@@ -34589,10 +34738,18 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("settingType8Message", SettingType8MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/requesting-server-service.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="models.ts" />
+/// <reference path="settingtype8-resource.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34664,7 +34821,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType8Directive;
-    }(CustomerSetting.DefaultSettingTypeGroupingDirective));
+    })(CustomerSetting.DefaultSettingTypeGroupingDirective);
     CustomerSetting.ModuleRegister.directive("settingtype8", SettingType8Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -34686,7 +34843,7 @@ $templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': cu
 $templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
 $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype6-win-limit-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-model=\"settingItem.winLimit\" data-ng-options=\"item.key as item.value for item in range\" data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'settingType6ResourceService\':\'winLimit\':\'unlimitedLimit\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (settingItem.validationState | highlightingField:\'winLimit\') }\"></select><span>{{::(\'OnGivenCredit\' | settingType6Label)}}</span></div>");
-$templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'lossLimit\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-disabled=\"item.maxLossRange !== 0\" data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
+$templateCache.put("settingtype6.htm","<div class=\"block full-width settingtype6\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType || settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{group[0].sportTypeName}}</div><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.betType\">{{group[0].betTypeName}}</div><div class=\"block__item-group\" data-ng-repeat=\"item in group\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><div class=\"block__sub-header block__sub-header--indent\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\">{{item.betTypeName}}</div><div class=\"block__column block__column--border-right w50-percent\"><div class=\"block__row\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumWin\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><settingtype6-win-limit-select data-setting-item=\"item\"></settingtype6-win-limit-select></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.winLimit | unlimitedLimit}}{{item.winLimit !== 0 ? \'X\' : \'\'}} {{::(\'OnGivenCredit\' | settingType6Label)}}</div></div><div class=\"block__row block__row--border-top\"><div class=\"block__lbl w40-percent\">{{::(\'MaximumLoss\' | settingType6Label)}}</div><div class=\"block__value w60-percent\" data-ng-if=\"settingType | editableSettingType\"><div class=\"setting-field-wrapper w100-percent\"><input type=\"text\" maxlength=\"14\" data-ng-model=\"item.lossLimit\" data-settingtype6-loss-limit-input data-ng-change=\"updateValue()\" data-ng-disabled=\"item.lossLimit === 0\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'lossLimit\':\'unlimitedLimit\'}}\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField: \'lossLimit\') }\" class=\"setting-field setting-field--number setting-field--has-constraint\"> <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span></div><div class=\"setting-field-wrapper\" data-ng-if=\"item.maxLossRange === 0\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-settingtype6-unlimited-checkbox data-ng-model=\"isUnlimited\" data-ng-change=\"check()\"> {{\'Unlimited\' | settingType6Label}}</label></div></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\">{{item.lossLimit | formatNumber | unlimitedLimit}}</div></div><div class=\"block__row block__row--border-top\" data-ng-if=\"customerLevel === avaiCustomerLevels.member\"><div class=\"block__lbl w40-percent\">{{::(\'CurrentWinLossAmount\' | settingType6Label)}}</div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"!item.currentWinLossAmount\"><a href=\"javascript:void(0);\" data-ng-click=\"getCurrentWinLoss(item)\">{{::(\'ClickToViewCurrentWinLossLimit\' | settingType6Label)}}</a></div><div class=\"block__value w60-percent setting-field-wrapper\" data-ng-if=\"item.currentWinLossAmount\"><div><span>{{\'Winning\' | settingType6Label}}:</span> <span data-ng-if=\"item.winLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.winLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.winPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.winPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxWinAmount | formatNumber}}</span></span></div><div><span>{{\'Losing\' | settingType6Label}}:</span> <span data-ng-if=\"item.lossLimit === 0\">{{\'Unlimited\' | settingType6Label}}</span> <span data-ng-if=\"item.lossLimit > 0\"><span data-ng-class=\"{ \'red-text\': item.currentWinLossAmount.lossPercent >= highestPercentageRange }\">{{item.currentWinLossAmount.lossPercent | formatNumber}}%</span> <span>{{\'Of\' | settingType6Label}}</span> <span>{{item.currentWinLossAmount.maxLossAmount | formatNumber}}</span></span></div></div></div></div><div class=\"block__column w50-percent\"><div class=\"block__cell setting-field-wrapper\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType6ResourceService\':\'isAutoReset\'}}\" data-ng-model=\"item.isAutoReset\" data-ng-disabled=\"!(settingType | editableSettingType) || !item.isAutoResetUpline\"> {{\'DailyAutoResetLimit\' | settingType6Label}}</label></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");
 $templateCache.put("settingtype8-checkbox-group.htm","<label class=\"check-all-field\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"checked\" data-ng-click=\"checkAll()\"></label>");
 $templateCache.put("settingtype8-groupdetails-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"hostItem.showingDetails\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\">{{::(\'BetLimit\' | settingType8Label)}}</div><div class=\"modal__content\" data-detect-max-height><settingtype8 data-setting-type=\"hostItem.allDetails\" data-popup-mode=\"true\"></settingtype8></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{::(\'Close\' | settingType8Label)}}</button></div></div></div>");
 $templateCache.put("settingtype8.htm","<div class=\"block settingtype8\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-if=\"!popupMode\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{::(\'BetLimit\' | settingType8Label)}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{::(\'Update\' | label)}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"item in settingType.settingItems\"><div class=\"col col--lbl w20-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"block__sub-header\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType8ResourceService\'}}\"><label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportType\">{{item.sportTypeName}}</label> <label class=\"check-all-field-lbl\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.product\">{{productName}}</label><setting-type8-checkbox-group data-ng-if=\"(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member) && !popupMode\" data-items=\"item.groups\"></setting-type8-checkbox-group></div><div class=\"block__cell\" data-ng-repeat=\"detail in item.details\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last && !item.hasMoreDetails }\">{{detail.betTypeName }}</div><div class=\"block__cell block__cell--no-border-bottom\" data-ng-if=\"item.hasMoreDetails\"><a href=\"javascript:void(0);\" data-ng-click=\"getLevelGroupDetails(item)\">{{::(\'ViewMore\' | settingType8Label)}}</a><settingtype8-group-details-modal data-ng-if=\"item.allDetails\" data-host-item=\"item\"></settingtype8-group-details-modal></div></div><div class=\"col col--border-left scrollable-area w80-percent\" data-ng-class=\"{ \'col--border-top\': ($index > 0) }\"><div class=\"col\" data-ng-repeat=\"group in item.groups\" data-ng-class=\"{ \'col--last\': $last }\" data-ng-style=\"item.styles\"><div class=\"block__sub-header\"><div class=\"setting-field--checkfield\"><input id=\"{{group.levelId}}\" type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"group.selected\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel !== avaiCustomerLevels.member && !popupMode\"> <input id=\"{{group.levelId}}\" type=\"radio\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.selectedLevelId\" data-ng-value=\"group.levelId\" data-ng-disabled=\"!(settingType | editableSettingType)\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && !popupMode\"> <label class=\"setting-field--checkfield__check-ctrl-lbl\" for=\"{{group.levelId}}\">{{group.levelGroupName}}</label></div></div><div class=\"block__cell\" data-ng-class=\"{ \'block__cell--no-border-bottom\': $last && !item.hasMoreDetails }\" data-ng-repeat=\"detail in item.details\">{{detail.stakeRanges[$parent.$index].value}}</div><div class=\"block__cell block__cell--no-border-bottom\" data-ng-if=\"item.hasMoreDetails\"></div></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{settingType.settingItems[0].errorMessage}}</div></div>");}]);

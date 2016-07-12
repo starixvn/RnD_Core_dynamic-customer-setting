@@ -34053,6 +34053,7 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>');
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -34071,7 +34072,7 @@ var CustomerSetting;
                 });
             };
             return StringFormater;
-        }());
+        })();
         IE8.StringFormater = StringFormater;
         var ArrayHelpers = (function () {
             function ArrayHelpers() {
@@ -34091,11 +34092,12 @@ var CustomerSetting;
                 return result;
             };
             return ArrayHelpers;
-        }());
+        })();
         IE8.ArrayHelpers = ArrayHelpers;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="helpers.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -34148,7 +34150,7 @@ var CustomerSetting;
                 return "The number of customer IDs does not match with the number of customer names.";
             };
             return Exceptions;
-        }());
+        })();
         IE8.Exceptions = Exceptions;
         var Defaults = (function () {
             function Defaults() {
@@ -34158,7 +34160,7 @@ var CustomerSetting;
             Defaults.percentageDivider = 100;
             Defaults.displayingMsgTime = 3000;
             return Defaults;
-        }());
+        })();
         IE8.Defaults = Defaults;
         var KeyValuePair = (function () {
             function KeyValuePair(key, value) {
@@ -34166,11 +34168,13 @@ var CustomerSetting;
                 this.value = value;
             }
             return KeyValuePair;
-        }());
+        })();
         IE8.KeyValuePair = KeyValuePair;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="helper-services.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -34204,7 +34208,7 @@ var CustomerSetting;
                 app.value(name, target);
             };
             return ModuleRegister;
-        }());
+        })();
         IE8.ModuleRegister = ModuleRegister;
         app.run(["$http", "appConfigService", function ($http, appConfigService) {
                 $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
@@ -34212,10 +34216,13 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference path="common.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34231,7 +34238,7 @@ var CustomerSetting;
             Level.agent = 2;
             Level.member = 1;
             return Level;
-        }());
+        })();
         IE8.Level = Level;
         var CustomerInfo = (function () {
             function CustomerInfo(info) {
@@ -34247,7 +34254,7 @@ var CustomerSetting;
                 }
             }
             return CustomerInfo;
-        }());
+        })();
         IE8.CustomerInfo = CustomerInfo;
         var DefaultSettingItem = (function () {
             function DefaultSettingItem(settingItem) {
@@ -34309,7 +34316,7 @@ var CustomerSetting;
                 return settingItem;
             };
             return DefaultSettingItem;
-        }());
+        })();
         IE8.DefaultSettingItem = DefaultSettingItem;
         var ErrorSettingItem = (function () {
             function ErrorSettingItem(errorItem) {
@@ -34332,7 +34339,7 @@ var CustomerSetting;
             };
             ;
             return ErrorSettingItem;
-        }());
+        })();
         IE8.ErrorSettingItem = ErrorSettingItem;
         var SettingType = (function () {
             function SettingType(settingType) {
@@ -34413,7 +34420,7 @@ var CustomerSetting;
                 return extraData;
             };
             return SettingType;
-        }());
+        })();
         IE8.SettingType = SettingType;
         var Setting = (function () {
             function Setting(setting) {
@@ -34520,7 +34527,7 @@ var CustomerSetting;
                 });
             };
             return Setting;
-        }());
+        })();
         IE8.Setting = Setting;
         var Result = (function () {
             function Result(code, message, msgType) {
@@ -34546,7 +34553,7 @@ var CustomerSetting;
             Result.noChangeToUpdate = new Result(-3, "NoChangeToUpdate", IE8.MessageType.error);
             Result.invalidParameters = new Result(-4, IE8.Exceptions.invalidParams(), IE8.MessageType.error);
             return Result;
-        }());
+        })();
         IE8.Result = Result;
         var SettingResult = (function (_super) {
             __extends(SettingResult, _super);
@@ -34557,7 +34564,7 @@ var CustomerSetting;
                 this.messages = messages;
             }
             return SettingResult;
-        }(Result));
+        })(Result);
         IE8.SettingResult = SettingResult;
         var CustomerSettingResult = (function () {
             function CustomerSettingResult(settingResult) {
@@ -34607,7 +34614,7 @@ var CustomerSetting;
                 this.settingResults = uniquedResults;
             };
             return CustomerSettingResult;
-        }());
+        })();
         IE8.CustomerSettingResult = CustomerSettingResult;
         var UpdatingSettingResult = (function (_super) {
             __extends(UpdatingSettingResult, _super);
@@ -34649,7 +34656,7 @@ var CustomerSetting;
                 return this.subResults || new Array();
             };
             return UpdatingSettingResult;
-        }(Result));
+        })(Result);
         IE8.UpdatingSettingResult = UpdatingSettingResult;
         var ValidationResult = (function (_super) {
             __extends(ValidationResult, _super);
@@ -34661,15 +34668,21 @@ var CustomerSetting;
                 this.isWarning = isWarning;
             }
             return ValidationResult;
-        }(Result));
+        })(Result);
         IE8.ValidationResult = ValidationResult;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="common.ts" />
+/// <reference path="helpers.ts" />
+/// <reference path="models.ts" />
+/// <reference path="module-registrater.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34698,7 +34711,7 @@ var CustomerSetting;
                 return this.uplineLevel;
             };
             return AbstractSettingQuery;
-        }());
+        })();
         IE8.AbstractSettingQuery = AbstractSettingQuery;
         var SettingQuery = (function (_super) {
             __extends(SettingQuery, _super);
@@ -34721,7 +34734,7 @@ var CustomerSetting;
                 return params;
             };
             return SettingQuery;
-        }(AbstractSettingQuery));
+        })(AbstractSettingQuery);
         IE8.SettingQuery = SettingQuery;
         var MultipleSettingQuery = (function (_super) {
             __extends(MultipleSettingQuery, _super);
@@ -34753,7 +34766,7 @@ var CustomerSetting;
                 return this.customerIds.length === this.customerNames.length;
             };
             return MultipleSettingQuery;
-        }(AbstractSettingQuery));
+        })(AbstractSettingQuery);
         IE8.MultipleSettingQuery = MultipleSettingQuery;
         var SettingCommand = (function () {
             function SettingCommand(uplineLevel, setting) {
@@ -34773,7 +34786,7 @@ var CustomerSetting;
                 };
             };
             return SettingCommand;
-        }());
+        })();
         IE8.SettingCommand = SettingCommand;
         var MultipleSettingCommand = (function (_super) {
             __extends(MultipleSettingCommand, _super);
@@ -34800,7 +34813,7 @@ var CustomerSetting;
                 };
             };
             return MultipleSettingCommand;
-        }(SettingCommand));
+        })(SettingCommand);
         IE8.MultipleSettingCommand = MultipleSettingCommand;
         var SettingPartialCommand = (function () {
             function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -34811,7 +34824,7 @@ var CustomerSetting;
                 this.settingType = settingType;
             }
             return SettingPartialCommand;
-        }());
+        })();
         IE8.SettingPartialCommand = SettingPartialCommand;
         var RedirectCommand = (function () {
             function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
@@ -34829,11 +34842,16 @@ var CustomerSetting;
                 };
             };
             return RedirectCommand;
-        }());
+        })();
         IE8.RedirectCommand = RedirectCommand;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference path="common.ts" />
+/// <reference path="module-registrater.ts" />
+/// <reference path="parameters.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -34873,7 +34891,7 @@ var CustomerSetting;
             };
             AppConfigService.$inject = ["$window"];
             return AppConfigService;
-        }());
+        })();
         IE8.AppConfigService = AppConfigService;
         IE8.ModuleRegister.service("appConfigService", AppConfigService);
         var ParametersService = (function () {
@@ -34940,7 +34958,7 @@ var CustomerSetting;
             };
             ParametersService.$inject = ["$window"];
             return ParametersService;
-        }());
+        })();
         IE8.ParametersService = ParametersService;
         IE8.ModuleRegister.service("parametersService", ParametersService);
         var UpdatingSettingTypePromiseChain = (function () {
@@ -34986,7 +35004,7 @@ var CustomerSetting;
             };
             UpdatingSettingTypePromiseChain.$inject = ["$q"];
             return UpdatingSettingTypePromiseChain;
-        }());
+        })();
         IE8.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
         IE8.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
         var SettingTypesSharedValuesService = (function () {
@@ -35003,7 +35021,7 @@ var CustomerSetting;
                 }
             };
             return SettingTypesSharedValuesService;
-        }());
+        })();
         IE8.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
         IE8.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
         var ValueRangeService = (function () {
@@ -35027,7 +35045,7 @@ var CustomerSetting;
                 return ranges;
             };
             return ValueRangeService;
-        }());
+        })();
         IE8.ValueRangeService = ValueRangeService;
         IE8.ModuleRegister.service("valueRangeService", ValueRangeService);
         function FormatNumber($filter) {
@@ -35088,6 +35106,9 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35161,7 +35182,7 @@ var CustomerSetting;
             };
             ResourceService.$inject = ["customerSettingResource", "parametersService"];
             return ResourceService;
-        }());
+        })();
         IE8.ResourceService = ResourceService;
         IE8.ModuleRegister.service("resourceService", ResourceService);
         function LabelFilter(resourceService) {
@@ -35186,6 +35207,8 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35200,7 +35223,7 @@ var CustomerSetting;
                     }];
             }
             return BlockUiDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("blockUi", BlockUiDirective);
         var BlockUiService = (function () {
             function BlockUiService() {
@@ -35215,12 +35238,15 @@ var CustomerSetting;
                 this.scope.isLoading = false;
             };
             return BlockUiService;
-        }());
+        })();
         IE8.BlockUiService = BlockUiService;
         IE8.ModuleRegister.service("blockUiService", BlockUiService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="blockui/block-ui.ts" />
+/// <reference path="module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35264,12 +35290,20 @@ var CustomerSetting;
             };
             RequestService.$inject = ["$http", "resourceService", "blockUiService"];
             return RequestService;
-        }());
+        })();
         IE8.RequestService = RequestService;
         IE8.ModuleRegister.service("requestService", RequestService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../resource/resource-translation.ts" />
+/// <reference path="common.ts" />
+/// <reference path="helper-services.ts" />
+/// <reference path="models.ts" />
+/// <reference path="module-registrater.ts" />
+/// <reference path="parameters.ts" />
+/// <reference path="requesting-server-service.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35362,11 +35396,13 @@ var CustomerSetting;
                 "updatingSettingTypePromiseChain",
                 "settingTypesSharedValuesService"];
             return CustomerSettingController;
-        }());
+        })();
         IE8.ModuleRegister.controller("customerSettingController", CustomerSettingController);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35382,11 +35418,14 @@ var CustomerSetting;
                 this.templateUrl = "CustomerInfo/customer-info.htm";
             }
             return CustomerInfoDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35422,7 +35461,7 @@ var CustomerSetting;
             }
             CopySettingDirective.$inject = ["copyingSettingService"];
             return CopySettingDirective;
-        }());
+        })();
         IE8.CopySettingDirective = CopySettingDirective;
         IE8.ModuleRegister.directive("copySetting", CopySettingDirective);
         var CopyingSettingService = (function () {
@@ -35467,11 +35506,15 @@ var CustomerSetting;
             };
             CopyingSettingService.$inject = ["$rootScope"];
             return CopyingSettingService;
-        }());
+        })();
         IE8.ModuleRegister.service("copyingSettingService", CopyingSettingService);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../helper-services.ts" />
+/// <reference path="../models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35516,11 +35559,17 @@ var CustomerSetting;
                 this.settingItemType = settingItemType;
             }
             return SettingTypeDirective;
-        }());
+        })();
         IE8.SettingTypeDirective = SettingTypeDirective;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
+/// <reference path="../settingtype/setting-type-base-directive.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35566,7 +35615,7 @@ var CustomerSetting;
                 return result;
             };
             return DefaultSettingTypeGroupingDirective;
-        }());
+        })();
         IE8.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
         IE8.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
         function ShowingName() {
@@ -35582,6 +35631,9 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../helpers.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35620,11 +35672,13 @@ var CustomerSetting;
             };
             DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
             return DetectMaxHeightDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35692,11 +35746,15 @@ var CustomerSetting;
             }
             DraggableDirective.$inject = ["$document"];
             return DraggableDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("draggable", DraggableDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35718,11 +35776,15 @@ var CustomerSetting;
                     }];
             }
             return SettingResultDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35776,11 +35838,14 @@ var CustomerSetting;
             };
             SettingTypeDirectiveLoader.$inject = ["$compile"];
             return SettingTypeDirectiveLoader;
-        }());
+        })();
         IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../resource/resource-translation.ts" />
+/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -35848,7 +35913,7 @@ var CustomerSetting;
             };
             Tooltip.$inject = ["$window", "$document", "$compile", "$timeout", "$templateCache"];
             return Tooltip;
-        }());
+        })();
         IE8.ModuleRegister.directive("tooltip", Tooltip);
         function TooltipMessage($injector, $filter) {
             return function (result, resourceServiceName, fieldName, customFilterName) {
@@ -35896,10 +35961,13 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -35912,7 +35980,7 @@ var CustomerSetting;
             SettingType1Config.step = 1;
             SettingType1Config.roundingFactor = 100;
             return SettingType1Config;
-        }());
+        })();
         IE8.SettingType1Config = SettingType1Config;
         var SettingType1Item = (function () {
             function SettingType1Item() {
@@ -35960,7 +36028,7 @@ var CustomerSetting;
                 return false;
             };
             return SettingType1Item;
-        }());
+        })();
         IE8.SettingType1Item = SettingType1Item;
         var SuperPositionTaking = (function (_super) {
             __extends(SuperPositionTaking, _super);
@@ -36021,7 +36089,7 @@ var CustomerSetting;
                 return true;
             };
             return SuperPositionTaking;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.SuperPositionTaking = SuperPositionTaking;
         var MasterPositionTaking = (function (_super) {
             __extends(MasterPositionTaking, _super);
@@ -36167,7 +36235,7 @@ var CustomerSetting;
                 }
             };
             return MasterPositionTaking;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.MasterPositionTaking = MasterPositionTaking;
         var AgentPositionTaking = (function (_super) {
             __extends(AgentPositionTaking, _super);
@@ -36313,7 +36381,7 @@ var CustomerSetting;
                 }
             };
             return AgentPositionTaking;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.AgentPositionTaking = AgentPositionTaking;
         var SuperPositionTakingOnMember = (function (_super) {
             __extends(SuperPositionTakingOnMember, _super);
@@ -36395,7 +36463,7 @@ var CustomerSetting;
                 }
             };
             return SuperPositionTakingOnMember;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
         var MasterPositionTakingOnMember = (function (_super) {
             __extends(MasterPositionTakingOnMember, _super);
@@ -36485,7 +36553,7 @@ var CustomerSetting;
                 }
             };
             return MasterPositionTakingOnMember;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
         var AgentPositionTakingOnMember = (function (_super) {
             __extends(AgentPositionTakingOnMember, _super);
@@ -36526,15 +36594,22 @@ var CustomerSetting;
                 return true;
             };
             return AgentPositionTakingOnMember;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../core/defaultsettingblock/copy-setting.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -36562,7 +36637,7 @@ var CustomerSetting;
             };
             PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
             return PositionTakingOnMemberDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
         var AdjustMemberPtModalDirective = (function () {
             function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -36609,7 +36684,7 @@ var CustomerSetting;
             };
             AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
             return AdjustMemberPtModalDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
         var AdjustMemberPtModalService = (function () {
             function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -36694,7 +36769,7 @@ var CustomerSetting;
             };
             AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
             return AdjustMemberPtModalService;
-        }());
+        })();
         IE8.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
         var CopyPositionTakingOnMemberDirective = (function (_super) {
             __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -36732,7 +36807,7 @@ var CustomerSetting;
                     }];
             }
             return CopyPositionTakingOnMemberDirective;
-        }(IE8.CopySettingDirective));
+        })(IE8.CopySettingDirective);
         IE8.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
         function Unsafe($sce) {
             return function (value) {
@@ -36744,10 +36819,14 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -36761,7 +36840,7 @@ var CustomerSetting;
             }
             PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
             return PositionTakingResourceService;
-        }(IE8.ResourceService));
+        })(IE8.ResourceService);
         IE8.PositionTakingResourceService = PositionTakingResourceService;
         IE8.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
         function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -36786,6 +36865,10 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -36834,7 +36917,7 @@ var CustomerSetting;
             };
             PositionTakingSelectDirective.$inject = ["$compile", "valueRangeService"];
             return PositionTakingSelectDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
         function PositionTakingFormatFilter() {
             return function (ptValue) {
@@ -36853,10 +36936,16 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="models.ts" />
+/// <reference path="position-taking-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -36878,15 +36967,17 @@ var CustomerSetting;
             }
             SettingType1Directive.$inject = ["positionTakingResourceService"];
             return SettingType1Directive;
-        }(IE8.SettingTypeDirective));
+        })(IE8.SettingTypeDirective);
         IE8.ModuleRegister.directive("settingtype1", SettingType1Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37014,11 +37105,15 @@ var CustomerSetting;
                 return true;
             };
             return SettingType2Item;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.SettingType2Item = SettingType2Item;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helpers.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -37158,15 +37253,19 @@ var CustomerSetting;
             }
             BetSettingInputDirective.$inject = ["$compile", "$filter", "betSettingResourceService"];
             return BetSettingInputDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("betSettingInput", BetSettingInputDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37180,7 +37279,7 @@ var CustomerSetting;
             }
             BetSettingResourceService.$inject = ["betSettingResources", "parametersService"];
             return BetSettingResourceService;
-        }(IE8.ResourceService));
+        })(IE8.ResourceService);
         IE8.BetSettingResourceService = BetSettingResourceService;
         IE8.ModuleRegister.service("betSettingResourceService", BetSettingResourceService);
         function BetSettingLabelFilter(betSettingResourceService) {
@@ -37205,10 +37304,16 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="bet-setting-resources.ts" />
+/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37230,15 +37335,17 @@ var CustomerSetting;
             }
             SettingType2Directive.$inject = ["betSettingResourceService"];
             return SettingType2Directive;
-        }(IE8.SettingTypeDirective));
+        })(IE8.SettingTypeDirective);
         IE8.ModuleRegister.directive("settingtype2", SettingType2Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37343,15 +37450,19 @@ var CustomerSetting;
                 return settingItem;
             };
             return SettingType4Item;
-        }(IE8.DefaultSettingItem));
+        })(IE8.DefaultSettingItem);
         IE8.SettingType4Item = SettingType4Item;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37365,7 +37476,7 @@ var CustomerSetting;
             }
             ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
             return ProductStatusResourceService;
-        }(IE8.ResourceService));
+        })(IE8.ResourceService);
         IE8.ProductStatusResourceService = ProductStatusResourceService;
         IE8.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
         function ProductStatusLabelFilter(productStatusResourceService) {
@@ -37390,10 +37501,16 @@ var CustomerSetting;
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="models.ts" />
+/// <reference path="product-status-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -37414,11 +37531,14 @@ var CustomerSetting;
             }
             SettingType4Directive.$inject = ["productStatusResourceService"];
             return SettingType4Directive;
-        }(IE8.SettingTypeDirective));
+        })(IE8.SettingTypeDirective);
         IE8.ModuleRegister.directive("settingtype4", SettingType4Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     var IE8;
@@ -37449,7 +37569,7 @@ var CustomerSetting;
                     }];
             }
             return StatusCheckboxDirective;
-        }());
+        })();
         IE8.ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));

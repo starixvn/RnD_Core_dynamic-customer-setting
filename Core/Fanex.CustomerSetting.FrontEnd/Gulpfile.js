@@ -58,8 +58,6 @@
     });
 
     gulp.task("copy-packages", function () {
-        console.log(configs.staticResourceProject);
-
         return gulp.src(path.join(process.cwd(), configs.root, configs.publish, "**/**"))
                    .pipe(gulp.dest(configs.staticResourceProject));
     });
