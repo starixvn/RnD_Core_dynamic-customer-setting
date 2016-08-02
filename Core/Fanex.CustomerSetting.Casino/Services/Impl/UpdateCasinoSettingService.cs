@@ -29,8 +29,8 @@
 
         public UpdateCasinoSettingService(ISettingContext settingContext)
         {
-            Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(settingContext.Actor, nameof(settingContext.Actor));
 
             _settingContext = settingContext;
             _updateSettingService = new UpdateSettingService(settingContext);

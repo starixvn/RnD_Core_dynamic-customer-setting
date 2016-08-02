@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".readme", ".readme", "{5697E4DC-4C04-474A-83C0-5B24B1344DB9}"
 	ProjectSection(SolutionItems) = preProject
@@ -105,6 +105,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.WebAPI.Tests", "Core\Tests\Fanex.CustomerSetting.WebAPI.Tests\Fanex.CustomerSetting.WebAPI.Tests.csproj", "{22B07933-D1E2-4258-BFB6-152FEF795A58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Matrix.WebApi.Tests", "Matrix\Fanex.CustomerSetting.Matrix.WebApi.Tests\Fanex.CustomerSetting.Matrix.WebApi.Tests.csproj", "{77D9873F-325C-4A4C-BCA0-4706B8B86DF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.NumberGames2", "Core\Fanex.CustomerSetting.NumberGames2\Fanex.CustomerSetting.NumberGames2.csproj", "{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -252,6 +254,10 @@ Global
 		{77D9873F-325C-4A4C-BCA0-4706B8B86DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D9873F-325C-4A4C-BCA0-4706B8B86DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D9873F-325C-4A4C-BCA0-4706B8B86DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -301,6 +307,7 @@ Global
 		{F198F6F4-FDB2-4550-B270-CEBD79B1950E} = {30FFDB3A-D004-46C2-92BE-E8DCB6FB07BC}
 		{22B07933-D1E2-4258-BFB6-152FEF795A58} = {09967616-74BB-44FA-918B-819B7AA63F26}
 		{77D9873F-325C-4A4C-BCA0-4706B8B86DF7} = {598ACDF7-7E9B-44F8-AFB4-EDF46A231C41}
+		{F2A5014C-9DAF-4B5E-8471-7D68742A7DDE} = {6697D778-2FC4-4DAE-8BFE-84C027F635FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
