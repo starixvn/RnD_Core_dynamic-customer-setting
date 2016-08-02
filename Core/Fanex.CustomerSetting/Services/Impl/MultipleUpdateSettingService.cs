@@ -12,7 +12,7 @@
 
     public partial class UpdateSettingService : IUpdateSettingService
     {
-        public IResult Update(MultipleUpdateCustomerSettingCommand command)
+        public virtual IResult Update(MultipleUpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
@@ -25,23 +25,23 @@
             }
 
             // Run plugged tasks before updating settings of mutiple customers.
-            _taskService.Run(command.Setting.ProductId, command);
+            TaskService.Run(command.Setting.ProductId, command);
 
             var updateSettingTypeResults = UpdateSettingTypesForMultipleCustomers(command);
             var result = MapUpdateSettingResultWithCustomerName(updateSettingTypeResults, command.CustomerIds, command.CustomerNames);
 
             // Run plugged tasks after updating settings of mutiple customers.
-            _taskService.Run(command.Setting.ProductId, command, result);
+            TaskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
 
-        private IResult Validate(MultipleUpdateCustomerSettingCommand command)
+        protected virtual IResult Validate(MultipleUpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateMultipleSettingAction(command);
+            return ValidationService.ValidateUpdateMultipleSettingAction(command);
         }
 
-        private List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
+        protected virtual List<SettingResult> UpdateSettingTypesForMultipleCustomers(MultipleUpdateCustomerSettingCommand command)
         {
             var customerLevel = command.Setting.CustomerLevel;
             var uplineLevel = command.UplineLevel;
@@ -60,7 +60,7 @@
             return results;
         }
 
-        private IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
+        protected virtual IEnumerable<SettingResult> UpdateMultipleCustomersSettingType(
             IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,
@@ -70,18 +70,18 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
-                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
+                TaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType);
 
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
+                var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
                 var updateSettingResults = settingTypeService.UpdateMultipleCustomerSettingType(
-                        _settingContext,
+                        SettingContext,
                         customerIds,
                         customerLevel,
                         uplineLevel,
                         productId,
                         settingType);
 
-                _taskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
+                TaskService.Run(productId, settingType.Id, customerIds, customerLevel, uplineLevel, settingType, updateSettingResults);
 
                 return updateSettingResults;
             }
@@ -102,7 +102,7 @@
             }
         }
 
-        private UpdateSettingResult MapUpdateSettingResultWithCustomerName(
+        protected virtual UpdateSettingResult MapUpdateSettingResultWithCustomerName(
             IEnumerable<SettingResult> settingResults,
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
@@ -112,7 +112,7 @@
             return MapSettingResultWithCustomerName(customerIdNameContainer, settingResults);
         }
 
-        private UpdateSettingResult MapSettingResultWithCustomerName(
+        protected virtual UpdateSettingResult MapSettingResultWithCustomerName(
             Dictionary<int, string> customerIdNameContainer,
             IEnumerable<SettingResult> results)
         {
@@ -127,7 +127,7 @@
             return new UpdateSettingResult(results);
         }
 
-        private Dictionary<int, string> GetCustomerIdNameContainer(
+        protected virtual Dictionary<int, string> GetCustomerIdNameContainer(
             IEnumerable<int> customerIds,
             IEnumerable<string> customerNames)
         {
@@ -142,7 +142,7 @@
             return customerIdNameContainer;
         }
 
-        private void WriteLog(
+        protected virtual void WriteLog(
             IEnumerable<int> customerIds,
             Level customerLevel,
             Level uplineLevel,
@@ -150,11 +150,11 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Multiple Setting", _settingContext);
+            ex.SetSettingContextInfo("Update Multiple Setting", SettingContext);
             ex.SetCustomerInfo(string.Join(",", customerIds), customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            Logger.Error(ex.Message, ex);
         }
     }
 }

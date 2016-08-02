@@ -41,7 +41,7 @@
             _validationService = validationService ?? new ValidationService(_settingContext);
             _resourceService = resourceService ?? new ResourceService();
             _taskService = pluggableTaskService ?? new TaskService(_settingContext);
-            _logger = logger ?? Logger.Log;
+            _logger = logger ?? Logging.Logger.Log;
             _settingTypeServiceFactory = settingTypeServiceFactory ?? new SettingTypeServiceFactory();
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
@@ -55,15 +55,31 @@
         {
         }
 
-        public ISetting GetCustomerSetting(CustomerSettingQuery query)
+        protected ISettingContext SettingContext => _settingContext;
+
+        protected IValidationService ValidationService => _validationService;
+
+        protected IProductService ProductService => _productService;
+
+        protected IResourceService ResourceService => _resourceService;
+
+        protected ITaskService TaskService => _taskService;
+
+        protected ILogger Logger => _logger;
+
+        protected ISettingTypeServiceFactory SettingTypeServiceFactory => _settingTypeServiceFactory;
+
+        protected IDynamicRepository DynamicRepository => _dynamicRepository;
+
+        public virtual ISetting GetCustomerSetting(CustomerSettingQuery query)
         {
             Validate(query);
 
             // Run plugged tasks before querying data.
-            _taskService.Run(query.ProductId, query);
+            TaskService.Run(query.ProductId, query);
 
             var customerInfo = GetCustomerInfo(query.CustomerId);
-            var product = GetProductInfo(query.ProductId, _settingContext.System);
+            var product = GetProductInfo(query.ProductId, SettingContext.System);
             var customerSettingTypes = GetCustomerSettingTypes(query, product.SettingTypes);
 
             var setting = new Setting(
@@ -75,19 +91,19 @@
                 customerSettingTypes);
 
             // Run plugged tasks after querying setting data of a product.
-            _taskService.Run(query.ProductId, query, setting);
+            TaskService.Run(query.ProductId, query, setting);
 
             return setting;
         }
 
-        private void Validate(CustomerSettingQuery query)
+        protected virtual void Validate(CustomerSettingQuery query)
         {
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(query));
             }
 
-            var validationResult = _validationService.ValidateQuerySettingAction(query);
+            var validationResult = ValidationService.ValidateQuerySettingAction(query);
 
             if (validationResult.IsNotOk)
             {
@@ -100,11 +116,11 @@
         /// </summary>
         /// <param name="productId">The product identifier.</param>
         /// <returns></returns>
-        private Product GetProductInfo(byte productId, byte systemId)
+        protected virtual Product GetProductInfo(byte productId, byte systemId)
         {
-            var productSettingTypes = _productService.GetProductSettingTypes(productId, systemId)
+            var productSettingTypes = ProductService.GetProductSettingTypes(productId, systemId)
                 .Where(product => product.DisplayMode != DisplayMode.Hidden);
-            var productName = _resourceService.GetProductName(productId, _settingContext.Language);
+            var productName = ResourceService.GetProductName(productId, SettingContext.Language);
 
             return new Product
             {
@@ -114,9 +130,9 @@
             };
         }
 
-        private CustomerInfo GetCustomerInfo(int customerId)
+        protected virtual CustomerInfo GetCustomerInfo(int customerId)
         {
-            var customerInfo = _dynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria
+            var customerInfo = DynamicRepository.Get<CustomerInfo>(new CustomerInfoQueryCriteria
             {
                 CustId = customerId
             });
@@ -130,7 +146,7 @@
         /// <param name="query">The query setting parameters.</param>
         /// <param name="productSettingTypes">The product setting types.</param>
         /// <returns>Customer setting on each setting type.</returns>
-        private IList<SettingType> GetCustomerSettingTypes(CustomerSettingQuery query, IEnumerable<SettingType> productSettingTypes)
+        protected virtual IList<SettingType> GetCustomerSettingTypes(CustomerSettingQuery query, IEnumerable<SettingType> productSettingTypes)
         {
             var customerSettingTypes = new List<SettingType>();
 
@@ -149,18 +165,18 @@
             return customerSettingTypes;
         }
 
-        private SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
+        protected virtual SettingType GetCustomerSettingType(CustomerSettingQuery query, SettingType productSettingType)
         {
             SettingType customerSettingType = productSettingType;
 
             try
             {
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(productSettingType);
+                var settingTypeService = SettingTypeServiceFactory.GetInstance(productSettingType);
 
                 // Run plugged tasks of setting type before querying setting type's data.
-                _taskService.Run(query.ProductId, productSettingType.Id, query);
+                TaskService.Run(query.ProductId, productSettingType.Id, query);
 
-                customerSettingType = settingTypeService.GetCustomerSettingType(_settingContext, query);
+                customerSettingType = settingTypeService.GetCustomerSettingType(SettingContext, query);
                 customerSettingType.Id = productSettingType.Id;
                 customerSettingType.SettingLevel = productSettingType.SettingLevel;
                 customerSettingType.DisplayOrder = productSettingType.DisplayOrder;
@@ -171,7 +187,7 @@
                 }
 
                 // Run plugged tasks on setting type after querying setting type's data.
-                _taskService.Run(query.ProductId, productSettingType.Id, query, customerSettingType);
+                TaskService.Run(query.ProductId, productSettingType.Id, query, customerSettingType);
             }
             catch (Exception ex)
             {
@@ -184,15 +200,15 @@
             return customerSettingType;
         }
 
-        private void WriteLog(CustomerSettingQuery query, SettingType productSettingType, Exception ex)
+        protected virtual void WriteLog(CustomerSettingQuery query, SettingType productSettingType, Exception ex)
         {
             var exception = new CustomerSettingException(ex.Message, ex);
 
-            exception.SetSettingContextInfo("Query Setting", _settingContext);
+            exception.SetSettingContextInfo("Query Setting", SettingContext);
             exception.SetCustomerInfo(query.CustomerId, query.CustomerLevel, query.UplineLevel);
             exception.SetProductInfo(query.ProductId, productSettingType);
 
-            _logger.Error(exception.Message, exception);
+            Logger.Error(exception.Message, exception);
         }
     }
 }

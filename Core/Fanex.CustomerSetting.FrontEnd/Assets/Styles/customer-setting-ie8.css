@@ -313,16 +313,24 @@ th {
   display: inline-block; }
   .icon--update {
     background-position: 0 0;
-    height: 16px;
-    width: 16px; }
+    height: 15px;
+    width: 15px; }
   .icon--copy {
     background-position: -16px 0;
     height: 20px;
-    width: 20px; }
+    width: 19px; }
   .icon--close {
-    background-position: -36px 0;
-    height: 15px;
-    width: 15px; }
+    background-position: -35px 0;
+    height: 14px;
+    width: 14px; }
+  .icon--collapse {
+    background-position: 0 -52px;
+    height: 17px;
+    width: 18px; }
+  .icon--expand {
+    background-position: -23px -52px;
+    height: 17px;
+    width: 18px; }
 
 .block-ui-overlay, .modal-overlay {
   bottom: 0;

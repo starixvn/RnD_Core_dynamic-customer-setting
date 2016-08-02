@@ -51,12 +51,22 @@
         {
         }
 
+        protected ISettingContext SettingContext => _settingContext;
+
+        protected IValidationService ValidationService => _validationService;
+
+        protected ITaskService TaskService => _taskService;
+
+        protected ILogger Logger => _logger;
+
+        protected ISettingTypeServiceFactory SettingTypeServiceFactory => _settingTypeServiceFactory;
+
         /// <summary>
         /// Updates the customer setting, includes list of setting types.
         /// </summary>
         /// <param name="command">The update parameters.</param>
         /// <returns>Result after update customer setting.</returns>
-        public IResult Update(UpdateCustomerSettingCommand command)
+        public virtual IResult Update(UpdateCustomerSettingCommand command)
         {
             Check.Argument.IsNotNull(command, "command");
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
@@ -69,22 +79,22 @@
             }
 
             // Run plugged tasks before updating settings of customer.
-            _taskService.Run(command.Setting.ProductId, command);
+            TaskService.Run(command.Setting.ProductId, command);
 
             IResult result = new UpdateSettingResult(UpdateCustomerSettingTypes(command));
 
             // Run plugged tasks after updating settings of customer.
-            _taskService.Run(command.Setting.ProductId, command, result);
+            TaskService.Run(command.Setting.ProductId, command, result);
 
             return result;
         }
 
-        private IResult Validate(UpdateCustomerSettingCommand command)
+        protected virtual IResult Validate(UpdateCustomerSettingCommand command)
         {
-            return _validationService.ValidateUpdateSettingAction(command);
+            return ValidationService.ValidateUpdateSettingAction(command);
         }
 
-        private IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
+        protected virtual IEnumerable<SettingResult> UpdateCustomerSettingTypes(UpdateCustomerSettingCommand command)
         {
             var settingTypes = command.Setting.SettingTypes;
             var customerId = command.Setting.CustomerId;
@@ -110,7 +120,7 @@
             return settingTypeResults;
         }
 
-        private SettingResult UpdateCustomerSettingType(
+        protected virtual SettingResult UpdateCustomerSettingType(
             int customerId,
             CustomerInfo customerInfo,
             Level customerLevel,
@@ -122,13 +132,13 @@
             {
                 CheckSettingTypeIsValid(settingType);
 
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
+                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
-                var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
-                var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+                var settingTypeService = SettingTypeServiceFactory.GetInstance(settingType);
+                var settingResult = settingTypeService.UpdateCustomerSettingType(SettingContext, customerId, customerLevel, uplineLevel, productId, settingType);
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
 
-                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
+                TaskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;
             }
@@ -150,7 +160,7 @@
             }
         }
 
-        private void CheckSettingTypeIsValid(SettingType settingType)
+        protected virtual void CheckSettingTypeIsValid(SettingType settingType)
         {
             var result = settingType.Validate();
 
@@ -160,7 +170,7 @@
             }
         }
 
-        private void WriteLog(
+        protected virtual void WriteLog(
             int customerId,
             Level customerLevel,
             Level uplineLevel,
@@ -168,11 +178,11 @@
             SettingType customerSettingType,
             CustomerSettingException ex)
         {
-            ex.SetSettingContextInfo("Update Setting", _settingContext);
+            ex.SetSettingContextInfo("Update Setting", SettingContext);
             ex.SetCustomerInfo(customerId, customerLevel, uplineLevel);
             ex.SetProductInfo(productId, customerSettingType);
 
-            _logger.Error(ex.Message, ex);
+            Logger.Error(ex.Message, ex);
         }
     }
 }
