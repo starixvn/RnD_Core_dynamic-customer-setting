@@ -23,8 +23,8 @@
                 .Apply();
 
             configurator
-                .UseQueryServiceType(typeof(QuerySettingService))
-                .UseUpdateServiceType(typeof(UpdateNumberGamesSettingService))
+                .UseQueryServiceType(typeof(QueryNumberGames2SettingService))
+                .UseUpdateServiceType(typeof(UpdateNumberGames2SettingService))
                 .ForProducts(NumberGames2)
                 .ForAllSystems()
                 .Apply();

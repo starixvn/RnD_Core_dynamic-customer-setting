@@ -22,12 +22,12 @@
             return _dataAccess.GetCustomserSyncStatus(customerId, productId);
         }
 
-        public void UpdateCustomerSyncStatus(int customerId, byte productId, int subAccountId, int userId, string ip)
+        public void UpdateCustomerSyncStatus(int customerId, byte productId, int userId, int subAccountId, string ip)
         {
             Check.Argument.IsNotNegativeOrZero(customerId, nameof(customerId));
             Check.Argument.IsNotNegativeOrZero(productId, nameof(productId));
-            Check.Argument.IsNotNegative(subAccountId, nameof(subAccountId));
             Check.Argument.IsNotNegativeOrZero(userId, nameof(userId));
+            Check.Argument.IsNotNegative(subAccountId, nameof(subAccountId));
             Check.Argument.IsNotEmpty(ip, nameof(ip));
 
             _dataAccess.UpdateCustomerSynceStatus(customerId, productId, userId, subAccountId, ip);

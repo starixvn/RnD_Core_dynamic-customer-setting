@@ -108,8 +108,8 @@
             _customerProductStatusService.Received().UpdateCustomerStatus(
                 command.Setting.CustomerId,
                 command.Setting.ProductId,
-                _settingContext.Actor.SubAccountId,
                 _settingContext.Actor.Id,
+                _settingContext.Actor.SubAccountId,
                 _settingContext.IP);
         }
 

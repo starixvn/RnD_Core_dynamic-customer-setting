@@ -6,6 +6,6 @@
     {
         CustomerProductStatus GetCustomerStatus(int customerId, byte productId);
 
-        void UpdateCustomerStatus(int customerId, byte productId, int subAccountId, int userId, string ip);
+        void UpdateCustomerStatus(int customerId, byte productId, int userId, int subAccountId, string ip);
     }
 }

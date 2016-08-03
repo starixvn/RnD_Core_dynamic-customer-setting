@@ -86,7 +86,8 @@
     </Compile>
     <Compile Include="Services\ICustomerSyncStatusService.cs" />
     <Compile Include="Services\Impl\CustomerSyncStatusService.cs" />
-    <Compile Include="Services\Impl\UpdateNumberGamesSettingService.cs" />
+    <Compile Include="Services\Impl\QueryNumberGames2SettingService.cs" />
+    <Compile Include="Services\Impl\UpdateNumberGames2SettingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">

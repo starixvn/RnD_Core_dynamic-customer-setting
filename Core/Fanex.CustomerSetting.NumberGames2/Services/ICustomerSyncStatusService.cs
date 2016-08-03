@@ -6,6 +6,6 @@
     {
         CustomerSyncStatus GetCustomerSyncStatus(int customerId, byte productId);
 
-        void UpdateCustomerSyncStatus(int customerId, byte productId, int subAccountId, int userId, string ip);
+        void UpdateCustomerSyncStatus(int customerId, byte productId, int userId, int subAccountId, string ip);
     }
 }
