@@ -13,13 +13,13 @@
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
-        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatus(CustomerSettingQuery query)
+        public IEnumerable<ProductStatusDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
             using (ObjectDb objectDb = new ObjectDb("CustSetting_DisableStatSelect"))
             {
                 var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
 
-                return objectDb.Query<ProductStatusItemDto>(parameterValues);
+                return objectDb.Query<ProductStatusDto>(parameterValues);
             }
         }
 

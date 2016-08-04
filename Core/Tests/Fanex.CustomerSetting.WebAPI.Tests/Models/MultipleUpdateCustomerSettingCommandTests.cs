@@ -22,7 +22,7 @@
                 Setting = SampleSetting,
                 UplineLevel = Level.Agent.Value,
                 CustomerIds = "123",
-                CustomerNames = "supertest",
+                CustomerNames = "supertest"
             };
         }
 

@@ -29,7 +29,7 @@
         private const string BaseAddress = "http://dummyname/";
         private static Setting _sampleSetting;
 
-        private bool disposedValue = false;
+        private bool disposedValue;
 
         private ISettingServiceFactory _serviceFactory;
         private IContainer _container;

@@ -37,7 +37,7 @@
 
         public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
-            IEnumerable<ProductStatusItemDto> productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatus(query);
+            IEnumerable<ProductStatusDto> productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatus(query);
             var customerProductStatus = new SettingType
             {
                 Name = Label.ProductStatus,

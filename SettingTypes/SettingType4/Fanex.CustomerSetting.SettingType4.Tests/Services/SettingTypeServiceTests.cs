@@ -102,27 +102,6 @@
             Assert.AreEqual(true, actualCustomerProductStatusItem.Downline.IsDisabled);
         }
 
-        private static object[] GetCustomerSettingType_ViewInDirectDownlineCustomer_Cases =
-        {
-            new object[] { Level.Member, Level.Super },
-            new object[] { Level.Member, Level.Master }
-        };
-
-        [Test, TestCaseSource(nameof(GetCustomerSettingType_ViewInDirectDownlineCustomer_Cases))]
-        public void GetCustomerSettingType_ViewInDirectDownlineCustomer_AlwaysReturnNoSettingItem(
-            Level customerLevel,
-            Level uplineLevel)
-        {
-            //// Arrange
-            var query = InstanceFactory.CreateQuerySettingParam(1, customerLevel, 1, uplineLevel);
-
-            //// Act
-            var actualCustomerProductStatus = _settingType4Service.GetCustomerSettingType(_settingContext, query);
-
-            //// Assert
-            Assert.IsEmpty(actualCustomerProductStatus.SettingItems);
-        }
-
         [Test]
         public void UpdateCustomerSettingType_Always_CallUpdateCustomerProductStatus()
         {
