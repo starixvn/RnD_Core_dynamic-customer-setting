@@ -1,5 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.SettingType11.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
     using CustomerSetting.Models;
@@ -9,6 +10,7 @@
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using DataAccesses;
+    using Dtos;
     using Logging;
     using Models;
     using Resources;
@@ -33,11 +35,9 @@
             _productStatusDataAccess = productDataAccess ?? new DataAccess();
         }
 
-        public override SettingType GetCustomerSettingType(
-            ISettingContext settingContext,
-            CustomerSettingQuery query)
+        public override SettingType GetCustomerSettingType(ISettingContext settingContext, CustomerSettingQuery query)
         {
-            var productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatusItemsRawData(query);
+            IEnumerable<ProductStatusItemDto> productStatusItemsRawData = _productStatusDataAccess.GetCustomerProductStatus(query);
             var customerProductStatus = new SettingType
             {
                 Name = Label.ProductStatus,
@@ -59,13 +59,13 @@
         {
             Check.Argument.IsNotNull(settingType, nameof(settingType));
 
-            var result = _productStatusDataAccess.UpdateCustomerProductStatus(
+            IResult result = _productStatusDataAccess.UpdateCustomerProductStatus(
                 settingContext,
                 customerId,
                 customerLevel,
                 uplineLevel,
                 settingType.ToXml());
-            var settingResult = CreateSettingResult(result, customerId, settingType);
+            SettingResult settingResult = CreateSettingResult(result, customerId, settingType);
 
             return TranslateUpdateResultMessage(
                 settingResult,

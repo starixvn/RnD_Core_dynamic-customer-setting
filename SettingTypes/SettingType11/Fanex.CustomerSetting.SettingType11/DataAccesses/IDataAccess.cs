@@ -9,7 +9,7 @@
 
     internal interface IDataAccess
     {
-        IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery query);
+        IEnumerable<ProductStatusItemDto> GetCustomerProductStatus(CustomerSettingQuery query);
 
         IResult UpdateCustomerProductStatus(
             ISettingContext settingContext,

@@ -15,6 +15,11 @@
         {
         }
 
+        internal ProductStatusItem(bool isDisabled)
+        {
+            IsDisabled = isDisabled;
+        }
+
         internal ProductStatusItem(ProductStatusItemDto productStatusItemDto)
         {
             Check.Argument.IsNotNull(productStatusItemDto, nameof(productStatusItemDto));
@@ -23,24 +28,16 @@
             BetTypeId = productStatusItemDto.BetTypeId;
             IsDisabled = productStatusItemDto.IsDisabled;
 
-            if (productStatusItemDto.HasDownline)
+            if (productStatusItemDto.HasDownline
+                && productStatusItemDto.IsDisabledDownline.HasValue)
             {
-                Downline =
-                    productStatusItemDto.IsDisabledDownline.HasValue
-                    ? new ProductStatusItem
-                    {
-                        IsDisabled = productStatusItemDto.IsDisabledDownline.Value
-                    }
-                    : null;
+                Downline = new ProductStatusItem(productStatusItemDto.IsDisabledDownline.Value);
             }
 
-            Upline =
-                productStatusItemDto.IsDisabledUpline.HasValue
-                ? new ProductStatusItem
-                {
-                    IsDisabled = productStatusItemDto.IsDisabledUpline.Value
-                }
-                : null;
+            if (productStatusItemDto.IsDisabledUpline.HasValue)
+            {
+                Upline = new ProductStatusItem(productStatusItemDto.IsDisabledUpline.Value);
+            }
         }
 
         public bool IsDisabled { get; set; }

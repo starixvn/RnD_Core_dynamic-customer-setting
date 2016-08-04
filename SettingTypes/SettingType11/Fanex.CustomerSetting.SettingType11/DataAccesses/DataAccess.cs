@@ -13,7 +13,7 @@
 
     internal class DataAccess : BaseDataAccess, IDataAccess
     {
-        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatusItemsRawData(CustomerSettingQuery query)
+        public IEnumerable<ProductStatusItemDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
             using (ObjectDb objectDb = new ObjectDb("CustSetting_DisableStatSelect"))
             {
