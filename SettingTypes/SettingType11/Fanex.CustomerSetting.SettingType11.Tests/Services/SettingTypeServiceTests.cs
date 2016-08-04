@@ -35,7 +35,6 @@
             _logger = Substitute.For<ILogger>();
             _messageService = Substitute.For<IMessageService>();
             _dataAccess = Substitute.For<IDataAccess>();
-
             _settingContext = Substitute.For<ISettingContext>();
             _settingTypeService = new SettingTypeService(_messageService, _resourceService, _logger, _dataAccess);
         }
