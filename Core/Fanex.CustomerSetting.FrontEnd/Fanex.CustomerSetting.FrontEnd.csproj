@@ -443,6 +443,19 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>settingtype8-resources.js</LastGenOutput>
     </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>settingtype9-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype9-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9.htm" />
     <Content Include="Assets\Scripts\NodeModules\embeded-template.js" />
     <Content Include="Assets\Styles\customer-setting-ie8.css">
       <DependentUpon>customer-setting-ie8.scss</DependentUpon>
@@ -602,6 +615,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-groupdetails-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType8\settingtype8-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType9\settingtype9.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\embeded-template.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\js-string-escape.d.ts" />
     <TypeScriptCompile Include="Assets\Scripts\NodeModules\minimize.d.ts" />

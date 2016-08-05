@@ -44,12 +44,12 @@ module CustomerSetting {
             var isSuccessful: boolean = true;
             var backupMinBet: number;
             var backupMaxBet: number;
-            var backupMaxPerMatchBet: number;
+            var backupMaxPerMatch: number;
 
             if (source) {
                 backupMinBet = this.minBet;
                 backupMaxBet = this.maxBet;
-                backupMaxPerMatchBet = this.maxPerMatch;
+                backupMaxPerMatch = this.maxPerMatch;
 
                 this.minBet = source.minBet;
                 this.maxBet = source.maxBet;
@@ -60,7 +60,7 @@ module CustomerSetting {
                 if (!isSuccessful) {
                     this.minBet = backupMinBet;
                     this.maxBet = backupMaxBet;
-                    this.maxPerMatch = backupMaxPerMatchBet;
+                    this.maxPerMatch = backupMaxPerMatch;
                 }
             }
 
