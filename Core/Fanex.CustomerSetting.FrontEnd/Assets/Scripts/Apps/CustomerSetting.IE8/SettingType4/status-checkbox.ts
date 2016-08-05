@@ -27,7 +27,6 @@ module CustomerSetting.IE8 {
                             $scope.item.downline.isChecked = false;
                         }
 
-                        $scope.item.downline.isChecked = (<SettingType4Item>$scope.item.oldSetting).isChecked ? $scope.item.isChecked : false;
                         $scope.item.downline.readonly = true;
                     }
                 }
