@@ -28,7 +28,7 @@
             {
                 MinBet = dto.MinBetMin,
                 MaxBet = dto.MaxBetMax,
-                MaxPerNumber = dto.MaxPerNumber
+                MaxPerNumber = dto.MaxPerNumberMax
             };
         }
 
@@ -85,6 +85,44 @@
                 MinBet,
                 MaxBet,
                 MaxPerNumber);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var otherObj = obj as BetLimitItem;
+
+            if (otherObj == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(otherObj, this))
+            {
+                return true;
+            }
+
+            if (SportTypeId == otherObj.SportTypeId
+                && BetTypeId == otherObj.BetTypeId
+                && MinBet == otherObj.MinBet
+                && MaxBet == otherObj.MaxBet
+                && MaxPerNumber == otherObj.MaxPerNumber)
+            {
+                return Equals(Upline, otherObj.Upline);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            var uplineHashCode = Upline != null ? Upline.GetHashCode() : 0;
+
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ MinBet.GetHashCode()
+                ^ MaxBet.GetHashCode()
+                ^ MaxPerNumber.GetHashCode()
+                ^ uplineHashCode;
         }
     }
 }

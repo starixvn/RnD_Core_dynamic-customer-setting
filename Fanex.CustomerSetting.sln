@@ -122,6 +122,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Setti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType9", "SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9\Fanex.CustomerSetting.SettingType9.csproj", "{3FCF65FB-A2E7-4B82-B0D1-665D73468C3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.SettingType9.Tests", "SettingTypes\SettingType9\Fanex.CustomerSetting.SettingType9.Tests\Fanex.CustomerSetting.SettingType9.Tests.csproj", "{87D952AB-4331-4B5D-9CDE-E7E54549D542}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -288,6 +290,10 @@ Global
 		{3FCF65FB-A2E7-4B82-B0D1-665D73468C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FCF65FB-A2E7-4B82-B0D1-665D73468C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FCF65FB-A2E7-4B82-B0D1-665D73468C3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87D952AB-4331-4B5D-9CDE-E7E54549D542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87D952AB-4331-4B5D-9CDE-E7E54549D542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87D952AB-4331-4B5D-9CDE-E7E54549D542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87D952AB-4331-4B5D-9CDE-E7E54549D542}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -345,6 +351,7 @@ Global
 		{24FD214C-E151-4F97-95C7-924680D84C74} = {C1C7569D-A8EC-46BE-983A-91C1465D8734}
 		{7985A626-6E6D-4853-BD16-8F88BF52AE99} = {C1C7569D-A8EC-46BE-983A-91C1465D8734}
 		{3FCF65FB-A2E7-4B82-B0D1-665D73468C3A} = {8C5010EF-FAAC-4718-A434-D64433772FAF}
+		{87D952AB-4331-4B5D-9CDE-E7E54549D542} = {8C5010EF-FAAC-4718-A434-D64433772FAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35

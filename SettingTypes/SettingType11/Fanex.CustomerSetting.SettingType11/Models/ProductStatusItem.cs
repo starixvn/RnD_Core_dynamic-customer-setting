@@ -93,10 +93,13 @@
 
         public override int GetHashCode()
         {
-            var uplineHashCode = Upline != null ? Upline.IsDisabled.GetHashCode() : 0;
-            var downlineHashCode = Downline != null ? Downline.IsDisabled.GetHashCode() : 0;
+            var uplineHashCode = Upline != null ? Upline.GetHashCode() : 0;
+            var downlineHashCode = Downline != null ? Downline.GetHashCode() : 0;
 
-            return SportTypeId.GetHashCode() ^ BetTypeId.GetHashCode() ^ uplineHashCode ^ downlineHashCode;
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ IsDisabled.GetHashCode()
+                ^ uplineHashCode ^ downlineHashCode;
         }
     }
 }
