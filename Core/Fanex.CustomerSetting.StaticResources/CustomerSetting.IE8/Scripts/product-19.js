@@ -35752,6 +35752,36 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingResultDirective = (function () {
+            function SettingResultDirective() {
+                this.replace = true;
+                this.scope = {
+                    result: "="
+                };
+                this.templateUrl = "SettingResult/setting-result.htm";
+                this.controller = ["$scope", "$window", function ($scope, $window) {
+                        $scope.$watch("result", function (result) {
+                            if (angular.isDefined(result)) {
+                                $window.scrollTo(0, 0);
+                            }
+                        });
+                    }];
+            }
+            return SettingResultDirective;
+        })();
+        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../../../typings/underscore/underscore.d.ts" />
 /// <reference path="../models.ts" />
 /// <reference path="../module-registrater.ts" />
@@ -35810,36 +35840,6 @@ var CustomerSetting;
             return SettingTypeDirectiveLoader;
         })();
         IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var SettingResultDirective = (function () {
-            function SettingResultDirective() {
-                this.replace = true;
-                this.scope = {
-                    result: "="
-                };
-                this.templateUrl = "SettingResult/setting-result.htm";
-                this.controller = ["$scope", "$window", function ($scope, $window) {
-                        $scope.$watch("result", function (result) {
-                            if (angular.isDefined(result)) {
-                                $window.scrollTo(0, 0);
-                            }
-                        });
-                    }];
-            }
-            return SettingResultDirective;
-        })();
-        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -37744,7 +37744,6 @@ var CustomerSetting;
                                     else {
                                         $scope.item.downline.isChecked = false;
                                     }
-                                    $scope.item.downline.isChecked = $scope.item.oldSetting.isChecked ? $scope.item.isChecked : false;
                                     $scope.item.downline.readonly = true;
                                 }
                             }

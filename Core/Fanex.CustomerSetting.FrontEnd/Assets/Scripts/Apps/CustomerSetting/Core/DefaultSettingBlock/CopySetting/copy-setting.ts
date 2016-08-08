@@ -1,5 +1,5 @@
-﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
+﻿/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../module-registrater.ts" />
 
 module CustomerSetting {
     "use strict";
@@ -15,7 +15,7 @@ module CustomerSetting {
         public static $inject: string[] = ["copyingSettingService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "DefaultSettingBlock/copy-setting.htm";
+        public templateUrl: string = "DefaultSettingBlock/CopySetting/copy-setting.htm";
 
         public get scope(): any {
             return {

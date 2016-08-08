@@ -321,10 +321,11 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\copy-setting.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\customer-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -562,10 +563,12 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\common.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\copy-setting.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Modal\detect-max-height.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Modal\draggable.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ToggleSettingBlock\togglable-setting-block-shared-states.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Modal\detect-max-height.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Modal\draggable.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\helpers.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\models.ts" />
@@ -575,7 +578,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-base-directive.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\Tooltip\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.ts" />

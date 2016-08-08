@@ -9,6 +9,9 @@
              data-ng-click="update({ settingTypeId: settingType.id })">
             <span class="icon icon--update"></span>
         </div>
+        <toggle-setting-block data-ng-if="togglableSharedStates && togglableSharedStates.toggleStates.length > 1"
+                              data-shared-states="togglableSharedStates">
+        </toggle-setting-block>
     </div>
     <div class="block__item-group" data-ng-if="settingType | validSettingType" data-ng-repeat="group in sportGroups">
         <div class="block__sub-header"
@@ -20,10 +23,19 @@
                           data-setting-type-id="settingType.id"
                           data-setting-items="sportGroups">
             </copy-setting>
+            <toggle-setting-block data-ng-if="togglableSharedStates && togglableSharedStates.toggleStates.length > 1"
+                                  data-shared-states="togglableSharedStates"
+                                  data-block-Index="$index"
+                                  data-setting-data="group">
+            </toggle-setting-block>
         </div>
-        <div class="block__lbl-group" data-ng-include="headerTemplateUrl"></div>
+        <div class="block__lbl-group"
+             data-ng-include="headerTemplateUrl"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index]">
+        </div>
         <div class="block__item"
              data-ng-repeat="item in group"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index]"
              data-ng-class="{ 'block__item--last': $last,
                               'block__item--near-last': $index === group.length - 2 && $index % 2 === 0,
                               'block__item--before-extra-item': $last && group.length % 2 === 1 && group.length > 1,
@@ -41,7 +53,9 @@
             </div>
             <div class="block__value" data-ng-include="valueTemplateUrl"></div>
         </div>
-        <div class="block__item block__item--last block__item--extra" data-ng-if="group.length % 2 === 1 && group.length > 1">
+        <div class="block__item block__item--last block__item--extra"
+             data-ng-if="group.length % 2 === 1 && group.length > 1"
+             data-ng-hide="togglableSharedStates && !togglableSharedStates.toggleStates[$index]">
             <div class="block__lbl"></div>
             <div class="block__value"></div>
         </div>

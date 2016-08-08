@@ -120,11 +120,17 @@
   <data name="Agents" xml:space="preserve">
     <value>Agents</value>
   </data>
+  <data name="Collapse" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
   <data name="CopyTooltip" xml:space="preserve">
     <value>Click to duplicate the values</value>
   </data>
   <data name="CustomerSetting" xml:space="preserve">
     <value>Customer Setting</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Expand</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>

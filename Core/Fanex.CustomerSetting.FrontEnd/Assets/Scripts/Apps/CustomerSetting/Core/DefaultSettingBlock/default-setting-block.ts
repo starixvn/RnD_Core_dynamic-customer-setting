@@ -10,6 +10,8 @@ module CustomerSetting {
     export interface IDefaultSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
         avaiSettingLevels: Object;
         sportGroups: DefaultSettingItem[][];
+        togglableSettingBlocks: boolean;
+        togglableSharedStates: TogglableSettingBlockSharedStates;
     }
 
     export class DefaultSettingTypeGroupingDirective implements ng.IDirective {
@@ -23,6 +25,10 @@ module CustomerSetting {
                 if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                        }
                     } else {
                         $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
                     }

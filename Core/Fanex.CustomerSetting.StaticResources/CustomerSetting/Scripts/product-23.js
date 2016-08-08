@@ -32079,122 +32079,124 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../helpers.ts" />
-/// <reference path="../module-registrater.ts" />
+/// <reference path="../helper-services.ts" />
+/// <reference path="../models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var DetectMaxHeightDirective = (function () {
-        function DetectMaxHeightDirective($window, $timeout) {
+    var SettingTypeDirective = (function () {
+        function SettingTypeDirective(settingItemType) {
             var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                var debounceResize = CustomerSetting.debounce(function () {
-                    if (!element.hasClass("ng-hide")) {
-                        _this.calculateHeight(element, container);
-                    }
-                }, 100);
-                _this.calculateHeight(element, container);
-                container.css({ "height": "auto" });
-                angular.element(_this.$window).on("resize", debounceResize);
-            };
-            this.$window = $window;
-            this.$timeout = $timeout;
-        }
-        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-            var _this = this;
-            this.$timeout(function () {
-                var outerHeight = _this.$window.innerHeight;
-                var maxHeigth = outerHeight * 0.6;
-                var marginTop = outerHeight * 0.2 - 35;
-                element.css({
-                    "max-height": maxHeigth + "px"
-                });
-                container.css({ "margin-top": marginTop + "px" });
-            });
-        };
-        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-        return DetectMaxHeightDirective;
-    })();
-    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DraggableDirective = (function () {
-        function DraggableDirective($document) {
-            var _this = this;
-            this.restrict = "A";
-            this.link = function (scope, element) {
-                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                var container = angular.element(element.parent())[0];
-                var width;
-                var height;
-                var startX;
-                var startY;
-                var currentX;
-                var currentY;
-                draggableBanner.css({
-                    cursor: "move"
-                });
-                draggableBanner.on("mousedown", function (event) {
-                    startX = event.clientX - element[0].offsetLeft;
-                    startY = event.clientY - element[0].offsetTop;
-                    width = element[0].offsetWidth;
-                    height = element[0].offsetHeight;
-                    _this.$document.on("mousemove", mouseMove);
-                    _this.$document.on("mouseup", mouseUp);
-                });
-                var mouseMove = function (event) {
-                    currentX = event.clientX - startX;
-                    currentY = event.clientY - startY;
-                    updatePosition();
-                };
-                var mouseUp = function (event) {
-                    _this.$document.off("mousemove", mouseMove);
-                    _this.$document.off("mouseup", mouseUp);
-                };
-                function updatePosition() {
-                    if (container) {
-                        var containerClientRect = container.getBoundingClientRect();
-                        if (currentX < containerClientRect.left) {
-                            currentX = containerClientRect.left;
+            this.replace = true;
+            this.controller = [
+                "$scope",
+                "settingTypesSharedValuesService",
+                function ($scope, settingTypesSharedValuesService) {
+                    $scope.customerId = settingTypesSharedValuesService.customerId;
+                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
+                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
+                    $scope.productId = settingTypesSharedValuesService.productId;
+                    $scope.productName = settingTypesSharedValuesService.productName;
+                    $scope.avaiCustomerLevels = CustomerSetting.Level;
+                    $scope.$watch("settingType", function (settingType) {
+                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
+                        if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                            if (settingType.isError) {
+                                if (settingType.settingItems.length > 0) {
+                                    settingType.settingItems[0] = new CustomerSetting.ErrorSettingItem(settingType.settingItems[0]);
+                                }
+                            }
+                            else {
+                                settingType.settingItems.forEach(function (item, index) {
+                                    if (angular.isDefined(item)) {
+                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel, settingType.extraData);
+                                    }
+                                });
+                            }
                         }
-                        else if (currentX > containerClientRect.right - width) {
-                            currentX = containerClientRect.right - width;
-                        }
-                        if (currentY < containerClientRect.top) {
-                            currentY = containerClientRect.top;
-                        }
-                        else if (currentY > containerClientRect.bottom - height) {
-                            currentY = containerClientRect.bottom - height;
-                        }
-                    }
-                    element.css({
-                        "margin-top": currentY + "px",
-                        "margin-left": currentX + "px"
                     });
-                }
-            };
-            this.$document = $document;
+                }];
+            this.settingItemType = settingItemType;
         }
-        Object.defineProperty(DraggableDirective.prototype, "scope", {
+        Object.defineProperty(SettingTypeDirective.prototype, "scope", {
             get: function () {
                 return {
-                    draggableBanner: "=draggable"
+                    settingType: "=",
+                    update: "&"
                 };
             },
             enumerable: true,
             configurable: true
         });
-        DraggableDirective.$inject = ["$document"];
-        return DraggableDirective;
+        return SettingTypeDirective;
     })();
-    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
+    CustomerSetting.SettingTypeDirective = SettingTypeDirective;
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../common.ts" />
+/// <reference path="../models.ts" />
+/// <reference path="../module-registrater.ts" />
+/// <reference path="../settingtype/setting-type-base-directive.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DefaultSettingTypeGroupingDirective = (function () {
+        function DefaultSettingTypeGroupingDirective() {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/default-setting-block.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
+                    $scope.$watch("settingType", function (settingType) {
+                        if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                            if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
+                                $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
+                                if ($scope.togglableSettingBlocks) {
+                                    $scope.togglableSharedStates = new CustomerSetting.TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                                }
+                            }
+                            else {
+                                $scope.sportGroups = [settingType.settingItems];
+                            }
+                        }
+                    });
+                }];
+        }
+        DefaultSettingTypeGroupingDirective.prototype.groupSettingItemsBySportType = function (settingItems) {
+            var currentSportTypeId = -1;
+            var result = new Array();
+            var group;
+            settingItems.forEach(function (item) {
+                var settingItem = item;
+                if (currentSportTypeId !== settingItem.sportTypeId) {
+                    if (angular.isDefined(group)) {
+                        result.push(group);
+                    }
+                    currentSportTypeId = settingItem.sportTypeId;
+                    group = new Array();
+                }
+                group.push(settingItem);
+            });
+            if (angular.isDefined(group)) {
+                result.push(group);
+            }
+            return result;
+        };
+        return DefaultSettingTypeGroupingDirective;
+    })();
+    CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
+    CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
+    function ShowingName() {
+        return function (settingItem, settingLevel, productName) {
+            return settingLevel === CustomerSetting.SettingLevel.product
+                ? productName
+                : (settingLevel === CustomerSetting.SettingLevel.sportType
+                    ? settingItem.sportTypeName
+                    : settingItem.betTypeName);
+        };
+    }
+    CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
@@ -32231,7 +32233,72 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../models.ts" />
 /// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingTypeDirectiveLoader = (function () {
+        function SettingTypeDirectiveLoader($compile) {
+            var _this = this;
+            this.replace = true;
+            this.link = function (scope, element) {
+                scope.$watch("setting.settingTypes", function () {
+                    _this.generateNodes(scope, element);
+                });
+            };
+            this.$compile = $compile;
+            this.loadedSettingTypes = new Array();
+        }
+        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+            get: function () {
+                return {
+                    setting: "=",
+                    update: "&"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
+            var _this = this;
+            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
+                scope.setting.settingTypes.forEach(function (settingType, index) {
+                    var loaded = _this.loadedSettingTypes.some(function (item) {
+                        return item === settingType.id;
+                    });
+                    if (!loaded) {
+                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
+                        var newNodeParts = [
+                            "<",
+                            settingTypeName,
+                            " data-setting-type=\"setting.settingTypes[",
+                            index,
+                            "]\"",
+                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
+                            "></",
+                            settingTypeName,
+                            ">"
+                        ];
+                        var settingTypeElement = angular.element(newNodeParts.join(""));
+                        if (index === scope.setting.settingTypes.length - 1) {
+                            settingTypeElement.addClass("last-setting-type");
+                        }
+                        element.append(settingTypeElement);
+                        _this.$compile(settingTypeElement)(scope);
+                        _this.loadedSettingTypes.push(settingType.id);
+                    }
+                });
+            }
+        };
+        SettingTypeDirectiveLoader.$inject = ["$compile"];
+        return SettingTypeDirectiveLoader;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32239,7 +32306,7 @@ var CustomerSetting;
         function CopySettingDirective(copyingSettingService) {
             var _this = this;
             this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/copy-setting.htm";
+            this.templateUrl = "DefaultSettingBlock/CopySetting/copy-setting.htm";
             this.controller = ["$scope", function ($scope) {
                     _this.copyingSettingService.register($scope);
                     $scope.showError = false;
@@ -32320,193 +32387,240 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../helper-services.ts" />
-/// <reference path="../models.ts" />
+/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../helpers.ts" />
+/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingTypeDirective = (function () {
-        function SettingTypeDirective(settingItemType) {
+    var DetectMaxHeightDirective = (function () {
+        function DetectMaxHeightDirective($window, $timeout) {
             var _this = this;
-            this.replace = true;
-            this.controller = [
-                "$scope",
-                "settingTypesSharedValuesService",
-                function ($scope, settingTypesSharedValuesService) {
-                    $scope.customerId = settingTypesSharedValuesService.customerId;
-                    $scope.uplineLevel = settingTypesSharedValuesService.uplineLevel;
-                    $scope.customerLevel = settingTypesSharedValuesService.customerLevel;
-                    $scope.productId = settingTypesSharedValuesService.productId;
-                    $scope.productName = settingTypesSharedValuesService.productName;
-                    $scope.avaiCustomerLevels = CustomerSetting.Level;
-                    $scope.$watch("settingType", function (settingType) {
-                        $scope.normalMode = settingTypesSharedValuesService.normalMode;
-                        if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                            if (settingType.isError) {
-                                if (settingType.settingItems.length > 0) {
-                                    settingType.settingItems[0] = new CustomerSetting.ErrorSettingItem(settingType.settingItems[0]);
-                                }
-                            }
-                            else {
-                                settingType.settingItems.forEach(function (item, index) {
-                                    if (angular.isDefined(item)) {
-                                        settingType.settingItems[index] = _this.settingItemType(item, true, $scope.customerLevel, $scope.uplineLevel, settingType.extraData);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }];
-            this.settingItemType = settingItemType;
-        }
-        Object.defineProperty(SettingTypeDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    settingType: "=",
-                    update: "&"
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return SettingTypeDirective;
-    })();
-    CustomerSetting.SettingTypeDirective = SettingTypeDirective;
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-/// <reference path="../settingtype/setting-type-base-directive.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var DefaultSettingTypeGroupingDirective = (function () {
-        function DefaultSettingTypeGroupingDirective() {
-            var _this = this;
-            this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/default-setting-block.htm";
-            this.controller = ["$scope", function ($scope) {
-                    $scope.avaiSettingLevels = CustomerSetting.SettingLevel;
-                    $scope.$watch("settingType", function (settingType) {
-                        if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
-                            if (settingType.settingLevel === CustomerSetting.SettingLevel.sportTypeBetType) {
-                                $scope.sportGroups = _this.groupSettingItemsBySportType(settingType.settingItems);
-                            }
-                            else {
-                                $scope.sportGroups = [settingType.settingItems];
-                            }
-                        }
-                    });
-                }];
-        }
-        DefaultSettingTypeGroupingDirective.prototype.groupSettingItemsBySportType = function (settingItems) {
-            var currentSportTypeId = -1;
-            var result = new Array();
-            var group;
-            settingItems.forEach(function (item) {
-                var settingItem = item;
-                if (currentSportTypeId !== settingItem.sportTypeId) {
-                    if (angular.isDefined(group)) {
-                        result.push(group);
-                    }
-                    currentSportTypeId = settingItem.sportTypeId;
-                    group = new Array();
-                }
-                group.push(settingItem);
-            });
-            if (angular.isDefined(group)) {
-                result.push(group);
-            }
-            return result;
-        };
-        return DefaultSettingTypeGroupingDirective;
-    })();
-    CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
-    CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
-    function ShowingName() {
-        return function (settingItem, settingLevel, productName) {
-            return settingLevel === CustomerSetting.SettingLevel.product
-                ? productName
-                : (settingLevel === CustomerSetting.SettingLevel.sportType
-                    ? settingItem.sportTypeName
-                    : settingItem.betTypeName);
-        };
-    }
-    CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingTypeDirectiveLoader = (function () {
-        function SettingTypeDirectiveLoader($compile) {
-            var _this = this;
-            this.replace = true;
+            this.restrict = "A";
             this.link = function (scope, element) {
-                scope.$watch("setting.settingTypes", function () {
-                    _this.generateNodes(scope, element);
-                });
+                var container = angular.element(element.parent());
+                var debounceResize = CustomerSetting.debounce(function () {
+                    if (!element.hasClass("ng-hide")) {
+                        _this.calculateHeight(element, container);
+                    }
+                }, 100);
+                _this.calculateHeight(element, container);
+                container.css({ "height": "auto" });
+                angular.element(_this.$window).on("resize", debounceResize);
             };
-            this.$compile = $compile;
-            this.loadedSettingTypes = new Array();
+            this.$window = $window;
+            this.$timeout = $timeout;
         }
-        Object.defineProperty(SettingTypeDirectiveLoader.prototype, "scope", {
+        DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+            var _this = this;
+            this.$timeout(function () {
+                var outerHeight = _this.$window.innerHeight;
+                var maxHeigth = outerHeight * 0.6;
+                var marginTop = outerHeight * 0.2 - 35;
+                element.css({
+                    "max-height": maxHeigth + "px"
+                });
+                container.css({ "margin-top": marginTop + "px" });
+            });
+        };
+        DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+        return DetectMaxHeightDirective;
+    })();
+    CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var DraggableDirective = (function () {
+        function DraggableDirective($document) {
+            var _this = this;
+            this.restrict = "A";
+            this.link = function (scope, element) {
+                var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                var container = angular.element(element.parent())[0];
+                var width;
+                var height;
+                var startX;
+                var startY;
+                var currentX;
+                var currentY;
+                draggableBanner.css({
+                    cursor: "move"
+                });
+                draggableBanner.on("mousedown", function (event) {
+                    startX = event.clientX - element[0].offsetLeft;
+                    startY = event.clientY - element[0].offsetTop;
+                    width = element[0].offsetWidth;
+                    height = element[0].offsetHeight;
+                    _this.$document.on("mousemove", mouseMove);
+                    _this.$document.on("mouseup", mouseUp);
+                });
+                var mouseMove = function (event) {
+                    currentX = event.clientX - startX;
+                    currentY = event.clientY - startY;
+                    updatePosition();
+                };
+                var mouseUp = function (event) {
+                    _this.$document.off("mousemove", mouseMove);
+                    _this.$document.off("mouseup", mouseUp);
+                };
+                function updatePosition() {
+                    if (container) {
+                        var containerClientRect = container.getBoundingClientRect();
+                        if (currentX < containerClientRect.left) {
+                            currentX = containerClientRect.left;
+                        }
+                        else if (currentX > containerClientRect.right - width) {
+                            currentX = containerClientRect.right - width;
+                        }
+                        if (currentY < containerClientRect.top) {
+                            currentY = containerClientRect.top;
+                        }
+                        else if (currentY > containerClientRect.bottom - height) {
+                            currentY = containerClientRect.bottom - height;
+                        }
+                    }
+                    element.css({
+                        "margin-top": currentY + "px",
+                        "margin-left": currentX + "px"
+                    });
+                }
+            };
+            this.$document = $document;
+        }
+        Object.defineProperty(DraggableDirective.prototype, "scope", {
             get: function () {
                 return {
-                    setting: "=",
-                    update: "&"
+                    draggableBanner: "=draggable"
                 };
             },
             enumerable: true,
             configurable: true
         });
-        SettingTypeDirectiveLoader.prototype.generateNodes = function (scope, element) {
-            var _this = this;
-            if (angular.isDefined(scope.setting) && angular.isDefined(scope.setting.settingTypes) && angular.isArray(scope.setting.settingTypes)) {
-                scope.setting.settingTypes.forEach(function (settingType, index) {
-                    var loaded = _this.loadedSettingTypes.some(function (item) {
-                        return item === settingType.id;
-                    });
-                    if (!loaded) {
-                        var settingTypeName = CustomerSetting.StringFormater.format("settingtype{0}", settingType.id);
-                        var newNodeParts = [
-                            "<",
-                            settingTypeName,
-                            " data-setting-type=\"setting.settingTypes[",
-                            index,
-                            "]\"",
-                            " data-update=\"update({ settingTypeId: settingTypeId})\"",
-                            "></",
-                            settingTypeName,
-                            ">"
-                        ];
-                        var settingTypeElement = angular.element(newNodeParts.join(""));
-                        if (index === scope.setting.settingTypes.length - 1) {
-                            settingTypeElement.addClass("last-setting-type");
-                        }
-                        element.append(settingTypeElement);
-                        _this.$compile(settingTypeElement)(scope);
-                        _this.loadedSettingTypes.push(settingType.id);
-                    }
-                });
-            }
-        };
-        SettingTypeDirectiveLoader.$inject = ["$compile"];
-        return SettingTypeDirectiveLoader;
+        DraggableDirective.$inject = ["$document"];
+        return DraggableDirective;
     })();
-    CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+    CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../resource/resource-translation.ts" />
-/// <reference path="../helpers.ts" />
-/// <reference path="../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var TogglableSettingBlockSharedStates = (function () {
+        function TogglableSettingBlockSharedStates(numberofBlocks) {
+            if (numberofBlocks > 0) {
+                this.toggleStates = [];
+                this.numberofCollapsedBlocks = numberofBlocks - 1;
+                for (var index = 0; index < numberofBlocks; index++) {
+                    this.toggleStates[index] = index === 0 ? true : false;
+                }
+            }
+        }
+        TogglableSettingBlockSharedStates.prototype.isExpanded = function (blockIndex) {
+            return this.toggleStates[blockIndex];
+        };
+        TogglableSettingBlockSharedStates.prototype.isExpandedAll = function () {
+            return this.numberofCollapsedBlocks === this.toggleStates.length;
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseBlock = function (blockIndex) {
+            this.toggleStates[blockIndex] = false;
+            this.numberofCollapsedBlocks--;
+        };
+        TogglableSettingBlockSharedStates.prototype.expandBlock = function (blockIndex) {
+            this.toggleStates[blockIndex] = true;
+            this.numberofCollapsedBlocks++;
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = false;
+            }
+            this.numberofCollapsedBlocks = 0;
+        };
+        TogglableSettingBlockSharedStates.prototype.expandAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = true;
+            }
+            this.numberofCollapsedBlocks = this.toggleStates.length;
+        };
+        return TogglableSettingBlockSharedStates;
+    })();
+    CustomerSetting.TogglableSettingBlockSharedStates = TogglableSettingBlockSharedStates;
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../module-registrater.ts" />
+/// <reference path="togglable-setting-block-shared-states.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective() {
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
+            this.link = function (scope) {
+                if (isNaN(scope.blockIndex)) {
+                    scope.isExpanded = scope.sharedStates.isExpandedAll();
+                }
+                else {
+                    scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                }
+                scope.toggle = function () {
+                    if (isNaN(scope.blockIndex)) {
+                        if (scope.isExpanded) {
+                            scope.sharedStates.collapseAllBlocks();
+                        }
+                        else {
+                            scope.sharedStates.expandAllBlocks();
+                        }
+                        scope.isExpanded = scope.sharedStates.isExpandedAll();
+                    }
+                    else {
+                        if (scope.isExpanded) {
+                            scope.sharedStates.collapseBlock(scope.blockIndex);
+                        }
+                        else {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                        }
+                        scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                    }
+                };
+                if (isNaN(scope.blockIndex)) {
+                    scope.$watch("sharedStates", function (sharedStates) {
+                        scope.isExpanded = sharedStates.isExpandedAll();
+                    }, true);
+                }
+                else {
+                    scope.$watch("settingData", function () {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
+                        scope.isExpanded = true;
+                    }, true);
+                }
+            };
+        }
+        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return ToggleSettingBlockDirective;
+    })();
+    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../resource/resource-translation.ts" />
+/// <reference path="../../helpers.ts" />
+/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32516,7 +32630,7 @@ var CustomerSetting;
             this.restrict = "A";
             this.priority = 100;
             this.link = function (scope, element) {
-                var template = _this.$templateCache.get("Tooltip/tooltip.htm");
+                var template = _this.$templateCache.get("DefaultSettingBlock/Tooltip/tooltip.htm");
                 var tooltip = angular.element(template);
                 var debounceResize = CustomerSetting.debounce(function () {
                     if (!tooltip.hasClass("ng-hide")) {
@@ -32826,6 +32940,359 @@ var CustomerSetting;
         return SettingType11Directive;
     })(CustomerSetting.SettingTypeDirective);
     CustomerSetting.ModuleRegister.directive("settingtype11", SettingType11Directive);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../core/models.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType9Item = (function (_super) {
+        __extends(SettingType9Item, _super);
+        function SettingType9Item(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            if (settingItem) {
+                this.minBet = settingItem.minBet;
+                this.maxBet = settingItem.maxBet;
+                this.maxPerNumber = settingItem.maxPerNumber;
+                if (settingItem.upline) {
+                    this.upline = new SettingType9Item(settingItem.upline);
+                }
+            }
+            if (backup) {
+                this.oldSetting = new SettingType9Item(this);
+            }
+        }
+        SettingType9Item.prototype.isChanged = function () {
+            var isChanged = _super.prototype.isChanged.call(this);
+            var oldSetting = this.oldSetting;
+            return isChanged
+                || this.minBet !== oldSetting.minBet
+                || this.maxBet !== oldSetting.maxBet
+                || this.maxPerNumber !== oldSetting.maxPerNumber;
+        };
+        SettingType9Item.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupMinBet;
+            var backupMaxBet;
+            var backupMaxPerNumber;
+            if (source) {
+                backupMinBet = this.minBet;
+                backupMaxBet = this.maxBet;
+                backupMaxPerNumber = this.maxPerNumber;
+                this.minBet = source.minBet;
+                this.maxBet = source.maxBet;
+                this.maxPerNumber = source.maxPerNumber;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    this.minBet = backupMinBet;
+                    this.maxBet = backupMaxBet;
+                    this.maxPerNumber = backupMaxPerNumber;
+                }
+            }
+            return isSuccessful;
+        };
+        SettingType9Item.prototype.validate = function () {
+            if (!this.validateMinBet()) {
+                return false;
+            }
+            if (!this.validateMaxBet()) {
+                return false;
+            }
+            if (!this.validateMaxPerNumber()) {
+                return false;
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        SettingType9Item.prototype.validateSpecialCase = function () {
+            if (this.minBet === 0 && this.maxBet === 0 && this.maxPerNumber === 0) {
+                this.validationState = CustomerSetting.Result.normal;
+                return true;
+            }
+        };
+        SettingType9Item.prototype.validateMinBet = function () {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+            if (this.minBet !== 0) {
+                if (this.minBet < this.upline.minBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MinBetMoreThanOrEqualTo", "minBet", [this.upline.minBet]);
+                    return false;
+                }
+                if (this.minBet > this.maxBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MinBetLessThanOrEqualMaxBet", "minBet");
+                    return false;
+                }
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        SettingType9Item.prototype.validateMaxBet = function () {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+            if (this.maxBet !== 0) {
+                if (this.upline.maxBet > 0 && this.maxBet > this.upline.maxBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualTo", "maxBet", [this.upline.maxBet]);
+                    return false;
+                }
+                if (this.maxBet > this.maxPerNumber) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetLessThanOrEqualMaxPerNumber", "maxBet");
+                    return false;
+                }
+                if (this.maxBet < this.minBet) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxBetMoreThanOrEqualMinBet", "maxBet");
+                    return false;
+                }
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        SettingType9Item.prototype.validateMaxPerNumber = function () {
+            if (this.validateSpecialCase()) {
+                return true;
+            }
+            if (this.maxPerNumber !== 0) {
+                if (this.upline.maxPerNumber > 0 && this.maxPerNumber > this.upline.maxPerNumber) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxPerNumberLessThanOrEqualTo", "maxPerNumber", [this.upline.maxPerNumber]);
+                    return false;
+                }
+                if (this.maxBet > this.maxPerNumber) {
+                    this.validationState = new CustomerSetting.ValidationResult("MaxPerNumberMoreThanOrEqualMaxBet", "maxPerNumber");
+                    return false;
+                }
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        return SettingType9Item;
+    })(CustomerSetting.DefaultSettingItem);
+    CustomerSetting.SettingType9Item = SettingType9Item;
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/helpers.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="models.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType9InputDirective = (function () {
+        function SettingType9InputDirective($compile, $filter) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "settingtype9-input.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.updateValue = function () {
+                        if ($scope.fieldName === "minBet") {
+                            $scope.settingItem.validateMinBet();
+                        }
+                        else if ($scope.fieldName === "maxBet") {
+                            $scope.settingItem.validateMaxBet();
+                        }
+                        else if ($scope.fieldName === "maxPerNumber") {
+                            $scope.settingItem.validateMaxPerNumber();
+                        }
+                    };
+                }];
+            this.link = function (scope, wrapElement) {
+                var element = angular.element(wrapElement.children()[0]);
+                var modelCtrl;
+                element.attr("data-ng-model", "settingItem." + scope.fieldName);
+                element.attr("data-ng-change", "updateValue()");
+                element.attr("data-tooltip", "");
+                element.attr("data-ng-class", CustomerSetting.StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
+                element.attr("data-message", CustomerSetting.StringFormater.format("{{settingItem.validationState | tooltipMessage:'settingType9ResourceService':'{0}'}}", scope.fieldName));
+                element.addClass("setting-field--has-constraint");
+                if (scope.fieldName === "minBet") {
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> >={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
+                }
+                else {
+                    wrapElement.append(CustomerSetting.StringFormater.format("<span data-ng-if=\"settingItem.upline.{0} > 0\"> <={{settingItem.upline.{0} | formatNumber}}</span>", scope.fieldName));
+                }
+                _this.$compile(wrapElement)(scope);
+                modelCtrl = element.controller("ngModel");
+                element.on("focus", function () {
+                    element.data("focused", true);
+                });
+                element.on("focusout", function () {
+                    element.data("focused", false);
+                });
+                element.on("mouseup", function () {
+                    if (element.data("focused")) {
+                        var input = element[0];
+                        input.select();
+                    }
+                });
+                element.on("keydown", function (event) {
+                    var value = element.val();
+                    var dotPistion = value.indexOf(".");
+                    var numberParts = value.split(".");
+                    var input = element[0];
+                    if (modelCtrl.$modelValue === 0 && [46, 8].indexOf(event.keyCode) >= 0) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if ([110, 190].indexOf(event.keyCode) >= 0) {
+                        if (numberParts.length > 1) {
+                            event.preventDefault();
+                            return;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    if ([46, 8, 9, 27, 13].indexOf(event.keyCode) >= 0
+                        || (event.keyCode === 65 && event.ctrlKey === true)
+                        || (event.keyCode >= 35 && event.keyCode <= 40)) {
+                        return;
+                    }
+                    if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57))
+                        && (event.keyCode < 96 || event.keyCode > 105)) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if (dotPistion >= 0 && dotPistion < input.selectionStart && numberParts[1].length > 1) {
+                        event.preventDefault();
+                        return;
+                    }
+                });
+                modelCtrl.$formatters.unshift(function () {
+                    return _this.$filter("number")(modelCtrl.$modelValue);
+                });
+                modelCtrl.$parsers.unshift(function (viewValue) {
+                    var input = element[0];
+                    var value = 0;
+                    var formattedValue = viewValue;
+                    var caretPosition = input.selectionStart;
+                    var numberParts = viewValue ? viewValue.split(".") : [];
+                    if (numberParts.length > 1) {
+                        var plainIntegerPart = numberParts[0].replace(/[\,]/g, "") || "0";
+                        var decimalPart = numberParts[1].replace(/[\,\.]/g, "") || "";
+                        decimalPart = decimalPart.substring(0, 2);
+                        value = parseFloat(plainIntegerPart + "." + decimalPart);
+                        formattedValue = _this.$filter("number")(plainIntegerPart) + "." + decimalPart;
+                    }
+                    else if (numberParts.length > 0) {
+                        var plainNumber = viewValue.replace(/[\,]/g, "");
+                        value = parseInt(plainNumber, 10) || 0;
+                        formattedValue = _this.$filter("number")(value);
+                    }
+                    element.val(formattedValue);
+                    if (viewValue.length !== caretPosition) {
+                        var offset = viewValue.length - formattedValue.length;
+                        caretPosition -= offset;
+                        if (input.selectionStart === input.selectionEnd) {
+                            input.selectionEnd = caretPosition;
+                        }
+                        input.selectionStart = caretPosition;
+                    }
+                    return value;
+                });
+            };
+            this.$compile = $compile;
+            this.$filter = $filter;
+        }
+        Object.defineProperty(SettingType9InputDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: "=",
+                    customerLevel: "=",
+                    uplineLevel: "=",
+                    fieldName: "@"
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingType9InputDirective.$inject = ["$compile", "$filter", "settingType9ResourceService"];
+        return SettingType9InputDirective;
+    })();
+    CustomerSetting.ModuleRegister.directive("settingtype9Input", SettingType9InputDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../core/helper-services.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../resource/resource-translation.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType9ResourceService = (function (_super) {
+        __extends(SettingType9ResourceService, _super);
+        function SettingType9ResourceService(settingType9Resources, parametersService) {
+            _super.call(this, settingType9Resources, parametersService);
+        }
+        SettingType9ResourceService.$inject = ["settingType9Resources", "parametersService"];
+        return SettingType9ResourceService;
+    })(CustomerSetting.ResourceService);
+    CustomerSetting.SettingType9ResourceService = SettingType9ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType9ResourceService", SettingType9ResourceService);
+    function SettingType9LabelFilter(settingType9ResourceService) {
+        return function (name) {
+            return settingType9ResourceService.getLabel(name);
+        };
+    }
+    SettingType9LabelFilter.$inject = ["settingType9ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType9Label", SettingType9LabelFilter);
+    function SettingType9MessageFilter(settingType9ResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            replacements.unshift(name);
+            return settingType9ResourceService.getFormattedMessage.apply(SettingType9ResourceService, replacements);
+        };
+    }
+    SettingType9MessageFilter.$inject = ["settingType9ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType9Message", SettingType9MessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="settingtype9-resources.ts" />
+/// <reference path="models.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType9Directive = (function (_super) {
+        __extends(SettingType9Directive, _super);
+        function SettingType9Directive(settingType9ResourceService) {
+            var _this = this;
+            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType9Item(settingItem, backup); });
+            this.templateUrl = "settingtype9.htm";
+            this.link = function (scope) {
+                scope.headerTemplateUrl = "settingtype9-header.htm";
+                scope.valueTemplateUrl = "settingtype9-value.htm";
+                scope.settingTypeName = _this.settingType9ResourceService.getLabel("BetSetting");
+                scope.togglableSettingBlocks = true;
+            };
+            this.settingType9ResourceService = settingType9ResourceService;
+        }
+        SettingType9Directive.$inject = ["settingType9ResourceService"];
+        return SettingType9Directive;
+    })(CustomerSetting.SettingTypeDirective);
+    CustomerSetting.ModuleRegister.directive("settingtype9", SettingType9Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../core/models.ts" />
@@ -33474,7 +33941,7 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 /// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/copy-setting.ts" />
+/// <reference path="../core/defaultsettingblock/copysetting/copy-setting.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
 /// <reference path="../core/module-registrater.ts" />
 /// <reference path="models.ts" />
@@ -33842,12 +34309,17 @@ var CustomerSetting;
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\"></toggle-setting-block></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
-$templateCache.put("Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
+$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"right-btn-area\" title=\"{{(isExpanded ? \'Collapse\' : \'Collapse\') | label}}\" data-ng-class=\"{ \'right-btn-area--seperate\': blockIndex === null || blockIndex === undefined }\" data-ng-click=\"toggle()\"><span class=\"icon\" data-ng-class=\"{ \'icon--collapse\': isExpanded, \'icon--expand\': !isExpanded }\"></span></div>");
+$templateCache.put("DefaultSettingBlock/Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
 $templateCache.put("settingtype11.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
+$templateCache.put("settingtype9-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType9Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType9Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerNumber\' | settingType9Label)}}</div></div>");
+$templateCache.put("settingtype9-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
+$templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"><settingtype9-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></settingtype9-input></settingtype9-input></settingtype9-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
+$templateCache.put("settingtype9.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\"></select></div></div>");
 $templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
@@ -33863,8 +34335,10 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     resources["label"] = resources["label"] || {};
     resources["label"]["en-us"] = {
         "Agents": "Agents",
+        "Collapse": "Collapse",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
+        "Expand": "Expand",
         "Fax": "Fax",
         "FirstName": "First Name",
         "GeneralInformation": "General Information",
@@ -34194,6 +34668,206 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     };
 
     angular.module("customerSetting").value("settingType11Resources", settingType11Resources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var settingType9Resources = {};
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["en-us"] = {
+        "BetSetting": "Bet Setting",
+        "MaxBet": "Max Bet",
+        "MaxPerMatch": "Max Per Match",
+        "MinBet": "Min Bet"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["zh-cn"] = {
+        "BetSetting": "投注设定",
+        "MaxBet": "最高投注",
+        "MaxPerMatch": "单场限额",
+        "MinBet": "最低投注"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["zh-tw"] = {
+        "BetSetting": "投注設定",
+        "MaxBet": "最高投注",
+        "MaxPerMatch": "單場限額",
+        "MinBet": "最低投注"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["ko-kr"] = {
+        "BetSetting": "배팅 설정",
+        "MaxBet": "최대 배팅",
+        "MaxPerMatch": "경기당 최대 값",
+        "MinBet": "최소 배팅"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["ja-jp"] = {
+        "MaxBet": "最大ベット",
+        "MaxPerMatch": "1 試合毎の最大"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["th-th"] = {
+        "BetSetting": "การกำหนดการวางเดิมพัน",
+        "MaxBet": "ค่าเดิมพันสูงสุด",
+        "MaxPerMatch": "ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
+        "MinBet": "ค่าเดิมพันต้ำสุด"
+    };
+    
+    settingType9Resources["label"] = settingType9Resources["label"] || {};
+    settingType9Resources["label"]["vi-vn"] = {
+        "BetSetting": "Tiền Cược",
+        "MaxBet": "Cược lớn nhất",
+        "MaxPerMatch": "Cược tối đa cho 1 trận",
+        "MinBet": "Cược nhỏ nhất"
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["en-us"] = {
+        "BetLimitCannotBeGreaterThanMaxValue": "BetLimit cannot be greater than Max Value.",
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match.",
+        "MaxBetCannotBeNegative": "Max Bet cannot be negative.",
+        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
+        "MaxBetLessThanOrEqualTo": "Max Bet must be less than or equal to {0}.",
+        "MaxBetMoreThanOrEqualMinBet": "Max Bet must be greater than or equal to Min Bet.",
+        "MaxPerMatchCannotBeNegative": "Max Per Match cannot be negative.",
+        "MaxPerMatchLessThanOrEqualTo": "Max Per Match must be less than or equal to {0}.",
+        "MaxPerMatchMoreThanOrEqualMaxBet": "Max Per Match must be greater than or equal to Max Bet.",
+        "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
+        "MinBetCannotBeNegative": "Min Bet cannot be negative.",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet.",
+        "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}.",
+        "Msg_10003": "Invalid Min bet/ Max bet/ Max per match.",
+        "Msg_10005": "Min bet must be less than or equal to max bet and max bet must be less than or equal to max bet per match.",
+        "Msg_10006": "Min bet must be greater than or equal to Agent min bet.",
+        "Msg_10007": "Max bet must be less than or equal to Agent max bet.",
+        "Msg_10008": "Max Per Match must be less than or equal to Agent Max Per Match.",
+        "Msg_10016": "Min bet must be greater than or equal to Super Agent min bet.",
+        "Msg_10017": "Max bet must be less than or equal to Super Agent max bet.",
+        "Msg_10018": "Max Per Match must be less than or equal to Super Agent Max Per Match.",
+        "Msg_10019": "Min bet must be greater than or equal to Master Agent min bet.",
+        "Msg_10020": "Max bet must be less than or equal to Master Agent max bet.",
+        "Msg_10021": "Max Per Match must be less than or equal to Master Agent Max Per Match.",
+        "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["zh-cn"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高于当场最高投注",
+        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必须少于或相等于单场限额",
+        "MaxBetLessThanOrEqualTo": "最高投注不得多于或相等于 {0}",
+        "MaxBetMoreThanOrEqualMinBet": "最高投注限额必须大于或相等于最低投注限额",
+        "MaxPerMatchLessThanOrEqualTo": "单场最高投注需低于或相等于 {0}",
+        "MaxPerMatchMoreThanOrEqualMaxBet": "单场投注限额必须大于或相等于最高投注限额",
+        "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高于最低投注",
+        "MinBetLessThanOrEqualMaxBet": "最低投注必须少于或相等于最高投注",
+        "MinBetMoreThanOrEqualTo": "最大投注额必须大于或等于 {0}",
+        "Msg_10003": "最低投注/最高投注/单场限额无效",
+        "Msg_10005": "最低投注必须少于或相等于最高投注以及最高投注必须小于或相等于单场投注限额",
+        "Msg_10006": "最低投注必须大于或相等于代理最低投注限额",
+        "Msg_10007": "最高投注必须少于或相等于代理最高投注限额",
+        "Msg_10008": "单场限额必须少于或相等于代理单场投注限额",
+        "Msg_10016": "最低投注大于或相等于超级总代理最低投注限额",
+        "Msg_10017": "最高投注必须少于或相等于超级总代理最高投注限额",
+        "Msg_10018": "单场限额必须少于或相等于超级总代理单场投注限额",
+        "Msg_10019": "最低投注大于或相等于总代理最低投注限额",
+        "Msg_10020": "最高投注必须少于或相等于总代理最高投注限额",
+        "Msg_10021": "单场限额必须少于或相等于总代理单场投注限额",
+        "UpdateBetSettingSuccessfully": "投注设定已更新成功."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["zh-tw"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高於單場最高投注",
+        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必須少於或相等於單場限額",
+        "MaxBetLessThanOrEqualTo": "最高投注不得多於或相等於 {0}",
+        "MaxBetMoreThanOrEqualMinBet": "最高投註限額必須大於或相等於最低投註限額",
+        "MaxPerMatchLessThanOrEqualTo": "單場最高投注需底於或等於 {0}",
+        "MaxPerMatchMoreThanOrEqualMaxBet": "單場投註限額必須大於或相等於最高投註限額",
+        "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高於最高投注",
+        "MinBetLessThanOrEqualMaxBet": "最低投注必須少於或相等於最高投注",
+        "MinBetMoreThanOrEqualTo": "最大投注額必須大於或等於 {0}",
+        "Msg_10003": "最低投註/最高投註/單場限額無效",
+        "Msg_10005": "最低投註必須少於或相等於最高投註以及最高投註必須小於或相等於單場投註限額",
+        "Msg_10006": "最低投註必須大於或相等於代理最低投註限額",
+        "Msg_10007": "最高投註必須少於或相等於代理最高投註限額",
+        "Msg_10008": "單場限額必須少於或相等於代理單場投註限額",
+        "Msg_10016": "最低投註大於或相等於超級總代理最低投註限額",
+        "Msg_10017": "最高投註必須少於或相等於超級總代理最高投註限額",
+        "Msg_10018": "單場限額必須少於或相等於超級總代理單場投註限額",
+        "Msg_10019": "最低投註大於或相等於總代理最低投註限額",
+        "Msg_10020": "最高投註必須少於或相等於總代理最高投註限額",
+        "Msg_10021": "單場限額必須少於或相等於總代理單場投註限額",
+        "UpdateBetSettingSuccessfully": "投注設定已更新成功."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["ko-kr"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "최대 배팅은 경기당최대 값보다 클수 없습니다",
+        "MaxBetLessThanOrEqualMaxPerMatch": "최대베팅은 경기 당 최대치와 같거나 이하이어야합니다",
+        "MaxBetLessThanOrEqualTo": "최대 배팅보다 이하이여야 합니다 {0}.",
+        "MaxPerMatchLessThanOrEqualTo": "경기당 최대 값은 {0}과 같거나 작아야 합니다.",
+        "MinBetCannotBeGreaterThanMaxBet": "최소 배팅은 최대 배팅보다 클수 없습니다.",
+        "MinBetLessThanOrEqualMaxBet": "최소베팅은 최대 베팅과 같거나  이하이어야합니다.",
+        "UpdateBetSettingSuccessfully": "베팅 설정이 성공적으로 업데이트되었습니다."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["ja-jp"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match",
+        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
+        "MaxBetLessThanOrEqualTo": "一回当たりのマックスベットポイントは表示されていますので、再確認してください {0}.",
+        "MaxPerMatchLessThanOrEqualTo": "Max Per Match must be less than or equal to {0}.",
+        "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
+        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet",
+        "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["th-th"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น",
+        "MaxBetLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน",
+        "MaxBetLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.",
+        "MaxBetMoreThanOrEqualMinBet": "ค่าการเดิมพันขั้นสูงสุดต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นต่ำ",
+        "MaxPerMatchLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุงต่อรายการต้องน้อยกว่า หรือเท่ากับ {0}",
+        "MaxPerMatchMoreThanOrEqualMaxBet": "ค่าการเดิมพันสูงสุดต่อแมทช์ต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นสูงสุด",
+        "MinBetCannotBeGreaterThanMaxBet": "จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้",
+        "MinBetLessThanOrEqualMaxBet": "ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.",
+        "Msg_10003": "ค่า เดิมพันขั้นต่ำ/ เดิมพันขั้นสูดสุด/ เดิมพันต่อเกมสูงสุด ไม่ถูกต้อง",
+        "Msg_10005": "ค่าการเดิมพันขั้นต่ำต้องน้อยกว่าหรือเท่ากับค่าเดิมพันขั้นสูงสุด และ ค่าเดิมพันสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าเดิมพันสูงสุดต่อแมทซ์",
+        "Msg_10006": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันต่ำสุดของเอเจนท์",
+        "Msg_10007": "ค่าวางเดิมพันขั้นสุงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันสูงสุดของเอเจนท์",
+        "Msg_10008": "ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันสูงสุดต่อแมทซ์ของเอเจนท์",
+        "Msg_10016": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันขั้นต่ำของซูเปอร์เอเจนท์",
+        "Msg_10017": "ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของซูเปอร์เอเจนท์",
+        "Msg_10018": "ค่าวางเดิมพันขั้นสูงสุดต่อแมทซ์ต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของซูเปอร์เอเจนท์ต่อแมทซ์",
+        "Msg_10019": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันขั้นต่ำของมาสเตอร์เอเจนท์",
+        "Msg_10020": "ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของมาสเตอร์เอเจนท์",
+        "Msg_10021": "ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดต่อแมทซ์ของมาสเตอร์เอเจนท์",
+        "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
+    };
+    
+    settingType9Resources["message"] = settingType9Resources["message"] || {};
+    settingType9Resources["message"]["vi-vn"] = {
+        "MaxBetCannotBeGreaterThanMaxPerMatch": "Tiền cược lớn nhất không thể lớn hơn Tiền cược tối đa của mỗi trận đấu",
+        "MaxBetLessThanOrEqualMaxPerMatch": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng Tiền cược tối đa của mỗi trận đấu",
+        "MaxBetLessThanOrEqualTo": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng {0}",
+        "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
+        "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
+        "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
+        "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"
+    };
+
+    angular.module("customerSetting").value("settingType9Resources", settingType9Resources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/

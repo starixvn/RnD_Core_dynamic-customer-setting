@@ -12,10 +12,11 @@ module CustomerSetting {
 
         public templateUrl: string = "settingtype9.htm";
 
-        public link: ng.IDirectiveLinkFn = (scope: ISettingTypeDirectiveSharedScope) => {
+        public link: ng.IDirectiveLinkFn = (scope: IDefaultSettingTypeDirectiveScope) => {
             scope.headerTemplateUrl = "settingtype9-header.htm";
             scope.valueTemplateUrl = "settingtype9-value.htm";
             scope.settingTypeName = this.settingType9ResourceService.getLabel("BetSetting");
+            scope.togglableSettingBlocks = true;
         };
 
         private settingType9ResourceService: SettingType9ResourceService;
