@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,6 +80,7 @@
     <Compile Include="DataAccesses\DataAccess.cs" />
     <Compile Include="DataAccesses\IDataAccess.cs" />
     <Compile Include="Dtos\BetLimitDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetLimitItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Label.Designer.cs">
@@ -124,6 +126,11 @@
     <EmbeddedResource Include="Resources\Message.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-TW.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fanex.CustomerSetting.SettingType9.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

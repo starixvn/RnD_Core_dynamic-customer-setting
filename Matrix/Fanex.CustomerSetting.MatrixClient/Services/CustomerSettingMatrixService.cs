@@ -1,7 +1,7 @@
 ﻿namespace Fanex.CustomerSetting.MatrixClient.Services
 {
+    using System;
     using Configurations;
-    using Exceptions;
     using Helpers;
     using Models.Requests;
     using RestSharp;
@@ -33,7 +33,7 @@
         {
             if (query == null)
             {
-                throw new SettingMatrixException("QuerySettingMatrixRequest cannot be null");
+                throw new ArgumentNullException(nameof(query));
             }
 
             var request = new RestRequest("/customersettingmatrix/get", Method.GET);

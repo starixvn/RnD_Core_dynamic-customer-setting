@@ -2,7 +2,6 @@
 {
     using Common.Helper;
     using DataAccesses;
-    using DataAccesses.Impl;
     using Models;
 
     public class CustomerSyncStatusService : ICustomerSyncStatusService

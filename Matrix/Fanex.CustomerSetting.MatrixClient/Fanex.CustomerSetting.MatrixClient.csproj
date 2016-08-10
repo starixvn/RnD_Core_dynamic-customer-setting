@@ -31,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\CodeAnalysis\FanexRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -82,6 +83,7 @@
     <Compile Include="Configurations\SettingMatrixConfiguration.cs" />
     <Compile Include="Controllers\ViewCustomerSettingMatrixController.cs" />
     <Compile Include="Exceptions\SettingMatrixException.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="SettingMatrixRegistration.cs" />

@@ -64,7 +64,7 @@
             return string.Format(SettingTypeXmlFormat, settingItemsXml);
         }
 
-        public IResult Validate()
+        public virtual IResult Validate()
         {
             if (!SettingItems.Any())
             {

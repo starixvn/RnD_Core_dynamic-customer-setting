@@ -9,15 +9,18 @@
     using Logging;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    public class ExceptionHandlingAttribute : HandleErrorAttribute
+    public sealed class ExceptionHandlingAttribute : HandleErrorAttribute
     {
         public override void OnException(ExceptionContext filterContext)
         {
-            var exception = filterContext.Exception;
-
-            if (exception != null)
+            if (filterContext != null)
             {
-                Log(exception);
+                var exception = filterContext.Exception;
+
+                if (exception != null)
+                {
+                    Log(exception);
+                }
             }
 
             base.OnException(filterContext);

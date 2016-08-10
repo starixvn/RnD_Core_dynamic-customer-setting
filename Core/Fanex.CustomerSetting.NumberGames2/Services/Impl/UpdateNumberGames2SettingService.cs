@@ -100,6 +100,7 @@
         private void SyncCustomer(UpdateCustomerSettingCommand command, List<SettingResult> settingTypeResults)
         {
             // @@TODO: Call API to sync the customer profile.
+            // @@TODO: Should we sync the user group along with customer profile at one step?
             bool syncResult = true;
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
 

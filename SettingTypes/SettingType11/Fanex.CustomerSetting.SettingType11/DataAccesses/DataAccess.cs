@@ -15,11 +15,11 @@
     {
         public IEnumerable<ProductStatusDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
-            using (ObjectDb objectDb = new ObjectDb("CustSetting_DisableStatSelect"))
+            using (var objectDb = new ObjectDb("CustSetting_DisableStatSelect"))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
+                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
 
-                return objectDb.Query<ProductStatusDto>(parameterValues);
+                return objectDb.Query<ProductStatusDto>(parameters);
             }
         }
 
@@ -30,7 +30,7 @@
             Level uplineLevel,
             string productStatusXml)
         {
-            var param = new Hashtable
+            var parameters = new Hashtable
             {
                 { "userid", settingContext.Actor.Id },
                 { "subaccid", settingContext.Actor.SubAccountId },
@@ -42,7 +42,7 @@
                 { "msgtype", 0 }
             };
 
-            return ExecuteNonQuery("CustSetting_DisableStatUpd", param);
+            return ExecuteNonQuery("CustSetting_DisableStatUpd", parameters);
         }
     }
 }

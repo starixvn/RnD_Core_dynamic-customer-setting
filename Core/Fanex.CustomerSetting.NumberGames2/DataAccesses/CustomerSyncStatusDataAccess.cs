@@ -1,4 +1,4 @@
-﻿namespace Fanex.CustomerSetting.NumberGames2.DataAccesses.Impl
+﻿namespace Fanex.CustomerSetting.NumberGames2.DataAccesses
 {
     using Data;
     using Models;

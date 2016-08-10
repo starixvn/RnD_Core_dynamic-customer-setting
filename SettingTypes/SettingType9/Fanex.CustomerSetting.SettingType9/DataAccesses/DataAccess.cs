@@ -15,11 +15,11 @@
     {
         public IEnumerable<BetLimitDto> GetCustomerBetLimit(CustomerSettingQuery query)
         {
-            using (ObjectDb objectDb = new ObjectDb("Acc_CustSetting_BetLimitSelect"))
+            using (var objectDb = new ObjectDb("Acc_CustSetting_GameBetLimitSelect"))
             {
-                var parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
+                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
 
-                return objectDb.Query<BetLimitDto>(parameterValues);
+                return objectDb.Query<BetLimitDto>(parameters);
             }
         }
 
@@ -30,19 +30,19 @@
             Level uplineLevel,
             string betLimitXml)
         {
-            var param = new Hashtable
+            var parameters = new Hashtable
             {
                 { "userid", settingContext.Actor.Id },
                 { "subaccid", settingContext.Actor.SubAccountId },
                 { "custid", customerId },
                 { "ip", settingContext.IP },
-                { "betlimit", betLimitXml },
+                { "gamebetlimit", betLimitXml },
                 { "errcode", 0 },
                 { "errmsg", string.Empty },
                 { "msgtype", 0 }
             };
 
-            return ExecuteNonQuery("CustSetting_BetLimitUpd", param);
+            return ExecuteNonQuery("Acc_CustSetting_GameBetLimitUpd", parameters);
         }
     }
 }

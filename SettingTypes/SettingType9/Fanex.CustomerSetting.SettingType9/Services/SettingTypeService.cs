@@ -39,6 +39,9 @@
             ISettingContext settingContext,
             CustomerSettingQuery query)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+
             IEnumerable<BetLimitDto> rawData = _betLimitDataAccess.GetCustomerBetLimit(query);
             var customerBetLimit = new SettingType
             {
@@ -59,6 +62,7 @@
             byte productId,
             SettingType settingType)
         {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(settingType, nameof(settingType));
 
             IResult result = _betLimitDataAccess.UpdateCustomerBetLimit(

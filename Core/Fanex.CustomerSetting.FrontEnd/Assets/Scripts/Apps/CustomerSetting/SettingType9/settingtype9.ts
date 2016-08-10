@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
+/// <reference path="../core/defaultsettingblock/default-setting-block.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/module-registrater.ts" />
 /// <reference path="settingtype9-resources.ts" />
 /// <reference path="models.ts" />
 
