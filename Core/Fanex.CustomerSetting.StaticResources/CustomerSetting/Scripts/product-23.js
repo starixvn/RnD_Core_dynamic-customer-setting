@@ -30594,7 +30594,7 @@ var CustomerSetting;
             });
         };
         return StringFormater;
-    })();
+    }());
     CustomerSetting.StringFormater = StringFormater;
     var ArrayHelpers = (function () {
         function ArrayHelpers() {
@@ -30614,7 +30614,7 @@ var CustomerSetting;
             return result;
         };
         return ArrayHelpers;
-    })();
+    }());
     CustomerSetting.ArrayHelpers = ArrayHelpers;
     function debounce(func, waitTime) {
         var timeout;
@@ -30645,7 +30645,6 @@ var CustomerSetting;
     CustomerSetting.debounce = debounce;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="helpers.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -30696,7 +30695,7 @@ var CustomerSetting;
             return "The number of customer IDs does not match with the number of customer names.";
         };
         return Exceptions;
-    })();
+    }());
     CustomerSetting.Exceptions = Exceptions;
     var Defaults = (function () {
         function Defaults() {
@@ -30730,7 +30729,7 @@ var CustomerSetting;
             configurable: true
         });
         return Defaults;
-    })();
+    }());
     CustomerSetting.Defaults = Defaults;
     var KeyValuePair = (function () {
         function KeyValuePair(key, value) {
@@ -30738,12 +30737,10 @@ var CustomerSetting;
             this.value = value;
         }
         return KeyValuePair;
-    })();
+    }());
     CustomerSetting.KeyValuePair = KeyValuePair;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="helper-services.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -30775,19 +30772,17 @@ var CustomerSetting;
             app.value(name, target);
         };
         return ModuleRegister;
-    })();
+    }());
     CustomerSetting.ModuleRegister = ModuleRegister;
     app.run(["$http", "appConfigService", function ($http, appConfigService) {
             $http.defaults.headers.common["__RequestVerificationToken"] = appConfigService.requestVerificationToken();
         }]);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="common.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -30814,7 +30809,7 @@ var CustomerSetting;
             }
         }
         return CustomerInfo;
-    })();
+    }());
     CustomerSetting.CustomerInfo = CustomerInfo;
     var DefaultSettingItem = (function () {
         function DefaultSettingItem(settingItem) {
@@ -30876,7 +30871,7 @@ var CustomerSetting;
             return settingItem;
         };
         return DefaultSettingItem;
-    })();
+    }());
     CustomerSetting.DefaultSettingItem = DefaultSettingItem;
     var ErrorSettingItem = (function () {
         function ErrorSettingItem(errorItem) {
@@ -30899,7 +30894,7 @@ var CustomerSetting;
         };
         ;
         return ErrorSettingItem;
-    })();
+    }());
     CustomerSetting.ErrorSettingItem = ErrorSettingItem;
     var SettingType = (function () {
         function SettingType(settingType) {
@@ -30980,7 +30975,7 @@ var CustomerSetting;
             return extraData;
         };
         return SettingType;
-    })();
+    }());
     CustomerSetting.SettingType = SettingType;
     var Setting = (function () {
         function Setting(setting) {
@@ -31087,7 +31082,7 @@ var CustomerSetting;
             });
         };
         return Setting;
-    })();
+    }());
     CustomerSetting.Setting = Setting;
     var Result = (function () {
         function Result(code, message, msgType) {
@@ -31153,7 +31148,7 @@ var CustomerSetting;
             configurable: true
         });
         return Result;
-    })();
+    }());
     CustomerSetting.Result = Result;
     var SettingResult = (function (_super) {
         __extends(SettingResult, _super);
@@ -31164,7 +31159,7 @@ var CustomerSetting;
             this.messages = messages;
         }
         return SettingResult;
-    })(Result);
+    }(Result));
     CustomerSetting.SettingResult = SettingResult;
     var CustomerSettingResult = (function () {
         function CustomerSettingResult(settingResult) {
@@ -31218,7 +31213,7 @@ var CustomerSetting;
             this.settingResults = uniquedResults;
         };
         return CustomerSettingResult;
-    })();
+    }());
     CustomerSetting.CustomerSettingResult = CustomerSettingResult;
     var UpdatingSettingResult = (function (_super) {
         __extends(UpdatingSettingResult, _super);
@@ -31264,7 +31259,7 @@ var CustomerSetting;
             return this.subResults || new Array();
         };
         return UpdatingSettingResult;
-    })(Result);
+    }(Result));
     CustomerSetting.UpdatingSettingResult = UpdatingSettingResult;
     var ValidationResult = (function (_super) {
         __extends(ValidationResult, _super);
@@ -31276,20 +31271,14 @@ var CustomerSetting;
             this.isWarning = isWarning;
         }
         return ValidationResult;
-    })(Result);
+    }(Result));
     CustomerSetting.ValidationResult = ValidationResult;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="common.ts" />
-/// <reference path="helpers.ts" />
-/// <reference path="models.ts" />
-/// <reference path="module-registrater.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -31343,7 +31332,7 @@ var CustomerSetting;
             configurable: true
         });
         return AbstractSettingQuery;
-    })();
+    }());
     CustomerSetting.AbstractSettingQuery = AbstractSettingQuery;
     var SettingQuery = (function (_super) {
         __extends(SettingQuery, _super);
@@ -31376,7 +31365,7 @@ var CustomerSetting;
             return params;
         };
         return SettingQuery;
-    })(AbstractSettingQuery);
+    }(AbstractSettingQuery));
     CustomerSetting.SettingQuery = SettingQuery;
     var MultipleSettingQuery = (function (_super) {
         __extends(MultipleSettingQuery, _super);
@@ -31422,7 +31411,7 @@ var CustomerSetting;
             return this.custIds.length === this.custNames.length;
         };
         return MultipleSettingQuery;
-    })(AbstractSettingQuery);
+    }(AbstractSettingQuery));
     CustomerSetting.MultipleSettingQuery = MultipleSettingQuery;
     var SettingCommand = (function () {
         function SettingCommand(uplineLevel, setting) {
@@ -31442,7 +31431,7 @@ var CustomerSetting;
             };
         };
         return SettingCommand;
-    })();
+    }());
     CustomerSetting.SettingCommand = SettingCommand;
     var MultipleSettingCommand = (function (_super) {
         __extends(MultipleSettingCommand, _super);
@@ -31469,7 +31458,7 @@ var CustomerSetting;
             };
         };
         return MultipleSettingCommand;
-    })(SettingCommand);
+    }(SettingCommand));
     CustomerSetting.MultipleSettingCommand = MultipleSettingCommand;
     var SettingPartialCommand = (function () {
         function SettingPartialCommand(uplineLevel, customerLevel, productId, productName, settingType) {
@@ -31480,7 +31469,7 @@ var CustomerSetting;
             this.settingType = settingType;
         }
         return SettingPartialCommand;
-    })();
+    }());
     CustomerSetting.SettingPartialCommand = SettingPartialCommand;
     var RedirectCommand = (function () {
         function RedirectCommand(settingTypeId, actionId, actionType, jsonParameters) {
@@ -31498,14 +31487,10 @@ var CustomerSetting;
             };
         };
         return RedirectCommand;
-    })();
+    }());
     CustomerSetting.RedirectCommand = RedirectCommand;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="common.ts" />
-/// <reference path="module-registrater.ts" />
-/// <reference path="parameters.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31543,7 +31528,7 @@ var CustomerSetting;
         };
         AppConfigService.$inject = ["$window"];
         return AppConfigService;
-    })();
+    }());
     CustomerSetting.AppConfigService = AppConfigService;
     CustomerSetting.ModuleRegister.service("appConfigService", AppConfigService);
     var ParametersService = (function () {
@@ -31621,7 +31606,7 @@ var CustomerSetting;
         };
         ParametersService.$inject = ["$window"];
         return ParametersService;
-    })();
+    }());
     CustomerSetting.ParametersService = ParametersService;
     CustomerSetting.ModuleRegister.service("parametersService", ParametersService);
     var UpdatingSettingTypePromiseChain = (function () {
@@ -31667,7 +31652,7 @@ var CustomerSetting;
         };
         UpdatingSettingTypePromiseChain.$inject = ["$q"];
         return UpdatingSettingTypePromiseChain;
-    })();
+    }());
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
     var SettingTypesSharedValuesService = (function () {
@@ -31684,7 +31669,7 @@ var CustomerSetting;
             }
         };
         return SettingTypesSharedValuesService;
-    })();
+    }());
     CustomerSetting.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
     CustomerSetting.ModuleRegister.service("settingTypesSharedValuesService", SettingTypesSharedValuesService);
     var ValueRangeService = (function () {
@@ -31708,7 +31693,7 @@ var CustomerSetting;
             return ranges;
         };
         return ValueRangeService;
-    })();
+    }());
     CustomerSetting.ValueRangeService = ValueRangeService;
     CustomerSetting.ModuleRegister.service("valueRangeService", ValueRangeService);
     function FormatNumber($filter) {
@@ -31775,9 +31760,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("unsafe", Unsafe);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31843,7 +31825,7 @@ var CustomerSetting;
         };
         ResourceService.$inject = ["customerSettingResource", "parametersService"];
         return ResourceService;
-    })();
+    }());
     CustomerSetting.ResourceService = ResourceService;
     CustomerSetting.ModuleRegister.service("resourceService", ResourceService);
     function LabelFilter(resourceService) {
@@ -31867,8 +31849,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("message", MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31881,7 +31861,7 @@ var CustomerSetting;
                 }];
         }
         return BlockUiDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("blockUi", BlockUiDirective);
     var BlockUiService = (function () {
         function BlockUiService() {
@@ -31896,14 +31876,11 @@ var CustomerSetting;
             this.scope.isLoading = false;
         };
         return BlockUiService;
-    })();
+    }());
     CustomerSetting.BlockUiService = BlockUiService;
     CustomerSetting.ModuleRegister.service("blockUiService", BlockUiService);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="blockui/block-ui.ts" />
-/// <reference path="module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -31946,19 +31923,11 @@ var CustomerSetting;
         };
         RequestService.$inject = ["$http", "resourceService", "blockUiService"];
         return RequestService;
-    })();
+    }());
     CustomerSetting.RequestService = RequestService;
     CustomerSetting.ModuleRegister.service("requestService", RequestService);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../resource/resource-translation.ts" />
-/// <reference path="common.ts" />
-/// <reference path="helper-services.ts" />
-/// <reference path="models.ts" />
-/// <reference path="module-registrater.ts" />
-/// <reference path="parameters.ts" />
-/// <reference path="requesting-server-service.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32049,12 +32018,10 @@ var CustomerSetting;
             "updatingSettingTypePromiseChain",
             "settingTypesSharedValuesService"];
         return CustomerSettingController;
-    })();
+    }());
     CustomerSetting.ModuleRegister.controller("customerSettingController", CustomerSettingController);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32074,13 +32041,10 @@ var CustomerSetting;
             configurable: true
         });
         return CustomerInfoDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../helper-services.ts" />
-/// <reference path="../models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32129,15 +32093,54 @@ var CustomerSetting;
             configurable: true
         });
         return SettingTypeDirective;
-    })();
+    }());
     CustomerSetting.SettingTypeDirective = SettingTypeDirective;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
-/// <reference path="../settingtype/setting-type-base-directive.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var TogglableSettingBlockSharedStates = (function () {
+        function TogglableSettingBlockSharedStates(numberofBlocks) {
+            if (numberofBlocks > 0) {
+                this.toggleStates = [];
+                this.numberofCollapsedBlocks = numberofBlocks - 1;
+                for (var index = 0; index < numberofBlocks; index++) {
+                    this.toggleStates[index] = index === 0 ? true : false;
+                }
+            }
+        }
+        TogglableSettingBlockSharedStates.prototype.isExpanded = function (blockIndex) {
+            return this.toggleStates[blockIndex];
+        };
+        TogglableSettingBlockSharedStates.prototype.isExpandedAll = function () {
+            return this.numberofCollapsedBlocks === this.toggleStates.length;
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseBlock = function (blockIndex) {
+            this.toggleStates[blockIndex] = false;
+            this.numberofCollapsedBlocks--;
+        };
+        TogglableSettingBlockSharedStates.prototype.expandBlock = function (blockIndex) {
+            this.toggleStates[blockIndex] = true;
+            this.numberofCollapsedBlocks++;
+        };
+        TogglableSettingBlockSharedStates.prototype.collapseAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = false;
+            }
+            this.numberofCollapsedBlocks = 0;
+        };
+        TogglableSettingBlockSharedStates.prototype.expandAllBlocks = function () {
+            for (var index = 0; index < this.toggleStates.length; index++) {
+                this.toggleStates[index] = true;
+            }
+            this.numberofCollapsedBlocks = this.toggleStates.length;
+        };
+        return TogglableSettingBlockSharedStates;
+    }());
+    CustomerSetting.TogglableSettingBlockSharedStates = TogglableSettingBlockSharedStates;
+})(CustomerSetting || (CustomerSetting = {}));
+
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32184,7 +32187,7 @@ var CustomerSetting;
             return result;
         };
         return DefaultSettingTypeGroupingDirective;
-    })();
+    }());
     CustomerSetting.DefaultSettingTypeGroupingDirective = DefaultSettingTypeGroupingDirective;
     CustomerSetting.ModuleRegister.directive("defaultSettingTypeGrouping", DefaultSettingTypeGroupingDirective);
     function ShowingName() {
@@ -32199,10 +32202,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("showingName", ShowingName);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../common.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32228,13 +32227,10 @@ var CustomerSetting;
             configurable: true
         });
         return SettingResultDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("settingResult", SettingResultDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../models.ts" />
-/// <reference path="../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32293,12 +32289,10 @@ var CustomerSetting;
         };
         SettingTypeDirectiveLoader.$inject = ["$compile"];
         return SettingTypeDirectiveLoader;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32338,7 +32332,7 @@ var CustomerSetting;
         });
         CopySettingDirective.$inject = ["copyingSettingService"];
         return CopySettingDirective;
-    })();
+    }());
     CustomerSetting.CopySettingDirective = CopySettingDirective;
     CustomerSetting.ModuleRegister.directive("copySetting", CopySettingDirective);
     var CopyingSettingService = (function () {
@@ -32383,13 +32377,65 @@ var CustomerSetting;
         };
         CopyingSettingService.$inject = ["$rootScope"];
         return CopyingSettingService;
-    })();
+    }());
     CustomerSetting.ModuleRegister.service("copyingSettingService", CopyingSettingService);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../helpers.ts" />
-/// <reference path="../../module-registrater.ts" />
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective() {
+            this.replace = true;
+            this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
+            this.link = function (scope) {
+                scope.toggle = function () {
+                    if (isNaN(scope.blockIndex)) {
+                        if (scope.isExpanded) {
+                            scope.sharedStates.collapseAllBlocks();
+                        }
+                        else {
+                            scope.sharedStates.expandAllBlocks();
+                        }
+                        scope.isExpanded = scope.sharedStates.isExpandedAll();
+                    }
+                    else {
+                        if (scope.isExpanded) {
+                            scope.sharedStates.collapseBlock(scope.blockIndex);
+                        }
+                        else {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                        }
+                        scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                    }
+                };
+                scope.$watch("sharedStates", function (sharedStates) {
+                    if (isNaN(scope.blockIndex)) {
+                        scope.isExpanded = sharedStates.isExpandedAll();
+                    }
+                    else {
+                        scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                    }
+                }, true);
+            };
+        }
+        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return ToggleSettingBlockDirective;
+    }());
+    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32425,12 +32471,10 @@ var CustomerSetting;
         };
         DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
         return DetectMaxHeightDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32502,125 +32546,10 @@ var CustomerSetting;
         });
         DraggableDirective.$inject = ["$document"];
         return DraggableDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var TogglableSettingBlockSharedStates = (function () {
-        function TogglableSettingBlockSharedStates(numberofBlocks) {
-            if (numberofBlocks > 0) {
-                this.toggleStates = [];
-                this.numberofCollapsedBlocks = numberofBlocks - 1;
-                for (var index = 0; index < numberofBlocks; index++) {
-                    this.toggleStates[index] = index === 0 ? true : false;
-                }
-            }
-        }
-        TogglableSettingBlockSharedStates.prototype.isExpanded = function (blockIndex) {
-            return this.toggleStates[blockIndex];
-        };
-        TogglableSettingBlockSharedStates.prototype.isExpandedAll = function () {
-            return this.numberofCollapsedBlocks === this.toggleStates.length;
-        };
-        TogglableSettingBlockSharedStates.prototype.collapseBlock = function (blockIndex) {
-            this.toggleStates[blockIndex] = false;
-            this.numberofCollapsedBlocks--;
-        };
-        TogglableSettingBlockSharedStates.prototype.expandBlock = function (blockIndex) {
-            this.toggleStates[blockIndex] = true;
-            this.numberofCollapsedBlocks++;
-        };
-        TogglableSettingBlockSharedStates.prototype.collapseAllBlocks = function () {
-            for (var index = 0; index < this.toggleStates.length; index++) {
-                this.toggleStates[index] = false;
-            }
-            this.numberofCollapsedBlocks = 0;
-        };
-        TogglableSettingBlockSharedStates.prototype.expandAllBlocks = function () {
-            for (var index = 0; index < this.toggleStates.length; index++) {
-                this.toggleStates[index] = true;
-            }
-            this.numberofCollapsedBlocks = this.toggleStates.length;
-        };
-        return TogglableSettingBlockSharedStates;
-    })();
-    CustomerSetting.TogglableSettingBlockSharedStates = TogglableSettingBlockSharedStates;
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../module-registrater.ts" />
-/// <reference path="togglable-setting-block-shared-states.ts" />
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var ToggleSettingBlockDirective = (function () {
-        function ToggleSettingBlockDirective() {
-            this.replace = true;
-            this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
-            this.link = function (scope) {
-                if (isNaN(scope.blockIndex)) {
-                    scope.isExpanded = scope.sharedStates.isExpandedAll();
-                }
-                else {
-                    scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-                }
-                scope.toggle = function () {
-                    if (isNaN(scope.blockIndex)) {
-                        if (scope.isExpanded) {
-                            scope.sharedStates.collapseAllBlocks();
-                        }
-                        else {
-                            scope.sharedStates.expandAllBlocks();
-                        }
-                        scope.isExpanded = scope.sharedStates.isExpandedAll();
-                    }
-                    else {
-                        if (scope.isExpanded) {
-                            scope.sharedStates.collapseBlock(scope.blockIndex);
-                        }
-                        else {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                        }
-                        scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-                    }
-                };
-                if (isNaN(scope.blockIndex)) {
-                    scope.$watch("sharedStates", function (sharedStates) {
-                        scope.isExpanded = sharedStates.isExpandedAll();
-                    }, true);
-                }
-                else {
-                    scope.$watch("settingData", function () {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                        scope.isExpanded = true;
-                    }, true);
-                }
-            };
-        }
-        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return ToggleSettingBlockDirective;
-    })();
-    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../resource/resource-translation.ts" />
-/// <reference path="../../helpers.ts" />
-/// <reference path="../../module-registrater.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -32689,7 +32618,7 @@ var CustomerSetting;
         };
         Tooltip.$inject = ["$window", "$compile", "$timeout", "$templateCache"];
         return Tooltip;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("tooltip", Tooltip);
     function TooltipMessage($injector, $filter) {
         return function (result, resourceServiceName, fieldName, customFilterName) {
@@ -32736,218 +32665,10 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingType11Item = (function (_super) {
-        __extends(SettingType11Item, _super);
-        function SettingType11Item(settingItem, backup) {
-            if (backup === void 0) { backup = false; }
-            _super.call(this, settingItem);
-            if (settingItem) {
-                this.isDisabled = settingItem.isDisabled;
-                if (settingItem.upline) {
-                    this.upline = new SettingType11Item(settingItem.upline);
-                    this.readonly = settingItem.upline.isDisabled;
-                }
-                else {
-                    this.readonly = false;
-                }
-                if (settingItem.downline) {
-                    this.downline = new SettingType11Item(settingItem.downline, true);
-                    this.downline.readonly = true;
-                }
-            }
-            if (backup) {
-                this.oldSetting = new SettingType11Item(this);
-            }
-        }
-        Object.defineProperty(SettingType11Item.prototype, "isChecked", {
-            get: function () {
-                return !this.isDisabled;
-            },
-            set: function (isChecked) {
-                this.isDisabled = !isChecked;
-                if (this.downline) {
-                    if (isChecked && !this.oldSetting.isChecked) {
-                        this.downline.readonly = false;
-                    }
-                    else {
-                        if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
-                            this.downline.isChecked = this.isChecked;
-                        }
-                        else {
-                            this.downline.isChecked = false;
-                        }
-                        this.downline.readonly = true;
-                    }
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SettingType11Item.prototype.isChanged = function () {
-            var isChanged = _super.prototype.isChanged.call(this);
-            var oldSetting = this.oldSetting;
-            return isChanged
-                || this.isDisabled !== oldSetting.isDisabled
-                || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
-        };
-        SettingType11Item.prototype.copySettingFrom = function (source) {
-            var isSuccessful = true;
-            if (source) {
-                var backupDisabled = this.isDisabled;
-                var backupReadonly = this.readonly;
-                var backupDisabledDownline;
-                var backupReadonlyDownline;
-                this.isDisabled = source.isDisabled;
-                this.readonly = source.readonly;
-                if (this.downline && source.downline) {
-                    backupDisabledDownline = this.downline.isDisabled;
-                    backupReadonlyDownline = this.downline.readonly;
-                    this.downline.isDisabled = source.downline.isDisabled;
-                    this.downline.readonly = source.downline.readonly;
-                }
-                isSuccessful = this.validate();
-                if (!isSuccessful) {
-                    this.isDisabled = backupDisabled;
-                    this.readonly = backupReadonly;
-                    if (this.downline && source.downline) {
-                        this.downline.isDisabled = backupDisabledDownline;
-                        this.downline.readonly = backupReadonlyDownline;
-                    }
-                }
-            }
-            return isSuccessful;
-        };
-        SettingType11Item.prototype.validate = function () {
-            if (this.isDisabled && this.downline && !this.downline.isDisabled) {
-                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-                return false;
-            }
-            if (this.downline
-                && this.isDisabled === this.oldSetting.isDisabled
-                && this.downline.isDisabled !== this.oldSetting.downline.isDisabled) {
-                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
-                return false;
-            }
-            if (this.upline && this.upline.isDisabled && !this.isDisabled) {
-                this.validationState = new CustomerSetting.ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
-                return false;
-            }
-            this.validationState = CustomerSetting.Result.normal;
-            return true;
-        };
-        SettingType11Item.prototype.toJson = function () {
-            var settingItem = {
-                sportTypeId: this.sportTypeId,
-                sportTypeName: this.sportTypeName,
-                betTypeId: this.betTypeId,
-                betTypeName: this.betTypeName,
-                typeName: this.typeName,
-                isDisabled: this.isDisabled
-            };
-            if (this.upline) {
-                settingItem.upline = this.upline.toJson();
-            }
-            if (this.downline) {
-                settingItem.downline = this.downline.toJson();
-            }
-            return settingItem;
-        };
-        return SettingType11Item;
-    })(CustomerSetting.DefaultSettingItem);
-    CustomerSetting.SettingType11Item = SettingType11Item;
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingType11ResourceService = (function (_super) {
-        __extends(SettingType11ResourceService, _super);
-        function SettingType11ResourceService(settingType11Resources, parametersService) {
-            _super.call(this, settingType11Resources, parametersService);
-        }
-        SettingType11ResourceService.$inject = ["settingType11Resources", "parametersService"];
-        return SettingType11ResourceService;
-    })(CustomerSetting.ResourceService);
-    CustomerSetting.SettingType11ResourceService = SettingType11ResourceService;
-    CustomerSetting.ModuleRegister.service("settingType11ResourceService", SettingType11ResourceService);
-    function SettingType11LabelFilter(settingType11ResourceService) {
-        return function (name) {
-            return settingType11ResourceService.getLabel(name);
-        };
-    }
-    SettingType11LabelFilter.$inject = ["settingType11ResourceService"];
-    CustomerSetting.ModuleRegister.filter("settingType11Label", SettingType11LabelFilter);
-    function SettingType11MessageFilter(settingType11ResourceService) {
-        return function (name) {
-            var replacements = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                replacements[_i - 1] = arguments[_i];
-            }
-            replacements.unshift(name);
-            return settingType11ResourceService.getFormattedMessage.apply(settingType11ResourceService, replacements);
-        };
-    }
-    SettingType11MessageFilter.$inject = ["settingType11ResourceService"];
-    CustomerSetting.ModuleRegister.filter("settingType11Message", SettingType11MessageFilter);
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="models.ts" />
-/// <reference path="settingtype11-resources.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var SettingType11Directive = (function (_super) {
-        __extends(SettingType11Directive, _super);
-        function SettingType11Directive(settingType11ResourceService) {
-            var _this = this;
-            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType11Item(settingItem, backup); });
-            this.templateUrl = "settingtype11.htm";
-            this.link = function (scope) {
-                scope.valueTemplateUrl = "settingtype11-value.htm";
-                scope.settingTypeName = _this.settingType11ResourceService.getLabel("ProductStatus");
-            };
-            this.settingType11ResourceService = settingType11ResourceService;
-        }
-        SettingType11Directive.$inject = ["settingType11ResourceService"];
-        return SettingType11Directive;
-    })(CustomerSetting.SettingTypeDirective);
-    CustomerSetting.ModuleRegister.directive("settingtype11", SettingType11Directive);
-})(CustomerSetting || (CustomerSetting = {}));
-
-/// <reference path="../core/models.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33073,14 +32794,10 @@ var CustomerSetting;
             return true;
         };
         return SettingType9Item;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SettingType9Item = SettingType9Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helpers.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -33214,18 +32931,14 @@ var CustomerSetting;
         });
         SettingType9InputDirective.$inject = ["$compile", "$filter", "settingType9ResourceService"];
         return SettingType9InputDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("settingtype9Input", SettingType9InputDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33237,7 +32950,7 @@ var CustomerSetting;
         }
         SettingType9ResourceService.$inject = ["settingType9Resources", "parametersService"];
         return SettingType9ResourceService;
-    })(CustomerSetting.ResourceService);
+    }(CustomerSetting.ResourceService));
     CustomerSetting.SettingType9ResourceService = SettingType9ResourceService;
     CustomerSetting.ModuleRegister.service("settingType9ResourceService", SettingType9ResourceService);
     function SettingType9LabelFilter(settingType9ResourceService) {
@@ -33261,16 +32974,10 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("settingType9Message", SettingType9MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="settingtype9-resources.ts" />
-/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33291,16 +32998,14 @@ var CustomerSetting;
         }
         SettingType9Directive.$inject = ["settingType9ResourceService"];
         return SettingType9Directive;
-    })(CustomerSetting.SettingTypeDirective);
+    }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype9", SettingType9Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33323,7 +33028,7 @@ var CustomerSetting;
             configurable: true
         });
         return SettingType1Config;
-    })();
+    }());
     CustomerSetting.SettingType1Config = SettingType1Config;
     var SettingType1Item = (function () {
         function SettingType1Item() {
@@ -33370,7 +33075,7 @@ var CustomerSetting;
             return false;
         };
         return SettingType1Item;
-    })();
+    }());
     CustomerSetting.SettingType1Item = SettingType1Item;
     var SuperPositionTaking = (function (_super) {
         __extends(SuperPositionTaking, _super);
@@ -33431,7 +33136,7 @@ var CustomerSetting;
             return true;
         };
         return SuperPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SuperPositionTaking = SuperPositionTaking;
     var MasterPositionTaking = (function (_super) {
         __extends(MasterPositionTaking, _super);
@@ -33577,7 +33282,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.MasterPositionTaking = MasterPositionTaking;
     var AgentPositionTaking = (function (_super) {
         __extends(AgentPositionTaking, _super);
@@ -33723,7 +33428,7 @@ var CustomerSetting;
             }
         };
         return AgentPositionTaking;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.AgentPositionTaking = AgentPositionTaking;
     var SuperPositionTakingOnMember = (function (_super) {
         __extends(SuperPositionTakingOnMember, _super);
@@ -33805,7 +33510,7 @@ var CustomerSetting;
             }
         };
         return SuperPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.SuperPositionTakingOnMember = SuperPositionTakingOnMember;
     var MasterPositionTakingOnMember = (function (_super) {
         __extends(MasterPositionTakingOnMember, _super);
@@ -33895,7 +33600,7 @@ var CustomerSetting;
             }
         };
         return MasterPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.MasterPositionTakingOnMember = MasterPositionTakingOnMember;
     var AgentPositionTakingOnMember = (function (_super) {
         __extends(AgentPositionTakingOnMember, _super);
@@ -33936,20 +33641,14 @@ var CustomerSetting;
             return true;
         };
         return AgentPositionTakingOnMember;
-    })(CustomerSetting.DefaultSettingItem);
+    }(CustomerSetting.DefaultSettingItem));
     CustomerSetting.AgentPositionTakingOnMember = AgentPositionTakingOnMember;
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/defaultsettingblock/copysetting/copy-setting.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -33975,7 +33674,7 @@ var CustomerSetting;
         };
         PositionTakingOnMemberDirective.$inject = ["$q", "updatingSettingTypePromiseChain", "adjustMemberPtModalService"];
         return PositionTakingOnMemberDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("positionTakingOnMember", PositionTakingOnMemberDirective);
     var AdjustMemberPtModalDirective = (function () {
         function AdjustMemberPtModalDirective(adjustMemberPtModalService) {
@@ -34028,7 +33727,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalDirective.$inject = ["adjustMemberPtModalService"];
         return AdjustMemberPtModalDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("adjustMemberPtModal", AdjustMemberPtModalDirective);
     var AdjustMemberPtModalService = (function () {
         function AdjustMemberPtModalService($rootScope, valueRangeService) {
@@ -34113,7 +33812,7 @@ var CustomerSetting;
         };
         AdjustMemberPtModalService.$inject = ["$rootScope", "valueRangeService"];
         return AdjustMemberPtModalService;
-    })();
+    }());
     CustomerSetting.ModuleRegister.service("adjustMemberPtModalService", AdjustMemberPtModalService);
     var CopyPositionTakingOnMemberDirective = (function (_super) {
         __extends(CopyPositionTakingOnMemberDirective, _super);
@@ -34157,18 +33856,14 @@ var CustomerSetting;
             configurable: true
         });
         return CopyPositionTakingOnMemberDirective;
-    })(CustomerSetting.CopySettingDirective);
+    }(CustomerSetting.CopySettingDirective));
     CustomerSetting.ModuleRegister.directive("copyPositionTakingOnMember", CopyPositionTakingOnMemberDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../resource/resource-translation.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34180,7 +33875,7 @@ var CustomerSetting;
         }
         PositionTakingResourceService.$inject = ["positionTakingResources", "parametersService"];
         return PositionTakingResourceService;
-    })(CustomerSetting.ResourceService);
+    }(CustomerSetting.ResourceService));
     CustomerSetting.PositionTakingResourceService = PositionTakingResourceService;
     CustomerSetting.ModuleRegister.service("positionTakingResourceService", PositionTakingResourceService);
     function PositionTakingLabelFilter(positionTakingResourceService) {
@@ -34204,10 +33899,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("positionTakingMessage", PositionTakingMessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/helper-services.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="models.ts" />
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
@@ -34256,7 +33947,7 @@ var CustomerSetting;
         });
         PositionTakingSelectDirective.$inject = ["$compile"];
         return PositionTakingSelectDirective;
-    })();
+    }());
     CustomerSetting.ModuleRegister.directive("positionTakingSelect", PositionTakingSelectDirective);
     function PositionTakingFormatFilter() {
         return function (ptValue) {
@@ -34274,16 +33965,10 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.filter("hideIsAutoColumn", HideIsAutoColumnFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../core/module-registrater.ts" />
-/// <reference path="../core/settingtype/setting-type-base-directive.ts" />
-/// <reference path="models.ts" />
-/// <reference path="position-taking-resources.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var CustomerSetting;
 (function (CustomerSetting) {
@@ -34303,22 +33988,20 @@ var CustomerSetting;
         }
         SettingType1Directive.$inject = ["positionTakingResourceService"];
         return SettingType1Directive;
-    })(CustomerSetting.SettingTypeDirective);
+    }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype1", SettingType1Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\"></toggle-setting-block></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\"></toggle-setting-block><div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\"></toggle-setting-block></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"right-btn-area\" title=\"{{(isExpanded ? \'Collapse\' : \'Collapse\') | label}}\" data-ng-class=\"{ \'right-btn-area--seperate\': blockIndex === null || blockIndex === undefined }\" data-ng-click=\"toggle()\"><span class=\"icon\" data-ng-class=\"{ \'icon--collapse\': isExpanded, \'icon--expand\': !isExpanded }\"></span></div>");
 $templateCache.put("DefaultSettingBlock/Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
-$templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
-$templateCache.put("settingtype11.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype9-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType9Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType9Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerNumber\' | settingType9Label)}}</div></div>");
 $templateCache.put("settingtype9-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
-$templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"><settingtype9-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></settingtype9-input></settingtype9-input></settingtype9-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
+$templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype9-input><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype9-input><settingtype9-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></settingtype9-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
 $templateCache.put("settingtype9.htm","<div><default-setting-type-grouping class=\"full-width\"></default-setting-type-grouping></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\"></select></div></div>");
@@ -34570,118 +34253,13 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
 (function () {
     "use strict";
 
-    var settingType11Resources = {};
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["en-us"] = {
-        "Enable": "Enable",
-        "EnableDownline": "Enable Downline",
-        "ProductStatus": "Product Status"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["zh-cn"] = {
-        "Enable": "启用",
-        "EnableDownline": "启动下线",
-        "ProductStatus": "产品状态"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["zh-tw"] = {
-        "Enable": "啟用",
-        "EnableDownline": "啟動下線",
-        "ProductStatus": "產品狀態"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["ko-kr"] = {
-        "Enable": "활성화",
-        "EnableDownline": "다운라인 활성화하기",
-        "ProductStatus": "Product Status"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["ja-jp"] = {
-        "Enable": "Enable"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["th-th"] = {
-        "Enable": "เปิดใช้งาน",
-        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
-        "ProductStatus": "สถานะผลิตภันฑ์"
-    };
-    
-    settingType11Resources["label"] = settingType11Resources["label"] || {};
-    settingType11Resources["label"]["vi-vn"] = {
-        "Enable": "Cho phép",
-        "EnableDownline": "Enable Downline",
-        "ProductStatus": "Product Status"
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["en-us"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
-        "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
-        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
-        "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
-        "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
-        "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["zh-cn"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
-        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
-        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
-        "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
-        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
-        "UpdateProductStatusSuccessfully": "产品状态更新成功"
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["zh-tw"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
-        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
-        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
-        "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
-        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
-        "UpdateProductStatusSuccessfully": "產品狀態更新成功"
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["ko-kr"] = {
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["ja-jp"] = {
-    };
-    
-    settingType11Resources["message"] = settingType11Resources["message"] || {};
-    settingType11Resources["message"]["th-th"] = {
-        "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
-        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
-        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
-        "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
-        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
-        "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
-    };
-
-    angular.module("customerSetting").value("settingType11Resources", settingType11Resources);
-})();
-
-/*jshint -W101,-W106,-W044,-W098*/
-
-(function () {
-    "use strict";
-
     var settingType9Resources = {};
     
     settingType9Resources["label"] = settingType9Resources["label"] || {};
     settingType9Resources["label"]["en-us"] = {
         "BetSetting": "Bet Setting",
         "MaxBet": "Max Bet",
-        "MaxPerMatch": "Max Per Match",
+        "MaxPerNumber": "Max Per Number",
         "MinBet": "Min Bet"
     };
     
@@ -34689,7 +34267,6 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     settingType9Resources["label"]["zh-cn"] = {
         "BetSetting": "投注设定",
         "MaxBet": "最高投注",
-        "MaxPerMatch": "单场限额",
         "MinBet": "最低投注"
     };
     
@@ -34697,7 +34274,6 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     settingType9Resources["label"]["zh-tw"] = {
         "BetSetting": "投注設定",
         "MaxBet": "最高投注",
-        "MaxPerMatch": "單場限額",
         "MinBet": "最低投注"
     };
     
@@ -34705,21 +34281,18 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     settingType9Resources["label"]["ko-kr"] = {
         "BetSetting": "배팅 설정",
         "MaxBet": "최대 배팅",
-        "MaxPerMatch": "경기당 최대 값",
         "MinBet": "최소 배팅"
     };
     
     settingType9Resources["label"] = settingType9Resources["label"] || {};
     settingType9Resources["label"]["ja-jp"] = {
-        "MaxBet": "最大ベット",
-        "MaxPerMatch": "1 試合毎の最大"
+        "MaxBet": "最大ベット"
     };
     
     settingType9Resources["label"] = settingType9Resources["label"] || {};
     settingType9Resources["label"]["th-th"] = {
         "BetSetting": "การกำหนดการวางเดิมพัน",
         "MaxBet": "ค่าเดิมพันสูงสุด",
-        "MaxPerMatch": "ค่าเดิมพันสูงสุดต่อคู่การแข่งขัน",
         "MinBet": "ค่าเดิมพันต้ำสุด"
     };
     
@@ -34727,47 +34300,42 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     settingType9Resources["label"]["vi-vn"] = {
         "BetSetting": "Tiền Cược",
         "MaxBet": "Cược lớn nhất",
-        "MaxPerMatch": "Cược tối đa cho 1 trận",
         "MinBet": "Cược nhỏ nhất"
     };
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["en-us"] = {
         "BetLimitCannotBeGreaterThanMaxValue": "BetLimit cannot be greater than Max Value.",
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match.",
+        "MaxBetCannotBeGreaterThanMaxPerNumber": "Max Bet cannot be greater than Max Per Number.",
         "MaxBetCannotBeNegative": "Max Bet cannot be negative.",
-        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
+        "MaxBetLessThanOrEqualMaxPerNumber": "The Max Bet should be less than or equal to Max Per Number.",
         "MaxBetLessThanOrEqualTo": "Max Bet must be less than or equal to {0}.",
         "MaxBetMoreThanOrEqualMinBet": "Max Bet must be greater than or equal to Min Bet.",
-        "MaxPerMatchCannotBeNegative": "Max Per Match cannot be negative.",
-        "MaxPerMatchLessThanOrEqualTo": "Max Per Match must be less than or equal to {0}.",
-        "MaxPerMatchMoreThanOrEqualMaxBet": "Max Per Match must be greater than or equal to Max Bet.",
+        "MaxPerNumberCannotBeNegative": "Max Per Number cannot be negative.",
+        "MaxPerNumberGreaterThanOrEqualMaxBet": "Max Per Number must be greater than or equal to Max Bet.",
+        "MaxPerNumberLessThanOrEqualTo": "Max Per Number must be less than or equal to {0}.",
         "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
         "MinBetCannotBeNegative": "Min Bet cannot be negative.",
         "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet.",
         "MinBetMoreThanOrEqualTo": "Min Bet must be greater than or equal to {0}.",
-        "Msg_10003": "Invalid Min bet/ Max bet/ Max per match.",
-        "Msg_10005": "Min bet must be less than or equal to max bet and max bet must be less than or equal to max bet per match.",
-        "Msg_10006": "Min bet must be greater than or equal to Agent min bet.",
-        "Msg_10007": "Max bet must be less than or equal to Agent max bet.",
-        "Msg_10008": "Max Per Match must be less than or equal to Agent Max Per Match.",
-        "Msg_10016": "Min bet must be greater than or equal to Super Agent min bet.",
-        "Msg_10017": "Max bet must be less than or equal to Super Agent max bet.",
-        "Msg_10018": "Max Per Match must be less than or equal to Super Agent Max Per Match.",
-        "Msg_10019": "Min bet must be greater than or equal to Master Agent min bet.",
-        "Msg_10020": "Max bet must be less than or equal to Master Agent max bet.",
-        "Msg_10021": "Max Per Match must be less than or equal to Master Agent Max Per Match.",
+        "Msg_10006": "Min Bet must be greater than or equal to Agent&apos;s Min Bet.",
+        "Msg_10007": "Max Bet must be less than or equal to Agent&apos;s Max Bet.",
+        "Msg_10016": "Min Bet must be greater than or equal to Super Agent&apos;s Min Bet.",
+        "Msg_10017": "Max Bet must be less than or equal to Super Agent&apos;s Max Bet.",
+        "Msg_10019": "Min Bet must be greater than or equal to Master Agent&apos;s Min Bet.",
+        "Msg_10020": "Max Bet must be less than or equal to Master Agent&apos;s Max Bet.",
+        "Msg_10035": "Invalid Min Bet/ Max Bet/ Max Per Number.",
+        "Msg_10036": "Min Bet must be less than or equal to Max Bet and Max Bet must be less than or equal to Max Per Number.",
+        "Msg_10037": "Max Per Number must be less than or equal to Super Agent&apos;s Max Per Number.",
+        "Msg_10038": "Max Per Number must be less than or equal to Master Agent&apos;s Max Per Number.",
+        "Msg_10039": "Max Per Number must be less than or equal to Agent Max Per Number.",
         "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
     };
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["zh-cn"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高于当场最高投注",
-        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必须少于或相等于单场限额",
         "MaxBetLessThanOrEqualTo": "最高投注不得多于或相等于 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最高投注限额必须大于或相等于最低投注限额",
-        "MaxPerMatchLessThanOrEqualTo": "单场最高投注需低于或相等于 {0}",
-        "MaxPerMatchMoreThanOrEqualMaxBet": "单场投注限额必须大于或相等于最高投注限额",
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高于最低投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必须少于或相等于最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注额必须大于或等于 {0}",
@@ -34787,12 +34355,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["zh-tw"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "最高投注不可高於單場最高投注",
-        "MaxBetLessThanOrEqualMaxPerMatch": "最高投注必須少於或相等於單場限額",
         "MaxBetLessThanOrEqualTo": "最高投注不得多於或相等於 {0}",
         "MaxBetMoreThanOrEqualMinBet": "最高投註限額必須大於或相等於最低投註限額",
-        "MaxPerMatchLessThanOrEqualTo": "單場最高投注需底於或等於 {0}",
-        "MaxPerMatchMoreThanOrEqualMaxBet": "單場投註限額必須大於或相等於最高投註限額",
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高於最高投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必須少於或相等於最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注額必須大於或等於 {0}",
@@ -34812,10 +34376,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["ko-kr"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "최대 배팅은 경기당최대 값보다 클수 없습니다",
-        "MaxBetLessThanOrEqualMaxPerMatch": "최대베팅은 경기 당 최대치와 같거나 이하이어야합니다",
         "MaxBetLessThanOrEqualTo": "최대 배팅보다 이하이여야 합니다 {0}.",
-        "MaxPerMatchLessThanOrEqualTo": "경기당 최대 값은 {0}과 같거나 작아야 합니다.",
         "MinBetCannotBeGreaterThanMaxBet": "최소 배팅은 최대 배팅보다 클수 없습니다.",
         "MinBetLessThanOrEqualMaxBet": "최소베팅은 최대 베팅과 같거나  이하이어야합니다.",
         "UpdateBetSettingSuccessfully": "베팅 설정이 성공적으로 업데이트되었습니다."
@@ -34823,23 +34384,13 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["ja-jp"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "Max Bet cannot be greater than Max Per Match",
-        "MaxBetLessThanOrEqualMaxPerMatch": "The Max Bet should be less than or equal to Max Per Match",
-        "MaxBetLessThanOrEqualTo": "一回当たりのマックスベットポイントは表示されていますので、再確認してください {0}.",
-        "MaxPerMatchLessThanOrEqualTo": "Max Per Match must be less than or equal to {0}.",
-        "MinBetCannotBeGreaterThanMaxBet": "Min Bet cannot be greater than Max Bet.",
-        "MinBetLessThanOrEqualMaxBet": "The Min Bet should be less than or equal to Max Bet",
-        "UpdateBetSettingSuccessfully": "Bet Setting is updated successfully."
+        "MaxBetLessThanOrEqualTo": "一回当たりのマックスベットポイントは表示されていますので、再確認してください {0}."
     };
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["th-th"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "จำนวนเงินสูงสุดที่สามารถเล่นได้ต้องไม่มากกว่าจำนวนเงินสูงสุดต่อรายการที่เล่น",
-        "MaxBetLessThanOrEqualMaxPerMatch": "ค่าเดิมพันสูงสุดควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุดต่อการแข่งขัน",
         "MaxBetLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุดต้องน้อยกว่า หรือเท่ากับ {0}.",
         "MaxBetMoreThanOrEqualMinBet": "ค่าการเดิมพันขั้นสูงสุดต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นต่ำ",
-        "MaxPerMatchLessThanOrEqualTo": "จำนวนการเดิมพันสูงสุงต่อรายการต้องน้อยกว่า หรือเท่ากับ {0}",
-        "MaxPerMatchMoreThanOrEqualMaxBet": "ค่าการเดิมพันสูงสุดต่อแมทช์ต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นสูงสุด",
         "MinBetCannotBeGreaterThanMaxBet": "จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้",
         "MinBetLessThanOrEqualMaxBet": "ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.",
         "Msg_10003": "ค่า เดิมพันขั้นต่ำ/ เดิมพันขั้นสูดสุด/ เดิมพันต่อเกมสูงสุด ไม่ถูกต้อง",
@@ -34858,10 +34409,7 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     
     settingType9Resources["message"] = settingType9Resources["message"] || {};
     settingType9Resources["message"]["vi-vn"] = {
-        "MaxBetCannotBeGreaterThanMaxPerMatch": "Tiền cược lớn nhất không thể lớn hơn Tiền cược tối đa của mỗi trận đấu",
-        "MaxBetLessThanOrEqualMaxPerMatch": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng Tiền cược tối đa của mỗi trận đấu",
         "MaxBetLessThanOrEqualTo": "Tiền cược lớn nhất phải nhỏ hơn hoặc bằng {0}",
-        "MaxPerMatchLessThanOrEqualTo": "Tiền cược tối đa cho mỗi trận phài ít hơn hoặc bằng {0}",
         "MinBetCannotBeGreaterThanMaxBet": "Tiền cược nhỏ nhất không thể lớn hơn Tiền cược lớn nhất",
         "MinBetLessThanOrEqualMaxBet": "Tiền cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền cược lớn nhất.",
         "UpdateBetSettingSuccessfully": "Thiết lập về tiền cược được cập nhật thành công"

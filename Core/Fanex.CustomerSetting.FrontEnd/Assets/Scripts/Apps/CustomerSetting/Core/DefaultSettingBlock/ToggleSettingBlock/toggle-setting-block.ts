@@ -26,12 +26,6 @@ module CustomerSetting {
         }
 
         public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope) => {
-            if (isNaN(scope.blockIndex)) {
-                scope.isExpanded = scope.sharedStates.isExpandedAll();
-            } else {
-                scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-            }
-
             scope.toggle = () => {
                 if (isNaN(scope.blockIndex)) {
                     if (scope.isExpanded) {
@@ -52,16 +46,22 @@ module CustomerSetting {
                 }
             };
 
-            if (isNaN(scope.blockIndex)) {
-                scope.$watch("sharedStates", (sharedStates: TogglableSettingBlockSharedStates) => {
+            scope.$watch("sharedStates", (sharedStates: TogglableSettingBlockSharedStates) => {
+                if (isNaN(scope.blockIndex)) {
                     scope.isExpanded = sharedStates.isExpandedAll();
-                }, true);
-            } else {
-                scope.$watch("settingData", () => {
-                    scope.sharedStates.expandBlock(scope.blockIndex);
-                    scope.isExpanded = true;
-                }, true);
-            }
+                } else {
+                    scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                }
+            }, true);
+
+            //if (!isNaN(scope.blockIndex)) {
+            //    scope.$watch("settingData", (newSettingData: DefaultSettingItem[], oldSettingData: DefaultSettingItem[]) => {
+            //        if (oldSettingData) {
+            //            scope.sharedStates.expandBlock(scope.blockIndex);
+            //            scope.isExpanded = true;
+            //        }
+            //    }, true);
+            //}
         }
     }
 

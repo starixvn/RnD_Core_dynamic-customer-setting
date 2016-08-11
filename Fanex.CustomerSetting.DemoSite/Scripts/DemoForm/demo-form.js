@@ -235,7 +235,7 @@ var DemoFrom;
         SampleDataFactory.createMultipleTargetInfo = function (ids, names, role, uplineRole) {
             return new MultipleTargets(ids, names, role, uplineRole, this.defaultProductId);
         };
-        SampleDataFactory.defaultProductId = 22;
+        SampleDataFactory.defaultProductId = 23;
         SampleDataFactory.defaultLanguage = "en-US";
         return SampleDataFactory;
     }());

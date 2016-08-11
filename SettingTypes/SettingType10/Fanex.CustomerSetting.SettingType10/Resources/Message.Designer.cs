@@ -79,6 +79,15 @@ namespace Fanex.CustomerSetting.SettingType10.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commission must be less than {0}.
+        /// </summary>
+        internal static string CommissionMustBeLessThan {
+            get {
+                return ResourceManager.GetString("CommissionMustBeLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid user group..
         /// </summary>
         internal static string InvalidUserGroup {

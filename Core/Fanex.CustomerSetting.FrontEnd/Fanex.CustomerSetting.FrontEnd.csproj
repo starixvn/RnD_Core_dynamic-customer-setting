@@ -336,6 +336,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>customer-setting-resource.tt</DependentUpon>
     </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\settingtype10-select.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\settingtype10-resources.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>settingtype10-resources.tt</DependentUpon>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\settingtype10-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype10-resources.js</LastGenOutput>
+    </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -580,6 +590,9 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingType\setting-type-directive-loader.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Resource\resource-translation.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\settingtype10-select.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\settingtype10-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType10\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11.ts" />

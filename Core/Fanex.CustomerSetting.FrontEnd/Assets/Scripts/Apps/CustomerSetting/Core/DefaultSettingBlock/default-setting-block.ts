@@ -3,6 +3,7 @@
 /// <reference path="../models.ts" />
 /// <reference path="../module-registrater.ts" />
 /// <reference path="../settingtype/setting-type-base-directive.ts" />
+/// <reference path="togglesettingblock/togglable-setting-block-shared-states.ts" />
 
 module CustomerSetting {
     "use strict";

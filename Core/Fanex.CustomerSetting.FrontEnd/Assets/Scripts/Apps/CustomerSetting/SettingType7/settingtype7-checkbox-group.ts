@@ -43,7 +43,7 @@ module CustomerSetting {
                             }
                         });
                     } else {
-                        (<SettingType7StakeRange>item).selected = state;
+                        item.selected = state;
                     }
                 });
             }

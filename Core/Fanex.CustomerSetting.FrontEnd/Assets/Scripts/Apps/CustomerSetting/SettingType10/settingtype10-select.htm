@@ -1,0 +1,8 @@
+﻿<div class="setting-field-wrapper">
+    <div data-tooltip data-message="{{dataSource.validationState | tooltipMessage:'settingType10ResourceService'}}">
+        <select class="setting-field"
+                data-ng-model="dataSource.rate"
+                data-ng-options="item.value as item.key for item in range"
+                data-ng-class="{ 'setting-field--invalid': (dataSource.validationState | highlightingField) }"></select>
+    </div>
+</div>

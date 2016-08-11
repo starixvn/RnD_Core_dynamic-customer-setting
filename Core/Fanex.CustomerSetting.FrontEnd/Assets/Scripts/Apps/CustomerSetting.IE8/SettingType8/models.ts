@@ -17,9 +17,9 @@ module CustomerSetting.IE8 {
 
         constructor();
         constructor(settingItem: any);
-        constructor(settingItem: any, customerLevel: Level);
-        constructor(settingItem: any, customerLevel: Level, backup: boolean)
-        constructor(settingItem?: any, customerLevel?: Level, backup: boolean = false) {
+        constructor(settingItem: any, backup: boolean)
+        constructor(settingItem?: any, backup?: boolean, customerLevel?: Level)
+        constructor(settingItem?: any, backup: boolean = false, customerLevel?: Level) {
             super(settingItem);
 
             if (settingItem) {
@@ -54,7 +54,7 @@ module CustomerSetting.IE8 {
             }
 
             if (backup) {
-                this.oldSetting = new SettingType8Item(this, this.customerLevel);
+                this.oldSetting = new SettingType8Item(this, false, this.customerLevel);
                 (<SettingType8Item>this.oldSetting).selectedLevelId = this.selectedLevelId;
             }
         }

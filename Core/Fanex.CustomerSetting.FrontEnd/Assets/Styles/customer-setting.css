@@ -482,6 +482,8 @@ th {
     text-align: left; }
     .block__sub-header--border-top {
       border-top: 1px solid #7c98a4; }
+    .block__sub-header--no-border-bottom {
+      border-bottom: none; }
   .block__item-group {
     overflow: hidden;
     *zoom: 1; }
@@ -565,7 +567,8 @@ th {
 .right-btn-area {
   cursor: pointer;
   float: right;
-  height: 100%; }
+  height: 100%;
+  padding: 0 5px; }
   .right-btn-area .icon {
     vertical-align: middle; }
   .right-btn-area--seperate {

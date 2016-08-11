@@ -56,7 +56,7 @@ module CustomerSetting {
                         } else {
                             settingType.settingItems.forEach((item: any, index: number) => {
                                 if (angular.isDefined(item)) {
-                                    settingType.settingItems[index] = new SettingType8Item(item, $scope.customerLevel, true);
+                                    settingType.settingItems[index] = new SettingType8Item(item, true, $scope.customerLevel);
                                 }
                             });
                         }

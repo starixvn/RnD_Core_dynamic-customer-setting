@@ -123,6 +123,9 @@
   <data name="CommissionCannotExceedMaxValue" xml:space="preserve">
     <value>Commission cannot exceed Max Value.</value>
   </data>
+  <data name="CommissionMustBeLessThan" xml:space="preserve">
+    <value>Commission must be less than {0}</value>
+  </data>
   <data name="InvalidUserGroup" xml:space="preserve">
     <value>Invalid user group.</value>
   </data>

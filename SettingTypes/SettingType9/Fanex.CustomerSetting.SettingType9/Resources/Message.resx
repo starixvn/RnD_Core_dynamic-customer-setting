@@ -156,20 +156,11 @@
   <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
     <value>Min Bet must be greater than or equal to {0}.</value>
   </data>
-  <data name="Msg_10003" xml:space="preserve">
-    <value>Invalid Min Bet/ Max Bet/ Max Per Number.</value>
-  </data>
-  <data name="Msg_10005" xml:space="preserve">
-    <value>Min Bet must be less than or equal to Max Bet and Max Bet must be less than or equal to Max Per Number.</value>
-  </data>
   <data name="Msg_10006" xml:space="preserve">
     <value>Min Bet must be greater than or equal to Agent's Min Bet.</value>
   </data>
   <data name="Msg_10007" xml:space="preserve">
     <value>Max Bet must be less than or equal to Agent's Max Bet.</value>
-  </data>
-  <data name="Msg_10008" xml:space="preserve">
-    <value>Max Per Number must be less than or equal to Agent Max Per Number.</value>
   </data>
   <data name="Msg_10016" xml:space="preserve">
     <value>Min Bet must be greater than or equal to Super Agent's Min Bet.</value>
@@ -177,17 +168,26 @@
   <data name="Msg_10017" xml:space="preserve">
     <value>Max Bet must be less than or equal to Super Agent's Max Bet.</value>
   </data>
-  <data name="Msg_10018" xml:space="preserve">
-    <value>Max Per Number must be less than or equal to Super Agent's Max Per Number.</value>
-  </data>
   <data name="Msg_10019" xml:space="preserve">
     <value>Min Bet must be greater than or equal to Master Agent's Min Bet.</value>
   </data>
   <data name="Msg_10020" xml:space="preserve">
     <value>Max Bet must be less than or equal to Master Agent's Max Bet.</value>
   </data>
-  <data name="Msg_10021" xml:space="preserve">
+  <data name="Msg_10035" xml:space="preserve">
+    <value>Invalid Min Bet/ Max Bet/ Max Per Number.</value>
+  </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>Min Bet must be less than or equal to Max Bet and Max Bet must be less than or equal to Max Per Number.</value>
+  </data>
+  <data name="Msg_10037" xml:space="preserve">
+    <value>Max Per Number must be less than or equal to Super Agent's Max Per Number.</value>
+  </data>
+  <data name="Msg_10038" xml:space="preserve">
     <value>Max Per Number must be less than or equal to Master Agent's Max Per Number.</value>
+  </data>
+  <data name="Msg_10039" xml:space="preserve">
+    <value>Max Per Number must be less than or equal to Agent Max Per Number.</value>
   </data>
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>Bet Setting is updated successfully.</value>

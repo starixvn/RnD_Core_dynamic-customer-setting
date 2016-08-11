@@ -42,7 +42,7 @@ module CustomerSetting.IE8 {
                             }
                         });
                     } else {
-                        (<SettingType7StakeRange>item).selected = state;
+                        item.selected = state;
                     }
                 });
             }

@@ -178,24 +178,6 @@ namespace Fanex.CustomerSetting.SettingType9.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Min Bet/ Max Bet/ Max Per Number..
-        /// </summary>
-        internal static string Msg_10003 {
-            get {
-                return ResourceManager.GetString("Msg_10003", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Min Bet must be less than or equal to Max Bet and Max Bet must be less than or equal to Max Per Number..
-        /// </summary>
-        internal static string Msg_10005 {
-            get {
-                return ResourceManager.GetString("Msg_10005", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Min Bet must be greater than or equal to Agent&apos;s Min Bet..
         /// </summary>
         internal static string Msg_10006 {
@@ -210,15 +192,6 @@ namespace Fanex.CustomerSetting.SettingType9.Resources {
         internal static string Msg_10007 {
             get {
                 return ResourceManager.GetString("Msg_10007", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Per Number must be less than or equal to Agent Max Per Number..
-        /// </summary>
-        internal static string Msg_10008 {
-            get {
-                return ResourceManager.GetString("Msg_10008", resourceCulture);
             }
         }
         
@@ -241,15 +214,6 @@ namespace Fanex.CustomerSetting.SettingType9.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Per Number must be less than or equal to Super Agent&apos;s Max Per Number..
-        /// </summary>
-        internal static string Msg_10018 {
-            get {
-                return ResourceManager.GetString("Msg_10018", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Min Bet must be greater than or equal to Master Agent&apos;s Min Bet..
         /// </summary>
         internal static string Msg_10019 {
@@ -268,11 +232,47 @@ namespace Fanex.CustomerSetting.SettingType9.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Min Bet/ Max Bet/ Max Per Number..
+        /// </summary>
+        internal static string Msg_10035 {
+            get {
+                return ResourceManager.GetString("Msg_10035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet must be less than or equal to Max Bet and Max Bet must be less than or equal to Max Per Number..
+        /// </summary>
+        internal static string Msg_10036 {
+            get {
+                return ResourceManager.GetString("Msg_10036", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Number must be less than or equal to Super Agent&apos;s Max Per Number..
+        /// </summary>
+        internal static string Msg_10037 {
+            get {
+                return ResourceManager.GetString("Msg_10037", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Per Number must be less than or equal to Master Agent&apos;s Max Per Number..
         /// </summary>
-        internal static string Msg_10021 {
+        internal static string Msg_10038 {
             get {
-                return ResourceManager.GetString("Msg_10021", resourceCulture);
+                return ResourceManager.GetString("Msg_10038", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Number must be less than or equal to Agent Max Per Number..
+        /// </summary>
+        internal static string Msg_10039 {
+            get {
+                return ResourceManager.GetString("Msg_10039", resourceCulture);
             }
         }
         

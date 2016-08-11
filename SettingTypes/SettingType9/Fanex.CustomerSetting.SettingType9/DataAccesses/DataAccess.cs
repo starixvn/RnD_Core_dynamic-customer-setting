@@ -2,7 +2,6 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
@@ -17,9 +16,11 @@
         {
             using (var objectDb = new ObjectDb("Acc_CustSetting_GameBetLimitSelect"))
             {
-                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
-
-                return objectDb.Query<BetLimitDto>(parameters);
+                return objectDb.Query<BetLimitDto>(new
+                {
+                    CustId = query.CustomerId,
+                    ProductId = query.ProductId
+                });
             }
         }
 
