@@ -44,9 +44,16 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            CustomerSyncStatus syncStatus = _customerSyncStatusService.GetCustomerSyncStatus(
-                command.Setting.CustomerId,
-                command.Setting.ProductId);
+            ////CustomerSyncStatus syncStatus = _customerSyncStatusService.GetCustomerSyncStatus(
+            ////    command.Setting.CustomerId,
+            ////    command.Setting.ProductId);
+
+            // Cheat here while waiting for SPs and APIs.
+            var syncStatus = new CustomerSyncStatus
+            {
+                IsSynced = true,
+                IsUplineSynced = true
+            };
 
             if (!syncStatus.IsUplineSynced)
             {

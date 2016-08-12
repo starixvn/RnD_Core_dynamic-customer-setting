@@ -14,6 +14,7 @@ module CustomerSetting {
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
+        public static $inject: string[] = ["$timeout"];
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
 
@@ -24,6 +25,8 @@ module CustomerSetting {
                 settingData: "="
             };
         }
+
+        private initializing: boolean = true;
 
         public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope) => {
             scope.toggle = () => {
@@ -54,14 +57,22 @@ module CustomerSetting {
                 }
             }, true);
 
-            //if (!isNaN(scope.blockIndex)) {
-            //    scope.$watch("settingData", (newSettingData: DefaultSettingItem[], oldSettingData: DefaultSettingItem[]) => {
-            //        if (oldSettingData) {
-            //            scope.sharedStates.expandBlock(scope.blockIndex);
-            //            scope.isExpanded = true;
-            //        }
-            //    }, true);
-            //}
+            if (!isNaN(scope.blockIndex)) {
+                scope.$watch("settingData", () => {
+                    if (this.initializing) {
+                        this.$timeout(() => this.initializing = false);
+                    } else {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
+                        scope.isExpanded = true;
+                    }
+                }, true);
+            }
+        }
+
+        private $timeout: ng.ITimeoutService;
+
+        constructor($timeout: ng.ITimeoutService) {
+            this.$timeout = $timeout;
         }
     }
 

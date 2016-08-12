@@ -33,7 +33,7 @@
                         MinBet = 4,
                         MaxBet = 10,
                         MaxPerNumber = 7
-                    }).Returns(7002);
+                    }).Returns(7007);
                 yield return new TestCaseData(
                     new BetLimitItem
                     {
@@ -60,7 +60,7 @@
                         MinBet = 1,
                         MaxBet = 2,
                         MaxPerNumber = -3
-                    }).Returns(7005);
+                    }).Returns(7008);
                 yield return new TestCaseData(
                     new BetLimitItem
                     {
@@ -121,7 +121,7 @@
                         MinBet = 1,
                         MaxBet = 2,
                         MaxPerNumber = 3
-                    }).Returns("<BetLimit SportType=\"1\" BetType=\"1\" MinBet=\"1\" MaxBet=\"2\" MaxPerNumber=\"3\"/>");
+                    }).Returns("<GameBetLimit SportType=\"1\" BetType=\"1\" MinBet=\"1\" MaxBet=\"2\" MaxPerNumber=\"3\"/>");
                 yield return new TestCaseData(
                     new BetLimitItem
                     {
@@ -130,7 +130,7 @@
                         MinBet = 0,
                         MaxBet = 0,
                         MaxPerNumber = 0
-                    }).Returns("<BetLimit SportType=\"1\" BetType=\"1\" MinBet=\"0\" MaxBet=\"0\" MaxPerNumber=\"0\"/>");
+                    }).Returns("<GameBetLimit SportType=\"1\" BetType=\"1\" MinBet=\"0\" MaxBet=\"0\" MaxPerNumber=\"0\"/>");
             }
         }
 

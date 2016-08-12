@@ -3,12 +3,12 @@
 
     export class TogglableSettingBlockSharedStates {
         public toggleStates: boolean[];
-        public numberofCollapsedBlocks: number;
+        public numberofExpandedBlocks: number;
 
         constructor(numberofBlocks: number) {
             if (numberofBlocks > 0) {
                 this.toggleStates = [];
-                this.numberofCollapsedBlocks = numberofBlocks - 1;
+                this.numberofExpandedBlocks = 1;
 
                 for (var index = 0; index < numberofBlocks; index++) {
                     this.toggleStates[index] = index === 0 ? true : false;
@@ -21,17 +21,21 @@
         }
 
         public isExpandedAll(): boolean {
-            return this.numberofCollapsedBlocks === this.toggleStates.length;
+            return this.numberofExpandedBlocks === this.toggleStates.length;
         }
 
         public collapseBlock(blockIndex: number): void {
-            this.toggleStates[blockIndex] = false;
-            this.numberofCollapsedBlocks--;
+            if (this.toggleStates[blockIndex]) {
+                this.toggleStates[blockIndex] = false;
+                this.numberofExpandedBlocks--;
+            }
         }
 
         public expandBlock(blockIndex: number): void {
-            this.toggleStates[blockIndex] = true;
-            this.numberofCollapsedBlocks++;
+            if (!this.toggleStates[blockIndex]) {
+                this.toggleStates[blockIndex] = true;
+                this.numberofExpandedBlocks++;
+            }
         }
 
         public collapseAllBlocks(): void {
@@ -39,7 +43,7 @@
                 this.toggleStates[index] = false;
             }
 
-            this.numberofCollapsedBlocks = 0;
+            this.numberofExpandedBlocks = 0;
         }
 
         public expandAllBlocks(): void {
@@ -47,7 +51,7 @@
                 this.toggleStates[index] = true;
             }
 
-            this.numberofCollapsedBlocks = this.toggleStates.length;
+            this.numberofExpandedBlocks = this.toggleStates.length;
         }
     }
 }

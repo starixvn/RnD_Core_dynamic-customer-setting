@@ -9,7 +9,7 @@
 
     public class BetLimitItem : SettingItemDefault
     {
-        private const string BetLimitXmlFormat = "<BetLimit {0} MinBet=\"{1}\" MaxBet=\"{2}\" MaxPerNumber=\"{3}\"/>";
+        private const string BetLimitXmlFormat = "<GameBetLimit {0} MinBet=\"{1}\" MaxBet=\"{2}\" MaxPerNumber=\"{3}\"/>";
 
         public BetLimitItem()
         {
