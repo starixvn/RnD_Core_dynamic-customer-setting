@@ -4,6 +4,7 @@
 /// <reference path="../models.ts" />
 /// <reference path="../module-registrater.ts" />
 /// <reference path="../settingtype/setting-type-base-directive.ts" />
+/// <reference path="togglesettingblock/togglable-setting-block-shared-states.ts" />
 
 module CustomerSetting.IE8 {
     "use strict";
@@ -11,6 +12,8 @@ module CustomerSetting.IE8 {
     export interface IDefaultSettingTypeDirectiveScope extends ISettingTypeDirectiveSharedScope {
         avaiSettingLevels: Object;
         sportGroups: DefaultSettingItem[][];
+        togglableSettingBlocks: boolean;
+        togglableSharedStates: TogglableSettingBlockSharedStates;
     }
 
     export class DefaultSettingTypeGroupingDirective implements ng.IDirective {
@@ -24,6 +27,10 @@ module CustomerSetting.IE8 {
                 if (angular.isDefined(settingType) && angular.isDefined(settingType.settingItems) && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
+
+                        if ($scope.togglableSettingBlocks) {
+                            $scope.togglableSharedStates = new TogglableSettingBlockSharedStates($scope.sportGroups.length);
+                        }
                     } else {
                         $scope.sportGroups = <DefaultSettingItem[][]>[settingType.settingItems];
                     }

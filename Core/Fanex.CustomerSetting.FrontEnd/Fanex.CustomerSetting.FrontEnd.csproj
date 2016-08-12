@@ -182,10 +182,11 @@
   <ItemGroup>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\copy-setting.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\customer-setting-ie8.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\customer-setting-resource.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -305,6 +306,19 @@
       <LastGenOutput>settingtype8-resources.js</LastGenOutput>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-header.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-input.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.js">
+      <DependentUpon>settingtype9-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype9-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\customer-setting-matrix.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.htm" />
@@ -506,10 +520,12 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\common.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\copy-setting.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\CopySetting\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Modal\detect-max-height.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Modal\draggable.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Modal\detect-max-height.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Modal\draggable.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\togglable-setting-block-shared-states.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helper-services.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\helpers.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\models.ts" />
@@ -519,7 +535,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-base-directive.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingType\setting-type-directive-loader.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\Tooltip\tooltip.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Tooltip\tooltip.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\Resource\resource-translation.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-resources.ts" />
@@ -559,6 +575,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-groupdetails-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType8\settingtype8.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType9\settingtype9.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\BlockUI\block-ui.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSettingMatrix\Directives\CommissionMatrix\commission-matrix.ts" />

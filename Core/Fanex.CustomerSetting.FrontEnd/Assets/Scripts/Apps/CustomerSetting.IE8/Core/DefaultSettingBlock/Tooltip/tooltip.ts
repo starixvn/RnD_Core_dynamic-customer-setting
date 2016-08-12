@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../resource/resource-translation.ts" />
-/// <reference path="../module-registrater.ts" />
+﻿/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../resource/resource-translation.ts" />
+/// <reference path="../../module-registrater.ts" />
 
 module CustomerSetting.IE8 {
     "use strict";
@@ -20,7 +20,7 @@ module CustomerSetting.IE8 {
         };
 
         public link: ng.IDirectiveLinkFn = (scope: ITooltipScope, element: ng.IAugmentedJQuery) => {
-            var template = this.$templateCache.get("Tooltip/tooltip.htm");
+            var template = this.$templateCache.get("DefaultSettingBlock/Tooltip/tooltip.htm");
             var tooltip = angular.element(template);
             var debounceResize = _.debounce(() => {
                 if (!tooltip.hasClass("ng-hide")) {

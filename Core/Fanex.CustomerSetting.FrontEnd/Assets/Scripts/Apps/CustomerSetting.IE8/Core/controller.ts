@@ -81,7 +81,7 @@ module CustomerSetting.IE8 {
             var validationResult: Result;
             var command: SettingCommand;
 
-            this.$rootScope.$emit("updateSetting");
+            this.$rootScope.$emit("updateSetting", settingTypeId);
             this.requestMsgResult = undefined;
 
             if (setting) {

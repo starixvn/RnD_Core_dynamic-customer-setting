@@ -11,10 +11,11 @@ module CustomerSetting {
         blockIndex: number;
         sharedStates: TogglableSettingBlockSharedStates;
         settingData: DefaultSettingItem[];
+        settingTypeId: number;
     }
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
-        public static $inject: string[] = ["$timeout"];
+        public static $inject: string[] = ["$rootScope", "$timeout"];
         public replace: boolean = true;
         public templateUrl: string = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
 
@@ -22,7 +23,8 @@ module CustomerSetting {
             return {
                 blockIndex: "=",
                 sharedStates: "=",
-                settingData: "="
+                settingData: "=",
+                settingTypeId: "="
             };
         }
 
@@ -66,12 +68,23 @@ module CustomerSetting {
                         scope.isExpanded = true;
                     }
                 }, true);
+
+                this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
+                    if (settingTypeId === scope.settingTypeId
+                        && scope.settingData
+                        && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
+                        scope.isExpanded = true;
+                    }
+                });
             }
         }
 
+        private $rootScope: ng.IRootScopeService;
         private $timeout: ng.ITimeoutService;
 
-        constructor($timeout: ng.ITimeoutService) {
+        constructor($rootScope: ng.IRootScopeService, $timeout: ng.ITimeoutService) {
+            this.$rootScope = $rootScope;
             this.$timeout = $timeout;
         }
     }

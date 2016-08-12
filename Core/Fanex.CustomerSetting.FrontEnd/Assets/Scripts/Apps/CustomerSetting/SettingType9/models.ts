@@ -160,7 +160,7 @@ module CustomerSetting {
                 }
 
                 if (this.maxBet > this.maxPerNumber) {
-                    this.validationState = new ValidationResult("MaxPerNumberMoreThanOrEqualMaxBet", "maxPerNumber");
+                    this.validationState = new ValidationResult("MaxPerNumberGreaterThanOrEqualMaxBet", "maxPerNumber");
 
                     return false;
                 }

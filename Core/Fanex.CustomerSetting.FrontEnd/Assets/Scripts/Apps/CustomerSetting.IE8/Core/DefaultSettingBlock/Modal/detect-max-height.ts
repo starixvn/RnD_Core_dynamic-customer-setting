@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../helpers.ts" />
-/// <reference path="../module-registrater.ts" />
+﻿/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../helpers.ts" />
+/// <reference path="../../module-registrater.ts" />
 
 module CustomerSetting.IE8 {
     "use strict";

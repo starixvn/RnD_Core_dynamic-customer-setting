@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-/// <reference path="../module-registrater.ts" />
+﻿/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../../typings/underscore/underscore.d.ts" />
+/// <reference path="../../module-registrater.ts" />
 
 module CustomerSetting.IE8 {
     "use strict";
@@ -16,7 +16,7 @@ module CustomerSetting.IE8 {
         public static $inject: string[] = ["copyingSettingService"];
 
         public replace: boolean = true;
-        public templateUrl: string = "DefaultSettingBlock/copy-setting.htm";
+        public templateUrl: string = "DefaultSettingBlock/CopySetting/copy-setting.htm";
 
         public scope: any = {
             settingTypeId: "=",
