@@ -31,19 +31,10 @@ module CustomerSetting.IE8 {
 
         public templateUrl: string = "position-taking-select.htm";
 
-        public controller: any = ["$scope", ($scope: IPositionTakingSelectScope) => {
-            $scope.divisor = SettingType1Config.roundingFactor;
-
-            $scope.$watch("min + max", (newValue: number, oldValue: number) => {
-                this.updatePositionTakingValues(newValue, oldValue, $scope);
-            });
-        }];
-
         public link: ng.IDirectiveLinkFn = (scope: IPositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
             var select: ng.IAugmentedJQuery = element.find("select");
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
-            select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
             select.attr("data-ng-class", StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
             select.attr("data-tooltip", "");
             select.attr(
@@ -54,7 +45,28 @@ module CustomerSetting.IE8 {
                 select.attr("disabled", "disabled");
             }
 
+            select.on("mouseover", (event: JQueryEventObject) => {
+                if (scope.range.length === 1) {
+                    this.updatePositionTakingValues(scope);
+                    scope.$apply();
+                }
+            });
+
             this.$compile(select)(scope);
+
+            scope.divisor = SettingType1Config.roundingFactor;
+            scope.$watch("min + max", (newValue: number, oldValue: number) => {
+                if (!angular.equals(oldValue, newValue)) {
+                    scope.settingItem[scope.fieldName] = Math.max(scope.min, Math.min(scope.max, scope.settingItem[scope.fieldName]));
+                }
+
+                var value: number = scope.settingItem[scope.fieldName];
+
+                scope.range = [new KeyValuePair<number, number>(value, value)];
+            });
+            scope.$watch("settingItem." + scope.fieldName, (value: number) => {
+                scope.range = [new KeyValuePair<number, number>(value, value)];
+            });
         };
 
         private $compile: ng.ICompileService;
@@ -65,12 +77,8 @@ module CustomerSetting.IE8 {
             this.valueRangeService = valueRangeService;
         }
 
-        private updatePositionTakingValues(newValue: number, oldValue: number, $scope: IPositionTakingSelectScope): void {
+        private updatePositionTakingValues($scope: IPositionTakingSelectScope): void {
             if ($scope.settingItem) {
-                if (!angular.equals(oldValue, newValue)) {
-                    $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
-                }
-
                 $scope.range = this.valueRangeService.generateRanges(
                     $scope.settingItem[$scope.fieldName],
                     $scope.min,

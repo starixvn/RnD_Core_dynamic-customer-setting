@@ -62,13 +62,13 @@
                 new BetLimitDto
                 {
                     SportTypeId = 1,
-                BetTypeId = 1,
-                MinBet = 1,
-                MaxBet = 2,
-                MaxPerNumber = 3,
-                MinBetMin = 0,
-                MaxBetMax = 3,
-                MaxPerNumberMax = 4
+                    BetTypeId = 1,
+                    MinBet = 1,
+                    MaxBet = 2,
+                    MaxPerNumber = 3,
+                    MinBetMin = 0,
+                    MaxBetMax = 3,
+                    MaxPerNumberMax = 4
                 }
             };
 

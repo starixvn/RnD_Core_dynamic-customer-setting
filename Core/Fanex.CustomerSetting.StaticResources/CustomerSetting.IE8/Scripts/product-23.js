@@ -11900,7 +11900,7 @@ return jQuery;
 }.call(this));
 
 /**
- * @license AngularJS v1.2.28
+ * @license AngularJS v1.2.29
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11969,7 +11969,7 @@ function minErr(module) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.2.28/' +
+    message = message + '\nhttp://errors.angularjs.org/1.2.29/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i-2) + '=' +
@@ -12383,6 +12383,8 @@ noop.$inject = [];
        return (transformationFn || angular.identity)(value);
      };
    ```
+  * @param {*} value to be returned.
+  * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -13888,11 +13890,11 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.2.28',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.2.29',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 2,
-  dot: 28,
-  codeName: 'finnish-disembarkation'
+  dot: 29,
+  codeName: 'ultimate-deprecation'
 };
 
 
@@ -16324,6 +16326,11 @@ function Browser(window, document, $log, $sniffer) {
     }
   }
 
+  function getHash(url) {
+    var index = url.indexOf('#');
+    return index === -1 ? '' : url.substr(index + 1);
+  }
+
   /**
    * @private
    * Note: this method is used only by scenario runner
@@ -16435,8 +16442,10 @@ function Browser(window, document, $log, $sniffer) {
         }
         if (replace) {
           location.replace(url);
-        } else {
+        } else if (!sameBase) {
           location.href = url;
+        } else {
+          location.hash = getHash(url);
         }
       }
       return self;
@@ -18147,6 +18156,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           }
           break;
         case 3: /* Text Node */
+          if (msie === 11) {
+            // Workaround for #11781
+            while (node.parentNode && node.nextSibling && node.nextSibling.nodeType === 3 /* Text Node */) {
+              node.nodeValue = node.nodeValue + node.nextSibling.nodeValue;
+              node.parentNode.removeChild(node.nextSibling);
+            }
+          }
           addTextInterpolateDirective(directives, node.nodeValue);
           break;
         case 8: /* Comment */
@@ -21191,6 +21207,10 @@ function stripHash(url) {
   return index == -1 ? url : url.substr(0, index);
 }
 
+function trimEmptyHash(url) {
+  return url.replace(/(#.+)|#$/, '$1');
+}
+
 
 function stripFile(url) {
   return url.substr(0, stripHash(url).lastIndexOf('/') + 1);
@@ -21847,10 +21867,11 @@ function $LocationProvider(){
     // update browser
     var changeCounter = 0;
     $rootScope.$watch(function $locationWatch() {
-      var oldUrl = $browser.url();
+      var oldUrl = trimEmptyHash($browser.url());
+      var newUrl = trimEmptyHash($location.absUrl());
       var currentReplace = $location.$$replace;
 
-      if (!changeCounter || oldUrl != $location.absUrl()) {
+      if (!changeCounter || oldUrl != newUrl) {
         changeCounter++;
         $rootScope.$evalAsync(function() {
           if ($rootScope.$broadcast('$locationChangeStart', $location.absUrl(), oldUrl).
@@ -22071,7 +22092,26 @@ function ensureSafeMemberName(name, fullExpression) {
       || name === "__proto__") {
     throw $parseMinErr('isecfld',
         'Attempting to access a disallowed field in Angular expressions! '
-        +'Expression: {0}', fullExpression);
+        + 'Expression: {0}', fullExpression);
+  }
+  return name;
+}
+
+function getStringValue(name, fullExpression) {
+  // From the JavaScript docs:
+  // Property names must be strings. This means that non-string objects cannot be used
+  // as keys in an object. Any non-string object, including a number, is typecasted
+  // into a string via the toString method.
+  //
+  // So, to ensure that we are checking the same `name` that JavaScript would use,
+  // we cast it to a string, if possible.
+  // Doing `name + ''` can cause a repl error if the result to `toString` is not a string,
+  // this is, this will handle objects that misbehave.
+  name = name + '';
+  if (!isString(name)) {
+    throw $parseMinErr('iseccst',
+        'Cannot convert object to primitive value! '
+        + 'Expression: {0}', fullExpression);
   }
   return name;
 }
@@ -22750,7 +22790,7 @@ Parser.prototype = {
 
     return extend(function(self, locals) {
       var o = obj(self, locals),
-          i = indexFn(self, locals),
+          i = getStringValue(indexFn(self, locals), parser.text),
           v, p;
 
       ensureSafeMemberName(i, parser.text);
@@ -22767,7 +22807,7 @@ Parser.prototype = {
       return v;
     }, {
       assign: function(self, value, locals) {
-        var key = ensureSafeMemberName(indexFn(self, locals), parser.text);
+        var key = ensureSafeMemberName(getStringValue(indexFn(self, locals), parser.text), parser.text);
         // prevent overwriting of Function.constructor which would break ensureSafeObject check
         var o = ensureSafeObject(obj(self, locals), parser.text);
         if (!o) obj.assign(self, o = {});
@@ -27449,37 +27489,12 @@ function limitToFilter(){
       limit = int(limit);
     }
 
-    if (isString(input)) {
-      //NaN check on limit
-      if (limit) {
-        return limit >= 0 ? input.slice(0, limit) : input.slice(limit, input.length);
-      } else {
-        return "";
-      }
-    }
-
-    var out = [],
-      i, n;
-
-    // if abs(limit) exceeds maximum length, trim it
-    if (limit > input.length)
-      limit = input.length;
-    else if (limit < -input.length)
-      limit = -input.length;
-
-    if (limit > 0) {
-      i = 0;
-      n = limit;
+    //NaN check on limit
+    if (limit) {
+      return limit > 0 ? input.slice(0, limit) : input.slice(limit);
     } else {
-      i = input.length + limit;
-      n = input.length;
+      return isString(input) ? "" : [];
     }
-
-    for (; i<n; i++) {
-      out.push(input[i]);
-    }
-
-    return out;
   };
 }
 
@@ -31752,7 +31767,7 @@ var ngIfDirective = ['$animate', function($animate) {
        <select ng-model="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <tt>{{template.url}}</tt>
+       url of the template: <code>{{template.url}}</code>
        <hr/>
        <div class="slide-animate-container">
          <div class="slide-animate" ng-include="template.url"></div>
@@ -36215,16 +36230,8 @@ var CustomerSetting;
                     }
                     modelCtrl = element.controller("ngModel");
                     element.on("focus", function () {
-                        element.data("focused", true);
-                    });
-                    element.on("focusout", function () {
-                        element.data("focused", false);
-                    });
-                    element.on("mouseup", function () {
-                        if (element.data("focused")) {
-                            var input = element[0];
-                            input.select();
-                        }
+                        var input = element[0];
+                        input.select();
                     });
                     element.on("keydown", function (event) {
                         var value = element.val();
@@ -37285,32 +37292,39 @@ var CustomerSetting;
                     disabled: "@"
                 };
                 this.templateUrl = "position-taking-select.htm";
-                this.controller = ["$scope", function ($scope) {
-                        $scope.divisor = IE8.SettingType1Config.roundingFactor;
-                        $scope.$watch("min + max", function (newValue, oldValue) {
-                            _this.updatePositionTakingValues(newValue, oldValue, $scope);
-                        });
-                    }];
                 this.link = function (scope, element) {
                     var select = element.find("select");
                     select.attr("data-ng-model", "settingItem." + scope.fieldName);
-                    select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
                     select.attr("data-ng-class", IE8.StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
                     select.attr("data-tooltip", "");
                     select.attr("data-message", IE8.StringFormater.format("{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':'{0}'}}", scope.fieldName));
                     if (scope.disabled === "true") {
                         select.attr("disabled", "disabled");
                     }
+                    select.on("mouseover", function (event) {
+                        if (scope.range.length === 1) {
+                            _this.updatePositionTakingValues(scope);
+                            scope.$apply();
+                        }
+                    });
                     _this.$compile(select)(scope);
+                    scope.divisor = IE8.SettingType1Config.roundingFactor;
+                    scope.$watch("min + max", function (newValue, oldValue) {
+                        if (!angular.equals(oldValue, newValue)) {
+                            scope.settingItem[scope.fieldName] = Math.max(scope.min, Math.min(scope.max, scope.settingItem[scope.fieldName]));
+                        }
+                        var value = scope.settingItem[scope.fieldName];
+                        scope.range = [new IE8.KeyValuePair(value, value)];
+                    });
+                    scope.$watch("settingItem." + scope.fieldName, function (value) {
+                        scope.range = [new IE8.KeyValuePair(value, value)];
+                    });
                 };
                 this.$compile = $compile;
                 this.valueRangeService = valueRangeService;
             }
-            PositionTakingSelectDirective.prototype.updatePositionTakingValues = function (newValue, oldValue, $scope) {
+            PositionTakingSelectDirective.prototype.updatePositionTakingValues = function ($scope) {
                 if ($scope.settingItem) {
-                    if (!angular.equals(oldValue, newValue)) {
-                        $scope.settingItem[$scope.fieldName] = Math.max($scope.min, Math.min($scope.max, $scope.settingItem[$scope.fieldName]));
-                    }
                     $scope.range = this.valueRangeService.generateRanges($scope.settingItem[$scope.fieldName], $scope.min, $scope.max, IE8.SettingType1Config.step, IE8.SettingType1Config.roundingFactor);
                 }
             };
@@ -37377,7 +37391,7 @@ $templateCache.put("settingtype9-input.htm","<div><input type=\"text\" maxlength
 $templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><div class=\"block__cell w33-percent setting-field-wrapper\" data-settingtype9-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></div><div class=\"block__cell w33-percent setting-field-wrapper\" data-settingtype9-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-settingtype9-input data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></div></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
 $templateCache.put("settingtype9.htm","<div><div data-default-setting-type-grouping class=\"full-width\"></div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'superPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'masterPTOnMembers\') }\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
-$templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\"></select></div>");
+$templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-options=\"item.key as (item.value | ptFormat) for item in range\"></select></div>");
 $templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w25-percent\">{{\'SuperMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{\'SuperMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'MasterMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{\'AgentMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent no-right-border\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div>{{\'AgentPT\' | positionTakingLabel}}</div></div>");
 $templateCache.put("settingtype1-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w25-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"s4\" data-min=\"{{0}}\" data-max=\"{{item.defaultMaxPT}}\"></div></div><div class=\"block__cell w25-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"m4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></div></div><div class=\"block__cell w25-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"a4\" data-min=\"{{0}}\" data-max=\"{{item.m4}}\"></div></div><div class=\"block__cell block__cell--no-border w25-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"n4\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></div></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-position-taking-on-member><div class=\"block__cell w28-percent\" data-ng-show=\"item.iS3\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"uS3\" data-min=\"{{0}}\" data-max=\"{{item.s4}}\"></div></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iS3\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"s3\" data-min=\"{{[0, item.n4 - item.m4] | maxValue}}\" data-max=\"{{item.s4}}\"></div></div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"m3\" data-min=\"{{item.iS3 ? item.n4 - item.uS3 : ([0, item.n4 - item.s3] | maxValue)}}\" data-max=\"{{item.iS3 ? ([item.s4, item.m4] | minValue) : ([item.s4 - item.s3, item.m4] | minValue)}}\"></div></div><div class=\"block__cell block__cell--no-border w28-percent\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"n3\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></div></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-position-taking-on-member><div class=\"block__cell w28-percent\" data-ng-show=\"item.iM2 && !(settingType | hideIsAutoColumn)\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"uM2\" data-min=\"{{0}}\" data-max=\"{{item.m3}}\"></div></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"m2\" data-min=\"{{[0, item.n3 - item.a4] | maxValue}}\" data-max=\"{{item.m3}}\"></div></div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"a2\" data-min=\"{{item.iM2 ? item.n3 - item.uM2 : ([0, item.n3 - item.m2] | maxValue)}}\" data-max=\"{{item.iM2 ? ([item.m3, item.a4] | minValue) : ([item.m3 - item.m2, item.a4] | minValue)}}\"></div></div><div class=\"block__cell block__cell--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"n2\" data-min=\"{{0}}\" data-max=\"{{item.a2}}\"></div></div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w28-percent\" data-ng-show=\"item.iS1\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"uS1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{item.s4}}\"></div></div><div class=\"block__cell w28-percent\" data-ng-show=\"!item.iS1\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"s1\" data-min=\"{{[0, item.n4 - item.m1 - item.a1] | maxValue}}\" data-max=\"{{[item.n4 - item.m1 - item.a1, item.s4 - item.m3] | maxValue}}\" data-disabled=\"{{item.iS3}}\"></div></div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w42-percent\" data-ng-show=\"item.iM1 && !(settingType | hideIsAutoColumn)\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"uM1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3}}\"></div></div><div class=\"block__cell w42-percent\" data-ng-show=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\"><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"m1\" data-min=\"{{[0, item.n3 - item.a1] | maxValue}}\" data-max=\"{{item.m3 - item.a1}}\" data-disabled=\"{{item.iM2 && !(settingType | hideIsAutoColumn)}}\"></div></div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div><div data-position-taking-select data-setting-item=\"item\" data-field-name=\"a1\" data-min=\"{{item.n2}}\" data-max=\"{{item.a2}}\"></div></div></div></div><div data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w25-percent\">{{item.s4 | ptFormat}}</div><div class=\"block__cell w25-percent\">{{item.m4 | ptFormat}}</div><div class=\"block__cell w25-percent\">{{item.a4 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w25-percent\">{{item.n4 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iS3\">{{item.uS3 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iS3\">{{item.s3 | ptFormat}}</div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS3\"></label></div><div class=\"block__cell w28-percent\">{{item.m3 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.n3 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iM2 && !(settingType | hideIsAutoColumn)\">{{item.uM2 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iM2 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.m2 | ptFormat}}</div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM2\"></label></div><div class=\"block__cell w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{item.a2 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{item.n2 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__cell w28-percent\" data-ng-if=\"item.iS1\">{{item.uS1 | ptFormat}}</div><div class=\"block__cell w28-percent\" data-ng-if=\"!item.iS1\">{{item.s1 | ptFormat}}</div><div class=\"block__cell w16-percent\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iS1\"></label></div><div class=\"block__cell w28-percent\">{{item.m1 | ptFormat}}</div><div class=\"block__cell block__cell--no-border w28-percent\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__cell w42-percent\" data-ng-if=\"item.iM1 && !(settingType | hideIsAutoColumn)\">{{item.uM1 | ptFormat}}</div><div class=\"block__cell w42-percent\" data-ng-if=\"!item.iM1 || (settingType | hideIsAutoColumn)\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.m1 | ptFormat}}</div><div class=\"block__cell w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.iM1\"></label></div><div class=\"block__cell block__cell--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{item.a1 | ptFormat}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{item.a1 | ptFormat}}</div></div>");
 $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-default-setting-type-grouping class=\"full-width\"></div><div data-adjust-member-pt-modal data-ng-if=\"settingType | editableSettingType\"></div></div>");}]);
