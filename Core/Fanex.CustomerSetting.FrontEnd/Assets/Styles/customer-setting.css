@@ -316,19 +316,19 @@ th {
     height: 15px;
     width: 15px; }
   .icon--copy {
-    background-position: -16px 0;
+    background-position: -15px 0;
     height: 20px;
-    width: 19px; }
+    width: 20px; }
   .icon--close {
     background-position: -35px 0;
     height: 14px;
     width: 14px; }
   .icon--collapse {
-    background-position: 0 -52px;
+    background-position: -1px -26px;
     height: 17px;
     width: 18px; }
   .icon--expand {
-    background-position: -23px -52px;
+    background-position: -26px -26px;
     height: 17px;
     width: 18px; }
 

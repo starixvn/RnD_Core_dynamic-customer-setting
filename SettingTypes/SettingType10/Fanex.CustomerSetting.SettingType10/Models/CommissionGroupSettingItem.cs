@@ -23,19 +23,19 @@
         internal CommissionGroupSettingItem(
             short sportTypeId,
             short betTypeId,
-            IEnumerable<CommissionDto> dtos,
+            IEnumerable<CommissionDto> groupsRawData,
             Func<int, string> commissionGroupNameGetter)
         {
-            Check.Argument.IsNotNull(dtos, nameof(dtos));
+            Check.Argument.IsNotNull(groupsRawData, nameof(groupsRawData));
             Check.Argument.IsNotNull(commissionGroupNameGetter, nameof(commissionGroupNameGetter));
 
             SportTypeId = sportTypeId;
             BetTypeId = betTypeId;
             Groups = new List<CommissionGroup>();
 
-            if (dtos.Any())
+            if (groupsRawData.Any())
             {
-                Groups = dtos.Select(dto => new CommissionGroup
+                Groups = groupsRawData.Select(dto => new CommissionGroup
                 {
                     Id = dto.GroupId,
                     Value = dto.GroupValue,

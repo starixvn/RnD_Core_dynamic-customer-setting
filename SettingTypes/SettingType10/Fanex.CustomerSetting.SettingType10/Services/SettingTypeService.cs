@@ -144,7 +144,16 @@
             Check.Argument.IsNotNull(settingContext, nameof(settingContext));
             Check.Argument.IsNotNull(jsonParameters, nameof(jsonParameters));
 
-            throw new NotImplementedException();
+            ////StakeLevelGroupDetailsQuery query = JsonConvert.DeserializeObject<StakeLevelGroupDetailsQuery>(jsonParameters);
+            IEnumerable<CommissionDto> groupConstraintsRawData = _commissionDataAccess.GetMemberComissionGroupConstraints(1, "a");
+            IEnumerable<MemberCommissionSettingItem> groupConstraints = Enumerable.Empty<MemberCommissionSettingItem>();
+
+            if (groupConstraintsRawData?.Any() == true)
+            {
+                groupConstraints = groupConstraintsRawData.Select(constraint => new MemberCommissionSettingItem(constraint));
+            }
+
+            return groupConstraints;
         }
     }
 }

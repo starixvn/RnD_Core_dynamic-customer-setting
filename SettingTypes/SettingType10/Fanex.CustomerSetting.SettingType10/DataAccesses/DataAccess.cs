@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
@@ -18,9 +17,11 @@
         {
             using (var objectDb = new ObjectDb("Acc_CustSetting_SMACommissionGroupSelect"))
             {
-                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
-
-                return objectDb.Query<CommissionDto>(parameters);
+                return objectDb.Query<CommissionDto>(new
+                {
+                    CustId = query.CustomerId,
+                    ProductId = query.ProductId
+                });
             }
         }
 
@@ -32,9 +33,12 @@
 
             using (var objectDb = new ObjectDb("Acc_CustSetting_MemberCommissionGroupSelect"))
             {
-                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
-
-                parameters.Add("usergroup", string.Empty);
+                var parameters = new Hashtable
+                {
+                    { "custid", query.CustomerId },
+                    { "productid", query.ProductId },
+                    { "usergroup", string.Empty }
+                };
 
                 using (var multi = objectDb.QueryMultiple(parameters))
                 {
