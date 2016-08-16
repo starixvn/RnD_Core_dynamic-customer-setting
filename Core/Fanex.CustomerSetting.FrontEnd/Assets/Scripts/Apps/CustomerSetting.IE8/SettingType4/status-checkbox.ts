@@ -29,6 +29,8 @@ module CustomerSetting.IE8 {
 
                         $scope.item.downline.readonly = true;
                     }
+
+                    $scope.item.downline.isDisabled = !$scope.item.downline.isChecked;
                 }
             };
         }];

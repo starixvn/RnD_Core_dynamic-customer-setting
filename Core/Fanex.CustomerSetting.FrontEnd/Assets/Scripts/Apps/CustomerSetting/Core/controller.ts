@@ -130,6 +130,7 @@ module CustomerSetting {
                     this.setting = new Setting(response.data);
                     this.warningMessages = this.setting.warningMessage;
                     this.settingTypesSharedValuesService.register(this.setting, this.parametersService.uplineLevel);
+                    this.$rootScope.$emit("queriedSetting");
                 });
             }
         }

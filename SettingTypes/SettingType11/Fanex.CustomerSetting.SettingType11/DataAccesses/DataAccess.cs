@@ -2,7 +2,6 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Constants;
     using CustomerSetting.DataAccesses.Impl;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
@@ -15,11 +14,13 @@
     {
         public IEnumerable<ProductStatusDto> GetCustomerProductStatus(CustomerSettingQuery query)
         {
-            using (var objectDb = new ObjectDb("CustSetting_DisableStatSelect"))
+            using (var objectDb = new ObjectDb("Acc_CustSetting_DisableGameStatusSelect"))
             {
-                var parameters = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
-
-                return objectDb.Query<ProductStatusDto>(parameters);
+                return objectDb.Query<ProductStatusDto>(new
+                {
+                    CustId = query.CustomerId,
+                    ProductId = query.ProductId
+                });
             }
         }
 
@@ -42,7 +43,7 @@
                 { "msgtype", 0 }
             };
 
-            return ExecuteNonQuery("CustSetting_DisableStatUpd", parameters);
+            return ExecuteNonQuery("Acc_CustSetting_DisableGameStatusUpd", parameters);
         }
     }
 }

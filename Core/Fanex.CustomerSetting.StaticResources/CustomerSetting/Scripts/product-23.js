@@ -32004,6 +32004,7 @@ var CustomerSetting;
                     _this.setting = new CustomerSetting.Setting(response.data);
                     _this.warningMessages = _this.setting.warningMessage;
                     _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.uplineLevel);
+                    _this.$rootScope.$emit("queriedSetting");
                 });
             }
         };
@@ -32555,6 +32556,9 @@ var CustomerSetting;
                             scope.isExpanded = true;
                         }
                     });
+                    _this.$rootScope.$on("queriedSetting", function () {
+                        _this.initializing = true;
+                    });
                 }
             };
             this.$rootScope = $rootScope;
@@ -32692,6 +32696,200 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType11Item = (function (_super) {
+        __extends(SettingType11Item, _super);
+        function SettingType11Item(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            if (settingItem) {
+                this.isDisabled = settingItem.isDisabled;
+                if (settingItem.upline) {
+                    this.upline = new SettingType11Item(settingItem.upline);
+                    this.readonly = settingItem.upline.isDisabled;
+                }
+                else {
+                    this.readonly = false;
+                }
+                if (settingItem.downline) {
+                    this.downline = new SettingType11Item(settingItem.downline, true);
+                    this.downline.readonly = true;
+                }
+            }
+            if (backup) {
+                this.oldSetting = new SettingType11Item(this);
+            }
+        }
+        Object.defineProperty(SettingType11Item.prototype, "isChecked", {
+            get: function () {
+                return !this.isDisabled;
+            },
+            set: function (isChecked) {
+                this.isDisabled = !isChecked;
+                if (this.downline) {
+                    if (isChecked && !this.oldSetting.isChecked) {
+                        this.downline.readonly = false;
+                    }
+                    else {
+                        if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
+                            this.downline.isChecked = this.isChecked;
+                        }
+                        else {
+                            this.downline.isChecked = false;
+                        }
+                        this.downline.readonly = true;
+                    }
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        SettingType11Item.prototype.isChanged = function () {
+            var isChanged = _super.prototype.isChanged.call(this);
+            var oldSetting = this.oldSetting;
+            return isChanged
+                || this.isDisabled !== oldSetting.isDisabled
+                || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
+        };
+        SettingType11Item.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            if (source) {
+                var backupDisabled = this.isDisabled;
+                var backupReadonly = this.readonly;
+                var backupDisabledDownline;
+                var backupReadonlyDownline;
+                this.isDisabled = source.isDisabled;
+                this.readonly = source.readonly;
+                if (this.downline && source.downline) {
+                    backupDisabledDownline = this.downline.isDisabled;
+                    backupReadonlyDownline = this.downline.readonly;
+                    this.downline.isDisabled = source.downline.isDisabled;
+                    this.downline.readonly = source.downline.readonly;
+                }
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    this.isDisabled = backupDisabled;
+                    this.readonly = backupReadonly;
+                    if (this.downline && source.downline) {
+                        this.downline.isDisabled = backupDisabledDownline;
+                        this.downline.readonly = backupReadonlyDownline;
+                    }
+                }
+            }
+            return isSuccessful;
+        };
+        SettingType11Item.prototype.validate = function () {
+            if (this.isDisabled && this.downline && !this.downline.isDisabled) {
+                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
+                return false;
+            }
+            if (this.downline
+                && this.isDisabled === this.oldSetting.isDisabled
+                && this.downline.isDisabled !== this.oldSetting.downline.isDisabled) {
+                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
+                return false;
+            }
+            if (this.upline && this.upline.isDisabled && !this.isDisabled) {
+                this.validationState = new CustomerSetting.ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
+                return false;
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        SettingType11Item.prototype.toJson = function () {
+            var settingItem = {
+                sportTypeId: this.sportTypeId,
+                sportTypeName: this.sportTypeName,
+                betTypeId: this.betTypeId,
+                betTypeName: this.betTypeName,
+                typeName: this.typeName,
+                isDisabled: this.isDisabled
+            };
+            if (this.upline) {
+                settingItem.upline = this.upline.toJson();
+            }
+            if (this.downline) {
+                settingItem.downline = this.downline.toJson();
+            }
+            return settingItem;
+        };
+        return SettingType11Item;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.SettingType11Item = SettingType11Item;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType11ResourceService = (function (_super) {
+        __extends(SettingType11ResourceService, _super);
+        function SettingType11ResourceService(settingType11Resources, parametersService) {
+            _super.call(this, settingType11Resources, parametersService);
+        }
+        SettingType11ResourceService.$inject = ["settingType11Resources", "parametersService"];
+        return SettingType11ResourceService;
+    }(CustomerSetting.ResourceService));
+    CustomerSetting.SettingType11ResourceService = SettingType11ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType11ResourceService", SettingType11ResourceService);
+    function SettingType11LabelFilter(settingType11ResourceService) {
+        return function (name) {
+            return settingType11ResourceService.getLabel(name);
+        };
+    }
+    SettingType11LabelFilter.$inject = ["settingType11ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType11Label", SettingType11LabelFilter);
+    function SettingType11MessageFilter(settingType11ResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            replacements.unshift(name);
+            return settingType11ResourceService.getFormattedMessage.apply(settingType11ResourceService, replacements);
+        };
+    }
+    SettingType11MessageFilter.$inject = ["settingType11ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType11Message", SettingType11MessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType11Directive = (function (_super) {
+        __extends(SettingType11Directive, _super);
+        function SettingType11Directive(settingType11ResourceService) {
+            var _this = this;
+            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType11Item(settingItem, backup); });
+            this.templateUrl = "settingtype11.htm";
+            this.link = function (scope) {
+                scope.valueTemplateUrl = "settingtype11-value.htm";
+                scope.settingTypeName = _this.settingType11ResourceService.getLabel("ProductStatus");
+            };
+            this.settingType11ResourceService = settingType11ResourceService;
+        }
+        SettingType11Directive.$inject = ["settingType11ResourceService"];
+        return SettingType11Directive;
+    }(CustomerSetting.SettingTypeDirective));
+    CustomerSetting.ModuleRegister.directive("settingtype11", SettingType11Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -34028,6 +34226,8 @@ $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"resul
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"right-btn-area\" title=\"{{(isExpanded ? \'Collapse\' : \'Collapse\') | label}}\" data-ng-class=\"{ \'right-btn-area--seperate\': blockIndex === null || blockIndex === undefined }\" data-ng-click=\"toggle()\"><span class=\"icon\" data-ng-class=\"{ \'icon--collapse\': isExpanded, \'icon--expand\': !isExpanded }\"></span></div>");
 $templateCache.put("DefaultSettingBlock/Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
+$templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
+$templateCache.put("settingtype11.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype9-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType9Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType9Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerNumber\' | settingType9Label)}}</div></div>");
 $templateCache.put("settingtype9-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
 $templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype9-input><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype9-input><settingtype9-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></settingtype9-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
@@ -34282,6 +34482,111 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
 (function () {
     "use strict";
 
+    var settingType11Resources = {};
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["en-us"] = {
+        "Enable": "Enable",
+        "EnableDownline": "Enable Downline",
+        "ProductStatus": "Product Status"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["zh-cn"] = {
+        "Enable": "启用",
+        "EnableDownline": "启动下线",
+        "ProductStatus": "产品状态"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["zh-tw"] = {
+        "Enable": "啟用",
+        "EnableDownline": "啟動下線",
+        "ProductStatus": "產品狀態"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["ko-kr"] = {
+        "Enable": "활성화",
+        "EnableDownline": "다운라인 활성화하기",
+        "ProductStatus": "Product Status"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["ja-jp"] = {
+        "Enable": "Enable"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["th-th"] = {
+        "Enable": "เปิดใช้งาน",
+        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
+        "ProductStatus": "สถานะผลิตภันฑ์"
+    };
+    
+    settingType11Resources["label"] = settingType11Resources["label"] || {};
+    settingType11Resources["label"]["vi-vn"] = {
+        "Enable": "Cho phép",
+        "EnableDownline": "Enable Downline",
+        "ProductStatus": "Product Status"
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["en-us"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
+        "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
+        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
+        "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
+        "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
+        "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["zh-cn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
+        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
+        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
+        "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
+        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "UpdateProductStatusSuccessfully": "产品状态更新成功"
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["zh-tw"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
+        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
+        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
+        "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
+        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "UpdateProductStatusSuccessfully": "產品狀態更新成功"
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["ko-kr"] = {
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["ja-jp"] = {
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["th-th"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
+        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
+        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
+        "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
+        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
+    };
+
+    angular.module("customerSetting").value("settingType11Resources", settingType11Resources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
     var settingType9Resources = {};
     
     settingType9Resources["label"] = settingType9Resources["label"] || {};
@@ -34368,17 +34673,12 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高于最低投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必须少于或相等于最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注额必须大于或等于 {0}",
-        "Msg_10003": "最低投注/最高投注/单场限额无效",
-        "Msg_10005": "最低投注必须少于或相等于最高投注以及最高投注必须小于或相等于单场投注限额",
         "Msg_10006": "最低投注必须大于或相等于代理最低投注限额",
         "Msg_10007": "最高投注必须少于或相等于代理最高投注限额",
-        "Msg_10008": "单场限额必须少于或相等于代理单场投注限额",
         "Msg_10016": "最低投注大于或相等于超级总代理最低投注限额",
         "Msg_10017": "最高投注必须少于或相等于超级总代理最高投注限额",
-        "Msg_10018": "单场限额必须少于或相等于超级总代理单场投注限额",
         "Msg_10019": "最低投注大于或相等于总代理最低投注限额",
         "Msg_10020": "最高投注必须少于或相等于总代理最高投注限额",
-        "Msg_10021": "单场限额必须少于或相等于总代理单场投注限额",
         "UpdateBetSettingSuccessfully": "投注设定已更新成功."
     };
     
@@ -34389,17 +34689,12 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "MinBetCannotBeGreaterThanMaxBet": "最低投注不可高於最高投注",
         "MinBetLessThanOrEqualMaxBet": "最低投注必須少於或相等於最高投注",
         "MinBetMoreThanOrEqualTo": "最大投注額必須大於或等於 {0}",
-        "Msg_10003": "最低投註/最高投註/單場限額無效",
-        "Msg_10005": "最低投註必須少於或相等於最高投註以及最高投註必須小於或相等於單場投註限額",
         "Msg_10006": "最低投註必須大於或相等於代理最低投註限額",
         "Msg_10007": "最高投註必須少於或相等於代理最高投註限額",
-        "Msg_10008": "單場限額必須少於或相等於代理單場投註限額",
         "Msg_10016": "最低投註大於或相等於超級總代理最低投註限額",
         "Msg_10017": "最高投註必須少於或相等於超級總代理最高投註限額",
-        "Msg_10018": "單場限額必須少於或相等於超級總代理單場投註限額",
         "Msg_10019": "最低投註大於或相等於總代理最低投註限額",
         "Msg_10020": "最高投註必須少於或相等於總代理最高投註限額",
-        "Msg_10021": "單場限額必須少於或相等於總代理單場投註限額",
         "UpdateBetSettingSuccessfully": "投注設定已更新成功."
     };
     
@@ -34422,17 +34717,12 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "MaxBetMoreThanOrEqualMinBet": "ค่าการเดิมพันขั้นสูงสุดต้องมากกว่าหรือเท่ากับค่าการเดิมพันขั้นต่ำ",
         "MinBetCannotBeGreaterThanMaxBet": "จำนวนเงินต่ำสุดที่สามารถเล่นได้ ต้องไม่มากกว่า จำนวนเงินสูงสุดที่สามารถเล่นได้",
         "MinBetLessThanOrEqualMaxBet": "ค่าเดิมพันขั้นต่ำควรจะน้อยกว่า หรือ เท่ากับค่าเดิมพันสูงสุด.",
-        "Msg_10003": "ค่า เดิมพันขั้นต่ำ/ เดิมพันขั้นสูดสุด/ เดิมพันต่อเกมสูงสุด ไม่ถูกต้อง",
-        "Msg_10005": "ค่าการเดิมพันขั้นต่ำต้องน้อยกว่าหรือเท่ากับค่าเดิมพันขั้นสูงสุด และ ค่าเดิมพันสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าเดิมพันสูงสุดต่อแมทซ์",
         "Msg_10006": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันต่ำสุดของเอเจนท์",
         "Msg_10007": "ค่าวางเดิมพันขั้นสุงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันสูงสุดของเอเจนท์",
-        "Msg_10008": "ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันสูงสุดต่อแมทซ์ของเอเจนท์",
         "Msg_10016": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันขั้นต่ำของซูเปอร์เอเจนท์",
         "Msg_10017": "ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของซูเปอร์เอเจนท์",
-        "Msg_10018": "ค่าวางเดิมพันขั้นสูงสุดต่อแมทซ์ต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของซูเปอร์เอเจนท์ต่อแมทซ์",
         "Msg_10019": "ค่าวางเดิมพันขั้นต่ำต้องมากกว่าหรือเท่ากับ ค่าการเดิมพันขั้นต่ำของมาสเตอร์เอเจนท์",
         "Msg_10020": "ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของมาสเตอร์เอเจนท์",
-        "Msg_10021": "ค่าวางเดิมพันต่อแมทซ์สูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดต่อแมทซ์ของมาสเตอร์เอเจนท์",
         "UpdateBetSettingSuccessfully": "การตั้งค่าเดิมพัน ได้อัพเดทเรียบร้อยแล้ว."
     };
     

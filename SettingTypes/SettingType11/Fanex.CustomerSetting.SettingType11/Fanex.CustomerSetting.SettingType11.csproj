@@ -126,6 +126,11 @@
     <EmbeddedResource Include="Resources\Message.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-TW.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fanex.CustomerSetting.SettingType11.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

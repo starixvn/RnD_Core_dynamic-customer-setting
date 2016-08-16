@@ -130,6 +130,7 @@ module CustomerSetting.IE8 {
                     this.setting = new Setting(response.data);
                     this.warningMessages = this.setting.warningMessage;
                     this.settingTypesSharedValuesService.register(this.setting, this.parametersService.getUplineLevel());
+                    this.$rootScope.$emit("queriedSetting");
                 });
             }
         }

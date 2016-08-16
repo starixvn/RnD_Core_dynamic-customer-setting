@@ -32004,6 +32004,7 @@ var CustomerSetting;
                     _this.setting = new CustomerSetting.Setting(response.data);
                     _this.warningMessages = _this.setting.warningMessage;
                     _this.settingTypesSharedValuesService.register(_this.setting, _this.parametersService.uplineLevel);
+                    _this.$rootScope.$emit("queriedSetting");
                 });
             }
         };
@@ -32554,6 +32555,9 @@ var CustomerSetting;
                             scope.sharedStates.expandBlock(scope.blockIndex);
                             scope.isExpanded = true;
                         }
+                    });
+                    _this.$rootScope.$on("queriedSetting", function () {
+                        _this.initializing = true;
                     });
                 }
             };

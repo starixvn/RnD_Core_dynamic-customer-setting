@@ -77,6 +77,9 @@ module CustomerSetting {
                         scope.isExpanded = true;
                     }
                 });
+                this.$rootScope.$on("queriedSetting", () => {
+                    this.initializing = true;
+                });
             }
         }
 
