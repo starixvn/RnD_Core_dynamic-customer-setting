@@ -113,7 +113,7 @@ module CustomerSetting.IE8 {
             var reservedProperties: string[] = ["oldSetting", "validationState"];
 
             _.chain(this).keys().forEach((prop: string) => {
-                if (this[prop] !== (undefined || null) && _.indexOf(reservedProperties, prop) < 0) {
+                if (this[prop] !== undefined && this[prop] !== null && _.indexOf(reservedProperties, prop) < 0) {
                     if (this[prop].toJson) {
                         settingItem[prop] = this[prop].toJson();
                     } else {

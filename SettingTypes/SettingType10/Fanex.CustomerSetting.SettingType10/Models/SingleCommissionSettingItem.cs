@@ -46,6 +46,11 @@
                 return new Result(ErrorCode.CommissionIsNegative, Message.CommissionCannotBeNegative);
             }
 
+            if (Upline != null && Rate > Upline.Rate)
+            {
+                return new Result(ErrorCode.CommissionMustBeLessThanValue, string.Format(Message.CommissionMustBeLessThan, Upline.Rate));
+            }
+
             return base.Validate();
         }
 

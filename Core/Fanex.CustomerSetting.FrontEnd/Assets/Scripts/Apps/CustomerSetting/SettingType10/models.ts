@@ -28,12 +28,8 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
-                if (settingItem.rate) {
+                if (settingItem.rate !== null && settingItem.rate !== undefined) {
                     this.rate = settingItem.rate;
-                }
-
-                if (settingItem.upline) {
-                    this.upline = new SettingType10Item(settingItem.upline);
                 }
 
                 if (customerLevel === Level.member) {
@@ -43,6 +39,10 @@ module CustomerSetting {
 
                 if (settingItem.groups && settingItem.groups.length > 0) {
                     this.groups = settingItem.groups.map((group: any) => new CommissionGroup(group));
+                }
+
+                if (settingItem.upline) {
+                    this.upline = new SettingType10Item(settingItem.upline);
                 }
             }
 
@@ -55,8 +55,12 @@ module CustomerSetting {
             var isChanged: boolean = super.isChanged();
             var oldSetting: SettingType10Item = <SettingType10Item>this.oldSetting;
 
-            if (this.rate !== undefined) {
+            if (this.rate !== null && this.rate !== undefined) {
                 isChanged = isChanged || this.rate !== oldSetting.rate;
+            }
+
+            if (this.groupId) {
+                isChanged = isChanged || this.groupId !== oldSetting.groupId;
             }
 
             if (this.groups) {
@@ -67,7 +71,7 @@ module CustomerSetting {
         }
 
         public validate(): boolean {
-            if (this.rate !== undefined) {
+            if (this.rate !== null && this.rate !== undefined) {
                 if (this.rate < 0) {
                     this.validationState = new ValidationResult("CommissionCannotBeNegative", "rate");
 
@@ -90,6 +94,44 @@ module CustomerSetting {
             this.validationState = <ValidationResult>Result.normal;
 
             return true;
+        }
+
+        public toJson(): {} {
+            var settingItem: any = {
+                sportTypeId: this.sportTypeId,
+                sportTypeName: this.sportTypeName,
+                betTypeId: this.betTypeId,
+                betTypeName: this.betTypeName,
+                typeName: this.typeName
+            };
+
+            if (this.isLive !== undefined) {
+                settingItem.isLive = this.isLive;
+            }
+
+            if (this.rate !== null && this.rate !== undefined) {
+                settingItem.rate = this.rate;
+            }
+
+            if (this.groupId) {
+                settingItem.groupId = this.groupId;
+                settingItem.groupValue = this.groupValue;
+            }
+
+            if (this.groups) {
+                settingItem.groups = [];
+                this.groups.forEach((group: CommissionGroup) => {
+                    if (group.isChanged()) {
+                        settingItem.groups.push(group.toJson());
+                    }
+                });
+            }
+
+            if (this.upline) {
+                settingItem.upline = this.upline.toJson();
+            }
+
+            return settingItem;
         }
     }
 
@@ -138,6 +180,7 @@ module CustomerSetting {
         public toJson(): {} {
             return {
                 id: this.id,
+                value: this.value,
                 rate: this.rate,
                 maxRate: this.maxRate
             };

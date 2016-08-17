@@ -34,7 +34,9 @@ module CustomerSetting {
 
             if (angular.isDefined(label)) {
                 label = label.replace(/{(\d+)}/g, (match: string, index: number) => {
-                    return args[index] === (undefined || null) ? match : args[index];
+                    return args[index] === undefined || args[index] === null
+                        ? match
+                        : args[index];
                 });
             }
 
@@ -56,7 +58,9 @@ module CustomerSetting {
 
             if (angular.isDefined(msg)) {
                 msg = msg.replace(/{(\d+)}/g, (match: string, index: number) => {
-                    return args[index] === (undefined || null) ? match : args[index];
+                    return args[index] === undefined || args[index] === null
+                        ? match
+                        : args[index];
                 });
             }
 

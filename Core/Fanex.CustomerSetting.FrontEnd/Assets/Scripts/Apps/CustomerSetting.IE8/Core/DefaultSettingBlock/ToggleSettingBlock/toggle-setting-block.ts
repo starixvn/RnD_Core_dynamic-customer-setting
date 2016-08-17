@@ -31,7 +31,7 @@ module CustomerSetting.IE8 {
 
         public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope) => {
             scope.toggle = () => {
-                if (isNaN(scope.blockIndex)) {
+                if (this.isToggleAllDirective(scope)) {
                     if (scope.isExpanded) {
                         scope.sharedStates.collapseAllBlocks();
                     } else {
@@ -51,14 +51,14 @@ module CustomerSetting.IE8 {
             };
 
             scope.$watch("sharedStates", (sharedStates: TogglableSettingBlockSharedStates) => {
-                if (isNaN(scope.blockIndex)) {
+                if (this.isToggleAllDirective(scope)) {
                     scope.isExpanded = sharedStates.isExpandedAll();
                 } else {
                     scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
                 }
             }, true);
 
-            if (!isNaN(scope.blockIndex)) {
+            if (!this.isToggleAllDirective(scope)) {
                 scope.$watch("settingData", () => {
                     if (this.initializing) {
                         this.$timeout(() => this.initializing = false);
@@ -88,6 +88,10 @@ module CustomerSetting.IE8 {
         constructor($rootScope: ng.IRootScopeService, $timeout: ng.ITimeoutService) {
             this.$rootScope = $rootScope;
             this.$timeout = $timeout;
+        }
+
+        private isToggleAllDirective(scope: IToggleSettingBlockScope): boolean {
+            return scope.blockIndex === null || scope.blockIndex === undefined;
         }
     }
 

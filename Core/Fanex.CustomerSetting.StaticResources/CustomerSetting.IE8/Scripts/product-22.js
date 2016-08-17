@@ -34082,7 +34082,9 @@ var CustomerSetting;
                     replacements[_i - 1] = arguments[_i];
                 }
                 return originalString.replace(/{(\d+)}/g, function (match, index) {
-                    return replacements[index] === (undefined || null) ? match : replacements[index];
+                    return replacements[index] === undefined || replacements[index] === null
+                        ? match
+                        : replacements[index];
                 });
             };
             return StringFormater;
@@ -34312,7 +34314,7 @@ var CustomerSetting;
                 var settingItem = {};
                 var reservedProperties = ["oldSetting", "validationState"];
                 _.chain(this).keys().forEach(function (prop) {
-                    if (_this[prop] !== (undefined || null) && _.indexOf(reservedProperties, prop) < 0) {
+                    if (_this[prop] !== undefined && _this[prop] !== null && _.indexOf(reservedProperties, prop) < 0) {
                         if (_this[prop].toJson) {
                             settingItem[prop] = _this[prop].toJson();
                         }
@@ -35131,7 +35133,9 @@ var CustomerSetting;
                 var label = this.getMessage(key);
                 if (angular.isDefined(label)) {
                     label = label.replace(/{(\d+)}/g, function (match, index) {
-                        return args[index] === (undefined || null) ? match : args[index];
+                        return args[index] === undefined || args[index] === null
+                            ? match
+                            : args[index];
                     });
                 }
                 return label;
@@ -35154,7 +35158,9 @@ var CustomerSetting;
                 var msg = this.getMessage(key);
                 if (angular.isDefined(msg)) {
                     msg = msg.replace(/{(\d+)}/g, function (match, index) {
-                        return args[index] === (undefined || null) ? match : args[index];
+                        return args[index] === undefined || args[index] === null
+                            ? match
+                            : args[index];
                     });
                 }
                 return msg;
@@ -35870,7 +35876,7 @@ var CustomerSetting;
                 this.initializing = true;
                 this.link = function (scope) {
                     scope.toggle = function () {
-                        if (isNaN(scope.blockIndex)) {
+                        if (_this.isToggleAllDirective(scope)) {
                             if (scope.isExpanded) {
                                 scope.sharedStates.collapseAllBlocks();
                             }
@@ -35890,14 +35896,14 @@ var CustomerSetting;
                         }
                     };
                     scope.$watch("sharedStates", function (sharedStates) {
-                        if (isNaN(scope.blockIndex)) {
+                        if (_this.isToggleAllDirective(scope)) {
                             scope.isExpanded = sharedStates.isExpandedAll();
                         }
                         else {
                             scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
                         }
                     }, true);
-                    if (!isNaN(scope.blockIndex)) {
+                    if (!_this.isToggleAllDirective(scope)) {
                         scope.$watch("settingData", function () {
                             if (_this.initializing) {
                                 _this.$timeout(function () { return _this.initializing = false; });
@@ -35923,6 +35929,9 @@ var CustomerSetting;
                 this.$rootScope = $rootScope;
                 this.$timeout = $timeout;
             }
+            ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+                return scope.blockIndex === null || scope.blockIndex === undefined;
+            };
             ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
             return ToggleSettingBlockDirective;
         }());

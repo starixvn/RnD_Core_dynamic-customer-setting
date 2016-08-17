@@ -4,7 +4,8 @@
     {
         public const int CommissionIsNegative = 5101;
         public const int CommissionExceedsMaxValue = 5102;
-        public const int UnableToChangeUserGroup = 5103;
-        public const int InvalidUserGroup = 5104;
+        public const int CommissionMustBeLessThanValue = 5103;
+        public const int UnableToChangeUserGroup = 5104;
+        public const int InvalidUserGroup = 5105;
     }
 }

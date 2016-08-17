@@ -57,6 +57,11 @@
                     return new Result(ErrorCode.CommissionExceedsMaxValue, Message.CommissionCannotExceedMaxValue);
                 }
 
+                if (group.Rate > group.MaxRate)
+                {
+                    return new Result(ErrorCode.CommissionMustBeLessThanValue, string.Format(Message.CommissionMustBeLessThan, group.Rate));
+                }
+
                 if (group.Rate < 0)
                 {
                     return new Result(ErrorCode.CommissionIsNegative, Message.CommissionCannotBeNegative);

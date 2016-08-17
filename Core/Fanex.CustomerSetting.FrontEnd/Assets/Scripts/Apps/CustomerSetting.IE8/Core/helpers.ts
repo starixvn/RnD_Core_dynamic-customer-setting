@@ -6,7 +6,9 @@ module CustomerSetting.IE8 {
     export class StringFormater {
         public static format(originalString: string, ...replacements: any[]): string {
             return originalString.replace(/{(\d+)}/g, (match: string, index: number) => {
-                return replacements[index] === (undefined || null) ? match : replacements[index];
+                return replacements[index] === undefined || replacements[index] === null
+                    ? match
+                    : replacements[index];
             });
         }
     }
