@@ -51,6 +51,10 @@
     @include col(28%, true);
 }
 
+.w30-percent {
+    @include col(30%, true);
+}
+
 .w33-percent {
     @include col(33%, true);
 

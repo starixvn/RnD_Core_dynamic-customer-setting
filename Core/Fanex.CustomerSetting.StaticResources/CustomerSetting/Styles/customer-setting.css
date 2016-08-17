@@ -210,7 +210,7 @@ th {
 .x-ng-cloak {
   display: none !important; }
 
-.w16-percent, .w20-percent, .w25-percent, .w28-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
+.w16-percent, .w20-percent, .w25-percent, .w28-percent, .w30-percent, .w33-percent, .w40-percent, .w42-percent, .w50-percent, .w60-percent, .w80-percent, .w100-percent, .block__item, .block__item--full-width, .block__item--full-width .block__lbl,
 .block__item--full-width .block__lbl--white, .block__item--full-width .block__value, .block__lbl, .block__value, .full-width .block__item, .full-width .block__lbl,
 .full-width .block__lbl--white, .full-width .block__value {
   float: left; }
@@ -226,6 +226,9 @@ th {
 
 .w28-percent {
   width: 28% !important; }
+
+.w30-percent {
+  width: 30% !important; }
 
 .w33-percent {
   width: 33% !important; }
@@ -745,4 +748,39 @@ select.setting-field {
 
 .settingtype8 .modal__content {
   overflow-y: auto; }
+
+.settingtype10 .settingtype6 .block__item-group, .settingtype6 .settingtype10 .block__item-group, .settingtype10 .settingtype7 .block__lbl-wrapper, .settingtype7 .settingtype10 .block__lbl-wrapper, .settingtype10 .settingtype7 .block__header-cell, .settingtype7 .settingtype10 .block__header-cell, .settingtype10 .block__item, .settingtype10 .block__row {
+  display: table;
+  table-layout: fixed; }
+
+.settingtype10 .settingtype6 .block__column, .settingtype6 .settingtype10 .block__column, .settingtype10 .settingtype7 .check-all-field-lbl, .settingtype7 .settingtype10 .check-all-field-lbl, .settingtype10 .settingtype7 .check-all-field, .settingtype7 .settingtype10 .check-all-field, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-wrapper, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-wrapper, .settingtype10 .settingtype7 .setting-field--checkfield__check-ctrl-lbl, .settingtype7 .settingtype10 .setting-field--checkfield__check-ctrl-lbl, .settingtype10 .block__cell, .settingtype10 .block__lbl, .settingtype10 .block__value {
+  display: table-cell;
+  vertical-align: middle; }
+
+.settingtype10 .block__item {
+  float: none;
+  height: 100%; }
+
+.settingtype10 .block__row {
+  width: 100%; }
+  .settingtype10 .block__row--border-top {
+    border-top: 1px solid #7c98a4; }
+
+.settingtype10 .block__cell, .settingtype10 .block__lbl, .settingtype10 .block__value {
+  float: none;
+  width: 20%; }
+
+.settingtype10 .block__lbl {
+  padding-right: 0; }
+
+.settingtype10 block__sub-lbl {
+  background-color: #ecf3f7;
+  width: 25%; }
+
+.settingtype10 .block__value {
+  float: none;
+  width: auto; }
+
+.settingtype10 .block__sub-header {
+  padding: 0; }
 

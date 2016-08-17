@@ -7,8 +7,15 @@
 module CustomerSetting {
     "use strict";
 
-    interface ISettingType10ItemScope extends ng.IScope {
-        dataSource: SettingType10Item | CommissionGroup;
+    interface ISettingType10SelectDataSource {
+        rate: number,
+        upline?: { rate: number },
+        maxRate?: number,
+        validationState: ValidationResult;
+    }
+
+    interface ISettingType10SelectScope extends ng.IScope {
+        dataSource: ISettingType10SelectDataSource;
         range: Array<KeyValuePair<number, number>>;
     }
 
@@ -25,15 +32,13 @@ module CustomerSetting {
 
         public templateUrl: string = "settingtype10-select.htm";
 
-        public controller: any = ["$scope", ($scope: ISettingType10ItemScope) => {
-            $scope.$watch("dataSource", (dataSource: SettingType10Item | CommissionGroup) => {
-                var maxRate: number;
+        public controller: any = ["$scope", ($scope: ISettingType10SelectScope) => {
+            $scope.$watch("dataSource", (dataSource: ISettingType10SelectDataSource) => {
+                var maxRate: number = dataSource.rate;
 
-                if (dataSource instanceof SettingType10Item) {
-                    if (dataSource.upline) {
-                        maxRate = dataSource.upline.rate;
-                    }
-                } else {
+                if (dataSource.upline) {
+                    maxRate = dataSource.upline.rate;
+                } else if (dataSource.maxRate) {
                     maxRate = dataSource.maxRate;
                 }
 

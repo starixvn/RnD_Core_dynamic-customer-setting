@@ -144,7 +144,9 @@ module CustomerSetting {
         public oldRate: number;
         public validationState: ValidationResult;
 
-        constructor(group: any) {
+        constructor()
+        constructor(group: any);
+        constructor(group?: any) {
             if (group) {
                 this.id = group.id;
                 this.value = group.value;

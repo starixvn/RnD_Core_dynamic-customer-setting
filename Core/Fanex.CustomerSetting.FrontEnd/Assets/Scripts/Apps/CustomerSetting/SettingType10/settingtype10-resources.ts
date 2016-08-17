@@ -6,10 +6,10 @@ module CustomerSetting {
     "use strict";
 
     export class SettingType10ResourceService extends ResourceService {
-        public static $inject: string[] = ["settingType11Resources", "parametersService"];
+        public static $inject: string[] = ["settingType10Resources", "parametersService"];
 
-        constructor(settingType11Resources: any, parametersService: ParametersService) {
-            super(settingType11Resources, parametersService);
+        constructor(settingType10Resources: any, parametersService: ParametersService) {
+            super(settingType10Resources, parametersService);
         }
     }
 

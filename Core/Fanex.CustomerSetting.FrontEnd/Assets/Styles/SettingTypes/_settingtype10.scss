@@ -1,0 +1,50 @@
+﻿.settingtype10 {
+    %display-table {
+        display: table;
+        table-layout: fixed;
+    }
+
+    %display-table-cell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .block__item {
+        @extend %display-table;
+        float: none;
+        height: 100%;
+    }
+
+    .block__row {
+        @extend %display-table;
+        width: 100%;
+
+        &--border-top {
+            @include border(top);
+        }
+    }
+
+    .block__cell {
+        @extend %display-table-cell;
+        float: none;
+        width: 20%;
+    }
+    
+    .block__lbl {
+        padding-right: 0;
+    }
+
+    block__sub-lbl {
+        background-color: #ecf3f7;
+        width: 25%;
+    }
+
+    .block__value {
+        float: none;
+        width: auto;
+    }
+
+    .block__sub-header {
+        padding: 0;
+    }
+}

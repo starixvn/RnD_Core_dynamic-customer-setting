@@ -20,7 +20,7 @@
 (function () {
     "use strict";
 
-    var settingType11Resources = {};
+    var settingType10Resources = {};
 <#
     var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
     var resourcePath = Path.Combine(solutionPath, "SettingTypes/SettingType10/Fanex.CustomerSetting.SettingType10", "Resources");
@@ -50,7 +50,7 @@
         var cultureIndex = fileName.IndexOf('.');
         var culture = cultureIndex > 0 ? fileName.Substring(cultureIndex + 1) : "en-US";
         var resourceName = cultureIndex > 0 ? fileName.Substring(0, cultureIndex) : fileName;
-        var language = new StringBuilder(string.Format("\r\n    settingType11Resources[\"{0}\"] = settingType11Resources[\"{0}\"] || {{}};\r\n    settingType11Resources[\"{0}\"][\"{1}\"] = {{", resourceName.ToLower(), culture.ToLower()));
+        var language = new StringBuilder(string.Format("\r\n    settingType10Resources[\"{0}\"] = settingType10Resources[\"{0}\"] || {{}};\r\n    settingType10Resources[\"{0}\"][\"{1}\"] = {{", resourceName.ToLower(), culture.ToLower()));
         var filePath = Path.Combine(resourcePath, string.Format("{0}.resx", fileName));
 
         if (File.Exists(filePath))
@@ -83,7 +83,7 @@
     }
 #>
 
-    angular.module("customerSetting").value("settingType11Resources", settingType11Resources);
+    angular.module("customerSetting").value("settingType10Resources", settingType10Resources);
 })();
 <#+
 string CreateJsonPropertise(string name, string value, bool isLast)
