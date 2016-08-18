@@ -96,11 +96,11 @@ module CustomerSetting {
                             var updatedSettingItems: SettingType10Item[] = response.data.map((item: any) => new SettingType10Item(item, true, $scope.customerLevel));
 
                             $scope.settingType.settingItems.forEach((item: SettingType10Item) => {
-                                var matchedItems: SettingType10Item[] = updatedSettingItems.filter((updatedItem: SettingType10Item) => {
+                                var matchingItems: SettingType10Item[] = updatedSettingItems.filter((updatedItem: SettingType10Item) => {
                                     return item.sportTypeId === updatedItem.sportTypeId && item.betTypeId === updatedItem.betTypeId
                                 });
 
-                                if (matchedItems && matchedItems.length === 0) {
+                                if (matchingItems && matchingItems.length === 0) {
                                     updatedSettingItems.push(item);
                                 }
                             });

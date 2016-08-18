@@ -12,8 +12,8 @@
     </div>
     <div class="block__item" data-ng-if="userGroup">
         <div class="block__lbl">{{::('UserGroup' | settingType10Label)}}</div>
-        <div class="block__value" data-ng-if="!(settingType | editableSettingType)">{{userGroup}}</div>
-        <div class="block__value" data-ng-if="settingType | editableSettingType">
+        <div class="block__value align-center" data-ng-if="!(settingType | editableSettingType)">{{userGroup}}</div>
+        <div class="block__value align-center" data-ng-if="settingType | editableSettingType">
             <div class="setting-field-wrapper">
                 <select class="setting-field"
                         data-ng-model="userGroup"
@@ -56,20 +56,21 @@
             </div>
             <div class="block__value" data-ng-if="customerLevel !== avaiCustomerLevels.member">
                 <div class="align-center" data-ng-if="!item.groups">
+                    <div data-ng-if="!(settingType | editableSettingType)">{{item.rate}}</div>
                     <settingtype10-select data-ng-if="settingType | editableSettingType"
                                           data-data-source="item">
                     </settingtype10-select>
                 </div>
                 <div data-ng-if="item.groups"
-                     data-ng-repeat="group in groupIntoRows(item.groups)">
-                    <div class="block__row"
-                         data-ng-class="{ 'block__row--border-top': $index > 0 }">
+                     data-ng-repeat="row in groupIntoRows(item.groups)">
+                    <div class="block__row" data-ng-class="{ 'block__row--border-top': $index > 0 }">
                         <div class="block__cell block__sub-lbl" data-ng-repeat-start="cell in row">
                             {{cell.displayingName}}
                         </div>
                         <div class="block__cell align-center w25-percent"
                              data-ng-class="{ 'block__cell--no-border': $last }"
                              data-ng-repeat-end>
+                            <div data-ng-if="!(settingType | editableSettingType)">{{cell.rate}}</div>
                             <settingtype10-select data-ng-if="(settingType | editableSettingType) && cell.id"
                                                   data-data-source="cell">
                             </settingtype10-select>
@@ -93,6 +94,7 @@
                     <div class="block__cell">{{item.groupValue}}</div>
                     <div class="block__cell w30-percent">{{item.upline.rate}}</div>
                     <div class="block__cell block__cell--no-border w30-percent">
+                        <div data-ng-if="!(settingType | editableSettingType)">{{item.rate}}</div>
                         <settingtype10-select data-ng-if="settingType | editableSettingType"
                                               data-data-source="item">
                         </settingtype10-select>
