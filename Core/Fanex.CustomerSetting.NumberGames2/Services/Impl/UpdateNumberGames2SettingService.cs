@@ -13,17 +13,22 @@
     using Exceptions;
     using Logging;
     using Models;
+    using ONEbook.NG2.API.Interface;
     using Resources;
+    using SettingType10.Models;
+    using ApiModels = ONEbook.NG2.API.DTO;
+    using ApiServices = ONEbook.NG2.API;
 
     public class UpdateNumberGames2SettingService : UpdateSettingService, IUpdateSettingService
     {
         private const short ProductStatusSettingType = 11;
-        ////private const short CommissionGroupSettingType = 10;
+        private const short CommissionGroupSettingType = 10;
 
         private readonly ICustomerSyncStatusService _customerSyncStatusService;
+        private readonly IThirdPartyServices _apiService;
 
         public UpdateNumberGames2SettingService(ISettingContext settingContext)
-            : this(settingContext, null, null, null, null, null)
+            : this(settingContext, null, null, null, null, null, null)
         {
         }
 
@@ -33,10 +38,12 @@
             ITaskService pluggableTaskService = null,
             ILogger logger = null,
             ISettingTypeServiceFactory settingTypeServiceFactory = null,
-            ICustomerSyncStatusService customerSyncStatusService = null)
+            ICustomerSyncStatusService customerSyncStatusService = null,
+            IThirdPartyServices apiService = null)
             : base(settingContext, validationService, pluggableTaskService, logger, settingTypeServiceFactory)
         {
             _customerSyncStatusService = customerSyncStatusService ?? new CustomerSyncStatusService();
+            _apiService = apiService ?? new ApiServices.Services();
         }
 
         public override IResult Update(UpdateCustomerSettingCommand command)
@@ -44,18 +51,11 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNegativeOrZero(command.Setting.SettingTypes.Count(), "command.Setting.SettingTypes.Count");
 
-            ////CustomerSyncStatus syncStatus = _customerSyncStatusService.GetCustomerSyncStatus(
-            ////    command.Setting.CustomerId,
-            ////    command.Setting.ProductId);
+            CustomerSyncStatus syncStatus = _customerSyncStatusService.GetCustomerSyncStatus(
+                command.Setting.CustomerId,
+                command.Setting.ProductId);
 
-            // Cheat here while waiting for SPs and APIs.
-            var syncStatus = new CustomerSyncStatus
-            {
-                IsSynced = true,
-                IsUplineSynced = true
-            };
-
-            if (!syncStatus.IsUplineSynced)
+            if (!syncStatus.IsSyncedUpline)
             {
                 throw new CustomerSettingException(
                     $"Product {command.Setting.ProductId} has not been offered for Upline of Customer {command.Setting.CustomerId}.");
@@ -106,10 +106,11 @@
 
         private void SyncCustomer(UpdateCustomerSettingCommand command, List<SettingResult> settingTypeResults)
         {
-            // @@TODO: Call API to sync the customer profile.
-            // @@TODO: Should we sync the user group along with customer profile at one step?
-            bool syncResult = true;
+            string updatedUserGroup = DetectUserGroup(command);
+            ApiModels.Request request = CreateApiRequest(command, updatedUserGroup);
+            ApiModels.Response response = _apiService.SyncCustomers(request);
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
+            bool syncResult = response?.Result?.ResultDetail?.All(detail => detail.IsSuccess) == true;
 
             if (syncResult)
             {
@@ -149,19 +150,65 @@
 
         private void SyncUserGroup(UpdateCustomerSettingCommand command)
         {
+            string updatedUserGroup = DetectUserGroup(command);
+
+            if (!string.IsNullOrEmpty(updatedUserGroup))
+            {
+                ApiModels.Request request = CreateApiRequest(command, updatedUserGroup);
+
+                _apiService.ChangeUsersGroup(request);
+            }
+        }
+
+        private string DetectUserGroup(UpdateCustomerSettingCommand command)
+        {
+            string userGroup = null;
+
             if (command.Setting.CustomerLevel.IsMemberLevel())
             {
-                // @@TODO: Check whether user edited Commission.
-                // @@TODO: Check whether it is the first time edit
-                // @@TODO: Check whether UserGroup in Commission is updated.
-                bool allowGroupUpdate = true;
-                ////string newUserGroup = "a";
+                var memberCommissionSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == CommissionGroupSettingType)
+                    as MemberCommissionGroupSettingType;
 
-                if (allowGroupUpdate)
+                if (memberCommissionSettingType != null)
                 {
-                    // @@TODO: Call API to sync member group.
+                    string newUserGroup = memberCommissionSettingType.UserGroup;
+                    bool isValidUserGroup = true;
+
+                    // @@TODO: Check whether UserGroup in Commission is updated.
+                    // @@TODO: Call SP to check new user group is valid or not.
+                    // @@TODO: Check whether it is the first time edit.
+                    if (isValidUserGroup)
+                    {
+                        userGroup = newUserGroup;
+                    }
                 }
             }
+
+            return userGroup;
+        }
+
+        private ApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command, string userGroup)
+        {
+            bool isSubAccount = SettingContext.Actor.SubAccountId > 0;
+            var request = new ApiModels.Request
+            {
+                Auth = new ApiModels.Auth
+                {
+                    SiteId = MapSiteId()
+                },
+                Call = new ApiModels.Call
+                {
+                    UserId = SettingContext.Actor.Id,
+                    IsSubAccount = isSubAccount,
+                    Language = SettingContext.Language,
+                    CustIds = new List<int> { command.Setting.CustomerId },
+                    RoleId = command.Setting.CustomerLevel.Value,
+                    ////Currencies = new Dictionary<int, decimal> { { 0, 0 } },
+                    UserGroup = userGroup
+                }
+            };
+
+            return request;
         }
 
         private void UpdateCustomerSettingTypes(
@@ -185,6 +232,16 @@
 
                 settingTypeResults.Add(updateSettingTypeResult);
             }
+        }
+
+        private string MapSiteId()
+        {
+            string napSiteId = "2000";
+            string alphaSiteId = "3000";
+
+            return SettingContext.System == (byte)SystemType.Alpha || SettingContext.System == (byte)SystemType.InternalAlpha
+                ? alphaSiteId
+                : napSiteId;
         }
     }
 }

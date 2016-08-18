@@ -2,10 +2,14 @@
 {
     public enum SystemType
     {
-        Accounting = 1,
+        Nap = 1,
 
-        Agency = 2,
+        Alpha = 2,
 
-        ExternalAccounting = 3
+        InternalAlpha = 3,
+
+        ExternalNap = 4,
+
+        ExternalNapBetSetting = 5
     }
 }

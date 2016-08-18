@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Customer_Setting_Casino">
+    <Setting Key="Acc_CustSetting_SyncGameStatusSelect " SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+  </Function>
+</Functions>

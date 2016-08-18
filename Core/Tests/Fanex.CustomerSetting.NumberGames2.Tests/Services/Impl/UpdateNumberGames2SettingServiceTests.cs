@@ -14,6 +14,7 @@
     using NumberGames2.Services;
     using NumberGames2.Services.Impl;
     using NUnit.Framework;
+    using ONEbook.NG2.API.Interface;
 
     public class UpdateNumberGames2SettingServiceTests
     {
@@ -24,6 +25,7 @@
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ICustomerSyncStatusService _customerSyncStatusService;
         private IUpdateSettingService _updateSettingService;
+        private IThirdPartyServices _apiService;
         private List<ISettingTypeService> _settingTypeServices;
 
         [SetUp]
@@ -35,6 +37,7 @@
             _logger = Substitute.For<ILogger>();
             _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
             _customerSyncStatusService = Substitute.For<ICustomerSyncStatusService>();
+            _apiService = Substitute.For<IThirdPartyServices>();
             _settingTypeServices = new List<ISettingTypeService>();
 
             _settingContext.Actor.Returns(new User
@@ -62,7 +65,8 @@
                 _pluggableTaskService,
                  _logger,
                  _settingTypeServiceFactory,
-                 _customerSyncStatusService);
+                 _customerSyncStatusService,
+                 _apiService);
         }
 
         [Test]
@@ -132,7 +136,7 @@
                 .Returns(new CustomerSyncStatus
                 {
                     IsSynced = true,
-                    IsUplineSynced = true
+                    IsSyncedUpline = true
                 });
 
             // Act.

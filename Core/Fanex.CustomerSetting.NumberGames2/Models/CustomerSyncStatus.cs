@@ -4,6 +4,6 @@
     {
         public bool IsSynced { get; set; }
 
-        public bool IsUplineSynced { get; set; }
+        public bool IsSyncedUpline { get; set; }
     }
 }

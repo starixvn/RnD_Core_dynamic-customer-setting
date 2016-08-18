@@ -132,7 +132,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.backupMNL.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.local.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.pro.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.sit.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.uat.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.NumberGames2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -171,7 +190,11 @@
     <Content Include="App_Data\CustomerSettingSpNames\DEV\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.NumberGames2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -210,7 +233,11 @@
     <Content Include="App_Data\CustomerSettingSpNames\LOCAL\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.NumberGames2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -249,7 +276,11 @@
     <Content Include="App_Data\CustomerSettingSpNames\PRO\Fanex.CustomerSetting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.NumberGames2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -278,7 +309,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\SIT\Fanex.CustomerSetting.xml" />
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\APILoggerSpNames.xml" />
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.Casino.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.NumberGames2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\CustomerSettingSpNames\UAT\Fanex.CustomerSetting.Product20Tasks.xml">
@@ -396,6 +431,8 @@
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Web.backupMNL.config" />
+    <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

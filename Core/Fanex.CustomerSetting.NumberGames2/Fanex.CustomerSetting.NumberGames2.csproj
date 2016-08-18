@@ -43,6 +43,10 @@
       <HintPath>..\..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Module.Logs, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
       <Private>True</Private>
@@ -65,6 +69,14 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ONEbook.NG2.API.1.0.0.0-beta5\lib\net461\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -92,6 +104,10 @@
     <Compile Include="Services\Impl\UpdateNumberGames2SettingService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SettingTypes\SettingType10\Fanex.CustomerSetting.SettingType10\Fanex.CustomerSetting.SettingType10.csproj">
+      <Project>{5abdefc1-b529-4a67-a136-e72265914e6a}</Project>
+      <Name>Fanex.CustomerSetting.SettingType10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
@@ -104,8 +120,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fanex.CustomerSetting.NumberGames2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
