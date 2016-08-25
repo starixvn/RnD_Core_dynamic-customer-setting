@@ -9,7 +9,7 @@
 
     public class ProductStatusItem : SettingItemDefault
     {
-        private const string ProductXmlFormat = "<GameStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
+        private const string ProductXmlFormat = "<ProductStatus {0} IsDisabled=\"{1}\" IsDisabledDownline=\"{2}\"/>";
 
         public ProductStatusItem()
         {

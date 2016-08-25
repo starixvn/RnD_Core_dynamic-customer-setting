@@ -64,7 +64,7 @@
                         BetTypeId = 1,
                         IsDisabled = true,
                         Downline = new ProductStatusItem(true)
-                    }).Returns("<GameStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"1\"/>");
+                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"1\"/>");
                 yield return new TestCaseData(
                     new ProductStatusItem
                     {
@@ -72,14 +72,14 @@
                         BetTypeId = 1,
                         IsDisabled = false,
                         Downline = new ProductStatusItem(false)
-                    }).Returns("<GameStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"0\" IsDisabledDownline=\"0\"/>");
+                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"0\" IsDisabledDownline=\"0\"/>");
                 yield return new TestCaseData(
                     new ProductStatusItem
                     {
                         SportTypeId = 1,
                         BetTypeId = 1,
                         IsDisabled = true
-                    }).Returns("<GameStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>");
+                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>");
                 yield return new TestCaseData(
                     new ProductStatusItem
                     {
@@ -87,7 +87,7 @@
                         BetTypeId = 1,
                         IsDisabled = true,
                         Downline = new ProductStatusItem(false)
-                    }).Returns("<GameStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>");
+                    }).Returns("<ProductStatus SportType=\"1\" BetType=\"1\" IsDisabled=\"1\" IsDisabledDownline=\"0\"/>");
             }
         }
 
