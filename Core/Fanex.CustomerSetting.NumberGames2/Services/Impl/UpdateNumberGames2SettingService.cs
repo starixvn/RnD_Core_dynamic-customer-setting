@@ -103,7 +103,7 @@
         private void SyncCustomer(UpdateCustomerSettingCommand command, List<SettingResult> settingTypeResults)
         {
             ApiModels.Request request = CreateApiRequest(command);
-            ApiModels.Response response = _apiService.SyncCustomers(request);
+            ApiModels.IResponse response = _apiService.SyncCustomers(request);
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
             bool syncResult = response?.Result?.ResultDetail?.All(detail => detail.IsSuccess) == true;
 

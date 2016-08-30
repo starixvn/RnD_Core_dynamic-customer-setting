@@ -8,51 +8,22 @@
 
     internal static class StubHelpers
     {
-        public static readonly byte[] SettingTypes = { 11, 10, 9, 1 };
+        public static readonly byte[] SettingTypes = { 11, 3, 9, 1 };
 
         public static UpdateCustomerSettingCommand CreateUpdateSettingCommand(
             int customerId = 1,
             Level customerLevel = null,
             byte productId = 1,
-            Level uplineLevel = null)
+            Level uplineLevel = null,
+            byte[] settingTypes = null)
         {
             var settings = CreateCustomerSetting(
                 customerId,
                 customerLevel ?? Level.Master,
                 productId,
-                SettingTypes);
+                settingTypes ?? SettingTypes);
 
             return new UpdateCustomerSettingCommand(settings, uplineLevel);
-        }
-
-        public static MultipleUpdateCustomerSettingCommand CreateUpdateMultipleSettingCommand(
-            Level customerLevel = null,
-            byte productId = 1,
-            Level uplineLevel = null,
-            List<int> customerIds = null,
-            List<string> customerNames = null)
-        {
-            if (customerIds == null)
-            {
-                throw new System.ArgumentNullException(nameof(customerIds));
-            }
-
-            if (customerNames == null)
-            {
-                throw new System.ArgumentNullException(nameof(customerNames));
-            }
-
-            var settings = CreateCustomerSetting(
-                customerIds[0],
-                customerLevel ?? Level.Master,
-                productId,
-                SettingTypes);
-
-            return new MultipleUpdateCustomerSettingCommand(
-                settings,
-                customerIds,
-                customerNames,
-                uplineLevel);
         }
 
         public static Setting CreateCustomerSetting(
