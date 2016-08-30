@@ -15,7 +15,6 @@
     using Models;
     using ONEbook.NG2.API.Interface;
     using Resources;
-    using SettingType10.Models;
     using ApiModels = ONEbook.NG2.API.DTO;
     using ApiServices = ONEbook.NG2.API;
 
@@ -63,15 +62,12 @@
 
             if (syncStatus.IsSynced)
             {
-                SyncUserGroup(command);
-
                 return base.Update(command);
             }
 
             var settingTypeResults = new List<SettingResult>();
 
             SyncCustomer(command, settingTypeResults);
-            SyncUserGroup(command);
             UpdateCustomerSettingTypes(
                 command.Setting.CustomerId,
                 command.Setting.CustomerInfo,
@@ -106,8 +102,7 @@
 
         private void SyncCustomer(UpdateCustomerSettingCommand command, List<SettingResult> settingTypeResults)
         {
-            string updatedUserGroup = DetectUserGroup(command);
-            ApiModels.Request request = CreateApiRequest(command, updatedUserGroup);
+            ApiModels.Request request = CreateApiRequest(command);
             ApiModels.Response response = _apiService.SyncCustomers(request);
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
             bool syncResult = response?.Result?.ResultDetail?.All(detail => detail.IsSuccess) == true;
@@ -148,46 +143,7 @@
             }
         }
 
-        private void SyncUserGroup(UpdateCustomerSettingCommand command)
-        {
-            string updatedUserGroup = DetectUserGroup(command);
-
-            if (!string.IsNullOrEmpty(updatedUserGroup))
-            {
-                ApiModels.Request request = CreateApiRequest(command, updatedUserGroup);
-
-                _apiService.ChangeUsersGroup(request);
-            }
-        }
-
-        private string DetectUserGroup(UpdateCustomerSettingCommand command)
-        {
-            string userGroup = null;
-
-            if (command.Setting.CustomerLevel.IsMemberLevel())
-            {
-                var memberCommissionSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == CommissionGroupSettingType)
-                    as MemberCommissionGroupSettingType;
-
-                if (memberCommissionSettingType != null)
-                {
-                    string newUserGroup = memberCommissionSettingType.UserGroup;
-                    bool isValidUserGroup = true;
-
-                    // @@TODO: Check whether UserGroup in Commission is updated.
-                    // @@TODO: Call SP to check new user group is valid or not.
-                    // @@TODO: Check whether it is the first time edit.
-                    if (isValidUserGroup)
-                    {
-                        userGroup = newUserGroup;
-                    }
-                }
-            }
-
-            return userGroup;
-        }
-
-        private ApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command, string userGroup)
+        private ApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command)
         {
             bool isSubAccount = SettingContext.Actor.SubAccountId > 0;
             var request = new ApiModels.Request
@@ -202,9 +158,8 @@
                     IsSubAccount = isSubAccount,
                     Language = SettingContext.Language,
                     CustIds = new List<int> { command.Setting.CustomerId },
-                    RoleId = command.Setting.CustomerLevel.Value,
+                    RoleId = command.Setting.CustomerLevel.Value
                     ////Currencies = new Dictionary<int, decimal> { { 0, 0 } },
-                    UserGroup = userGroup
                 }
             };
 
@@ -236,6 +191,7 @@
 
         private string MapSiteId()
         {
+            // Accept to hard-code the site ID here since the IDs take different values for both sides.
             string napSiteId = "2000";
             string alphaSiteId = "3000";
 
