@@ -137,7 +137,7 @@ var DemoForm;
         function SampleDataFactory() {
         }
         SampleDataFactory.getSystemTypes = function () {
-            return new Array(new KeyValuePair(1, "accounting"), new KeyValuePair(2, "agency"), new KeyValuePair(3, "external accounting"));
+            return new Array(new KeyValuePair(1, "NAP"), new KeyValuePair(2, "Alpha"), new KeyValuePair(3, "Internal Alpha"), new KeyValuePair(4, "External NAP"));
         };
         SampleDataFactory.getLanuages = function () {
             return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("th-TH", "ภาษาไทย (th-TH)"), new KeyValuePair("zh-TW", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));
@@ -257,7 +257,7 @@ var DemoForm;
             for (var item in Role) {
                 if (item) {
                     var roleId = parseInt(item, 10);
-                    if (roleId !== Role.member) {
+                    if (!isNaN(roleId) && roleId !== Role.member) {
                         roles.push(new KeyValuePair(roleId, Role[roleId]));
                     }
                 }

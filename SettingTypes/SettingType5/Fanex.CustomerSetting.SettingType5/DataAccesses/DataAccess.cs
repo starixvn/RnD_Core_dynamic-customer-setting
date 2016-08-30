@@ -35,7 +35,7 @@
 
                 if (query.CustomerLevel == Level.Member)
                 {
-                    parameters.Add("roleid", query.UplineLevel.Value);
+                    parameters.Add("uplineroleid", query.UplineLevel.Value);
                 }
 
                 return objectDb.Query<ChargeCommissionDto>(parameters);

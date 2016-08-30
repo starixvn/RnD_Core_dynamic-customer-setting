@@ -494,7 +494,7 @@ th {
     width: 50%;
     border-bottom: 1px solid #7c98a4;
     border-right: 1px solid #7c98a4; }
-    .block__item--even {
+    .block__item--even, .block__item--odd {
       border-right: none; }
     .block__item--near-last {
       border-bottom: none; }

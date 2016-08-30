@@ -32909,6 +32909,161 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var CommissionResourceService = (function (_super) {
+        __extends(CommissionResourceService, _super);
+        function CommissionResourceService(commissionResources, parametersService) {
+            _super.call(this, commissionResources, parametersService);
+        }
+        CommissionResourceService.$inject = ["commissionResources", "parametersService"];
+        return CommissionResourceService;
+    }(CustomerSetting.ResourceService));
+    CustomerSetting.CommissionResourceService = CommissionResourceService;
+    CustomerSetting.ModuleRegister.service("commissionResourceService", CommissionResourceService);
+    function CommissionLabelFilter(commissionResourceService) {
+        return function (name) {
+            return commissionResourceService.getLabel(name);
+        };
+    }
+    CommissionLabelFilter.$inject = ["commissionResourceService"];
+    CustomerSetting.ModuleRegister.filter("commissionLabel", CommissionLabelFilter);
+    function CommissionMessageFilter(commissionResourceService) {
+        return function (name) {
+            var replacements = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                replacements[_i - 1] = arguments[_i];
+            }
+            replacements.unshift(name);
+            return commissionResourceService.getFormattedMessage.apply(commissionResourceService, replacements);
+        };
+    }
+    CommissionMessageFilter.$inject = ["commissionResourceService"];
+    CustomerSetting.ModuleRegister.filter("commissionMessage", CommissionMessageFilter);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType3Item = (function (_super) {
+        __extends(SettingType3Item, _super);
+        function SettingType3Item(settingItem, backup) {
+            if (backup === void 0) { backup = false; }
+            _super.call(this, settingItem);
+            if (settingItem) {
+                this.commRate = settingItem.commRate;
+                this.intervalStep = settingItem.intervalStep;
+                if (settingItem.upline) {
+                    this.upline = new SettingType3Item(settingItem.upline);
+                }
+            }
+            if (backup) {
+                this.oldSetting = new SettingType3Item(this);
+            }
+        }
+        SettingType3Item.prototype.isChanged = function () {
+            var isChanged = _super.prototype.isChanged.call(this);
+            var oldSetting = this.oldSetting;
+            return isChanged
+                || this.commRate !== oldSetting.commRate;
+        };
+        SettingType3Item.prototype.copySettingFrom = function (source) {
+            var isSuccessful = true;
+            var backupCommRate;
+            if (source) {
+                backupCommRate = this.commRate;
+                this.commRate = source.commRate;
+                isSuccessful = this.validate();
+                if (!isSuccessful) {
+                    this.commRate = backupCommRate;
+                }
+            }
+            return isSuccessful;
+        };
+        SettingType3Item.prototype.validate = function () {
+            if (this.commRate > this.upline.commRate) {
+                this.validationState = new CustomerSetting.ValidationResult("CommRateCannotBeExceedMaxValue", "commRate");
+                return false;
+            }
+            this.validationState = CustomerSetting.Result.normal;
+            return true;
+        };
+        return SettingType3Item;
+    }(CustomerSetting.DefaultSettingItem));
+    CustomerSetting.SettingType3Item = SettingType3Item;
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var roundingFactor = 10000;
+    var CommRateSelectDirective = (function () {
+        function CommRateSelectDirective(valueRangeService) {
+            var _this = this;
+            this.replace = true;
+            this.templateUrl = "comm-rate-select.htm";
+            this.controller = ["$scope", function ($scope) {
+                    $scope.$watch("settingItem", function () {
+                        $scope.range = _this.valueRangeService.generateRanges($scope.settingItem.commRate, 0, $scope.settingItem.upline.commRate, $scope.settingItem.intervalStep, roundingFactor);
+                    });
+                }];
+            this.valueRangeService = valueRangeService;
+        }
+        Object.defineProperty(CommRateSelectDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    settingItem: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        CommRateSelectDirective.$inject = ["valueRangeService"];
+        return CommRateSelectDirective;
+    }());
+    CustomerSetting.ModuleRegister.directive("commRateSelect", CommRateSelectDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var SettingType3Directive = (function (_super) {
+        __extends(SettingType3Directive, _super);
+        function SettingType3Directive(commissionResourceService) {
+            var _this = this;
+            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType3Item(settingItem, backup); });
+            this.templateUrl = "settingtype3.htm";
+            this.link = function (scope) {
+                if (scope.customerLevel === CustomerSetting.Level.member && scope.uplineLevel !== CustomerSetting.Level.agent) {
+                    scope.headerTemplateUrl = "settingtype3-header.htm";
+                }
+                scope.valueTemplateUrl = "settingtype3-value.htm";
+                scope.settingTypeName = _this.commissionResourceService.getLabel("Commission");
+            };
+            this.commissionResourceService = commissionResourceService;
+        }
+        SettingType3Directive.$inject = ["commissionResourceService"];
+        return SettingType3Directive;
+    }(CustomerSetting.SettingTypeDirective));
+    CustomerSetting.ModuleRegister.directive("settingtype3", SettingType3Directive);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var SettingType9Item = (function (_super) {
         __extends(SettingType9Item, _super);
         function SettingType9Item(settingItem, backup) {
@@ -34230,13 +34385,17 @@ var CustomerSetting;
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"right-btn-area\" title=\"{{(isExpanded ? \'Collapse\' : \'Collapse\') | label}}\" data-ng-class=\"{ \'right-btn-area--seperate\': blockIndex === null || blockIndex === undefined }\" data-ng-click=\"toggle()\"><span class=\"icon\" data-ng-class=\"{ \'icon--collapse\': isExpanded, \'icon--expand\': !isExpanded }\"></span></div>");
 $templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
 $templateCache.put("settingtype11.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
+$templateCache.put("comm-rate-select.htm","<div class=\"setting-field-wrapper\"><div data-tooltip data-message=\"{{settingItem.validationState | tooltipMessage:\'commissionResourceService\'}}\"><select class=\"setting-field\" data-ng-model=\"settingItem.commRate\" data-ng-options=\"item.value as item.key for item in range\" data-ng-class=\"{ \'setting-field--invalid\': (settingItem.validationState | highlightingField) }\"></select></div></div>");
+$templateCache.put("settingtype3-header.htm","<div data-ng-if=\"uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'CommissionForMaster\' | commissionLabel)}}</div><div class=\"block__lbl w33-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div></div><div data-ng-if=\"uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl\"></div><div class=\"block__lbl w40-percent\">{{::(\'CommissionForAgent\' | commissionLabel)}}</div><div class=\"block__lbl block__lbl--no-border w40-percent\">{{::(\'CommissionForMember\' | commissionLabel)}}</div></div>");
+$templateCache.put("settingtype3-value.htm","<comm-rate-select data-ng-if=\"settingType | editableSettingType\" data-setting-item=\"item\"></comm-rate-select><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType) && (customerLevel !== avaiCustomerLevels.member || uplineLevel === avaiCustomerLevels.agent)\">{{item.commRate}}</div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__cell w33-percent\">{{item.upline.upline.commRate}}</div><div class=\"block__cell w33-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.commRate}}</div></div><div class=\"align-center\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__cell w50-percent\">{{item.upline.commRate}}</div><div class=\"block__cell block__cell--no-border w50-percent\">{{item.commRate}}</div></div>");
+$templateCache.put("settingtype3.htm","<div data-ng-class=\"{ \'full-width\': customerLevel === avaiCustomerLevels.member && uplineLevel !== avaiCustomerLevels.agent }\"><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("settingtype9-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\"><div class=\"block__lbl w33-percent\">{{::(\'MinBet\' | settingType9Label)}}</div><div class=\"block__lbl w33-percent\">{{::(\'MaxBet\' | settingType9Label)}}</div><div class=\"block__lbl block__lbl--no-border w33-percent w33-percent--last\">{{::(\'MaxPerNumber\' | settingType9Label)}}</div></div>");
 $templateCache.put("settingtype9-input.htm","<div><input type=\"text\" maxlength=\"14\" class=\"setting-field setting-field--fullwidth setting-field--number\"></div>");
 $templateCache.put("settingtype9-value.htm","<div data-ng-if=\"settingType | editableSettingType\"><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"minBet\"></settingtype9-input><settingtype9-input class=\"block__cell w33-percent setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxBet\"></settingtype9-input><settingtype9-input class=\"block__cell block__cell--no-border w33-percent w33-percent--last setting-field-wrapper\" data-setting-item=\"item\" data-upline-level=\"uplineLevel\" data-customer-level=\"customerLevel\" data-field-name=\"maxPerNumber\"></settingtype9-input></div><div class=\"align-center\" data-ng-if=\"!(settingType | editableSettingType)\"><div class=\"block__cell w33-percent\">{{item.minBet | formatNumber}}</div><div class=\"block__cell w33-percent\">{{item.maxBet | formatNumber}}</div><div class=\"block__cell block__cell--no-border w33-percent w33-percent--last\">{{item.maxPerNumber | formatNumber}}</div></div>");
@@ -34589,6 +34748,110 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
     };
 
     angular.module("customerSetting").value("settingType11Resources", settingType11Resources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var commissionResources = {};
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["en-us"] = {
+        "Commission": "Commission",
+        "CommissionForAgent": "Comm for Agent",
+        "CommissionForMaster": "Comm for Master",
+        "CommissionForMember": "Comm for Member"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["zh-cn"] = {
+        "Commission": "佣金",
+        "CommissionForAgent": "代理佣金",
+        "CommissionForMaster": "总代理佣金",
+        "CommissionForMember": "会员的佣金"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["zh-tw"] = {
+        "Commission": "佣金",
+        "CommissionForAgent": "代理佣金",
+        "CommissionForMaster": "總代理佣金",
+        "CommissionForMember": "會員的佣金"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["ko-kr"] = {
+        "Commission": "수수료",
+        "CommissionForAgent": "에이전트 수수료",
+        "CommissionForMaster": "마스터 수수료",
+        "CommissionForMember": "회원 수수료"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["ja-jp"] = {
+        "Commission": "Commission",
+        "CommissionForMember": "メンバーの手数料"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["th-th"] = {
+        "Commission": "คอมมิชชั่น",
+        "CommissionForAgent": "ค่าคอมมิชชั่น จาก ตัวแทน",
+        "CommissionForMaster": "ค่าคอมมิชชั่น จากตัวแทนหลัก",
+        "CommissionForMember": "ค่าคอมมิชชั่นสำหรับสมาชิก"
+    };
+    
+    commissionResources["label"] = commissionResources["label"] || {};
+    commissionResources["label"]["vi-vn"] = {
+        "Commission": "Hoa hồng",
+        "CommissionForAgent": "Hoa hồng cho Agent",
+        "CommissionForMaster": "Hoa hồng Master",
+        "CommissionForMember": "Hoa hồng cho Member"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["en-us"] = {
+        "CommRateCannotBeExceedMaxValue": "Commission Rate cannot be exceed Max Value.",
+        "CommRateCannotBeNegative": "Commission Rate cannot be negative.",
+        "Msg_1": "Invalid Commission Rate.",
+        "UpdateCommissionSuccessfully": "Updated commission setting successfully."
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["zh-cn"] = {
+        "Msg_1": "佣金率无效",
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["zh-tw"] = {
+        "Msg_1": "傭金率無效",
+        "UpdateCommissionSuccessfully": "佣金已更新成功"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["ko-kr"] = {
+        "UpdateCommissionSuccessfully": "수수료가 성공적으로 업데이트되었습니다."
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["ja-jp"] = {
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["th-th"] = {
+        "Msg_1": "อัตราค่าคอมมิชชั่นไม่ถูกต้อง",
+        "UpdateCommissionSuccessfully": "ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว"
+    };
+    
+    commissionResources["message"] = commissionResources["message"] || {};
+    commissionResources["message"]["vi-vn"] = {
+        "UpdateCommissionSuccessfully": "Tiền hoa hồng được cập nhật thành công"
+    };
+
+    angular.module("customerSetting").value("commissionResources", commissionResources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/

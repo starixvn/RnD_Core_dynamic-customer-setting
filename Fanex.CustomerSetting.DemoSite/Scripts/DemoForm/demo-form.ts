@@ -216,9 +216,10 @@ module DemoFrom {
 
         public static getSystemTypes(): KeyValuePair<number, string>[] {
             return new Array<KeyValuePair<number, string>>(
-                new KeyValuePair<number, string>(1, "accounting"),
-                new KeyValuePair<number, string>(2, "agency"),
-                new KeyValuePair<number, string>(3, "external accounting"));
+                new KeyValuePair<number, string>(1, "NAP"),
+                new KeyValuePair<number, string>(2, "Alpha"),
+                new KeyValuePair<number, string>(3, "Internal Alpha"),
+                new KeyValuePair<number, string>(4, "External NAP"));
         }
 
         public static getLanuages(): KeyValuePair<string, string>[] {
@@ -379,7 +380,7 @@ module DemoFrom {
                 if (item) {
                     var roleId: number = parseInt(item, 10);
 
-                    if (roleId !== Role.member) {
+                    if (!isNaN(roleId) && roleId !== Role.member) {
                         roles.push(new KeyValuePair<number, string>(roleId, Role[roleId]));
                     }
                 }

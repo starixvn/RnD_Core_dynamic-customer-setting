@@ -318,7 +318,7 @@
         @include border(bottom);
         @include border(right);
 
-        &--even {
+        &--even, &--odd {
             border-right: none;
         }
 
