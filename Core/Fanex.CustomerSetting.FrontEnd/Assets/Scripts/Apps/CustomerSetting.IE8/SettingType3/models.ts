@@ -5,6 +5,7 @@ module CustomerSetting.IE8 {
 
     export class SettingType3Item extends DefaultSettingItem {
         public commRate: number;
+        public intervalStep: number;
         public upline: SettingType3Item;
 
         constructor();
@@ -15,6 +16,7 @@ module CustomerSetting.IE8 {
 
             if (settingItem) {
                 this.commRate = settingItem.commRate;
+                this.intervalStep = settingItem.intervalStep;
 
                 if (settingItem.upline) {
                     this.upline = new SettingType3Item(settingItem.upline);
@@ -63,10 +65,5 @@ module CustomerSetting.IE8 {
 
             return true;
         }
-    }
-
-    export class SettingType3Config {
-        public static step: number = 0.0005;
-        public static roundingFactor: number = 10000;
     }
 }

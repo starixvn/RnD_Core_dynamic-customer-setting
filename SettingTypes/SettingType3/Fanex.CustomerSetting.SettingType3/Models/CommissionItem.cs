@@ -22,6 +22,7 @@
             SportTypeId = commItemDto.SportTypeId;
             BetTypeId = commItemDto.BetTypeId;
             CommRate = commItemDto.CommRate;
+            IntervalStep = commItemDto.IntervalStep;
             Upline = new CommissionItem
             {
                 CommRate = commItemDto.UplineCommRate,
@@ -34,6 +35,8 @@
         }
 
         public decimal CommRate { get; set; }
+
+        public decimal IntervalStep { get; set; }
 
         public CommissionItem Upline { get; set; }
 

@@ -8,6 +8,8 @@
 
         public decimal ChargeCommission { get; set; }
 
+        public decimal IntervalStep { get; set; }
+
         public decimal UplineChargeCommission { get; set; }
 
         public decimal? UplineOfUplineChargeCommission { get; set; }

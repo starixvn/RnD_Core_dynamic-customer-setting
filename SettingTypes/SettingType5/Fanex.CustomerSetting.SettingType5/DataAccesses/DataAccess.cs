@@ -27,9 +27,18 @@
 
             using (var objectDb = new ObjectDb(settingKey))
             {
-                Hashtable parameterValues = GetSPParamsForGettingSettingType(query, Constants.SettingTypeId);
+                var parameters = new Hashtable
+                {
+                    { "custid", query.CustomerId },
+                    { "productid", query.ProductId }
+                };
 
-                return objectDb.Query<ChargeCommissionDto>(parameterValues);
+                if (query.CustomerLevel == Level.Member)
+                {
+                    parameters.Add("roleid", query.UplineLevel.Value);
+                }
+
+                return objectDb.Query<ChargeCommissionDto>(parameters);
             }
         }
 
@@ -40,7 +49,7 @@
             Level uplineLevel,
             string chargeCommissionXml)
         {
-            var param = new Hashtable
+            var parameters = new Hashtable
             {
                 { "userid", settingContext.Actor.Id },
                 { "subaccid", settingContext.Actor.SubAccountId },
@@ -53,7 +62,7 @@
                 { "errmsg", string.Empty }
             };
 
-            return ExecuteNonQuery("CustSetting_ChargeCommissionUpd", param);
+            return ExecuteNonQuery("CustSetting_ChargeCommissionUpd", parameters);
         }
     }
 }

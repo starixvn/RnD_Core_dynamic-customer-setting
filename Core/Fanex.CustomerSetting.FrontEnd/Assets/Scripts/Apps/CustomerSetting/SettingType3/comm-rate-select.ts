@@ -7,6 +7,8 @@
 module CustomerSetting {
     "use strict";
 
+    const roundingFactor: number = 10000;
+
     interface ISettingType3ItemScope extends ng.IScope {
         settingItem: SettingType3Item;
         range: Array<KeyValuePair<number, number>>;
@@ -31,8 +33,8 @@ module CustomerSetting {
                     $scope.settingItem.commRate,
                     0,
                     $scope.settingItem.upline.commRate,
-                    SettingType3Config.step,
-                    SettingType3Config.roundingFactor);
+                    $scope.settingItem.intervalStep,
+                    roundingFactor);
             });
         }];
 

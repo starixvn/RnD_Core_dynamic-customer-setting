@@ -8,6 +8,8 @@
 
         public decimal CommRate { get; set; }
 
+        public decimal IntervalStep { get; set; }
+
         public decimal UplineCommRate { get; set; }
 
         public decimal? UplineOfUplineCommRate { get; set; }

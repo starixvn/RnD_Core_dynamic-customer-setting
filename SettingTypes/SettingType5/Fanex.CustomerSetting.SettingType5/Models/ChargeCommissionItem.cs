@@ -22,6 +22,7 @@
             SportTypeId = chargeCommissionDto.SportTypeId;
             BetTypeId = chargeCommissionDto.BetTypeId;
             ChargeCommission = chargeCommissionDto.ChargeCommission;
+            IntervalStep = chargeCommissionDto.IntervalStep;
             Upline = new ChargeCommissionItem
             {
                 ChargeCommission = chargeCommissionDto.UplineChargeCommission
@@ -37,6 +38,8 @@
         }
 
         public decimal ChargeCommission { get; set; }
+
+        public decimal IntervalStep { get; set; }
 
         public ChargeCommissionItem Upline { get; set; }
 

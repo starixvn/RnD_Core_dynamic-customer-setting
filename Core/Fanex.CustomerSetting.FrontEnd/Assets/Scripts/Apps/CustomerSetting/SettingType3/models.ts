@@ -5,6 +5,7 @@ module CustomerSetting {
 
     export class SettingType3Item extends DefaultSettingItem {
         public commRate: number;
+        public intervalStep: number;
         public upline: SettingType3Item;
 
         constructor();
@@ -15,6 +16,7 @@ module CustomerSetting {
 
             if (settingItem) {
                 this.commRate = settingItem.commRate;
+                this.intervalStep = settingItem.intervalStep;
 
                 if (settingItem.upline) {
                     this.upline = new SettingType3Item(settingItem.upline);
@@ -62,16 +64,6 @@ module CustomerSetting {
             this.validationState = <ValidationResult>Result.normal;
 
             return true;
-        }
-    }
-
-    export class SettingType3Config {
-        public static get step(): number {
-            return 0.0005;
-        }
-
-        public static get roundingFactor(): number {
-            return 10000;
         }
     }
 }
