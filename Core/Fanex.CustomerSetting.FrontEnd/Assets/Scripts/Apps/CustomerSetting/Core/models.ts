@@ -28,6 +28,7 @@ module CustomerSetting {
         public mobilePhone: string;
         public fax: string;
         public email: string;
+        public currency: number;
 
         constructor(info: any) {
             if (info) {
@@ -39,6 +40,7 @@ module CustomerSetting {
                 this.mobilePhone = info.mobilePhone;
                 this.fax = info.fax;
                 this.email = info.email;
+                this.currency = info.currency;
             }
         }
     }

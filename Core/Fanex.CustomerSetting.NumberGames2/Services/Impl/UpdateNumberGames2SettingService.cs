@@ -158,8 +158,8 @@
                     IsSubAccount = isSubAccount,
                     Language = SettingContext.Language,
                     CustIds = new List<int> { command.Setting.CustomerId },
-                    RoleId = command.Setting.CustomerLevel.Value
-                    ////Currencies = new Dictionary<int, decimal> { { 0, 0 } },
+                    RoleId = command.Setting.CustomerLevel.Value,
+                    Currencies = new Dictionary<int, decimal> { { command.Setting.CustomerInfo.Currency, 0 } },
                 }
             };
 

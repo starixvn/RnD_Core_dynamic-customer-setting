@@ -20,5 +20,7 @@
         public string Fax { get; set; }
 
         public string Email { get; set; }
+
+        public byte Currency { get; set; }
     }
 }
