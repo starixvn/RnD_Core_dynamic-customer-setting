@@ -8,10 +8,8 @@
     resources["label"] = resources["label"] || {};
     resources["label"]["en-us"] = {
         "Agents": "Agents",
-        "Collapse": "Collapse",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
-        "Expand": "Expand",
         "Fax": "Fax",
         "FirstName": "First Name",
         "GeneralInformation": "General Information",

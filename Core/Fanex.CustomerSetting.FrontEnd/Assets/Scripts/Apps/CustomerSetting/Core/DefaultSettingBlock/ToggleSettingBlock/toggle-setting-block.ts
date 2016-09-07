@@ -6,8 +6,6 @@ module CustomerSetting {
     "use strict";
 
     export interface IToggleSettingBlockScope extends ng.IScope {
-        toggle: () => void;
-        isExpanded: boolean;
         blockIndex: number;
         sharedStates: TogglableSettingBlockSharedStates;
         settingData: DefaultSettingItem[];
@@ -16,8 +14,6 @@ module CustomerSetting {
 
     export class ToggleSettingBlockDirective implements ng.IDirective {
         public static $inject: string[] = ["$rootScope", "$timeout"];
-        public replace: boolean = true;
-        public templateUrl: string = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
 
         public get scope(): any {
             return {
@@ -30,34 +26,19 @@ module CustomerSetting {
 
         private initializing: boolean = true;
 
-        public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope) => {
-            scope.toggle = () => {
-                if (this.isToggleAllDirective(scope)) {
-                    if (scope.isExpanded) {
-                        scope.sharedStates.collapseAllBlocks();
-                    } else {
-                        scope.sharedStates.expandAllBlocks();
-                    }
+        public link: ng.IDirectiveLinkFn = (scope: IToggleSettingBlockScope, element: ng.IAugmentedJQuery) => {
+            var container: ng.IAugmentedJQuery = angular.element(element.parent());
 
-                    scope.isExpanded = scope.sharedStates.isExpandedAll();
-                } else {
-                    if (scope.isExpanded) {
-                        scope.sharedStates.collapseBlock(scope.blockIndex);
-                    } else {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                    }
+            container.addClass("togglable-bar");
+            container.on("click", (event: BaseJQueryEventObject) => {
+                var target: ng.IAugmentedJQuery = angular.element(event.target);
 
-                    scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
+                if (target.hasClass("togglable-bar")) {
+                    this.toggle(scope);
+
+                    return false;
                 }
-            };
-
-            scope.$watch("sharedStates", (sharedStates: TogglableSettingBlockSharedStates) => {
-                if (this.isToggleAllDirective(scope)) {
-                    scope.isExpanded = sharedStates.isExpandedAll();
-                } else {
-                    scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-                }
-            }, true);
+            });
 
             if (!this.isToggleAllDirective(scope)) {
                 scope.$watch("settingData", () => {
@@ -65,16 +46,14 @@ module CustomerSetting {
                         this.$timeout(() => this.initializing = false);
                     } else {
                         scope.sharedStates.expandBlock(scope.blockIndex);
-                        scope.isExpanded = true;
                     }
                 }, true);
 
                 this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
-                    if (settingTypeId === scope.settingTypeId
+                    if ((!settingTypeId || settingTypeId === scope.settingTypeId)
                         && scope.settingData
                         && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
-                        scope.isExpanded = true;
                     }
                 });
                 this.$rootScope.$on("queriedSetting", () => {
@@ -90,6 +69,24 @@ module CustomerSetting {
             this.$rootScope = $rootScope;
             this.$timeout = $timeout;
         }
+
+        private toggle(scope: IToggleSettingBlockScope): void {
+            if (this.isToggleAllDirective(scope)) {
+                if (scope.sharedStates.isExpandedAll()) {
+                    scope.sharedStates.collapseAllBlocks();
+                } else {
+                    scope.sharedStates.expandAllBlocks();
+                }
+            } else {
+                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                    scope.sharedStates.collapseBlock(scope.blockIndex);
+                } else {
+                    scope.sharedStates.expandBlock(scope.blockIndex);
+                }
+            }
+
+            scope.$apply();
+        };
 
         private isToggleAllDirective(scope: IToggleSettingBlockScope): boolean {
             return scope.blockIndex === null || scope.blockIndex === undefined;

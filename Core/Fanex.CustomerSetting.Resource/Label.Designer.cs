@@ -70,15 +70,6 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Collapse.
-        /// </summary>
-        public static string Collapse {
-            get {
-                return ResourceManager.GetString("Collapse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Click to duplicate the values.
         /// </summary>
         public static string CopyTooltip {
@@ -93,15 +84,6 @@ namespace Fanex.CustomerSetting.Resource {
         public static string CustomerSetting {
             get {
                 return ResourceManager.GetString("CustomerSetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expand.
-        /// </summary>
-        public static string Expand {
-            get {
-                return ResourceManager.GetString("Expand", resourceCulture);
             }
         }
         

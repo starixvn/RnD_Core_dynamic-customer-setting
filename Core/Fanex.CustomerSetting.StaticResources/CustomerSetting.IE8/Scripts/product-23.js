@@ -35415,32 +35415,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var SettingResultDirective = (function () {
-            function SettingResultDirective() {
-                this.replace = true;
-                this.scope = {
-                    result: "="
-                };
-                this.templateUrl = "SettingResult/setting-result.htm";
-                this.controller = ["$scope", "$window", function ($scope, $window) {
-                        $scope.$watch("result", function (result) {
-                            if (angular.isDefined(result)) {
-                                $window.scrollTo(0, 0);
-                            }
-                        });
-                    }];
-            }
-            return SettingResultDirective;
-        }());
-        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var SettingTypeDirective = (function () {
             function SettingTypeDirective(settingItemType) {
                 var _this = this;
@@ -35597,6 +35571,32 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingResultDirective = (function () {
+            function SettingResultDirective() {
+                this.replace = true;
+                this.scope = {
+                    result: "="
+                };
+                this.templateUrl = "SettingResult/setting-result.htm";
+                this.controller = ["$scope", "$window", function ($scope, $window) {
+                        $scope.$watch("result", function (result) {
+                            if (angular.isDefined(result)) {
+                                $window.scrollTo(0, 0);
+                            }
+                        });
+                    }];
+            }
+            return SettingResultDirective;
+        }());
+        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -35866,8 +35866,6 @@ var CustomerSetting;
         var ToggleSettingBlockDirective = (function () {
             function ToggleSettingBlockDirective($rootScope, $timeout) {
                 var _this = this;
-                this.replace = true;
-                this.templateUrl = "DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm";
                 this.scope = {
                     blockIndex: "=",
                     sharedStates: "=",
@@ -35875,35 +35873,17 @@ var CustomerSetting;
                     settingTypeId: "="
                 };
                 this.initializing = true;
-                this.link = function (scope) {
-                    scope.toggle = function () {
-                        if (_this.isToggleAllDirective(scope)) {
-                            if (scope.isExpanded) {
-                                scope.sharedStates.collapseAllBlocks();
-                            }
-                            else {
-                                scope.sharedStates.expandAllBlocks();
-                            }
-                            scope.isExpanded = scope.sharedStates.isExpandedAll();
+                this.link = function (scope, element) {
+                    var container = angular.element(element.parent());
+                    container.addClass("togglable-bar");
+                    container.on("click", function (event) {
+                        var target = angular.element(event.target);
+                        if (target.hasClass("togglable-bar")) {
+                            _this.toggle(scope);
+                            return false;
                         }
-                        else {
-                            if (scope.isExpanded) {
-                                scope.sharedStates.collapseBlock(scope.blockIndex);
-                            }
-                            else {
-                                scope.sharedStates.expandBlock(scope.blockIndex);
-                            }
-                            scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-                        }
-                    };
-                    scope.$watch("sharedStates", function (sharedStates) {
-                        if (_this.isToggleAllDirective(scope)) {
-                            scope.isExpanded = sharedStates.isExpandedAll();
-                        }
-                        else {
-                            scope.isExpanded = scope.sharedStates.isExpanded(scope.blockIndex);
-                        }
-                    }, true);
+                    });
+                    element.addClass("ng-hide");
                     if (!_this.isToggleAllDirective(scope)) {
                         scope.$watch("settingData", function () {
                             if (_this.initializing) {
@@ -35911,15 +35891,13 @@ var CustomerSetting;
                             }
                             else {
                                 scope.sharedStates.expandBlock(scope.blockIndex);
-                                scope.isExpanded = true;
                             }
                         }, true);
                         _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                            if (settingTypeId === scope.settingTypeId
+                            if ((!settingTypeId || settingTypeId === scope.settingTypeId)
                                 && scope.settingData
                                 && _.some(scope.settingData, function (item) { return !item.validationState.isSuccessful(); })) {
                                 scope.sharedStates.expandBlock(scope.blockIndex);
-                                scope.isExpanded = true;
                             }
                         });
                         _this.$rootScope.$on("queriedSetting", function () {
@@ -35930,6 +35908,26 @@ var CustomerSetting;
                 this.$rootScope = $rootScope;
                 this.$timeout = $timeout;
             }
+            ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+                if (this.isToggleAllDirective(scope)) {
+                    if (scope.sharedStates.isExpandedAll()) {
+                        scope.sharedStates.collapseAllBlocks();
+                    }
+                    else {
+                        scope.sharedStates.expandAllBlocks();
+                    }
+                }
+                else {
+                    if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                        scope.sharedStates.collapseBlock(scope.blockIndex);
+                    }
+                    else {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
+                    }
+                }
+                scope.$apply();
+            };
+            ;
             ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
                 return scope.blockIndex === null || scope.blockIndex === undefined;
             };
@@ -37775,10 +37773,9 @@ var CustomerSetting;
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
-$templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
+$templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-tooltip data-message=\"{{showError ? (\'CopyingFailed\' | message) : \'\'}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
-$templateCache.put("DefaultSettingBlock/ToggleSettingBlock/toggle-setting-block.htm","<div class=\"right-btn-area\" title=\"{{(isExpanded ? \'Collapse\' : \'Collapse\') | label}}\" data-ng-class=\"{ \'right-btn-area--seperate\': blockIndex === null || blockIndex === undefined }\" data-ng-click=\"toggle()\"><span class=\"icon\" data-ng-class=\"{ \'icon--collapse\': isExpanded, \'icon--expand\': !isExpanded }\"></span></div>");
 $templateCache.put("DefaultSettingBlock/Tooltip/tooltip.htm","<div class=\"tooltip\" data-ng-show=\"message\"><div class=\"tooltip__content\">{{message}}</div></div>");
 $templateCache.put("settingtype11-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'isDisabled\'}}\" data-settingtype11-checkbox data-ng-change=\"change()\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'isDisabled\') }\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-tooltip data-message=\"{{item.validationState | tooltipMessage:\'settingType11ResourceService\':\'downline.isDisabled\'}}\" data-settingtype11-checkbox data-ng-change=\"change()\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\" data-ng-class=\"{ \'setting-field--invalid\': (item.validationState | highlightingField:\'downline.isDisabled\') }\"> {{\'EnableDownline\' | settingType11Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType11Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType11Label}}</label></div>");
 $templateCache.put("settingtype11.htm","<div><div data-default-setting-type-grouping></div></div>");
@@ -37805,10 +37802,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     resources["label"] = resources["label"] || {};
     resources["label"]["en-us"] = {
         "Agents": "Agents",
-        "Collapse": "Collapse",
         "CopyTooltip": "Click to duplicate the values",
         "CustomerSetting": "Customer Setting",
-        "Expand": "Expand",
         "Fax": "Fax",
         "FirstName": "First Name",
         "GeneralInformation": "General Information",

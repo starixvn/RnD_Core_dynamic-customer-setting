@@ -37,7 +37,9 @@
             return new Setting(
                 customerId,
                 customerLevel ?? Level.Master,
+                new CustomerInfo(),
                 productId,
+                string.Empty,
                 settingTypes);
         }
 

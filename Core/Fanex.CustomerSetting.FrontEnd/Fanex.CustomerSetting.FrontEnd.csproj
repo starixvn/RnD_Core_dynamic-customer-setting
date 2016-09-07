@@ -185,7 +185,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\CustomerInfo\customer-info.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\default-setting-block.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\Core\DefaultSettingBlock\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\customer-setting-ie8.htm" />
@@ -338,7 +337,6 @@
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ToggleSettingBlock\toggle-setting-block.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\Tooltip\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\customer-setting.htm" />
