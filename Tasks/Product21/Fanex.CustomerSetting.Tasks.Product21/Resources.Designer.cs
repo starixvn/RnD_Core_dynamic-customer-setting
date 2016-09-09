@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legend:.
+        ///   Looks up a localized string similar to Notes:.
         /// </summary>
         internal static string MainInfoMessage {
             get {
