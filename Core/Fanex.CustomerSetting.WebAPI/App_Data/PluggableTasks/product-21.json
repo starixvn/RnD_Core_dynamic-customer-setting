@@ -1,0 +1,12 @@
+﻿[
+  {
+    "productId": 21,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.Product21.RenameBetTypesTask, Fanex.CustomerSetting.Tasks.Product21"
+        ]
+      }
+    ]
+  }
+]

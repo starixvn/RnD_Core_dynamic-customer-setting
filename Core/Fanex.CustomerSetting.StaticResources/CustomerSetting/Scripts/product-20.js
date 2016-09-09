@@ -30990,7 +30990,7 @@ var CustomerSetting;
                 this.productName = setting.productName;
                 this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
                 if (setting.warningMessage) {
-                    this.warningMessage = new Result(setting.warningMessage.code, setting.warningMessage.message, CustomerSetting.MessageType.warning);
+                    this.initializeWarningMessage(setting.warningMessage);
                 }
                 if (setting.settingTypes) {
                     this.settingTypes = setting.settingTypes.map(function (settingType) { return new SettingType(settingType); });
@@ -31083,6 +31083,17 @@ var CustomerSetting;
             return this.settingTypes.filter(function (settingType) {
                 return settingType.displayMode === CustomerSetting.DisplayMode.editable;
             });
+        };
+        Setting.prototype.initializeWarningMessage = function (warningMessage) {
+            this.warningMessage = new UpdatingSettingResult(warningMessage);
+            this.warningMessage.msgType = CustomerSetting.MessageType.warning;
+            if (this.warningMessage.subResults) {
+                this.warningMessage.subResults.forEach(function (subResult) {
+                    subResult.settingResults.forEach(function (settingResult) {
+                        settingResult.msgType = CustomerSetting.MessageType.warning;
+                    });
+                });
+            }
         };
         return Setting;
     }());

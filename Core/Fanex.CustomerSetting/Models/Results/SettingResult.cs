@@ -87,6 +87,15 @@
         {
         }
 
+        public SettingResult(
+            int code,
+            string mainMessage,
+            IEnumerable<string> subMessages)
+            : base(code, mainMessage)
+        {
+            SubMessages = subMessages;
+        }
+
         public int CustomerId { get; private set; }
 
         public string CustomerName { get; set; }

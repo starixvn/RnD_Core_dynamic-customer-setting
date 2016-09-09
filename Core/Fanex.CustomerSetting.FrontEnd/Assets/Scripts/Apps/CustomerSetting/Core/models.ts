@@ -268,7 +268,7 @@ module CustomerSetting {
         public productId: number;
         public productName: string;
         public settingTypes: Array<SettingType>;
-        public warningMessage: Result;
+        public warningMessage: UpdatingSettingResult;
         public isNormalMode: boolean;
 
         constructor();
@@ -283,7 +283,7 @@ module CustomerSetting {
                 this.isNormalMode = setting.isNormalMode === null || setting.isNormalMode === undefined ? true : setting.isNormalMode;
 
                 if (setting.warningMessage) {
-                    this.warningMessage = new Result(setting.warningMessage.code, setting.warningMessage.message, MessageType.warning);
+                    this.initializeWarningMessage(setting.warningMessage);
                 }
 
                 if (setting.settingTypes) {
@@ -392,6 +392,19 @@ module CustomerSetting {
             return this.settingTypes.filter((settingType: SettingType) => {
                 return settingType.displayMode === DisplayMode.editable;
             });
+        }
+
+        private initializeWarningMessage(warningMessage: any): void {
+            this.warningMessage = new UpdatingSettingResult(warningMessage);
+            this.warningMessage.msgType = MessageType.warning;
+
+            if (this.warningMessage.subResults) {
+                this.warningMessage.subResults.forEach((subResult: CustomerSettingResult) => {
+                    subResult.settingResults.forEach((settingResult: SettingResult) => {
+                        settingResult.msgType = MessageType.warning;
+                    });
+                });
+            }
         }
     }
 
