@@ -96,43 +96,33 @@ module CustomerSettingMatrix {
         }
 
         public queryProductNames(): void {
-            if (this.querySettingMatrix.settingTypeId === SettingType.Commission.id
-                || this.querySettingMatrix.settingTypeId === SettingType.ChargeCommission.id) {
-                this.isUIblocked = true;
+            this.isUIblocked = true;
 
-                this.$http
-                    .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
-                    .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                        var products = response.data;
+            this.$http
+                .post(this.appConfigService.resolveRootUrl(this.queryAllProducts), {})
+                .then((response: ng.IHttpPromiseCallbackArg<any>) => {
+                    var products = response.data;
 
-                        if (products && products.length > 0) {
-                            this.products = products.map((product: any) => new Product(product));
+                    if (products && products.length > 0) {
+                        this.products = products.map((product: any) => new Product(product));
 
-                            this.products.forEach(p => {
-                                if (p.id == this.querySettingMatrix.productId) {
-                                    this.product = p;
-                                }
-                            });
-
-                            if (this.product == null || this.product.id == 0) {
-                                this.product = this.products[0];
+                        this.products.forEach(p => {
+                            if (p.id == this.querySettingMatrix.productId) {
+                                this.product = p;
                             }
+                        });
 
-                            this.querySettingMatrix.productId = this.product.id;
-                            this.loadSettingMatrix();
+                        if (this.product == null || this.product.id == 0) {
+                            this.product = this.products[0];
                         }
-                    })
-                    .finally(() => {
-                        this.isUIblocked = false;
-                    });
-            }
-            else {
-                this.product = new Product({
-                    id: 0,
-                    name: ""
+
+                        this.querySettingMatrix.productId = this.product.id;
+                        this.loadSettingMatrix();
+                    }
+                })
+                .finally(() => {
+                    this.isUIblocked = false;
                 });
-                this.loadSettingMatrix();
-            }
         }
 
         public loadSettingMatrix(): void {

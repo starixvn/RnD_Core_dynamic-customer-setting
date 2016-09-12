@@ -122,6 +122,7 @@ module DemoFrom {
         }
 
         public viewMatrix(): void {
+            var productId: number = this.target.productId;
             var customerName: string = "";
 
             if (this.isMultipleUpdates) {
@@ -130,7 +131,7 @@ module DemoFrom {
                 customerName = (<SingleTarget>this.target).customerName;
             }
 
-            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&settingTypeId=1&sportTypeId=44&betTypeId=3&customerName=" + customerName), "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&productId=" + productId + "&settingTypeId=1&customerName=" + customerName), "_bank");
         }
 
         private resolveUrl(requestUrl: string): string {

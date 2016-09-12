@@ -61,11 +61,29 @@ namespace Fanex.CustomerSetting.Matrix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Type Id.
+        /// </summary>
+        internal static string BetTypeId {
+            get {
+                return ResourceManager.GetString("BetTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commission.
         /// </summary>
         internal static string Commission {
             get {
                 return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Live.
+        /// </summary>
+        internal static string IsLive {
+            get {
+                return ResourceManager.GetString("IsLive", resourceCulture);
             }
         }
         
@@ -93,6 +111,15 @@ namespace Fanex.CustomerSetting.Matrix.Resources {
         internal static string Product {
             get {
                 return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Type Id.
+        /// </summary>
+        internal static string SportTypeId {
+            get {
+                return ResourceManager.GetString("SportTypeId", resourceCulture);
             }
         }
         

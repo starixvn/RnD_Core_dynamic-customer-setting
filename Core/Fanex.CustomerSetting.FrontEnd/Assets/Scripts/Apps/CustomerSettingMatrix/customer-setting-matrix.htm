@@ -20,7 +20,7 @@
 
             <form class="matrix-form" data-ng-submit="ctrl.loadSettingMatrix()">
 
-                <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==3">
+                <div class="form-control">
                     <label for="product">
                         {{'Product' | label}}
                     </label>
@@ -28,22 +28,21 @@
                 </div>
                 <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
                     <label for="sporTypeId">
-                        Sport Type Id
+                        {{'SportTypeId' | label}}
                     </label>
                     <input name="sporTypeId" type="text" data-ng-model="ctrl.querySettingMatrix.sportTypeId" />
                 </div>
                 <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
                     <label for="betTypeId">
-                        Bet Type Id
+                        {{'BetTypeId' | label}}
                     </label>
                     <input name="betTypeId" type="text" data-ng-model="ctrl.querySettingMatrix.betTypeId" />
                 </div>
                 <div class="form-control check-box-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
                     <label for="isLive">
-                        Is Live
+                        {{'IsLive' | label}}
                         <input name="isLive" id="isLive" type="checkbox" data-ng-model="ctrl.querySettingMatrix.isLive" />
                     </label>
-                    
                 </div>
                 <div class="form-control">
                     <label for="userName">

@@ -86,6 +86,7 @@ var DemoFrom;
             this.postingToIframeService.submitToIframe(params);
         };
         DemoFormController.prototype.viewMatrix = function () {
+            var productId = this.target.productId;
             var customerName = "";
             if (this.isMultipleUpdates) {
                 customerName = this.target.firstCustomerName;
@@ -93,7 +94,7 @@ var DemoFrom;
             else {
                 customerName = this.target.customerName;
             }
-            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&settingTypeId=1&sportTypeId=44&betTypeId=3&customerName=" + customerName), "_bank");
+            this.$window.open(this.resolveUrl("Matrix/ViewCustomerSettingMatrix?showFilter=true&productId=" + productId + "&settingTypeId=1&customerName=" + customerName), "_bank");
         };
         DemoFormController.prototype.resolveUrl = function (requestUrl) {
             return this.applicationPath + requestUrl;

@@ -250,7 +250,7 @@
     </Content>
     <Content Include="Web.sit.config" />
     <Content Include="Web.uat.config" />
-    <None Include="Web.spu2.config" />
+    <Content Include="Web.spu2.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />

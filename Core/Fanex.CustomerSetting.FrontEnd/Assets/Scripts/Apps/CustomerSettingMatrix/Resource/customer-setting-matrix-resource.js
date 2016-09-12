@@ -4,10 +4,13 @@ var resources = resources || {};
 
 resources["label"] = resources["label"] || {};
 resources["label"]["en-us"] = {
+    "BetTypeId": "Bet Type Id",
     "Commission": "Commission",
+    "IsLive": "Is Live",
     "Live": "(Live)",
     "PositionTaking": "Position Taking",
     "Product": "Product",
+    "SportTypeId": "Sport Type Id",
     "Submit": "Submit",
     "Username": "Username"
 };

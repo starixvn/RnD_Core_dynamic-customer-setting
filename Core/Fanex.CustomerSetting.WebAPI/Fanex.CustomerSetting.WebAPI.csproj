@@ -359,21 +359,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
-    <None Include="Web.AppSettings.local.config">
+    <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.AppSettings.pro.config">
+    </Content>
+    <Content Include="Web.AppSettings.pro.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.AppSettings.sit.config">
+    </Content>
+    <Content Include="Web.AppSettings.sit.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.AppSettings.uat.config">
+    </Content>
+    <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.AppSettings.backupMNL.config">
+    </Content>
+    <Content Include="Web.AppSettings.backupMNL.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -411,12 +411,12 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Web.AppSettings.config" />
-    <None Include="Web.AppSettings.spu2.config">
+    <Content Include="Web.AppSettings.spu2.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.ConnectionStrings.backupMNL.config">
+    </Content>
+    <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Web.ConnectionStrings.config" />
     <Content Include="App_Data\PluggableTasks\product-20.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -425,27 +425,27 @@
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
     <Content Include="App_Data\PluggableTasks\product-21.json" />
-    <None Include="Web.ConnectionStrings.spu2.config">
+    <Content Include="Web.ConnectionStrings.spu2.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Web.ConnectionStrings.uat.config">
+    <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
-    <None Include="Web.ConnectionStrings.sit.config">
+    </Content>
+    <Content Include="Web.ConnectionStrings.sit.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
-    <None Include="Web.ConnectionStrings.pro.config">
+    </Content>
+    <Content Include="Web.ConnectionStrings.pro.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
-    <None Include="Web.ConnectionStrings.local.config">
+    </Content>
+    <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
-    <None Include="Web.spu2.config" />
+    <Content Include="Web.spu2.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
