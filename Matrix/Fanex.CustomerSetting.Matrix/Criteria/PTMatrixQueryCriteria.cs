@@ -4,7 +4,6 @@
 
     internal class PTMatrixQueryCriteria : CriteriaBase
     {
-        [SpParam(Ignored = true)]
         public byte ProductId { get; set; }
 
         public string UserName { get; set; }

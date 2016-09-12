@@ -24,7 +24,9 @@
                     <label for="product">
                         {{'Product' | label}}
                     </label>
-                    <select name="product" data-ng-model="ctrl.product" data-ng-options="product.name for product in ctrl.products"></select>
+                    <select name="product"
+                            data-ng-model="ctrl.querySettingMatrix.productId"
+                            data-ng-options="product.id as product.name for product in ctrl.products"></select>
                 </div>
                 <div class="form-control" data-ng-if="ctrl.querySettingMatrix.settingTypeId==1">
                     <label for="sporTypeId">
