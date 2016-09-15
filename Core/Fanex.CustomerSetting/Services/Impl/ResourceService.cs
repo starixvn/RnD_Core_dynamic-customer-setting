@@ -1,10 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Services.Impl
 {
-    using System;
-    using Common.Helper;
-    using Criteria;
     using Data.Repository;
-    using Models;
     using RemotingRefApi;
 
     public class ResourceService : IResourceService
@@ -14,55 +10,31 @@
         private const string SportTypeDefaultFormat = "Sport Type {0}";
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
+        private const string ProductRefId = "Product";
         private const string RefResourceDefaultFormat = "Ref Resource: {0} - Key: {1}";
-
-        private readonly IDynamicRepository _resourceRepository;
+        
         private readonly IRemotingRefService _remotingRef;
-        private readonly ICachingService _cachingservice;
 
-        public ResourceService(
-            IDynamicRepository resourceRepository = null,
-            IRemotingRefService remotingRef = null,
-            ICachingService cacheService = null)
+        public ResourceService(IRemotingRefService remotingRef = null)
         {
-            _resourceRepository = resourceRepository ?? new DynamicRepository();
             _remotingRef = remotingRef ?? new RemotingRefService();
-            _cachingservice = cacheService ?? new CachingService();
         }
 
         public string GetProductName(byte productId, string language)
         {
-            Check.Argument.IsNotNegativeOrZero(productId, "productId");
-
-            var languageKey = LanguageNameConverter.GetRefLanguageName(language).ToUpper();
-
-            var productName = GetProductNameFromCache(productId, languageKey);
-
-            if (productName != null)
+            if (productId <= 0)
             {
-                return productName.Name;
+                return string.Empty;
             }
 
-            return string.Format(ProductDefaultFormat, productId);
-        }
+            var resourceData = _remotingRef.GetResourceData(
+                ProductRefId,
+                productId.ToString(),
+                LanguageNameConverter.GetRefLanguageName(language).ToUpper());
 
-        private ProductName GetProductNameFromCache(byte productId, string languageKey)
-        {
-            var cacheKey = string.Format(ProductNamesCacheKey, productId, languageKey);
-
-            var productName = _cachingservice.GetOrAdd<ProductName>(
-                cacheKey,
-                () =>
-                {
-                    return _resourceRepository.Get<ProductName>(new ProductNamesQueryCriteria
-                    {
-                        ProductId = productId,
-                        LanguageKey = languageKey
-                    });
-                },
-                new TimeSpan(ProductNamesCacheTimeout, 0, 0));
-
-            return productName;
+            return string.IsNullOrEmpty(resourceData)
+                ? string.Format(ProductDefaultFormat, productId)
+                : resourceData;
         }
 
         public string GetSportTypeName(int sportTypeId, string language)

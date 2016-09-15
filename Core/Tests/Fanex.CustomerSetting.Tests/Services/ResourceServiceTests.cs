@@ -1,7 +1,5 @@
 ﻿namespace Fanex.CustomerSetting.Tests.Services
 {
-    using System;
-    using CustomerSetting.Models;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
     using Data.Repository;
@@ -13,90 +11,84 @@
     public class ResourceServiceTests
     {
         private IResourceService _resourceService;
-        private IDynamicRepository _dymanicRepository;
         private IRemotingRefService _remotingRefApi;
-        private ICachingService _cachingService;
         private string _language;
 
         [SetUp]
         public void Setup()
         {
-            _dymanicRepository = Substitute.For<IDynamicRepository>();
             _remotingRefApi = Substitute.For<IRemotingRefService>();
-            _cachingService = Substitute.For<ICachingService>();
             _language = "en-US";
-            _resourceService = new ResourceService(_dymanicRepository, _remotingRefApi, _cachingService);
+            _resourceService = new ResourceService(_remotingRefApi);
         }
 
         #region Get Product Name
 
         [Test]
-        public void GetProductName_ProductIdIsZero_ThrowArgumentOutOfRangeException()
+        public void GetProductName_ProductIdIsZero_ReturnEmptyName()
         {
-            //// Arrange
+            //// Act
             byte productId = 0;
+            var actualProductName = _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            Assert.Throws<ArgumentOutOfRangeException>(
-                new TestDelegate(
-                    () => _resourceService.GetProductName(productId, _language)));
+            Assert.IsEmpty(actualProductName);
         }
 
         [Test]
-        public void GetProductName_Always_GetProductNameFromCache()
+        public void GetProductName_Always_ExecuteGetResourceDataOfRemotingRefApi()
         {
             //// Arrange
             byte productId = 1;
-            var productName = new ProductName { ProductId = productId, Name = "product name EN" };
-            _cachingService.GetOrAdd<ProductName>(
+
+            //// Act
+            _resourceService.GetProductName(productId, _language);
+
+            //// Assert
+            _remotingRefApi
+                .Received()
+                .GetResourceData(
+                Arg.Is<string>(refId => refId == "Product"),
+                Arg.Is<string>(resourceId => resourceId == productId.ToString()),
+                Arg.Any<string>());
+        }
+
+        [Test]
+        public void GetProductName_Always_ReturnDataFromRemotingRefApi()
+        {
+            //// Arrange
+            byte productId = 1;
+            string expectedProductName = "Product Name";
+
+            _remotingRefApi.GetResourceData(
+                Arg.Is<string>(refId => refId == "Product"),
                 Arg.Any<string>(),
-                Arg.Any<Func<ProductName>>(),
-                new TimeSpan(1, 0, 0)).Returns(productName);
+                Arg.Any<string>()).Returns(expectedProductName);
 
             //// Act
-            var actualResult = _resourceService.GetProductName(productId, _language);
+            var actualProductName = _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            Assert.AreEqual(productName.Name, actualResult);
+            Assert.AreEqual(expectedProductName, actualProductName);
         }
 
-        [Test]
-        public void GetProductName_NoDataInCache_ReturnsDefaultProductName()
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetProductName_ProductNameIsNullOrEmpty_ReturnDefaultProductName(string productNameFromApi)
         {
             //// Arrange
             byte productId = 1;
-            ProductName nullProductName = null;
-            _cachingService.GetOrAdd<ProductName>(
-               Arg.Any<string>(),
-               Arg.Any<Func<ProductName>>(),
-               new TimeSpan(1, 0, 0)).Returns(nullProductName);
+
+            _remotingRefApi.GetResourceData(
+                Arg.Is<string>(refId => refId == "Product"),
+                Arg.Any<string>(),
+                Arg.Any<string>()).Returns(productNameFromApi);
 
             //// Act
-            var actualResult = _resourceService.GetProductName(productId, _language);
+            var actualProductName = _resourceService.GetProductName(productId, _language);
 
             //// Assert
-            Assert.AreEqual(string.Format("Product {0}", productId), actualResult);
-        }
-
-        [Test]
-        public void GetProductName_NoDataInCache_ReturnDataGetFromRepository()
-        {
-            //// Arrange
-            byte productId = 1;
-            var productName = new ProductName { Name = "A product name" };
-
-            _cachingService.GetOrAdd<ProductName>(
-               Arg.Any<string>(),
-               Arg.Any<Func<ProductName>>(),
-               new TimeSpan(1, 0, 0)).Returns(productName);
-
-            _dymanicRepository.Get<ProductName>(Arg.Any<ICriteria>()).Returns(productName);
-
-            //// Act
-            var actualResult = _resourceService.GetProductName(productId, _language);
-
-            //// Assert
-            Assert.AreEqual(productName.Name, actualResult);
+            Assert.AreEqual("Product 1", actualProductName);
         }
 
         #endregion Get Product Name
