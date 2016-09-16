@@ -4,12 +4,14 @@
     using System.Linq;
     using Common.Helper;
     using Constants;
+    using Criteria;
     using CustomerSetting.Models;
     using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using CustomerSetting.Services;
     using CustomerSetting.Services.Impl;
+    using Data.Repository;
     using Exceptions;
     using Logging;
     using Models;
@@ -17,6 +19,7 @@
     using Resources;
     using ApiModels = ONEbook.NG2.API.DTO;
     using ApiServices = ONEbook.NG2.API;
+    using CreateAccountApiModels = ONEbook.NG2.API.DTO.CreateAccount;
 
     public class UpdateNumberGames2SettingService : UpdateSettingService, IUpdateSettingService
     {
@@ -25,9 +28,10 @@
 
         private readonly ICustomerSyncStatusService _customerSyncStatusService;
         private readonly IThirdPartyServices _apiService;
+        private readonly IDynamicRepository _dynamicRepository;
 
         public UpdateNumberGames2SettingService(ISettingContext settingContext)
-            : this(settingContext, null, null, null, null, null, null)
+            : this(settingContext, null, null, null, null, null, null, null)
         {
         }
 
@@ -38,11 +42,13 @@
             ILogger logger = null,
             ISettingTypeServiceFactory settingTypeServiceFactory = null,
             ICustomerSyncStatusService customerSyncStatusService = null,
-            IThirdPartyServices apiService = null)
+            IThirdPartyServices apiService = null,
+            IDynamicRepository dynamicRepository = null)
             : base(settingContext, validationService, pluggableTaskService, logger, settingTypeServiceFactory)
         {
             _customerSyncStatusService = customerSyncStatusService ?? new CustomerSyncStatusService();
             _apiService = apiService ?? new ApiServices.Services();
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public override IResult Update(UpdateCustomerSettingCommand command)
@@ -102,10 +108,11 @@
 
         private void SyncCustomer(UpdateCustomerSettingCommand command, List<SettingResult> settingTypeResults)
         {
-            ApiModels.Request request = CreateApiRequest(command);
-            ApiModels.IResponse response = _apiService.SyncCustomers(request);
+            CreateAccountApiModels.Request request = CreateApiRequest(command);
+            CreateAccountApiModels.Response response = _apiService.SyncCustomers(request);
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
-            bool syncResult = response?.Result?.ResultDetail?.All(detail => detail.IsSuccess) == true;
+            bool syncResult = response?.Result?.IsSuccess == true;
+            ///bool syncResult = response?.Result?.AccountArray?.All(detail => detail.IsCreated == 1) == true;
 
             if (syncResult)
             {
@@ -143,23 +150,25 @@
             }
         }
 
-        private ApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command)
+        private CreateAccountApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command)
         {
-            bool isSubAccount = SettingContext.Actor.SubAccountId > 0;
-            var request = new ApiModels.Request
+            int uplineId = GetDirectUplineId(command.Setting.CustomerId);
+            var customerInfo = new CreateAccountApiModels.AccountInfo
+            {
+                ObCustId = command.Setting.CustomerId
+            };
+            var request = new CreateAccountApiModels.Request
             {
                 Auth = new ApiModels.Auth
                 {
-                    SiteId = MapSiteId()
+                    SiteId = MapAccessingSiteId()
                 },
-                Call = new ApiModels.Call
+                Call = new CreateAccountApiModels.Call
                 {
-                    UserId = SettingContext.Actor.Id,
-                    IsSubAccount = isSubAccount,
-                    Language = SettingContext.Language,
-                    CustIds = new List<int> { command.Setting.CustomerId },
-                    RoleId = command.Setting.CustomerLevel.Value,
-                    Currencies = new Dictionary<int, decimal> { { command.Setting.CustomerInfo.Currency, 0 } },
+                    AccountArray = new List<CreateAccountApiModels.AccountInfo> { customerInfo },
+                    CurrencyId = command.Setting.CustomerInfo.Currency,
+                    UplineId = uplineId,
+                    Level = command.Setting.CustomerLevel.Value
                 }
             };
 
@@ -189,15 +198,25 @@
             }
         }
 
-        private string MapSiteId()
+        private int MapAccessingSiteId()
         {
             // Accept to hard-code the site ID here since the IDs take different values for both sides.
-            string napSiteId = "2000";
-            string alphaSiteId = "3000";
+            int napSiteId = 2000;
+            int alphaSiteId = 3000;
 
             return SettingContext.System == (byte)SystemType.Alpha || SettingContext.System == (byte)SystemType.InternalAlpha
                 ? alphaSiteId
                 : napSiteId;
+        }
+
+        private int GetDirectUplineId(int customerId)
+        {
+            var criteria = new DirectUplineCriteria
+            {
+                CustId = customerId
+            };
+
+            return _dynamicRepository.Get<int>(criteria);
         }
     }
 }
