@@ -25,70 +25,6 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_ParametersAreNull_ThrowException()
-        {
-            // Arrange.
-            CustomerSettingQuery query = null;
-            ISetting setting = null;
-
-            // Act.
-            TestDelegate invokeDelegate = () => _task.Invoke(_settingContext, query, setting);
-
-            // Assert.
-            Assert.Throws<ArgumentNullException>(invokeDelegate);
-        }
-
-        [Test]
-        public void PostQueryCustomerSetting_ParametersAreNotNull_WarningMessageIsNotNull()
-        {
-            // Arrange.
-            var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            ISetting setting = CreateSampleSettingData();
-
-            // Act.
-            _task.Invoke(_settingContext, query, setting);
-
-            // Assert.
-            Assert.NotNull(setting.WarningMessage);
-        }
-
-        [Test]
-        public void PostQueryCustomerSetting_ParametersAreNotNull_WarningMessageIsTypeOfUpdateSettingResult()
-        {
-            // Arrange.
-            var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            ISetting setting = CreateSampleSettingData();
-
-            // Act.
-            _task.Invoke(_settingContext, query, setting);
-
-            // Assert.
-            Assert.IsInstanceOf<UpdateSettingResult>(setting.WarningMessage);
-        }
-
-        [Test]
-        public void PostQueryCustomerSetting_ParametersAreNotNull_WarningMessageContainsExpectedContent()
-        {
-            // Arrange.
-            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
-            ISetting setting = CreateSampleSettingData();
-
-            // Act.
-            _task.Invoke(_settingContext, query, setting);
-
-            // Assert.
-            var warningMessage = setting.WarningMessage as UpdateSettingResult;
-
-            Assert.IsNotEmpty(warningMessage.SubResults);
-
-            var subMessage = warningMessage.SubResults.ElementAt(0);
-
-            Assert.AreEqual(Resources.MainInfoMessage, subMessage.Message);
-            Assert.AreEqual(Resources.NormalGamesSubMessage, subMessage.SubMessages.ElementAt(0));
-            Assert.AreEqual(Resources.VipBaccaratSubMessage, subMessage.SubMessages.ElementAt(1));
-        }
-
-        [Test]
         public void PostQueryCustomerSettingType_ParametersAreNull_ThrowException()
         {
             // Arrange.
@@ -116,11 +52,28 @@
             var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
                 settingItem => (settingItem as SettingItemDefault).BetTypeId == 2401) as SettingItemDefault;
 
-            Assert.AreEqual(Resources.NormalGames, assertedSettingItem.BetTypeName);
+            Assert.AreEqual(Resources.OtherDisplayingTextForBaccarat, assertedSettingItem.BetTypeName);
         }
 
         [Test]
         public void PostQueryCustomerSettingType_SettingTypeIs6_RenameBetType2401()
+        {
+            // Arrange.
+            var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
+            SettingType settingType = CreateSampleSettingType7Data();
+
+            // Act.
+            _task.Invoke(_settingContext, query, settingType);
+
+            // Assert.
+            var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
+                settingItem => (settingItem as SettingItemDefault).BetTypeId == 2401) as SettingItemDefault;
+
+            Assert.AreEqual(Resources.OtherDisplayingTextForBaccarat, assertedSettingItem.BetTypeName);
+        }
+
+        [Test]
+        public void PostQueryCustomerSettingType_SettingTypeIs4_BetType2402NameStaysTheSame()
         {
             // Arrange.
             var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
@@ -131,9 +84,26 @@
 
             // Assert.
             var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
-                settingItem => (settingItem as SettingItemDefault).BetTypeId == 2401) as SettingItemDefault;
+                settingItem => (settingItem as SettingItemDefault).BetTypeId == 2402) as SettingItemDefault;
 
-            Assert.AreEqual(Resources.NormalGames, assertedSettingItem.BetTypeName);
+            Assert.AreEqual("Bet Type 2402", assertedSettingItem.BetTypeName);
+        }
+
+        [Test]
+        public void PostQueryCustomerSettingType_SettingTypeIs6_RenameBetType2402()
+        {
+            // Arrange.
+            var query = Substitute.For<CustomerSettingQuery>(1, Level.Agent, (byte)21, null);
+            SettingType settingType = CreateSampleSettingType7Data();
+
+            // Act.
+            _task.Invoke(_settingContext, query, settingType);
+
+            // Assert.
+            var assertedSettingItem = settingType.SettingItems.FirstOrDefault(
+                settingItem => (settingItem as SettingItemDefault).BetTypeId == 2402) as SettingItemDefault;
+
+            Assert.AreEqual(Resources.OtherDisplayingTextForVipBaccarat, assertedSettingItem.BetTypeName);
         }
 
         private ISetting CreateSampleSettingData()
@@ -169,28 +139,36 @@
         {
             SettingType settingType4 = Substitute.For<SettingType>();
             var betType2401 = Substitute.For<SettingItemDefault>();
+            var betType2402 = Substitute.For<SettingItemDefault>();
             var settingItems = new List<SettingItemDefault>();
 
             settingType4.Id = 4;
             settingType4.SettingItems = settingItems;
             betType2401.BetTypeId = 2401;
+            betType2402.BetTypeId = 2402;
+            betType2402.BetTypeName = "Bet Type 2402";
             settingItems.Add(betType2401);
+            settingItems.Add(betType2402);
 
             return settingType4;
         }
 
-        private SettingType CreateSampleSettingType6Data()
+        private SettingType CreateSampleSettingType7Data()
         {
-            SettingType settingType6 = Substitute.For<SettingType>();
+            SettingType settingType7 = Substitute.For<SettingType>();
             var betType2401 = Substitute.For<SettingItemDefault>();
+            var betType2402 = Substitute.For<SettingItemDefault>();
             var settingItems = new List<SettingItemDefault>();
 
-            settingType6.Id = 6;
-            settingType6.SettingItems = settingItems;
+            settingType7.Id = 7;
+            settingType7.SettingItems = settingItems;
             betType2401.BetTypeId = 2401;
+            betType2402.BetTypeId = 2402;
+            betType2402.BetTypeName = "Bet Type 2402";
             settingItems.Add(betType2401);
+            settingItems.Add(betType2402);
 
-            return settingType6;
+            return settingType7;
         }
     }
 }

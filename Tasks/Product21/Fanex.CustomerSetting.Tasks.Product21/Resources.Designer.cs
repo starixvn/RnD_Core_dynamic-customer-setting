@@ -61,38 +61,20 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notes:.
+        ///   Looks up a localized string similar to Baccarat, Roulette, Sic Bo, Dragon Tiger.
         /// </summary>
-        internal static string MainInfoMessage {
+        internal static string OtherDisplayingTextForBaccarat {
             get {
-                return ResourceManager.GetString("MainInfoMessage", resourceCulture);
+                return ResourceManager.GetString("OtherDisplayingTextForBaccarat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Normal Games.
+        ///   Looks up a localized string similar to VIP Baccarat (min bet might vary from different table).
         /// </summary>
-        internal static string NormalGames {
+        internal static string OtherDisplayingTextForVipBaccarat {
             get {
-                return ResourceManager.GetString("NormalGames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting of Normal Games is applied for Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat - SideBet..
-        /// </summary>
-        internal static string NormalGamesSubMessage {
-            get {
-                return ResourceManager.GetString("NormalGamesSubMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting of VIP Baccarat is applied for VIP Baccarat - Join/Reserve..
-        /// </summary>
-        internal static string VipBaccaratSubMessage {
-            get {
-                return ResourceManager.GetString("VipBaccaratSubMessage", resourceCulture);
+                return ResourceManager.GetString("OtherDisplayingTextForVipBaccarat", resourceCulture);
             }
         }
     }

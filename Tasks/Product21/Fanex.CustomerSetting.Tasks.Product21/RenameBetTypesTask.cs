@@ -1,16 +1,17 @@
 ﻿namespace Fanex.CustomerSetting.Tasks.Product21
 {
+    using System.Linq;
     using Common.Helper;
     using Models;
     using Models.Requests;
-    using Models.Results;
     using Tasks;
 
-    public class RenameBetTypesTask : IPostQueryCustomerSettingTypeTask, IPostQueryCustomerSettingTask
+    public class RenameBetTypesTask : IPostQueryCustomerSettingTypeTask
     {
         private const short ProductStatusSettingType = 4;
         private const short StakeLevelSettingType = 7;
         private const int Baccarat = 2401;
+        private const int VipBaccarat = 2402;
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, SettingType settingTypeData)
         {
@@ -18,36 +19,31 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(settingTypeData, nameof(settingTypeData));
 
-            if (settingTypeData.Id == ProductStatusSettingType || settingTypeData.Id == StakeLevelSettingType)
+            if (settingTypeData.Id == ProductStatusSettingType)
             {
-                foreach (ISettingItem item in settingTypeData.SettingItems)
-                {
-                    var settingItem = item as SettingItemDefault;
+                var baccarat = settingTypeData.SettingItems.FirstOrDefault(item => (item as SettingItemDefault)?.BetTypeId == Baccarat) as SettingItemDefault;
 
-                    if (settingItem?.BetTypeId == Baccarat)
-                    {
-                        settingItem.BetTypeName = Resources.NormalGames;
-                    }
+                if (baccarat != null)
+                {
+                    baccarat.BetTypeName = Resources.OtherDisplayingTextForBaccarat;
                 }
             }
-        }
 
-        public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
-        {
-            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(query, nameof(query));
-            Check.Argument.IsNotNull(setting, nameof(setting));
-
-            var subMessages = new string[]
+            if (settingTypeData.Id == StakeLevelSettingType)
             {
-                Resources.NormalGamesSubMessage,
-                Resources.VipBaccaratSubMessage
-            };
+                var baccarat = settingTypeData.SettingItems.FirstOrDefault(item => (item as SettingItemDefault)?.BetTypeId == Baccarat) as SettingItemDefault;
+                var vipBaccarat = settingTypeData.SettingItems.FirstOrDefault(item => (item as SettingItemDefault)?.BetTypeId == VipBaccarat) as SettingItemDefault;
 
-            setting.WarningMessage = new UpdateSettingResult(new SettingResult[]
-            {
-                new SettingResult(0, Resources.MainInfoMessage, subMessages)
-            });
+                if (baccarat != null)
+                {
+                    baccarat.BetTypeName = Resources.OtherDisplayingTextForBaccarat;
+                }
+
+                if (vipBaccarat != null)
+                {
+                    vipBaccarat.BetTypeName = Resources.OtherDisplayingTextForVipBaccarat;
+                }
+            }
         }
     }
 }

@@ -117,16 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainInfoMessage" xml:space="preserve">
-    <value>Notes:</value>
+  <data name="OtherDisplayingTextForBaccarat" xml:space="preserve">
+    <value>Baccarat, Roulette, Sic Bo, Dragon Tiger</value>
   </data>
-  <data name="NormalGames" xml:space="preserve">
-    <value>Normal Games</value>
-  </data>
-  <data name="NormalGamesSubMessage" xml:space="preserve">
-    <value>Setting of Normal Games is applied for Normal Baccarat, Roulette, SicBo, DragonTiger, VIP Baccarat - SideBet.</value>
-  </data>
-  <data name="VipBaccaratSubMessage" xml:space="preserve">
-    <value>Setting of VIP Baccarat is applied for VIP Baccarat - Join/Reserve.</value>
+  <data name="OtherDisplayingTextForVipBaccarat" xml:space="preserve">
+    <value>VIP Baccarat (min bet might vary from different table)</value>
   </data>
 </root>
