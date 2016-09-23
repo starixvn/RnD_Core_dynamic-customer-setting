@@ -19,8 +19,25 @@
         width: 100%;
     }
 
-    &--invalid {
-        border-color: $field-invalid-border-color !important;
+    &--error {
+        border: {
+            color: $error-color !important;
+            width: 2 * $border-size;
+        }
+    }
+
+    &--warning {
+        border: {
+            color: $warning-color !important;
+            width: 2 * $border-size;
+        }
+    }
+
+    &--success {
+        border: {
+            color: $success-color !important;
+            width: 2 * $border-size;
+        }
     }
 
     &--has-constraint {
@@ -168,7 +185,7 @@
 
     &:after {
         border: {
-            color: $invalid-tooltip-border-color transparent transparent transparent;
+            color: transparent;
             style: $border-style;
             width: 5px;
         }
@@ -182,7 +199,6 @@
     &__content {
         @include border-radius($default-border-radius);
         @include opacity(0.85);
-        background-color: $invalid-tooltip-bg;
         color: $invalid-tooltip-text-color;
         max-width: 300px;
         padding: 4px 8px;
@@ -193,6 +209,36 @@
     &--right:after {
         position: absolute;
         right: 5px;
+    }
+
+    &--error {
+        &:after {
+            border-top-color: $error-tooltip-border-color;
+        }
+
+        &__content {
+            background-color: $error-color;
+        }
+    }
+
+    &--warning {
+        &:after {
+            border-top-color: $warning-tooltip-border-color;
+        }
+
+        &__content {
+            background-color: $warning-color;
+        }
+    }
+
+    &--success {
+        &:after {
+            border-top-color: $success-tooltip-border-color;
+        }
+
+        &__content {
+            background-color: $success-color;
+        }
     }
 }
 

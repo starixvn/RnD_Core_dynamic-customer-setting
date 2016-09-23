@@ -1,8 +1,23 @@
 ﻿@import "./Compass/_compass";
 @import "_variables";
 
-input[type=checkbox].setting-field--invalid {
-    outline: $border-size $border-style $field-invalid-border-color;
+input[type=checkbox].setting-field {
+    outline: {
+        style: $border-style;
+        width: 2 * $border-size;
+    }
+
+    &--error {
+        border-color: $error-color;
+    }
+
+    &--warning {
+        border-color: $warning-color;
+    }
+
+    &--success {
+        border-color: $success-color;
+    }
 }
 
 select.setting-field {

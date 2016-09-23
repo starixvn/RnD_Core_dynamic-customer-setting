@@ -54,6 +54,7 @@ module CustomerSetting {
         public isLive: boolean;
         public oldSetting: DefaultSettingItem;
         public validationState: ValidationResult;
+        public highlightState: NotificationType[];
 
         constructor();
         constructor(settingItem: any);
@@ -71,6 +72,7 @@ module CustomerSetting {
             }
 
             this.validationState = <ValidationResult>ValidationResult.normal;
+            this.highlightState = [];
         }
 
         public isChanged(): boolean {
@@ -90,10 +92,6 @@ module CustomerSetting {
                     if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
                         validItem = item.copySettingFrom(this);
                         isSuccessful = isSuccessful ? validItem : isSuccessful;
-
-                        if (!validItem) {
-                            item.validationState.isWarning = true;
-                        }
                     }
                 });
             }
@@ -596,13 +594,11 @@ module CustomerSetting {
     export class ValidationResult extends Result {
         public fieldName: string;
         public msgParams: any[];
-        public isWarning: boolean;
 
-        constructor(message: string, fieldName?: string, msgParams?: any[], isWarning: boolean = false) {
+        constructor(message: string, fieldName?: string, msgParams?: any[]) {
             super(-8000, message, MessageType.error);
             this.fieldName = fieldName;
             this.msgParams = msgParams;
-            this.isWarning = isWarning;
         }
     }
 }
