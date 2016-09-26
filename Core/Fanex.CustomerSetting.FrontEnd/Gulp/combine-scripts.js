@@ -26,6 +26,10 @@ module.exports = function (configs) {
     var sourceDir = path.join(process.cwd(), configs.root, configs.scripts, configs.apps, configs.packages.customerSetting);
     var destinationDir = path.join(process.cwd(), configs.root, configs.publish, configs.packages.customerSetting);
     var tempDir = path.join(sourceDir, "Temp");
+    var styleResources = [
+        path.join(process.cwd(), configs.root, configs.styles, "customer-setting.{*.map,css,*.css}"),
+        path.join(process.cwd(), configs.root, configs.styles, "flexbox-patch.{*.map,css,*.css}")
+    ];
 
     gulp.task("product:scripts:compile", function () {
         var productsConfigs = require(path.join(process.cwd(), configs.gulpDir, configs.configFiles.productsConfig));
@@ -93,7 +97,7 @@ module.exports = function (configs) {
 
     gulp.task("template:copy", function () {
         return gulp.src(path.join(sourceDir, "*.htm"))
-                   .pipe(minifyHTML({ empty: true, quotes: true }))
+                   .pipe(minifyHTML({ conditionals : true, empty: true, quotes: true }))
                    .pipe(gulp.dest(path.join(process.cwd(), configs.templatesDir)));
     });
 
@@ -107,7 +111,7 @@ module.exports = function (configs) {
     });
 
     gulp.task("styles:publish", ["images:publish"], function () {
-        return gulp.src(path.join(process.cwd(), configs.root, configs.styles, "customer-setting.{*.map,css,*.css}"))
+        return gulp.src(styleResources)
                    .pipe(gulp.dest(path.join(destinationDir, configs.styles)));
     });
 };

@@ -100,6 +100,8 @@
     <Content Include="CustomerSetting\Scripts\product-23.min.js" />
     <Content Include="CustomerSetting\Styles\customer-setting.css" />
     <Content Include="CustomerSetting\Styles\customer-setting.min.css" />
+    <Content Include="CustomerSetting\Styles\flexbox-patch.css" />
+    <Content Include="CustomerSetting\Styles\flexbox-patch.min.css" />
     <Content Include="CustomerSetting\Styles\Images\auto-pt.gif" />
     <Content Include="CustomerSetting\Styles\Images\loading.gif" />
     <Content Include="CustomerSetting\Styles\Images\not-allow-auto-pt.gif" />

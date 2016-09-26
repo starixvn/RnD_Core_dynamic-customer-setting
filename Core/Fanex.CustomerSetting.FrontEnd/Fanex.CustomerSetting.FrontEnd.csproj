@@ -159,6 +159,7 @@
       <DependentUpon>customer-setting.css</DependentUpon>
     </None>
     <None Include="Assets\Styles\customer-setting.scss" />
+    <None Include="Assets\Styles\flexbox-patch.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype6.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype10.scss" />
@@ -499,6 +500,12 @@
     </Content>
     <Content Include="Assets\Styles\customer-setting.min.css">
       <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\flexbox-patch.css">
+      <DependentUpon>flexbox-patch.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\Styles\flexbox-patch.min.css">
+      <DependentUpon>flexbox-patch.css</DependentUpon>
     </Content>
     <Content Include="Assets\Styles\Images\auto-pt.gif" />
     <Content Include="Assets\Styles\Images\loading.gif" />

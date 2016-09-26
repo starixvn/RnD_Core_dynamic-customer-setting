@@ -6,5 +6,9 @@
   {
     "outputFile": "Assets/Styles/customer-setting-ie8.css",
     "inputFile": "Assets/Styles/customer-setting-ie8.scss"
+  },
+  {
+    "outputFile": "Assets/Styles/flexbox-patch.css",
+    "inputFile": "Assets/Styles/flexbox-patch.scss"
   }
 ]

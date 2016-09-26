@@ -70,7 +70,7 @@ namespace Fanex.CustomerSetting.Tasks.Product21 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VIP Baccarat (min bet might vary from different table).
+        ///   Looks up a localized string similar to VIP Baccarat (min bet might vary from different tables).
         /// </summary>
         internal static string OtherDisplayingTextForVipBaccarat {
             get {
