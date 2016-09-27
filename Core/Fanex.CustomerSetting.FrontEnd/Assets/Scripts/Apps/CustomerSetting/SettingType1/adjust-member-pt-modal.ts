@@ -262,7 +262,8 @@ module CustomerSetting {
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
 
-            $scope.showError = false;
+            $scope.copyingState = new CopyingState("resourceService");
+            $scope.copyingState.none();
 
             $scope.copy = () => {
                 this.copyingSettingService.hideSportCopyingError($scope);
@@ -271,19 +272,34 @@ module CustomerSetting {
                     var items: DefaultSettingItem[] = ArrayHelpers.join2DimensionalArray($scope.settingItems);
                     var source: DefaultSettingItem = items[0];
                     var targets: DefaultSettingItem[] = items.slice(1);
-                    var isSuccessful: boolean = true;
+                    var numberOfCopiedItems: number = 0;
+                    var successful: boolean = true;
 
                     if ($scope.customerLevel === Level.master) {
-                        isSuccessful = targets.every((item: DefaultSettingItem) => {
-                            return (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
-                        });
+                        numberOfCopiedItems = targets.filter((item: DefaultSettingItem) => {
+                            var validItem: boolean = (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
+
+                            successful = successful ? validItem : successful;
+
+                            return validItem ? item.isChanged() : validItem;
+                        }).length;
                     } else if ($scope.customerLevel === Level.agent) {
-                        isSuccessful = targets.every((item: DefaultSettingItem) => {
-                            return (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
-                        });
+                        numberOfCopiedItems = targets.filter((item: DefaultSettingItem) => {
+                            var validItem: boolean = (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
+
+                            successful = successful ? validItem : successful;
+
+                            return validItem ? item.isChanged() : validItem;
+                        }).length;
                     }
 
-                    $scope.showError = !isSuccessful;
+                    if (!successful) {
+                        $scope.copyingState.fail();
+                    } else if (numberOfCopiedItems > 0) {
+                        $scope.copyingState.succeed();
+                    } else {
+                        $scope.copyingState.none();
+                    }
                 }
             };
         }];

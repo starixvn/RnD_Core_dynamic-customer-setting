@@ -79,7 +79,16 @@ namespace Fanex.CustomerSetting.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to copy value to the hi-lighted field(s)..
+        ///   Looks up a localized string similar to All fields in green are copied..
+        /// </summary>
+        public static string CopiedSuccessfully {
+            get {
+                return ResourceManager.GetString("CopiedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to copy to the fields in red..
         /// </summary>
         public static string CopyingFailed {
             get {

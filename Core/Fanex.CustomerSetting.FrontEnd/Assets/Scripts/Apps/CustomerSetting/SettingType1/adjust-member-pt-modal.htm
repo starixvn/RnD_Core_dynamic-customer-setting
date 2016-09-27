@@ -42,12 +42,12 @@
                                 <select class="setting-field"
                                         data-ng-if="customerLevel === avaiCustomerLevels.master"
                                         data-ng-model="item.superPTOnMembers"
-                                        data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField:'superPTOnMembers') }"
+                                        data-control-notification="{ 'fieldName': 'superPTOnMembers', 'validationState': item.validationState, 'highlightState': item.highlightState }"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                                 <select class="setting-field"
                                         data-ng-if="customerLevel === avaiCustomerLevels.agent"
                                         data-ng-model="item.masterPTOnMembers"
-                                        data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField:'masterPTOnMembers') }"
+                                        data-control-notification="{ 'fieldName': 'masterPTOnMembers', 'validationState': item.validationState, 'highlightState': item.highlightState }"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                             </div>
                         </div>

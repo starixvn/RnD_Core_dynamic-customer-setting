@@ -128,9 +128,9 @@
         private string AddFlexboxPatchToTemplate(string template)
         {
             string finalTemplate = template;
-            bool flexboxUnapplicable = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 11;
+            bool flexboxInapplicable = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 11;
 
-            if (flexboxUnapplicable)
+            if (flexboxInapplicable)
             {
                 return finalTemplate;
             }

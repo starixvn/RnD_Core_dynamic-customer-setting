@@ -123,8 +123,11 @@
   <data name="AccountWasDisabled" xml:space="preserve">
     <value>This account was disabled.</value>
   </data>
+  <data name="CopiedSuccessfully" xml:space="preserve">
+    <value>All fields in green are copied.</value>
+  </data>
   <data name="CopyingFailed" xml:space="preserve">
-    <value>Unable to copy value to the hi-lighted field(s).</value>
+    <value>Unable to copy to the fields in red.</value>
   </data>
   <data name="CustomersAreNotSameLine" xml:space="preserve">
     <value>Customers are not in the same line!</value>

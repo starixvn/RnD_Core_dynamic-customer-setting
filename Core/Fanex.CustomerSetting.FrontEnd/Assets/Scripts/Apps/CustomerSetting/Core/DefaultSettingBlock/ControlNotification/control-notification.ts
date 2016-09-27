@@ -8,12 +8,12 @@ module CustomerSetting {
 
     interface IControlNotification {
         message: string;
-        type: NotificationType,
+        type: string,
         fieldName: string;
         validationState: ValidationResult;
-        highlightState: NotificationType[];
+        highlightState: {};
         resourceServiceName: string;
-        customFilterName: string;
+        msgParamFilterName: string;
     }
 
     interface IControlNotificationScope extends ng.IScope {
@@ -23,7 +23,7 @@ module CustomerSetting {
     }
 
     class ControlNotificationDirective implements ng.IDirective {
-        public static $inject: string[] = ["$window", "$compile", "$timeout", "$templateCache"];
+        public static $inject: string[] = ["$window", "$compile", "$timeout", "$templateCache", "$injector", "$filter"];
 
         public restrict: string = "A";
         public priority: number = 100;
@@ -38,8 +38,8 @@ module CustomerSetting {
             var template: {} = this.$templateCache.get("DefaultSettingBlock/ControlNotification/tooltip.htm");
             var tooltip: ng.IAugmentedJQuery = angular.element(template);
             var debounceResize: any = debounce(() => {
-                if (!tooltip.hasClass("ng-hide")) {
-                    this.calculateTooltipPosition(element, tooltip);
+                if (scope.displayingMessage) {
+                    this.calculateTooltipPosition(element);
                 }
             }, 100);
 
@@ -47,36 +47,48 @@ module CustomerSetting {
             element.parent().prepend(tooltip);
 
             scope.$watchGroup(["controlNotification.message", "controlNotification.validationState"], () => {
-                // @@TODO: do we need to keep track of state of error field?
-
                 this.detechDisplayingMessage(scope);
-                this.resetElementBorder(element);
+
+                if (scope.displayingMessage) {
+                    this.calculateTooltipPosition(element);
+                }
 
                 if (scope.type) {
-                    element.addClass("setting-field--" + scope.type);
+                    if (scope.controlNotification.fieldName) {
+                        scope.controlNotification.highlightState[scope.controlNotification.fieldName] = NotificationType[scope.type];
+                    }
                 }
             });
 
-            scope.$watchCollection("controlNotification.highlightState", () => {
-                var fieldHighlightState = scope.controlNotification.highlightState[scope.controlNotification.fieldName];
-                var style: string = fieldHighlightState && fieldHighlightState !== NotificationType.none
-                    ? NotificationType[fieldHighlightState]
-                    : null;
+            if (scope.controlNotification.highlightState) {
+                scope.$watch("controlNotification.highlightState", (highlightState: NotificationType[]) => {
+                    var fieldHighlightState = highlightState[scope.controlNotification.fieldName];
+                    var style: string = fieldHighlightState && fieldHighlightState !== NotificationType.none
+                        ? NotificationType[fieldHighlightState]
+                        : null;
 
-                if (style) {
-                    this.resetElementBorder(element);
-                    element.addClass("setting-field--" + style);
-                }
-            });
+                    if (style) {
+                        this.resetElementBorder(element);
+                        element.addClass("setting-field--" + style);
+                    }
+                }, true);
+            }
 
             element.on("change", () => {
-                // @@TODO: need to hide the tooltip when user changes data of field? 
                 var fieldHighlightState = scope.controlNotification.highlightState[scope.controlNotification.fieldName];
 
-                if (fieldHighlightState && fieldHighlightState !== NotificationType.none && tooltip.hasClass("ng-hide")) {
+                scope.displayingMessage = null;
+
+                if (scope.controlNotification.validationState) {
+                    scope.controlNotification.validationState.code = 0;
+                }
+
+                if (fieldHighlightState && fieldHighlightState !== NotificationType.none) {
                     this.resetElementBorder(element);
                     scope.controlNotification.highlightState[scope.controlNotification.fieldName] = NotificationType.none;
                 }
+
+                scope.$apply();
             });
 
             angular.element(this.$window).on("resize scroll", debounceResize);
@@ -104,19 +116,25 @@ module CustomerSetting {
             this.$filter = $filter;
         }
 
-        private calculateTooltipPosition(target: ng.IAugmentedJQuery, tooltip: ng.IAugmentedJQuery): void {
+        private calculateTooltipPosition(target: ng.IAugmentedJQuery): void {
             this.$timeout(() => {
+                var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
                 var elementRect: ClientRect = target[0].getBoundingClientRect();
                 var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
                 var scrollX: number = this.$window.pageXOffset;
                 var scrollY: number = this.$window.pageYOffset;
                 var top: number = Math.max(0, elementRect.top - tooltipRect.height + scrollY + 5);
-                var left: number = Math.max(0, elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX);
+                var left: number = elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX;
 
                 if (this.$window.innerWidth < left + tooltipRect.width) {
                     left = elementRect.left - tooltipRect.width + elementRect.width / 2;
                     left = Math.min(left, this.$window.innerWidth - tooltipRect.width - 5);
                     tooltip.addClass("tooltip--right");
+                }
+
+                if (left < 0) {
+                    left = elementRect.left + (elementRect.width / 2);
+                    tooltip.addClass("tooltip--left");
                 }
 
                 if (top !== tooltipRect.top || left !== tooltipRect.left) {
@@ -132,13 +150,23 @@ module CustomerSetting {
             var config: IControlNotification = scope.controlNotification;
 
             if (config && config.message && config.message.length > 0) {
-                scope.displayingMessage = config.message;
-                scope.type = NotificationType[config.type] || "success";
-            } else if (config.validationState && !config.validationState.isSuccessful) {
+                var resourceService: ResourceService = this.$injector.get<ResourceService>(config.resourceServiceName);
+
+                scope.displayingMessage = resourceService.getMessage(config.message);
+                scope.type = config.type || "success";
+            } else if (config.validationState
+                && config.validationState.fieldName === scope.controlNotification.fieldName
+                && !config.validationState.isSuccessful) {
                 scope.displayingMessage = this.getErrorMessage(config);
                 scope.type = "error";
             } else {
+                var fieldHighlightState = config.highlightState ? config.highlightState[config.fieldName] : null;
+                var type: string = fieldHighlightState && fieldHighlightState !== NotificationType.none
+                    ? NotificationType[fieldHighlightState]
+                    : null;
+
                 scope.displayingMessage = null;
+                scope.type = type;
             }
         }
 
@@ -151,8 +179,8 @@ module CustomerSetting {
                     if (typeof param === "number") {
                         var value = this.$filter("number")(param);
 
-                        if (config.customFilterName) {
-                            value = this.$filter(config.customFilterName)(value);
+                        if (config.msgParamFilterName) {
+                            value = this.$filter(config.msgParamFilterName)(value);
                         }
 
                         return value;
@@ -172,15 +200,15 @@ module CustomerSetting {
 
         private resetElementBorder(element: ng.IAugmentedJQuery): void {
             if (element.hasClass("setting-field--error")) {
-                element.remove("setting-field--error");
+                element.removeClass("setting-field--error");
             }
 
             if (element.hasClass("setting-field--warning")) {
-                element.remove("setting-field--success");
+                element.removeClass("setting-field--success");
             }
 
             if (element.hasClass("setting-field--success")) {
-                element.remove("setting-field--success");
+                element.removeClass("setting-field--success");
             }
         }
     }

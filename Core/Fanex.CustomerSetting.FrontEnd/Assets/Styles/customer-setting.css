@@ -416,20 +416,23 @@ th {
     padding: 4px 8px;
     text-align: center;
     text-decoration: none; }
+  .tooltip--left:after {
+    position: absolute;
+    left: 5px; }
   .tooltip--right:after {
     position: absolute;
     right: 5px; }
   .tooltip--error:after {
     border-top-color: rgba(233, 50, 45, 0.85); }
-  .tooltip--error__content {
+  .tooltip--error .tooltip__content {
     background-color: #e9322d; }
   .tooltip--warning:after {
     border-top-color: rgba(194, 143, 6, 0.85); }
-  .tooltip--warning__content {
+  .tooltip--warning .tooltip__content {
     background-color: #c28f06; }
   .tooltip--success:after {
     border-top-color: rgba(97, 142, 17, 0.85); }
-  .tooltip--success__content {
+  .tooltip--success .tooltip__content {
     background-color: #618e11; }
 
 .msg-container {

@@ -4,9 +4,38 @@
 module CustomerSetting {
     "use strict";
 
+    export class CopyingState {
+        public message: string;
+        public type: string;
+        public resourceServiceName: string;
+
+        constructor(resourceServiceName: string) {
+            this.resourceServiceName = resourceServiceName;
+        }
+
+        public isFailed(): boolean {
+            return !!this.message || this.type === "error";
+        }
+
+        public succeed(): void {
+            this.message = "CopiedSuccessfully";
+            this.type = "success";
+        }
+
+        public fail(): void {
+            this.message = "CopyingFailed";
+            this.type = "error";
+        }
+
+        public none(): void {
+            this.message = null;
+            this.type = "none";
+        }
+    }
+
     export interface ICopySettingScope extends ng.IScope {
         copy: () => void;
-        showError: boolean;
+        copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
     }
@@ -25,9 +54,9 @@ module CustomerSetting {
         }
 
         public controller: any = ["$scope", ($scope: ICopySettingScope) => {
-            this.copyingSettingService.register($scope);
+            $scope.copyingState = new CopyingState("resourceService");
 
-            $scope.showError = false;
+            this.copyingSettingService.register($scope);
 
             $scope.copy = () => {
                 this.copyingSettingService.hideSportCopyingError($scope);
@@ -38,8 +67,14 @@ module CustomerSetting {
                     var targets = items.slice(1);
 
                     if (source.validate()) {
-                        if (!source.copySettingTo(targets)) {
-                            $scope.showError = true;
+                        var copyingResult = source.copySettingTo(targets);
+
+                        if (!copyingResult.status) {
+                            $scope.copyingState.fail();
+                        } else if (copyingResult.numberOfCopiedItems > 0) {
+                            $scope.copyingState.succeed();
+                        } else {
+                            $scope.copyingState.none();
                         }
                     }
                 }
@@ -68,10 +103,10 @@ module CustomerSetting {
 
             this.$rootScope.$on("updateSetting", () => {
                 this.scopes.forEach((registeredScope: ICopySettingScope) => {
-                    if (registeredScope.showError) {
+                    if (registeredScope.copyingState.isFailed()) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
-                        registeredScope.showError = false;
+                        registeredScope.copyingState.none();
 
                         items.forEach((item: DefaultSettingItem) => {
                             item.validationState = undefined;
@@ -95,13 +130,13 @@ module CustomerSetting {
             var settingTypeId: number = scope.settingTypeId;
 
             this.scopes.forEach((registeredScope: ICopySettingScope) => {
-                if (registeredScope.showError) {
+                if (registeredScope.copyingState.isFailed()) {
                     var registeredSettingTypeId: number = registeredScope.settingTypeId;
 
                     if (registeredSettingTypeId === settingTypeId) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
-                        registeredScope.showError = false;
+                        registeredScope.copyingState.none();
                         items.forEach((item: DefaultSettingItem) => {
                             item.validationState = undefined;
                         });

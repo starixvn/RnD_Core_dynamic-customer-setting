@@ -206,6 +206,11 @@
         text-decoration: none;
     }
 
+    &--left:after {
+        position: absolute;
+        left: 5px;
+    }
+
     &--right:after {
         position: absolute;
         right: 5px;
@@ -216,7 +221,7 @@
             border-top-color: $error-tooltip-border-color;
         }
 
-        &__content {
+        .tooltip__content {
             background-color: $error-color;
         }
     }
@@ -226,7 +231,7 @@
             border-top-color: $warning-tooltip-border-color;
         }
 
-        &__content {
+        .tooltip__content {
             background-color: $warning-color;
         }
     }
@@ -236,7 +241,7 @@
             border-top-color: $success-tooltip-border-color;
         }
 
-        &__content {
+        .tooltip__content {
             background-color: $success-color;
         }
     }

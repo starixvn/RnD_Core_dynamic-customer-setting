@@ -54,7 +54,7 @@ module CustomerSetting {
         public isLive: boolean;
         public oldSetting: DefaultSettingItem;
         public validationState: ValidationResult;
-        public highlightState: NotificationType[];
+        public highlightState: {};
 
         constructor();
         constructor(settingItem: any);
@@ -72,7 +72,7 @@ module CustomerSetting {
             }
 
             this.validationState = <ValidationResult>ValidationResult.normal;
-            this.highlightState = [];
+            this.highlightState = {};
         }
 
         public isChanged(): boolean {
@@ -82,21 +82,26 @@ module CustomerSetting {
                 || (this.betTypeName !== this.oldSetting.betTypeName);
         }
 
-        public copySettingTo(targets: Array<DefaultSettingItem>): boolean {
-            var isSuccessful = true;
+        public copySettingTo(targets: Array<DefaultSettingItem>): { numberOfCopiedItems: number, status: boolean } {
+            var numberOfCopiedItems: number = 0;
+            var status: boolean = true;
 
             if (targets) {
-                targets.forEach((item: DefaultSettingItem) => {
+                numberOfCopiedItems = targets.filter((item: DefaultSettingItem) => {
                     var validItem: boolean = true;
 
                     if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
                         validItem = item.copySettingFrom(this);
-                        isSuccessful = isSuccessful ? validItem : isSuccessful;
+                        status = status ? validItem : status;
+
+                        return validItem ? item.isChanged() : validItem;
                     }
-                });
+
+                    return false;
+                }).length;
             }
 
-            return isSuccessful;
+            return { numberOfCopiedItems: numberOfCopiedItems, status: status };
         }
 
         public copySettingFrom(source: DefaultSettingItem): boolean {
@@ -122,6 +127,33 @@ module CustomerSetting {
             });
 
             return settingItem;
+        }
+
+        public changeFieldHighlightState(fieldName: string, state: NotificationType = NotificationType.none): void {
+            if (fieldName) {
+                this.highlightState[fieldName] = state;
+            }
+        }
+
+        public resetValidationState(): void {
+            this.validationState = <ValidationResult>Result.normal;
+        }
+
+        public highlightCopiedFields(state: {}): void {
+            if (state) {
+                for (var key in state) {
+                    if (this[key] !== state[key]) {
+                        this.highlightState[key] = NotificationType.success;
+                    } else if (this.highlightState[key]) {
+                        this.highlightState[key] = NotificationType.none;
+                    }
+                }
+            }
+        }
+
+        public highlightUnablyCopiedField(): void {
+            this.changeFieldHighlightState(this.validationState.fieldName, NotificationType.error);
+            this.resetValidationState();
         }
     }
 

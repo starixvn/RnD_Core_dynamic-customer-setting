@@ -57,11 +57,9 @@ module CustomerSetting {
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
-            select.attr("data-ng-class", StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
-            select.attr("data-tooltip", "");
             select.attr(
-                "data-message",
-                StringFormater.format("{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':'{0}'}}", scope.fieldName));
+                "data-control-notification",
+                "{'fieldName': fieldName,'validationState': settingItem.validationState,'highlightState': settingItem.highlightState,'resourceServiceName': 'positionTakingResourceService'}");
 
             if (scope.disabled === "true") {
                 select.attr("disabled", "disabled");
