@@ -169,7 +169,9 @@
                     CurrencyId = command.Setting.CustomerInfo.Currency,
                     UplineId = uplineId,
                     Level = command.Setting.CustomerLevel.Value
-                }
+                },
+                UserId = SettingContext.Actor.Id,
+                Language = SettingContext.Language
             };
 
             return request;
