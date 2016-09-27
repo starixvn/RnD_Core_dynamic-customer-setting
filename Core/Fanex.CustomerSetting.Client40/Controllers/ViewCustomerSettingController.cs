@@ -58,6 +58,7 @@
 
                 query.System = settingContext.System;
                 query.Language = settingContext.Language;
+                template = AddFlexboxPatchToTemplate(template);
                 template = ReplaceParameters(template, query);
             }
 
@@ -122,6 +123,33 @@
             template = template.Replace("{{min}}", isDebug ? string.Empty : ".min");
 
             return template;
+        }
+
+        private string AddFlexboxPatchToTemplate(string template)
+        {
+            string finalTemplate = template;
+            bool flexboxUnapplicable = Request.Browser.Browser == "IE" && Request.Browser.MajorVersion < 11;
+
+            if (flexboxUnapplicable)
+            {
+                return finalTemplate;
+            }
+
+            bool isDebug = HttpContext.IsDebuggingEnabled;
+            string cdn = RandomHelper.GetRandomUri(CustomerSettingConfiguration.Settings.CdnUris);
+            string flexboxStyleSheetTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"{{cdnUri}}/customerSetting/styles/flexbox-patch.min.css?v={{version}}\" />";
+
+            if (!cdn.Contains("http"))
+            {
+                cdn = Url.Content(cdn);
+            }
+
+            finalTemplate = finalTemplate.Replace("{{flexboxPatch}}", flexboxStyleSheetTag);
+            finalTemplate = finalTemplate.Replace("{{cdnUri}}", cdn);
+            finalTemplate = finalTemplate.Replace("{{version}}", isDebug ? "0.0.1" : Guid.NewGuid().ToString("N"));
+            finalTemplate = finalTemplate.Replace("{{min}}", isDebug ? string.Empty : ".min");
+
+            return finalTemplate;
         }
 
         private string ReplaceParameters(string template, SettingFormQuery query)

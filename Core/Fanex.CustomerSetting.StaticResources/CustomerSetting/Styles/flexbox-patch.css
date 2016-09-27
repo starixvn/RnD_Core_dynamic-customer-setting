@@ -36,7 +36,7 @@
   display: -ms-flexbox;
   display: flex;
   height: auto !important; }
-  .block__lbl span {
+  .block__lbl .showing-name {
     flex-grow: 1; }
 
 .settingtype7 .block__item {
