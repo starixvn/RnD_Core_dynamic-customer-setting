@@ -106,7 +106,7 @@ module CustomerSetting {
                 var item: DefaultSettingItem = <DefaultSettingItem>settingItem;
 
                 if (currentSportTypeId !== item.sportTypeId) {
-                    if (angular.isDefined(group)) {
+                    if (group) {
                         result.push(group);
                     }
 
@@ -117,7 +117,7 @@ module CustomerSetting {
                 group.push(item);
             });
 
-            if (angular.isDefined(group)) {
+            if (group) {
                 result.push(group);
             }
 
@@ -262,7 +262,7 @@ module CustomerSetting {
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
 
-            $scope.copyingState = new CopyingState("resourceService");
+            $scope.copyingState = new CopyingState();
             $scope.copyingState.none();
 
             $scope.copy = () => {

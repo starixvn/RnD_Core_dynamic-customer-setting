@@ -23,7 +23,7 @@ module CustomerSetting {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                if (settingType && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
 
@@ -46,7 +46,7 @@ module CustomerSetting {
                 var settingItem = <DefaultSettingItem>item;
 
                 if (currentSportTypeId !== settingItem.sportTypeId) {
-                    if (angular.isDefined(group)) {
+                    if (group) {
                         result.push(group);
                     }
 
@@ -57,7 +57,7 @@ module CustomerSetting {
                 group.push(settingItem);
             });
 
-            if (angular.isDefined(group)) {
+            if (group) {
                 result.push(group);
             }
 

@@ -80,14 +80,14 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
 
         public validateSpecialCase(): boolean {
             if (this.minBet === 0 && this.maxBet === 0 && this.maxPerNumber === 0) {
-                this.validationState = <ValidationResult>Result.normal;
+                this.resetValidationState();
 
                 return true;
             }
@@ -112,7 +112,7 @@ module CustomerSetting {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -142,7 +142,7 @@ module CustomerSetting {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -166,7 +166,7 @@ module CustomerSetting {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

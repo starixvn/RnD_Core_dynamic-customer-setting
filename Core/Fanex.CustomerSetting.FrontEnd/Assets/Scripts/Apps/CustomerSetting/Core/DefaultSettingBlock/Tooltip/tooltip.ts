@@ -92,41 +92,6 @@ module CustomerSetting {
 
     ModuleRegister.directive("tooltip", Tooltip);
 
-    function TooltipMessage($injector: ng.auto.IInjectorService, $filter: ng.IFilterService): Function {
-        return (result: ValidationResult, resourceServiceName: string, fieldName: string, customFilterName: string = null) => {
-            var message: string = "";
-
-            if (result
-                && !result.isSuccessful
-                && (!fieldName || (fieldName && fieldName === result.fieldName))) {
-                var resourceService: ResourceService = $injector.get<ResourceService>(resourceServiceName);
-                var params: string[] = (result.msgParams || []).map((param: any) => {
-                    if (typeof param === "number") {
-                        var value = $filter("number")(param);
-
-                        if (customFilterName) {
-                            value = $filter(customFilterName)(value);
-                        }
-
-                        return value;
-                    } else {
-                        return param;
-                    }
-                });
-
-                if (resourceService) {
-                    params.unshift(result.message)
-                    message = resourceService.getFormattedMessage.apply(resourceService, params);
-                }
-            }
-
-            return message;
-        };
-    }
-
-    TooltipMessage.$inject = ["$injector", "$filter"];
-    ModuleRegister.filter("tooltipMessage", TooltipMessage);
-
     function HighlightingField(): Function {
         return (result: ValidationResult, fieldName: string) => {
             var mustHighlighted: boolean = false;

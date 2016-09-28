@@ -5,30 +5,25 @@ module CustomerSetting {
     "use strict";
 
     export class CopyingState {
-        public message: string;
+        public messageKey: string;
         public type: string;
-        public resourceServiceName: string;
-
-        constructor(resourceServiceName: string) {
-            this.resourceServiceName = resourceServiceName;
-        }
 
         public isFailed(): boolean {
-            return !!this.message || this.type === "error";
+            return !!this.messageKey || this.type === "error";
         }
 
         public succeed(): void {
-            this.message = "CopiedSuccessfully";
+            this.messageKey = "CopiedSuccessfully";
             this.type = "success";
         }
 
         public fail(): void {
-            this.message = "CopyingFailed";
+            this.messageKey = "CopyingFailed";
             this.type = "error";
         }
 
         public none(): void {
-            this.message = null;
+            this.messageKey = null;
             this.type = "none";
         }
     }
@@ -54,7 +49,7 @@ module CustomerSetting {
         }
 
         public controller: any = ["$scope", ($scope: ICopySettingScope) => {
-            $scope.copyingState = new CopyingState("resourceService");
+            $scope.copyingState = new CopyingState();
 
             this.copyingSettingService.register($scope);
 
@@ -109,7 +104,7 @@ module CustomerSetting {
                         registeredScope.copyingState.none();
 
                         items.forEach((item: DefaultSettingItem) => {
-                            item.validationState = undefined;
+                            item.resetValidationState();
                         });
                     }
                 });
@@ -138,7 +133,7 @@ module CustomerSetting {
 
                         registeredScope.copyingState.none();
                         items.forEach((item: DefaultSettingItem) => {
-                            item.validationState = undefined;
+                            item.resetValidationState();
                         });
                     }
                 }

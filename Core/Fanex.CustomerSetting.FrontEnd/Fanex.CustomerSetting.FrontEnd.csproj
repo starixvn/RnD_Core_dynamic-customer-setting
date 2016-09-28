@@ -336,7 +336,7 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\BlockUI\block-ui.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.htm" />
-    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ControlNotification\tooltip.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\HighlightField\tooltip.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\Core\SettingResult\setting-result.htm" />
@@ -601,7 +601,7 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\common.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\controller.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\CustomerInfo\customer-info.ts" />
-    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ControlNotification\control-notification.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\HighlightField\highlight-field.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\CopySetting\copy-setting.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\default-setting-block.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\Core\DefaultSettingBlock\ToggleSettingBlock\togglable-setting-block-shared-states.ts" />

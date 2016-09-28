@@ -79,6 +79,8 @@ module CustomerSetting {
                 }
             }
 
+            this.resetValidationState();
+
             return true;
         }
 

@@ -57,9 +57,7 @@ module CustomerSetting {
 
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
-            select.attr(
-                "data-control-notification",
-                "{'fieldName': fieldName,'validationState': settingItem.validationState,'highlightState': settingItem.highlightState,'resourceServiceName': 'positionTakingResourceService'}");
+            select.attr("data-field-highlighting", "");
 
             if (scope.disabled === "true") {
                 select.attr("disabled", "disabled");

@@ -23,7 +23,7 @@ module CustomerSetting {
 
         public controller: any = ["$scope", "$window", ($scope: ISettingResultScope, $window: ng.IWindowService) => {
             $scope.$watch("result", (result: UpdatingSettingResult) => {
-                if (angular.isDefined(result)) {
+                if (result) {
                     $window.scrollTo(0, 0);
                 }
             });

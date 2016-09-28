@@ -82,7 +82,7 @@ module CustomerSetting {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

@@ -60,14 +60,14 @@ module CustomerSetting {
                         $scope.userGroup = userGroup[0].value;
                     }
 
-                    if (angular.isDefined(settingType) && angular.isArray(settingType.settingItems)) {
+                    if (settingType && angular.isArray(settingType.settingItems)) {
                         if (settingType.isError) {
                             if (settingType.settingItems.length > 0) {
                                 settingType.settingItems[0] = new ErrorSettingItem(settingType.settingItems[0]);
                             }
                         } else {
                             settingType.settingItems.forEach((item: any, index: number) => {
-                                if (angular.isDefined(item)) {
+                                if (item) {
                                     settingType.settingItems[index] = new SettingType10Item(item, true, $scope.customerLevel);
                                 }
                             });
