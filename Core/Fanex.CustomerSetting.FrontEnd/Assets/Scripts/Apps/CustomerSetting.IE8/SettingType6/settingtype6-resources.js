@@ -85,11 +85,11 @@
         "AutoResetIsViolatedWithUpline": "Daily Auto Reset is turned off for the Upline.",
         "MaximumLossValueIsRequired": "Maximum Loss value is required.",
         "MaximumLossValueShouldBeInRange": "Maximum Loss value should be in the range of ({0} - {1}).",
-        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of Direct Upline.",
+        "MaximumWinShouldBotExceedThanUplineMaximumWin": "Maximum Win should be less than or equal to Maximum Win of the direct upline.",
         "MaximumWinShouldNotBeLessThanZero": "Maximum Win should not be less than 0.",
         "Msg_10022": "You are not allowed to change Daily auto reset limit.",
-        "Msg_10024": "Maximum Win should be less than or equal to Maximum Win of Direct Upline.",
-        "Msg_10033": "Maximum Loss should be less than or equal to Maximum Loss of Direct Upline.",
+        "Msg_10024": "Maximum Win should be less than or equal to Maximum Win of the direct upline.",
+        "Msg_10033": "Maximum Loss should be less than or equal to Maximum Loss of the direct upline.",
         "UpdatedWinLossLimitSuccessfully": "Updated Win Loss Limit successfully."
     };
     

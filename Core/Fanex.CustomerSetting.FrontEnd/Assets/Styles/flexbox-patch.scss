@@ -24,8 +24,9 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
+    height: auto !important;
 
-    div {
+    > div {
         width: 100%;
     }
 }
@@ -45,10 +46,16 @@
     display: -ms-flexbox;
     display: flex;
     height: auto !important;
+    min-height: 28px;
 
     .showing-name {
         flex-grow: 1;
     }
+}
+
+.block__cell {
+    height: auto !important;
+    line-height: 28px;
 }
 
 .settingtype7 {

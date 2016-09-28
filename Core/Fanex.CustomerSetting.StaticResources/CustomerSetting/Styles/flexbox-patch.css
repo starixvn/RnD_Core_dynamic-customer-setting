@@ -20,8 +20,9 @@
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
-  display: flex; }
-  .block__value div {
+  display: flex;
+  height: auto !important; }
+  .block__value > div {
     width: 100%; }
 
 .block__lbl-group {
@@ -35,9 +36,14 @@
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  height: auto !important; }
+  height: auto !important;
+  min-height: 28px; }
   .block__lbl .showing-name {
     flex-grow: 1; }
+
+.block__cell {
+  height: auto !important;
+  line-height: 28px; }
 
 .settingtype7 .block__item {
   display: -webkit-box;
