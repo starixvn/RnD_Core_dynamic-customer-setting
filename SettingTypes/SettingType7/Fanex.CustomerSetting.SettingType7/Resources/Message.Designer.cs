@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.SettingType7.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Each bet type must have one Bet Limit value be selected..
+        ///   Looks up a localized string similar to Each bet type must have one Bet Limit value to be selected..
         /// </summary>
         internal static string MemberStakeLevelMustBeSelectedForBetType {
             get {

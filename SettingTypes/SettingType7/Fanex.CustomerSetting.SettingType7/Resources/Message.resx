@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MemberStakeLevelMustBeSelectedForBetType" xml:space="preserve">
-    <value>Each bet type must have one Bet Limit value be selected.</value>
+    <value>Each bet type must have one Bet Limit value to be selected.</value>
   </data>
   <data name="Msg_10034" xml:space="preserve">
     <value>This user's upline does not have Stake Level.</value>

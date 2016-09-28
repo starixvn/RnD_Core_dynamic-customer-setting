@@ -127,7 +127,7 @@
     <value>Maximum Loss value should be in the range of ({0} - {1}).</value>
   </data>
   <data name="MaximumWinShouldBotExceedThanUplineMaximumWin" xml:space="preserve">
-    <value>Maximum Win should be less than or equal to Maximum Win of Direct Upline.</value>
+    <value>Maximum Win should be less than or equal to Maximum Win of the direct upline.</value>
   </data>
   <data name="MaximumWinShouldNotBeLessThanZero" xml:space="preserve">
     <value>Maximum Win should not be less than 0.</value>
@@ -136,10 +136,10 @@
     <value>You are not allowed to change Daily auto reset limit.</value>
   </data>
   <data name="Msg_10024" xml:space="preserve">
-    <value>Maximum Win should be less than or equal to Maximum Win of Direct Upline.</value>
+    <value>Maximum Win should be less than or equal to Maximum Win of the direct upline.</value>
   </data>
   <data name="Msg_10033" xml:space="preserve">
-    <value>Maximum Loss should be less than or equal to Maximum Loss of Direct Upline.</value>
+    <value>Maximum Loss should be less than or equal to Maximum Loss of the direct upline.</value>
   </data>
   <data name="UpdatedWinLossLimitSuccessfully" xml:space="preserve">
     <value>Updated Win Loss Limit successfully.</value>

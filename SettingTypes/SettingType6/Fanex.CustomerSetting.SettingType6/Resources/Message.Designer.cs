@@ -88,7 +88,7 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win should be less than or equal to Maximum Win of Direct Upline..
+        ///   Looks up a localized string similar to Maximum Win should be less than or equal to Maximum Win of the direct upline..
         /// </summary>
         internal static string MaximumWinShouldBotExceedThanUplineMaximumWin {
             get {
@@ -115,7 +115,7 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win should be less than or equal to Maximum Win of Direct Upline..
+        ///   Looks up a localized string similar to Maximum Win should be less than or equal to Maximum Win of the direct upline..
         /// </summary>
         internal static string Msg_10024 {
             get {
@@ -124,7 +124,7 @@ namespace Fanex.CustomerSetting.SettingType6.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Loss should be less than or equal to Maximum Loss of Direct Upline..
+        ///   Looks up a localized string similar to Maximum Loss should be less than or equal to Maximum Loss of the direct upline..
         /// </summary>
         internal static string Msg_10033 {
             get {
