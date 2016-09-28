@@ -8,8 +8,8 @@ module CustomerSetting {
         public messageKey: string;
         public type: string;
 
-        public isFailed(): boolean {
-            return !!this.messageKey || this.type === "error";
+        public isShowingMessage(): boolean {
+            return !!this.messageKey || this.type === "none";
         }
 
         public succeed(): void {
@@ -33,6 +33,7 @@ module CustomerSetting {
         copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
+        inModal: boolean;
     }
 
     export class CopySettingDirective implements ng.IDirective {
@@ -54,14 +55,14 @@ module CustomerSetting {
             this.copyingSettingService.register($scope);
 
             $scope.copy = () => {
-                this.copyingSettingService.hideSportCopyingError($scope);
-
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
                     var source = items[0];
                     var targets = items.slice(1);
 
                     if (source.validate()) {
+                        this.copyingSettingService.hideSubGroupsTooltip($scope);
+
                         var copyingResult = source.copySettingTo(targets);
 
                         if (!copyingResult.status) {
@@ -98,13 +99,13 @@ module CustomerSetting {
 
             this.$rootScope.$on("updateSetting", () => {
                 this.scopes.forEach((registeredScope: ICopySettingScope) => {
-                    if (registeredScope.copyingState.isFailed()) {
+                    if (registeredScope.copyingState.isShowingMessage()) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
 
                         items.forEach((item: DefaultSettingItem) => {
-                            item.resetValidationState();
+                            item.resetHighlightState();
                         });
                     }
                 });
@@ -121,20 +122,25 @@ module CustomerSetting {
             }
         }
 
-        public hideSportCopyingError(scope: ICopySettingScope): void {
+        public hideSubGroupsTooltip(scope: ICopySettingScope): void {
             var settingTypeId: number = scope.settingTypeId;
+            var isSubGroup: boolean = !(scope.settingItems[0] instanceof Array);
+
+            if (isSubGroup) {
+                return;
+            }
 
             this.scopes.forEach((registeredScope: ICopySettingScope) => {
-                if (registeredScope.copyingState.isFailed()) {
+                if (registeredScope.copyingState.isShowingMessage()) {
                     var registeredSettingTypeId: number = registeredScope.settingTypeId;
 
                     if (registeredSettingTypeId === settingTypeId) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
-                        items.forEach((item: DefaultSettingItem) => {
-                            item.resetValidationState();
-                        });
+                        //items.forEach((item: DefaultSettingItem) => {
+                        //    item.resetHighlightState();
+                        //});
                     }
                 }
             });

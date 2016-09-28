@@ -6,9 +6,16 @@
 module CustomerSetting {
     "use strict";
 
+    enum TooltipPositionModel {
+        relative = 1,
+        absolute = 2,
+        fixed = 3
+    }
+
     interface IFieldHighlightingStateScope extends ng.IScope {
         tooltipMessage: string;
         tooltipType: string;
+        tooltipPositionModel: TooltipPositionModel,
         highlightType: string,
         fieldName: string;
         highlightState: {};
@@ -24,6 +31,7 @@ module CustomerSetting {
             return {
                 tooltipMessage: "@",
                 tooltipType: "@",
+                tooltipPositionModel: "@",
                 fieldName: "@",
                 highlightState: "="
             };
@@ -34,7 +42,7 @@ module CustomerSetting {
             var tooltip: ng.IAugmentedJQuery = angular.element(template);
             var debounceResize: any = debounce(() => {
                 if (scope.tooltipMessage) {
-                    this.calculateTooltipPosition(element);
+                    this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                 }
             }, 100);
 
@@ -48,17 +56,17 @@ module CustomerSetting {
                 scope.highlightType = null;
 
                 if (scope.tooltipMessage) {
-                    this.calculateTooltipPosition(element);
+                    this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                     scope.highlightType = scope.tooltipType || "error";
                 }
 
-                if (scope.highlightType && highlightState && fieldName) {
-                    highlightState[fieldName] = NotificationType[scope.highlightType];
+                if (highlightState && fieldName) {
+                    highlightState[fieldName] = NotificationType[scope.highlightType || NotificationType.none];
                 }
             });
 
             if (scope.highlightState) {
-                scope.$watch("highlightState", (highlightState: NotificationType[]) => {
+                scope.$watch("highlightState", (highlightState: {}) => {
                     var fieldHighlightState = (highlightState || {})[scope.fieldName];
                     var style: string = fieldHighlightState && fieldHighlightState !== NotificationType.none
                         ? NotificationType[fieldHighlightState]
@@ -73,9 +81,7 @@ module CustomerSetting {
             }
 
             element.on("change", () => {
-                scope.tooltipMessage = null;
-
-                if (scope.highlightState) {
+                if (!scope.tooltipMessage && scope.highlightState) {
                     var fieldHighlightState = scope.highlightState[scope.fieldName];
 
                     if (fieldHighlightState && fieldHighlightState !== NotificationType.none) {
@@ -86,7 +92,7 @@ module CustomerSetting {
                 scope.$apply();
             });
 
-            angular.element(this.$window).on("resize scroll", debounceResize);
+            angular.element(this.$window).on("resize", debounceResize);
         };
 
         private $window: ng.IWindowService;
@@ -105,31 +111,48 @@ module CustomerSetting {
             this.$templateCache = $templateCache;
         }
 
-        private calculateTooltipPosition(target: ng.IAugmentedJQuery): void {
+        private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: TooltipPositionModel): void {
+            var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
+
+            tooltip.removeClass("tooltip--right tooltip--left");
+            tooltip.css({ "left": "0px", "visibility": "hidden" });
+
             this.$timeout(() => {
-                var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
                 var elementRect: ClientRect = target[0].getBoundingClientRect();
                 var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
-                var scrollX: number = this.$window.pageXOffset;
-                var scrollY: number = this.$window.pageYOffset;
-                var top: number = Math.max(0, elementRect.top - tooltipRect.height + scrollY + 5);
-                var left: number = elementRect.left + (elementRect.width - tooltipRect.width) / 2 + scrollX;
+
+                var topOffset: number = 0;
+                var leftOffset: number = 0;
+
+                var arrowWidth: number = 5;
+
+                if ((+positionModel || TooltipPositionModel.relative) === TooltipPositionModel.relative) {
+                    var bodyRect: ClientRect = this.$window.document.body.getBoundingClientRect();
+
+                    topOffset = bodyRect.top;
+                    leftOffset = bodyRect.left;
+                }
+
+                var top: number = Math.max(0, elementRect.top - topOffset - tooltipRect.height + arrowWidth);
+                var left: number = elementRect.left + (elementRect.width - tooltipRect.width) / 2 - leftOffset;
 
                 if (this.$window.innerWidth < left + tooltipRect.width) {
-                    left = elementRect.left - tooltipRect.width + elementRect.width / 2;
-                    left = Math.min(left, this.$window.innerWidth - tooltipRect.width - 5);
+                    top = elementRect.top - topOffset - (tooltipRect.height - elementRect.height) / 2 + arrowWidth;
+                    left = elementRect.left - tooltipRect.width - arrowWidth;
                     tooltip.addClass("tooltip--right");
                 }
 
                 if (left < 0) {
-                    left = elementRect.left + (elementRect.width / 2);
+                    top = elementRect.top - topOffset - (tooltipRect.height - elementRect.height) / 2 + arrowWidth;
+                    left = elementRect.left + elementRect.width;
                     tooltip.addClass("tooltip--left");
                 }
 
                 if (top !== tooltipRect.top || left !== tooltipRect.left) {
                     tooltip.css({
                         "top": top + "px",
-                        "left": left + "px"
+                        "left": left + "px",
+                        "visibility": "visible"
                     });
                 }
             });

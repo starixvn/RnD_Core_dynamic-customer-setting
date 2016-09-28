@@ -98,6 +98,22 @@ module CustomerSetting {
                         this.downline.isDisabled = backupDisabledDownline;
                         this.downline.readonly = backupReadonlyDownline;
                     }
+
+                    this.highlightUnablyCopiedField();
+                } else {
+                    // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
+                    if (this.isDisabled !== backupDisabled || this.readonly !== backupReadonly) {
+                        this.highlightState["isDisabled"] = NotificationType.success;
+                    } else if (this.highlightState["isDisabled"]) {
+                        this.highlightState["isDisabled"] = NotificationType.none;
+                    }
+
+                    if (this.downline.isDisabled !== backupDisabledDownline
+                        || this.downline.readonly !== backupReadonlyDownline) {
+                        this.highlightState["downline.isDisabled"] = NotificationType.success;
+                    } else if (this.highlightState["downline.isDisabled"]) {
+                        this.highlightState["downline.isDisabled"] = NotificationType.none;
+                    }
                 }
             }
 

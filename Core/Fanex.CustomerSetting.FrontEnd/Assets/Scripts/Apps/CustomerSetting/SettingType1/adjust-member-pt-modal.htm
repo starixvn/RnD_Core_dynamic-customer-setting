@@ -43,14 +43,14 @@
                                         data-ng-if="customerLevel === avaiCustomerLevels.master"
                                         data-ng-model="item.superPTOnMembers"
                                         data-field-highlighting
-                                        data-field-name="'superPTOnMembers'"
+                                        data-field-name="superPTOnMembers"
                                         data-highlight-state="item.highlightState"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                                 <select class="setting-field"
                                         data-ng-if="customerLevel === avaiCustomerLevels.agent"
                                         data-ng-model="item.masterPTOnMembers"
                                         data-field-highlighting
-                                        data-field-name="'masterPTOnMembers'"
+                                        data-field-name="masterPTOnMembers"
                                         data-highlight-state="item.highlightState"
                                         data-ng-options="item.key as (item.value | ptFormat) for item in ranges[$index]"></select>
                             </div>

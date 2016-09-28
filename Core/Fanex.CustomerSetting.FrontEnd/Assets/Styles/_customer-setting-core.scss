@@ -178,6 +178,7 @@
 }
 
 .tooltip {
+    cursor: default;
     left: 0;
     position: absolute;
     top: 0;
@@ -206,19 +207,40 @@
         text-decoration: none;
     }
 
-    &--left:after {
-        position: absolute;
-        left: 5px;
+    &--right {
+        &:after {
+            display: inline-block;
+        }
+
+        .tooltip__content {
+            display: inline-block;
+        }
     }
 
-    &--right:after {
-        position: absolute;
-        right: 5px;
+    &--left {
+        &:after {
+            display: inline-block;
+        }
+
+        .tooltip__content {
+            display: inline-block;
+            float: right;
+        }
     }
 
     &--error {
         &:after {
             border-top-color: $error-tooltip-border-color;
+        }
+
+        &.tooltip--right:after {
+            border-left-color: $error-tooltip-border-color;
+            border-top-color: transparent;
+        }
+
+        &.tooltip--left:after {
+            border-right-color: $error-tooltip-border-color;
+            border-top-color: transparent;
         }
 
         .tooltip__content {
@@ -231,6 +253,16 @@
             border-top-color: $warning-tooltip-border-color;
         }
 
+        &.tooltip--right:after {
+            border-left-color: $warning-tooltip-border-color;
+            border-top-color: transparent;
+        }
+
+        &.tooltip--left:after {
+            border-right-color: $warning-tooltip-border-color;
+            border-top-color: transparent;
+        }
+
         .tooltip__content {
             background-color: $warning-color;
         }
@@ -239,6 +271,16 @@
     &--success {
         &:after {
             border-top-color: $success-tooltip-border-color;
+        }
+
+        &.tooltip--right:after {
+            border-left-color: $success-tooltip-border-color;
+            border-top-color: transparent;
+        }
+
+        &.tooltip--left:after {
+            border-right-color: $success-tooltip-border-color;
+            border-top-color: transparent;
         }
 
         .tooltip__content {

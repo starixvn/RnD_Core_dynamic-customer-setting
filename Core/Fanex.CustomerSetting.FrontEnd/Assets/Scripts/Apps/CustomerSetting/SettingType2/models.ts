@@ -61,6 +61,13 @@ module CustomerSetting {
                     this.minBet = backupMinBet;
                     this.maxBet = backupMaxBet;
                     this.maxPerMatch = backupMaxPerMatch;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        minBet: backupMinBet,
+                        maxBet: backupMaxBet,
+                        maxPerMatch: backupMaxPerMatch
+                    });
                 }
             }
 

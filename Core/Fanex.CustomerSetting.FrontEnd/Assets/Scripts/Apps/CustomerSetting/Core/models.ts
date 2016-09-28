@@ -144,16 +144,19 @@ module CustomerSetting {
                 for (var key in state) {
                     if (this[key] !== state[key]) {
                         this.highlightState[key] = NotificationType.success;
-                    } else if (this.highlightState[key]) {
-                        this.highlightState[key] = NotificationType.none;
                     }
                 }
             }
         }
 
         public highlightUnablyCopiedField(): void {
+            this.resetHighlightState();
             this.changeFieldHighlightState(this.validationState.fieldName, NotificationType.error);
             this.resetValidationState();
+        }
+
+        public resetHighlightState(): void {
+            this.highlightState = {};
         }
     }
 

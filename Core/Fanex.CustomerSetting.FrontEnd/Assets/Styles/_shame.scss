@@ -2,21 +2,28 @@
 @import "_variables";
 
 input[type=checkbox].setting-field {
-    outline: {
-        style: $border-style;
-        width: 2 * $border-size;
-    }
-
     &--error {
-        border-color: $error-color;
+        outline: {
+            style: $border-style;
+            width: 2 * $border-size;
+            color: $error-color;
+        }
     }
 
     &--warning {
-        border-color: $warning-color;
+        outline: {
+            style: $border-style;
+            width: 2 * $border-size;
+            color: $warning-color;
+        }
     }
 
     &--success {
-        border-color: $success-color;
+        outline: {
+            style: $border-style;
+            width: 2 * $border-size;
+            color: $success-color;
+        }
     }
 }
 

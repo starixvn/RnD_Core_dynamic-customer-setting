@@ -264,9 +264,10 @@ module CustomerSetting {
 
             $scope.copyingState = new CopyingState();
             $scope.copyingState.none();
+            $scope.inModal = true;
 
             $scope.copy = () => {
-                this.copyingSettingService.hideSportCopyingError($scope);
+                this.copyingSettingService.hideSubGroupsTooltip($scope);
 
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items: DefaultSettingItem[] = ArrayHelpers.join2DimensionalArray($scope.settingItems);
