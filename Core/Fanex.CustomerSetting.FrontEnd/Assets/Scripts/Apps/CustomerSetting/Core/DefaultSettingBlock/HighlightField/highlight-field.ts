@@ -22,7 +22,7 @@ module CustomerSetting {
     }
 
     class FieldHighlightingDirective implements ng.IDirective {
-        public static $inject: string[] = ["$window", "$compile", "$timeout", "$templateCache"];
+        public static $inject: string[] = ["$window", "$compile", "$timeout", "$templateCache", "$rootScope"];
 
         public restrict: string = "A";
         public priority: number = 100;
@@ -93,22 +93,30 @@ module CustomerSetting {
             });
 
             angular.element(this.$window).on("resize", debounceResize);
+            this.$rootScope.$on("page-height-changed", () => {
+                if (scope.tooltipMessage) {
+                    this.calculateTooltipPosition(element, scope.tooltipPositionModel);
+                }
+            })
         };
 
         private $window: ng.IWindowService;
         private $compile: ng.ICompileService;
         private $timeout: ng.ITimeoutService;
         private $templateCache: ng.ITemplateCacheService;
+        private $rootScope: ng.IRootScopeService;
 
         constructor(
             $window: ng.IWindowService,
             $compile: ng.ICompileService,
             $timeout: ng.ITimeoutService,
-            $templateCache: ng.ITemplateCacheService) {
+            $templateCache: ng.ITemplateCacheService,
+            $rootScope: ng.IRootScopeService) {
             this.$window = $window;
             this.$compile = $compile;
             this.$timeout = $timeout;
             this.$templateCache = $templateCache;
+            this.$rootScope = $rootScope;
         }
 
         private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: TooltipPositionModel): void {

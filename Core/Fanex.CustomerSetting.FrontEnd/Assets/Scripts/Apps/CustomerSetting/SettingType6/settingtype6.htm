@@ -50,9 +50,10 @@
                                    data-settingtype6-loss-limit-input
                                    data-ng-change="updateValue()"
                                    data-ng-disabled="item.lossLimit === 0"
-                                   data-tooltip
-                                   data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit':'unlimitedLimit'}}"
-                                   data-ng-class="{ 'setting-field--invalid': (item.validationState | highlightingField: 'lossLimit') }"
+                                   data-field-highlighting
+                                   data-field-name="lossLimit"
+                                   data-highlight-state="item.highlightState"
+                                   data-tooltip-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'lossLimit':'unlimitedLimit'}}"
                                    class="setting-field setting-field--number setting-field--has-constraint" />
                             <span>({{item.minLossRange | formatNumber}} - {{item.maxLossRange | formatNumber | unlimitedLimit}})</span>
                         </div>
@@ -107,8 +108,10 @@
                     <label class="setting-field--checkfield">
                         <input type="checkbox"
                                class="setting-field--checkfield__check-ctrl"
-                               data-tooltip
-                               data-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
+                               data-field-highlighting
+                               data-highlight-state="item.highlightState"
+                               data-field-name="isAutoReset"
+                               data-tooltip-message="{{item.validationState | tooltipMessage:'settingType6ResourceService':'isAutoReset'}}"
                                data-ng-model="item.isAutoReset"
                                data-ng-disabled="!(settingType | editableSettingType) || !item.isAutoResetUpline" />
                         {{'DailyAutoResetLimit' | settingType6Label}}

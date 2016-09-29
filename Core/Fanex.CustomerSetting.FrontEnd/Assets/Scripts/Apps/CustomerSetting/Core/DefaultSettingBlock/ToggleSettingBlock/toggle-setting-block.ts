@@ -46,6 +46,7 @@ module CustomerSetting {
                         this.$timeout(() => this.initializing = false);
                     } else {
                         scope.sharedStates.expandBlock(scope.blockIndex);
+                        this.triggerPageHeightChangedEvent();
                     }
                 }, true);
 
@@ -54,6 +55,7 @@ module CustomerSetting {
                         && scope.settingData
                         && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
+                        this.triggerPageHeightChangedEvent();
                     }
                 });
                 this.$rootScope.$on("queriedSetting", () => {
@@ -86,10 +88,15 @@ module CustomerSetting {
             }
 
             scope.$apply();
+            this.triggerPageHeightChangedEvent();
         };
 
         private isToggleAllDirective(scope: IToggleSettingBlockScope): boolean {
             return scope.blockIndex === null || scope.blockIndex === undefined;
+        }
+
+        private triggerPageHeightChangedEvent(): void {
+            this.$rootScope.$emit("page-height-changed");
         }
     }
 

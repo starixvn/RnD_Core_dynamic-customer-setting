@@ -17,6 +17,7 @@ module CustomerSetting {
     interface ISettingType10SelectScope extends ng.IScope {
         dataSource: ISettingType10SelectDataSource;
         range: Array<KeyValuePair<number, number>>;
+        resetValidationState: () => void;
     }
 
     class SettingType10SelectDirective implements ng.IDirective {
@@ -49,6 +50,10 @@ module CustomerSetting {
                     SettingType10Config.step,
                     SettingType10Config.roundingFactor);
             });
+
+            $scope.resetValidationState = () => {
+                $scope.dataSource.validationState = <ValidationResult>Result.normal;
+            }
         }];
 
         private valueRangeService: ValueRangeService;

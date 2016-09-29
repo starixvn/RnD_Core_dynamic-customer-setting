@@ -57,6 +57,9 @@ module CustomerSetting {
 
                 if (!isSuccessful) {
                     this.chargeCommission = backupChargeCommission;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({ chargeCommission: backupChargeCommission });
                 }
             }
 

@@ -4,6 +4,7 @@
             data-field-name="rate"
             data-highlight-state="dataSource.highlightState"
             data-tooltip-message="{{dataSource.validationState | tooltipMessage:'settingType10ResourceService'}}"
+            data-ng-change="resetValidationState()"
             data-ng-model="dataSource.rate"
             data-ng-options="item.value as item.key for item in range"></select>
 </div>

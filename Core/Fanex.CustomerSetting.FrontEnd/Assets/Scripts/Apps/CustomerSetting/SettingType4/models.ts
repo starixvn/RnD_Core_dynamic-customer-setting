@@ -30,6 +30,10 @@ module CustomerSetting {
 
                     this.downline.readonly = true;
                 }
+
+                this.resetFieldState("isDisabled");
+            } else {
+                this.resetFieldState("downline.isDisabled");
             }
         }
 
@@ -165,6 +169,16 @@ module CustomerSetting {
             }
 
             return settingItem;
+        }
+
+        private resetFieldState(fieldName: string): void {
+            this.resetFieldHighlightState(fieldName);
+
+            if (this.validationState && !this.validationState.isSuccessful) {
+                if (this.validationState.fieldName === fieldName) {
+                    this.resetValidationState();
+                }
+            }
         }
     }
 }

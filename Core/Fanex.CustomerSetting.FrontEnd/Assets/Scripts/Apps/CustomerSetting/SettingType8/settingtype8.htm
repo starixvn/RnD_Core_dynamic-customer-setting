@@ -17,8 +17,8 @@
         <div class="col col--lbl w20-percent"
              data-ng-class="{ 'col--border-top': ($index > 0) }">
             <div class="block__sub-header"
-                 data-tooltip
-                 data-message="{{item.validationState | tooltipMessage:'settingType8ResourceService'}}">
+                 data-field-highlighting
+                 data-tooltip-message="{{item.validationState | tooltipMessage:'settingType8ResourceService'}}">
                 <label class="check-all-field-lbl"
                        data-ng-if="settingType.settingLevel === avaiSettingLevels.sportType">
                     {{item.sportTypeName}}

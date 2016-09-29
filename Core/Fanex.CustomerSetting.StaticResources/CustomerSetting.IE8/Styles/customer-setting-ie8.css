@@ -273,8 +273,15 @@ th {
     border-color: #66afe9; }
   .setting-field--fullwidth {
     width: 100%; }
-  .setting-field--invalid {
-    border-color: #e9322d !important; }
+  .setting-field--error {
+    border-color: #e9322d !important;
+    border-width: 2px; }
+  .setting-field--warning {
+    border-color: #c28f06 !important;
+    border-width: 2px; }
+  .setting-field--success {
+    border-color: #618e11 !important;
+    border-width: 2px; }
   .setting-field--has-constraint {
     width: 50%; }
   .setting-field--number {
@@ -384,12 +391,13 @@ th {
     text-align: right; }
 
 .tooltip {
+  cursor: default;
   left: 0;
   position: absolute;
   top: 0;
   z-index: 1; }
   .tooltip:after {
-    border-color: rgba(233, 50, 45, 0.85) transparent transparent transparent;
+    border-color: transparent;
     border-style: solid;
     border-width: 5px;
     content: " ";
@@ -404,15 +412,50 @@ th {
     border-radius: 3px;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
     opacity: 0.85;
-    background-color: #e9322d;
     color: #fff;
     max-width: 300px;
     padding: 4px 8px;
     text-align: center;
     text-decoration: none; }
   .tooltip--right:after {
-    position: absolute;
-    right: 5px; }
+    display: inline-block; }
+  .tooltip--right .tooltip__content {
+    display: inline-block; }
+  .tooltip--left:after {
+    display: inline-block; }
+  .tooltip--left .tooltip__content {
+    display: inline-block;
+    float: right; }
+  .tooltip--error:after {
+    border-top-color: rgba(233, 50, 45, 0.85); }
+  .tooltip--error.tooltip--right:after {
+    border-left-color: rgba(233, 50, 45, 0.85);
+    border-top-color: transparent; }
+  .tooltip--error.tooltip--left:after {
+    border-right-color: rgba(233, 50, 45, 0.85);
+    border-top-color: transparent; }
+  .tooltip--error .tooltip__content {
+    background-color: #e9322d; }
+  .tooltip--warning:after {
+    border-top-color: rgba(194, 143, 6, 0.85); }
+  .tooltip--warning.tooltip--right:after {
+    border-left-color: rgba(194, 143, 6, 0.85);
+    border-top-color: transparent; }
+  .tooltip--warning.tooltip--left:after {
+    border-right-color: rgba(194, 143, 6, 0.85);
+    border-top-color: transparent; }
+  .tooltip--warning .tooltip__content {
+    background-color: #c28f06; }
+  .tooltip--success:after {
+    border-top-color: rgba(97, 142, 17, 0.85); }
+  .tooltip--success.tooltip--right:after {
+    border-left-color: rgba(97, 142, 17, 0.85);
+    border-top-color: transparent; }
+  .tooltip--success.tooltip--left:after {
+    border-right-color: rgba(97, 142, 17, 0.85);
+    border-top-color: transparent; }
+  .tooltip--success .tooltip__content {
+    background-color: #618e11; }
 
 .msg-container {
   border: 1px solid #7c98a4;
@@ -594,8 +637,20 @@ th {
  * A partial implementation of the Ruby display functions from Compass:
  * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
  */
-input[type=checkbox].setting-field--invalid {
-  outline: 1px solid #e9322d; }
+input[type=checkbox].setting-field--error {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #e9322d; }
+
+input[type=checkbox].setting-field--warning {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #c28f06; }
+
+input[type=checkbox].setting-field--success {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #618e11; }
 
 select.setting-field {
   min-width: 60px; }

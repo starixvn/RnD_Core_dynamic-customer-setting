@@ -14,6 +14,7 @@ module CustomerSetting {
         disabled: string;
         divisor: number;
         range: Array<KeyValuePair<number, number>>;
+        resetState: (fieldName: string) => void;
     }
 
     class PositionTakingSelectDirective implements ng.IDirective {
@@ -50,11 +51,24 @@ module CustomerSetting {
                         SettingType1Config.roundingFactor);
                 }
             });
+
+            $scope.resetState = (fieldName: string) => {
+                var item: DefaultSettingItem = <DefaultSettingItem>$scope.settingItem;
+
+                if (item.validationState && !item.validationState.isSuccessful) {
+                    if (item.validationState.fieldName === fieldName) {
+                        item.resetValidationState();
+                    }
+                } else {
+                    item.resetHighlightState();
+                }
+            }
         }];
 
         public link: ng.IDirectiveLinkFn = (scope: IPositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
             var select: ng.IAugmentedJQuery = element.find("select");
 
+            select.attr("data-ng-change", "resetState(fieldName)");
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
             select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
             select.attr("data-field-highlighting", "");

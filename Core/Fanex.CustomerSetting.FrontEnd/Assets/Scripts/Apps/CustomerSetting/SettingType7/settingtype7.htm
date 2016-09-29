@@ -35,8 +35,8 @@
                  data-sport-type="{{item.sportTypeId}}"
                  data-bet-type="{{item.betTypeId}}">
                 <div class="block__lbl-wrapper"
-                     data-tooltip
-                     data-message="{{settingItem.validationState | tooltipMessage:'settingType7ResourceService'}}">
+                     data-field-highlighting
+                     data-tooltip-message="{{item.validationState | tooltipMessage:'settingType7ResourceService'}}">
                     <label class="check-all-field-lbl">
                         {{item | showingName:settingType.settingLevel:productName }}
                         {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}

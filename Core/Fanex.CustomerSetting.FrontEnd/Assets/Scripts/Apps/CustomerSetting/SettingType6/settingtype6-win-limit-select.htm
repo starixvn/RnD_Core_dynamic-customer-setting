@@ -2,8 +2,9 @@
     <select class="setting-field"
             data-ng-model="settingItem.winLimit"
             data-ng-options="item.key as item.value for item in range"
-            data-tooltip
-            data-message="{{settingItem.validationState | tooltipMessage:'settingType6ResourceService':'winLimit':'unlimitedLimit'}}"
-            data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'winLimit') }"></select>
+            data-field-highlighting
+            data-field-name="winLimit"
+            data-highlight-state="settingItem.highlightState"
+            data-tooltip-message="{{settingItem.validationState | tooltipMessage:'settingType6ResourceService':'winLimit':'unlimitedLimit'}}"></select>
     <span>{{::('OnGivenCredit' | settingType6Label)}}</span>
 </div>

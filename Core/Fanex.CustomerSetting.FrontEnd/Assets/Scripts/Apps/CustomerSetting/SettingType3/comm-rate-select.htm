@@ -4,6 +4,7 @@
             data-field-name="commRate"
             data-highlight-state="settingItem.highlightState"
             data-tooltip-message="{{settingItem.validationState | tooltipMessage:'commissionResourceService'}}"
+            data-ng-change="resetValidationState()"
             data-ng-model="settingItem.commRate"
             data-ng-options="item.value as item.key for item in range"></select>
 </div>
