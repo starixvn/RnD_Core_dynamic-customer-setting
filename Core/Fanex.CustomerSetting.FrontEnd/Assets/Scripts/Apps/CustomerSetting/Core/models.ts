@@ -94,7 +94,7 @@ module CustomerSetting {
                         validItem = item.copySettingFrom(this);
                         status = status ? validItem : status;
 
-                        return validItem ? item.isChanged() : validItem;
+                        return validItem ? item.hasHighlightField(NotificationType.success) : validItem;
                     }
 
                     return false;
@@ -155,6 +155,16 @@ module CustomerSetting {
             this.resetHighlightState();
             this.changeFieldHighlightState(this.validationState.fieldName, NotificationType.error);
             this.resetValidationState();
+        }
+
+        public hasHighlightField(type: NotificationType): boolean {
+            for (var key in this.highlightState) {
+                if (this.highlightState[key] === type) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public resetHighlightState(): void {

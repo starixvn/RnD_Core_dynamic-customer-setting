@@ -120,12 +120,12 @@ module CustomerSetting {
         }
 
         private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: TooltipPositionModel): void {
-            var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
-
-            tooltip.removeClass("tooltip--right tooltip--left");
-            tooltip.css({ "left": "0px", "visibility": "hidden" });
-
             this.$timeout(() => {
+                var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
+
+                tooltip.removeClass("tooltip--right tooltip--left");
+                tooltip.css({ "left": "0px", "visibility": "hidden" });
+
                 var elementRect: ClientRect = target[0].getBoundingClientRect();
                 var tooltipRect: ClientRect = tooltip[0].getBoundingClientRect();
 

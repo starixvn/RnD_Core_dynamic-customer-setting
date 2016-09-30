@@ -278,7 +278,7 @@ module CustomerSetting.IE8 {
 
                             successful = successful ? validItem : successful;
 
-                            return validItem ? item.isChanged() : validItem;
+                            return validItem ? item.hasHighlightField(NotificationType.success) : validItem;
                         }).length;
                     } else if ($scope.customerLevel === Level.agent) {
                         numberOfCopiedItems = _.filter(targets, (item: DefaultSettingItem) => {
@@ -286,7 +286,7 @@ module CustomerSetting.IE8 {
 
                             successful = successful ? validItem : successful;
 
-                            return validItem ? item.isChanged() : validItem;
+                            return validItem ? item.hasHighlightField(NotificationType.success) : validItem;
                         }).length;
                     }
 

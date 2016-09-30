@@ -282,7 +282,7 @@ module CustomerSetting {
 
                             successful = successful ? validItem : successful;
 
-                            return validItem ? item.isChanged() : validItem;
+                            return validItem ? item.hasHighlightField(NotificationType.success) : validItem;
                         }).length;
                     } else if ($scope.customerLevel === Level.agent) {
                         numberOfCopiedItems = targets.filter((item: DefaultSettingItem) => {
@@ -290,7 +290,7 @@ module CustomerSetting {
 
                             successful = successful ? validItem : successful;
 
-                            return validItem ? item.isChanged() : validItem;
+                            return validItem ? item.hasHighlightField(NotificationType.success) : validItem;
                         }).length;
                     }
 

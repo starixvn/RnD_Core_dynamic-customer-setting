@@ -30852,7 +30852,7 @@ var CustomerSetting;
                     if (_this.sportTypeId !== item.sportTypeId || _this.betTypeId !== item.betTypeId || _this.isLive !== item.isLive) {
                         validItem = item.copySettingFrom(_this);
                         status = status ? validItem : status;
-                        return validItem ? item.isChanged() : validItem;
+                        return validItem ? item.hasHighlightField(CustomerSetting.NotificationType.success) : validItem;
                     }
                     return false;
                 }).length;
@@ -30906,6 +30906,14 @@ var CustomerSetting;
             this.resetHighlightState();
             this.changeFieldHighlightState(this.validationState.fieldName, CustomerSetting.NotificationType.error);
             this.resetValidationState();
+        };
+        DefaultSettingItem.prototype.hasHighlightField = function (type) {
+            for (var key in this.highlightState) {
+                if (this.highlightState[key] === type) {
+                    return true;
+                }
+            }
+            return false;
         };
         DefaultSettingItem.prototype.resetHighlightState = function () {
             this.highlightState = {};
@@ -32566,10 +32574,10 @@ var CustomerSetting;
         });
         FieldHighlightingDirective.prototype.calculateTooltipPosition = function (target, positionModel) {
             var _this = this;
-            var tooltip = angular.element(target[0].previousElementSibling);
-            tooltip.removeClass("tooltip--right tooltip--left");
-            tooltip.css({ "left": "0px", "visibility": "hidden" });
             this.$timeout(function () {
+                var tooltip = angular.element(target[0].previousElementSibling);
+                tooltip.removeClass("tooltip--right tooltip--left");
+                tooltip.css({ "left": "0px", "visibility": "hidden" });
                 var elementRect = target[0].getBoundingClientRect();
                 var tooltipRect = tooltip[0].getBoundingClientRect();
                 var topOffset = 0;
@@ -33746,14 +33754,14 @@ var CustomerSetting;
                                 numberOfCopiedItems = targets.filter(function (item) {
                                     var validItem = item.copyPtOnMembersFrom(source);
                                     successful = successful ? validItem : successful;
-                                    return validItem ? item.isChanged() : validItem;
+                                    return validItem ? item.hasHighlightField(CustomerSetting.NotificationType.success) : validItem;
                                 }).length;
                             }
                             else if ($scope.customerLevel === CustomerSetting.Level.agent) {
                                 numberOfCopiedItems = targets.filter(function (item) {
                                     var validItem = item.copyPtOnMembersFrom(source);
                                     successful = successful ? validItem : successful;
-                                    return validItem ? item.isChanged() : validItem;
+                                    return validItem ? item.hasHighlightField(CustomerSetting.NotificationType.success) : validItem;
                                 }).length;
                             }
                             if (!successful) {
