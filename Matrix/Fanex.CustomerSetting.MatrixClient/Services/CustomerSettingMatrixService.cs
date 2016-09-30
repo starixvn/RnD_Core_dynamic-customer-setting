@@ -36,9 +36,9 @@
                 throw new ArgumentNullException(nameof(query));
             }
 
-            var request = new RestRequest("/customersettingmatrix/get", Method.GET);
+            var request = new RestRequest("/customersettingmatrix/post", Method.POST);
 
-            request.AddObject(query);
+            request.AddJsonBody(query);
 
             return _restClient.Execute(request);
         }
