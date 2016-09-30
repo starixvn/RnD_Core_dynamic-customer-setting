@@ -138,9 +138,6 @@ module CustomerSetting {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
-                        //items.forEach((item: DefaultSettingItem) => {
-                        //    item.resetHighlightState();
-                        //});
                     }
                 }
             });

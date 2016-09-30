@@ -7,14 +7,14 @@ module CustomerSetting.IE8 {
 
     interface ISettingType11CheckboxScope extends ng.IScope {
         item: SettingType11Item;
-        change: () => void;
+        change: (fieldName: string) => void;
     }
 
     class SettingType11CheckboxDirective implements ng.IDirective {
         public restrict: string = "A";
 
         public controller: any = ["$scope", ($scope: ISettingType11CheckboxScope) => {
-            $scope.change = () => {
+            $scope.change = (fieldName: string) => {
                 $scope.item.isDisabled = !$scope.item.isChecked;
 
                 if ($scope.item.downline) {
@@ -32,8 +32,20 @@ module CustomerSetting.IE8 {
 
                     $scope.item.downline.isDisabled = !$scope.item.downline.isChecked;
                 }
+
+                this.resetFieldState($scope.item, fieldName);
             };
         }];
+
+        private resetFieldState(item: SettingType11Item, fieldName: string): void {
+            item.resetFieldHighlightState(fieldName);
+
+            if (item.validationState && !item.validationState.isSuccessful()) {
+                if (item.validationState.fieldName === fieldName) {
+                    item.resetValidationState();
+                }
+            }
+        }
     }
 
     ModuleRegister.directive("settingtype11Checkbox", SettingType11CheckboxDirective);

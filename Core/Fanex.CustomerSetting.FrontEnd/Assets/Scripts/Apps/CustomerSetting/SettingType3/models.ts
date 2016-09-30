@@ -15,7 +15,7 @@ module CustomerSetting {
             super(settingItem);
 
             if (settingItem) {
-                this.commRate = 0.1;//settingItem.commRate;
+                this.commRate = settingItem.commRate;
                 this.intervalStep = settingItem.intervalStep;
 
                 if (settingItem.upline) {

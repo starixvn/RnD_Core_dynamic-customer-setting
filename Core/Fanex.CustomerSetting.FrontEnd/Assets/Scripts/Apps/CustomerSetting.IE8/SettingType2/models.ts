@@ -44,12 +44,12 @@ module CustomerSetting.IE8 {
             var isSuccessful: boolean = true;
             var backupMinBet: number;
             var backupMaxBet: number;
-            var backupMaxPerMatchBet: number;
+            var backupMaxPerMatch: number;
 
             if (source) {
                 backupMinBet = this.minBet;
                 backupMaxBet = this.maxBet;
-                backupMaxPerMatchBet = this.maxPerMatch;
+                backupMaxPerMatch = this.maxPerMatch;
 
                 this.minBet = source.minBet;
                 this.maxBet = source.maxBet;
@@ -60,7 +60,14 @@ module CustomerSetting.IE8 {
                 if (!isSuccessful) {
                     this.minBet = backupMinBet;
                     this.maxBet = backupMaxBet;
-                    this.maxPerMatch = backupMaxPerMatchBet;
+                    this.maxPerMatch = backupMaxPerMatch;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        minBet: backupMinBet,
+                        maxBet: backupMaxBet,
+                        maxPerMatch: backupMaxPerMatch
+                    });
                 }
             }
 
@@ -80,14 +87,14 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
 
         public validateSpecialCase(): boolean {
             if (this.minBet === this.maxBet && this.maxBet === this.maxPerMatch && this.maxPerMatch === 0) {
-                this.validationState = <ValidationResult>Result.normal;
+                this.resetValidationState();
 
                 return true;
             }
@@ -112,7 +119,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -142,7 +149,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -166,7 +173,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

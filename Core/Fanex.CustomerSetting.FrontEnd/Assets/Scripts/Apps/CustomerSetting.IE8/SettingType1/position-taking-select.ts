@@ -14,6 +14,7 @@ module CustomerSetting.IE8 {
         disabled: string;
         divisor: number;
         range: Array<KeyValuePair<number, number>>;
+        resetState: (fieldName: string) => void;
     }
 
     class PositionTakingSelectDirective implements ng.IDirective {
@@ -34,12 +35,10 @@ module CustomerSetting.IE8 {
         public link: ng.IDirectiveLinkFn = (scope: IPositionTakingSelectScope, element: ng.IAugmentedJQuery) => {
             var select: ng.IAugmentedJQuery = element.find("select");
 
+            select.attr("data-ng-change", "resetState(fieldName)");
             select.attr("data-ng-model", "settingItem." + scope.fieldName);
-            select.attr("data-ng-class", StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
-            select.attr("data-tooltip", "");
-            select.attr(
-                "data-message",
-                StringFormater.format("{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':'{0}'}}", scope.fieldName));
+            select.attr("data-ng-options", "item.key as (item.value | ptFormat) for item in range");
+            select.attr("data-field-highlighting", "");
 
             if (scope.disabled === "true") {
                 select.attr("disabled", "disabled");
@@ -55,6 +54,7 @@ module CustomerSetting.IE8 {
             this.$compile(select)(scope);
 
             scope.divisor = SettingType1Config.roundingFactor;
+
             scope.$watch("min + max", (newValue: number, oldValue: number) => {
                 if (!angular.equals(oldValue, newValue)) {
                     scope.settingItem[scope.fieldName] = Math.max(scope.min, Math.min(scope.max, scope.settingItem[scope.fieldName]));
@@ -64,9 +64,22 @@ module CustomerSetting.IE8 {
 
                 scope.range = [new KeyValuePair<number, number>(value, value)];
             });
+
             scope.$watch("settingItem." + scope.fieldName, (value: number) => {
                 scope.range = [new KeyValuePair<number, number>(value, value)];
             });
+
+            scope.resetState = (fieldName: string) => {
+                var item: DefaultSettingItem = <DefaultSettingItem>scope.settingItem;
+
+                if (item.validationState && !item.validationState.isSuccessful()) {
+                    if (item.validationState.fieldName === fieldName) {
+                        item.resetValidationState();
+                    }
+                } else {
+                    item.resetHighlightState();
+                }
+            }
         };
 
         private $compile: ng.ICompileService;

@@ -45,7 +45,7 @@ module CustomerSetting.IE8 {
         }
 
         public static detechChanges(settingItem: any): boolean {
-            var reservedProperties: string[] = ["oldSetting", "validationState"];
+            var reservedProperties: string[] = ["oldSetting", "validationState", "highlightState"];
 
             if (settingItem) {
                 var leftKeys: string[] = _.chain(settingItem).keys().value();
@@ -109,6 +109,14 @@ module CustomerSetting.IE8 {
                     this.m4 = backupM4;
                     this.a4 = backupA4;
                     this.n4 = backupN4;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        s4: backupS4,
+                        m4: backupM4,
+                        a4: backupA4,
+                        n4: backupN4
+                    });
                 }
             }
 
@@ -140,7 +148,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -217,6 +225,15 @@ module CustomerSetting.IE8 {
                     this.m3 = backupM3;
                     this.uS3 = backupUs3;
                     this.s3 = backupS3;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        iS3: backupIs3,
+                        n3: backupN3,
+                        m3: backupM3,
+                        uS3: backupUs3,
+                        s3: backupS3
+                    });
                 }
             }
 
@@ -234,7 +251,11 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.superPTOnMembers = backupSuperPTOnMembers;
-                    this.validationState.fieldName = "superPTOnMembers";
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        superPTOnMembers: backupSuperPTOnMembers
+                    });
                 }
             }
 
@@ -258,7 +279,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -423,6 +444,15 @@ module CustomerSetting.IE8 {
                     this.a2 = backupA2;
                     this.uM2 = backupUm2;
                     this.m2 = backupM2;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        iM2: backupIm2,
+                        n2: backupN2,
+                        a2: backupA2,
+                        uM2: backupUm2,
+                        m2: backupM2
+                    });
                 }
             }
 
@@ -440,7 +470,11 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.masterPTOnMembers = backupMasterPTOnMembers;
-                    this.validationState.fieldName = "masterPTOnMembers";
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        masterPTOnMembers: backupMasterPTOnMembers
+                    });
                 }
             }
 
@@ -464,7 +498,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -620,6 +654,13 @@ module CustomerSetting.IE8 {
                     this.iS1 = backupIs1;
                     this.uS1 = backupUs1;
                     this.s1 = backups1;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        iS1: backupIs1,
+                        uS1: backupUs1,
+                        s1: backups1
+                    });
                 }
             }
 
@@ -667,7 +708,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -754,6 +795,13 @@ module CustomerSetting.IE8 {
                     this.iM1 = backupIm1;
                     this.uM1 = backupUm1;
                     this.m1 = backupM1;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        iM1: backupIm1,
+                        uM1: backupUm1,
+                        m1: backupM1
+                    });
                 }
             }
 
@@ -801,7 +849,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -850,6 +898,11 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.a1 = backupA1;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        a1: backupA1
+                    });
                 }
             }
 
@@ -869,7 +922,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

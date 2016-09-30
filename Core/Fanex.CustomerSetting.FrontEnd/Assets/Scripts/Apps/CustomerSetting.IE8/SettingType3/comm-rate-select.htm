@@ -1,8 +1,10 @@
 ﻿<div class="setting-field-wrapper">
-    <div data-tooltip data-message="{{settingItem.validationState | tooltipMessage:'commissionResourceService'}}">
-        <select class="setting-field"
-                data-ng-model="settingItem.commRate"
-                data-ng-options="item.value as item.key for item in range"
-                data-ng-class="{ 'setting-field--invalid': (settingItem.validationState | highlightingField) }"></select>
-    </div>
+    <select class="setting-field"
+            data-field-highlighting
+            data-field-name="commRate"
+            data-highlight-state="settingItem.highlightState"
+            data-tooltip-message="{{settingItem.validationState | tooltipMessage:'commissionResourceService'}}"
+            data-ng-change="resetValidationState()"
+            data-ng-model="settingItem.commRate"
+            data-ng-options="item.value as item.key for item in range"></select>
 </div>

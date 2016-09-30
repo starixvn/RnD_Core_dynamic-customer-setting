@@ -61,6 +61,13 @@ module CustomerSetting.IE8 {
                     this.minBet = backupMinBet;
                     this.maxBet = backupMaxBet;
                     this.maxPerNumber = backupMaxPerNumber;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        minBet: backupMinBet,
+                        maxBet: backupMaxBet,
+                        maxPerNumber: backupMaxPerNumber
+                    });
                 }
             }
 
@@ -80,14 +87,14 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
 
         public validateSpecialCase(): boolean {
             if (this.minBet === 0 && this.maxBet === 0 && this.maxPerNumber === 0) {
-                this.validationState = <ValidationResult>Result.normal;
+                this.resetValidationState();
 
                 return true;
             }
@@ -112,7 +119,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -142,7 +149,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }
@@ -166,7 +173,7 @@ module CustomerSetting.IE8 {
                 }
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

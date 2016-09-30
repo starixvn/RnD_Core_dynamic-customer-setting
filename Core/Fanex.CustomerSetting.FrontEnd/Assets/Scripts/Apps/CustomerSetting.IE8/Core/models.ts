@@ -55,6 +55,7 @@ module CustomerSetting.IE8 {
         public isLive: boolean;
         public oldSetting: DefaultSettingItem;
         public validationState: ValidationResult;
+        public highlightState: {};
 
         constructor();
         constructor(settingItem: any);
@@ -72,6 +73,7 @@ module CustomerSetting.IE8 {
             }
 
             this.validationState = <ValidationResult>ValidationResult.normal;
+            this.highlightState = {};
         }
 
         public isChanged(): boolean {
@@ -81,25 +83,26 @@ module CustomerSetting.IE8 {
                 || (this.betTypeName !== this.oldSetting.betTypeName);
         }
 
-        public copySettingTo(targets: Array<DefaultSettingItem>): boolean {
-            var isSuccessful = true;
+        public copySettingTo(targets: Array<DefaultSettingItem>): { numberOfCopiedItems: number, status: boolean } {
+            var numberOfCopiedItems: number = 0;
+            var status: boolean = true;
 
             if (targets) {
-                _.forEach(targets, (item: DefaultSettingItem) => {
+                numberOfCopiedItems = _.filter(targets, (item: DefaultSettingItem) => {
                     var validItem: boolean = true;
 
                     if (this.sportTypeId !== item.sportTypeId || this.betTypeId !== item.betTypeId || this.isLive !== item.isLive) {
                         validItem = item.copySettingFrom(this);
-                        isSuccessful = isSuccessful ? validItem : isSuccessful;
+                        status = status ? validItem : status;
 
-                        if (!validItem) {
-                            item.validationState.isWarning = true;
-                        }
+                        return validItem ? item.isChanged() : validItem;
                     }
-                });
+
+                    return false;
+                }).length;
             }
 
-            return isSuccessful;
+            return { numberOfCopiedItems: numberOfCopiedItems, status: status };
         }
 
         public copySettingFrom(source: DefaultSettingItem): boolean {
@@ -125,6 +128,42 @@ module CustomerSetting.IE8 {
             });
 
             return settingItem;
+        }
+
+        public changeFieldHighlightState(fieldName: string, state: NotificationType = NotificationType.none): void {
+            if (fieldName) {
+                this.highlightState[fieldName] = state;
+            }
+        }
+
+        public resetValidationState(): void {
+            this.validationState = <ValidationResult>Result.normal;
+        }
+
+        public highlightCopiedFields(state: {}): void {
+            if (state) {
+                for (var key in state) {
+                    if (this[key] !== state[key]) {
+                        this.highlightState[key] = NotificationType.success;
+                    } else {
+                        this.highlightState[key] = NotificationType.none;
+                    }
+                }
+            }
+        }
+
+        public highlightUnablyCopiedField(): void {
+            this.resetHighlightState();
+            this.changeFieldHighlightState(this.validationState.fieldName, NotificationType.error);
+            this.resetValidationState();
+        }
+
+        public resetHighlightState(): void {
+            this.highlightState = {};
+        }
+
+        public resetFieldHighlightState(fieldName: string): void {
+            this.highlightState[fieldName] = NotificationType.none;
         }
     }
 
@@ -582,13 +621,11 @@ module CustomerSetting.IE8 {
     export class ValidationResult extends Result {
         public fieldName: string;
         public msgParams: any[];
-        public isWarning: boolean;
 
-        constructor(message: string, fieldName?: string, msgParams?: any[], isWarning: boolean = false) {
+        constructor(message: string, fieldName?: string, msgParams?: any[]) {
             super(-8000, message, MessageType.error);
             this.fieldName = fieldName;
             this.msgParams = msgParams;
-            this.isWarning = isWarning;
         }
     }
 }

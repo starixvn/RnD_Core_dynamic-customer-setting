@@ -83,7 +83,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

@@ -80,6 +80,8 @@ module CustomerSetting.IE8 {
                 }
             }
 
+            this.resetValidationState();
+
             return true;
         }
 

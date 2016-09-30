@@ -55,6 +55,9 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.chargeCommission = backupChargeCommission;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({ chargeCommission: backupChargeCommission });
                 }
             }
 
@@ -80,7 +83,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

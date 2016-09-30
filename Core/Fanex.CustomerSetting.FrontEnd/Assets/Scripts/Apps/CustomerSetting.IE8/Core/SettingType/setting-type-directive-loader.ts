@@ -36,7 +36,7 @@ module CustomerSetting.IE8 {
         }
 
         private generateNodes(scope: ISettingTypeLoaderScope, element: ng.IAugmentedJQuery): void {
-            if (angular.isDefined(scope.setting)) {
+            if (scope.setting && scope.setting.settingTypes && angular.isArray(scope.setting.settingTypes)) {
                 _.forEach(scope.setting.settingTypes, (settingType: SettingType, index: number) => {
                     var loaded = _.some(this.loadedSettingTypes, (item: number) => {
                         return item === settingType.id;

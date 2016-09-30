@@ -176,7 +176,7 @@ module CustomerSetting.IE8 {
                 $scope.item.lossLimit = $scope.isUnlimited ? 0 : null;
 
                 if ($scope.isUnlimited && $scope.item.validationState.fieldName === "lossLimit") {
-                    $scope.item.validationState = <ValidationResult>Result.normal;
+                    $scope.item.resetValidationState();
                 }
             };
         }];

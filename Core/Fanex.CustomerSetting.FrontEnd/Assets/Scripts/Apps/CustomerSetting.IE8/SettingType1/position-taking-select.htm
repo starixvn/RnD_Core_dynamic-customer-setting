@@ -1,3 +1,6 @@
 ﻿<div class="setting-field-wrapper">
-    <select class="setting-field" data-ng-options="item.key as (item.value | ptFormat) for item in range"></select>
+    <select class="setting-field"
+            data-field-name="{{fieldName}}"
+            data-highlight-state="settingItem.highlightState"
+            data-tooltip-message="{{settingItem.validationState | tooltipMessage:'positionTakingResourceService':fieldName}}"></select>
 </div>

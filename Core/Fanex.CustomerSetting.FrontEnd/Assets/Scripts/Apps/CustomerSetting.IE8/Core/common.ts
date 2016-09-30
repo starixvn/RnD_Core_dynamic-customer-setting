@@ -28,6 +28,13 @@ module CustomerSetting.IE8 {
         multipleUpdate = 2
     }
 
+    export enum NotificationType {
+        none = 0,
+        success = 1,
+        warning = 2,
+        error = 3
+    }
+
     export class Exceptions {
         public static notImplemented(funcName: string): string {
             return StringFormater.format("{0} is not implemented", funcName);

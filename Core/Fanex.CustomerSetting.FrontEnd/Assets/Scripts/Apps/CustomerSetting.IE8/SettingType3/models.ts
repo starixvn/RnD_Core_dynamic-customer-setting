@@ -48,6 +48,11 @@ module CustomerSetting.IE8 {
 
                 if (!isSuccessful) {
                     this.commRate = backupCommRate;
+                    this.highlightUnablyCopiedField();
+                } else {
+                    this.highlightCopiedFields({
+                        commRate: backupCommRate
+                    });
                 }
             }
 
@@ -61,7 +66,7 @@ module CustomerSetting.IE8 {
                 return false;
             }
 
-            this.validationState = <ValidationResult>Result.normal;
+            this.resetValidationState();
 
             return true;
         }

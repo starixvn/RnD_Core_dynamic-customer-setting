@@ -19,10 +19,11 @@ module CustomerSetting.IE8 {
 
         public templateUrl: string = "SettingResult/setting-result.htm";
 
-        public controller: any = ["$scope", "$window", ($scope: ISettingResultScope, $window: ng.IWindowService) => {
+        public controller: any = ["$rootScope", "$scope", "$window", ($rootScope: ng.IRootScopeService, $scope: ISettingResultScope, $window: ng.IWindowService) => {
             $scope.$watch("result", (result: UpdatingSettingResult) => {
-                if (angular.isDefined(result)) {
+                if (result) {
                     $window.scrollTo(0, 0);
+                    $rootScope.$emit("page-height-changed");
                 }
             });
         }];

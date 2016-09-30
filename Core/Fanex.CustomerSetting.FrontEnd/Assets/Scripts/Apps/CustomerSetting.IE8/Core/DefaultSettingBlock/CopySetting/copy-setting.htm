@@ -1,6 +1,9 @@
 ﻿<div class="right-btn-area">
     <div title="{{'CopyTooltip' | label}}"
-         data-tooltip data-message="{{showError ? ('CopyingFailed' | message) : ''}}"
+         data-field-highlighting
+         data-tooltip-type="{{copyingState.type}}"
+         data-tooltip-message="{{copyingState.messageKey | message}}"
+         data-tooltip-position-model="{{inModal ? 3 : 1}}"
          data-ng-click="copy()">
         <span class="icon icon--copy"></span>
     </div>

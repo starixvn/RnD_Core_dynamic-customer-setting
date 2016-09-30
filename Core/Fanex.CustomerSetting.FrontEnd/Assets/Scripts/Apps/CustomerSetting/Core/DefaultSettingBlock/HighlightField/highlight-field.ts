@@ -97,7 +97,7 @@ module CustomerSetting {
                 if (scope.tooltipMessage) {
                     this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                 }
-            })
+            });
         };
 
         private $window: ng.IWindowService;

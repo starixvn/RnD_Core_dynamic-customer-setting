@@ -104,7 +104,7 @@ module CustomerSetting.IE8 {
                 var item: DefaultSettingItem = <DefaultSettingItem>settingItem;
 
                 if (currentSportTypeId !== item.sportTypeId) {
-                    if (angular.isDefined(group)) {
+                    if (group) {
                         result.push(group);
                     }
 
@@ -115,7 +115,7 @@ module CustomerSetting.IE8 {
                 group.push(item);
             });
 
-            if (angular.isDefined(group)) {
+            if (group) {
                 result.push(group);
             }
 
@@ -258,28 +258,45 @@ module CustomerSetting.IE8 {
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
 
-            $scope.showError = false;
+            $scope.copyingState = new CopyingState();
+            $scope.copyingState.none();
+            $scope.inModal = true;
 
             $scope.copy = () => {
-                this.copyingSettingService.hideSportCopyingError($scope);
+                this.copyingSettingService.hideSubGroupsTooltip($scope);
 
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items: DefaultSettingItem[] = ArrayHelpers.join2DimensionalArray($scope.settingItems);
                     var source: DefaultSettingItem = items[0];
                     var targets: DefaultSettingItem[] = items.slice(1);
-                    var isSuccessful: boolean = true;
+                    var numberOfCopiedItems: number = 0;
+                    var successful: boolean = true;
 
                     if ($scope.customerLevel === Level.masterAgent) {
-                        isSuccessful = _.every(targets, (item: DefaultSettingItem) => {
-                            return (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
-                        });
+                        numberOfCopiedItems = _.filter(targets, (item: DefaultSettingItem) => {
+                            var validItem: boolean = (<MasterPositionTaking>item).copyPtOnMembersFrom(<MasterPositionTaking>source);
+
+                            successful = successful ? validItem : successful;
+
+                            return validItem ? item.isChanged() : validItem;
+                        }).length;
                     } else if ($scope.customerLevel === Level.agent) {
-                        isSuccessful = _.every(targets, (item: DefaultSettingItem) => {
-                            return (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
-                        });
+                        numberOfCopiedItems = _.filter(targets, (item: DefaultSettingItem) => {
+                            var validItem: boolean = (<AgentPositionTaking>item).copyPtOnMembersFrom(<AgentPositionTaking>source);
+
+                            successful = successful ? validItem : successful;
+
+                            return validItem ? item.isChanged() : validItem;
+                        }).length;
                     }
 
-                    $scope.showError = !isSuccessful;
+                    if (!successful) {
+                        $scope.copyingState.fail();
+                    } else if (numberOfCopiedItems > 0) {
+                        $scope.copyingState.succeed();
+                    } else {
+                        $scope.copyingState.none();
+                    }
                 }
             };
         }];

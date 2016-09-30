@@ -5,11 +5,36 @@
 module CustomerSetting.IE8 {
     "use strict";
 
+    export class CopyingState {
+        public messageKey: string;
+        public type: string;
+
+        public isShowingMessage(): boolean {
+            return !!this.messageKey || this.type === "none";
+        }
+
+        public succeed(): void {
+            this.messageKey = "CopiedSuccessfully";
+            this.type = "success";
+        }
+
+        public fail(): void {
+            this.messageKey = "CopyingFailed";
+            this.type = "error";
+        }
+
+        public none(): void {
+            this.messageKey = null;
+            this.type = "none";
+        }
+    }
+
     export interface ICopySettingScope extends ng.IScope {
         copy: () => void;
-        showError: boolean;
+        copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
+        inModal: boolean;
     }
 
     export class CopySettingDirective implements ng.IDirective {
@@ -24,21 +49,27 @@ module CustomerSetting.IE8 {
         };
 
         public controller: any = ["$scope", ($scope: ICopySettingScope) => {
+            $scope.copyingState = new CopyingState();
+
             this.copyingSettingService.register($scope);
 
-            $scope.showError = false;
-
             $scope.copy = () => {
-                this.copyingSettingService.hideSportCopyingError($scope);
-
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items = ArrayHelpers.join2DimensionalArray($scope.settingItems);
                     var source = items[0];
                     var targets = items.slice(1);
 
                     if (source.validate()) {
-                        if (!source.copySettingTo(targets)) {
-                            $scope.showError = true;
+                        this.copyingSettingService.hideSubGroupsTooltip($scope);
+
+                        var copyingResult = source.copySettingTo(targets);
+
+                        if (!copyingResult.status) {
+                            $scope.copyingState.fail();
+                        } else if (copyingResult.numberOfCopiedItems > 0) {
+                            $scope.copyingState.succeed();
+                        } else {
+                            $scope.copyingState.none();
                         }
                     }
                 }
@@ -67,13 +98,13 @@ module CustomerSetting.IE8 {
 
             this.$rootScope.$on("updateSetting", () => {
                 _.forEach(this.scopes, (registeredScope: ICopySettingScope) => {
-                    if (registeredScope.showError) {
+                    if (registeredScope.copyingState.isShowingMessage()) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
-                        registeredScope.showError = false;
+                        registeredScope.copyingState.none();
 
                         _.forEach(items, (item: DefaultSettingItem) => {
-                            item.validationState = undefined;
+                            item.resetHighlightState();
                         });
                     }
                 });
@@ -90,20 +121,22 @@ module CustomerSetting.IE8 {
             }
         }
 
-        public hideSportCopyingError(scope: ICopySettingScope): void {
+        public hideSubGroupsTooltip(scope: ICopySettingScope): void {
             var settingTypeId: number = scope.settingTypeId;
+            var isSubGroup: boolean = !(scope.settingItems[0] instanceof Array);
+
+            if (isSubGroup) {
+                return;
+            }
 
             _.forEach(this.scopes, (registeredScope: ICopySettingScope) => {
-                if (registeredScope.showError) {
+                if (registeredScope.copyingState.isShowingMessage()) {
                     var registeredSettingTypeId: number = registeredScope.settingTypeId;
 
                     if (registeredSettingTypeId === settingTypeId) {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
-                        registeredScope.showError = false;
-                        _.forEach(items, (item: DefaultSettingItem) => {
-                            item.validationState = undefined;
-                        });
+                        registeredScope.copyingState.none();
                     }
                 }
             });

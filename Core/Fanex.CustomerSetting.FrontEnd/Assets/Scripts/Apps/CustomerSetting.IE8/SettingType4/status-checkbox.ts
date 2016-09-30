@@ -7,14 +7,14 @@ module CustomerSetting.IE8 {
 
     interface IStatusCheckboxScope extends ng.IScope {
         item: SettingType4Item;
-        change: () => void;
+        change: (fieldName: string) => void;
     }
 
     class StatusCheckboxDirective implements ng.IDirective {
         public restrict: string = "A";
 
         public controller: any = ["$scope", ($scope: IStatusCheckboxScope) => {
-            $scope.change = () => {
+            $scope.change = (fieldName: string) => {
                 $scope.item.isDisabled = !$scope.item.isChecked;
 
                 if ($scope.item.downline) {
@@ -32,8 +32,20 @@ module CustomerSetting.IE8 {
 
                     $scope.item.downline.isDisabled = !$scope.item.downline.isChecked;
                 }
+
+                this.resetFieldState($scope.item, fieldName);
             };
         }];
+
+        private resetFieldState(item: SettingType4Item, fieldName: string): void {
+            item.resetFieldHighlightState(fieldName);
+
+            if (item.validationState && !item.validationState.isSuccessful()) {
+                if (item.validationState.fieldName === fieldName) {
+                    item.resetValidationState();
+                }
+            }
+        }
     }
 
     ModuleRegister.directive("statusCheckbox", StatusCheckboxDirective);

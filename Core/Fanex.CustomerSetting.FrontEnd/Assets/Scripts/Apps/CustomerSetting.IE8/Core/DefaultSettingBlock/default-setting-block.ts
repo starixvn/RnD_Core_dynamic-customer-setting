@@ -24,7 +24,7 @@ module CustomerSetting.IE8 {
             $scope.avaiSettingLevels = SettingLevel;
 
             $scope.$watch("settingType", (settingType: SettingType) => {
-                if (angular.isDefined(settingType) && angular.isDefined(settingType.settingItems) && angular.isArray(settingType.settingItems)) {
+                if (settingType && settingType.settingItems && angular.isArray(settingType.settingItems)) {
                     if (settingType.settingLevel === SettingLevel.sportTypeBetType) {
                         $scope.sportGroups = this.groupSettingItemsBySportType(settingType.settingItems);
 
@@ -47,7 +47,7 @@ module CustomerSetting.IE8 {
                 var settingItem = <DefaultSettingItem>item;
 
                 if (currentSportTypeId !== settingItem.sportTypeId) {
-                    if (angular.isDefined(group)) {
+                    if (group) {
                         result.push(group);
                     }
 
@@ -58,7 +58,7 @@ module CustomerSetting.IE8 {
                 group.push(settingItem);
             });
 
-            if (angular.isDefined(group)) {
+            if (group) {
                 result.push(group);
             }
 

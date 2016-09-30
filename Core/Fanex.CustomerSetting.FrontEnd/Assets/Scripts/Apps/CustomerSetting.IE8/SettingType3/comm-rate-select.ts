@@ -11,6 +11,7 @@ module CustomerSetting.IE8 {
     interface ISettingType3ItemScope extends ng.IScope {
         settingItem: SettingType3Item;
         range: Array<KeyValuePair<number, number>>;
+        resetValidationState: () => void;
     }
 
     class CommRateSelectDirective implements ng.IDirective {
@@ -33,6 +34,10 @@ module CustomerSetting.IE8 {
                     $scope.settingItem.intervalStep,
                     roundingFactor);
             });
+
+            $scope.resetValidationState = () => {
+                $scope.settingItem.resetValidationState();
+            }
         }];
 
         private valueRangeService: ValueRangeService;

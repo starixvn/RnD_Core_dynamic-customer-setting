@@ -46,13 +46,7 @@ module CustomerSetting.IE8 {
 
             element.attr("data-ng-model", "settingItem." + scope.fieldName);
             element.attr("data-ng-change", "updateValue()");
-            element.attr("data-tooltip", "");
-            element.attr(
-                "data-ng-class",
-                StringFormater.format("{ 'setting-field--invalid': (settingItem.validationState | highlightingField:'{0}') }", scope.fieldName));
-            element.attr(
-                "data-message",
-                StringFormater.format("{{settingItem.validationState | tooltipMessage:'betSettingResourceService':'{0}'}}", scope.fieldName));
+            element.attr("data-field-highlighting", "");
 
             if (scope.customerLevel !== Level.superAgent || (scope.fieldName === "minBet" && scope.settingItem.upline.minBet > 0)) {
                 element.addClass("setting-field--has-constraint");

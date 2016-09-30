@@ -26,7 +26,7 @@ module CustomerSetting.IE8 {
                 value = this.defaultLabel[key] || key;
             }
 
-            if (angular.isDefined(value)) {
+            if (value) {
                 value = value.replace(/&apos;|&#x0*27;/g, "'");
             }
 
@@ -36,7 +36,7 @@ module CustomerSetting.IE8 {
         public getFormattedLabel(key: string, ...args: any[]): string {
             var label: string = this.getMessage(key);
 
-            if (angular.isDefined(label)) {
+            if (label) {
                 label = label.replace(/{(\d+)}/g, (match: string, index: number) => {
                     return args[index] === undefined || args[index] === null
                         ? match
@@ -54,7 +54,7 @@ module CustomerSetting.IE8 {
                 msg = this.defaultMessage[key] || key;
             }
 
-            if (angular.isDefined(msg)) {
+            if (msg) {
                 msg = msg.replace(/&apos;|&#x0*27;/g, "'");
             }
 
@@ -64,7 +64,7 @@ module CustomerSetting.IE8 {
         public getFormattedMessage(key: string, ...args: any[]): string {
             var msg: string = this.getMessage(key);
 
-            if (angular.isDefined(msg)) {
+            if (msg) {
                 msg = msg.replace(/{(\d+)}/g, (match: string, index: number) => {
                     return args[index] === undefined || args[index] === null
                         ? match
@@ -81,7 +81,7 @@ module CustomerSetting.IE8 {
             var label = this.resource["label"] || {};
             var message = this.resource["message"] || {};
 
-            if (angular.isDefined(language)) {
+            if (language) {
                 language = language.toLowerCase();
             } else {
                 language = defaultLanguage;
