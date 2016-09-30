@@ -33980,7 +33980,7 @@ var CustomerSetting;
             if (backup === void 0) { backup = false; }
             _super.call(this, settingItem);
             if (settingItem) {
-                this.commRate = 0.1;
+                this.commRate = settingItem.commRate;
                 this.intervalStep = settingItem.intervalStep;
                 if (settingItem.upline) {
                     this.upline = new SettingType3Item(settingItem.upline);

@@ -854,7 +854,18 @@ body {
   line-height: 23.1px;
   min-height: 23.1px; }
 
-.tooltip:after {
+.tooltip:after,
+.tooltip--error:after,
+.tooltip--warning:after,
+.tooltip--success:after,
+.tooltip--right:after,
+.tooltip--error.tooltip--right:after,
+.tooltip--warning.tooltip--right:after,
+.tooltip--success.tooltip--right:after,
+.tooltip--left:after,
+.tooltip--error.tooltip--left:after,
+.tooltip--warning.tooltip--left:after,
+.tooltip--success.tooltip--left:after {
   border-color: transparent;
   border-width: 3px; }
 
