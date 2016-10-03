@@ -6,16 +6,11 @@
 module CustomerSetting {
     "use strict";
 
-    enum TooltipPositionModel {
-        relative = 1,
-        absolute = 2,
-        fixed = 3
-    }
-
     interface IFieldHighlightingStateScope extends ng.IScope {
         tooltipMessage: string;
         tooltipType: string;
-        tooltipPositionModel: TooltipPositionModel,
+        tooltipPositionModel: PositionModel,
+        tooltipDisplayingSeconds: number;
         highlightType: string,
         fieldName: string;
         highlightState: {};
@@ -32,6 +27,7 @@ module CustomerSetting {
                 tooltipMessage: "@",
                 tooltipType: "@",
                 tooltipPositionModel: "@",
+                tooltipDisplayingSeconds: "@",
                 fieldName: "@",
                 highlightState: "="
             };
@@ -58,10 +54,16 @@ module CustomerSetting {
                 if (scope.tooltipMessage) {
                     this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                     scope.highlightType = scope.tooltipType || "error";
+
+                    if (scope.tooltipDisplayingSeconds) {
+                        this.$timeout(() => {
+                            scope.tooltipMessage = null;
+                        }, +scope.tooltipDisplayingSeconds * 1000);
+                    }
                 }
 
                 if (highlightState && fieldName) {
-                    highlightState[fieldName] = NotificationType[scope.highlightType || NotificationType.none];
+                    highlightState[fieldName] = NotificationType[scope.highlightType || "none"];
                 }
             });
 
@@ -119,9 +121,13 @@ module CustomerSetting {
             this.$rootScope = $rootScope;
         }
 
-        private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: TooltipPositionModel): void {
+        private calculateTooltipPosition(target: ng.IAugmentedJQuery, positionModel: PositionModel): void {
             this.$timeout(() => {
                 var tooltip: ng.IAugmentedJQuery = angular.element(target[0].previousElementSibling);
+
+                if (!tooltip || tooltip.length === 0) {
+                    return;
+                }
 
                 tooltip.removeClass("tooltip--right tooltip--left");
                 tooltip.css({ "left": "0px", "visibility": "hidden" });
@@ -134,7 +140,7 @@ module CustomerSetting {
 
                 var arrowWidth: number = 5;
 
-                if ((+positionModel || TooltipPositionModel.relative) === TooltipPositionModel.relative) {
+                if ((+positionModel || PositionModel.relative) === PositionModel.relative) {
                     var bodyRect: ClientRect = this.$window.document.body.getBoundingClientRect();
 
                     topOffset = bodyRect.top;
@@ -156,13 +162,11 @@ module CustomerSetting {
                     tooltip.addClass("tooltip--left");
                 }
 
-                if (top !== tooltipRect.top || left !== tooltipRect.left) {
-                    tooltip.css({
-                        "top": top + "px",
-                        "left": left + "px",
-                        "visibility": "visible"
-                    });
-                }
+                tooltip.css({
+                    "top": top + "px",
+                    "left": left + "px",
+                    "visibility": "visible"
+                });
             });
         }
 

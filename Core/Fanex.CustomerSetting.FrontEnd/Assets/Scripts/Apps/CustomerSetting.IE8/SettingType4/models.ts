@@ -92,8 +92,7 @@ module CustomerSetting.IE8 {
                         this.highlightState["isDisabled"] = NotificationType.none;
                     }
 
-                    if (this.downline.isDisabled !== backupDisabledDownline
-                        || this.downline.readonly !== backupReadonlyDownline) {
+                    if (this.downline.isDisabled !== backupDisabledDownline || this.downline.readonly !== backupReadonlyDownline) {
                         this.highlightState["downline.isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["downline.isDisabled"]) {
                         this.highlightState["downline.isDisabled"] = NotificationType.none;

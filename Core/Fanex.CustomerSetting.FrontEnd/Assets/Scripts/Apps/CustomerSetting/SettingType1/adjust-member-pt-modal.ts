@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../core/defaultsettingblock/copysetting/copy-setting.ts" />
 /// <reference path="../core/settingtype/setting-type-base-directive.ts" />
+/// <reference path="../core/common.ts" />
 /// <reference path="../core/module-registrater.ts" />
 /// <reference path="models.ts" />
 
@@ -262,12 +263,11 @@ module CustomerSetting {
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
 
-            $scope.copyingState = new CopyingState();
+            $scope.copyingState = new CopyingState(PositionModel.fixed);
             $scope.copyingState.none();
-            $scope.inModal = true;
 
             $scope.copy = () => {
-                this.copyingSettingService.hideSubGroupsTooltip($scope);
+                this.copyingSettingService.hideTooltips($scope);
 
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items: DefaultSettingItem[] = ArrayHelpers.join2DimensionalArray($scope.settingItems);

@@ -143,9 +143,7 @@ module CustomerSetting {
             if (state) {
                 for (var key in state) {
                     if (this[key] !== state[key]) {
-                        this.highlightState[key] = NotificationType.success;
-                    } else {
-                        this.highlightState[key] = NotificationType.none;
+                        this.changeFieldHighlightState(key, NotificationType.success);
                     }
                 }
             }
@@ -172,7 +170,7 @@ module CustomerSetting {
         }
 
         public resetFieldHighlightState(fieldName: string): void {
-            this.highlightState[fieldName] = NotificationType.none;
+            this.changeFieldHighlightState(fieldName);
         }
     }
 

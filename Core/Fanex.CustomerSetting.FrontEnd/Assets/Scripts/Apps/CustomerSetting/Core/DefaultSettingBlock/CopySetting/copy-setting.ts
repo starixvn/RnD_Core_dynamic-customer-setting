@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../common.ts" />
 /// <reference path="../../module-registrater.ts" />
 
 module CustomerSetting {
@@ -7,6 +8,13 @@ module CustomerSetting {
     export class CopyingState {
         public messageKey: string;
         public type: string;
+        public positionModel: PositionModel;
+        public displayingSeconds: number;
+
+        constructor(positionModel?: PositionModel, displayingSeconds: number = 5) {
+            this.positionModel = positionModel || PositionModel.relative;
+            this.displayingSeconds = displayingSeconds;
+        }
 
         public isShowingMessage(): boolean {
             return !!this.messageKey || this.type === "none";
@@ -33,7 +41,6 @@ module CustomerSetting {
         copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
-        inModal: boolean;
     }
 
     export class CopySettingDirective implements ng.IDirective {
@@ -61,7 +68,7 @@ module CustomerSetting {
                     var targets = items.slice(1);
 
                     if (source.validate()) {
-                        this.copyingSettingService.hideSubGroupsTooltip($scope);
+                        this.copyingSettingService.hideTooltips($scope);
 
                         var copyingResult = source.copySettingTo(targets);
 
@@ -122,13 +129,8 @@ module CustomerSetting {
             }
         }
 
-        public hideSubGroupsTooltip(scope: ICopySettingScope): void {
+        public hideTooltips(scope: ICopySettingScope): void {
             var settingTypeId: number = scope.settingTypeId;
-            var isSubGroup: boolean = !(scope.settingItems[0] instanceof Array);
-
-            if (isSubGroup) {
-                return;
-            }
 
             this.scopes.forEach((registeredScope: ICopySettingScope) => {
                 if (registeredScope.copyingState.isShowingMessage()) {
@@ -138,6 +140,9 @@ module CustomerSetting {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
+                        items.forEach((item: DefaultSettingItem) => {
+                            item.resetHighlightState();
+                        });
                     }
                 }
             });

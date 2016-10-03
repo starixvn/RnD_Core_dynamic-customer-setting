@@ -35,6 +35,12 @@ module CustomerSetting.IE8 {
         error = 3
     }
 
+    export enum PositionModel {
+        relative = 1,
+        absolute = 2,
+        fixed = 3
+    }
+
     export class Exceptions {
         public static notImplemented(funcName: string): string {
             return StringFormater.format("{0} is not implemented", funcName);

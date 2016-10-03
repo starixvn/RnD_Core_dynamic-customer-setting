@@ -8,6 +8,13 @@ module CustomerSetting.IE8 {
     export class CopyingState {
         public messageKey: string;
         public type: string;
+        public positionModel: PositionModel;
+        public displayingSeconds: number;
+
+        constructor(positionModel?: PositionModel, displayingSeconds: number = 5) {
+            this.positionModel = positionModel || PositionModel.relative;
+            this.displayingSeconds = displayingSeconds;
+        }
 
         public isShowingMessage(): boolean {
             return !!this.messageKey || this.type === "none";
@@ -34,7 +41,6 @@ module CustomerSetting.IE8 {
         copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
-        inModal: boolean;
     }
 
     export class CopySettingDirective implements ng.IDirective {
@@ -60,7 +66,7 @@ module CustomerSetting.IE8 {
                     var targets = items.slice(1);
 
                     if (source.validate()) {
-                        this.copyingSettingService.hideSubGroupsTooltip($scope);
+                        this.copyingSettingService.hideTooltips($scope);
 
                         var copyingResult = source.copySettingTo(targets);
 
@@ -121,13 +127,8 @@ module CustomerSetting.IE8 {
             }
         }
 
-        public hideSubGroupsTooltip(scope: ICopySettingScope): void {
+        public hideTooltips(scope: ICopySettingScope): void {
             var settingTypeId: number = scope.settingTypeId;
-            var isSubGroup: boolean = !(scope.settingItems[0] instanceof Array);
-
-            if (isSubGroup) {
-                return;
-            }
 
             _.forEach(this.scopes, (registeredScope: ICopySettingScope) => {
                 if (registeredScope.copyingState.isShowingMessage()) {
@@ -137,6 +138,9 @@ module CustomerSetting.IE8 {
                         var items: Array<DefaultSettingItem> = ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
 
                         registeredScope.copyingState.none();
+                        _.forEach(items, (item: DefaultSettingItem) => {
+                            item.resetHighlightState();
+                        });
                     }
                 }
             });

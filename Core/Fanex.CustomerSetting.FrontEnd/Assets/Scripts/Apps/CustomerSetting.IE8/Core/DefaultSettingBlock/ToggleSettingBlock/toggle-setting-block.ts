@@ -44,7 +44,7 @@ module CustomerSetting.IE8 {
                 scope.$watch("settingData", () => {
                     if (this.initializing) {
                         this.$timeout(() => this.initializing = false);
-                    } else {
+                    } else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
                         this.triggerPageHeightChangedEvent();
                     }
@@ -53,7 +53,8 @@ module CustomerSetting.IE8 {
                 this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
                     if ((!settingTypeId || settingTypeId === scope.settingTypeId)
                         && scope.settingData
-                        && _.some(scope.settingData, (item: DefaultSettingItem) => !item.validationState.isSuccessful())) {
+                        && _.some(scope.settingData, (item: DefaultSettingItem) => !item.validationState.isSuccessful())
+                        && !scope.sharedStates.isExpanded(scope.blockIndex)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
                         this.triggerPageHeightChangedEvent();
                     }

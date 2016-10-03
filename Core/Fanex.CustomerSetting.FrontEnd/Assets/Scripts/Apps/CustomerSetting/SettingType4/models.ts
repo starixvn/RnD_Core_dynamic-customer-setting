@@ -112,8 +112,7 @@ module CustomerSetting {
                         this.highlightState["isDisabled"] = NotificationType.none;
                     }
 
-                    if (this.downline.isDisabled !== backupDisabledDownline
-                        || this.downline.readonly !== backupReadonlyDownline) {
+                    if (this.downline.isDisabled !== backupDisabledDownline || this.downline.readonly !== backupReadonlyDownline) {
                         this.highlightState["downline.isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["downline.isDisabled"]) {
                         this.highlightState["downline.isDisabled"] = NotificationType.none;
@@ -172,12 +171,12 @@ module CustomerSetting {
         }
 
         private resetFieldState(fieldName: string): void {
-            this.resetFieldHighlightState(fieldName);
-
             if (this.validationState && !this.validationState.isSuccessful) {
                 if (this.validationState.fieldName === fieldName) {
                     this.resetValidationState();
                 }
+            } else {
+                this.resetFieldHighlightState(fieldName);
             }
         }
     }

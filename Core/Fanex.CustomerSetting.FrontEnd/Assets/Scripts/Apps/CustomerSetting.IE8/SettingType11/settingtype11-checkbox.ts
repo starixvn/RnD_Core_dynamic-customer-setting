@@ -38,12 +38,12 @@ module CustomerSetting.IE8 {
         }];
 
         private resetFieldState(item: SettingType11Item, fieldName: string): void {
-            item.resetFieldHighlightState(fieldName);
-
             if (item.validationState && !item.validationState.isSuccessful()) {
                 if (item.validationState.fieldName === fieldName) {
                     item.resetValidationState();
                 }
+            } else {
+                item.resetFieldHighlightState(fieldName);
             }
         }
     }

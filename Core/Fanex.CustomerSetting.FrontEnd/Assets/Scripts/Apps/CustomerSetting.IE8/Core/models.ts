@@ -144,9 +144,7 @@ module CustomerSetting.IE8 {
             if (state) {
                 for (var key in state) {
                     if (this[key] !== state[key]) {
-                        this.highlightState[key] = NotificationType.success;
-                    } else {
-                        this.highlightState[key] = NotificationType.none;
+                        this.changeFieldHighlightState(key, NotificationType.success);
                     }
                 }
             }
@@ -158,14 +156,6 @@ module CustomerSetting.IE8 {
             this.resetValidationState();
         }
 
-        public resetHighlightState(): void {
-            this.highlightState = {};
-        }
-
-        public resetFieldHighlightState(fieldName: string): void {
-            this.highlightState[fieldName] = NotificationType.none;
-        }
-
         public hasHighlightField(type: NotificationType): boolean {
             for (var key in this.highlightState) {
                 if (this.highlightState[key] === type) {
@@ -174,6 +164,14 @@ module CustomerSetting.IE8 {
             }
 
             return false;
+        }
+
+        public resetHighlightState(): void {
+            this.highlightState = {};
+        }
+
+        public resetFieldHighlightState(fieldName: string): void {
+            this.changeFieldHighlightState(fieldName);
         }
     }
 

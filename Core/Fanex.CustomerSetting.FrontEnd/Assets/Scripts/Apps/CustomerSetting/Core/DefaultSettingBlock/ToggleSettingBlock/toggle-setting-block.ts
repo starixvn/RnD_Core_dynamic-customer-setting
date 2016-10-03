@@ -44,7 +44,7 @@ module CustomerSetting {
                 scope.$watch("settingData", () => {
                     if (this.initializing) {
                         this.$timeout(() => this.initializing = false);
-                    } else {
+                    } else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
                         this.triggerPageHeightChangedEvent();
                     }
@@ -53,7 +53,8 @@ module CustomerSetting {
                 this.$rootScope.$on("updateSetting", (event: ng.IAngularEvent, settingTypeId: number) => {
                     if ((!settingTypeId || settingTypeId === scope.settingTypeId)
                         && scope.settingData
-                        && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)) {
+                        && scope.settingData.some((item: DefaultSettingItem) => !item.validationState.isSuccessful)
+                        && !scope.sharedStates.isExpanded(scope.blockIndex)) {
                         scope.sharedStates.expandBlock(scope.blockIndex);
                         this.triggerPageHeightChangedEvent();
                     }

@@ -258,12 +258,11 @@ module CustomerSetting.IE8 {
         public controller: any = ["$scope", ($scope: ICopyPositionTakingOnMemberScope) => {
             this.copyingSettingService.register($scope);
 
-            $scope.copyingState = new CopyingState();
+            $scope.copyingState = new CopyingState(PositionModel.fixed);
             $scope.copyingState.none();
-            $scope.inModal = true;
 
             $scope.copy = () => {
-                this.copyingSettingService.hideSubGroupsTooltip($scope);
+                this.copyingSettingService.hideTooltips($scope);
 
                 if ($scope.settingItems && $scope.settingItems.length > 1) {
                     var items: DefaultSettingItem[] = ArrayHelpers.join2DimensionalArray($scope.settingItems);
