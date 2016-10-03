@@ -30682,6 +30682,12 @@ var CustomerSetting;
         NotificationType[NotificationType["error"] = 3] = "error";
     })(CustomerSetting.NotificationType || (CustomerSetting.NotificationType = {}));
     var NotificationType = CustomerSetting.NotificationType;
+    (function (PositionModel) {
+        PositionModel[PositionModel["relative"] = 1] = "relative";
+        PositionModel[PositionModel["absolute"] = 2] = "absolute";
+        PositionModel[PositionModel["fixed"] = 3] = "fixed";
+    })(CustomerSetting.PositionModel || (CustomerSetting.PositionModel = {}));
+    var PositionModel = CustomerSetting.PositionModel;
     var Exceptions = (function () {
         function Exceptions() {
         }
@@ -30894,10 +30900,7 @@ var CustomerSetting;
             if (state) {
                 for (var key in state) {
                     if (this[key] !== state[key]) {
-                        this.highlightState[key] = CustomerSetting.NotificationType.success;
-                    }
-                    else {
-                        this.highlightState[key] = CustomerSetting.NotificationType.none;
+                        this.changeFieldHighlightState(key, CustomerSetting.NotificationType.success);
                     }
                 }
             }
@@ -30919,7 +30922,7 @@ var CustomerSetting;
             this.highlightState = {};
         };
         DefaultSettingItem.prototype.resetFieldHighlightState = function (fieldName) {
-            this.highlightState[fieldName] = CustomerSetting.NotificationType.none;
+            this.changeFieldHighlightState(fieldName);
         };
         return DefaultSettingItem;
     }());
@@ -32376,7 +32379,10 @@ var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
     var CopyingState = (function () {
-        function CopyingState() {
+        function CopyingState(positionModel, displayingSeconds) {
+            if (displayingSeconds === void 0) { displayingSeconds = 5; }
+            this.positionModel = positionModel || CustomerSetting.PositionModel.relative;
+            this.displayingSeconds = displayingSeconds;
         }
         CopyingState.prototype.isShowingMessage = function () {
             return !!this.messageKey || this.type === "none";
@@ -32410,7 +32416,7 @@ var CustomerSetting;
                             var source = items[0];
                             var targets = items.slice(1);
                             if (source.validate()) {
-                                _this.copyingSettingService.hideSubGroupsTooltip($scope);
+                                _this.copyingSettingService.hideTooltips($scope);
                                 var copyingResult = source.copySettingTo(targets);
                                 if (!copyingResult.status) {
                                     $scope.copyingState.fail();
@@ -32467,18 +32473,17 @@ var CustomerSetting;
                 this.scopes.push(scope);
             }
         };
-        CopyingSettingService.prototype.hideSubGroupsTooltip = function (scope) {
+        CopyingSettingService.prototype.hideTooltips = function (scope) {
             var settingTypeId = scope.settingTypeId;
-            var isSubGroup = !(scope.settingItems[0] instanceof Array);
-            if (isSubGroup) {
-                return;
-            }
             this.scopes.forEach(function (registeredScope) {
                 if (registeredScope.copyingState.isShowingMessage()) {
                     var registeredSettingTypeId = registeredScope.settingTypeId;
                     if (registeredSettingTypeId === settingTypeId) {
                         var items = CustomerSetting.ArrayHelpers.join2DimensionalArray(registeredScope.settingItems);
                         registeredScope.copyingState.none();
+                        items.forEach(function (item) {
+                            item.resetHighlightState();
+                        });
                     }
                 }
             });
@@ -32492,12 +32497,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var TooltipPositionModel;
-    (function (TooltipPositionModel) {
-        TooltipPositionModel[TooltipPositionModel["relative"] = 1] = "relative";
-        TooltipPositionModel[TooltipPositionModel["absolute"] = 2] = "absolute";
-        TooltipPositionModel[TooltipPositionModel["fixed"] = 3] = "fixed";
-    })(TooltipPositionModel || (TooltipPositionModel = {}));
     var FieldHighlightingDirective = (function () {
         function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
             var _this = this;
@@ -32520,9 +32519,14 @@ var CustomerSetting;
                     if (scope.tooltipMessage) {
                         _this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                         scope.highlightType = scope.tooltipType || "error";
+                        if (scope.tooltipDisplayingSeconds) {
+                            _this.$timeout(function () {
+                                scope.tooltipMessage = null;
+                            }, +scope.tooltipDisplayingSeconds * 1000);
+                        }
                     }
                     if (highlightState && fieldName) {
-                        highlightState[fieldName] = CustomerSetting.NotificationType[scope.highlightType || CustomerSetting.NotificationType.none];
+                        highlightState[fieldName] = CustomerSetting.NotificationType[scope.highlightType || "none"];
                     }
                 });
                 if (scope.highlightState) {
@@ -32565,6 +32569,7 @@ var CustomerSetting;
                     tooltipMessage: "@",
                     tooltipType: "@",
                     tooltipPositionModel: "@",
+                    tooltipDisplayingSeconds: "@",
                     fieldName: "@",
                     highlightState: "="
                 };
@@ -32576,6 +32581,9 @@ var CustomerSetting;
             var _this = this;
             this.$timeout(function () {
                 var tooltip = angular.element(target[0].previousElementSibling);
+                if (!tooltip || tooltip.length === 0) {
+                    return;
+                }
                 tooltip.removeClass("tooltip--right tooltip--left");
                 tooltip.css({ "left": "0px", "visibility": "hidden" });
                 var elementRect = target[0].getBoundingClientRect();
@@ -32583,7 +32591,7 @@ var CustomerSetting;
                 var topOffset = 0;
                 var leftOffset = 0;
                 var arrowWidth = 5;
-                if ((+positionModel || TooltipPositionModel.relative) === TooltipPositionModel.relative) {
+                if ((+positionModel || CustomerSetting.PositionModel.relative) === CustomerSetting.PositionModel.relative) {
                     var bodyRect = _this.$window.document.body.getBoundingClientRect();
                     topOffset = bodyRect.top;
                     leftOffset = bodyRect.left;
@@ -32600,13 +32608,11 @@ var CustomerSetting;
                     left = elementRect.left + elementRect.width;
                     tooltip.addClass("tooltip--left");
                 }
-                if (top !== tooltipRect.top || left !== tooltipRect.left) {
-                    tooltip.css({
-                        "top": top + "px",
-                        "left": left + "px",
-                        "visibility": "visible"
-                    });
-                }
+                tooltip.css({
+                    "top": top + "px",
+                    "left": left + "px",
+                    "visibility": "visible"
+                });
             });
         };
         FieldHighlightingDirective.prototype.resetElementBorder = function (element) {
@@ -32792,7 +32798,7 @@ var CustomerSetting;
                         if (_this.initializing) {
                             _this.$timeout(function () { return _this.initializing = false; });
                         }
-                        else {
+                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
                             scope.sharedStates.expandBlock(scope.blockIndex);
                             _this.triggerPageHeightChangedEvent();
                         }
@@ -32800,7 +32806,8 @@ var CustomerSetting;
                     _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
                         if ((!settingTypeId || settingTypeId === scope.settingTypeId)
                             && scope.settingData
-                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })) {
+                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
+                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
                             scope.sharedStates.expandBlock(scope.blockIndex);
                             _this.triggerPageHeightChangedEvent();
                         }
@@ -33739,11 +33746,10 @@ var CustomerSetting;
             _super.apply(this, arguments);
             this.controller = ["$scope", function ($scope) {
                     _this.copyingSettingService.register($scope);
-                    $scope.copyingState = new CustomerSetting.CopyingState();
+                    $scope.copyingState = new CustomerSetting.CopyingState(CustomerSetting.PositionModel.fixed);
                     $scope.copyingState.none();
-                    $scope.inModal = true;
                     $scope.copy = function () {
-                        _this.copyingSettingService.hideSubGroupsTooltip($scope);
+                        _this.copyingSettingService.hideTooltips($scope);
                         if ($scope.settingItems && $scope.settingItems.length > 1) {
                             var items = CustomerSetting.ArrayHelpers.join2DimensionalArray($scope.settingItems);
                             var source = items[0];
@@ -34541,8 +34547,7 @@ var CustomerSetting;
                     else if (this.highlightState["isDisabled"]) {
                         this.highlightState["isDisabled"] = CustomerSetting.NotificationType.none;
                     }
-                    if (this.downline.isDisabled !== backupDisabledDownline
-                        || this.downline.readonly !== backupReadonlyDownline) {
+                    if (this.downline.isDisabled !== backupDisabledDownline || this.downline.readonly !== backupReadonlyDownline) {
                         this.highlightState["downline.isDisabled"] = CustomerSetting.NotificationType.success;
                     }
                     else if (this.highlightState["downline.isDisabled"]) {
@@ -34588,11 +34593,13 @@ var CustomerSetting;
             return settingItem;
         };
         SettingType4Item.prototype.resetFieldState = function (fieldName) {
-            this.resetFieldHighlightState(fieldName);
             if (this.validationState && !this.validationState.isSuccessful) {
                 if (this.validationState.fieldName === fieldName) {
                     this.resetValidationState();
                 }
+            }
+            else {
+                this.resetFieldHighlightState(fieldName);
             }
         };
         return SettingType4Item;
@@ -34669,7 +34676,7 @@ angular.module("customerSetting").run(["$templateCache", function($templateCache
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{::(\"GeneralInformation\" | label)}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"UserName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Nickname\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"FirstName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"Phone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{::(\"LastName\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{::(\"MobilePhone\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{::(\"Fax\" | label)}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></toggle-setting-block></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></toggle-setting-block><copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></copy-setting></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingType.settingLevel:productName }}{{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></copy-setting></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
-$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{inModal ? 3 : 1}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
+$templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");

@@ -395,6 +395,7 @@ th {
   left: 0;
   position: absolute;
   top: 0;
+  visibility: hidden;
   z-index: 1; }
   .tooltip:after {
     border-color: transparent;
