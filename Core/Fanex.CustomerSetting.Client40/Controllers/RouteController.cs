@@ -12,14 +12,14 @@
     {
         private readonly IRouteService _routeService;
 
-        public RouteController(IRouteService customerSettingService)
-        {
-            _routeService = customerSettingService ?? new RouteService();
-        }
-
         public RouteController()
             : this(null)
         {
+        }
+
+        internal RouteController(IRouteService customerSettingService)
+        {
+            _routeService = customerSettingService ?? new RouteService();
         }
 
         [HttpPost, AdditionalRequestAuth]

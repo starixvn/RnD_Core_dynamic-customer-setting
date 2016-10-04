@@ -12,14 +12,14 @@
     {
         private readonly ICustomerSettingService _customerSettingService;
 
-        public UpdateCustomerSettingController(ICustomerSettingService customerSettingService)
-        {
-            _customerSettingService = customerSettingService ?? new CustomerSettingService();
-        }
-
         public UpdateCustomerSettingController()
             : this(null)
         {
+        }
+
+        internal UpdateCustomerSettingController(ICustomerSettingService customerSettingService)
+        {
+            _customerSettingService = customerSettingService ?? new CustomerSettingService();
         }
 
         [HttpPost]

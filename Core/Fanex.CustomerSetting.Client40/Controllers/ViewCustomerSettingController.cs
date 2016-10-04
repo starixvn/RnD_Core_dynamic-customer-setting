@@ -22,15 +22,15 @@
 
         private readonly ICustomerSettingService _customerSettingService;
 
-        public ViewCustomerSettingController(
-            ICustomerSettingService customerSettingService)
-        {
-            _customerSettingService = customerSettingService ?? new CustomerSettingService();
-        }
-
         public ViewCustomerSettingController()
             : this(null)
         {
+        }
+
+        internal ViewCustomerSettingController(
+            ICustomerSettingService customerSettingService)
+        {
+            _customerSettingService = customerSettingService ?? new CustomerSettingService();
         }
 
         [CustomerSettingAuth(IsUpdate = false, IsMultipleUpdate = false)]
