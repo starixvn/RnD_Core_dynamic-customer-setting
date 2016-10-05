@@ -162,11 +162,35 @@
         }
 
         [Test]
-        public void Update_UnsyncedCustomer_CallApiToSyncCustomerInfo()
+        public void Update_UnsyncedSuperCustomer_CallApiToSyncCustomerInfoWithUplineIdIsSuperId()
         {
             // Arrange.
             int customerId = 1;
             Level customerLevel = Level.Super;
+            byte productId = 1;
+            UpdateCustomerSettingCommand command = StubHelpers.CreateUpdateSettingCommand(
+                customerId,
+                customerLevel,
+                productId);
+
+            FakeSyncStatusServiceCall(customerId, productId);
+
+            // Act.
+            _updateSettingService.Update(command);
+
+            // Assert.
+            _apiService.Received().SyncCustomers(Arg.Is<CreateAccountApiModels.Request>(request =>
+                request.Call.AccountArray.Any(account => account.ObCustId == customerId)
+                && request.Call.Level == customerLevel.Value
+                && request.Call.UplineId == customerId));
+        }
+
+        [Test]
+        public void Update_UnsyncedAgentCustomer_CallApiToSyncCustomerInfo()
+        {
+            // Arrange.
+            int customerId = 1;
+            Level customerLevel = Level.Master;
             byte productId = 1;
             UpdateCustomerSettingCommand command = StubHelpers.CreateUpdateSettingCommand(
                 customerId,

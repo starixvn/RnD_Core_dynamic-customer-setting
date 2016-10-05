@@ -152,7 +152,9 @@
 
         private CreateAccountApiModels.Request CreateApiRequest(UpdateCustomerSettingCommand command)
         {
-            int uplineId = GetDirectUplineId(command.Setting.CustomerId);
+            int uplineId = command.Setting.CustomerLevel.IsSuperLevel()
+                ? command.Setting.CustomerId
+                : GetDirectUplineId(command.Setting.CustomerId);
             var customerInfo = new CreateAccountApiModels.AccountInfo
             {
                 ObCustId = command.Setting.CustomerId
