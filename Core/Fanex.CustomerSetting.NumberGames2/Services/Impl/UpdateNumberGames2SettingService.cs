@@ -111,8 +111,7 @@
             CreateAccountApiModels.Request request = CreateApiRequest(command);
             CreateAccountApiModels.Response response = _apiService.SyncCustomers(request);
             SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
-            bool syncResult = response?.Result?.IsSuccess == true;
-            ///bool syncResult = response?.Result?.AccountArray?.All(detail => detail.IsCreated == 1) == true;
+            bool syncResult = response?.Result?.AccountArray?.All(detail => detail.IsSuccess) == true;
 
             if (syncResult)
             {
@@ -146,6 +145,7 @@
                     productStatusSettingType.Id,
                     productStatusSettingType.Name);
 
+                updateProductStatusResult.CustomerName = command.Setting.CustomerInfo.UserName;
                 settingTypeResults.Add(updateProductStatusResult);
             }
         }

@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.NumberGames2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to update the Product Status for the time being..
+        ///   Looks up a localized string similar to Unable to update the Product Status for the time being. Please try again later..
         /// </summary>
         internal static string UnableToUpdateProductStatus {
             get {

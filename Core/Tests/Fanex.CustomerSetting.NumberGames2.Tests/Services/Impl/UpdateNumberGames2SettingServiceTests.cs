@@ -286,7 +286,7 @@
             Assert.True(result.IsFailed);
         }
 
-        /*[Test]
+        [Test]
         public void Update_FailedToSyncCustomerInfoAndProductStatusNeedsToBeUpdated_ReturnErrorMessage()
         {
             // Arrange.
@@ -307,7 +307,7 @@
 
             // Assert.
             Assert.That(result.SubResults.Any(subResult => subResult.Message == Messages.UnableToUpdateProductStatus));
-        }/**/
+        }
 
         private void FakeSyncStatusServiceCall(
             int customerId,
