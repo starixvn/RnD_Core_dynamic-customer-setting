@@ -10,15 +10,21 @@ module CustomerSetting.IE8 {
     }
 
     export class RequestService {
-        public static $inject: string[] = ["$http", "resourceService", "blockUiService"];
+        public static $inject: string[] = ["$http", "$window", "resourceService", "blockUiService"];
 
         private $http: ng.IHttpService;
+        private $window: ng.IWindowService;
         private resourceService: ResourceService;
         private blockUiService: BlockUiService;
         private sharedScope: any;
 
-        constructor($http: ng.IHttpService, resourceService: ResourceService, blockUiService: BlockUiService) {
+        constructor(
+            $http: ng.IHttpService,
+            $window: ng.IWindowService,
+            resourceService: ResourceService,
+            blockUiService: BlockUiService) {
             this.$http = $http;
+            this.$window = $window;
             this.resourceService = resourceService;
             this.blockUiService = blockUiService;
         }
@@ -33,7 +39,13 @@ module CustomerSetting.IE8 {
             this.$http
                 .post(path, parameters)
                 .then((response: ng.IHttpPromiseCallbackArg<any>) => {
-                    callback(response);
+                    if (typeof response.data === "string") {
+                        this.$window.document.write(response.data);
+                    } else if (response.data.code === -302 && response.data.redirect) {
+                        this.$window.location.href = this.$window.location.origin + response.data.redirect;
+                    } else {
+                        callback(response);
+                    }
                 }, (response: ng.IHttpPromiseCallbackArg<any>) => {
                     var error: Result;
 
