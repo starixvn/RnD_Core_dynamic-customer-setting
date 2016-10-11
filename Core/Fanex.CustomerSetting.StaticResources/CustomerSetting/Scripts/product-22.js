@@ -31903,8 +31903,9 @@ var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
     var RequestService = (function () {
-        function RequestService($http, resourceService, blockUiService) {
+        function RequestService($http, $window, resourceService, blockUiService) {
             this.$http = $http;
+            this.$window = $window;
             this.resourceService = resourceService;
             this.blockUiService = blockUiService;
         }
@@ -31917,7 +31918,15 @@ var CustomerSetting;
             this.$http
                 .post(path, parameters)
                 .then(function (response) {
-                callback(response);
+                if (typeof response.data === "string") {
+                    _this.$window.document.write(response.data);
+                }
+                else if (response.data.code === -302 && response.data.redirect) {
+                    _this.$window.location.href = _this.$window.location.origin + response.data.redirect;
+                }
+                else {
+                    callback(response);
+                }
             }, function (response) {
                 var error;
                 if (response) {
@@ -31939,7 +31948,7 @@ var CustomerSetting;
                 _this.blockUiService.unblockUi();
             });
         };
-        RequestService.$inject = ["$http", "resourceService", "blockUiService"];
+        RequestService.$inject = ["$http", "$window", "resourceService", "blockUiService"];
         return RequestService;
     }());
     CustomerSetting.RequestService = RequestService;
