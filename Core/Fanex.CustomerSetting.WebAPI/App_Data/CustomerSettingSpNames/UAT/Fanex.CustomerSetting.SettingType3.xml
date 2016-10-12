@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
     <Function Name="Commission">
-        <Setting Key="CustSetting_SuperCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_SuperCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="SuperDiscount" ObjectProperty="CommRate" />
@@ -9,7 +9,7 @@
             <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
         </Setting>
 
-        <Setting Key="CustSetting_MasterCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_MasterCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="MasterDiscount" ObjectProperty="CommRate" />
@@ -17,7 +17,7 @@
             <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
         </Setting>
 
-        <Setting Key="CustSetting_AgentCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_AgentCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="AgentDiscount" ObjectProperty="CommRate" />
@@ -25,7 +25,7 @@
             <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
         </Setting>
 
-        <Setting Key="CustSetting_MemberCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_MemberCommissionSelect" SpName="Acc_CustSetting_DiscountSelect_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
             <Mapping DataField="PlayerDiscount" ObjectProperty="CommRate" />
