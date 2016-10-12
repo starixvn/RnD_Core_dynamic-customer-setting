@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="WinLossLimit">
+        <Setting Key="CustSetting_LossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+            <Mapping DataField="MaxLossLimit" ObjectProperty="LossLimit" />
+        </Setting>
+
+        <Setting Key="CustSetting_LossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+
+        <Setting Key="CustSetting_LossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+</Functions>
