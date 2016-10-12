@@ -161,6 +161,7 @@
     <None Include="Assets\Styles\customer-setting.scss" />
     <None Include="Assets\Styles\flexbox-patch.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype1.scss" />
+    <None Include="Assets\Styles\SettingTypes\_settingtype12.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype6.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype10.scss" />
     <None Include="Assets\Styles\SettingTypes\_settingtype7.scss" />
@@ -209,6 +210,16 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-value.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resources.js">
+      <DependentUpon>settingtype12-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype12-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -372,6 +383,16 @@
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-resources.js">
+      <DependentUpon>settingtype12-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype12-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -547,6 +568,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType11\settingtype11.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.ts" />
@@ -623,6 +648,10 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11-resources.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType11\settingtype11.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-input.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12-resource.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType12\settingtype12.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting\SettingType1\position-taking-resources.ts" />

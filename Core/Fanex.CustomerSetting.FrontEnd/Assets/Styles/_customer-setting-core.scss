@@ -372,7 +372,7 @@
         @include border(bottom);
         background-color: $block-header-bg;
         font-weight: bold;
-        line-height: 2.2rem;
+        line-height: 2.7rem;
         text-align: center;
         word-wrap: break-word;
 
@@ -391,7 +391,7 @@
         @include border(bottom);
         background-color: $sub-header-bg;
         font-weight: bold;
-        line-height: 2.2rem;
+        line-height: 2.7rem;
         padding: 0 3px;
         text-align: left;
 
@@ -456,7 +456,7 @@
             border: none;
             color: $error-color;
             font-weight: bold;
-            line-height: 2.1rem;
+            line-height: 2.6rem;
             padding: 0 3px;
             text-align: center;
             width: 100%;
@@ -465,7 +465,7 @@
 
     &__cell {
         @include border(right);
-        line-height: 2.1rem;
+        line-height: 2.6rem;
         min-height: 24px;
 
         &--no-border {
@@ -500,7 +500,7 @@
         @include border(bottom);
         @include clearfix();
         font-weight: bold;
-        line-height: 2.2rem;
+        line-height: 2.7rem;
         text-align: center;
     }
 
