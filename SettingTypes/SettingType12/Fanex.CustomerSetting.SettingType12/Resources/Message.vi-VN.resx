@@ -126,22 +126,13 @@
   <data name="MaximumLossValueShouldBeInRange" xml:space="preserve">
     <value>Tiền thua cược lớn nhất phải nằm trong khoảng ({0} - {1}).</value>
   </data>
-  <data name="MaximumWinShouldBotExceedThanUplineMaximumWin" xml:space="preserve">
-    <value>Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.</value>
-  </data>
-  <data name="MaximumWinShouldNotBeLessThanZero" xml:space="preserve">
-    <value>Tiền thắng cược lớn nhất phải lớn hơn 0.</value>
-  </data>
   <data name="Msg_10022" xml:space="preserve">
     <value>Bạn không được phép thay đổi chức năng Tự động reset giới hạn chuyển khoản mỗi ngày.</value>
-  </data>
-  <data name="Msg_10024" xml:space="preserve">
-    <value>Tiền thắng cược lớn nhất phải ít hơn hoặc bằng Tiền thắng cược lớn nhất của cấp trên trực tiếp.</value>
   </data>
   <data name="Msg_10033" xml:space="preserve">
     <value>Tiền thua cược lớn nhất phải ít hơn hoặc bằng Tiền thua cược lớn nhất của cấp trên trực tiếp.</value>
   </data>
-  <data name="UpdatedWinLossLimitSuccessfully" xml:space="preserve">
-    <value>Cập nhật Giới hạn thắng thua thành công.</value>
+  <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
+    <value>Cập nhật Giới hạn thua thành công.</value>
   </data>
 </root>

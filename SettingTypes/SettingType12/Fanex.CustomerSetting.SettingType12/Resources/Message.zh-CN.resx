@@ -132,4 +132,7 @@
   <data name="Msg_10033" xml:space="preserve">
     <value>最高输额应低于或相等于直系上线的最高输额.</value>
   </data>
+  <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
+    <value>输限额已成功更新.</value>
+  </data>
 </root>

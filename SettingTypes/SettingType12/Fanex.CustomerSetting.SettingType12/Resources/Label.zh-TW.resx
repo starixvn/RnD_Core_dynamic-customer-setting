@@ -135,4 +135,13 @@
   <data name="Unlimited" xml:space="preserve">
     <value>無限</value>
   </data>
+  <data name="LossLimit" xml:space="preserve">
+    <value>輸限額</value>
+  </data>
+  <data name="ClickToViewCurrentLossAmount" xml:space="preserve">
+    <value>點擊查看目前輸數額</value>
+  </data>
+  <data name="CurrentLossAmount" xml:space="preserve">
+    <value>目前輸數額</value>
+  </data>
 </root>
