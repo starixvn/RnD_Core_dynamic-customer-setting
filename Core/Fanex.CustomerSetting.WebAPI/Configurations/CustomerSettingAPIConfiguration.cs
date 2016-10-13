@@ -15,20 +15,6 @@
             }
         }
 
-        [ConfigurationProperty("EnableCheckUM", IsRequired = false, DefaultValue = true)]
-        public bool EnableCheckUM
-        {
-            get { return (bool)this["EnableCheckUM"]; }
-            set { this["EnableCheckUM"] = value; }
-        }
-
-        [ConfigurationProperty("UMAddress", IsRequired = true)]
-        public string UMAddress
-        {
-            get { return (string)this["UMAddress"]; }
-            set { this["UMAddress"] = value; }
-        }
-
         [ConfigurationProperty("SecretKey", IsRequired = true, DefaultValue = "U6BUFHtVcq5SPQcTl7tHLBG/LF6d5YVRKHrCHD9M+Vw=")]
         public string SecretKey
         {

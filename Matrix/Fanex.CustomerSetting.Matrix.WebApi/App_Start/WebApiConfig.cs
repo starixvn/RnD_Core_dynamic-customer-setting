@@ -35,7 +35,6 @@
             jsonFormater.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Filters.Add(new HmacAuthorizationFilter());
-            config.Filters.Add(new MaintenanceFilter());
             config.Filters.Add(new GlobalExceptionFilter());
 
             if (SettingMatrixAPIConfiguration.Settings.EnableRequestLogging)

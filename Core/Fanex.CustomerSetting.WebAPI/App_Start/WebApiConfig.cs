@@ -37,7 +37,6 @@
             jsonFormater.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
 
             config.Filters.Add(new HmacAuthorizationFilter());
-            config.Filters.Add(new MaintenanceFilter());
             config.Filters.Add(new GlobalExceptionFilter());
 
             if (CustomerSettingAPIConfiguration.Settings.EnableRequestLogging)

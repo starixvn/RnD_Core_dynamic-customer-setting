@@ -115,10 +115,6 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UMControllerLibrary.1.0.0.1\lib\net40\UMControllerLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -255,7 +251,6 @@
     <Compile Include="Filters\HmacAuthorizationFilter.cs" />
     <Compile Include="Filters\LogInfoFilter.cs" />
     <Compile Include="Filters\SetLanguageFilter.cs" />
-    <Compile Include="Filters\MaintenanceFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -318,10 +313,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\SettingTypes\SettingType10\Fanex.CustomerSetting.SettingType10\Fanex.CustomerSetting.SettingType10.csproj">
-      <Project>{5abdefc1-b529-4a67-a136-e72265914e6a}</Project>
-      <Name>Fanex.CustomerSetting.SettingType10</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SettingTypes\SettingType11\Fanex.CustomerSetting.SettingType11\Fanex.CustomerSetting.SettingType11.csproj">
       <Project>{24fd214c-e151-4f97-95c7-924680d84c74}</Project>
       <Name>Fanex.CustomerSetting.SettingType11</Name>
