@@ -31,7 +31,7 @@
                 {{item.betTypeName}}
             </div>
             <div class="block__column block__column--border-right w50-percent">
-                <div class="block__row block__row--border-top">
+                <div class="block__row">
                     <div class="block__lbl w40-percent">{{'MaximumLoss' | settingType12Label}}</div>
                     <div class="block__value w60-percent" data-ng-if="settingType | editableSettingType">
                         <div class="setting-field-wrapper w100-percent">
@@ -63,7 +63,7 @@
                         {{item.lossLimit | formatNumber | unlimitedLimit}}
                     </div>
                 </div>
-                <div class="block__row" data-ng-if="customerLevel === avaiCustomerLevels.member">
+                <div class="block__row block__row--border-top" data-ng-if="customerLevel === avaiCustomerLevels.member">
                     <div class="block__lbl w40-percent">{{'CurrentLossAmount' | settingType12Label}}</div>
                     <div class="block__value w60-percent setting-field-wrapper" data-ng-if="!item.currentLossAmount">
                         <a href="javascript:void(0);" data-ng-click="getCurrentLoss(item)">{{'ClickToViewCurrentLossAmount' | settingType12Label}}</a>
