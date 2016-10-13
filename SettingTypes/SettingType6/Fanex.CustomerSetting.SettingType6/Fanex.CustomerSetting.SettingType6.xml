@@ -10,6 +10,6 @@
 
         <Setting Key="CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
 
-        <Setting Key="CustSetting_WinLossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_WinLossPercentSelect" SpName="Acc_CustSetting_WinLossPercentSelect" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
 </Functions>
