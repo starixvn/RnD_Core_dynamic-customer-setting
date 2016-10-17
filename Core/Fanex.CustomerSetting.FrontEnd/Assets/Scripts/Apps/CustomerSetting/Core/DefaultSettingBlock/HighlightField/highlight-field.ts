@@ -11,6 +11,7 @@ module CustomerSetting {
         tooltipType: string;
         tooltipPositionModel: PositionModel,
         tooltipDisplayingSeconds: number;
+        displayingTimeoutCallback: Function;
         highlightType: string,
         fieldName: string;
         highlightState: {};
@@ -28,6 +29,7 @@ module CustomerSetting {
                 tooltipType: "@",
                 tooltipPositionModel: "@",
                 tooltipDisplayingSeconds: "@",
+                displayingTimeoutCallback: "&",
                 fieldName: "@",
                 highlightState: "="
             };
@@ -55,9 +57,9 @@ module CustomerSetting {
                     this.calculateTooltipPosition(element, scope.tooltipPositionModel);
                     scope.highlightType = scope.tooltipType || "error";
 
-                    if (scope.tooltipDisplayingSeconds) {
+                    if (scope.tooltipDisplayingSeconds && scope.displayingTimeoutCallback) {
                         this.$timeout(() => {
-                            scope.tooltipMessage = null;
+                            scope.displayingTimeoutCallback();
                         }, +scope.tooltipDisplayingSeconds * 1000);
                     }
                 }

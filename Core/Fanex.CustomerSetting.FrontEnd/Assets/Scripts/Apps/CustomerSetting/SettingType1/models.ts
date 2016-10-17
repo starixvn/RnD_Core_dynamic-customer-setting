@@ -631,6 +631,7 @@ module CustomerSetting {
             var backupIs1: boolean;
             var backupUs1: number;
             var backups1: number;
+            var isS1Disabled;
 
             if (source) {
                 backupIs1 = this.iS1;
@@ -639,7 +640,11 @@ module CustomerSetting {
 
                 this.iS1 = source.iS1;
                 this.uS1 = source.uS1;
-                this.s1 = source.s1;
+                isS1Disabled = !this.iS1 && this.iS3;
+
+                if (!isS1Disabled) {
+                    this.s1 = source.s1;
+                }
 
                 isSuccessful = this.validate();
 
@@ -772,6 +777,7 @@ module CustomerSetting {
             var backupIm1: boolean;
             var backupUm1: number;
             var backupM1: number;
+            var isM1Disabled: boolean;
 
             if (source) {
                 backupIm1 = this.iM1;
@@ -780,7 +786,11 @@ module CustomerSetting {
 
                 this.iM1 = source.iM1;
                 this.uM1 = source.uM1;
-                this.m1 = source.m1;
+                isM1Disabled = !this.iM1 && this.iM2;
+
+                if (!isM1Disabled) {
+                    this.m1 = source.m1;
+                }
 
                 isSuccessful = this.validate();
 

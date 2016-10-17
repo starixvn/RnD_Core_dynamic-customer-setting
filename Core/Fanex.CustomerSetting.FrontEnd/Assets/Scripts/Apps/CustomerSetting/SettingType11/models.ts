@@ -78,42 +78,40 @@ module CustomerSetting {
             var isSuccessful: boolean = true;
 
             if (source) {
-                var backupDisabled: boolean = this.isDisabled;
-                var backupReadonly: boolean = this.readonly;
-                var backupDisabledDownline: boolean;
-                var backupReadonlyDownline: boolean;
+                var backupChecked: boolean = this.isChecked;
+                var backupDownlineChecked: boolean;
 
-                this.isDisabled = source.isDisabled;
-                this.readonly = source.readonly;
+                if (!this.readonly) {
+                    this.isChecked = source.isChecked;
+                }
 
                 if (this.downline && source.downline) {
-                    backupDisabledDownline = this.downline.isDisabled;
-                    backupReadonlyDownline = this.downline.readonly;
-                    this.downline.isDisabled = source.downline.isDisabled;
-                    this.downline.readonly = source.downline.readonly;
+                    backupDownlineChecked = this.downline.isChecked;
+
+                    if (!this.downline.readonly) {
+                        this.downline.isChecked = source.downline.isChecked;
+                    }
                 }
 
                 isSuccessful = this.validate();
 
                 if (!isSuccessful) {
-                    this.isDisabled = backupDisabled;
-                    this.readonly = backupReadonly;
+                    this.isChecked = backupChecked;
 
-                    if (this.downline && source.downline) {
-                        this.downline.isDisabled = backupDisabledDownline;
-                        this.downline.readonly = backupReadonlyDownline;
+                    if (this.downline) {
+                        this.downline.isChecked = backupDownlineChecked;
                     }
 
                     this.highlightUnablyCopiedField();
                 } else {
                     // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
-                    if (this.isDisabled !== backupDisabled || this.readonly !== backupReadonly) {
+                    if (this.isChecked !== backupChecked) {
                         this.highlightState["isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["isDisabled"]) {
                         this.highlightState["isDisabled"] = NotificationType.none;
                     }
 
-                    if (this.downline.isDisabled !== backupDisabledDownline || this.downline.readonly !== backupReadonlyDownline) {
+                    if (this.downline && this.downline.isChecked !== backupDownlineChecked) {
                         this.highlightState["downline.isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["downline.isDisabled"]) {
                         this.highlightState["downline.isDisabled"] = NotificationType.none;

@@ -5,8 +5,6 @@
 
     public class ResourceService : IResourceService
     {
-        private const int ProductNamesCacheTimeout = 1; // 1 hour
-        private const string ProductNamesCacheKey = "Fanex.CustomerSetting.ProductResourceCacheKey_{0}_{1}";
         private const string SportTypeDefaultFormat = "Sport Type {0}";
         private const string BetTypeDefaultFormat = "Bet Type {0}";
         private const string ProductDefaultFormat = "Product {0}";
