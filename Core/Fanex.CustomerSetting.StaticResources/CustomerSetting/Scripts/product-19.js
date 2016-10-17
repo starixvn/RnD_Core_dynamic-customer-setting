@@ -33365,9 +33365,10 @@ var CustomerSetting;
                 backupUs1 = this.uS1;
                 backups1 = this.s1;
                 this.iS1 = source.iS1;
-                this.uS1 = source.uS1;
-                isS1Disabled = !this.iS1 && this.iS3;
-                if (!isS1Disabled) {
+                if (this.iS1) {
+                    this.uS1 = source.uS1;
+                }
+                else if (!this.iS3) {
                     this.s1 = source.s1;
                 }
                 isSuccessful = this.validate();
@@ -33461,15 +33462,15 @@ var CustomerSetting;
             var backupIm1;
             var backupUm1;
             var backupM1;
-            var isM1Disabled;
             if (source) {
                 backupIm1 = this.iM1;
                 backupUm1 = this.uM1;
                 backupM1 = this.m1;
                 this.iM1 = source.iM1;
-                this.uM1 = source.uM1;
-                isM1Disabled = !this.iM1 && this.iM2;
-                if (!isM1Disabled) {
+                if (this.iM1) {
+                    this.uM1 = source.uM1;
+                }
+                else if (!this.iM2) {
                     this.m1 = source.m1;
                 }
                 isSuccessful = this.validate();
@@ -34530,33 +34531,33 @@ var CustomerSetting;
         SettingType4Item.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
             if (source) {
-                var backupChecked = this.isChecked;
-                var backupDownlineChecked;
+                var backupIsChecked = this.isChecked;
+                var backupDownlineIsChecked;
                 if (!this.readonly) {
                     this.isChecked = source.isChecked;
                 }
                 if (this.downline && source.downline) {
-                    backupDownlineChecked = this.downline.isChecked;
+                    backupDownlineIsChecked = this.downline.isChecked;
                     if (!this.downline.readonly) {
                         this.downline.isChecked = source.downline.isChecked;
                     }
                 }
                 isSuccessful = this.validate();
                 if (!isSuccessful) {
-                    this.isChecked = backupChecked;
+                    this.isChecked = backupIsChecked;
                     if (this.downline) {
-                        this.downline.isChecked = backupDownlineChecked;
+                        this.downline.isChecked = backupDownlineIsChecked;
                     }
                     this.highlightUnablyCopiedField();
                 }
                 else {
-                    if (this.isChecked !== backupChecked) {
+                    if (this.isChecked !== backupIsChecked) {
                         this.highlightState["isDisabled"] = CustomerSetting.NotificationType.success;
                     }
                     else if (this.highlightState["isDisabled"]) {
                         this.highlightState["isDisabled"] = CustomerSetting.NotificationType.none;
                     }
-                    if (this.downline && this.downline.isChecked !== backupDownlineChecked) {
+                    if (this.downline && this.downline.isChecked !== backupDownlineIsChecked) {
                         this.highlightState["downline.isDisabled"] = CustomerSetting.NotificationType.success;
                     }
                     else if (this.highlightState["downline.isDisabled"]) {

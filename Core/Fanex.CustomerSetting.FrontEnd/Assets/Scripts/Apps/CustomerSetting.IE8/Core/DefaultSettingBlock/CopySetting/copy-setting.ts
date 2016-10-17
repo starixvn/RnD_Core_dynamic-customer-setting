@@ -38,6 +38,7 @@ module CustomerSetting.IE8 {
 
     export interface ICopySettingScope extends ng.IScope {
         copy: () => void;
+        hideTooltip: () => void;
         copyingState: CopyingState;
         settingTypeId: number;
         settingItems: Array<Array<DefaultSettingItem>>;
@@ -79,6 +80,10 @@ module CustomerSetting.IE8 {
                         }
                     }
                 }
+            };
+
+            $scope.hideTooltip = () => {
+                $scope.copyingState.none();
             };
         }];
 

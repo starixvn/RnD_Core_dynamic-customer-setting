@@ -639,10 +639,10 @@ module CustomerSetting {
                 backups1 = this.s1;
 
                 this.iS1 = source.iS1;
-                this.uS1 = source.uS1;
-                isS1Disabled = !this.iS1 && this.iS3;
 
-                if (!isS1Disabled) {
+                if (this.iS1) {
+                    this.uS1 = source.uS1;
+                } else if (!this.iS3) {
                     this.s1 = source.s1;
                 }
 
@@ -777,7 +777,6 @@ module CustomerSetting {
             var backupIm1: boolean;
             var backupUm1: number;
             var backupM1: number;
-            var isM1Disabled: boolean;
 
             if (source) {
                 backupIm1 = this.iM1;
@@ -785,10 +784,10 @@ module CustomerSetting {
                 backupM1 = this.m1;
 
                 this.iM1 = source.iM1;
-                this.uM1 = source.uM1;
-                isM1Disabled = !this.iM1 && this.iM2;
 
-                if (!isM1Disabled) {
+                if (this.iM1) {
+                    this.uM1 = source.uM1;
+                } else if (!this.iM2) {
                     this.m1 = source.m1;
                 }
 

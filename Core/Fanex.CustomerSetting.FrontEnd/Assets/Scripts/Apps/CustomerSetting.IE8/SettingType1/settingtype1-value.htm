@@ -52,7 +52,13 @@
         </div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS3" />
+                <input type="checkbox"
+                       class="setting-field--checkfield__check-ctrl"
+                       data-field-highlighting
+                       data-field-name="iS3"
+                       data-highlight-state="item.highlightState"
+                       data-ng-change="item.resetFieldHighlightState('iS3');"
+                       data-ng-model="item.iS3" />
             </label>
         </div>
         <div class="block__cell w28-percent">
@@ -93,7 +99,13 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM2" />
+                <input type="checkbox"
+                       class="setting-field--checkfield__check-ctrl"
+                       data-field-highlighting
+                       data-field-name="iM2"
+                       data-highlight-state="item.highlightState"
+                       data-ng-change="item.resetFieldHighlightState('iM2');"
+                       data-ng-model="item.iM2" />
             </label>
         </div>
         <div class="block__cell w28-percent" data-ng-class="{ 'w33-percent': (settingType | hideIsAutoColumn) }">
@@ -133,7 +145,13 @@
         </div>
         <div class="block__cell w16-percent">
             <label class="setting-field--checkfield">
-                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iS1" />
+                <input type="checkbox"
+                       class="setting-field--checkfield__check-ctrl"
+                       data-field-highlighting
+                       data-field-name="iS1"
+                       data-highlight-state="item.highlightState"
+                       data-ng-change="item.resetFieldHighlightState('iS1');"
+                       data-ng-model="item.iS1" />
             </label>
         </div>
         <div class="block__cell w28-percent">{{item.m1 | ptFormat}}</div>
@@ -161,7 +179,13 @@
         </div>
         <div class="block__cell w16-percent" data-ng-if="!(settingType | hideIsAutoColumn)">
             <label class="setting-field--checkfield">
-                <input type="checkbox" class="setting-field--checkfield__check-ctrl" data-ng-model="item.iM1" />
+                <input type="checkbox"
+                       class="setting-field--checkfield__check-ctrl"
+                       data-field-highlighting
+                       data-field-name="iM1"
+                       data-highlight-state="item.highlightState"
+                       data-ng-change="item.resetFieldHighlightState('iM1');"
+                       data-ng-model="item.iM1" />
             </label>
         </div>
         <div class="block__cell block__cell--no-border w42-percent"

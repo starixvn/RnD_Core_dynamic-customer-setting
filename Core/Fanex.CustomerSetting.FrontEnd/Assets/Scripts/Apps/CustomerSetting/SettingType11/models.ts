@@ -78,15 +78,15 @@ module CustomerSetting {
             var isSuccessful: boolean = true;
 
             if (source) {
-                var backupChecked: boolean = this.isChecked;
-                var backupDownlineChecked: boolean;
+                var backupIsChecked: boolean = this.isChecked;
+                var backupDownlineIsChecked: boolean;
 
                 if (!this.readonly) {
                     this.isChecked = source.isChecked;
                 }
 
                 if (this.downline && source.downline) {
-                    backupDownlineChecked = this.downline.isChecked;
+                    backupDownlineIsChecked = this.downline.isChecked;
 
                     if (!this.downline.readonly) {
                         this.downline.isChecked = source.downline.isChecked;
@@ -96,22 +96,22 @@ module CustomerSetting {
                 isSuccessful = this.validate();
 
                 if (!isSuccessful) {
-                    this.isChecked = backupChecked;
+                    this.isChecked = backupIsChecked;
 
                     if (this.downline) {
-                        this.downline.isChecked = backupDownlineChecked;
+                        this.downline.isChecked = backupDownlineIsChecked;
                     }
 
                     this.highlightUnablyCopiedField();
                 } else {
                     // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
-                    if (this.isChecked !== backupChecked) {
+                    if (this.isChecked !== backupIsChecked) {
                         this.highlightState["isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["isDisabled"]) {
                         this.highlightState["isDisabled"] = NotificationType.none;
                     }
 
-                    if (this.downline && this.downline.isChecked !== backupDownlineChecked) {
+                    if (this.downline && this.downline.isChecked !== backupDownlineIsChecked) {
                         this.highlightState["downline.isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["downline.isDisabled"]) {
                         this.highlightState["downline.isDisabled"] = NotificationType.none;

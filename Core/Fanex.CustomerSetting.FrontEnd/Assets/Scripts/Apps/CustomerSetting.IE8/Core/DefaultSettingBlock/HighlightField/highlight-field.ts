@@ -12,6 +12,7 @@ module CustomerSetting.IE8 {
         tooltipType: string;
         tooltipPositionModel: PositionModel,
         tooltipDisplayingSeconds: number;
+        displayingTimeoutCallback: Function;
         highlightType: string,
         fieldName: string;
         highlightState: {};
@@ -28,6 +29,7 @@ module CustomerSetting.IE8 {
             tooltipType: "@",
             tooltipPositionModel: "@",
             tooltipDisplayingSeconds: "@",
+            displayingTimeoutCallback: "&",
             fieldName: "@",
             highlightState: "="
         };
@@ -56,7 +58,7 @@ module CustomerSetting.IE8 {
 
                     if (scope.tooltipDisplayingSeconds) {
                         this.$timeout(() => {
-                            scope.tooltipMessage = null;
+                            scope.displayingTimeoutCallback();
                         }, +scope.tooltipDisplayingSeconds * 1000);
                     }
                 }

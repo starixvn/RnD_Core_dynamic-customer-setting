@@ -6,8 +6,7 @@
                data-field-name="isDisabled"
                data-highlight-state="item.highlightState"
                data-tooltip-message="{{item.validationState | tooltipMessage:'settingType11ResourceService':'isDisabled'}}"
-               data-settingtype11-checkbox
-               data-ng-change="change('isDisabled')"
+               data-ng-change="item.toggleCheck();"
                data-ng-model="item.isChecked"
                data-ng-disabled="item.readonly" />
         {{'Enable' | settingType11Label}}
@@ -19,8 +18,7 @@
                data-field-name="downline.isDisabled"
                data-highlight-state="item.highlightState"
                data-tooltip-message="{{item.validationState | tooltipMessage:'settingType11ResourceService':'downline.isDisabled'}}"
-               data-settingtype11-checkbox
-               data-ng-change="change('downline.isDisabled')"
+               data-ng-change="item.toggleCheck(true);"
                data-ng-model="item.downline.isChecked"
                data-ng-disabled="item.downline.readonly" />
         {{'EnableDownline' | settingType11Label}}

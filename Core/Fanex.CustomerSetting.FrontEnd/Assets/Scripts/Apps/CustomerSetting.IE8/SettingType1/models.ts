@@ -637,8 +637,12 @@ module CustomerSetting.IE8 {
                 backups1 = this.s1;
 
                 this.iS1 = source.iS1;
-                this.uS1 = source.uS1;
-                this.s1 = source.s1;
+
+                if (this.iS1) {
+                    this.uS1 = source.uS1;
+                } else if (!this.iS3) {
+                    this.s1 = source.s1;
+                }
 
                 isSuccessful = this.validate();
 
@@ -778,8 +782,12 @@ module CustomerSetting.IE8 {
                 backupM1 = this.m1;
 
                 this.iM1 = source.iM1;
-                this.uM1 = source.uM1;
-                this.m1 = source.m1;
+
+                if (this.iM1) {
+                    this.uM1 = source.uM1;
+                } else if (!this.iM2) {
+                    this.m1 = source.m1;
+                }
 
                 isSuccessful = this.validate();
 

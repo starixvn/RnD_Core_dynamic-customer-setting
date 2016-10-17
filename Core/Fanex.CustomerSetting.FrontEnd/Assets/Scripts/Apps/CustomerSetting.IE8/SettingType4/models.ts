@@ -53,46 +53,42 @@ module CustomerSetting.IE8 {
             var isSuccessful: boolean = true;
 
             if (source) {
-                var backupDisabled: boolean = this.isDisabled;
-                var backupReadonly: boolean = this.readonly;
-                var backupDisabledDownline: boolean;
-                var backupReadonlyDownline: boolean;
+                var backupIsChecked: boolean = this.isDisabled;
+                var backupDownlineIsChecked: boolean;
 
-                this.isDisabled = source.isDisabled;
-                this.isChecked = !this.isDisabled;
-                this.readonly = source.readonly;
-
-                if (this.downline && source.downline) {
-                    backupDisabledDownline = this.downline.isDisabled;
-                    backupReadonlyDownline = this.downline.readonly;
-                    this.downline.isDisabled = source.downline.isDisabled;
-                    this.downline.isChecked = !this.downline.isDisabled;
-                    this.downline.readonly = source.downline.readonly;
+                if (!this.readonly) {
+                    this.isChecked = source.isChecked;
                 }
 
+                if (this.downline && source.downline) {
+                    backupDownlineIsChecked = this.downline.isChecked;
+
+                    if (!this.downline.readonly) {
+                        this.downline.isChecked = source.downline.isChecked;
+                    }
+                }
+
+                this.toggleCheck();
                 isSuccessful = this.validate();
 
                 if (!isSuccessful) {
-                    this.isDisabled = backupDisabled;
-                    this.isChecked = !backupDisabled;
-                    this.readonly = backupReadonly;
+                    this.isChecked = backupIsChecked;
 
                     if (this.downline && source.downline) {
-                        this.downline.isDisabled = backupDisabledDownline;
-                        this.downline.isChecked = !backupDisabledDownline;
-                        this.downline.readonly = backupReadonlyDownline;
+                        this.downline.isChecked = backupDownlineIsChecked;
                     }
 
+                    this.toggleCheck();
                     this.highlightUnablyCopiedField();
                 } else {
                     // Since highlightCopiedFields can't work with complex rule, then we must call those commands manually.
-                    if (this.isDisabled !== backupDisabled || this.readonly !== backupReadonly) {
+                    if (this.isChecked !== backupIsChecked) {
                         this.highlightState["isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["isDisabled"]) {
                         this.highlightState["isDisabled"] = NotificationType.none;
                     }
 
-                    if (this.downline.isDisabled !== backupDisabledDownline || this.downline.readonly !== backupReadonlyDownline) {
+                    if (this.downline.isChecked !== backupDownlineIsChecked) {
                         this.highlightState["downline.isDisabled"] = NotificationType.success;
                     } else if (this.highlightState["downline.isDisabled"]) {
                         this.highlightState["downline.isDisabled"] = NotificationType.none;
@@ -148,6 +144,43 @@ module CustomerSetting.IE8 {
             }
 
             return settingItem;
+        }
+
+        public toggleCheck(isDownline: boolean = false): void {
+            if (isDownline) {
+                this.downline.isDisabled = !this.downline.isChecked;
+            } else {
+                this.isDisabled = !this.isChecked;
+            }
+
+            if (this.downline) {
+                if (this.isChecked && !(<SettingType4Item>this.oldSetting).isChecked) {
+                    this.downline.readonly = false;
+                } else {
+                    if ((<SettingType4Item>this.oldSetting).isChecked && (<SettingType4Item>this.downline.oldSetting).isChecked) {
+                        this.downline.isChecked = this.isChecked;
+                    } else {
+                        this.downline.isChecked = false;
+                    }
+
+                    this.downline.readonly = true;
+                }
+
+                this.downline.isDisabled = !this.downline.isChecked;
+                this.resetFieldState("isDisabled");
+            } else {
+                this.resetFieldState("downline.isDisabled");
+            }
+        }
+
+        private resetFieldState(fieldName: string): void {
+            if (this.validationState && !this.validationState.isSuccessful()) {
+                if (this.validationState.fieldName === fieldName) {
+                    this.resetValidationState();
+                }
+            } else {
+                this.resetFieldHighlightState(fieldName);
+            }
         }
     }
 }
