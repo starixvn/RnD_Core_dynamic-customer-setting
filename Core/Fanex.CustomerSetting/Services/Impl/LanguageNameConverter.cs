@@ -17,6 +17,8 @@
                 case "ZH-CN": return "cs"; // Simplified
                 case "JA-JP": return "jp"; // Japanese
                 case "TH-TH": return "th"; // Thai
+                case "KO-KR": return "ko"; // Korean
+                case "VI-VN": return "vn"; // Vietnamese
                 default: return DefaultLanguageName;
             }
         }
