@@ -34985,6 +34985,8 @@ $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class
     resources["message"]["zh-cn"] = {
         "AccessDeniedMsg": "对不起,您不被允许进入此网页.",
         "AccountWasDisabled": "这个帐号禁用",
+        "CopiedSuccessfully": "绿色的所有字段已被复制。",
+        "CopyingFailed": "红色字段无法复制。",
         "CustomersAreNotSameLine": "会员不同线！",
         "DuplicateValuesAlertMsg": "突显值已超出范围。",
         "Msg_90001": "更新程序失败！",
@@ -34998,6 +35000,8 @@ $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class
     resources["message"]["zh-tw"] = {
         "AccessDeniedMsg": "對不起, 您不被允許進入此網頁.",
         "AccountWasDisabled": "這個帳號禁用",
+        "CopiedSuccessfully": "綠色的所有字段已被複製。",
+        "CopyingFailed": "紅色字段無法複製。",
         "CustomersAreNotSameLine": "會員不同線！",
         "DuplicateValuesAlertMsg": "突顯值已超出範圍。",
         "Msg_90001": "更新程序失敗！",
@@ -35026,6 +35030,8 @@ $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class
     resources["message"]["th-th"] = {
         "AccessDeniedMsg": "ขออภัยคุณไม่ได้รับอนุญาติให้เข้าหน้านี้",
         "AccountWasDisabled": "บัญชีนี้ได้ถูกปิดไปแล้ว",
+        "CopiedSuccessfully": "ช่องสีเขียวทั้งหมดจะถูกคัดลอก",
+        "CopyingFailed": "ไม่สามารถคัดลอกไปยังช่องสีแดง",
         "CustomersAreNotSameLine": "ลูกเค้าไม่ได้อยู่ในสายเดียวกัน",
         "DuplicateValuesAlertMsg": "ตัวเลขที่ถูกไฮไลท์ไม่ได้อยู่ในขอบเขต",
         "Msg_90001": "กระบวนการอัพเดทสำเร็จแล้ว",
@@ -35039,6 +35045,8 @@ $templateCache.put("settingtype5.htm","<div><default-setting-type-grouping class
     resources["message"]["vi-vn"] = {
         "AccessDeniedMsg": "Xin lỗi, bạn không được phép truy cập vào trang này",
         "AccountWasDisabled": "Tài khoản bị vô hiệu hóa",
+        "CopiedSuccessfully": "Tất cả những ô được gán giá trị sao chép sẽ được đánh dấu xanh.",
+        "CopyingFailed": "Không thể gán giá trị được sao chép vào những ô được đánh dấu đỏ.",
         "SystemError": "Oh …hệ thống đang bi lỗi,Vui lòng báo với người quản lý",
         "YouAreNotAuthorized": "Bạn không được cho phép sử dụng chức năng này"
     };
