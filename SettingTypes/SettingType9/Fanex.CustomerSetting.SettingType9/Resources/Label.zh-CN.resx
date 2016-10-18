@@ -126,4 +126,7 @@
   <data name="MinBet" xml:space="preserve">
     <value>最低投注</value>
   </data>
+  <data name="MaxPerNumber" xml:space="preserve">
+    <value>最高数额</value>
+  </data>
 </root>

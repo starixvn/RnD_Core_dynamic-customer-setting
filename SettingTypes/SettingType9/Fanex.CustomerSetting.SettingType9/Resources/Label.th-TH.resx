@@ -126,4 +126,7 @@
   <data name="MinBet" xml:space="preserve">
     <value>ค่าเดิมพันต้ำสุด</value>
   </data>
+  <data name="MaxPerNumber" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลข</value>
+  </data>
 </root>

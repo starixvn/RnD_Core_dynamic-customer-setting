@@ -129,4 +129,67 @@
   <data name="UpdateBetSettingSuccessfully" xml:space="preserve">
     <value>Thiết lập về tiền cược được cập nhật thành công</value>
   </data>
+  <data name="BetLimitCannotBeGreaterThanMaxValue" xml:space="preserve">
+    <value>Hạn mức đặt cược không thể lớn hơn Max Value.</value>
+  </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerNumber" xml:space="preserve">
+    <value>Tiền Cược lớn nhất không thể lớn hơn Tiền Cược tối đa cho mỗi số.</value>
+  </data>
+  <data name="MaxBetCannotBeNegative" xml:space="preserve">
+    <value>Tiền Cược lớn nhất không thể là số âm.</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerNumber" xml:space="preserve">
+    <value>Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số.</value>
+  </data>
+  <data name="MaxPerNumberCannotBeNegative" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số không thể là số âm.</value>
+  </data>
+  <data name="MaxPerNumberGreaterThanOrEqualMaxBet" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số phải lớn hơn hoặc bằng Tiền Cược lớn nhất.</value>
+  </data>
+  <data name="MaxPerNumberLessThanOrEqualTo" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng {0}.</value>
+  </data>
+  <data name="MinBetCannotBeNegative" xml:space="preserve">
+    <value>Tiền Cược nhỏ nhất không thể là số âm.</value>
+  </data>
+  <data name="Msg_10035" xml:space="preserve">
+    <value>Giá trị Tiền Cược nhỏ nhất / Tiền Cược lớn nhất / Tiền Cược tối đa cho mỗi số không hợp lệ.</value>
+  </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>Tiền Cược nhỏ nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất và Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số.</value>
+  </data>
+  <data name="Msg_10037" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Super.</value>
+  </data>
+  <data name="Msg_10038" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Master.</value>
+  </data>
+  <data name="Msg_10039" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số phải nhỏ hơn hoặc bằng Tiền Cược tối đa cho mỗi số của Agent.</value>
+  </data>
+  <data name="MaxBetMoreThanOrEqualMinBet" xml:space="preserve">
+    <value>Tiền cược lớn nhất phải lớn hơn hoặc bằng tiền cược nhỏ nhất.</value>
+  </data>
+  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
+    <value>Tiền cược nhỏ nhất phải lớn hơn hoặc bằng {0}.</value>
+  </data>
+  <data name="Msg_10006" xml:space="preserve">
+    <value>Tiền Cược nhỏ nhất phải lớn hơn hoặc bằng Tiền Cược nhỏ nhất của Agent.</value>
+  </data>
+  <data name="Msg_10007" xml:space="preserve">
+    <value>Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất của Agent.</value>
+  </data>
+  <data name="Msg_10016" xml:space="preserve">
+    <value>Tiền Cược nhỏ nhất phải lớn hơn hoặc bằng Tiền Cược nhỏ nhất của Super.</value>
+  </data>
+  <data name="Msg_10017" xml:space="preserve">
+    <value>Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất của Super.</value>
+  </data>
+  <data name="Msg_10019" xml:space="preserve">
+    <value>Tiền Cược nhỏ nhất phải lớn hơn hoặc bằng Tiền Cược nhỏ nhất của Master</value>
+  </data>
+  <data name="Msg_10020" xml:space="preserve">
+    <value>Tiền Cược lớn nhất phải nhỏ hơn hoặc bằng Tiền Cược lớn nhất của Master.</value>
+  </data>
 </root>

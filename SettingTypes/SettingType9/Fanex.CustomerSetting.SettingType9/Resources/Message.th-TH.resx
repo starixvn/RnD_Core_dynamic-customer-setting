@@ -150,4 +150,47 @@
   <data name="Msg_10020" xml:space="preserve">
     <value>ค่าวางเดิมพันขั้นสูงสุดต้องน้อยกว่าหรือเท่ากับ ค่าการเดิมพันขั้นสูงสุดของมาสเตอร์เอเจนท์ </value>
   </data>
+  <data name="BetLimitCannotBeGreaterThanMaxValue" xml:space="preserve">
+    <value>ค่าเดิมพันต้องไม่มากกว่าค่าเดิมพันสูงสุด</value>
+  </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerNumber" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต้องไม่มากว่าค่าเดิมพันสูงสุดต่อหมายเลข</value>
+  </data>
+  <data name="MaxBetCannotBeNegative" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต้องไม่ติดลบ</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerNumber" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดควรจะน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลข</value>
+  </data>
+  <data name="MaxPerNumberCannotBeNegative" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องไม่ติดลบ</value>
+  </data>
+  <data name="MaxPerNumberGreaterThanOrEqualMaxBet" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องมากกว่าหรือเท่ากับค่าเดิมพันสูงสุด</value>
+  </data>
+  <data name="MaxPerNumberLessThanOrEqualTo" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับ{0}</value>
+  </data>
+  <data name="MinBetCannotBeNegative" xml:space="preserve">
+    <value>ค่าเดิมพันต่ำสุดต้องไม่ติดลบ</value>
+  </data>
+  <data name="Msg_10035" xml:space="preserve">
+    <value>ค่าเดิมพันต่ำสุด/ ค่าเดิมพันสูงสุด/ ค่าเดิมพันสูงสุดต่อหมายเลข ไม่ถูกต้อง</value>
+  </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>ค่าเดิมพันต่ำสุดต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุด และ
+ ค่าเดิมพันสูงสุดต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลข</value>
+  </data>
+  <data name="Msg_10037" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของซุปเปอร์เอเจ่นต์</value>
+  </data>
+  <data name="Msg_10038" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของมาสเตอร์เอเจ่นต์</value>
+  </data>
+  <data name="Msg_10039" xml:space="preserve">
+    <value>ค่าเดิมพันสูงสุดต่อหมายเลขต้องน้อยกว่าหรือเท่ากับค่าเดิมพันสูงสุดต่อหมายเลขของเอเจ่นต์</value>
+  </data>
+  <data name="MinBetMoreThanOrEqualTo" xml:space="preserve">
+    <value>จำนวนการเดิมพันต่ำสุดต้องมากกว่า หรือเท่ากับ {0}.</value>
+  </data>
 </root>

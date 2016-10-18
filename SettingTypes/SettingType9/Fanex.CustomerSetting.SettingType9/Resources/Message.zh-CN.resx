@@ -153,4 +153,43 @@
   <data name="Msg_10020" xml:space="preserve">
     <value>最高投注必须少于或相等于总代理最高投注限额</value>
   </data>
+  <data name="BetLimitCannotBeGreaterThanMaxValue" xml:space="preserve">
+    <value>投注限额不能大于最高值</value>
+  </data>
+  <data name="MaxBetCannotBeGreaterThanMaxPerNumber" xml:space="preserve">
+    <value>最高投注不能大于最高数额。</value>
+  </data>
+  <data name="MaxBetCannotBeNegative" xml:space="preserve">
+    <value>最高投注不能为负数。</value>
+  </data>
+  <data name="MaxBetLessThanOrEqualMaxPerNumber" xml:space="preserve">
+    <value>最高投注应小于或等于每个最高数额。</value>
+  </data>
+  <data name="MaxPerNumberCannotBeNegative" xml:space="preserve">
+    <value>最高数额不能为负数。</value>
+  </data>
+  <data name="MaxPerNumberGreaterThanOrEqualMaxBet" xml:space="preserve">
+    <value>最高数额必须大于或等于最高投注。</value>
+  </data>
+  <data name="MaxPerNumberLessThanOrEqualTo" xml:space="preserve">
+    <value>最高数额必须小于或等于{0}。</value>
+  </data>
+  <data name="MinBetCannotBeNegative" xml:space="preserve">
+    <value>最低投注不能为负数。</value>
+  </data>
+  <data name="Msg_10035" xml:space="preserve">
+    <value>无效的最低投注/最高投注/最高数额。</value>
+  </data>
+  <data name="Msg_10036" xml:space="preserve">
+    <value>最低投注必须小于或等于最高投注，最高投注必须小于或等于最高数额。</value>
+  </data>
+  <data name="Msg_10037" xml:space="preserve">
+    <value>最高数额必须小于或等于超级总代理的最高数额。</value>
+  </data>
+  <data name="Msg_10038" xml:space="preserve">
+    <value>最高数额必须小于或等于总代理的最高数额。</value>
+  </data>
+  <data name="Msg_10039" xml:space="preserve">
+    <value>最高数额必须小于或等于代理的最高数额。</value>
+  </data>
 </root>

@@ -131,6 +131,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.th-TH.resx" />
+    <EmbeddedResource Include="Resources\Messages.vi-VN.resx" />
+    <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Messages.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -126,4 +126,7 @@
   <data name="MinBet" xml:space="preserve">
     <value>Cược nhỏ nhất</value>
   </data>
+  <data name="MaxPerNumber" xml:space="preserve">
+    <value>Tiền Cược tối đa cho mỗi số </value>
+  </data>
 </root>
