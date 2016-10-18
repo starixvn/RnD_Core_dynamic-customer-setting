@@ -144,4 +144,10 @@
   <data name="YouAreNotAuthorized" xml:space="preserve">
     <value>您没有使用此功能的权限</value>
   </data>
+  <data name="CopyingFailed" xml:space="preserve">
+    <value>红色字段无法复制。</value>
+  </data>
+  <data name="CopiedSuccessfully" xml:space="preserve">
+    <value>绿色的所有字段已被复制。</value>
+  </data>
 </root>

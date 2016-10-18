@@ -129,4 +129,10 @@
   <data name="YouAreNotAuthorized" xml:space="preserve">
     <value>Bạn không được cho phép sử dụng chức năng này</value>
   </data>
+  <data name="CopyingFailed" xml:space="preserve">
+    <value>Không thể gán giá trị được sao chép vào những ô được đánh dấu đỏ.</value>
+  </data>
+  <data name="CopiedSuccessfully" xml:space="preserve">
+    <value>Tất cả những ô được gán giá trị sao chép sẽ được đánh dấu xanh.</value>
+  </data>
 </root>

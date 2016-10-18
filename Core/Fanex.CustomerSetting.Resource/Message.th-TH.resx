@@ -144,4 +144,10 @@
   <data name="YouAreNotAuthorized" xml:space="preserve">
     <value>คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้</value>
   </data>
+  <data name="CopyingFailed" xml:space="preserve">
+    <value>ไม่สามารถคัดลอกไปยังช่องสีแดง</value>
+  </data>
+  <data name="CopiedSuccessfully" xml:space="preserve">
+    <value>ช่องสีเขียวทั้งหมดจะถูกคัดลอก</value>
+  </data>
 </root>
