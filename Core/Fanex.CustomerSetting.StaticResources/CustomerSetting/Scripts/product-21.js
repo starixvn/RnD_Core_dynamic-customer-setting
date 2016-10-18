@@ -32530,89 +32530,6 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var ToggleSettingBlockDirective = (function () {
-        function ToggleSettingBlockDirective($rootScope, $timeout) {
-            var _this = this;
-            this.initializing = true;
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                container.addClass("togglable-bar");
-                container.on("click", function (event) {
-                    var target = angular.element(event.target);
-                    if (target.hasClass("togglable-bar")) {
-                        _this.toggle(scope);
-                        return false;
-                    }
-                });
-                if (!_this.isToggleAllDirective(scope)) {
-                    scope.$watch("settingData", function () {
-                        if (_this.initializing) {
-                            _this.$timeout(function () { return _this.initializing = false; });
-                        }
-                        else {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                        }
-                    }, true);
-                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                            && scope.settingData
-                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                        }
-                    });
-                    _this.$rootScope.$on("queriedSetting", function () {
-                        _this.initializing = true;
-                    });
-                }
-            };
-            this.$rootScope = $rootScope;
-            this.$timeout = $timeout;
-        }
-        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "=",
-                    settingTypeId: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
-            if (this.isToggleAllDirective(scope)) {
-                if (scope.sharedStates.isExpandedAll()) {
-                    scope.sharedStates.collapseAllBlocks();
-                }
-                else {
-                    scope.sharedStates.expandAllBlocks();
-                }
-            }
-            else {
-                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
-                    scope.sharedStates.collapseBlock(scope.blockIndex);
-                }
-                else {
-                    scope.sharedStates.expandBlock(scope.blockIndex);
-                }
-            }
-            scope.$apply();
-        };
-        ;
-        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
-            return scope.blockIndex === null || scope.blockIndex === undefined;
-        };
-        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
-        return ToggleSettingBlockDirective;
-    }());
-    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
     var Tooltip = (function () {
         function Tooltip($window, $compile, $timeout, $templateCache) {
             var _this = this;
@@ -32723,6 +32640,89 @@ var CustomerSetting;
         };
     }
     CustomerSetting.ModuleRegister.filter("highlightingField", HighlightingField);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective($rootScope, $timeout) {
+            var _this = this;
+            this.initializing = true;
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                container.addClass("togglable-bar");
+                container.on("click", function (event) {
+                    var target = angular.element(event.target);
+                    if (target.hasClass("togglable-bar")) {
+                        _this.toggle(scope);
+                        return false;
+                    }
+                });
+                if (!_this.isToggleAllDirective(scope)) {
+                    scope.$watch("settingData", function () {
+                        if (_this.initializing) {
+                            _this.$timeout(function () { return _this.initializing = false; });
+                        }
+                        else {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                        }
+                    }, true);
+                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                            && scope.settingData
+                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })) {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                        }
+                    });
+                    _this.$rootScope.$on("queriedSetting", function () {
+                        _this.initializing = true;
+                    });
+                }
+            };
+            this.$rootScope = $rootScope;
+            this.$timeout = $timeout;
+        }
+        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "=",
+                    settingTypeId: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+            if (this.isToggleAllDirective(scope)) {
+                if (scope.sharedStates.isExpandedAll()) {
+                    scope.sharedStates.collapseAllBlocks();
+                }
+                else {
+                    scope.sharedStates.expandAllBlocks();
+                }
+            }
+            else {
+                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                    scope.sharedStates.collapseBlock(scope.blockIndex);
+                }
+                else {
+                    scope.sharedStates.expandBlock(scope.blockIndex);
+                }
+            }
+            scope.$apply();
+        };
+        ;
+        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+            return scope.blockIndex === null || scope.blockIndex === undefined;
+        };
+        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+        return ToggleSettingBlockDirective;
+    }());
+    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
