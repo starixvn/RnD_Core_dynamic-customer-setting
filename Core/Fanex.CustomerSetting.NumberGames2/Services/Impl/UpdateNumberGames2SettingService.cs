@@ -173,7 +173,8 @@
                     Level = command.Setting.CustomerLevel.Value
                 },
                 UserId = SettingContext.Actor.Id,
-                Language = SettingContext.Language
+                Language = SettingContext.Language,
+                Ip = SettingContext.IP
             };
 
             return request;

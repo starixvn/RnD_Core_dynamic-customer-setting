@@ -206,7 +206,8 @@
             _apiService.Received().SyncCustomers(Arg.Is<CreateAccountApiModels.Request>(request =>
                 request.Call.AccountArray.Any(account => account.ObCustId == customerId)
                 && request.Call.Level == customerLevel.Value
-                && request.Call.UplineId == TestingUplineId));
+                && request.Call.UplineId == TestingUplineId
+                && request.Ip == _settingContext.IP));
         }
 
         [Test]
