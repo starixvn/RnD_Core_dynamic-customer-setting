@@ -298,6 +298,10 @@ module CustomerSetting.IE8 {
                     }
                 }
             };
+
+            $scope.hideTooltip = () => {
+                $scope.copyingState.none();
+            };
         }];
     }
 

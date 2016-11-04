@@ -29,8 +29,10 @@
                         <div class="block__lbl block__lbl--half-width"
                              data-sport-type="{{item.sportTypeId}}"
                              data-bet-type="{{item.betTypeId}}">
-                            {{item | showingName:settingLevel:productName }}
-                            {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                            <span class="showing-name">
+                                {{item | showingName:settingLevel:productName }}
+                                {{item.isLive ? '(' + ('Live' | label) + ')' : ''}}
+                            </span>
                             <copy-position-taking-on-member data-ng-if="group.length > 1 && $index === 0"
                                                             data-customer-level="customerLevel"
                                                             data-setting-type-id="settingTypeId"

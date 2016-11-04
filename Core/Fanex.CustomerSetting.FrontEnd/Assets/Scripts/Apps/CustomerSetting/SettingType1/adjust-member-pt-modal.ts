@@ -303,6 +303,10 @@ module CustomerSetting {
                     }
                 }
             };
+
+            $scope.hideTooltip = () => {
+                $scope.copyingState.none();
+            };
         }];
     }
 
