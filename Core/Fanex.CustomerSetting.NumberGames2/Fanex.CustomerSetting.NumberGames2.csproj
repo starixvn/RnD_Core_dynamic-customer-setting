@@ -80,11 +80,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ONEbook.NG2.API.1.0.0.1-DCS-06\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <HintPath>..\..\packages\ONEbook.NG2.API.DCS.1.0.0.1\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ONEbook.UM.ThirdParty.1.0.0.0-beta2\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
+      <HintPath>..\..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.5.6.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -137,7 +137,6 @@
     <EmbeddedResource Include="Resources\Messages.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
