@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
+    <value>Trạng thái trò chơi được cập nhật thành công.</value>
+  </data>
+  <data name="DownlineCannotBeEnabledWhenUplineIsDisabled" xml:space="preserve">
+    <value>Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.</value>
+  </data>
+  <data name="DownlineStatusCannotBeChanged" xml:space="preserve">
+    <value>Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.</value>
+  </data>
+  <data name="DownlineStatusIsInvalid" xml:space="preserve">
+    <value>Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.</value>
+  </data>
+  <data name="Msg_60033" xml:space="preserve">
+    <value>Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.</value>
+  </data>
+  <data name="Msg_60034" xml:space="preserve">
+    <value>Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.</value>
+  </data>
 </root>

@@ -122,6 +122,7 @@
       <LastGenOutput>Message.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Message.th-TH.resx" />
+    <EmbeddedResource Include="Resources\Message.vi-VN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-CN.resx" />
     <EmbeddedResource Include="Resources\Message.zh-TW.resx" />
   </ItemGroup>

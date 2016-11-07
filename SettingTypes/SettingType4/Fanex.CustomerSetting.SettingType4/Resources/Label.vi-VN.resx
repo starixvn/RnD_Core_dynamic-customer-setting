@@ -121,9 +121,9 @@
     <value>Cho phép</value>
   </data>
   <data name="EnableDownline" xml:space="preserve">
-    <value>Enable Downline</value>
+    <value>Cho phép thành viên cấp dưới</value>
   </data>
   <data name="ProductStatus" xml:space="preserve">
-    <value>Product Status</value>
+    <value>Trạng thái trò chơi</value>
   </data>
 </root>
