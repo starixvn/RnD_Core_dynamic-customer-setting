@@ -35648,33 +35648,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var SettingResultDirective = (function () {
-            function SettingResultDirective() {
-                this.replace = true;
-                this.scope = {
-                    result: "="
-                };
-                this.templateUrl = "SettingResult/setting-result.htm";
-                this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
-                        $scope.$watch("result", function (result) {
-                            if (result) {
-                                $window.scrollTo(0, 0);
-                                $rootScope.$emit("page-height-changed");
-                            }
-                        });
-                    }];
-            }
-            return SettingResultDirective;
-        }());
-        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var SettingTypeDirectiveLoader = (function () {
             function SettingTypeDirectiveLoader($compile) {
                 var _this = this;
@@ -35725,6 +35698,33 @@ var CustomerSetting;
             return SettingTypeDirectiveLoader;
         }());
         IE8.ModuleRegister.directive("settingTypeLoader", SettingTypeDirectiveLoader);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingResultDirective = (function () {
+            function SettingResultDirective() {
+                this.replace = true;
+                this.scope = {
+                    result: "="
+                };
+                this.templateUrl = "SettingResult/setting-result.htm";
+                this.controller = ["$rootScope", "$scope", "$window", function ($rootScope, $scope, $window) {
+                        $scope.$watch("result", function (result) {
+                            if (result) {
+                                $window.scrollTo(0, 0);
+                                $rootScope.$emit("page-height-changed");
+                            }
+                        });
+                    }];
+            }
+            return SettingResultDirective;
+        }());
+        IE8.ModuleRegister.directive("settingResult", SettingResultDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -38381,8 +38381,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
     settingType11Resources["label"] = settingType11Resources["label"] || {};
     settingType11Resources["label"]["vi-vn"] = {
         "Enable": "Cho phép",
-        "EnableDownline": "Enable Downline",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "Cho phép thành viên cấp dưới",
+        "ProductStatus": "Trạng thái trò chơi"
     };
     
     settingType11Resources["message"] = settingType11Resources["message"] || {};
@@ -38431,6 +38431,16 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><div data-d
         "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
         "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
         "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
+    };
+    
+    settingType11Resources["message"] = settingType11Resources["message"] || {};
+    settingType11Resources["message"]["vi-vn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.",
+        "DownlineStatusCannotBeChanged": "Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.",
+        "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
+        "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
+        "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
+        "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
     };
 
     angular.module("customerSetting").value("settingType11Resources", settingType11Resources);

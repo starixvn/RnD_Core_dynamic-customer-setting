@@ -35419,8 +35419,8 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     productStatusResources["label"] = productStatusResources["label"] || {};
     productStatusResources["label"]["vi-vn"] = {
         "Enable": "Cho phép",
-        "EnableDownline": "Enable Downline",
-        "ProductStatus": "Product Status"
+        "EnableDownline": "Cho phép thành viên cấp dưới",
+        "ProductStatus": "Trạng thái trò chơi"
     };
     
     productStatusResources["message"] = productStatusResources["message"] || {};
@@ -35474,6 +35474,12 @@ $templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></def
     
     productStatusResources["message"] = productStatusResources["message"] || {};
     productStatusResources["message"]["vi-vn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.",
+        "DownlineStatusCannotBeChanged": "Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.",
+        "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
+        "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
+        "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
+        "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
     };
 
     angular.module("customerSetting").value("productStatusResources", productStatusResources);
