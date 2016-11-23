@@ -30,31 +30,7 @@
             _customerSettingMatrixService = customerSettingMatrixService ?? new CustomerSettingMatrixService();
         }
 
-        public HttpResponseMessage Get([FromUri]SettingMatrixQuery request)
-        {
-            return GetSettingMatrix(request);
-        }
-
         public HttpResponseMessage Post([FromBody]SettingMatrixQuery request)
-        {
-            return GetSettingMatrix(request);
-        }
-
-        public HttpResponseMessage GetTemplate()
-        {
-            ObjectCache cache = MemoryCache.Default;
-            var template = cache.Get(CustomerSettingMatrixTemplateCacheKey) as string;
-
-            if (string.IsNullOrEmpty(template))
-            {
-                template = File.ReadAllText(HostingEnvironment.MapPath(CustomerSettingMatrixTemplateFilePath));
-                cache.Set(CustomerSettingMatrixTemplateCacheKey, template, DateTime.Now.AddHours(CachingHours));
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, template);
-        }
-
-        public HttpResponseMessage GetSettingMatrix(SettingMatrixQuery request)
         {
             if (request == null)
             {
@@ -73,6 +49,20 @@
                     HttpStatusCode.InternalServerError,
                     new Result(Result.DataError.Code, invalidException.Message));
             }
+        }
+
+        public HttpResponseMessage GetTemplate()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            var template = cache.Get(CustomerSettingMatrixTemplateCacheKey) as string;
+
+            if (string.IsNullOrEmpty(template))
+            {
+                template = File.ReadAllText(HostingEnvironment.MapPath(CustomerSettingMatrixTemplateFilePath));
+                cache.Set(CustomerSettingMatrixTemplateCacheKey, template, DateTime.Now.AddHours(CachingHours));
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, template);
         }
     }
 }

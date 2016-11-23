@@ -6,6 +6,7 @@
     using Helpers;
     using Models.Requests;
     using RestSharp;
+    using RestSharp.Extensions;
 
     internal class CustomerSettingService : ICustomerSettingService
     {
@@ -28,9 +29,9 @@
                 throw new CustomerSettingException("Query Setting Request cannot be null");
             }
 
-            var request = new RestRequest("/customersetting/", Method.GET);
+            var request = new RestRequest("/customersetting/postsettingrequest", Method.POST);
 
-            request.AddObject(query);
+            request.AddJsonBody(query);
 
             return _restClient.Execute(request);
         }

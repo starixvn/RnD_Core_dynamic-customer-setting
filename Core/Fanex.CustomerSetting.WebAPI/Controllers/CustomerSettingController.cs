@@ -33,7 +33,7 @@
         {
         }
 
-        public HttpResponseMessage Get([FromUri]QuerySettingRequest request)
+        public HttpResponseMessage PostSettingRequest([FromBody]QuerySettingRequest request)
         {
             if (request == null)
             {
