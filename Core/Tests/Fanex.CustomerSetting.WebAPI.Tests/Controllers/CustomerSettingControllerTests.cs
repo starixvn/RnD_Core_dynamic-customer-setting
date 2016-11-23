@@ -8,7 +8,6 @@
     using System.Net.Http.Formatting;
     using System.Text;
     using System.Threading;
-    using System.Web;
     using System.Web.Http;
     using Autofac;
     using Autofac.Integration.WebApi;
@@ -118,11 +117,12 @@
         }
 
         [Test]
-        public void Get_ParameterIsNull_ReturnPreconditionFailed()
+        public void PostSettingRequest_ParameterIsNull_ReturnPreconditionFailed()
         {
             // Arrange.
-            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/get");
-            _request.Method = HttpMethod.Get;
+            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/postsettingrequest");
+            _request.Method = HttpMethod.Post;
+            _request.Content = new ObjectContent<QuerySettingRequest>(new QuerySettingRequest(), new JsonMediaTypeFormatter());
 
             // Act and Assert.
             using (HttpResponseMessage response = _messageInvoker.SendAsync(_request, _cancellationToken.Token).Result)
@@ -132,11 +132,12 @@
         }
 
         [Test]
-        public void Get_ParameterIsValid_CallSettingServiceFactoryCreateQueryService()
+        public void PostSettingRequest_ParameterIsValid_CallSettingServiceFactoryCreateQueryService()
         {
             // Arrange.
-            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/get?" + GetQuerySettingRequestQueryString());
-            _request.Method = HttpMethod.Get;
+            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/postsettingrequest");
+            _request.Method = HttpMethod.Post;
+            _request.Content = new StringContent(BuildQuerySettingRequestJsonBody(), Encoding.UTF8, "application/json");
 
             // Act and Assert.
             using (HttpResponseMessage response = _messageInvoker.SendAsync(_request, _cancellationToken.Token).Result)
@@ -146,13 +147,14 @@
         }
 
         [Test]
-        public void Get_ParameterIsValid_CallQuerySettingServiceGetCustomerSetting()
+        public void PostSettingRequest_ParameterIsValid_CallQuerySettingServiceGetCustomerSetting()
         {
             // Arrange.
             var querySettingService = Substitute.For<IQuerySettingService>();
 
-            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/get?" + GetQuerySettingRequestQueryString());
-            _request.Method = HttpMethod.Get;
+            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/postsettingrequest");
+            _request.Method = HttpMethod.Post;
+            _request.Content = new StringContent(BuildQuerySettingRequestJsonBody(), Encoding.UTF8, "application/json");
             _serviceFactory.CreateQueryService(Arg.Is<byte>(1), Arg.Is<byte>(1), Arg.Any<ISettingContext>()).Returns(querySettingService);
 
             // Act and Assert.
@@ -160,17 +162,19 @@
             {
                 querySettingService.Received().GetCustomerSetting(Arg.Is<CustomerSettingQuery>(
                     query => query.ProductId == 1 && query.CustomerId == 1 && query.CustomerLevel == Level.Super));
+                querySettingService.ReceivedCalls();
             }
         }
 
         [Test]
-        public void Get_ParameterIsValid_ReturnStatusOk()
+        public void PostSettingRequest_ParameterIsValid_ReturnStatusOk()
         {
             // Arrange.
             var querySettingService = Substitute.For<IQuerySettingService>();
 
-            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/get?" + GetQuerySettingRequestQueryString());
-            _request.Method = HttpMethod.Get;
+            _request.RequestUri = new Uri(BaseAddress + "api/customersetting/postsettingrequest");
+            _request.Method = HttpMethod.Post;
+            _request.Content = new StringContent(BuildQuerySettingRequestJsonBody(), Encoding.UTF8, "application/json");
             _serviceFactory.CreateQueryService(Arg.Is<byte>(1), Arg.Is<byte>(1), Arg.Any<ISettingContext>()).Returns(querySettingService);
 
             // Act and Assert.
@@ -332,20 +336,22 @@
             }
         }
 
-        private static string GetQuerySettingRequestQueryString()
+        private static string BuildQuerySettingRequestJsonBody()
         {
-            var httpValueCollection = HttpUtility.ParseQueryString(string.Empty);
+            var jsonBuilder = new StringBuilder();
 
-            httpValueCollection.Add("ActorId", "1");
-            httpValueCollection.Add("ActorName", "sa");
-            httpValueCollection.Add("ActorLevel", "5");
-            httpValueCollection.Add("SubAccountId", "5");
-            httpValueCollection.Add("System", "1");
-            httpValueCollection.Add("ProductId", "1");
-            httpValueCollection.Add("CustomerId", "1");
-            httpValueCollection.Add("CustomerLevel", "4");
+            jsonBuilder.Append("{");
+            jsonBuilder.Append("\"ActorId\": 1,");
+            jsonBuilder.Append("\"ActorName\": \"sa\",");
+            jsonBuilder.Append("\"ActorLevel\": 5,");
+            jsonBuilder.Append("\"SubAccountId\": 5,");
+            jsonBuilder.AppendFormat("\"System\": 1,");
+            jsonBuilder.AppendFormat("\"ProductId\": 1,");
+            jsonBuilder.AppendFormat("\"CustomerId\": 1,");
+            jsonBuilder.AppendFormat("\"CustomerLevel\": 4");
+            jsonBuilder.Append("}");
 
-            return httpValueCollection.ToString();
+            return jsonBuilder.ToString();
         }
 
         private static string BuildJsonModel(
