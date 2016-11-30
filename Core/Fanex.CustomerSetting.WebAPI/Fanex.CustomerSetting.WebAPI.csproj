@@ -134,6 +134,12 @@
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.local.config">
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.masterLocal.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.masterSIT.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.pro.config">
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
@@ -221,19 +227,19 @@
     <Content Include="App_Data\Templates\customer-setting-ie8.htm" />
     <Content Include="App_Data\Templates\customer-setting.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Web.AppSettings.backupMNL.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.masterLocal.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.masterSIT.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.AppSettings.pro.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.sit.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.uat.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.backupMNL.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.config">
@@ -272,11 +278,14 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.sit.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.AppSettings.spu2.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionStrings.backupMNL.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    <Content Include="Web.AppSettings.uat.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.config" />
     <Content Include="App_Data\PluggableTasks\product-20.json" />
@@ -284,32 +293,43 @@
     <Content Include="App_Data\ApiConfigurations\LogsConfiguration.config" />
     <Content Include="App_Data\ApiConfigurations\ONEbook.NG2.API.config" />
     <Content Include="App_Data\PluggableTasks\product-21.json" />
-    <Content Include="Web.ConnectionStrings.spu2.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <Content Include="Web.ConnectionStrings.uat.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.sit.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.pro.config">
+    <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Web.ConnectionStrings.masterLocal.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.masterSIT.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.pro.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.sit.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.spu2.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.uat.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
     <Content Include="Web.spu2.config" />
+    <Content Include="Web.masterLocal.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Web.sit.config" />
     <Content Include="Web.uat.config" />
+    <Content Include="Web.masterSIT.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

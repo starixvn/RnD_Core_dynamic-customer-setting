@@ -133,16 +133,10 @@
     <Content Include="App_Data\SettingMatrixSpNames\UAT\Fanex.CustomerSetting.Matrix.xml" />
     <Content Include="App_Data\Templates\customer-setting-matrix.htm" />
     <Content Include="Global.asax" />
-    <Content Include="Web.AppSettings.spu2.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.uat.config">
+    <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.backupMNL.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.pro.config">
@@ -151,7 +145,14 @@
     <Content Include="Web.AppSettings.sit.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.spu2.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.uat.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
+    <Content Include="Web.masterSIT.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -171,6 +172,12 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\LocalDeployment.pubxml" />
+    <Content Include="Web.AppSettings.masterLocal.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.masterSIT.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionStrings.backupMNL.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
@@ -178,7 +185,19 @@
     <Content Include="Web.AppSettings.config" />
     <None Include="Properties\PublishProfiles\MatrixPublish.pubxml" />
     <Content Include="Web.backupMNL.config" />
+    <Content Include="Web.ConnectionStrings.pro.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.sit.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionStrings.spu2.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.masterLocal.config">
+      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionStrings.masterSIT.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -187,18 +206,13 @@
     <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionStrings.sit.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionStrings.pro.config">
-      <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionStrings.local.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Web.local.config" />
     <Content Include="Web.pro.config" />
     <Content Include="Web.spu2.config" />
+    <Content Include="Web.masterLocal.config" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
