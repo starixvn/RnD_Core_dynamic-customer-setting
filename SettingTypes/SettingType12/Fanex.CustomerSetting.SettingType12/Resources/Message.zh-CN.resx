@@ -133,6 +133,6 @@
     <value>最高输额应低于或相等于直系上线的最高输额.</value>
   </data>
   <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
-    <value>输限额已成功更新.</value>
+    <value>输的限额已更新成功。</value>
   </data>
 </root>

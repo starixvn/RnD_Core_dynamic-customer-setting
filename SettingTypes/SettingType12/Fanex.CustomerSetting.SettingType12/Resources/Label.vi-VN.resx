@@ -135,4 +135,13 @@
   <data name="Unlimited" xml:space="preserve">
     <value>Không giới hạn</value>
   </data>
+  <data name="ClickToViewCurrentLossAmount" xml:space="preserve">
+    <value>Nhấn để xem Lượng Tiền Đang Thua</value>
+  </data>
+  <data name="CurrentLossAmount" xml:space="preserve">
+    <value>Lượng Tiền Đang Thua</value>
+  </data>
+  <data name="LossLimit" xml:space="preserve">
+    <value>Giới Hạn Tiền Thua</value>
+  </data>
 </root>

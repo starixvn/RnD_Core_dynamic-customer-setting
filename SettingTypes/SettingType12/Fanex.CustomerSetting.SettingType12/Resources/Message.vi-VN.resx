@@ -133,6 +133,6 @@
     <value>Tiền thua cược lớn nhất phải ít hơn hoặc bằng Tiền thua cược lớn nhất của cấp trên trực tiếp.</value>
   </data>
   <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
-    <value>Cập nhật Giới hạn thua thành công.</value>
+    <value>Cập nhật Giới Hạn Tiền Thua thành công.</value>
   </data>
 </root>

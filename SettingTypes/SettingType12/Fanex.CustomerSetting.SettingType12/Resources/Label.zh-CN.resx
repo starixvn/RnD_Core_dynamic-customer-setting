@@ -136,12 +136,12 @@
     <value>无限</value>
   </data>
   <data name="LossLimit" xml:space="preserve">
-    <value>输限额</value>
+    <value>输的限额</value>
   </data>
   <data name="ClickToViewCurrentLossAmount" xml:space="preserve">
-    <value>点击查看目前输数额</value>
+    <value>点击查看目前输的数额</value>
   </data>
   <data name="CurrentLossAmount" xml:space="preserve">
-    <value>目前输数额</value>
+    <value>目前输的数额</value>
   </data>
 </root>

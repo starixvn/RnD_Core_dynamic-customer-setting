@@ -135,4 +135,13 @@
   <data name="Unlimited" xml:space="preserve">
     <value>ไม่จำกัด</value>
   </data>
+  <data name="ClickToViewCurrentLossAmount" xml:space="preserve">
+    <value>คลิกเพื่อดูยอดเสียปัจจุบัน</value>
+  </data>
+  <data name="CurrentLossAmount" xml:space="preserve">
+    <value>ยอดเสียปัจจุบัน</value>
+  </data>
+  <data name="LossLimit" xml:space="preserve">
+    <value>จำกัดยอดเสีย</value>
+  </data>
 </root>

@@ -133,6 +133,6 @@
     <value>最高輸額應低於或相等於直系上線的最高輸額.</value>
   </data>
   <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
-    <value>輸限額已成功更新.</value>
+    <value>輸的限額已更新成功。</value>
   </data>
 </root>

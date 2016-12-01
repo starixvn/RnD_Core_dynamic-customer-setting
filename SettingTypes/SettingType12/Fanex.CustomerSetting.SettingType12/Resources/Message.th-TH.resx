@@ -132,4 +132,7 @@
   <data name="Msg_10033" xml:space="preserve">
     <value>แพ้สูงสุดควรน้อยกว่าหรือเท่ากับแพ้สูงสุดของอัปไลน์โดยตรง</value>
   </data>
+  <data name="UpdatedLossLimitSuccessfully" xml:space="preserve">
+    <value>ได้ทำการปรับปรุงจำกัดยอดเสียเรียบร้อยแล้ว</value>
+  </data>
 </root>
