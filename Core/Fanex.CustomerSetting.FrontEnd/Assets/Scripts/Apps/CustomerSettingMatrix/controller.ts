@@ -164,6 +164,14 @@ module CustomerSettingMatrix {
                 })
                 .finally(() => {
                     this.isUIblocked = false;
+
+                    if (!this.product) {
+                        this.product = new Product(
+                            {
+                                id: this.settingTypeMatrix.productId,
+                                name: this.settingTypeMatrix.productName
+                            });
+                    }
                 });
         }
 

@@ -68,9 +68,13 @@
 
     export class SettingTypeMatrix {
         public settingLevel: number;
+        public productId: number;
+        public productName: string;
 
         constructor(settingTypeMatrix: any) {
             this.settingLevel = settingTypeMatrix.settingLevel;
+            this.productId = settingTypeMatrix.productId;
+            this.productName = settingTypeMatrix.productName;
         }
 
         public get isSportTypeBetTypeSettingLevel(): boolean {

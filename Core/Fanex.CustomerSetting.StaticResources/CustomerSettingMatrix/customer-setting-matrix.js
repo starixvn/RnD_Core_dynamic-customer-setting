@@ -30734,6 +30734,8 @@ var CustomerSettingMatrix;
     var SettingTypeMatrix = (function () {
         function SettingTypeMatrix(settingTypeMatrix) {
             this.settingLevel = settingTypeMatrix.settingLevel;
+            this.productId = settingTypeMatrix.productId;
+            this.productName = settingTypeMatrix.productName;
         }
         Object.defineProperty(SettingTypeMatrix.prototype, "isSportTypeBetTypeSettingLevel", {
             get: function () {
@@ -31142,6 +31144,12 @@ var CustomerSettingMatrix;
             })
                 .finally(function () {
                 _this.isUIblocked = false;
+                if (!_this.product) {
+                    _this.product = new CustomerSettingMatrix.Product({
+                        id: _this.settingTypeMatrix.productId,
+                        name: _this.settingTypeMatrix.productName
+                    });
+                }
             });
         };
         CustomerSettingMaxtrixController.prototype.handleError = function (errorMessage) {

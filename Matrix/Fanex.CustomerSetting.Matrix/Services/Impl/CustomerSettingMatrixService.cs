@@ -53,7 +53,14 @@
 
             var customerLine = _customerService.GetCustomerLine(settingMatrixQuery.CustomerName);
             var settingTypeMatrix = GetCustomerSettingTypeMatrix(settingMatrixQuery, customerLine);
+
             settingTypeMatrix.SettingLevel = GetSettingTypeLevel(settingMatrixQuery);
+
+            if (settingMatrixQuery.ProductId > 0)
+            {
+                settingTypeMatrix.ProductId = settingMatrixQuery.ProductId;
+                settingTypeMatrix.ProductName = _resourceService.GetProductName(settingMatrixQuery.ProductId, null);
+            }
 
             return new CustomerSettingMatrix
             {
