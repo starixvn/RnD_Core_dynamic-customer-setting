@@ -41,6 +41,7 @@
                 { "userid", settingContext.Actor.Id },
                 { "subaccid", settingContext.Actor.SubAccountId },
                 { "custid", customerId },
+                { "settingtype", Constants.SettingTypeId },
                 { "ip", settingContext.IP },
                 { "limit", lossLimitXml },
                 { "msgtype", 0 },
