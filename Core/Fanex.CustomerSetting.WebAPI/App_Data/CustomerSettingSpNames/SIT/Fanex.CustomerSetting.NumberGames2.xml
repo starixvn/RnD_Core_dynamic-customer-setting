@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
     <Function Name="Customer_Setting_NumberGames2">
-        <Setting Key="Acc_CustSetting_SyncGameStatusSelect " SpName="Acc_CustSetting_SyncGameStatusSelect_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-        <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-        <Setting Key="Acc_CustomerDirectUplineSel" SpName="Acc_CustomerDirectUplineSel_uat1" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="Acc_CustSetting_SyncGameStatusSelect " SpName="Acc_CustSetting_SyncGameStatusSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="Acc_CustomerDirectUplineSel" SpName="Acc_CustomerDirectUplineSel" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
 </Functions>

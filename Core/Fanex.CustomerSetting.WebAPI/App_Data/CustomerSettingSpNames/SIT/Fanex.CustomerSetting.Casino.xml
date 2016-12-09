@@ -2,6 +2,6 @@
 <Functions>
   <Function Name="Customer_Setting_Casino">
     <Setting Key="Acc_CustSetting_SyncStatusSelect " SpName="Acc_CustSetting_SyncStatusSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustSetting_SyncStatusUpd" SpName="Acc_CustSetting_SyncStatusUpd_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustSetting_SyncStatusUpd" SpName="Acc_CustSetting_SyncStatusUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
 </Functions>

@@ -7,7 +7,7 @@
             <Mapping DataField="IsChecked" ObjectProperty="Selected" />
         </Setting>
 
-        <Setting Key="CustSetting_StakeLevelGroupDetailSelect" SpName="Acc_CustSetting_StakeLevelGroupDetailSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+        <Setting Key="CustSetting_StakeLevelGroupDetailSelect" SpName="Acc_CustSetting_StakeLevelGroupDetailSelect" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
             <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
         </Setting>
