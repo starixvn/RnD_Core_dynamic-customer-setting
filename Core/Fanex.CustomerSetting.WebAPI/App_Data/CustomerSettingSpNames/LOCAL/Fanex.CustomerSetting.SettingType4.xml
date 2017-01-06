@@ -21,6 +21,6 @@
             <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
         </Setting>
 
-        <Setting Key="CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
 </Functions>
