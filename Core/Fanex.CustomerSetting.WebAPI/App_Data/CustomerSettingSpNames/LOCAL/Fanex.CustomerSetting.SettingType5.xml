@@ -34,6 +34,6 @@
             <Mapping DataField="IntervalComm" ObjectProperty="IntervalStep" />
         </Setting>
 
-        <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd_xpre" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+        <Setting Key="CustSetting_ChargeCommissionUpd" SpName="Acc_CustSetting_DiscountUpd" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
     </Function>
 </Functions>
