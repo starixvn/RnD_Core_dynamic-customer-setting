@@ -6,7 +6,6 @@
     using Models;
     using Models.Enumerations;
     using Models.Requests;
-    using Models.Results;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -104,35 +103,6 @@
                 settingItem => (settingItem as SettingItemDefault).BetTypeId == 2402) as SettingItemDefault;
 
             Assert.AreEqual(Resources.OtherDisplayingTextForVipBaccarat, assertedSettingItem.BetTypeName);
-        }
-
-        private ISetting CreateSampleSettingData()
-        {
-            ISetting setting = Substitute.For<ISetting>();
-            SettingType settingType1 = Substitute.For<SettingType>();
-            SettingType settingType3 = Substitute.For<SettingType>();
-            SettingType settingType4 = Substitute.For<SettingType>();
-            SettingType settingType6 = Substitute.For<SettingType>();
-            SettingType settingType7 = Substitute.For<SettingType>();
-
-            settingType1.Id = 1;
-            settingType3.Id = 3;
-            settingType4.Id = 4;
-            settingType6.Id = 6;
-            settingType7.Id = 7;
-
-            setting.SettingTypes = new List<SettingType>
-            {
-                settingType1,
-                settingType3,
-                settingType4,
-                settingType6,
-                settingType7
-            };
-            setting.WarningMessage = null;
-            setting.CustomerLevel = Level.Agent;
-
-            return setting;
         }
 
         private SettingType CreateSampleSettingType4Data()
