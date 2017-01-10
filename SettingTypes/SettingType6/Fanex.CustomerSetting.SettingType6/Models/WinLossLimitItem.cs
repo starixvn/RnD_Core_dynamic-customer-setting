@@ -31,12 +31,12 @@
                 return new Result(ErrorCode.MaximumWinShouldNotBeLessThanZero, Message.MaximumWinShouldNotBeLessThanZero);
             }
 
-            if (0 < MaxWinRange && MaxWinRange < WinLimit)
+            if (MaxWinRange > 0 && MaxWinRange < WinLimit)
             {
                 return new Result(ErrorCode.MaximumWinShouldNotExceedThanUplineMaximumWin, Message.MaximumWinShouldBotExceedThanUplineMaximumWin);
             }
 
-            if ((0 < MaxLossRange && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
+            if ((MaxLossRange > 0 && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
                 || LossLimit < 0)
             {
                 var errorMessage = string.Format(

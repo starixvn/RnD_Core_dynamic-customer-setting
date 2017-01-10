@@ -22,7 +22,7 @@
 
         public override IResult Validate()
         {
-            if ((0 < MaxLossRange && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
+            if ((MaxLossRange > 0 && (LossLimit < MinLossRange || MaxLossRange < LossLimit))
                 || LossLimit < 0)
             {
                 var errorMessage = string.Format(

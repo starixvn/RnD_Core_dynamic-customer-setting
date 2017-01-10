@@ -9,7 +9,7 @@
     public class BetLimitItemTests
     {
         [SuppressMessage(
-            "StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "StyleCop.CSharp.StylecopPlus.Rules",
             "SP2102:PropertyMustNotContainMoreLinesThan",
             Justification = "Reviewed.")]
         private static IEnumerable SampleBetLimitForValidateMethod
