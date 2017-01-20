@@ -34976,6 +34976,9 @@ var CustomerSetting;
             ParametersService.prototype.getUplineLevel = function () {
                 return this.query.getUplineLevel();
             };
+            ParametersService.prototype.getForcingMode = function () {
+                return this.isForcingMode;
+            };
             ParametersService.prototype.getSettingQuery = function () {
                 if (this.isMultipleUpdates) {
                     var multipleQuery = this.query;
@@ -35008,6 +35011,7 @@ var CustomerSetting;
                     this.isMultipleUpdates = params.isMultiple || false;
                     this.lang = params.language || IE8.Defaults.language;
                     this.system = params.system || IE8.Defaults.system;
+                    this.isForcingMode = params.isForcingMode || false;
                     if (this.isMultipleUpdates) {
                         this.query = new IE8.MultipleSettingQuery(params.productId, uplineLevel, customerLevel, params.customerIds, params.customerNames);
                     }
@@ -35068,7 +35072,8 @@ var CustomerSetting;
         IE8.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
         IE8.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
         var SettingTypesSharedValuesService = (function () {
-            function SettingTypesSharedValuesService() {
+            function SettingTypesSharedValuesService(parametersService) {
+                this.parametersService = parametersService;
             }
             SettingTypesSharedValuesService.prototype.register = function (setting, uplineLevel) {
                 this.uplineLevel = uplineLevel;
@@ -35078,8 +35083,12 @@ var CustomerSetting;
                     this.productId = setting.productId;
                     this.productName = setting.productName;
                     this.normalMode = setting.isNormalMode;
+                    if (this.parametersService.getForcingMode()) {
+                        this.normalMode = false;
+                    }
                 }
             };
+            SettingTypesSharedValuesService.$inject = ["parametersService"];
             return SettingTypesSharedValuesService;
         }());
         IE8.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
@@ -35391,7 +35400,7 @@ var CustomerSetting;
                 var isMultiple = !!this.customerNames;
                 var path = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
                 var editableSettings = this.setting.getEditableSettingTypes(settingTypeId);
-                var setting = isMultiple || !this.setting.isNormalMode ? editableSettings : this.setting.getChanges(settingTypeId);
+                var setting = isMultiple || !this.settingTypesSharedValuesService.normalMode ? editableSettings : this.setting.getChanges(settingTypeId);
                 var validationResult;
                 var command;
                 this.$rootScope.$emit("updateSetting", settingTypeId);

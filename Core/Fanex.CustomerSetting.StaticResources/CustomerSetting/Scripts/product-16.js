@@ -31627,6 +31627,13 @@ var CustomerSetting;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(ParametersService.prototype, "forcingMode", {
+            get: function () {
+                return this.isForcingMode;
+            },
+            enumerable: true,
+            configurable: true
+        });
         ParametersService.prototype.getSettingQuery = function () {
             if (this.isMultipleUpdates) {
                 var multipleQuery = this.query;
@@ -31659,6 +31666,7 @@ var CustomerSetting;
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || CustomerSetting.Defaults.language;
                 this.system = params.system || CustomerSetting.Defaults.system;
+                this.isForcingMode = params.isForcingMode || false;
                 if (this.isMultipleUpdates) {
                     this.query = new CustomerSetting.MultipleSettingQuery(params.productId, uplineLevel, customerLevel, params.customerIds, params.customerNames);
                 }
@@ -31719,7 +31727,8 @@ var CustomerSetting;
     CustomerSetting.UpdatingSettingTypePromiseChain = UpdatingSettingTypePromiseChain;
     CustomerSetting.ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
     var SettingTypesSharedValuesService = (function () {
-        function SettingTypesSharedValuesService() {
+        function SettingTypesSharedValuesService(parametersService) {
+            this.parametersService = parametersService;
         }
         SettingTypesSharedValuesService.prototype.register = function (setting, uplineLevel) {
             this.uplineLevel = uplineLevel;
@@ -31729,8 +31738,12 @@ var CustomerSetting;
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.normalMode = setting.isNormalMode;
+                if (this.parametersService.forcingMode) {
+                    this.normalMode = false;
+                }
             }
         };
+        SettingTypesSharedValuesService.$inject = ["parametersService"];
         return SettingTypesSharedValuesService;
     }());
     CustomerSetting.SettingTypesSharedValuesService = SettingTypesSharedValuesService;
@@ -32032,7 +32045,7 @@ var CustomerSetting;
             var isMultiple = !!this.customerNames;
             var path = isMultiple ? this.appConfigService.getUpdateMultiplePath() : this.appConfigService.getUpdatePath();
             var editableSettings = this.setting.getEditableSettingTypes(settingTypeId);
-            var setting = isMultiple || !this.setting.isNormalMode ? editableSettings : this.setting.getChanges(settingTypeId);
+            var setting = isMultiple || !this.settingTypesSharedValuesService.normalMode ? editableSettings : this.setting.getChanges(settingTypeId);
             var validationResult;
             var command;
             this.$rootScope.$emit("updateSetting", settingTypeId);
