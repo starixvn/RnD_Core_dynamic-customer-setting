@@ -22,6 +22,8 @@
 
         public bool IsReadOnly { get; set; }
 
+        public bool IsForcingMode { get; set; }
+
         internal byte System { get; set; }
 
         internal string ToJson()
@@ -34,6 +36,7 @@
             properties.Add(string.Format("\"productId\": {0},", ProductId));
             properties.Add(string.Format("\"customerLevel\": {0},", CustomerLevel));
             properties.Add(string.Format("\"uplineLevel\": {0},", UplineLevel));
+            properties.Add(string.Format("\"isForcingMode\": {0},", IsForcingMode.ToString().ToLowerInvariant()));
 
             if (IsMultiple.HasValue && IsMultiple.Value)
             {

@@ -70,6 +70,7 @@ module CustomerSetting.IE8 {
         private lang: string;
         private isMultipleUpdates: boolean;
         private system: number;
+        private isForcingMode: boolean;
 
         private $window: ng.IWindowService;
 
@@ -96,6 +97,10 @@ module CustomerSetting.IE8 {
 
         public getUplineLevel(): Level {
             return this.query.getUplineLevel();
+        }
+
+        public getForcingMode(): boolean {
+            return this.isForcingMode;
         }
 
         public getSettingQuery(): SettingQuery {
@@ -142,6 +147,7 @@ module CustomerSetting.IE8 {
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;
                 this.system = params.system || Defaults.system;
+                this.isForcingMode = params.isForcingMode || false;
 
                 if (this.isMultipleUpdates) {
                     this.query = new MultipleSettingQuery(
@@ -234,12 +240,20 @@ module CustomerSetting.IE8 {
     ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
 
     export class SettingTypesSharedValuesService {
+        public static $inject: string[] = ["parametersService"];
+
         public customerId: number
         public uplineLevel: Level;
         public customerLevel: Level;
         public productId: number;
         public productName: string;
         public normalMode: boolean;
+
+        private parametersService: ParametersService;
+
+        constructor(parametersService: ParametersService) {
+            this.parametersService = parametersService;
+        }
 
         public register(setting: Setting, uplineLevel: Level): void {
             this.uplineLevel = uplineLevel;
@@ -250,6 +264,10 @@ module CustomerSetting.IE8 {
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.normalMode = setting.isNormalMode;
+
+                if (this.parametersService.getForcingMode()) {
+                    this.normalMode = false;
+                }
             }
         }
     }

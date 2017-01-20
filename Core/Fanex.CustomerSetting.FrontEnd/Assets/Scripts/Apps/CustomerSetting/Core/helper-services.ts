@@ -81,10 +81,15 @@ module CustomerSetting {
             return this.query.uplineLevel;
         }
 
+        public get forcingMode(): boolean {
+            return this.isForcingMode;
+        }
+
         private query: SettingQuery | MultipleSettingQuery;
         private lang: string;
         private isMultipleUpdates: boolean;
         private system: number;
+        private isForcingMode: boolean;
 
         private $window: ng.IWindowService;
 
@@ -137,6 +142,7 @@ module CustomerSetting {
                 this.isMultipleUpdates = params.isMultiple || false;
                 this.lang = params.language || Defaults.language;
                 this.system = params.system || Defaults.system;
+                this.isForcingMode = params.isForcingMode || false;
 
                 if (this.isMultipleUpdates) {
                     this.query = new MultipleSettingQuery(
@@ -229,12 +235,20 @@ module CustomerSetting {
     ModuleRegister.service("updatingSettingTypePromiseChain", UpdatingSettingTypePromiseChain);
 
     export class SettingTypesSharedValuesService {
+        public static $inject: string[] = ["parametersService"];
+
         public customerId: number
         public uplineLevel: Level;
         public customerLevel: Level;
         public productId: number;
         public productName: string;
         public normalMode: boolean;
+
+        private parametersService: ParametersService;
+
+        constructor(parametersService: ParametersService) {
+            this.parametersService = parametersService;
+        }
 
         public register(setting: Setting, uplineLevel: Level): void {
             this.uplineLevel = uplineLevel;
@@ -245,6 +259,10 @@ module CustomerSetting {
                 this.productId = setting.productId;
                 this.productName = setting.productName;
                 this.normalMode = setting.isNormalMode;
+
+                if (this.parametersService.forcingMode) {
+                    this.normalMode = false;
+                }
             }
         }
     }
