@@ -3,6 +3,14 @@
 module CustomerSetting {
     "use strict";
 
+    export enum System {
+        nap = 1,
+        alpha = 2,
+        internalAlpha = 3,
+        externalNap = 4,
+        externalNapBetSetting = 5
+    }
+
     export enum SettingLevel {
         product = 1,
         sportType = 2,

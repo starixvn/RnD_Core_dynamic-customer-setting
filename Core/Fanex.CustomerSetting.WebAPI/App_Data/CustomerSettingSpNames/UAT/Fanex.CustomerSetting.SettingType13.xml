@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="GameDisableStatus">
+        <Setting Key="Acc_CustSetting_DisableNewProductStatusSelect" SpName="Acc_CustSetting_DisableNewProductStatusSelect_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600">
+            <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+            <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+        </Setting>
+        <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd_xtest" DbName="DBCUST.CUSTDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    </Function>
+</Functions>
