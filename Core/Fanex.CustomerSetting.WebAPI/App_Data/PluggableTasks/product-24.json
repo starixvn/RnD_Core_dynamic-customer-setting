@@ -1,0 +1,12 @@
+﻿[
+  {
+    "productId": 24,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.Product24.AddingPostUpdateProductStatusWarningTask, Fanex.CustomerSetting.Tasks.Product24"
+        ]
+      }
+    ]
+  }
+]
