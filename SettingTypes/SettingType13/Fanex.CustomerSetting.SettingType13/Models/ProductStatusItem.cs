@@ -65,5 +65,40 @@
                 IsDisabled ? 1 : 0,
                 (Downline != null && Downline.IsDisabled) ? 1 : 0);
         }
+
+        public override bool Equals(object obj)
+        {
+            var otherObj = obj as ProductStatusItem;
+
+            if (otherObj == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(otherObj, this))
+            {
+                return true;
+            }
+
+            if (SportTypeId == otherObj.SportTypeId
+                && BetTypeId == otherObj.BetTypeId
+                && IsDisabled == otherObj.IsDisabled)
+            {
+                return Equals(Upline, otherObj.Upline) && Equals(Downline, otherObj.Downline);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            var uplineHashCode = Upline != null ? Upline.GetHashCode() : 0;
+            var downlineHashCode = Downline != null ? Downline.GetHashCode() : 0;
+
+            return SportTypeId.GetHashCode()
+                ^ BetTypeId.GetHashCode()
+                ^ IsDisabled.GetHashCode()
+                ^ uplineHashCode ^ downlineHashCode;
+        }
     }
 }

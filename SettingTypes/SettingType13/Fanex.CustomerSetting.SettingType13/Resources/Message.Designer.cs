@@ -115,6 +115,24 @@ namespace Fanex.CustomerSetting.SettingType13.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to disable for downlines..
+        /// </summary>
+        internal static string Msg_60035 {
+            get {
+                return ResourceManager.GetString("Msg_60035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to perform this action..
+        /// </summary>
+        internal static string Msg_60036 {
+            get {
+                return ResourceManager.GetString("Msg_60036", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Status is updated successfully..
         /// </summary>
         internal static string UpdateProductStatusSuccessfully {

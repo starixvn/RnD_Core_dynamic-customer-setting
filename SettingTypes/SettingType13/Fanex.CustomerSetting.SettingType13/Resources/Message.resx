@@ -135,6 +135,12 @@
   <data name="Msg_60034" xml:space="preserve">
     <value>Unable to synchronize this product because the upline account setting is not synchronized.</value>
   </data>
+  <data name="Msg_60035" xml:space="preserve">
+    <value>You are not allowed to disable for downlines.</value>
+  </data>
+  <data name="Msg_60036" xml:space="preserve">
+    <value>You are not allowed to perform this action.</value>
+  </data>
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
     <value>Product Status is updated successfully.</value>
   </data>
