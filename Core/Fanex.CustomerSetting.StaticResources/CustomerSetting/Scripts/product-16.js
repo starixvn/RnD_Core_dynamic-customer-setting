@@ -30650,6 +30650,14 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    (function (System) {
+        System[System["nap"] = 1] = "nap";
+        System[System["alpha"] = 2] = "alpha";
+        System[System["internalAlpha"] = 3] = "internalAlpha";
+        System[System["externalNap"] = 4] = "externalNap";
+        System[System["externalNapBetSetting"] = 5] = "externalNapBetSetting";
+    })(CustomerSetting.System || (CustomerSetting.System = {}));
+    var System = CustomerSetting.System;
     (function (SettingLevel) {
         SettingLevel[SettingLevel["product"] = 1] = "product";
         SettingLevel[SettingLevel["sportType"] = 2] = "sportType";

@@ -30650,6 +30650,14 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    (function (System) {
+        System[System["nap"] = 1] = "nap";
+        System[System["alpha"] = 2] = "alpha";
+        System[System["internalAlpha"] = 3] = "internalAlpha";
+        System[System["externalNap"] = 4] = "externalNap";
+        System[System["externalNapBetSetting"] = 5] = "externalNapBetSetting";
+    })(CustomerSetting.System || (CustomerSetting.System = {}));
+    var System = CustomerSetting.System;
     (function (SettingLevel) {
         SettingLevel[SettingLevel["product"] = 1] = "product";
         SettingLevel[SettingLevel["sportType"] = 2] = "sportType";
@@ -32891,47 +32899,49 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType4Item = (function (_super) {
-        __extends(SettingType4Item, _super);
-        function SettingType4Item(settingItem, backup) {
+    var SettingType13Item = (function (_super) {
+        __extends(SettingType13Item, _super);
+        function SettingType13Item(settingItem, backup, customerLevel, systemId) {
             if (backup === void 0) { backup = false; }
+            if (customerLevel === void 0) { customerLevel = null; }
+            if (systemId === void 0) { systemId = 0; }
             _super.call(this, settingItem);
+            this.systemId = systemId;
+            this.customerLevel = customerLevel;
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
                 if (settingItem.upline) {
-                    this.upline = new SettingType4Item(settingItem.upline);
+                    this.upline = new SettingType13Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
+                }
+                else if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
+                    this.readonly = this.isChecked;
                 }
                 else {
                     this.readonly = false;
                 }
                 if (settingItem.downline) {
-                    this.downline = new SettingType4Item(settingItem.downline, true);
-                    this.downline.readonly = true;
+                    this.downline = new SettingType13Item(settingItem.downline, true, customerLevel, systemId);
+                    this.downline.readonly = !this.isChecked || this.downline.isChecked;
                 }
             }
             if (backup) {
-                this.oldSetting = new SettingType4Item(this);
+                this.oldSetting = new SettingType13Item(this);
             }
         }
-        Object.defineProperty(SettingType4Item.prototype, "isChecked", {
+        Object.defineProperty(SettingType13Item.prototype, "isChecked", {
             get: function () {
                 return !this.isDisabled;
             },
             set: function (isChecked) {
                 this.isDisabled = !isChecked;
                 if (this.downline) {
-                    if (isChecked && !this.oldSetting.isChecked) {
-                        this.downline.readonly = false;
+                    if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
+                        this.downline.isChecked = this.isChecked;
+                        this.downline.readonly = true;
                     }
                     else {
-                        if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
-                            this.downline.isChecked = this.isChecked;
-                        }
-                        else {
-                            this.downline.isChecked = false;
-                        }
-                        this.downline.readonly = true;
+                        this.downline.readonly = !isChecked;
                     }
                     this.resetFieldState("isDisabled");
                 }
@@ -32942,14 +32952,14 @@ var CustomerSetting;
             enumerable: true,
             configurable: true
         });
-        SettingType4Item.prototype.isChanged = function () {
+        SettingType13Item.prototype.isChanged = function () {
             var isChanged = _super.prototype.isChanged.call(this);
             var oldSetting = this.oldSetting;
             return isChanged
                 || this.isDisabled !== oldSetting.isDisabled
                 || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
         };
-        SettingType4Item.prototype.copySettingFrom = function (source) {
+        SettingType13Item.prototype.copySettingFrom = function (source) {
             var isSuccessful = true;
             if (source) {
                 var backupIsChecked = this.isChecked;
@@ -32988,7 +32998,7 @@ var CustomerSetting;
             }
             return isSuccessful;
         };
-        SettingType4Item.prototype.validate = function () {
+        SettingType13Item.prototype.validate = function () {
             if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new CustomerSetting.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
                 return false;
@@ -33006,24 +33016,27 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        SettingType4Item.prototype.toJson = function () {
+        SettingType13Item.prototype.toJson = function (isConstraint) {
+            if (isConstraint === void 0) { isConstraint = false; }
             var settingItem = {
                 sportTypeId: this.sportTypeId,
                 sportTypeName: this.sportTypeName,
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
-                typeName: this.typeName,
-                isDisabled: this.isDisabled
+                typeName: this.typeName
             };
+            if (isConstraint || this.systemId === CustomerSetting.System.nap || this.customerLevel === CustomerSetting.Level.member) {
+                settingItem.isDisabled = this.isDisabled;
+            }
             if (this.upline) {
-                settingItem.upline = this.upline.toJson();
+                settingItem.upline = this.upline.toJson(true);
             }
             if (this.downline) {
-                settingItem.downline = this.downline.toJson();
+                settingItem.downline = this.downline.toJson(true);
             }
             return settingItem;
         };
-        SettingType4Item.prototype.resetFieldState = function (fieldName) {
+        SettingType13Item.prototype.resetFieldState = function (fieldName) {
             if (this.validationState && !this.validationState.isSuccessful) {
                 if (this.validationState.fieldName === fieldName) {
                     this.resetValidationState();
@@ -33033,9 +33046,9 @@ var CustomerSetting;
                 this.resetFieldHighlightState(fieldName);
             }
         };
-        return SettingType4Item;
+        return SettingType13Item;
     }(CustomerSetting.DefaultSettingItem));
-    CustomerSetting.SettingType4Item = SettingType4Item;
+    CustomerSetting.SettingType13Item = SettingType13Item;
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -33046,35 +33059,35 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var ProductStatusResourceService = (function (_super) {
-        __extends(ProductStatusResourceService, _super);
-        function ProductStatusResourceService(productStatusResources, parametersService) {
-            _super.call(this, productStatusResources, parametersService);
+    var SettingType13ResourceService = (function (_super) {
+        __extends(SettingType13ResourceService, _super);
+        function SettingType13ResourceService(settingType13Resources, parametersService) {
+            _super.call(this, settingType13Resources, parametersService);
         }
-        ProductStatusResourceService.$inject = ["productStatusResources", "parametersService"];
-        return ProductStatusResourceService;
+        SettingType13ResourceService.$inject = ["settingType13Resources", "parametersService"];
+        return SettingType13ResourceService;
     }(CustomerSetting.ResourceService));
-    CustomerSetting.ProductStatusResourceService = ProductStatusResourceService;
-    CustomerSetting.ModuleRegister.service("productStatusResourceService", ProductStatusResourceService);
-    function ProductStatusLabelFilter(productStatusResourceService) {
+    CustomerSetting.SettingType13ResourceService = SettingType13ResourceService;
+    CustomerSetting.ModuleRegister.service("settingType13ResourceService", SettingType13ResourceService);
+    function SettingType13LabelFilter(settingType13ResourceService) {
         return function (name) {
-            return productStatusResourceService.getLabel(name);
+            return settingType13ResourceService.getLabel(name);
         };
     }
-    ProductStatusLabelFilter.$inject = ["productStatusResourceService"];
-    CustomerSetting.ModuleRegister.filter("productStatusLabel", ProductStatusLabelFilter);
-    function ProductStatusMessageFilter(productStatusResourceService) {
+    SettingType13LabelFilter.$inject = ["settingType13ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType13Label", SettingType13LabelFilter);
+    function SettingType13MessageFilter(settingType13ResourceService) {
         return function (name) {
             var replacements = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 replacements[_i - 1] = arguments[_i];
             }
             replacements.unshift(name);
-            return productStatusResourceService.getFormattedMessage.apply(productStatusResourceService, replacements);
+            return settingType13ResourceService.getFormattedMessage.apply(settingType13ResourceService, replacements);
         };
     }
-    ProductStatusMessageFilter.$inject = ["productStatusResourceService"];
-    CustomerSetting.ModuleRegister.filter("productStatusMessage", ProductStatusMessageFilter);
+    SettingType13MessageFilter.$inject = ["settingType13ResourceService"];
+    CustomerSetting.ModuleRegister.filter("settingType13Message", SettingType13MessageFilter);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -33085,22 +33098,22 @@ var __extends = (this && this.__extends) || function (d, b) {
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
-    var SettingType4Directive = (function (_super) {
-        __extends(SettingType4Directive, _super);
-        function SettingType4Directive(productStatusResourceService) {
+    var SettingType13Directive = (function (_super) {
+        __extends(SettingType13Directive, _super);
+        function SettingType13Directive(settingType13ResourceService, parametersService) {
             var _this = this;
-            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType4Item(settingItem, backup); });
-            this.templateUrl = "settingtype4.htm";
+            _super.call(this, function (settingItem, backup, customerLevel) { return new CustomerSetting.SettingType13Item(settingItem, backup, customerLevel, parametersService.systemId); });
+            this.templateUrl = "settingtype13.htm";
             this.link = function (scope) {
-                scope.valueTemplateUrl = "settingtype4-value.htm";
-                scope.settingTypeName = _this.productStatusResourceService.getLabel("ProductStatus");
+                scope.valueTemplateUrl = "settingtype13-value.htm";
+                scope.settingTypeName = _this.settingType13ResourceService.getLabel("ProductStatus");
             };
-            this.productStatusResourceService = productStatusResourceService;
+            this.settingType13ResourceService = settingType13ResourceService;
         }
-        SettingType4Directive.$inject = ["productStatusResourceService"];
-        return SettingType4Directive;
+        SettingType13Directive.$inject = ["settingType13ResourceService", "parametersService"];
+        return SettingType13Directive;
     }(CustomerSetting.SettingTypeDirective));
-    CustomerSetting.ModuleRegister.directive("settingtype4", SettingType4Directive);
+    CustomerSetting.ModuleRegister.directive("settingtype13", SettingType13Directive);
 })(CustomerSetting || (CustomerSetting = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
@@ -34531,8 +34544,8 @@ $templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
-$templateCache.put("settingtype4-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"downline.isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'productStatusResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\"> {{\'EnableDownline\' | productStatusLabel}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | productStatusLabel}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | productStatusLabel}}</label></div>");
-$templateCache.put("settingtype4.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
+$templateCache.put("settingtype13-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'isDisabled\'}}\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> {{\'Enable\' | settingType13Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"downline.isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'downline.isDisabled\'}}\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\"> {{\'EnableDownline\' | settingType13Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType13Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType13Label}}</label></div>");
+$templateCache.put("settingtype13.htm","<div><default-setting-type-grouping></default-setting-type-grouping></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.master\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></copy-position-taking-on-member></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></copy-position-taking-on-member></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div></div>");
 $templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w25-percent\">{{::(\'SuperMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w25-percent\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{::(\'SuperMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'MasterMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMaxPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentMinPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.super\"><div class=\"block__lbl w28-percent\">{{::(\'SuperPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl w28-percent\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.master\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'MasterPT\' | positionTakingLabel)}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{::(\'IsAuto\' | positionTakingLabel)}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{::(\'AgentPT\' | positionTakingLabel)}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\">{{::(\'AgentPT\' | positionTakingLabel)}}</div>");
@@ -34791,68 +34804,65 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
 (function () {
     "use strict";
 
-    var productStatusResources = {};
+    var settingType13Resources = {};
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["en-us"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["en-us"] = {
         "Enable": "Enable",
         "EnableDownline": "Enable Downline",
         "ProductStatus": "Product Status"
     };
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["zh-cn"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["zh-cn"] = {
         "Enable": "启用",
         "EnableDownline": "启动下线",
         "ProductStatus": "产品状态"
     };
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["zh-tw"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["zh-tw"] = {
         "Enable": "啟用",
         "EnableDownline": "啟動下線",
         "ProductStatus": "產品狀態"
     };
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["ko-kr"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["ko-kr"] = {
         "Enable": "활성화",
         "EnableDownline": "다운라인 활성화하기",
         "ProductStatus": "Product Status"
     };
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["ja-jp"] = {
-        "Enable": "Enable"
-    };
-    
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["th-th"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["th-th"] = {
         "Enable": "เปิดใช้งาน",
         "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
         "ProductStatus": "สถานะผลิตภันฑ์"
     };
     
-    productStatusResources["label"] = productStatusResources["label"] || {};
-    productStatusResources["label"]["vi-vn"] = {
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["vi-vn"] = {
         "Enable": "Cho phép",
         "EnableDownline": "Cho phép thành viên cấp dưới",
         "ProductStatus": "Trạng thái trò chơi"
     };
     
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["en-us"] = {
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["en-us"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
         "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
         "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
         "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
+        "Msg_60035": "You are not allowed to disable for downlines.",
+        "Msg_60036": "You are not allowed to perform this action.",
         "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
     
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["zh-cn"] = {
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["zh-cn"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
         "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
         "DownlineStatusIsInvalid": "此产品没有提供给此用户",
@@ -34861,8 +34871,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "UpdateProductStatusSuccessfully": "产品状态更新成功"
     };
     
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["zh-tw"] = {
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["zh-tw"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
         "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
         "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
@@ -34871,16 +34881,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["ko-kr"] = {
-    };
-    
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["ja-jp"] = {
-    };
-    
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["th-th"] = {
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["th-th"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
         "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
         "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
@@ -34889,8 +34891,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
     };
     
-    productStatusResources["message"] = productStatusResources["message"] || {};
-    productStatusResources["message"]["vi-vn"] = {
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["vi-vn"] = {
         "DownlineCannotBeEnabledWhenUplineIsDisabled": "Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.",
         "DownlineStatusCannotBeChanged": "Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.",
         "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
@@ -34899,7 +34901,7 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
     };
 
-    angular.module("customerSetting").value("productStatusResources", productStatusResources);
+    angular.module("customerSetting").value("settingType13Resources", settingType13Resources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/
