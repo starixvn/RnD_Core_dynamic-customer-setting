@@ -10,7 +10,6 @@
         public const int AllBets = 21;
         public const int MacauGames = 22;
         public const int NumberGames2 = 23;
-        public const int FishingWorld = 24;
 
         public static void Run()
         {
@@ -19,7 +18,7 @@
             configurator
                 .UseQueryServiceType(typeof(QueryCasinoSettingService))
                 .UseUpdateServiceType(typeof(UpdateCasinoSettingService))
-                .ForProducts(AllBets, MacauGames, FishingWorld)
+                .ForProducts(AllBets, MacauGames)
                 .ForAllSystems()
                 .Apply();
 

@@ -28,6 +28,10 @@ module CustomerSetting {
                     this.downline.isChecked = this.isChecked;
                     this.downline.readonly = true;
                 } else {
+                    if (!this.isChecked) {
+                        this.downline.isChecked = false;
+                    }
+
                     this.downline.readonly = !isChecked;
                 }
 
@@ -49,11 +53,11 @@ module CustomerSetting {
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
 
-                if (settingItem.upline) {
+                if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
+                    this.readonly = this.isChecked;
+                } else if (settingItem.upline) {
                     this.upline = new SettingType13Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
-                } else if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
-                    this.readonly = this.isChecked;
                 } else {
                     this.readonly = false;
                 }
@@ -129,14 +133,6 @@ module CustomerSetting {
         public validate(): boolean {
             if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-
-                return false;
-            }
-
-            if (this.downline
-                && this.isDisabled === (<SettingType13Item>this.oldSetting).isDisabled
-                && this.downline.isDisabled !== (<SettingType13Item>this.oldSetting).downline.isDisabled) {
-                this.validationState = new ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
 
                 return false;
             }

@@ -6,10 +6,10 @@
     public class Result : IResult
     {
         public static readonly Result Success = new Result(ResultValue.Success);
-        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Resource.Message.AccessDeniedMsg);
-        public static readonly Result NoChange = new Result(ResultValue.NoChange, Resource.Message.NoChangeToUpdate);
-        public static readonly Result SystemError = new Result(ResultValue.Error, Resource.Message.SystemError);
-        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Resource.Message.DataIsNotValid);
+        public static readonly Result AccessDenied = new Result(ResultValue.AccessDenied, Resource.Message.AccessDeniedMsg, MessageType.Exception);
+        public static readonly Result NoChange = new Result(ResultValue.NoChange, Resource.Message.NoChangeToUpdate, MessageType.Exception);
+        public static readonly Result SystemError = new Result(ResultValue.Error, Resource.Message.SystemError, MessageType.Exception);
+        public static readonly Result DataError = new Result(ResultValue.DataIsNotValid, Resource.Message.DataIsNotValid, MessageType.Exception);
 
         public Result(int code)
             : this(code, string.Empty)

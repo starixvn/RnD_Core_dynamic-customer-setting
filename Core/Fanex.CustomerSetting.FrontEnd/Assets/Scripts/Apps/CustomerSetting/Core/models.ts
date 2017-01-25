@@ -541,7 +541,7 @@ module CustomerSetting {
                 this.settingResults.push(new SettingResult(
                     settingResult.code,
                     settingResult.message,
-                    settingResult.isFailed ? MessageType.error : MessageType.success,
+                    this.detechMsgType(settingResult),
                     settingResult.settingTypeId,
                     settingResult.settingTypeName,
                     settingResult.subMessages));
@@ -553,7 +553,7 @@ module CustomerSetting {
                 this.settingResults.push(new SettingResult(
                     settingResult.code,
                     settingResult.message,
-                    settingResult.isFailed ? MessageType.error : MessageType.success,
+                    this.detechMsgType(settingResult),
                     settingResult.settingTypeId,
                     settingResult.settingTypeName,
                     settingResult.subMessages));
@@ -590,6 +590,16 @@ module CustomerSetting {
             });
 
             this.settingResults = uniquedResults;
+        }
+
+        private detechMsgType(settingResult: any): MessageType {
+            if (settingResult.isSuccessful) {
+                return MessageType.success;
+            } else if (settingResult.msgType !== 0) {
+                return MessageType.error;
+            } else {
+                return MessageType.warning;
+            }
         }
     }
 

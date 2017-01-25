@@ -4,6 +4,7 @@
     using System.Linq;
     using Common.Helper;
     using Models;
+    using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
 
@@ -18,7 +19,7 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(result);
+            AddWarningsForSuccessfulProductStatusUpdates(settingContext, result);
         }
 
         public void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult result)
@@ -27,10 +28,10 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(result);
+            AddWarningsForSuccessfulProductStatusUpdates(settingContext, result);
         }
 
-        private void AddWarningsForSuccessfulProductStatusUpdates(IResult updateResult)
+        private void AddWarningsForSuccessfulProductStatusUpdates(ISettingContext settingContext, IResult updateResult)
         {
             var updateSettingResult = updateResult as UpdateSettingResult;
 
@@ -39,7 +40,7 @@
                 return;
             }
 
-            var successfulProductStatusUpdates = FilterSuccessfulProductStatusResults(updateSettingResult);
+            var successfulProductStatusUpdates = FilterSuccessfulProductStatusResults(settingContext, updateSettingResult);
 
             if (successfulProductStatusUpdates.Any())
             {
@@ -65,7 +66,9 @@
             }
         }
 
-        private IEnumerable<SettingResult> FilterSuccessfulProductStatusResults(UpdateSettingResult updateResult)
-            => updateResult.SubResults.Where(subResult => subResult.SettingTypeId == ProductStatusSettingType && subResult.IsSuccessful);
+        private List<SettingResult> FilterSuccessfulProductStatusResults(ISettingContext settingContext, UpdateSettingResult updateResult)
+            => updateResult.SubResults
+                .Where(subResult => subResult.SettingTypeId == ProductStatusSettingType && subResult.IsSuccessful && settingContext.System != (byte)SystemType.Nap)
+                .ToList();
     }
 }
