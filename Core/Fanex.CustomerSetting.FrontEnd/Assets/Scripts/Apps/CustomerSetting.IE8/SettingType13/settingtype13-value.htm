@@ -1,0 +1,42 @@
+﻿﻿<div class="setting-field-wrapper" data-ng-if="settingType | editableSettingType">
+    <label class="setting-field--checkfield">
+        <input type="checkbox"
+               class="setting-field--checkfield__check-ctrl"
+               data-field-highlighting
+               data-field-name="isDisabled"
+               data-highlight-state="item.highlightState"
+               data-tooltip-message="{{item.validationState | tooltipMessage:'settingType13ResourceService':'isDisabled'}}"
+               data-ng-change="item.toggleCheck();"
+               data-ng-model="item.isChecked"
+               data-ng-disabled="item.readonly" />
+        {{'Enable' | settingType13Label}}
+    </label>
+    <label class="setting-field--checkfield" data-ng-show="item.downline && (customerLevel > avaiCustomerLevels.member)">
+        <input type="checkbox"
+               class="setting-field--checkfield__check-ctrl"
+               data-field-highlighting
+               data-field-name="downline.isDisabled"
+               data-highlight-state="item.highlightState"
+               data-tooltip-message="{{item.validationState | tooltipMessage:'settingType13ResourceService':'downline.isDisabled'}}"
+               data-ng-change="item.toggleCheck(true);"
+               data-ng-model="item.downline.isChecked"
+               data-ng-disabled="item.downline.readonly" />
+        {{'EnableDownline' | settingType13Label}}
+    </label>
+</div>
+<div class="setting-field-wrapper" data-ng-if="!(settingType | editableSettingType)">
+    <label class="setting-field--checkfield">
+        <input type="checkbox"
+               class="setting-field--checkfield__check-ctrl"
+               disabled="disabled"
+               data-ng-model="item.isChecked" />
+        {{'Enable' | settingType13Label}}
+    </label>
+    <label class="setting-field--checkfield" data-ng-show="item.downline && (customerLevel > avaiCustomerLevels.member)">
+        <input type="checkbox"
+               class="setting-field--checkfield__check-ctrl"
+               disabled="disabled"
+               data-ng-model="item.downline.isChecked" />
+        {{'EnableDownline' | settingType13Label}}
+    </label>
+</div>

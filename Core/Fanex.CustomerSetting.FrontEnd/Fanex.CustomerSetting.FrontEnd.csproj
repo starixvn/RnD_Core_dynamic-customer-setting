@@ -220,6 +220,17 @@
       <LastGenOutput>settingtype12-resources.js</LastGenOutput>
     </Content>
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.js">
+      <DependentUpon>settingtype13-resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>settingtype13-resources.js</LastGenOutput>
+    </Content>
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-value.htm" />
+    <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.htm" />
     <Content Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -583,6 +594,9 @@
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-input.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12-resource.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType12\settingtype12.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\models.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13-resources.ts" />
+    <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType13\settingtype13.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\adjust-member-pt-modal.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\models.ts" />
     <TypeScriptCompile Include="Assets\Scripts\Apps\CustomerSetting.IE8\SettingType1\position-taking-resources.ts" />
