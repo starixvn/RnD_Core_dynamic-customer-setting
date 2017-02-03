@@ -30,13 +30,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddingPostUpdateProductStatusWarningTaskTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
+      <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
+      <Name>Fanex.CustomerSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SettingTypes\SettingType13\Fanex.CustomerSetting.SettingType13\Fanex.CustomerSetting.SettingType13.csproj">
+      <Project>{A43DE0A6-EE77-4E8A-91DC-3E8E6089C1F1}</Project>
+      <Name>Fanex.CustomerSetting.SettingType13</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.CustomerSetting.Tasks.Product24\Fanex.CustomerSetting.Tasks.Product24.csproj">
+      <Project>{35419446-cf67-4423-854d-3da96572b53f}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.Product24</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,11 +7,13 @@
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
+    using SettingType13.Models;
 
     public class AddingPostUpdateProductStatusWarningTask : IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
     {
+        public const int SuccessfulProductStatusUpdateWarningCode = -9101;
+
         private const short ProductStatusSettingType = 13;
-        private const int SuccessfulProductStatusUpdateWarningCode = -9101;
 
         public void Invoke(ISettingContext settingContext, MultipleUpdateCustomerSettingCommand command, IResult result)
         {
@@ -19,7 +21,7 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(settingContext, result);
+            AddWarningsForSuccessfulProductStatusUpdates(settingContext, command, result);
         }
 
         public void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult result)
@@ -28,14 +30,14 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(settingContext, result);
+            AddWarningsForSuccessfulProductStatusUpdates(settingContext, command, result);
         }
 
-        private void AddWarningsForSuccessfulProductStatusUpdates(ISettingContext settingContext, IResult updateResult)
+        private void AddWarningsForSuccessfulProductStatusUpdates(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult updateResult)
         {
             var updateSettingResult = updateResult as UpdateSettingResult;
 
-            if (updateSettingResult == null)
+            if (updateSettingResult == null || !DidUserEnableDownlineProductStatus(command))
             {
                 return;
             }
@@ -64,6 +66,26 @@
                     }
                 }
             }
+        }
+
+        private bool DidUserEnableDownlineProductStatus(UpdateCustomerSettingCommand command)
+        {
+            SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
+
+            if (productStatusSettingType?.SettingItems.Any() == true)
+            {
+                foreach (ISettingItem settingItem in productStatusSettingType.SettingItems)
+                {
+                    var productStatusItem = settingItem as ProductStatusItem;
+
+                    if (productStatusItem?.Downline?.IsDisabled == false)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private List<SettingResult> FilterSuccessfulProductStatusResults(ISettingContext settingContext, UpdateSettingResult updateResult)
