@@ -34865,7 +34865,7 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
         "Msg_60035": "You are not allowed to disable for downlines.",
-        "Msg_60036": "You are not allowed to perform this action.",
+        "Msg_90012": "You are not allowed to perform this action.",
         "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
     
