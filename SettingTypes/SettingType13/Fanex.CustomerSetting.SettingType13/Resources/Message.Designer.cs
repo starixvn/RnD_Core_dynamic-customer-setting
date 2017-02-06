@@ -126,9 +126,9 @@ namespace Fanex.CustomerSetting.SettingType13.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You are not allowed to perform this action..
         /// </summary>
-        internal static string Msg_60036 {
+        internal static string Msg_90012 {
             get {
-                return ResourceManager.GetString("Msg_60036", resourceCulture);
+                return ResourceManager.GetString("Msg_90012", resourceCulture);
             }
         }
         

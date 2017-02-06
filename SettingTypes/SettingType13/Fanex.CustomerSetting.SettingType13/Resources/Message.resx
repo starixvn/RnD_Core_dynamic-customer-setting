@@ -138,7 +138,7 @@
   <data name="Msg_60035" xml:space="preserve">
     <value>You are not allowed to disable for downlines.</value>
   </data>
-  <data name="Msg_60036" xml:space="preserve">
+  <data name="Msg_90012" xml:space="preserve">
     <value>You are not allowed to perform this action.</value>
   </data>
   <data name="UpdateProductStatusSuccessfully" xml:space="preserve">
