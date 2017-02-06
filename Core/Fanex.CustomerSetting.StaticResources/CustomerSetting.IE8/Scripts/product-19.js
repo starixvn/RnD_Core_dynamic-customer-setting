@@ -34118,6 +34118,14 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        (function (System) {
+            System[System["nap"] = 1] = "nap";
+            System[System["alpha"] = 2] = "alpha";
+            System[System["internalAlpha"] = 3] = "internalAlpha";
+            System[System["externalNap"] = 4] = "externalNap";
+            System[System["externalNapBetSetting"] = 5] = "externalNapBetSetting";
+        })(IE8.System || (IE8.System = {}));
+        var System = IE8.System;
         (function (SettingLevel) {
             SettingLevel[SettingLevel["product"] = 1] = "product";
             SettingLevel[SettingLevel["sportType"] = 2] = "sportType";
@@ -34645,7 +34653,7 @@ var CustomerSetting;
                     this.customerId = settingResult.customerId;
                     this.customerName = settingResult.customerName;
                     this.settingResults = new Array();
-                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? IE8.MessageType.error : IE8.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
                 }
             }
             CustomerSettingResult.prototype.isSuccessful = function () {
@@ -34656,7 +34664,7 @@ var CustomerSetting;
             };
             CustomerSettingResult.prototype.pushSettingResult = function (settingResult) {
                 if (settingResult) {
-                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? IE8.MessageType.error : IE8.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
                 }
             };
             CustomerSettingResult.prototype.removeSuccessResults = function () {
@@ -34685,6 +34693,17 @@ var CustomerSetting;
                     }
                 });
                 this.settingResults = uniquedResults;
+            };
+            CustomerSettingResult.prototype.detechMsgType = function (settingResult) {
+                if (settingResult.isSuccessful) {
+                    return IE8.MessageType.success;
+                }
+                else if (settingResult.msgType !== 0) {
+                    return IE8.MessageType.error;
+                }
+                else {
+                    return IE8.MessageType.warning;
+                }
             };
             return CustomerSettingResult;
         }());
@@ -35473,6 +35492,26 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        }());
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var SettingTypeDirective = (function () {
             function SettingTypeDirective(settingItemType) {
                 var _this = this;
@@ -35629,26 +35668,6 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        }());
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -35861,121 +35880,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var DetectMaxHeightDirective = (function () {
-            function DetectMaxHeightDirective($window, $timeout) {
-                var _this = this;
-                this.restrict = "A";
-                this.link = function (scope, element) {
-                    var container = angular.element(element.parent());
-                    var debounceResize = _.debounce(function () {
-                        if (!element.hasClass("ng-hide")) {
-                            _this.calculateHeight(element, container);
-                        }
-                    }, 100);
-                    _this.calculateHeight(element, container);
-                    container.css({ "height": "auto" });
-                    angular.element(_this.$window).on("resize", debounceResize);
-                };
-                this.$window = $window;
-                this.$timeout = $timeout;
-            }
-            DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-                this.$timeout(function () {
-                    var outerHeight = angular.element(window).innerHeight();
-                    if (outerHeight > 0) {
-                        var maxHeigth = outerHeight * 0.6;
-                        var marginTop = outerHeight * 0.2 - 35;
-                        element.css({
-                            "max-height": maxHeigth + "px"
-                        });
-                        container.css({ "margin-top": marginTop + "px" });
-                    }
-                });
-            };
-            DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-            return DetectMaxHeightDirective;
-        }());
-        IE8.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var DraggableDirective = (function () {
-            function DraggableDirective($document) {
-                var _this = this;
-                this.restrict = "A";
-                this.scope = {
-                    draggableBanner: "=draggable"
-                };
-                this.link = function (scope, element) {
-                    var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                    var container = angular.element(element.parent())[0];
-                    var width;
-                    var height;
-                    var startX;
-                    var startY;
-                    var currentX;
-                    var currentY;
-                    draggableBanner.css({
-                        cursor: "move"
-                    });
-                    draggableBanner.on("mousedown", function (event) {
-                        startX = event.clientX - element[0].offsetLeft;
-                        startY = event.clientY - element[0].offsetTop;
-                        width = element[0].offsetWidth;
-                        height = element[0].offsetHeight;
-                        _this.$document.on("mousemove", mouseMove);
-                        _this.$document.on("mouseup", mouseUp);
-                    });
-                    var mouseMove = function (event) {
-                        currentX = event.clientX - startX;
-                        currentY = event.clientY - startY;
-                        updatePosition();
-                    };
-                    var mouseUp = function (event) {
-                        _this.$document.off("mousemove", mouseMove);
-                        _this.$document.off("mouseup", mouseUp);
-                    };
-                    function updatePosition() {
-                        if (container) {
-                            var containerClientRect = container.getBoundingClientRect();
-                            if (currentX < containerClientRect.left) {
-                                currentX = containerClientRect.left;
-                            }
-                            else if (currentX > containerClientRect.right - width) {
-                                currentX = containerClientRect.right - width;
-                            }
-                            if (currentY < containerClientRect.top) {
-                                currentY = containerClientRect.top;
-                            }
-                            else if (currentY > containerClientRect.bottom - height) {
-                                currentY = containerClientRect.bottom - height;
-                            }
-                        }
-                        element.css({
-                            "margin-top": currentY + "px",
-                            "margin-left": currentX + "px"
-                        });
-                    }
-                };
-                this.$document = $document;
-            }
-            DraggableDirective.$inject = ["$document"];
-            return DraggableDirective;
-        }());
-        IE8.ModuleRegister.directive("draggable", DraggableDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var FieldHighlightingDirective = (function () {
             function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
                 var _this = this;
@@ -36139,6 +36043,121 @@ var CustomerSetting;
         }
         TooltipMessage.$inject = ["$injector", "$filter"];
         IE8.ModuleRegister.filter("tooltipMessage", TooltipMessage);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var DetectMaxHeightDirective = (function () {
+            function DetectMaxHeightDirective($window, $timeout) {
+                var _this = this;
+                this.restrict = "A";
+                this.link = function (scope, element) {
+                    var container = angular.element(element.parent());
+                    var debounceResize = _.debounce(function () {
+                        if (!element.hasClass("ng-hide")) {
+                            _this.calculateHeight(element, container);
+                        }
+                    }, 100);
+                    _this.calculateHeight(element, container);
+                    container.css({ "height": "auto" });
+                    angular.element(_this.$window).on("resize", debounceResize);
+                };
+                this.$window = $window;
+                this.$timeout = $timeout;
+            }
+            DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+                this.$timeout(function () {
+                    var outerHeight = angular.element(window).innerHeight();
+                    if (outerHeight > 0) {
+                        var maxHeigth = outerHeight * 0.6;
+                        var marginTop = outerHeight * 0.2 - 35;
+                        element.css({
+                            "max-height": maxHeigth + "px"
+                        });
+                        container.css({ "margin-top": marginTop + "px" });
+                    }
+                });
+            };
+            DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+            return DetectMaxHeightDirective;
+        }());
+        IE8.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var DraggableDirective = (function () {
+            function DraggableDirective($document) {
+                var _this = this;
+                this.restrict = "A";
+                this.scope = {
+                    draggableBanner: "=draggable"
+                };
+                this.link = function (scope, element) {
+                    var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                    var container = angular.element(element.parent())[0];
+                    var width;
+                    var height;
+                    var startX;
+                    var startY;
+                    var currentX;
+                    var currentY;
+                    draggableBanner.css({
+                        cursor: "move"
+                    });
+                    draggableBanner.on("mousedown", function (event) {
+                        startX = event.clientX - element[0].offsetLeft;
+                        startY = event.clientY - element[0].offsetTop;
+                        width = element[0].offsetWidth;
+                        height = element[0].offsetHeight;
+                        _this.$document.on("mousemove", mouseMove);
+                        _this.$document.on("mouseup", mouseUp);
+                    });
+                    var mouseMove = function (event) {
+                        currentX = event.clientX - startX;
+                        currentY = event.clientY - startY;
+                        updatePosition();
+                    };
+                    var mouseUp = function (event) {
+                        _this.$document.off("mousemove", mouseMove);
+                        _this.$document.off("mouseup", mouseUp);
+                    };
+                    function updatePosition() {
+                        if (container) {
+                            var containerClientRect = container.getBoundingClientRect();
+                            if (currentX < containerClientRect.left) {
+                                currentX = containerClientRect.left;
+                            }
+                            else if (currentX > containerClientRect.right - width) {
+                                currentX = containerClientRect.right - width;
+                            }
+                            if (currentY < containerClientRect.top) {
+                                currentY = containerClientRect.top;
+                            }
+                            else if (currentY > containerClientRect.bottom - height) {
+                                currentY = containerClientRect.bottom - height;
+                            }
+                        }
+                        element.css({
+                            "margin-top": currentY + "px",
+                            "margin-left": currentX + "px"
+                        });
+                    }
+                };
+                this.$document = $document;
+            }
+            DraggableDirective.$inject = ["$document"];
+            return DraggableDirective;
+        }());
+        IE8.ModuleRegister.directive("draggable", DraggableDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -38082,8 +38101,8 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");

@@ -31240,7 +31240,7 @@ var CustomerSetting;
                 this.customerId = settingResult.customerId;
                 this.customerName = settingResult.customerName;
                 this.settingResults = new Array();
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         }
         Object.defineProperty(CustomerSettingResult.prototype, "isSuccessful", {
@@ -31255,7 +31255,7 @@ var CustomerSetting;
         });
         CustomerSettingResult.prototype.pushSettingResult = function (settingResult) {
             if (settingResult) {
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         };
         CustomerSettingResult.prototype.removeSuccessResults = function () {
@@ -31284,6 +31284,17 @@ var CustomerSetting;
                 }
             });
             this.settingResults = uniquedResults;
+        };
+        CustomerSettingResult.prototype.detechMsgType = function (settingResult) {
+            if (settingResult.isSuccessful) {
+                return CustomerSetting.MessageType.success;
+            }
+            else if (settingResult.msgType !== 0) {
+                return CustomerSetting.MessageType.error;
+            }
+            else {
+                return CustomerSetting.MessageType.warning;
+            }
         };
         return CustomerSettingResult;
     }());

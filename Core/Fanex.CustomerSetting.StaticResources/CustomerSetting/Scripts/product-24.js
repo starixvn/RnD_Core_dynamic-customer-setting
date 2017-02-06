@@ -31240,7 +31240,7 @@ var CustomerSetting;
                 this.customerId = settingResult.customerId;
                 this.customerName = settingResult.customerName;
                 this.settingResults = new Array();
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         }
         Object.defineProperty(CustomerSettingResult.prototype, "isSuccessful", {
@@ -31255,7 +31255,7 @@ var CustomerSetting;
         });
         CustomerSettingResult.prototype.pushSettingResult = function (settingResult) {
             if (settingResult) {
-                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? CustomerSetting.MessageType.error : CustomerSetting.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
             }
         };
         CustomerSettingResult.prototype.removeSuccessResults = function () {
@@ -31284,6 +31284,17 @@ var CustomerSetting;
                 }
             });
             this.settingResults = uniquedResults;
+        };
+        CustomerSettingResult.prototype.detechMsgType = function (settingResult) {
+            if (settingResult.isSuccessful) {
+                return CustomerSetting.MessageType.success;
+            }
+            else if (settingResult.msgType !== 0) {
+                return CustomerSetting.MessageType.error;
+            }
+            else {
+                return CustomerSetting.MessageType.warning;
+            }
         };
         return CustomerSettingResult;
     }());
@@ -32910,12 +32921,12 @@ var CustomerSetting;
             this.customerLevel = customerLevel;
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
-                if (settingItem.upline) {
+                if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
+                    this.readonly = this.isChecked;
+                }
+                else if (settingItem.upline) {
                     this.upline = new SettingType13Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
-                }
-                else if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
-                    this.readonly = this.isChecked;
                 }
                 else {
                     this.readonly = false;
@@ -32941,6 +32952,9 @@ var CustomerSetting;
                         this.downline.readonly = true;
                     }
                     else {
+                        if (!this.isChecked) {
+                            this.downline.isChecked = false;
+                        }
                         this.downline.readonly = !isChecked;
                     }
                     this.resetFieldState("isDisabled");
@@ -33001,12 +33015,6 @@ var CustomerSetting;
         SettingType13Item.prototype.validate = function () {
             if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new CustomerSetting.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-                return false;
-            }
-            if (this.downline
-                && this.isDisabled === this.oldSetting.isDisabled
-                && this.downline.isDisabled !== this.oldSetting.downline.isDisabled) {
-                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
                 return false;
             }
             if (this.upline && this.upline.isDisabled && !this.isDisabled) {

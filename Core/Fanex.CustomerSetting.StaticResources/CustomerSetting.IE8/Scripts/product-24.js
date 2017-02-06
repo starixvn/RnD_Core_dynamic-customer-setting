@@ -34118,6 +34118,14 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        (function (System) {
+            System[System["nap"] = 1] = "nap";
+            System[System["alpha"] = 2] = "alpha";
+            System[System["internalAlpha"] = 3] = "internalAlpha";
+            System[System["externalNap"] = 4] = "externalNap";
+            System[System["externalNapBetSetting"] = 5] = "externalNapBetSetting";
+        })(IE8.System || (IE8.System = {}));
+        var System = IE8.System;
         (function (SettingLevel) {
             SettingLevel[SettingLevel["product"] = 1] = "product";
             SettingLevel[SettingLevel["sportType"] = 2] = "sportType";
@@ -34645,7 +34653,7 @@ var CustomerSetting;
                     this.customerId = settingResult.customerId;
                     this.customerName = settingResult.customerName;
                     this.settingResults = new Array();
-                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? IE8.MessageType.error : IE8.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
                 }
             }
             CustomerSettingResult.prototype.isSuccessful = function () {
@@ -34656,7 +34664,7 @@ var CustomerSetting;
             };
             CustomerSettingResult.prototype.pushSettingResult = function (settingResult) {
                 if (settingResult) {
-                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, settingResult.isFailed ? IE8.MessageType.error : IE8.MessageType.success, settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
+                    this.settingResults.push(new SettingResult(settingResult.code, settingResult.message, this.detechMsgType(settingResult), settingResult.settingTypeId, settingResult.settingTypeName, settingResult.subMessages));
                 }
             };
             CustomerSettingResult.prototype.removeSuccessResults = function () {
@@ -34685,6 +34693,17 @@ var CustomerSetting;
                     }
                 });
                 this.settingResults = uniquedResults;
+            };
+            CustomerSettingResult.prototype.detechMsgType = function (settingResult) {
+                if (settingResult.isSuccessful) {
+                    return IE8.MessageType.success;
+                }
+                else if (settingResult.msgType !== 0) {
+                    return IE8.MessageType.error;
+                }
+                else {
+                    return IE8.MessageType.warning;
+                }
             };
             return CustomerSettingResult;
         }());
@@ -35473,6 +35492,26 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var CustomerInfoDirective = (function () {
+            function CustomerInfoDirective() {
+                this.replace = true;
+                this.scope = {
+                    info: "=",
+                    names: "="
+                };
+                this.templateUrl = "CustomerInfo/customer-info.htm";
+            }
+            return CustomerInfoDirective;
+        }());
+        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var SettingTypeDirective = (function () {
             function SettingTypeDirective(settingItemType) {
                 var _this = this;
@@ -35629,26 +35668,6 @@ var CustomerSetting;
             };
         }
         IE8.ModuleRegister.filter("showingName", ShowingName);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var CustomerInfoDirective = (function () {
-            function CustomerInfoDirective() {
-                this.replace = true;
-                this.scope = {
-                    info: "=",
-                    names: "="
-                };
-                this.templateUrl = "CustomerInfo/customer-info.htm";
-            }
-            return CustomerInfoDirective;
-        }());
-        IE8.ModuleRegister.directive("customerInfo", CustomerInfoDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -35861,121 +35880,6 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
-        var DetectMaxHeightDirective = (function () {
-            function DetectMaxHeightDirective($window, $timeout) {
-                var _this = this;
-                this.restrict = "A";
-                this.link = function (scope, element) {
-                    var container = angular.element(element.parent());
-                    var debounceResize = _.debounce(function () {
-                        if (!element.hasClass("ng-hide")) {
-                            _this.calculateHeight(element, container);
-                        }
-                    }, 100);
-                    _this.calculateHeight(element, container);
-                    container.css({ "height": "auto" });
-                    angular.element(_this.$window).on("resize", debounceResize);
-                };
-                this.$window = $window;
-                this.$timeout = $timeout;
-            }
-            DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
-                this.$timeout(function () {
-                    var outerHeight = angular.element(window).innerHeight();
-                    if (outerHeight > 0) {
-                        var maxHeigth = outerHeight * 0.6;
-                        var marginTop = outerHeight * 0.2 - 35;
-                        element.css({
-                            "max-height": maxHeigth + "px"
-                        });
-                        container.css({ "margin-top": marginTop + "px" });
-                    }
-                });
-            };
-            DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
-            return DetectMaxHeightDirective;
-        }());
-        IE8.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var DraggableDirective = (function () {
-            function DraggableDirective($document) {
-                var _this = this;
-                this.restrict = "A";
-                this.scope = {
-                    draggableBanner: "=draggable"
-                };
-                this.link = function (scope, element) {
-                    var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
-                    var container = angular.element(element.parent())[0];
-                    var width;
-                    var height;
-                    var startX;
-                    var startY;
-                    var currentX;
-                    var currentY;
-                    draggableBanner.css({
-                        cursor: "move"
-                    });
-                    draggableBanner.on("mousedown", function (event) {
-                        startX = event.clientX - element[0].offsetLeft;
-                        startY = event.clientY - element[0].offsetTop;
-                        width = element[0].offsetWidth;
-                        height = element[0].offsetHeight;
-                        _this.$document.on("mousemove", mouseMove);
-                        _this.$document.on("mouseup", mouseUp);
-                    });
-                    var mouseMove = function (event) {
-                        currentX = event.clientX - startX;
-                        currentY = event.clientY - startY;
-                        updatePosition();
-                    };
-                    var mouseUp = function (event) {
-                        _this.$document.off("mousemove", mouseMove);
-                        _this.$document.off("mouseup", mouseUp);
-                    };
-                    function updatePosition() {
-                        if (container) {
-                            var containerClientRect = container.getBoundingClientRect();
-                            if (currentX < containerClientRect.left) {
-                                currentX = containerClientRect.left;
-                            }
-                            else if (currentX > containerClientRect.right - width) {
-                                currentX = containerClientRect.right - width;
-                            }
-                            if (currentY < containerClientRect.top) {
-                                currentY = containerClientRect.top;
-                            }
-                            else if (currentY > containerClientRect.bottom - height) {
-                                currentY = containerClientRect.bottom - height;
-                            }
-                        }
-                        element.css({
-                            "margin-top": currentY + "px",
-                            "margin-left": currentX + "px"
-                        });
-                    }
-                };
-                this.$document = $document;
-            }
-            DraggableDirective.$inject = ["$document"];
-            return DraggableDirective;
-        }());
-        IE8.ModuleRegister.directive("draggable", DraggableDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
         var FieldHighlightingDirective = (function () {
             function FieldHighlightingDirective($window, $compile, $timeout, $templateCache, $rootScope) {
                 var _this = this;
@@ -36147,6 +36051,121 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var DetectMaxHeightDirective = (function () {
+            function DetectMaxHeightDirective($window, $timeout) {
+                var _this = this;
+                this.restrict = "A";
+                this.link = function (scope, element) {
+                    var container = angular.element(element.parent());
+                    var debounceResize = _.debounce(function () {
+                        if (!element.hasClass("ng-hide")) {
+                            _this.calculateHeight(element, container);
+                        }
+                    }, 100);
+                    _this.calculateHeight(element, container);
+                    container.css({ "height": "auto" });
+                    angular.element(_this.$window).on("resize", debounceResize);
+                };
+                this.$window = $window;
+                this.$timeout = $timeout;
+            }
+            DetectMaxHeightDirective.prototype.calculateHeight = function (element, container) {
+                this.$timeout(function () {
+                    var outerHeight = angular.element(window).innerHeight();
+                    if (outerHeight > 0) {
+                        var maxHeigth = outerHeight * 0.6;
+                        var marginTop = outerHeight * 0.2 - 35;
+                        element.css({
+                            "max-height": maxHeigth + "px"
+                        });
+                        container.css({ "margin-top": marginTop + "px" });
+                    }
+                });
+            };
+            DetectMaxHeightDirective.$inject = ["$window", "$timeout"];
+            return DetectMaxHeightDirective;
+        }());
+        IE8.ModuleRegister.directive("detectMaxHeight", DetectMaxHeightDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var DraggableDirective = (function () {
+            function DraggableDirective($document) {
+                var _this = this;
+                this.restrict = "A";
+                this.scope = {
+                    draggableBanner: "=draggable"
+                };
+                this.link = function (scope, element) {
+                    var draggableBanner = angular.element(element[0].querySelector(scope.draggableBanner));
+                    var container = angular.element(element.parent())[0];
+                    var width;
+                    var height;
+                    var startX;
+                    var startY;
+                    var currentX;
+                    var currentY;
+                    draggableBanner.css({
+                        cursor: "move"
+                    });
+                    draggableBanner.on("mousedown", function (event) {
+                        startX = event.clientX - element[0].offsetLeft;
+                        startY = event.clientY - element[0].offsetTop;
+                        width = element[0].offsetWidth;
+                        height = element[0].offsetHeight;
+                        _this.$document.on("mousemove", mouseMove);
+                        _this.$document.on("mouseup", mouseUp);
+                    });
+                    var mouseMove = function (event) {
+                        currentX = event.clientX - startX;
+                        currentY = event.clientY - startY;
+                        updatePosition();
+                    };
+                    var mouseUp = function (event) {
+                        _this.$document.off("mousemove", mouseMove);
+                        _this.$document.off("mouseup", mouseUp);
+                    };
+                    function updatePosition() {
+                        if (container) {
+                            var containerClientRect = container.getBoundingClientRect();
+                            if (currentX < containerClientRect.left) {
+                                currentX = containerClientRect.left;
+                            }
+                            else if (currentX > containerClientRect.right - width) {
+                                currentX = containerClientRect.right - width;
+                            }
+                            if (currentY < containerClientRect.top) {
+                                currentY = containerClientRect.top;
+                            }
+                            else if (currentY > containerClientRect.bottom - height) {
+                                currentY = containerClientRect.bottom - height;
+                            }
+                        }
+                        element.css({
+                            "margin-top": currentY + "px",
+                            "margin-left": currentX + "px"
+                        });
+                    }
+                };
+                this.$document = $document;
+            }
+            DraggableDirective.$inject = ["$document"];
+            return DraggableDirective;
+        }());
+        IE8.ModuleRegister.directive("draggable", DraggableDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var ToggleSettingBlockDirective = (function () {
             function ToggleSettingBlockDirective($rootScope, $timeout) {
                 var _this = this;
@@ -36227,6 +36246,240 @@ var CustomerSetting;
         }());
         IE8.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
         IE8.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType13Item = (function (_super) {
+            __extends(SettingType13Item, _super);
+            function SettingType13Item(settingItem, backup, customerLevel, systemId) {
+                if (backup === void 0) { backup = false; }
+                if (customerLevel === void 0) { customerLevel = null; }
+                if (systemId === void 0) { systemId = 0; }
+                _super.call(this, settingItem);
+                this.systemId = systemId;
+                this.customerLevel = customerLevel;
+                if (settingItem) {
+                    this.isDisabled = settingItem.isDisabled;
+                    this.isChecked = !this.isDisabled;
+                    if (this.systemId !== IE8.System.nap && this.customerLevel !== IE8.Level.member) {
+                        this.readonly = this.isChecked;
+                    }
+                    else if (settingItem.upline) {
+                        this.upline = new SettingType13Item(settingItem.upline);
+                        this.readonly = settingItem.upline.isDisabled;
+                    }
+                    else {
+                        this.readonly = false;
+                    }
+                    if (settingItem.downline) {
+                        this.downline = new SettingType13Item(settingItem.downline, true, customerLevel, systemId);
+                        this.downline.readonly = !this.isChecked || this.downline.isChecked;
+                    }
+                }
+                if (backup) {
+                    this.oldSetting = new SettingType13Item(this);
+                }
+            }
+            SettingType13Item.prototype.isChanged = function () {
+                var isChanged = _super.prototype.isChanged.call(this);
+                var oldSetting = this.oldSetting;
+                return isChanged
+                    || this.isDisabled !== oldSetting.isDisabled
+                    || (this.downline && this.downline.isDisabled !== oldSetting.downline.isDisabled);
+            };
+            SettingType13Item.prototype.copySettingFrom = function (source) {
+                var isSuccessful = true;
+                if (source) {
+                    var backupIsChecked = this.isChecked;
+                    var backupDownlineIsChecked;
+                    if (!this.readonly) {
+                        this.isChecked = source.isChecked;
+                    }
+                    if (this.downline && source.downline) {
+                        backupDownlineIsChecked = this.downline.isChecked;
+                        if (!this.downline.readonly) {
+                            this.downline.isChecked = source.downline.isChecked;
+                        }
+                    }
+                    this.toggleCheck();
+                    isSuccessful = this.validate();
+                    if (!isSuccessful) {
+                        this.isChecked = backupIsChecked;
+                        if (this.downline && source.downline) {
+                            this.downline.isChecked = backupDownlineIsChecked;
+                        }
+                        this.toggleCheck();
+                        this.highlightUnablyCopiedField();
+                    }
+                    else {
+                        if (this.isChecked !== backupIsChecked) {
+                            this.highlightState["isDisabled"] = IE8.NotificationType.success;
+                        }
+                        else if (this.highlightState["isDisabled"]) {
+                            this.highlightState["isDisabled"] = IE8.NotificationType.none;
+                        }
+                        if (this.downline.isChecked !== backupDownlineIsChecked) {
+                            this.highlightState["downline.isDisabled"] = IE8.NotificationType.success;
+                        }
+                        else if (this.highlightState["downline.isDisabled"]) {
+                            this.highlightState["downline.isDisabled"] = IE8.NotificationType.none;
+                        }
+                    }
+                }
+                return isSuccessful;
+            };
+            SettingType13Item.prototype.validate = function () {
+                if (this.isDisabled && this.downline && !this.downline.isDisabled) {
+                    this.validationState = new IE8.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
+                    return false;
+                }
+                if (this.upline && this.upline.isDisabled && !this.isDisabled) {
+                    this.validationState = new IE8.ValidationResult("DownlineCannotBeEnabledWhenUplineIsDisabled", "isDisabled");
+                    return false;
+                }
+                this.resetValidationState();
+                return true;
+            };
+            SettingType13Item.prototype.toJson = function (isConstraint) {
+                if (isConstraint === void 0) { isConstraint = false; }
+                var settingItem = {
+                    sportTypeId: this.sportTypeId,
+                    sportTypeName: this.sportTypeName,
+                    betTypeId: this.betTypeId,
+                    betTypeName: this.betTypeName,
+                    typeName: this.typeName
+                };
+                if (isConstraint || this.systemId === IE8.System.nap || this.customerLevel === IE8.Level.member) {
+                    settingItem.isDisabled = this.isDisabled;
+                }
+                if (this.upline) {
+                    settingItem.upline = this.upline.toJson(true);
+                }
+                if (this.downline) {
+                    settingItem.downline = this.downline.toJson(true);
+                }
+                return settingItem;
+            };
+            SettingType13Item.prototype.toggleCheck = function (isDownline) {
+                if (isDownline === void 0) { isDownline = false; }
+                if (isDownline) {
+                    this.downline.isDisabled = !this.downline.isChecked;
+                }
+                else {
+                    this.isDisabled = !this.isChecked;
+                }
+                if (this.downline) {
+                    if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
+                        this.downline.isChecked = this.isChecked;
+                        this.downline.readonly = true;
+                    }
+                    else {
+                        if (!this.isChecked) {
+                            this.downline.isChecked = false;
+                        }
+                        this.downline.readonly = !this.isChecked;
+                    }
+                    this.downline.isDisabled = !this.downline.isChecked;
+                    this.resetFieldState("isDisabled");
+                }
+                else {
+                    this.resetFieldState("downline.isDisabled");
+                }
+            };
+            SettingType13Item.prototype.resetFieldState = function (fieldName) {
+                if (this.validationState && !this.validationState.isSuccessful()) {
+                    if (this.validationState.fieldName === fieldName) {
+                        this.resetValidationState();
+                    }
+                }
+                else {
+                    this.resetFieldHighlightState(fieldName);
+                }
+            };
+            return SettingType13Item;
+        }(IE8.DefaultSettingItem));
+        IE8.SettingType13Item = SettingType13Item;
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType13ResourceService = (function (_super) {
+            __extends(SettingType13ResourceService, _super);
+            function SettingType13ResourceService(settingType13Resources, parametersService) {
+                _super.call(this, settingType13Resources, parametersService);
+            }
+            SettingType13ResourceService.$inject = ["settingType13Resources", "parametersService"];
+            return SettingType13ResourceService;
+        }(IE8.ResourceService));
+        IE8.SettingType13ResourceService = SettingType13ResourceService;
+        IE8.ModuleRegister.service("settingType13ResourceService", SettingType13ResourceService);
+        function SettingType13LabelFilter(settingType13ResourceService) {
+            return function (name) {
+                return settingType13ResourceService.getLabel(name);
+            };
+        }
+        SettingType13LabelFilter.$inject = ["settingType13ResourceService"];
+        IE8.ModuleRegister.filter("settingType13Label", SettingType13LabelFilter);
+        function SettingType13MessageFilter(settingType13ResourceService) {
+            return function (name) {
+                var replacements = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    replacements[_i - 1] = arguments[_i];
+                }
+                replacements.unshift(name);
+                return settingType13ResourceService.getFormattedMessage.apply(settingType13ResourceService, replacements);
+            };
+        }
+        SettingType13MessageFilter.$inject = ["settingType13ResourceService"];
+        IE8.ModuleRegister.filter("settingType13Message", SettingType13MessageFilter);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
+        var SettingType13Directive = (function (_super) {
+            __extends(SettingType13Directive, _super);
+            function SettingType13Directive(settingType13ResourceService, parametersService) {
+                var _this = this;
+                _super.call(this, function (settingItem, backup, customerLevel) { return new IE8.SettingType13Item(settingItem, backup, customerLevel, parametersService.getSystemId()); });
+                this.templateUrl = "settingtype13.htm";
+                this.link = function (scope) {
+                    scope.valueTemplateUrl = "settingtype13-value.htm";
+                    scope.settingTypeName = _this.settingType13ResourceService.getLabel("ProductStatus");
+                };
+                this.settingType13ResourceService = settingType13ResourceService;
+            }
+            SettingType13Directive.$inject = ["settingType13ResourceService", "parametersService"];
+            return SettingType13Directive;
+        }(IE8.SettingTypeDirective));
+        IE8.ModuleRegister.directive("settingtype13", SettingType13Directive);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
@@ -37667,11 +37920,13 @@ var CustomerSetting;
 })(CustomerSetting || (CustomerSetting = {}));
 
 angular.module("customerSetting").run(["$templateCache", function($templateCache) {$templateCache.put("BlockUI/block-ui.htm","<div class=\"block-ui-overlay\" data-ng-show=\"isLoading\"><div class=\"block-ui-loading\" data-ng-show=\"isLoading\"></div></div>");
-$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("CustomerInfo/customer-info.htm","<div class=\"customer-info\"><div class=\"block\" data-ng-if=\"names\"><div class=\"block__header block__header--no-border\">{{names}}</div></div><div class=\"block\" data-ng-if=\"!names\" data-ng-show=\"info\"><div class=\"block__header\">{{\"GeneralInformation\" | label}}</div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"UserName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Nickname\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.userName2 | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"FirstName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.firstName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"Phone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.phone | naValue}}</div></div><div class=\"block__item\"><div class=\"block__lbl block__lbl--white\">{{\"LastName\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.lastName | naValue}}</div></div><div class=\"block__item block__item--even\"><div class=\"block__lbl block__lbl--white\">{{\"MobilePhone\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.mobilePhone | naValue}}</div></div><div class=\"block__item block__item--near-last\"><div class=\"block__lbl block__lbl--white\">{{\"Fax\" | label}}</div><div class=\"block__value text-field-wrapper\">{{info.fax | naValue}}</div></div><div class=\"block__item block__item--last\"><div class=\"block__lbl block__lbl--white\"></div><div class=\"block__value text-field-wrapper\"></div></div></div></div>");
+$templateCache.put("DefaultSettingBlock/default-setting-block.htm","<div class=\"block\" data-ng-show=\"settingType\" data-ng-class=\"{ \'block--error\': !(settingType | validSettingType) }\"><div class=\"block__header\" data-setting-type=\"{{settingType.id}}\" data-ng-class=\"{ \'block__header--error\': !(settingType | validSettingType) }\">{{settingTypeName}}<div class=\"right-btn-area right-btn-area--seperate\" title=\"{{\'Update\' | label}}\" data-ng-if=\"(settingType | editableSettingType) && (settingType | validSettingType) && normalMode\" data-ng-click=\"update({ settingTypeId: settingType.id })\"><span class=\"icon icon--update\"></span></div><div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-setting-type-id=\"settingType.id\"></div></div><div class=\"block__item-group\" data-ng-if=\"settingType | validSettingType\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingType.settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0), \'block__sub-header--no-border-bottom\': togglableSharedStates && !togglableSharedStates.toggleStates[$index] }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-toggle-setting-block data-ng-if=\"togglableSharedStates && togglableSharedStates.toggleStates.length > 1\" data-shared-states=\"togglableSharedStates\" data-block-index=\"$index\" data-setting-data=\"group\" data-setting-type-id=\"settingType.id\"></div><div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && sportGroups.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__lbl-group\" data-ng-include=\"headerTemplateUrl\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$parent.$index]\" data-ng-class=\"{ \'block__item--last\': $last, \'block__item--near-last\': $index === group.length - 2 && $index % 2 === 0, \'block__item--before-extra-item\': $last && group.length % 2 === 1 && group.length > 1, \'block__item--odd\': $odd, \'block__item--full-width\': group.length === 1 }\"><div class=\"block__lbl\" data-product=\"{{productId}}\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\">{{item | showingName:settingType.settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}<div data-copy-setting data-ng-if=\"(settingType | editableSettingType) && group.length > 1 && $index === 0\" data-setting-type-id=\"settingType.id\" data-setting-items=\"group\"></div></div><div class=\"block__value\" data-ng-include=\"valueTemplateUrl\"></div></div><div class=\"block__item block__item--last block__item--extra\" data-ng-if=\"group.length % 2 === 1 && group.length > 1\" data-ng-hide=\"togglableSharedStates && !togglableSharedStates.toggleStates[$index]\"><div class=\"block__lbl\"></div><div class=\"block__value\"></div></div></div><div class=\"block__item block__item--error\" data-ng-if=\"!(settingType | validSettingType)\">{{sportGroups[0][0].errorMessage}}</div></div>");
 $templateCache.put("SettingResult/setting-result.htm","<div data-ng-show=\"result\"><div class=\"msg msg--{{result.msgTypeName}}\" data-ng-if=\"!result.subResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{result.message}}</div></div><div data-ng-if=\"result.subResults\" data-ng-repeat=\"subResult in result.subResults\"><div class=\"msg__customer-name\" data-ng-if=\"subResult.customerName\">{{subResult.customerName}}</div><div class=\"msg msg--{{subResult.msgTypeName}}\" data-ng-if=\"!subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{subResult.message}}</div></div><div class=\"msg msg--{{settingResult.msgTypeName}}\" data-ng-if=\"subResult.settingResults\" data-ng-repeat=\"settingResult in subResult.settingResults\"><div class=\"icon msg__icon\"></div><div class=\"msg__content\">{{settingResult.message}}</div><div class=\"msg__sub-message\" data-ng-if=\"settingResult.messages\" data-ng-repeat=\"message in settingResult.messages\">{{message}}</div></div></div></div>");
 $templateCache.put("DefaultSettingBlock/CopySetting/copy-setting.htm","<div class=\"right-btn-area\"><div title=\"{{\'CopyTooltip\' | label}}\" data-field-highlighting data-tooltip-type=\"{{copyingState.type}}\" data-tooltip-message=\"{{copyingState.messageKey | message}}\" data-tooltip-position-model=\"{{copyingState.positionModel}}\" data-tooltip-displaying-seconds=\"{{copyingState.displayingSeconds}}\" data-displaying-timeout-callback=\"hideTooltip();\" data-ng-click=\"copy()\"><span class=\"icon icon--copy\"></span></div></div>");
 $templateCache.put("DefaultSettingBlock/HighlightField/tooltip.htm","<div class=\"tooltip tooltip--{{highlightType}}\" data-ng-if=\"tooltipMessage\"><div class=\"tooltip__content\">{{tooltipMessage}}</div></div>");
+$templateCache.put("settingtype13-value.htm","<div class=\"setting-field-wrapper\" data-ng-if=\"settingType | editableSettingType\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'isDisabled\'}}\" data-ng-change=\"item.toggleCheck();\" data-ng-model=\"item.isChecked\" data-ng-disabled=\"item.readonly\"> {{\'Enable\' | settingType13Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" data-field-highlighting data-field-name=\"downline.isDisabled\" data-highlight-state=\"item.highlightState\" data-tooltip-message=\"{{item.validationState | tooltipMessage:\'settingType13ResourceService\':\'downline.isDisabled\'}}\" data-ng-change=\"item.toggleCheck(true);\" data-ng-model=\"item.downline.isChecked\" data-ng-disabled=\"item.downline.readonly\"> {{\'EnableDownline\' | settingType13Label}}</label></div><div class=\"setting-field-wrapper\" data-ng-if=\"!(settingType | editableSettingType)\"><label class=\"setting-field--checkfield\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.isChecked\"> {{\'Enable\' | settingType13Label}}</label> <label class=\"setting-field--checkfield\" data-ng-show=\"item.downline && (customerLevel > avaiCustomerLevels.member)\"><input type=\"checkbox\" class=\"setting-field--checkfield__check-ctrl\" disabled data-ng-model=\"item.downline.isChecked\"> {{\'EnableDownline\' | settingType13Label}}</label></div>");
+$templateCache.put("settingtype13.htm","<div><div data-default-setting-type-grouping></div></div>");
 $templateCache.put("adjust-member-pt-modal.htm","<div class=\"modal-overlay\" data-ng-show=\"isShown\"><div class=\"modal\" data-draggable=\"\'.modal__title\'\"><div class=\"modal__title\"><div data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\">{{\'DisableMasterAutoPt\' | positionTakingLabel}}</div><div data-ng-if=\"customerLevel === avaiCustomerLevels.agent\">{{\'DisableAgentAutoPt\' | positionTakingLabel}}</div></div><div class=\"modal__content\" data-detect-max-height><div class=\"question-block\" data-ng-bind-html=\"\'UpdateMemberPtQuestion\' | positionTakingLabel | unsafe\"></div><div class=\"block full-width\"><div class=\"block__item-group\" data-ng-repeat=\"group in sportGroups\"><div class=\"block__sub-header\" data-ng-if=\"settingLevel === avaiSettingLevels.sportTypeBetType\" data-ng-class=\"{ \'block__sub-header--border-top\': ($index > 0) }\" data-sport-type=\"{{group[0].sportTypeId}}\">{{group[0].sportTypeName}}<div data-copy-position-taking-on-member data-ng-if=\"sportGroups.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"sportGroups\"></div></div><div class=\"block__item\" data-ng-repeat=\"item in group\" data-ng-class=\"{ \'block__item--last\': $last }\"><div class=\"block__lbl block__lbl--half-width\" data-sport-type=\"{{item.sportTypeId}}\" data-bet-type=\"{{item.betTypeId}}\"><span class=\"showing-name\">{{item | showingName:settingLevel:productName }} {{item.isLive ? \'(\' + (\'Live\' | label) + \')\' : \'\'}}</span><div data-copy-position-taking-on-member data-ng-if=\"group.length > 1 && $index === 0\" data-customer-level=\"customerLevel\" data-setting-type-id=\"settingTypeId\" data-setting-items=\"group\"></div></div><div class=\"block__value block__value--half-width\"><div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\" data-ng-model=\"item.superPTOnMembers\" data-field-highlighting data-field-name=\"superPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select><select class=\"setting-field\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\" data-ng-model=\"item.masterPTOnMembers\" data-field-highlighting data-field-name=\"masterPTOnMembers\" data-highlight-state=\"item.highlightState\" data-ng-options=\"item.key as (item.value | ptFormat) for item in ranges[$index]\"></select></div></div></div></div></div></div><div class=\"modal__footer\"><button class=\"btn btn--small\" data-ng-click=\"ok()\">{{\'Yes\' | label}}</button> <button class=\"btn btn--small\" data-ng-click=\"cancel()\">{{\'No\' | label}}</button></div></div></div>");
 $templateCache.put("position-taking-select.htm","<div class=\"setting-field-wrapper\"><select class=\"setting-field\" data-field-name=\"{{fieldName}}\" data-highlight-state=\"settingItem.highlightState\" data-tooltip-message=\"{{settingItem.validationState | tooltipMessage:\'positionTakingResourceService\':fieldName}}\"></select></div>");
 $templateCache.put("settingtype1-header.htm","<div class=\"block__lbl\"></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w25-percent\">{{\'SuperMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl w25-percent\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w25-percent\">{{\'SuperMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'MasterMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.agent\"><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\" data-ng-class=\"{ \'w33-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentMaxPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\" data-ng-class=\"{ \'w33-percent--last\': (settingType | hideIsAutoColumn) }\">{{\'AgentMinPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.superAgent\"><div class=\"block__lbl w28-percent\">{{\'SuperPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl w28-percent\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w28-percent\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"w80-percent no-right-border\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.masterAgent\"><div class=\"block__lbl w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'MasterPT\' | positionTakingLabel}}</div><div class=\"block__lbl w16-percent\" data-ng-if=\"!(settingType | hideIsAutoColumn)\">{{\'IsAuto\' | positionTakingLabel}}</div><div class=\"block__lbl block__lbl--no-border w42-percent\" data-ng-class=\"{ \'w50-percent\': (settingType | hideIsAutoColumn) }\">{{\'AgentPT\' | positionTakingLabel}}</div></div><div class=\"block__lbl block__lbl--no-border w80-percent\" data-ng-if=\"customerLevel === avaiCustomerLevels.member && uplineLevel === avaiCustomerLevels.agent\"><div>{{\'AgentPT\' | positionTakingLabel}}</div></div>");
@@ -37923,6 +38178,111 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
     };
 
     angular.module("customerSetting").value("customerSettingResource", resources);
+})();
+
+/*jshint -W101,-W106,-W044,-W098*/
+
+(function () {
+    "use strict";
+
+    var settingType13Resources = {};
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["en-us"] = {
+        "Enable": "Enable",
+        "EnableDownline": "Enable Downline",
+        "ProductStatus": "Product Status"
+    };
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["zh-cn"] = {
+        "Enable": "启用",
+        "EnableDownline": "启动下线",
+        "ProductStatus": "产品状态"
+    };
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["zh-tw"] = {
+        "Enable": "啟用",
+        "EnableDownline": "啟動下線",
+        "ProductStatus": "產品狀態"
+    };
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["ko-kr"] = {
+        "Enable": "활성화",
+        "EnableDownline": "다운라인 활성화하기",
+        "ProductStatus": "Product Status"
+    };
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["th-th"] = {
+        "Enable": "เปิดใช้งาน",
+        "EnableDownline": "เปิดการใช้งาน ดาวน์ไลน์",
+        "ProductStatus": "สถานะผลิตภันฑ์"
+    };
+    
+    settingType13Resources["label"] = settingType13Resources["label"] || {};
+    settingType13Resources["label"]["vi-vn"] = {
+        "Enable": "Cho phép",
+        "EnableDownline": "Cho phép thành viên cấp dưới",
+        "ProductStatus": "Trạng thái trò chơi"
+    };
+    
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["en-us"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Downline cannnot be enabled when Upline is disabled.",
+        "DownlineProductStatusCannotBeNull": "Downline Product Status cannot be null.",
+        "DownlineStatusCannotBeChanged": "Downline&apos;s Product Status must be unchanged when the Upline has not been changed.",
+        "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
+        "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
+        "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
+        "Msg_60035": "You are not allowed to disable for downlines.",
+        "Msg_60036": "You are not allowed to perform this action.",
+        "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
+    };
+    
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["zh-cn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "当上线被禁用下线同时也禁用。",
+        "DownlineStatusCannotBeChanged": "当上线状态没有更改，下线状态也不会被更改。",
+        "DownlineStatusIsInvalid": "此产品没有提供给此用户",
+        "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
+        "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "UpdateProductStatusSuccessfully": "产品状态更新成功"
+    };
+    
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["zh-tw"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "當上線被禁用下線同時也禁用。",
+        "DownlineStatusCannotBeChanged": "當上線狀態沒有更改，下線狀態也不會被更改。",
+        "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
+        "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
+        "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "UpdateProductStatusSuccessfully": "產品狀態更新成功"
+    };
+    
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["th-th"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "เมื่อต้นสายมีการปิดการใช้งาน ดาวน์ไลนก็จะถูกปิดการใช้งานด้วย",
+        "DownlineStatusCannotBeChanged": "เมื่อต้นสายไม่มีการเปลี่ยนแปลงสถานะของผลิตภันฑ์ใดๆ ทางดาวน์ไลน์ก็จะไม่มีการเปลี่ยนแปลงด้วย",
+        "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
+        "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
+        "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
+    };
+    
+    settingType13Resources["message"] = settingType13Resources["message"] || {};
+    settingType13Resources["message"]["vi-vn"] = {
+        "DownlineCannotBeEnabledWhenUplineIsDisabled": "Thành viên cấp dưới sẽ không được phép chơi trong trường hợp thành viên cấp trên bị cấm chơi.",
+        "DownlineStatusCannotBeChanged": "Trạng thái trò chơi của thành viên cấp dưới không được phép thay đổi nếu thành viên cấp trên không có sự thay đổi.",
+        "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
+        "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
+        "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
+        "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
+    };
+
+    angular.module("customerSetting").value("settingType13Resources", settingType13Resources);
 })();
 
 /*jshint -W101,-W106,-W044,-W098*/
