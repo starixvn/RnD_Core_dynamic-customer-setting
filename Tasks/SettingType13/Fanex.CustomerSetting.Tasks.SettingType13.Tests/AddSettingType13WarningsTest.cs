@@ -11,11 +11,9 @@
     using NSubstitute;
     using NUnit.Framework;
 
-    public class AddingPostUpdateProductStatusWarningTaskTest
+    public class AddSettingType13WarningsTest
     {
-        private const short ProductStatusSettingType = 13;
-
-        private AddingPostUpdateProductStatusWarningTask _task;
+        private AddSettingType13Warnings _task;
         private UpdateSettingResult _settingResults;
         private List<SettingResult> _subResults;
         private ISettingContext _settingContext;
@@ -24,7 +22,7 @@
         [SetUp]
         public void SetUp()
         {
-            _task = new AddingPostUpdateProductStatusWarningTask();
+            _task = new AddSettingType13Warnings();
             _subResults = new List<SettingResult>();
             _settingResults = new UpdateSettingResult(_subResults);
             _settingContext = Substitute.For<ISettingContext>();
@@ -83,7 +81,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != ProductStatusSettingType);
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13Warnings.SettingType13Id);
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
@@ -97,7 +95,7 @@
         {
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
-            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
+            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
 
             productStatusSettingType.SettingItems = new List<ProductStatusItem>
             {
@@ -143,7 +141,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
@@ -158,7 +156,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = (byte)SystemType.Nap;
 
             // Act.
@@ -176,14 +174,14 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
 
             // Assert.
-            Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Code == AddingPostUpdateProductStatusWarningTask.SuccessfulProductStatusUpdateWarningCode));
+            Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Code == AddSettingType13Warnings.SuccessfulProductStatusUpdateWarningCode));
         }
 
         [TestCase((byte)SystemType.Alpha)]
@@ -194,7 +192,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -253,7 +251,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != ProductStatusSettingType);
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13Warnings.SettingType13Id);
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
@@ -267,7 +265,7 @@
         {
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
-            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
+            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
 
             productStatusSettingType.SettingItems = new List<ProductStatusItem>
             {
@@ -313,7 +311,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(-1, Arg.Any<string>(), -1, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
@@ -328,7 +326,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = (byte)SystemType.Nap;
 
             // Act.
@@ -346,14 +344,14 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
             _task.Invoke(_settingContext, command, _settingResults);
 
             // Assert.
-            Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Code == AddingPostUpdateProductStatusWarningTask.SuccessfulProductStatusUpdateWarningCode));
+            Assert.IsTrue(_settingResults.SubResults.Any(subResult => subResult.Code == AddSettingType13Warnings.SuccessfulProductStatusUpdateWarningCode));
         }
 
         [TestCase((byte)SystemType.Alpha)]
@@ -364,7 +362,7 @@
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
 
-            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, ProductStatusSettingType, Arg.Any<string>()));
+            _subResults.Add(new SettingResult(0, Arg.Any<string>(), 0, 1, AddSettingType13Warnings.SettingType13Id, Arg.Any<string>()));
             _settingContext.System = systemId;
 
             // Act.
@@ -382,7 +380,7 @@
             {
                 new SettingType
                 {
-                    Id = ProductStatusSettingType,
+                    Id = AddSettingType13Warnings.SettingType13Id,
                     DisplayMode = 1,
                     SettingItems = new List<ProductStatusItem>
                     {

@@ -10,12 +10,11 @@
     using Models.Requests;
     using Models.Results;
 
-    public class AddingPostUpdateProductStatusWarningTask : IPostQueryCustomerSettingTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
+    public class AddSettingType13Warnings : IPostQueryCustomerSettingTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
     {
+        internal const short SettingType13Id = 13;
         internal const int SuccessfulProductStatusUpdateWarningCode = -9101;
         internal const int ProductStatusNoteForExternalSitesCode = -9102;
-
-        private const short ProductStatusSettingType = 13;
 
         public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
         {
@@ -23,11 +22,7 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
 
-            SettingType productStatusSettingType = setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
-
-            if (productStatusSettingType != null
-                && settingContext.System != (byte)SystemType.Nap
-                && productStatusSettingType.DisplayMode == DisplayMode.Editable)
+            if (FilterSettingType13OnExternalSites(settingContext, setting)?.DisplayMode == DisplayMode.Editable)
             {
                 setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
             }
@@ -39,7 +34,7 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(settingContext, command, result);
+            AddWarningsForSuccessfulSettingType13Updates(settingContext, command, result);
         }
 
         public void Invoke(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult result)
@@ -48,27 +43,30 @@
             Check.Argument.IsNotNull(command, nameof(command));
             Check.Argument.IsNotNull(result, nameof(result));
 
-            AddWarningsForSuccessfulProductStatusUpdates(settingContext, command, result);
+            AddWarningsForSuccessfulSettingType13Updates(settingContext, command, result);
         }
 
-        private void AddWarningsForSuccessfulProductStatusUpdates(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult updateResult)
+        private void AddWarningsForSuccessfulSettingType13Updates(ISettingContext settingContext, UpdateCustomerSettingCommand command, IResult updateResult)
         {
             var updateSettingResult = updateResult as UpdateSettingResult;
+            SettingType settingType13OnExternalSite = FilterSettingType13OnExternalSites(settingContext, command.Setting);
 
-            if (updateSettingResult == null || !DidUserEnableDownlineProductStatus(command))
+            if (updateSettingResult == null
+                || settingType13OnExternalSite == null
+                || !DidUserEnableDownlineProductStatus(settingType13OnExternalSite))
             {
                 return;
             }
 
-            var successfulProductStatusUpdates = FilterSuccessfulProductStatusResults(settingContext, updateSettingResult);
+            var successfulSettingType13Updates = FilterSuccessfulProductStatusResults(updateSettingResult);
 
-            if (successfulProductStatusUpdates.Any())
+            if (successfulSettingType13Updates.Any())
             {
                 var updateSettingSubResults = updateSettingResult.SubResults as List<SettingResult>;
 
                 if (updateSettingSubResults != null)
                 {
-                    foreach (SettingResult successfulResult in successfulProductStatusUpdates)
+                    foreach (SettingResult successfulResult in successfulSettingType13Updates)
                     {
                         updateSettingSubResults.Add(new SettingResult(
                             SuccessfulProductStatusUpdateWarningCode,
@@ -86,13 +84,21 @@
             }
         }
 
-        private bool DidUserEnableDownlineProductStatus(UpdateCustomerSettingCommand command)
+        private SettingType FilterSettingType13OnExternalSites(ISettingContext settingContext, ISetting setting)
         {
-            SettingType productStatusSettingType = command.Setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
-
-            if (productStatusSettingType?.SettingItems.Any() == true)
+            if (settingContext.System == (byte)SystemType.Nap)
             {
-                foreach (ISettingItem settingItem in productStatusSettingType.SettingItems)
+                return null;
+            }
+
+            return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == SettingType13Id);
+        }
+
+        private bool DidUserEnableDownlineProductStatus(SettingType settingType)
+        {
+            if (settingType.SettingItems.Any() == true)
+            {
+                foreach (ISettingItem settingItem in settingType.SettingItems)
                 {
                     var productStatusItem = settingItem as ProductStatusItem;
 
@@ -106,9 +112,9 @@
             return false;
         }
 
-        private List<SettingResult> FilterSuccessfulProductStatusResults(ISettingContext settingContext, UpdateSettingResult updateResult)
+        private List<SettingResult> FilterSuccessfulProductStatusResults(UpdateSettingResult updateResult)
             => updateResult.SubResults
-                .Where(subResult => subResult.SettingTypeId == ProductStatusSettingType && subResult.IsSuccessful && settingContext.System != (byte)SystemType.Nap)
+                .Where(subResult => subResult.SettingTypeId == SettingType13Id && subResult.IsSuccessful)
                 .ToList();
     }
 }
