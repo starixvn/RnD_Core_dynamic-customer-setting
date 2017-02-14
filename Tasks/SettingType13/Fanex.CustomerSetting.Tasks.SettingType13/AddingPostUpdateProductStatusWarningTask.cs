@@ -1,19 +1,37 @@
-﻿namespace Fanex.CustomerSetting.Tasks.Product24
+﻿namespace Fanex.CustomerSetting.Tasks.SettingType13
 {
     using System.Collections.Generic;
     using System.Linq;
     using Common.Helper;
+    using CustomerSetting.SettingType13.Models;
     using Models;
+    using Models.Constants;
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
-    using SettingType13.Models;
 
-    public class AddingPostUpdateProductStatusWarningTask : IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
+    public class AddingPostUpdateProductStatusWarningTask : IPostQueryCustomerSettingTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
     {
-        public const int SuccessfulProductStatusUpdateWarningCode = -9101;
+        internal const int SuccessfulProductStatusUpdateWarningCode = -9101;
+        internal const int ProductStatusNoteForExternalSitesCode = -9102;
 
         private const short ProductStatusSettingType = 13;
+
+        public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
+        {
+            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
+            Check.Argument.IsNotNull(query, nameof(query));
+            Check.Argument.IsNotNull(setting, nameof(setting));
+
+            SettingType productStatusSettingType = setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == ProductStatusSettingType);
+
+            if (productStatusSettingType != null
+                && settingContext.System != (byte)SystemType.Nap
+                && productStatusSettingType.DisplayMode == DisplayMode.Editable)
+            {
+                setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
+            }
+        }
 
         public void Invoke(ISettingContext settingContext, MultipleUpdateCustomerSettingCommand command, IResult result)
         {

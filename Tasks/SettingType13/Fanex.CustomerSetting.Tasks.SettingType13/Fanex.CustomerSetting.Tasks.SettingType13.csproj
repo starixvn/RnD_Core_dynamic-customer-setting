@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{35419446-CF67-4423-854D-3DA96572B53F}</ProjectGuid>
+    <ProjectGuid>{6D79D74E-F7E8-4963-813A-7B3BF21C8FE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fanex.CustomerSetting.Tasks.Product24</RootNamespace>
-    <AssemblyName>Fanex.CustomerSetting.Tasks.Product24</AssemblyName>
+    <RootNamespace>Fanex.CustomerSetting.Tasks.SettingType13</RootNamespace>
+    <AssemblyName>Fanex.CustomerSetting.Tasks.SettingType13</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,6 +49,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Fanex.CustomerSetting\Fanex.CustomerSetting.csproj">
       <Project>{5acef400-fb41-4440-831c-13e49785ca97}</Project>
       <Name>Fanex.CustomerSetting</Name>
@@ -57,9 +60,6 @@
       <Project>{a43de0a6-ee77-4e8a-91dc-3e8e6089c1f1}</Project>
       <Name>Fanex.CustomerSetting.SettingType13</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

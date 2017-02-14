@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ProductStatusNoteForExternalSites" xml:space="preserve">
+    <value>You are not allowed to disable downline as company policy.</value>
+  </data>
   <data name="SuccessfulProductStatusUpdateWarning" xml:space="preserve">
     <value>You've just enabled for downlines. Please go to member setting page for your own settings.</value>
   </data>

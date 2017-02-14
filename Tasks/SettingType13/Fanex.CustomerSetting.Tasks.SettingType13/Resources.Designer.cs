@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.CustomerSetting.Tasks.Product24 {
+namespace Fanex.CustomerSetting.Tasks.SettingType13 {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Fanex.CustomerSetting.Tasks.Product24 {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.Tasks.Product24.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.CustomerSetting.Tasks.SettingType13.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Fanex.CustomerSetting.Tasks.Product24 {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to disable downline as company policy..
+        /// </summary>
+        internal static string ProductStatusNoteForExternalSites {
+            get {
+                return ResourceManager.GetString("ProductStatusNoteForExternalSites", resourceCulture);
             }
         }
         

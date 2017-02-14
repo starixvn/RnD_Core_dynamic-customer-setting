@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.CustomerSetting.Tasks.Product24")]
+[assembly: AssemblyTitle("Fanex.CustomerSetting.Tasks.SettingType13")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.CustomerSetting.Tasks.Product24")]
+[assembly: AssemblyProduct("Fanex.CustomerSetting.Tasks.SettingType13")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("35419446-cf67-4423-854d-3da96572b53f")]
+[assembly: Guid("6d79d74e-f7e8-4963-813a-7b3bf21c8fe9")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -36,5 +36,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: CLSCompliant(false)]
-[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Tasks.Product24.Tests")]
+[assembly: InternalsVisibleTo("Fanex.CustomerSetting.Tasks.SettingType13.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

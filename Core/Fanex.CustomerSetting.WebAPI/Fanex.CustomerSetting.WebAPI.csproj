@@ -328,7 +328,7 @@
     <Content Include="Web.ConnectionStrings.uat.config">
       <DependentUpon>Web.ConnectionStrings.config</DependentUpon>
     </Content>
-    <Content Include="App_Data\PluggableTasks\product-24.json" />
+    <Content Include="App_Data\PluggableTasks\settingtype-13.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -385,9 +385,9 @@
       <Project>{59db75bf-2708-4018-8c16-0a392e35431d}</Project>
       <Name>Fanex.CustomerSetting.Tasks.Product21</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tasks\Product24\Fanex.CustomerSetting.Tasks.Product24\Fanex.CustomerSetting.Tasks.Product24.csproj">
-      <Project>{35419446-cf67-4423-854d-3da96572b53f}</Project>
-      <Name>Fanex.CustomerSetting.Tasks.Product24</Name>
+    <ProjectReference Include="..\..\Tasks\SettingType13\Fanex.CustomerSetting.Tasks.SettingType13\Fanex.CustomerSetting.Tasks.SettingType13.csproj">
+      <Project>{6d79d74e-f7e8-4963-813a-7b3bf21c8fe9}</Project>
+      <Name>Fanex.CustomerSetting.Tasks.SettingType13</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.CustomerSetting.Casino\Fanex.CustomerSetting.Casino.csproj">
       <Project>{6fe2478f-9e93-48d1-95b9-cad78704b67e}</Project>

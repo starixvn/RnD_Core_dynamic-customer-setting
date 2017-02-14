@@ -1,15 +1,15 @@
-﻿namespace Fanex.CustomerSetting.Tasks.Product24.Tests
+﻿namespace Fanex.CustomerSetting.Tasks.SettingType13.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CustomerSetting.SettingType13.Models;
     using Models;
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
     using NSubstitute;
     using NUnit.Framework;
-    using SettingType13.Models;
 
     public class AddingPostUpdateProductStatusWarningTaskTest
     {

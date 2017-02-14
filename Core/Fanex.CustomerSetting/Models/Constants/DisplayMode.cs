@@ -1,6 +1,6 @@
 ﻿namespace Fanex.CustomerSetting.Models.Constants
 {
-    internal static class DisplayMode
+    public static class DisplayMode
     {
         public const byte Editable = 1;
         public const byte ReadOnly = 2;
