@@ -5,6 +5,7 @@
     using System.Linq;
     using CustomerSetting.SettingType13.Models;
     using Models;
+    using Models.Constants;
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
@@ -30,6 +31,150 @@
             _settingContext.Actor.Level = Level.Master;
             _settingContext.System = (byte)SystemType.Alpha;
             _setting = CreateSampleSettingData();
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_InputSettingContextIsNull_ThrowArgumentNullException()
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _settingContext = null;
+
+            // Act.
+            TestDelegate invokeDelegate = () => _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Throws(typeof(ArgumentNullException), invokeDelegate);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_InputQueryIsNull_ThrowArgumentNullException()
+        {
+            // Arrange.
+            CustomerSettingQuery query = null;
+
+            // Act.
+            TestDelegate invokeDelegate = () => _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Throws(typeof(ArgumentNullException), invokeDelegate);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_InputSettingIsNull_ThrowArgumentNullException()
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _setting = null;
+
+            // Act.
+            TestDelegate invokeDelegate = () => _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Throws(typeof(ArgumentNullException), invokeDelegate);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_DoesNotUpdateSettingType13_NoAddWarningMessage()
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _setting.SettingTypes = _setting.SettingTypes.Where(settingType => settingType.Id != AddSettingType13Warnings.SettingType13Id);
+
+            // Act.
+            _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Null(_setting.WarningMessage);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_SystemIsNap_NoAddWarningMessage()
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _settingContext.System = (byte)SystemType.Nap;
+
+            // Act.
+            _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Null(_setting.WarningMessage);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_DisplayModeIsReadonly_NoAddWarningMessage()
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
+
+            settingType13.DisplayMode = DisplayMode.ReadOnly;
+
+            // Act.
+            _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.Null(_setting.WarningMessage);
+        }
+
+        [TestCase((byte)SystemType.Alpha)]
+        [TestCase((byte)SystemType.InternalAlpha)]
+        [TestCase((byte)SystemType.ExternalNap)]
+        public void PostQueryCustomerSetting_EditSettingType13OnExternalSites_AddWarningMessageWithCodeIsNegative9102(byte systemId)
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _settingContext.System = systemId;
+
+            // Act.
+            _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Code == AddSettingType13Warnings.ProductStatusNoteForExternalSitesCode);
+        }
+
+        [TestCase((byte)SystemType.Alpha)]
+        [TestCase((byte)SystemType.InternalAlpha)]
+        [TestCase((byte)SystemType.ExternalNap)]
+        public void PostQueryCustomerSetting_EditSettingType13OnExternalSites_AddWarningNoteToUser(byte systemId)
+        {
+            // Arrange.
+            int customerId = 1;
+            byte productId = 1;
+            Level customerLevel = Level.Agent;
+            CustomerSettingQuery query = Substitute.For<CustomerSettingQuery>(customerId, customerLevel, productId, null);
+
+            _settingContext.System = systemId;
+
+            // Act.
+            _task.Invoke(_settingContext, query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
         }
 
         [Test]
@@ -95,9 +240,9 @@
         {
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
-            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
+            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
 
-            productStatusSettingType.SettingItems = new List<ProductStatusItem>
+            settingType13.SettingItems = new List<ProductStatusItem>
             {
                 new ProductStatusItem
                 {
@@ -265,9 +410,9 @@
         {
             // Arrange.
             UpdateCustomerSettingCommand command = Substitute.For<UpdateCustomerSettingCommand>(_setting, Arg.Any<Level>());
-            SettingType productStatusSettingType = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
+            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13Warnings.SettingType13Id);
 
-            productStatusSettingType.SettingItems = new List<ProductStatusItem>
+            settingType13.SettingItems = new List<ProductStatusItem>
             {
                 new ProductStatusItem
                 {
@@ -402,6 +547,7 @@
                 }
             };
             setting.CustomerLevel = Level.Master;
+            setting.WarningMessage = null;
 
             return setting;
         }

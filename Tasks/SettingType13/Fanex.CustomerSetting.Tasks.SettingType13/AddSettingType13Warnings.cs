@@ -53,7 +53,7 @@
 
             if (updateSettingResult == null
                 || settingType13OnExternalSite == null
-                || !DidUserEnableDownlineProductStatus(settingType13OnExternalSite))
+                || !CheckIfUserEnablesDownlines(settingType13OnExternalSite))
             {
                 return;
             }
@@ -94,7 +94,7 @@
             return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == SettingType13Id);
         }
 
-        private bool DidUserEnableDownlineProductStatus(SettingType settingType)
+        private bool CheckIfUserEnablesDownlines(SettingType settingType)
         {
             if (settingType.SettingItems.Any() == true)
             {
