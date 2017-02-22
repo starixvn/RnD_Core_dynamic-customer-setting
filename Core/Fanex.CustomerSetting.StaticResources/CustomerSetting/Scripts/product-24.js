@@ -33024,23 +33024,20 @@ var CustomerSetting;
             this.resetValidationState();
             return true;
         };
-        SettingType13Item.prototype.toJson = function (isConstraint) {
-            if (isConstraint === void 0) { isConstraint = false; }
+        SettingType13Item.prototype.toJson = function () {
             var settingItem = {
                 sportTypeId: this.sportTypeId,
                 sportTypeName: this.sportTypeName,
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
-                typeName: this.typeName
+                typeName: this.typeName,
+                isDisabled: this.isDisabled
             };
-            if (isConstraint || this.systemId === CustomerSetting.System.nap || this.customerLevel === CustomerSetting.Level.member) {
-                settingItem.isDisabled = this.isDisabled;
-            }
             if (this.upline) {
-                settingItem.upline = this.upline.toJson(true);
+                settingItem.upline = this.upline.toJson();
             }
             if (this.downline) {
-                settingItem.downline = this.downline.toJson(true);
+                settingItem.downline = this.downline.toJson();
             }
             return settingItem;
         };
@@ -34864,7 +34861,7 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
-        "Msg_60035": "You are not allowed to disable for downlines.",
+        "Msg_60035": "You are not allowed to disable downline&apos;s product.",
         "Msg_90012": "You are not allowed to perform this action.",
         "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
@@ -34876,6 +34873,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "DownlineStatusIsInvalid": "此产品没有提供给此用户",
         "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
         "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "Msg_60035": "您不能禁用下线的产品。",
+        "Msg_90012": "您不能执行此操作。",
         "UpdateProductStatusSuccessfully": "产品状态更新成功"
     };
     
@@ -34886,6 +34885,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
         "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
         "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "Msg_60035": "您不能禁用下線的產品。",
+        "Msg_90012": "您不能執行此操作。",
         "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
@@ -34896,6 +34897,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
         "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
         "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "Msg_60035": "คุณไม่สามารถปิดการใช้งานสินค้าให้กับดาวไลน์",
+        "Msg_90012": "คุณไม่สามารถดำเนินการนี้",
         "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
     };
     
@@ -34906,6 +34909,8 @@ $templateCache.put("settingtype12.htm","<div class=\"block full-width settingtyp
         "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
         "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
         "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
+        "Msg_60035": "Bạn không được phép vô hiệu hoá sản phẩm cược của cấp dưới.",
+        "Msg_90012": "Bạn không thể thực thi hành động này.",
         "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
     };
 
