@@ -148,25 +148,22 @@ module CustomerSetting {
             return true;
         }
 
-        public toJson(isConstraint: boolean = false): {} {
+        public toJson(): {} {
             var settingItem: any = {
                 sportTypeId: this.sportTypeId,
                 sportTypeName: this.sportTypeName,
                 betTypeId: this.betTypeId,
                 betTypeName: this.betTypeName,
-                typeName: this.typeName
+                typeName: this.typeName,
+                isDisabled: this.isDisabled
             };
 
-            if (isConstraint || this.systemId === System.nap || this.customerLevel === Level.member) {
-                settingItem.isDisabled = this.isDisabled
-            }
-
             if (this.upline) {
-                settingItem.upline = this.upline.toJson(true);
+                settingItem.upline = this.upline.toJson();
             }
 
             if (this.downline) {
-                settingItem.downline = this.downline.toJson(true);
+                settingItem.downline = this.downline.toJson();
             }
 
             return settingItem;

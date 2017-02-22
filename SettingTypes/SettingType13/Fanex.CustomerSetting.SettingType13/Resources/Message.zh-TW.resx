@@ -135,4 +135,10 @@
   <data name="Msg_60034" xml:space="preserve">
     <value>無法連接此產品由於上線的賬號設置不同步。</value>
   </data>
+  <data name="Msg_60035" xml:space="preserve">
+    <value>您不能禁用下線的產品。</value>
+  </data>
+  <data name="Msg_90012" xml:space="preserve">
+    <value>您不能執行此操作。</value>
+  </data>
 </root>

@@ -135,4 +135,10 @@
   <data name="Msg_60034" xml:space="preserve">
     <value>ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า</value>
   </data>
+  <data name="Msg_60035" xml:space="preserve">
+    <value>คุณไม่สามารถปิดการใช้งานสินค้าให้กับดาวไลน์</value>
+  </data>
+  <data name="Msg_90012" xml:space="preserve">
+    <value>คุณไม่สามารถดำเนินการนี้</value>
+  </data>
 </root>

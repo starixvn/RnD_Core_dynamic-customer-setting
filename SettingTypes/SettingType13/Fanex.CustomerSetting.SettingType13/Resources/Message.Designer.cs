@@ -115,7 +115,7 @@ namespace Fanex.CustomerSetting.SettingType13.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to disable for downlines..
+        ///   Looks up a localized string similar to You are not allowed to disable downline&apos;s product..
         /// </summary>
         internal static string Msg_60035 {
             get {
