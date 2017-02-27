@@ -5,28 +5,12 @@
     using Common.Helper;
     using CustomerSetting.SettingType13.Models;
     using Models;
-    using Models.Constants;
-    using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
 
-    public class AddSettingType13Warnings : IPostQueryCustomerSettingTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
+    public class AddSettingType13UpdateWarningsTask : AddSettingType13WarningTask, IPostUpdateCustomerSettingTask, IPostUpdateMultipleCustomersSettingTask
     {
-        internal const short SettingType13Id = 13;
         internal const int SuccessfulProductStatusUpdateWarningCode = -9101;
-        internal const int ProductStatusNoteForExternalSitesCode = -9102;
-
-        public void Invoke(ISettingContext settingContext, CustomerSettingQuery query, ISetting setting)
-        {
-            Check.Argument.IsNotNull(settingContext, nameof(settingContext));
-            Check.Argument.IsNotNull(query, nameof(query));
-            Check.Argument.IsNotNull(setting, nameof(setting));
-
-            if (FilterSettingType13OnExternalSites(settingContext, setting)?.DisplayMode == DisplayMode.Editable)
-            {
-                setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
-            }
-        }
 
         public void Invoke(ISettingContext settingContext, MultipleUpdateCustomerSettingCommand command, IResult result)
         {
@@ -82,16 +66,6 @@
                     }
                 }
             }
-        }
-
-        private SettingType FilterSettingType13OnExternalSites(ISettingContext settingContext, ISetting setting)
-        {
-            if (settingContext.System == (byte)SystemType.Nap)
-            {
-                return null;
-            }
-
-            return setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == SettingType13Id);
         }
 
         private bool CheckIfUserEnablesDownlines(SettingType settingType)
