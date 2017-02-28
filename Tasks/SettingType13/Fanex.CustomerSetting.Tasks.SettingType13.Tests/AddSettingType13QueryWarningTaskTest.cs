@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Models;
-    using Models.Constants;
     using Models.Enumerations;
     using Models.Requests;
     using Models.Results;
@@ -89,7 +88,7 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_SystemIsNap_NoAddWarningMessage()
+        public void PostQueryCustomerSetting_SystemIsNap_DoNotAddWarningMessage()
         {
             // Arrange.
             _settingContext.System = (byte)SystemType.Nap;
@@ -102,12 +101,75 @@
         }
 
         [Test]
-        public void PostQueryCustomerSetting_DisplayModeIsReadonly_NoAddWarningMessage()
+        public void PostQueryCustomerSetting_CustomerLevelIsSuper_DoNotAddWarningMessage()
         {
             // Arrange.
-            SettingType settingType13 = _setting.SettingTypes.FirstOrDefault(settingType => settingType.Id == AddSettingType13WarningTask.SettingType13Id);
+            _query.CustomerLevel = Level.Super;
 
-            settingType13.DisplayMode = DisplayMode.ReadOnly;
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.Null(_setting.WarningMessage);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_CustomerLevelIsMaster_AddWarningNoteToUser()
+        {
+            // Arrange.
+            _query.CustomerLevel = Level.Master;
+
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_CustomerLevelIsMaster_AddWarningMessageWithCodeIsNegative9102()
+        {
+            // Arrange.
+            _query.CustomerLevel = Level.Master;
+
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Code == AddSettingType13QueryWarningTask.ProductStatusNoteForExternalSitesCode);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_CustomerLevelIsAgent_AddWarningNoteToUser()
+        {
+            // Arrange.
+            _query.CustomerLevel = Level.Agent;
+
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Message == Resources.ProductStatusNoteForExternalSites);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_CustomerLevelIsAgent_AddWarningMessageWithCodeIsNegative9102()
+        {
+            // Arrange.
+            _query.CustomerLevel = Level.Agent;
+
+            // Act.
+            _task.Invoke(_settingContext, _query, _setting);
+
+            // Assert.
+            Assert.IsTrue(_setting?.WarningMessage?.Code == AddSettingType13QueryWarningTask.ProductStatusNoteForExternalSitesCode);
+        }
+
+        [Test]
+        public void PostQueryCustomerSetting_CustomerLevelIsMember_DoNotAddWarningMessage()
+        {
+            // Arrange.
+            _query.CustomerLevel = Level.Member;
 
             // Act.
             _task.Invoke(_settingContext, _query, _setting);

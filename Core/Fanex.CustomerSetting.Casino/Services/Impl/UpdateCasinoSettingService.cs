@@ -124,7 +124,7 @@
                     settingTypeResults.Add(updateSettingTypeResult);
                 });
 
-            if (!settingTypeResults.Exists(result => result.IsNotOk))
+            if (!settingTypeResults.Exists(result => result.IsNotOk) && _settingContext.System != (byte)SystemType.ExternalNapBetSetting)
             {
                 var productStatusResult = UpdateProductStatus(command);
 

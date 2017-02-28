@@ -16,7 +16,8 @@
             Check.Argument.IsNotNull(query, nameof(query));
             Check.Argument.IsNotNull(setting, nameof(setting));
 
-            if (FilterSettingType13OnExternalSites(settingContext, setting)?.DisplayMode == DisplayMode.Editable)
+            if ((query.CustomerLevel.IsMasterLevel() || query.CustomerLevel.IsAgentLevel())
+                && FilterSettingType13OnExternalSites(settingContext, setting) != null)
             {
                 setting.WarningMessage = new Result(ProductStatusNoteForExternalSitesCode, Resources.ProductStatusNoteForExternalSites);
             }

@@ -52,14 +52,15 @@ module CustomerSetting {
 
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
+                this.readonly = false;
 
-                if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
-                    this.readonly = this.isChecked;
-                } else if (settingItem.upline) {
+                if (settingItem.upline) {
                     this.upline = new SettingType13Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
-                } else {
-                    this.readonly = false;
+                }
+
+                if (this.systemId !== System.nap && this.customerLevel !== Level.member) {
+                    this.readonly = this.readonly || this.isChecked;
                 }
 
                 if (settingItem.downline) {
