@@ -148,7 +148,7 @@ var DemoFrom;
         function SampleDataFactory() {
         }
         SampleDataFactory.getSystemTypes = function () {
-            return new Array(new KeyValuePair(1, "NAP"), new KeyValuePair(2, "Alpha"), new KeyValuePair(3, "Internal Alpha"), new KeyValuePair(4, "External NAP"));
+            return new Array(new KeyValuePair(1, "NAP"), new KeyValuePair(2, "Alpha"), new KeyValuePair(3, "Internal Alpha"), new KeyValuePair(4, "External NAP"), new KeyValuePair(5, "External NAP Bet Setting"));
         };
         SampleDataFactory.getLanuages = function () {
             return new Array(new KeyValuePair("en-US", "English (en-US)"), new KeyValuePair("zh-TW", "繁體中文 (zh-TW)"), new KeyValuePair("zh-CN", "简体中文 (zh-CN)"), new KeyValuePair("ja-JP", "日本語 (ja-JP)"), new KeyValuePair("th-TH", "ภาษาไทย (th-TH)"), new KeyValuePair("zh-TW", "한국어 (ko-KR)"), new KeyValuePair("vi-VN", "Tiếng Việt (vi-VN)"));

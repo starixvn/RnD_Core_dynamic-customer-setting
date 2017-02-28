@@ -36271,15 +36271,13 @@ var CustomerSetting;
                 if (settingItem) {
                     this.isDisabled = settingItem.isDisabled;
                     this.isChecked = !this.isDisabled;
-                    if (this.systemId !== IE8.System.nap && this.customerLevel !== IE8.Level.member) {
-                        this.readonly = this.isChecked;
-                    }
-                    else if (settingItem.upline) {
+                    this.readonly = false;
+                    if (settingItem.upline) {
                         this.upline = new SettingType13Item(settingItem.upline);
                         this.readonly = settingItem.upline.isDisabled;
                     }
-                    else {
-                        this.readonly = false;
+                    if (this.systemId !== IE8.System.nap && this.customerLevel !== IE8.Level.member) {
+                        this.readonly = this.readonly || this.isChecked;
                     }
                     if (settingItem.downline) {
                         this.downline = new SettingType13Item(settingItem.downline, true, customerLevel, systemId);

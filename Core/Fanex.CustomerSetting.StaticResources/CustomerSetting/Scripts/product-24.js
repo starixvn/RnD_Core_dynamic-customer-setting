@@ -32921,15 +32921,13 @@ var CustomerSetting;
             this.customerLevel = customerLevel;
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
-                if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
-                    this.readonly = this.isChecked;
-                }
-                else if (settingItem.upline) {
+                this.readonly = false;
+                if (settingItem.upline) {
                     this.upline = new SettingType13Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
                 }
-                else {
-                    this.readonly = false;
+                if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
+                    this.readonly = this.readonly || this.isChecked;
                 }
                 if (settingItem.downline) {
                     this.downline = new SettingType13Item(settingItem.downline, true, customerLevel, systemId);

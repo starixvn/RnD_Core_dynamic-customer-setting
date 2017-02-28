@@ -220,7 +220,8 @@ module DemoFrom {
                 new KeyValuePair<number, string>(1, "NAP"),
                 new KeyValuePair<number, string>(2, "Alpha"),
                 new KeyValuePair<number, string>(3, "Internal Alpha"),
-                new KeyValuePair<number, string>(4, "External NAP"));
+                new KeyValuePair<number, string>(4, "External NAP"),
+                new KeyValuePair<number, string>(5, "External NAP Bet Setting"));
         }
 
         public static getLanuages(): KeyValuePair<string, string>[] {
