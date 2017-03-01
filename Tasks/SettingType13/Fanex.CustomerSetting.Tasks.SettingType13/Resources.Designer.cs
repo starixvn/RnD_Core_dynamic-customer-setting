@@ -61,7 +61,7 @@ namespace Fanex.CustomerSetting.Tasks.SettingType13 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to disable a downline as a company policy..
+        ///   Looks up a localized string similar to You are not allowed to disable downlines as a company policy..
         /// </summary>
         internal static string ProductStatusNoteForExternalSites {
             get {
