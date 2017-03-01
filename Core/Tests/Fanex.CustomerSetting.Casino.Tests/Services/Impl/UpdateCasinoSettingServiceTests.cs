@@ -6,6 +6,7 @@
     using Casino.Services;
     using Casino.Services.Impl;
     using CustomerSetting.Models;
+    using CustomerSetting.Models.Enumerations;
     using CustomerSetting.Models.Requests;
     using CustomerSetting.Models.Results;
     using CustomerSetting.Services;
@@ -41,17 +42,15 @@
                 _updateSettingService,
                 _validationService,
                 _customerProductStatusService,
-                 _settingTypeServiceFactory,
-                 _logger);
+                _settingTypeServiceFactory,
+                _logger);
         }
 
         private void ArrangeCustomerCasinoStatus(UpdateCustomerSettingCommand command, CustomerProductStatus status)
         {
             _customerProductStatusService
-             .GetCustomerStatus(
-                 command.Setting.CustomerId,
-                 command.Setting.ProductId)
-             .ReturnsForAnyArgs(status);
+                .GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId)
+                .ReturnsForAnyArgs(status);
         }
 
         [Test]
@@ -69,10 +68,22 @@
             _updateSettingService.Received().Update(command);
         }
 
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void Update_UnsyncedCustomerSetting_UpdateAllSettingTypesSuccessfully_CallUpdateCustomerProductStatusSynced(bool isSynced, bool isDownlineSynced)
+        [TestCase(false, true, (byte)SystemType.Nap)]
+        [TestCase(true, false, (byte)SystemType.Nap)]
+        [TestCase(false, false, (byte)SystemType.Nap)]
+        [TestCase(false, true, (byte)SystemType.InternalAlpha)]
+        [TestCase(true, false, (byte)SystemType.InternalAlpha)]
+        [TestCase(false, false, (byte)SystemType.InternalAlpha)]
+        [TestCase(false, true, (byte)SystemType.Alpha)]
+        [TestCase(true, false, (byte)SystemType.Alpha)]
+        [TestCase(false, false, (byte)SystemType.Alpha)]
+        [TestCase(false, true, (byte)SystemType.ExternalNap)]
+        [TestCase(true, false, (byte)SystemType.ExternalNap)]
+        [TestCase(false, false, (byte)SystemType.ExternalNap)]
+        public void Update_UnsyncedCustomerSetting_UpdateAllSettingTypesSuccessfully_CallUpdateCustomerProductStatusSynced(
+            bool isSynced,
+            bool isDownlineSynced,
+            byte systemId)
         {
             //// Arrange
             var settingTypeValues = new byte[] { StatusSettingTypeValue, 1, 5, 3 };
@@ -80,6 +91,7 @@
             var unsyncedStatus = new CustomerProductStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
             ArrangeCustomerCasinoStatus(command, unsyncedStatus);
             var services = new List<ISettingTypeService>();
+            _settingContext.System = systemId;
             command.Setting.SettingTypes.ToList().ForEach(settingType =>
             {
                 var settingTypeService = Substitute.For<ISettingTypeService>();
@@ -111,6 +123,54 @@
                 _settingContext.Actor.Id,
                 _settingContext.Actor.SubAccountId,
                 _settingContext.IP);
+        }
+
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public void Update_UnsyncedCustomerSetting_UpdateInExternalNapSetSettingFuction_CallUpdateCustomerProductStatusSynced(bool isSynced, bool isDownlineSynced)
+        {
+            //// Arrange
+            var settingTypeValues = new byte[] { StatusSettingTypeValue, 1, 5, 3 };
+            var command = StubHelper.CreateUpdateSettingParam(settingTypeValues: settingTypeValues);
+            var unsyncedStatus = new CustomerProductStatus { IsSynced = isSynced, IsDownlineSynced = isDownlineSynced, IsHidden = false };
+            ArrangeCustomerCasinoStatus(command, unsyncedStatus);
+            var services = new List<ISettingTypeService>();
+            _settingContext.System = (byte)SystemType.ExternalNapBetSetting;
+            command.Setting.SettingTypes.ToList().ForEach(settingType =>
+            {
+                var settingTypeService = Substitute.For<ISettingTypeService>();
+                var sucessResult = new SettingResult(Result.Success);
+
+                settingTypeService.UpdateCustomerSettingType(
+                    _settingContext,
+                    command.Setting.CustomerId,
+                    command.Setting.CustomerLevel,
+                    command.UplineLevel,
+                    command.Setting.ProductId,
+                    settingType)
+                    .ReturnsForAnyArgs(sucessResult);
+
+                _settingTypeServiceFactory
+                    .GetInstance(settingType)
+                    .Returns(settingTypeService);
+
+                services.Add(settingTypeService);
+            });
+
+            //// Act
+            _updateCasinoSettingService.Update(command);
+
+            //// Assert
+            services[0]
+                 .DidNotReceiveWithAnyArgs()
+                 .UpdateCustomerSettingType(
+                             _settingContext,
+                             command.Setting.CustomerId,
+                             command.Setting.CustomerLevel,
+                             command.UplineLevel,
+                             command.Setting.ProductId,
+                             Arg.Any<SettingType>());
         }
 
         [TestCase(false, true)]
