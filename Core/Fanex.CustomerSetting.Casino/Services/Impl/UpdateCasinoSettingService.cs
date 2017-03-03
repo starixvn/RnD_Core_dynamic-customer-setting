@@ -15,11 +15,12 @@
 
     public class UpdateCasinoSettingService : IUpdateCasinoSettingService
     {
-        private const byte StatusSettingTypeValue = 4;
+        private const byte StatusSettingTypeValue = 13;
         private readonly ISettingContext _settingContext;
         private readonly IUpdateSettingService _updateSettingService;
         private readonly IValidationService _validationService;
         private readonly ICustomerProductStatusService _customerProductStatusService;
+        private readonly ITaskService _taskService;
         private readonly ISettingTypeServiceFactory _settingTypeServiceFactory;
         private readonly ILogger _logger;
 
@@ -36,6 +37,7 @@
             _updateSettingService = new UpdateSettingService(settingContext);
             _validationService = new ValidationService(settingContext);
             _customerProductStatusService = new CustomerProductStatusService();
+            _taskService = new TaskService(_settingContext);
             _settingTypeServiceFactory = new SettingTypeServiceFactory();
             _logger = Logger.Log;
         }
@@ -45,6 +47,7 @@
             IUpdateSettingService updateSettingService,
             IValidationService validationService,
             ICustomerProductStatusService customerProductStatusService,
+            ITaskService taskService,
             ISettingTypeServiceFactory settingTypeServiceFactory,
             ILogger logger)
         {
@@ -52,6 +55,7 @@
             _updateSettingService = updateSettingService;
             _validationService = validationService;
             _customerProductStatusService = customerProductStatusService;
+            _taskService = taskService;
             _settingTypeServiceFactory = settingTypeServiceFactory;
             _logger = logger;
         }
@@ -70,6 +74,8 @@
                 return validationResult;
             }
 
+            _taskService.Run(command.Setting.ProductId, command);
+
             var customerCasinoStatus = _customerProductStatusService.GetCustomerStatus(command.Setting.CustomerId, command.Setting.ProductId);
 
             if (customerCasinoStatus.IsSynced && customerCasinoStatus.IsDownlineSynced)
@@ -77,7 +83,12 @@
                 return _updateSettingService.Update(command);
             }
 
-            return UpdateUnsyncedCustomerSetting(command);
+            IResult result = UpdateUnsyncedCustomerSetting(command);
+
+            // Run plugged tasks after updating settings of customer.
+            _taskService.Run(command.Setting.ProductId, command, result);
+
+            return result;
         }
 
         public IResult Update(MultipleUpdateCustomerSettingCommand command)
@@ -181,10 +192,13 @@
             try
             {
                 CheckSettingTypeIsValid(settingType);
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType);
 
                 var settingTypeService = _settingTypeServiceFactory.GetInstance(settingType);
                 var settingResult = settingTypeService.UpdateCustomerSettingType(_settingContext, customerId, customerLevel, uplineLevel, productId, settingType);
+
                 settingResult.CustomerName = customerInfo != null ? customerInfo.UserName : string.Empty;
+                _taskService.Run(productId, settingType.Id, customerId, customerLevel, uplineLevel, settingType, settingResult);
 
                 return settingResult;
             }

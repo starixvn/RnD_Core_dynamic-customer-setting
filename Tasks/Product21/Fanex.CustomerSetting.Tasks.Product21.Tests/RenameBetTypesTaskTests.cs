@@ -107,20 +107,20 @@
 
         private SettingType CreateSampleSettingType4Data()
         {
-            SettingType settingType4 = Substitute.For<SettingType>();
+            SettingType settingType13 = Substitute.For<SettingType>();
             var betType2401 = Substitute.For<SettingItemDefault>();
             var betType2402 = Substitute.For<SettingItemDefault>();
             var settingItems = new List<SettingItemDefault>();
 
-            settingType4.Id = 4;
-            settingType4.SettingItems = settingItems;
+            settingType13.Id = 13;
+            settingType13.SettingItems = settingItems;
             betType2401.BetTypeId = 2401;
             betType2402.BetTypeId = 2402;
             betType2402.BetTypeName = "Bet Type 2402";
             settingItems.Add(betType2401);
             settingItems.Add(betType2402);
 
-            return settingType4;
+            return settingType13;
         }
 
         private SettingType CreateSampleSettingType7Data()

@@ -18,12 +18,13 @@
     [TestFixture]
     public class UpdateCasinoSettingServiceTests
     {
-        private const int StatusSettingTypeValue = 4;
+        private const int StatusSettingTypeValue = 13;
         private IUpdateCasinoSettingService _updateCasinoSettingService;
         private ISettingContext _settingContext;
         private IUpdateSettingService _updateSettingService;
         private IValidationService _validationService;
         private ILogger _logger;
+        private ITaskService _taskService;
         private ISettingTypeServiceFactory _settingTypeServiceFactory;
         private ICustomerProductStatusService _customerProductStatusService;
 
@@ -34,6 +35,7 @@
             _validationService = Substitute.For<IValidationService>();
             _updateSettingService = Substitute.For<IUpdateSettingService>();
             _logger = Substitute.For<ILogger>();
+            _taskService = Substitute.For<ITaskService>();
             _settingTypeServiceFactory = Substitute.For<ISettingTypeServiceFactory>();
             _customerProductStatusService = Substitute.For<ICustomerProductStatusService>();
 
@@ -42,6 +44,7 @@
                 _updateSettingService,
                 _validationService,
                 _customerProductStatusService,
+                _taskService,
                 _settingTypeServiceFactory,
                 _logger);
         }

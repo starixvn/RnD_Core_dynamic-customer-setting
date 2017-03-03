@@ -8,7 +8,7 @@
 
     public class RenameBetTypesTask : IPostQueryCustomerSettingTypeTask
     {
-        private const short ProductStatusSettingType = 4;
+        private const short ProductStatusSettingType = 13;
         private const short StakeLevelSettingType = 7;
         private const int Baccarat = 2401;
         private const int VipBaccarat = 2402;

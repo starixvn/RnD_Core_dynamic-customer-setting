@@ -1,5 +1,25 @@
 ﻿[
   {
+    "productId": 21,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13"
+        ]
+      }
+    ]
+  },
+  {
+    "productId": 22,
+    "tasks": [
+      {
+        "taskNames": [
+          "Fanex.CustomerSetting.Tasks.SettingType13.AddSettingType13QueryWarningTask, Fanex.CustomerSetting.Tasks.SettingType13"
+        ]
+      }
+    ]
+  },
+  {
     "productId": 24,
     "tasks": [
       {
