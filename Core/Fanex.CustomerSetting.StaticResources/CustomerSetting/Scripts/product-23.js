@@ -32701,6 +32701,96 @@ var CustomerSetting;
 var CustomerSetting;
 (function (CustomerSetting) {
     "use strict";
+    var ToggleSettingBlockDirective = (function () {
+        function ToggleSettingBlockDirective($rootScope, $timeout) {
+            var _this = this;
+            this.initializing = true;
+            this.link = function (scope, element) {
+                var container = angular.element(element.parent());
+                container.addClass("togglable-bar");
+                container.on("click", function (event) {
+                    var target = angular.element(event.target);
+                    if (target.hasClass("togglable-bar")) {
+                        _this.toggle(scope);
+                        return false;
+                    }
+                });
+                if (!_this.isToggleAllDirective(scope)) {
+                    scope.$watch("settingData", function () {
+                        if (_this.initializing) {
+                            _this.$timeout(function () { return _this.initializing = false; });
+                        }
+                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                            _this.triggerPageHeightChangedEvent();
+                        }
+                    }, true);
+                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                            && scope.settingData
+                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
+                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
+                            scope.sharedStates.expandBlock(scope.blockIndex);
+                            _this.triggerPageHeightChangedEvent();
+                        }
+                    });
+                    _this.$rootScope.$on("queriedSetting", function () {
+                        _this.initializing = true;
+                    });
+                }
+            };
+            this.$rootScope = $rootScope;
+            this.$timeout = $timeout;
+        }
+        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
+            get: function () {
+                return {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "=",
+                    settingTypeId: "="
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+            if (this.isToggleAllDirective(scope)) {
+                if (scope.sharedStates.isExpandedAll()) {
+                    scope.sharedStates.collapseAllBlocks();
+                }
+                else {
+                    scope.sharedStates.expandAllBlocks();
+                }
+            }
+            else {
+                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                    scope.sharedStates.collapseBlock(scope.blockIndex);
+                }
+                else {
+                    scope.sharedStates.expandBlock(scope.blockIndex);
+                }
+            }
+            scope.$apply();
+            this.triggerPageHeightChangedEvent();
+        };
+        ;
+        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+            return scope.blockIndex === null || scope.blockIndex === undefined;
+        };
+        ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
+            this.$rootScope.$emit("page-height-changed");
+        };
+        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+        return ToggleSettingBlockDirective;
+    }());
+    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    "use strict";
     var DetectMaxHeightDirective = (function () {
         function DetectMaxHeightDirective($window, $timeout) {
             var _this = this;
@@ -32812,96 +32902,6 @@ var CustomerSetting;
     CustomerSetting.ModuleRegister.directive("draggable", DraggableDirective);
 })(CustomerSetting || (CustomerSetting = {}));
 
-var CustomerSetting;
-(function (CustomerSetting) {
-    "use strict";
-    var ToggleSettingBlockDirective = (function () {
-        function ToggleSettingBlockDirective($rootScope, $timeout) {
-            var _this = this;
-            this.initializing = true;
-            this.link = function (scope, element) {
-                var container = angular.element(element.parent());
-                container.addClass("togglable-bar");
-                container.on("click", function (event) {
-                    var target = angular.element(event.target);
-                    if (target.hasClass("togglable-bar")) {
-                        _this.toggle(scope);
-                        return false;
-                    }
-                });
-                if (!_this.isToggleAllDirective(scope)) {
-                    scope.$watch("settingData", function () {
-                        if (_this.initializing) {
-                            _this.$timeout(function () { return _this.initializing = false; });
-                        }
-                        else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
-                        }
-                    }, true);
-                    _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                        if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                            && scope.settingData
-                            && scope.settingData.some(function (item) { return !item.validationState.isSuccessful; })
-                            && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                            scope.sharedStates.expandBlock(scope.blockIndex);
-                            _this.triggerPageHeightChangedEvent();
-                        }
-                    });
-                    _this.$rootScope.$on("queriedSetting", function () {
-                        _this.initializing = true;
-                    });
-                }
-            };
-            this.$rootScope = $rootScope;
-            this.$timeout = $timeout;
-        }
-        Object.defineProperty(ToggleSettingBlockDirective.prototype, "scope", {
-            get: function () {
-                return {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "=",
-                    settingTypeId: "="
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ToggleSettingBlockDirective.prototype.toggle = function (scope) {
-            if (this.isToggleAllDirective(scope)) {
-                if (scope.sharedStates.isExpandedAll()) {
-                    scope.sharedStates.collapseAllBlocks();
-                }
-                else {
-                    scope.sharedStates.expandAllBlocks();
-                }
-            }
-            else {
-                if (scope.sharedStates.isExpanded(scope.blockIndex)) {
-                    scope.sharedStates.collapseBlock(scope.blockIndex);
-                }
-                else {
-                    scope.sharedStates.expandBlock(scope.blockIndex);
-                }
-            }
-            scope.$apply();
-            this.triggerPageHeightChangedEvent();
-        };
-        ;
-        ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
-            return scope.blockIndex === null || scope.blockIndex === undefined;
-        };
-        ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
-            this.$rootScope.$emit("page-height-changed");
-        };
-        ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
-        return ToggleSettingBlockDirective;
-    }());
-    CustomerSetting.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-    CustomerSetting.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
-})(CustomerSetting || (CustomerSetting = {}));
-
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32912,21 +32912,26 @@ var CustomerSetting;
     "use strict";
     var SettingType11Item = (function (_super) {
         __extends(SettingType11Item, _super);
-        function SettingType11Item(settingItem, backup) {
+        function SettingType11Item(settingItem, backup, customerLevel, systemId) {
             if (backup === void 0) { backup = false; }
+            if (customerLevel === void 0) { customerLevel = null; }
+            if (systemId === void 0) { systemId = 0; }
             _super.call(this, settingItem);
+            this.systemId = systemId;
+            this.customerLevel = customerLevel;
             if (settingItem) {
                 this.isDisabled = settingItem.isDisabled;
+                this.readonly = false;
                 if (settingItem.upline) {
                     this.upline = new SettingType11Item(settingItem.upline);
                     this.readonly = settingItem.upline.isDisabled;
                 }
-                else {
-                    this.readonly = false;
+                if (this.systemId !== CustomerSetting.System.nap && this.customerLevel !== CustomerSetting.Level.member) {
+                    this.readonly = this.readonly || this.isChecked;
                 }
                 if (settingItem.downline) {
-                    this.downline = new SettingType11Item(settingItem.downline, true);
-                    this.downline.readonly = true;
+                    this.downline = new SettingType11Item(settingItem.downline, true, customerLevel, systemId);
+                    this.downline.readonly = !this.isChecked || this.downline.isChecked;
                 }
             }
             if (backup) {
@@ -32940,17 +32945,15 @@ var CustomerSetting;
             set: function (isChecked) {
                 this.isDisabled = !isChecked;
                 if (this.downline) {
-                    if (isChecked && !this.oldSetting.isChecked) {
-                        this.downline.readonly = false;
+                    if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
+                        this.downline.isChecked = this.isChecked;
+                        this.downline.readonly = true;
                     }
                     else {
-                        if (this.oldSetting.isChecked && this.downline.oldSetting.isChecked) {
-                            this.downline.isChecked = this.isChecked;
-                        }
-                        else {
+                        if (!this.isChecked) {
                             this.downline.isChecked = false;
                         }
-                        this.downline.readonly = true;
+                        this.downline.readonly = !isChecked;
                     }
                     this.resetFieldState("isDisabled");
                 }
@@ -33010,12 +33013,6 @@ var CustomerSetting;
         SettingType11Item.prototype.validate = function () {
             if (this.isDisabled && this.downline && !this.downline.isDisabled) {
                 this.validationState = new CustomerSetting.ValidationResult("DownlineStatusIsInvalid", "downline.isDisabled");
-                return false;
-            }
-            if (this.downline
-                && this.isDisabled === this.oldSetting.isDisabled
-                && this.downline.isDisabled !== this.oldSetting.downline.isDisabled) {
-                this.validationState = new CustomerSetting.ValidationResult("DownlineStatusCannotBeChanged", "downline.isDisabled");
                 return false;
             }
             if (this.upline && this.upline.isDisabled && !this.isDisabled) {
@@ -33106,9 +33103,9 @@ var CustomerSetting;
     "use strict";
     var SettingType11Directive = (function (_super) {
         __extends(SettingType11Directive, _super);
-        function SettingType11Directive(settingType11ResourceService) {
+        function SettingType11Directive(settingType11ResourceService, parametersService) {
             var _this = this;
-            _super.call(this, function (settingItem, backup) { return new CustomerSetting.SettingType11Item(settingItem, backup); });
+            _super.call(this, function (settingItem, backup, customerLevel) { return new CustomerSetting.SettingType11Item(settingItem, backup, customerLevel, parametersService.systemId); });
             this.templateUrl = "settingtype11.htm";
             this.link = function (scope) {
                 scope.valueTemplateUrl = "settingtype11-value.htm";
@@ -33116,7 +33113,7 @@ var CustomerSetting;
             };
             this.settingType11ResourceService = settingType11ResourceService;
         }
-        SettingType11Directive.$inject = ["settingType11ResourceService"];
+        SettingType11Directive.$inject = ["settingType11ResourceService", "parametersService"];
         return SettingType11Directive;
     }(CustomerSetting.SettingTypeDirective));
     CustomerSetting.ModuleRegister.directive("settingtype11", SettingType11Directive);
@@ -35045,6 +35042,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "DownlineStatusIsInvalid": "The product is not offered for this customer line.",
         "Msg_60033": "Unable to edit downline&apos;s Product Status because the account disabled for this product.",
         "Msg_60034": "Unable to synchronize this product because the upline account setting is not synchronized.",
+        "Msg_60035": "You are not allowed to disable downline&apos;s product.",
+        "Msg_90012": "You are not allowed to perform this action.",
         "UpdateProductStatusSuccessfully": "Product Status is updated successfully."
     };
     
@@ -35055,6 +35054,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "DownlineStatusIsInvalid": "此产品没有提供给此用户",
         "Msg_60033": "由于账号的此产品已关闭导致无法更改下线产品状态。",
         "Msg_60034": "无法连接此产品由于上线的账号设置不同步。",
+        "Msg_60035": "您不能禁用下线的产品。",
+        "Msg_90012": "您不能执行此操作。",
         "UpdateProductStatusSuccessfully": "产品状态更新成功"
     };
     
@@ -35065,6 +35066,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "DownlineStatusIsInvalid": "此產品沒有提供給此用戶",
         "Msg_60033": "由於賬號的此產品已關閉導致無法更改下線產品狀態。",
         "Msg_60034": "無法連接此產品由於上線的賬號設置不同步。",
+        "Msg_60035": "您不能禁用下線的產品。",
+        "Msg_90012": "您不能執行此操作。",
         "UpdateProductStatusSuccessfully": "產品狀態更新成功"
     };
     
@@ -35083,6 +35086,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "DownlineStatusIsInvalid": "ผลิตภันฑ์นี้ ไม่เปิดใช้ ให้กับลูกค้าในสายนี้",
         "Msg_60033": "ไม่สามารถแก้ไขสถานะผลิตภัณฑ์ของดาวน์ไลน์ได้ เนื่องจากไม่ได้เปิดการใช้งานผลิตภัณฑ์นี้",
         "Msg_60034": "ไม่สามารถเชื่อมต่อ(Synchronize) ผลิตภันฑ์นี้เนื่องจากบัญชีต้นสายไม่เชื่อมต่อ(Synchronize) การตั้งค่า",
+        "Msg_60035": "คุณไม่สามารถปิดการใช้งานสินค้าให้กับดาวไลน์",
+        "Msg_90012": "คุณไม่สามารถดำเนินการนี้",
         "UpdateProductStatusSuccessfully": "สถานะผลิตภันฑ์ อัพเดทสำเร็จแล้ว"
     };
     
@@ -35093,6 +35098,8 @@ $templateCache.put("settingtype1.htm","<div class=\"setting-type-1\"><default-se
         "DownlineStatusIsInvalid": "Trò chơi không được cung cấp cho những khách hàng thuộc nhóm này.",
         "Msg_60033": "Không thể tùy chỉnh trạng thái trò chơi của thành viên cấp dưới bởi vì tài khoản hiện tại không được phép chơi trò này.",
         "Msg_60034": "Không thể đồng bộ hóa trò chơi này bởi vì thiết lập của tài khoản cấp trên hiện chưa được đồng bộ hóa.",
+        "Msg_60035": "Bạn không được phép vô hiệu hoá sản phẩm cược của cấp dưới.",
+        "Msg_90012": "Bạn không thể thực thi hành động này.",
         "UpdateProductStatusSuccessfully": "Trạng thái trò chơi được cập nhật thành công."
     };
 

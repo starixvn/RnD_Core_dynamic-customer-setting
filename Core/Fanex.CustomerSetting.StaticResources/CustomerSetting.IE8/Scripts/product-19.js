@@ -36051,6 +36051,94 @@ var CustomerSetting;
     var IE8;
     (function (IE8) {
         "use strict";
+        var ToggleSettingBlockDirective = (function () {
+            function ToggleSettingBlockDirective($rootScope, $timeout) {
+                var _this = this;
+                this.scope = {
+                    blockIndex: "=",
+                    sharedStates: "=",
+                    settingData: "=",
+                    settingTypeId: "="
+                };
+                this.initializing = true;
+                this.link = function (scope, element) {
+                    var container = angular.element(element.parent());
+                    container.addClass("togglable-bar");
+                    container.on("click", function (event) {
+                        var target = angular.element(event.target);
+                        if (target.hasClass("togglable-bar")) {
+                            _this.toggle(scope);
+                            return false;
+                        }
+                    });
+                    element.addClass("ng-hide");
+                    if (!_this.isToggleAllDirective(scope)) {
+                        scope.$watch("settingData", function () {
+                            if (_this.initializing) {
+                                _this.$timeout(function () { return _this.initializing = false; });
+                            }
+                            else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
+                                scope.sharedStates.expandBlock(scope.blockIndex);
+                                _this.triggerPageHeightChangedEvent();
+                            }
+                        }, true);
+                        _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
+                            if ((!settingTypeId || settingTypeId === scope.settingTypeId)
+                                && scope.settingData
+                                && _.some(scope.settingData, function (item) { return !item.validationState.isSuccessful(); })
+                                && !scope.sharedStates.isExpanded(scope.blockIndex)) {
+                                scope.sharedStates.expandBlock(scope.blockIndex);
+                                _this.triggerPageHeightChangedEvent();
+                            }
+                        });
+                        _this.$rootScope.$on("queriedSetting", function () {
+                            _this.initializing = true;
+                        });
+                    }
+                };
+                this.$rootScope = $rootScope;
+                this.$timeout = $timeout;
+            }
+            ToggleSettingBlockDirective.prototype.toggle = function (scope) {
+                if (this.isToggleAllDirective(scope)) {
+                    if (scope.sharedStates.isExpandedAll()) {
+                        scope.sharedStates.collapseAllBlocks();
+                    }
+                    else {
+                        scope.sharedStates.expandAllBlocks();
+                    }
+                }
+                else {
+                    if (scope.sharedStates.isExpanded(scope.blockIndex)) {
+                        scope.sharedStates.collapseBlock(scope.blockIndex);
+                    }
+                    else {
+                        scope.sharedStates.expandBlock(scope.blockIndex);
+                    }
+                }
+                scope.$apply();
+                this.triggerPageHeightChangedEvent();
+            };
+            ;
+            ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
+                return scope.blockIndex === null || scope.blockIndex === undefined;
+            };
+            ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
+                this.$rootScope.$emit("page-height-changed");
+            };
+            ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
+            return ToggleSettingBlockDirective;
+        }());
+        IE8.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
+        IE8.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
+    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
+})(CustomerSetting || (CustomerSetting = {}));
+
+var CustomerSetting;
+(function (CustomerSetting) {
+    var IE8;
+    (function (IE8) {
+        "use strict";
         var DetectMaxHeightDirective = (function () {
             function DetectMaxHeightDirective($window, $timeout) {
                 var _this = this;
@@ -36158,94 +36246,6 @@ var CustomerSetting;
             return DraggableDirective;
         }());
         IE8.ModuleRegister.directive("draggable", DraggableDirective);
-    })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
-})(CustomerSetting || (CustomerSetting = {}));
-
-var CustomerSetting;
-(function (CustomerSetting) {
-    var IE8;
-    (function (IE8) {
-        "use strict";
-        var ToggleSettingBlockDirective = (function () {
-            function ToggleSettingBlockDirective($rootScope, $timeout) {
-                var _this = this;
-                this.scope = {
-                    blockIndex: "=",
-                    sharedStates: "=",
-                    settingData: "=",
-                    settingTypeId: "="
-                };
-                this.initializing = true;
-                this.link = function (scope, element) {
-                    var container = angular.element(element.parent());
-                    container.addClass("togglable-bar");
-                    container.on("click", function (event) {
-                        var target = angular.element(event.target);
-                        if (target.hasClass("togglable-bar")) {
-                            _this.toggle(scope);
-                            return false;
-                        }
-                    });
-                    element.addClass("ng-hide");
-                    if (!_this.isToggleAllDirective(scope)) {
-                        scope.$watch("settingData", function () {
-                            if (_this.initializing) {
-                                _this.$timeout(function () { return _this.initializing = false; });
-                            }
-                            else if (!scope.sharedStates.isExpanded(scope.blockIndex)) {
-                                scope.sharedStates.expandBlock(scope.blockIndex);
-                                _this.triggerPageHeightChangedEvent();
-                            }
-                        }, true);
-                        _this.$rootScope.$on("updateSetting", function (event, settingTypeId) {
-                            if ((!settingTypeId || settingTypeId === scope.settingTypeId)
-                                && scope.settingData
-                                && _.some(scope.settingData, function (item) { return !item.validationState.isSuccessful(); })
-                                && !scope.sharedStates.isExpanded(scope.blockIndex)) {
-                                scope.sharedStates.expandBlock(scope.blockIndex);
-                                _this.triggerPageHeightChangedEvent();
-                            }
-                        });
-                        _this.$rootScope.$on("queriedSetting", function () {
-                            _this.initializing = true;
-                        });
-                    }
-                };
-                this.$rootScope = $rootScope;
-                this.$timeout = $timeout;
-            }
-            ToggleSettingBlockDirective.prototype.toggle = function (scope) {
-                if (this.isToggleAllDirective(scope)) {
-                    if (scope.sharedStates.isExpandedAll()) {
-                        scope.sharedStates.collapseAllBlocks();
-                    }
-                    else {
-                        scope.sharedStates.expandAllBlocks();
-                    }
-                }
-                else {
-                    if (scope.sharedStates.isExpanded(scope.blockIndex)) {
-                        scope.sharedStates.collapseBlock(scope.blockIndex);
-                    }
-                    else {
-                        scope.sharedStates.expandBlock(scope.blockIndex);
-                    }
-                }
-                scope.$apply();
-                this.triggerPageHeightChangedEvent();
-            };
-            ;
-            ToggleSettingBlockDirective.prototype.isToggleAllDirective = function (scope) {
-                return scope.blockIndex === null || scope.blockIndex === undefined;
-            };
-            ToggleSettingBlockDirective.prototype.triggerPageHeightChangedEvent = function () {
-                this.$rootScope.$emit("page-height-changed");
-            };
-            ToggleSettingBlockDirective.$inject = ["$rootScope", "$timeout"];
-            return ToggleSettingBlockDirective;
-        }());
-        IE8.ToggleSettingBlockDirective = ToggleSettingBlockDirective;
-        IE8.ModuleRegister.directive("toggleSettingBlock", ToggleSettingBlockDirective);
     })(IE8 = CustomerSetting.IE8 || (CustomerSetting.IE8 = {}));
 })(CustomerSetting || (CustomerSetting = {}));
 
